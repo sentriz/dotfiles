@@ -55,7 +55,6 @@ BIWhite='\e[1;97m'
 
 c_Blue='\033[38;5;39m'
 
-
 # ps1
 
 git_branch='`git branch 2> /dev/null | grep -e ^* | sed -E s/^\\\\\*\ \(.+\)$/\ \\\\\1\\/ `'
