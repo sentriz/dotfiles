@@ -2,7 +2,7 @@
 
 dir=~/dotfiles
 old_dir=~/dotfiles_old
-dotfiles="bashrc vimrc vim screenrc gitconfig"
+dotfiles="bashrc vimrc vim screenrc gitconfig ssh"
 
 mkdir -p $old_dir
 
