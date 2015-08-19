@@ -8,6 +8,10 @@ alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 alias temp='expr `cat /sys/class/thermal/thermal_zone0/temp` / 1000'
 
+# vi keybindings 
+
+set -o vi
+
 # functions
 
 extract() {
