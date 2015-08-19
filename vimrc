@@ -1,5 +1,9 @@
 set nocompatible
 syntax on
+set noswapfile
+set autowrite
+set nobackup
+set nowritebackup
 filetype off
 
 if has("win32")
@@ -44,7 +48,6 @@ augroup vimrc_autocmds
     autocmd FileType python match Excess /\%79v.*/
     autocmd FileType python set nowrap
 augroup END
-
 " line numbering
 set nu
 autocmd InsertEnter * set nornu
@@ -109,3 +112,8 @@ map <leader>ew :e <C-R>=expand("%:p:h") . "/" <CR>
 imap <Tab> <C-x><C-f>
 nnoremap <Tab> <C-w><C-w>
 
+" jump to last known cursor position (except in commit messages)
+autocmd BufReadPost *
+  \ if &ft != 'gitcommit' && line("'\"") > 0 && line("'\"") <= line("$") |
+  \   exe "normal g`\"" |
+  \ endif
