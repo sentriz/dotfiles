@@ -1,0 +1,12 @@
+/*
+!/.vim
+!/.vimrc
+!/.gitconfig
+!/.screenrc
+!/.gitignore
+!/.profile
+!/.bashrc
+!/.ssh
+/.ssh/*
+!/.ssh/authorized_keys
+!/.ssh/config
