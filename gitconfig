@@ -1,0 +1,22 @@
+[user]
+	email = senan.f.b.kelly+github@gmail.com
+	name = sentriz
+[push]
+	default = matching
+[color]
+	ui = true
+	branch = true
+	interactive = true
+	status = true
+[help]
+	autocorrect = true
+[alias]
+	c = commit
+	s = status
+	a = add
+[diff "zip"]
+	textconv = unzip -c -a
+[github]
+	user = sentriz
+[advice]
+    statusHints = false
