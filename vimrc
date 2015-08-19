@@ -37,7 +37,8 @@ set laststatus=2
 
 " colorscheme, term colours, hidden chars and font
 set t_Co=256
-colorscheme obsidian2
+"colorscheme obsidian2
+colorscheme desert
 set guifont=Consolas:h10
 set listchars=tab:>\ ,eol:¬,trail:.
 
