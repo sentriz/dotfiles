@@ -20,3 +20,5 @@
 	user = sentriz
 [advice]
     statusHints = false
+[core]
+	editor = vim
