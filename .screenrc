@@ -9,8 +9,8 @@ screen -t "bash" 1
 stuff "cd ~^Mclear^M"
 screen -t "bash" 2
 stuff "cd ~^Mclear^M"
-screen -t "su" 3
-stuff "sudo su^Mclear^M"
+screen -t "bash" 2
+stuff "cd ~^Mclear^M"
 screen -t "top" 4
 stuff "top^M"
 
