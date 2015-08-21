@@ -13,7 +13,7 @@ if has("win32")
     set rtp+=~\vimfiles\bundle\vundle\
 else
     " vundle setup
-    set rtp+=~/.vim/bundle/vundle/
+    set rtp+=~/.vim/bundle/Vundle.vim
 endif
 
 " plugins via vundle
