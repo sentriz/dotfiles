@@ -1,6 +1,7 @@
 /*
 !/.vim
 /.vim/bundle
+/.vim/bundle/*
 !/.vimrc
 !/.gitconfig
 !/.screenrc
