@@ -1,3 +1,15 @@
+# find ssh-agent
+
+. ~/bin/find_ssh_agent.sh
+set_ssh_agent_socket
+
+# ssh-find-agent -a
+# if [ -z "$SSH_AUTH_SOCK" ]
+# then
+#     eval $(ssh_agent) > /dev/null
+#     ssh-add -l >/dev/null || alias ssh='ssh-add -l >/dev/null || ssh-add && unalias ssh; ssh'
+# fi
+
 # aliases
 
 alias ls='ls --color=auto'
