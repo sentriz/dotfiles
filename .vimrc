@@ -109,6 +109,8 @@ map <leader>l :set list!<CR>
 map <leader><leader> :noh<CR>
 map <leader>ew :e <C-R>=expand("%:p:h") . "/" <CR>
 
+imap <leader>{ {<CR><Esc>o}<Esc>k4i<Space><Esc>A
+
 " mappings
 imap <Tab> <C-x><C-f>
 nnoremap <Tab> <C-w><C-w>
