@@ -102,9 +102,9 @@ endfunction
 
 " leader mappings
 map <leader>o :call OpenChangedFiles()<CR>
-map <leader>cg :cd M:\dev\github\<CR>
-map <leader>cd :cd M:\media\desktop\<CR>
-map <leader>cl :cd M:\media\downloads\<CR>
+map <leader>cg :cd /mnt/storage/dev/github/<CR>
+map <leader>cd :cd /mnt/storage/media/desktop/<CR>
+map <leader>cl :cd /mnt/storage/media/downloads/<CR>
 map <leader>l :set list!<CR>
 map <leader><leader> :noh<CR>
 map <leader>ew :e <C-R>=expand("%:p:h") . "/" <CR>
