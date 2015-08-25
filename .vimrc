@@ -24,20 +24,19 @@ Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-repeat'
 Plugin 'godlygeek/csapprox'
+Plugin 'powerline/powerline', {'rtp': 'powerline/bindings/vim/'}
 "Plugin 'klen/python-mode'
 call vundle#end()
 filetype plugin indent on
 
+" always show statusbar
+set laststatus=2
+
 " trim trailing on save
 autocmd BufWritePre *vimrc,*py,*.js,*.html call Preserve("%s/\\s\\+$//e")
 
-" statusline
-set statusline+=%{fugitive#statusline()}
-set laststatus=2
-
 " colorscheme, term colours, hidden chars and font
 set t_Co=256
-"colorscheme obsidian2
 colorscheme desert
 set guifont=Consolas:h10
 set listchars=tab:>\ ,eol:¬,trail:.
