@@ -1,6 +1,4 @@
 # Installation 
-on a *nix machine with git and bash, run the following commands to install my dotfiles:
-
     $ cd ~
     $ git init
     $ git remote add origin https://github.com/sentriz/dotfiles.git
