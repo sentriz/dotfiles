@@ -1,4 +1,5 @@
 set nocompatible
+set incsearch
 syntax on
 set noswapfile
 set autowrite
