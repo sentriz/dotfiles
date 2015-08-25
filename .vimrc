@@ -49,6 +49,7 @@ augroup vimrc_autocmds
     autocmd FileType python match Excess /\%79v.*/
     autocmd FileType python set nowrap
 augroup END
+
 " line numbering
 set nu
 autocmd InsertEnter * set nornu
