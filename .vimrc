@@ -111,6 +111,7 @@ nnoremap <leader>l :set list!<CR>
 " mappings
 inoremap <Tab> <C-x><C-f>
 nnoremap <Tab> <C-w><C-w>
+nnoremap <BS> daw
 
 " jump to last known cursor position (except in commit messages)
 autocmd BufReadPost *
