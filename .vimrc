@@ -109,7 +109,7 @@ nnoremap <leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
 nnoremap <leader>l :set list!<CR>
 
 " mappings
-imap <Tab> <C-x><C-f>
+inoremap <Tab> <C-x><C-f>
 nnoremap <Tab> <C-w><C-w>
 
 " jump to last known cursor position (except in commit messages)
