@@ -26,7 +26,7 @@ Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-repeat'
 Plugin 'godlygeek/csapprox'
-Plugin 'powerline/powerline', {'rtp': 'powerline/bindings/vim/'}
+Plugin 'easymotion/vim-easymotion'
 "Plugin 'klen/python-mode'
 call vundle#end()
 filetype plugin indent on
