@@ -100,15 +100,13 @@ function! Preserve(command)
 endfunction
 
 " leader mappings
-map <leader>o :call OpenChangedFiles()<CR>
-map <leader>cg :cd /mnt/storage/dev/github/<CR>
-map <leader>cd :cd /mnt/storage/media/desktop/<CR>
-map <leader>cl :cd /mnt/storage/media/downloads/<CR>
-map <leader>l :set list!<CR>
-map <leader><leader> :noh<CR>
-map <leader>ew :e <C-R>=expand("%:p:h") . "/" <CR>
-
-imap <leader>{ {<CR><Esc>o}<Esc>k4i<Space><Esc>A
+let mapleader = "\<Space>"
+nnoremap <leader>o :call OpenChangedFiles()<CR>
+nnoremap <leader>cg :cd /mnt/storage/dev/github/<CR>
+nnoremap <leader>cd :cd /mnt/storage/media/desktop/<CR>
+nnoremap <leader>cl :cd /mnt/storage/media/downloads/<CR>
+nnoremap <leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
+nnoremap <leader>l :set list!<CR>
 
 " mappings
 imap <Tab> <C-x><C-f>
