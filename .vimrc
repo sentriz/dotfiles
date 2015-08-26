@@ -5,6 +5,7 @@ set noswapfile
 set autowrite
 set nobackup
 set nowritebackup
+set laststatus=2
 filetype off
 
 if has("win32")
@@ -29,9 +30,6 @@ Plugin 'powerline/powerline', {'rtp': 'powerline/bindings/vim/'}
 "Plugin 'klen/python-mode'
 call vundle#end()
 filetype plugin indent on
-
-" always show statusbar
-set laststatus=2
 
 " trim trailing on save
 autocmd BufWritePre *vimrc,*py,*.js,*.html call Preserve("%s/\\s\\+$//e")
