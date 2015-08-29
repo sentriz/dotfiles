@@ -16,5 +16,9 @@
 !/.ssh/authorized_keys
 !/.ssh/config
 
+!/bin/
+/bin/*
+!/bin/find_ssh_agent.sh
+
 !/.gitignore
 !/README.md
