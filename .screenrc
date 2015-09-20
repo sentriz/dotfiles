@@ -15,8 +15,7 @@ screen -t "top" 4
 stuff "top^M"
 
 bind ' ' windowlist -b
-defscrollback 6000
+defscrollback 50000
 startup_message off
-#autodetach on
 altscreen on
 
