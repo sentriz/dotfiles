@@ -15,6 +15,9 @@ screen -t "top" 4
 stuff "top^M"
 
 bind ' ' windowlist -b
+bind z prev
+bind x next
+
 defscrollback 50000
 startup_message off
 altscreen on
