@@ -11,6 +11,7 @@ alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 alias temp='expr `cat /sys/class/thermal/thermal_zone0/temp` / 1000'
+vol() { amixer sset 'Master' $1%; }
 c() { cd "$@" && ls -lpAh; }
 
 alias med="cd /mnt/storage/media/"
