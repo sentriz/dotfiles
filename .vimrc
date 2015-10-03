@@ -114,6 +114,10 @@ inoremap <Tab> <C-x><C-f>
 nnoremap <Tab> <C-w><C-w>
 nnoremap <BS> daw
 
+" use C-e and C-y to copy word above and below the current line
+inoremap <expr> <c-y> pumvisible() ? "\<c-y>" : matchstr(getline(line('.')-1), '\%' . virtcol('.') . 'v\%(\k\+\\|.\)')
+inoremap <expr> <c-e> pumvisible() ? "\<c-e>" : matchstr(getline(line('.')+1), '\%' . virtcol('.') . 'v\%(\k\+\\|.\)')
+
 " jump to last known cursor position (except in commit messages)
 autocmd BufReadPost *
   \ if &ft != 'gitcommit' && line("'\"") > 0 && line("'\"") <= line("$") |
