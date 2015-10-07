@@ -113,6 +113,7 @@ nnoremap <leader>l :set list!<CR>
 inoremap <Tab> <C-x><C-f>
 nnoremap <Tab> <C-w><C-w>
 nnoremap <BS> daw
+map Y y$
 
 " use C-e and C-y to copy word above and below the current line
 inoremap <expr> <c-y> pumvisible() ? "\<c-y>" : matchstr(getline(line('.')-1), '\%' . virtcol('.') . 'v\%(\k\+\\|.\)')
