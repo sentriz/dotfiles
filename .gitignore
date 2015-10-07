@@ -3,6 +3,7 @@
 !/.vim
 /.vim/*
 !/.vim/colors
+!/.vim/ftplugin
 
 !/.gitconfig
 !/.screenrc
