@@ -3,6 +3,10 @@
 . ~/bin/find_ssh_agent.sh
 set_ssh_agent_socket
 
+# 256 colours
+
+export TERM=xterm-256color
+
 # aliases
 
 alias ls='ls --color=auto'
