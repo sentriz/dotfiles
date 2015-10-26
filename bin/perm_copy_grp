@@ -1,0 +1,11 @@
+chgrp --reference $1 $2
+if [ -d $1 ]
+then
+    if [ "x`ls $1`" != "x" ]
+    then
+        for f in `ls $1`
+        do
+            $0 $1/$f $2/$f
+        done
+    fi
+fi
