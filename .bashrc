@@ -21,6 +21,7 @@ c() { cd "$@" && ls -lpAh; }
 
 alias med="cd /mnt/storage/media/"
 alias dev="cd /mnt/storage/dev/"
+alias dot="cd /mnt/storage/dotfiles/"
 alias ~="cd ~"
 
 # vi keybindings 
