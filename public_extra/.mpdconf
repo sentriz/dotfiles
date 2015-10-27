@@ -211,14 +211,7 @@ input {
 
 audio_output {
         type "pulse"
-        name "pulse builtin"
-        mixer_control "pcm.builtin"
-}
-
-audio_output {
-        type "pulse"
-        name "pulse usb headphones"
-        mixer_control "pcm.usb_headphones"
+        name "pulse"
 }
 
 #
