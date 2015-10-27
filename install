@@ -1,0 +1,4 @@
+#!/bin/bash
+
+stow --ignore='.ssh' --target ~ -R public_common -R public_extra
+stow --ignore='.ssh' --target ~ -R private
