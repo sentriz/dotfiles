@@ -1,8 +1,3 @@
-# find ssh-agent
-
-. ~/bin/find_ssh_agent.sh
-set_ssh_agent_socket
-
 # 256 colours
 
 export TERM=xterm-256color
@@ -79,3 +74,14 @@ c_Blue='\033[38;5;39m'
 
 git_branch='`git branch 2> /dev/null | grep -e ^* | sed -E s/^\\\\\*\ \(.+\)$/\ \\\\\1\\/ `'
 export PS1="\[$BIGreen\]\u\[$Green\]@\h \[$c_Blue\]\w\[$Red\]$git_branch \[$White\]\$\[$Color_Off\] "
+
+# source local
+
+if [ -f ~/.bash_local ]; then
+    . ~/.bash_local
+fi
+
+# find ssh-agent
+
+. ~/bin/find_ssh_agent.sh
+set_ssh_agent_socket
