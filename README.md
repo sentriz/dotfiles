@@ -6,7 +6,7 @@ install [GNU Stow](https://www.gnu.org/software/stow/), then:
     $ mv [your current dotfiles] [somewhere else]
     $ cd ~ && git clone https://github.com/sentriz/dotfiles.git && cd dotfiles
     $ chkstow -t ~ # ensure home is clean
-    $ mkdir -p .vim/bundle
+    $ mkdir -p .vim/bundle # ensure stow unfolds .vim for second last step
     $ ./install_common
     $ ./install_extra # if you like
     $ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
