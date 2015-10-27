@@ -1,3 +1,5 @@
 private
 install_private
 misc
+public_common/.vim/bundle/
+public_extra/.ncmpcpp/error.log
