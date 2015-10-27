@@ -1,0 +1,3 @@
+#!/bin/bash
+
+stow -v --ignore='.ssh' --target ~ -R public_common 
