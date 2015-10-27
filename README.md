@@ -1,9 +1,12 @@
 # Installation 
-    $ cd ~
-    $ git init
-    $ git remote add origin https://github.com/sentriz/dotfiles.git
-    $ git fetch
-    $ mv [your current dotfiles] [a safe place]
-    $ git checkout -t origin/master
+
+install [GNU Stow](https://www.gnu.org/software/stow/), then:  
+(note: you can run `./install_common && ./install_extra` after adding files to public_*/)
+
+    $ cd ~ && git clone https://github.com/sentriz/dotfiles.git && cd dotfiles
+    $ mv [your current dotfiles] [somewhere else]
+    $ chkstow -t ~ # ensure home is clean
+    $ ./install_common
+    $ ./install_extra # if you like
     $ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
     $ vim +PluginInstall +qall
