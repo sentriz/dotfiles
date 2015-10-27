@@ -13,7 +13,9 @@
 [alias]
 	c = commit
 	s = status
-	a = add
+    ignore = update-index --assume-unchanged
+    unignore = update-index --no-assume-unchanged
+    ignored = !git ls-files -v | grep "^[[:lower:]]"
 [diff "zip"]
 	textconv = unzip -c -a
 [github]
