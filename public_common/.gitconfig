@@ -24,4 +24,4 @@
     statusHints = false
 [core]
     editor = vim
-    excludesfile = /home/senan/.gitignore_global
+    excludesfile = ~/.gitignore_global
