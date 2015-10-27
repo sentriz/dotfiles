@@ -1,27 +1,27 @@
 [user]
-	email = senan.f.b.kelly+github@gmail.com
-	name = sentriz
+    email = senan.f.b.kelly+github@gmail.com
+    name = sentriz
 [push]
-	default = matching
+    default = matching
 [color]
-	ui = true
-	branch = true
-	interactive = true
-	status = true
+    ui = true
+    branch = true
+    interactive = true
+    status = true
 [help]
-	autocorrect = true
+    autocorrect = true
 [alias]
-	c = commit
-	s = status
+    c = commit
+    s = status
     ignore = update-index --assume-unchanged
     unignore = update-index --no-assume-unchanged
     ignored = !git ls-files -v | grep "^[[:lower:]]"
 [diff "zip"]
-	textconv = unzip -c -a
+    textconv = unzip -c -a
 [github]
-	user = sentriz
+    user = sentriz
 [advice]
     statusHints = false
 [core]
-	editor = vim
-	excludesfile = /home/senan/.gitignore_global
+    editor = vim
+    excludesfile = /home/senan/.gitignore_global
