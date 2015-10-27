@@ -1,7 +1,7 @@
 # Installation 
 
 install [GNU Stow](https://www.gnu.org/software/stow/), then:  
-(note: you can run `./install_common && ./install_extra` after adding files to public_*/)
+(note: you can run `./install_common && ./install_extra` anytime after this with more files/folders in public_*/)
 
     $ cd ~ && git clone https://github.com/sentriz/dotfiles.git && cd dotfiles
     $ mv [your current dotfiles] [somewhere else]
