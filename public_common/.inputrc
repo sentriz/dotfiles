@@ -1,0 +1,7 @@
+set completion-prefix-display-length 2
+set completion-ignore-case on
+Control-j: menu-complete
+Control-k: menu-complete-backward
+set show-all-if-ambiguous on
+set show-all-if-unmodified on
+set completion-map-case on
