@@ -6,7 +6,9 @@ export TERM=xterm-256color
 
 alias ls='ls --color=auto'
 alias l='ls -lpAh'
+
 c() { cd "$@" && ls -lpAh; }
+alias please='sudo $(history -p \!\!)' 
 
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
@@ -14,12 +16,6 @@ alias egrep='egrep --color=auto'
 
 alias temp='expr `cat /sys/class/thermal/thermal_zone0/temp` / 1000'
 alias ascreen='screen -dRR'
-
-alias please='sudo $(history -p \!\!)' 
-
-alias med="cd /mnt/storage/media/"
-alias dev="cd /mnt/storage/dev/"
-alias dot="cd /mnt/storage/dotfiles/"
 alias home="cd ~"
 
 # vi keybindings 
