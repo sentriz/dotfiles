@@ -5,15 +5,6 @@ backtick 0 30 30 sh -c 'uptime -p | sed "s/ weeks/w/" | sed "s/ week/w/" | sed "
 backtick 1 30 30 sh -c 'expr `cat /sys/class/thermal/thermal_zone0/temp` / 1000'
 hardstatus alwayslastline "%{= KW} %` | %1`degC %{= Kw}|%{-} %-Lw%{= BW}%n%f %t%{-}%+Lw %=[%H] %c:%s"
 
-screen -t "bash" 1
-stuff "cd ~^Mclear^M"
-screen -t "bash" 2
-stuff "cd ~^Mclear^M"
-screen -t "bash" 2
-stuff "cd ~^Mclear^M"
-screen -t "top" 4
-stuff "top^M"
-
 bind ' ' windowlist -b
 bind z prev
 bind x next
