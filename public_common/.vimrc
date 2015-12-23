@@ -6,6 +6,7 @@ set autowrite
 set nobackup
 set nowritebackup
 set laststatus=2
+set nowrap
 filetype off
 
 if has("win32")
