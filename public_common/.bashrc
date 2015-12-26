@@ -80,8 +80,3 @@ export PS1="\[$BIGreen\]\u\[$Green\]@\h \[$c_Blue\]\w\[$Red\]$git_branch \[$Whit
 if [ -f ~/.bash_local ]; then
     . ~/.bash_local
 fi
-
-# find ssh-agent
-
-. ~/bin/find_ssh_agent.sh
-set_ssh_agent_socket
