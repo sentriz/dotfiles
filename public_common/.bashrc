@@ -70,13 +70,15 @@ BIWhite='\e[1;97m'
 
 c_Blue='\033[38;5;39m'
 
-# ps1
-
-git_branch='`git branch 2> /dev/null | grep -e ^* | sed -E s/^\\\\\*\ \(.+\)$/\ \\\\\1\\/ `'
-export PS1="\[$BIGreen\]\u\[$Green\]@\h \[$c_Blue\]\w\[$Red\]$git_branch \[$White\]\$\[$Color_Off\] "
-
 # source local
+
+export ssh_ps1_string=""
 
 if [ -f ~/.bash_local ]; then
     . ~/.bash_local
 fi
+
+# ps1
+
+git_branch='`git branch 2> /dev/null | grep -e ^* | sed -E s/^\\\\\*\ \(.+\)$/\ \\\\\1\\/ `'
+export PS1="\[$ssh_ps1_string\]\[$BIGreen\]\u\[$Green\]@\h \[$c_Blue\]\w\[$Red\]$git_branch \[$White\]\$\[$Color_Off\] "
