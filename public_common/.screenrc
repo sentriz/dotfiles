@@ -13,3 +13,4 @@ defscrollback 50000
 startup_message off
 altscreen on
 
+defbce on
