@@ -37,7 +37,6 @@ filetype plugin indent on
 autocmd BufWritePre *vimrc,*py,*.js,*.html call Preserve("%s/\\s\\+$//e")
 
 " colorscheme, term colours, hidden chars and font
-set t_Co=256
 colorscheme desert
 set guifont=Consolas:h10
 set listchars=tab:>\ ,eol:¬,trail:.
