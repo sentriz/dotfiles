@@ -124,3 +124,7 @@ autocmd BufReadPost *
   \ if &ft != 'gitcommit' && line("'\"") > 0 && line("'\"") <= line("$") |
   \   exe "normal g`\"" |
   \ endif
+
+" :Q -> :q | :W -> :w
+com Q q
+com W q
