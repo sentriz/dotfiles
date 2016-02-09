@@ -201,3 +201,6 @@ assign [class="chromium"] $work2
 assign [class="KeePass2"] $work5
 
 for_window [class="Pavucontrol"] floating enable
+
+bindsym Print exec scrot '%Y%m%d_%H%M%S.png' -e 'mv $f /mnt/storage/media/pictures/screenshots'
+bindsym $mod+Print --release exec scrot '%Y%m%d_%H%M%S.png' -s -e 'mv $f /mnt/storage/media/pictures/screenshots'
