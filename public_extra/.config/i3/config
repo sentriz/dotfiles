@@ -113,16 +113,16 @@ client.focused_inactive $base02 $base02    $base03 $base0F
 client.unfocused        $base02 $base02    $base03 $base0F
 client.urgent           $base02 $base08    $base00 $base0F
 
-hide_edge_borders both
-new_window none
-#smart_borders on
+# hide_edge_borders both
+# new_window none
+new_window pixel 4
 
 set $work1 "1: main"
 set $work2 "2: web "
 set $work3 "3: term "
-set $work4 "4: misc"
+set $work4 "4: music "
 set $work5 "5: keepass "
-set $work6 "6"
+set $work6 "6: irc "
 set $work7 "7"
 set $work8 "8"
 set $work9 "9"
@@ -199,8 +199,16 @@ exec --no-startup-id pasystray
 assign [class="Firefox"] $work2
 assign [class="chromium"] $work2
 assign [class="KeePass2"] $work5
+assign [class="URxvt" instance="ncmpcpp"] $work4
+assign [class="Wine" instance="foobar2000.exe"] $work4
+assign [class="URxvt" instance="weechat"] $work6
 
 for_window [class="Pavucontrol"] floating enable
 
-bindsym Print exec scrot '%Y%m%d_%H%M%S.png' -e 'mv $f /mnt/storage/media/pictures/screenshots'
-bindsym $mod+Print --release exec scrot '%Y%m%d_%H%M%S.png' -s -e 'mv $f /mnt/storage/media/pictures/screenshots'
+bindsym Print                exec scrot '%Y%m%d_%H%M%S.png' -e 'mv $f /mnt/storage/media/pictures/screenshots'
+bindsym shift+Print --release exec scrot '%Y%m%d_%H%M%S.png' -s -e 'mv $f /mnt/storage/media/pictures/screenshots'
+
+bindsym $mod+shift+m exec --no-startup-id urxvt -name ncmpcpp -e ncmpcpp -s playlist 
+bindsym $mod+shift+i exec --no-startup-id urxvt -name weechat -e 'ssh osmc -t screen -c /etc/screenrc -R -S weechat weechat'
+bindsym $mod+shift+e exec --no-startup-id nautilus
+bindsym $mod+shift+b exec --no-startup-id firefox
