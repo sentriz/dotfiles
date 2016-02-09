@@ -5,6 +5,7 @@ floating_modifier $mod
 # misc. config
 font pango:bitstream vera sans mono 10
 new_window pixel 4
+new_float pixel 4
 
 # keybindings (i3)
 bindsym $mod+Shift+r restart
