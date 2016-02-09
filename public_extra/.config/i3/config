@@ -121,7 +121,7 @@ set $work1 "1: main"
 set $work2 "2: web "
 set $work3 "3: term "
 set $work4 "4: misc"
-set $work5 "5"
+set $work5 "5: keepass "
 set $work6 "6"
 set $work7 "7"
 set $work8 "8"
@@ -198,5 +198,6 @@ exec --no-startup-id pasystray
 
 assign [class="Firefox"] $work2
 assign [class="chromium"] $work2
+assign [class="KeePass2"] $work5
 
 for_window [class="Pavucontrol"] floating enable
