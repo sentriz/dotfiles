@@ -11,3 +11,11 @@ install [GNU Stow](https://www.gnu.org/software/stow/), then:
     $ ./install_extra # if you like
     $ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
     $ vim +PluginInstall +qall
+
+# Screenshots
+
+![main](screens/main.png)
+![vim & screen](screens/vim__screen.png)
+![locked](screens/lock.png)
+![ncmpcpp](screens/ncmpcpp.png)
+![power controls](screens/power_controls.png)
