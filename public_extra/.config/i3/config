@@ -171,5 +171,5 @@ bindsym $mod+Ctrl+m exec --no-startup-id urxvt -name ncmpcpp -e ncmpcpp -s playl
 bindsym $mod+Ctrl+i exec --no-startup-id urxvt -name weechat -e 'ssh osmc -t screen -c /etc/screenrc -R -S weechat weechat'
 bindsym $mod+Ctrl+e exec --no-startup-id nautilus
 bindsym $mod+Ctrl+b exec --no-startup-id chromium
-bindsym $mod+Ctrl+k exec --no-startup-id keepass2
+bindsym $mod+Ctrl+k exec --no-startup-id keepass
 bindsym $mod+Ctrl+a exec --no-startup-id i3-dmenu-desktop
