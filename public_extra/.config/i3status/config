@@ -1,0 +1,55 @@
+general {
+    colors = yes
+    color_good = "#2ECC71"
+    color_bad = "#E74C3C"
+    color_degraded = "#1793D1"        
+    interval = 1
+}
+
+order += "disk /mnt/storage"
+order += "disk /"
+order += "wireless _first_"
+order += "ethernet enp3s0"
+#order += "battery 0"
+order += "load"
+order += "cpu_temperature 0"
+order += "cpu_usage"
+order += "volume master"
+order += "tztime local"
+
+disk /mnt/storage {
+    format = "   storage %percentage_used"
+}
+
+disk / {
+    format = " root %percentage_used"
+}
+
+wireless _first_ {
+    format_up = " %quality %ip"
+    format_down = " down"
+}
+
+ethernet enp3s0 {
+    format_up = " %ip"
+    format_down = " down"
+}
+
+load {
+    format = " %1min"
+}
+
+cpu_usage {
+    format = " %usage"
+}
+
+volume master {
+    format = " %volume"
+    device = "default"
+    mixer = "Master"
+    mixer_idx = 0
+}
+
+tztime local {
+    format = "%d %b %Y %H:%M:%S "
+}
