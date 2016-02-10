@@ -1,0 +1,11 @@
+#!/bin/bash
+
+echo locking
+shot=$(mktemp --tmpdir XXXX.png)
+string_prefix="desktop locked by user "
+user=$(whoami)
+string="$string_prefix'$user'"
+scrot $shot
+convert $shot -blur 0x3 -gravity north -fill white -pointsize 50 -annotate +0+90 "$string" $shot
+i3lock -i $shot
+rm $shot
