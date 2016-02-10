@@ -2,10 +2,8 @@
 
 echo locking
 shot=$(mktemp --tmpdir XXXX.png)
-string_prefix="desktop locked by user "
-user=$(whoami)
-string="$string_prefix'$user'"
 scrot $shot
-convert $shot -blur 0x3 -gravity north -fill white -pointsize 50 -annotate +0+90 "$string" $shot
-i3lock -i $shot
+convert $shot -blur 0x3 -gravity north -fill "#ababab" -pointsize 40 -annotate +0+90 "locked at $(date +%H:%m)" $shot
+convert $shot ~/bin/lock.png -gravity center -geometry +0+0 -composite $shot
+i3lock -u -i $shot
 rm $shot
