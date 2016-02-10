@@ -14,8 +14,8 @@ install [GNU Stow](https://www.gnu.org/software/stow/), then:
 
 # Screenshots
 
+![power controls](screens/power_controls.png)
 ![main](screens/main.png)
 ![vim & screen](screens/vim__screen.png)
 ![locked](screens/lock.png)
 ![ncmpcpp](screens/ncmpcpp.png)
-![power controls](screens/power_controls.png)
