@@ -9,7 +9,20 @@ new_float pixel 4
 
 # keybindings (i3)
 bindsym $mod+Shift+r restart
-#bindsym $mod+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+
+set $mode_system  [l]ock, log[o]ut, [s]uspend, [h]ibernate, [r]eboot, shut[d]own
+mode "$mode_system" {
+    bindsym l exec --no-startup-id i3lf, mode "default"
+    bindsym o exec --no-startup-id "i3-nagbar -t warning -m 'sure you want to log out?' -b 'yes' 'i3-msg exit'", mode "default"
+    bindsym s exec --no-startup-id i3lock, mode default; exec --no-startup-id /bin/systemctl suspend, mode "default"
+    bindsym h exec --no-startup-id i3lock, mode default; exec --no-startup-id /bin/systemctl hibernate, mode "default"
+    bindsym r exec --no-startup-id "i3-nagbar -t warning -m 'sure you want to reboot?' -b 'yes' '/bin/systemctl reboot'", mode "default"
+    bindsym d exec --no-startup-id "i3-nagbar -t warning -m 'sure you want to shutdown?' -b 'yes' '/bin/systemctl poweroff'", mode "default"
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+Shift+x mode "$mode_system"
 
 # keybindings (tiles)
 bindsym $mod+q kill
@@ -131,11 +144,11 @@ bindsym $mod+Shift+9 move container to workspace $work9
 
 # startup programs
 exec_always feh --no-startup-id --bg-scale /home/senan/.wallpaper.jpg
-exec --no-startup-id nm-applet
-exec --no-startup-id megasync
-exec --no-startup-id mpd
-exec --no-startup-id mpdscribble
-exec --no-startup-id pasystray
+exec            --no-startup-id            nm-applet
+exec            --no-startup-id            megasync
+exec            --no-startup-id            mpd
+exec            --no-startup-id            mpdscribble
+exec            --no-startup-id            pasystray
 
 # keeping programs on workspaces
 assign [class="Firefox"] $work2
@@ -149,13 +162,14 @@ assign [class="URxvt" instance="weechat"] $work6
 for_window [class="Pavucontrol"] floating enable
 
 # keybindings (sreenshotting)
-bindsym Print                 exec scrot '%Y%m%d_%H%M%S.png' -e 'mv $f /mnt/storage/media/pictures/screenshots'
+bindsym Print                exec scrot '%Y%m%d_%H%M%S.png' -e 'mv $f /mnt/storage/media/pictures/screenshots'
 bindsym Ctrl+Print --release exec scrot '%Y%m%d_%H%M%S.png' -s -e 'mv $f /mnt/storage/media/pictures/screenshots'
 
 # keybindings (programs)
-bindsym $mod+Return  exec --no-startup-id urxvt
+bindsym $mod+Return exec --no-startup-id urxvt
 bindsym $mod+Ctrl+m exec --no-startup-id urxvt -name ncmpcpp -e ncmpcpp -s playlist
 bindsym $mod+Ctrl+i exec --no-startup-id urxvt -name weechat -e 'ssh osmc -t screen -c /etc/screenrc -R -S weechat weechat'
 bindsym $mod+Ctrl+e exec --no-startup-id nautilus
 bindsym $mod+Ctrl+b exec --no-startup-id chromium
+bindsym $mod+Ctrl+k exec --no-startup-id keepass2
 bindsym $mod+Ctrl+a exec --no-startup-id i3-dmenu-desktop
