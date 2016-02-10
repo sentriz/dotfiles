@@ -150,6 +150,9 @@ exec            --no-startup-id            mpd
 exec            --no-startup-id            mpdscribble
 exec            --no-startup-id            pasystray
 
+# lock screen after 15 minutes
+exec xautolock -time 10 -locker '~/bin/i3lf' &
+
 # keeping programs on workspaces
 assign [class="Firefox"] $work2
 assign [class="chromium"] $work2
