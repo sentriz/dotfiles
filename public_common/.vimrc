@@ -34,7 +34,7 @@ call vundle#end()
 filetype plugin indent on
 
 " trim trailing on save
-autocmd BufWritePre *vimrc,*py,*.js,*.html call Preserve("%s/\\s\\+$//e")
+autocmd BufWritePre .vimrc,*.py,*.js,*.html call Preserve("%s/\\s\\+$//e")
 
 " colorscheme, term colours, hidden chars and font
 colorscheme desert
@@ -42,12 +42,14 @@ set guifont=Consolas:h10
 set listchars=tab:>\ ,eol:¬,trail:.
 
 " highlight >79 col
-augroup vimrc_autocmds
-    autocmd!
-    autocmd FileType python highlight Excess ctermbg=DarkGrey guibg=Black
-    autocmd FileType python match Excess /\%79v.*/
-    autocmd FileType python set nowrap
-augroup END
+autocmd FileType python highlight Excess ctermbg=DarkGrey guibg=Black
+autocmd FileType python match Excess /\%79v.*/
+
+" jump to last known cursor position (except in commit messages)
+autocmd BufReadPost *
+  \ if &ft != 'gitcommit' && line("'\"") > 0 && line("'\"") <= line("$") |
+  \   exe "normal g`\"" |
+  \ endif
 
 " line numbering
 set nu
@@ -118,12 +120,6 @@ map Y y$
 " use C-e and C-y to copy word above and below the current line
 inoremap <expr> <c-y> pumvisible() ? "\<c-y>" : matchstr(getline(line('.')-1), '\%' . virtcol('.') . 'v\%(\k\+\\|.\)')
 inoremap <expr> <c-e> pumvisible() ? "\<c-e>" : matchstr(getline(line('.')+1), '\%' . virtcol('.') . 'v\%(\k\+\\|.\)')
-
-" jump to last known cursor position (except in commit messages)
-autocmd BufReadPost *
-  \ if &ft != 'gitcommit' && line("'\"") > 0 && line("'\"") <= line("$") |
-  \   exe "normal g`\"" |
-  \ endif
 
 " :Q -> :q | :W -> :w
 com Q q
