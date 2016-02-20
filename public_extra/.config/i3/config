@@ -164,6 +164,7 @@ assign [class="URxvt" instance="weechat"] $work6
 # keeping programs floating/fullscreen
 for_window [class="Pavucontrol"] floating enable
 for_window [window_type="menu"] floating enable
+for_window [window_role="app"] floating enable
 for_window [class="feh"] fullscreen enable
 for_window [class="URxvt" title="screen"] fullscreen enable
 
