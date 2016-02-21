@@ -6,6 +6,7 @@ export TERM=xterm-256color
 
 alias ls='ls --color=auto'
 alias l='ls -lpAh'
+alias pg='ping 8.8.8.8'
 
 c() { cd "$@" && ls -lpAh; }
 alias please='sudo $(history -p \!\!)' 
