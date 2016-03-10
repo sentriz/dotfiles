@@ -20,6 +20,10 @@ alias tb='nc termbin.com 9999'
 alias ascreen='screen -dRR'
 alias home="cd ~"
 
+for n in `seq 1 9`; do
+    alias w$n="i3-msg workspace $n";
+done
+
 # vi keybindings 
 
 set -o vi
