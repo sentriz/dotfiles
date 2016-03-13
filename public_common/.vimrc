@@ -124,4 +124,4 @@ inoremap <expr> <c-e> pumvisible() ? "\<c-e>" : matchstr(getline(line('.')+1), '
 
 " :Q -> :q | :W -> :w
 com Q q
-com W q
+com W w
