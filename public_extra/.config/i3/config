@@ -166,11 +166,13 @@ for_window [class="Pavucontrol"] floating enable
 for_window [window_type="menu"] floating enable
 for_window [window_role="app"] floating enable
 for_window [class="feh"] fullscreen enable
-for_window [class="URxvt" title="screen"] fullscreen enable
+for_window [class="URxvt"] border none
+for_window [class="chromium"] border none
 
 # dialog rules
 for_window [window_type="dialog"] floating enable, move position center
 for_window [window_type="dialog"] floating_minimum_size 75 x 20
+popup_during_fullscreen smart
 
 # keybindings (sreenshotting)
 bindsym Print                exec scrot '%Y%m%d_%H%M%S.png' -e 'mv $f /mnt/storage/media/pictures/screenshots'
