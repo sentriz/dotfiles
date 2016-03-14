@@ -1,12 +1,13 @@
+" basic settings
 set nocompatible
 set incsearch
-syntax on
 set noswapfile
 set autowrite
 set nobackup
 set nowritebackup
 set laststatus=2
 set nowrap
+syntax on
 filetype off
 
 if has("win32")
@@ -30,7 +31,7 @@ Plugin 'mhinz/vim-startify'
 Plugin 'godlygeek/csapprox'
 Plugin 'easymotion/vim-easymotion'
 Plugin 'tommcdo/vim-exchange'
-"Plugin 'klen/python-mode'
+Plugin 'klen/python-mode'
 call vundle#end()
 filetype plugin indent on
 
@@ -59,15 +60,15 @@ autocmd InsertLeave * set rnu
 autocmd WinEnter * set rnu
 autocmd WinLeave * set nornu
 
+" save swapfiles in temp dir
+set backupdir=$TEMP,.
+set directory=$TEMP,.
+
 " tab settings
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 set expandtab
-
-" save swapfiles in temp dir
-set backupdir=$TEMP,.
-set directory=$TEMP,.
 
 " text bubbling
 nmap <C-k> ddkP
@@ -87,11 +88,7 @@ function! OpenChangedFiles()
     endif
     exec "edit " . topdir . "/" . filenames[0]
     for filename in filenames[1:]
-        if len(filenames) > 4
-            exec "tabedit " . topdir . "/" . filename
-        else
-            exec "sp " . topdir . "/" . filename
-        endif
+        exec "sp " . topdir . "/" . filename
     endfor
 endfunction
 
