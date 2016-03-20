@@ -110,13 +110,13 @@ client.unfocused        $base02 $base02    $base03 $base02
 client.urgent           $base02 $base08    $base00 $base02
 
 
-set $work1 "1: main"
-set $work2 "2: web "
-set $work3 "3: term "
-set $work4 "4: music "
-set $work5 "5: keepass "
-set $work6 "6: irc "
-set $work7 "7"
+set $work1 "1 main"
+set $work2 "2 web "
+set $work3 "3 term "
+set $work4 "4 music "
+set $work5 "5 keepass "
+set $work6 "6 irc "
+set $work7 "7 mnem "
 set $work8 "8"
 set $work9 "9"
 
@@ -149,6 +149,7 @@ exec            --no-startup-id            megasync
 exec            --no-startup-id            mpd
 exec            --no-startup-id            mpdscribble
 exec            --no-startup-id            pasystray
+exec            --no-startup-id            mnemosyne
 
 # lock screen after 15 minutes
 exec xautolock -time 10 -locker '~/bin/i3lf' &
@@ -160,9 +161,11 @@ assign [class="KeePass2"] $work5
 assign [class="URxvt" instance="ncmpcpp"] $work4
 assign [class="Wine" instance="foobar2000.exe"] $work4
 assign [class="URxvt" instance="weechat"] $work6
+assign [class="Mnemosyne"] $work7
 
 # keeping programs floating/fullscreen
 for_window [class="Pavucontrol"] floating enable
+for_window [class="Mnemosyne"] floating enable
 for_window [window_type="menu"] floating enable
 for_window [window_role="app"] floating enable
 for_window [class="feh"] fullscreen enable
