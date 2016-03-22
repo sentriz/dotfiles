@@ -53,13 +53,13 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 # set split direction
-bindsym $mod+z split h
-bindsym $mod+x split v
+bindsym $mod+n split h
+bindsym $mod+m split v
 
 # change container layout (stacked, tabbed, toggle split)
-bindsym $mod+s layout stacking
-bindsym $mod+w layout tabbed
-bindsym $mod+e layout toggle split
+bindsym $mod+z layout stacking
+bindsym $mod+x layout tabbed
+bindsym $mod+c layout toggle split
 
 # bar settings
 bar {
