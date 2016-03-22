@@ -10,6 +10,7 @@ new_float pixel 4
 # keybindings (i3)
 bindsym $mod+Shift+r restart
 
+# system power options
 set $mode_system  [l]ock, log[o]ut, [s]uspend, [h]ibernate, [r]eboot, shut[d]own
 mode "$mode_system" {
     bindsym l exec --no-startup-id i3lf, mode "default"
@@ -51,6 +52,27 @@ bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
+
+# move floating windows with keys
+bindsym $mod+Shift+space mode "move floating" focus floating
+
+mode "move floating" {
+    bindsym $mod+Tab focus right
+
+    bindsym Left  move left
+    bindsym Down  move down
+    bindsym Up    move up
+    bindsym Right move right
+
+    bindsym h     move left
+    bindsym j     move down
+    bindsym k     move up
+    bindsym l     move right
+
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
 
 # set split direction
 bindsym $mod+n split h
