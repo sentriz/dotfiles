@@ -28,7 +28,7 @@ bindsym $mod+Shift+x mode "$mode_system"
 bindsym $mod+q kill
 bindsym $mod+r mode "resize"
 bindsym $mod+f fullscreen toggle
-bindsym $mod+Space floating toggle
+bindsym $mod+space floating toggle
 
 # change focus
 bindsym $mod+h focus left
