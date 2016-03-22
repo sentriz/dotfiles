@@ -110,8 +110,8 @@ client.unfocused        $base02 $base02    $base03 $base02
 client.urgent           $base02 $base08    $base00 $base02
 
 
-set $work1 "1 main"
-set $work2 "2 web "
+set $work1 "1 main "
+set $work2 "2 web "
 set $work3 "3 term "
 set $work4 "4 music "
 set $work5 "5 keepass "
