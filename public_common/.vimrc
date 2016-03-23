@@ -30,6 +30,7 @@ Plugin 'tpope/vim-repeat'
 Plugin 'mhinz/vim-startify'
 Plugin 'tommcdo/vim-exchange'
 Plugin 'godlygeek/csapprox'
+Plugin 'Valloric/YouCompleteMe'
 call vundle#end()
 filetype plugin indent on
 
