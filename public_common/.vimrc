@@ -118,6 +118,7 @@ nnoremap <leader>gw :Gwrite<CR>
 nnoremap <leader>gm :Gremove<CR>
 nnoremap <leader>gd :Gdiff<CR>
 nnoremap <leader>gc :Gcommit<CR>
+nnoremap <leader>gb :Gbrowse!<CR>
 nnoremap <leader>gv :Gmove<Space>
 
 nnoremap <leader>dp :diffput<CR>
