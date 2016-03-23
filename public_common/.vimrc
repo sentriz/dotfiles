@@ -102,12 +102,26 @@ endfunction
 
 " leader mappings
 let mapleader = "\<Space>"
+
 nnoremap <leader>o :call OpenChangedFiles()<CR>
+nnoremap <leader>e :e <C-R>=expand("%:p:h") . "/"<CR>
+nnoremap <leader>l :set list!<CR>
+
 nnoremap <leader>cg :cd /mnt/storage/dev/github/<CR>
 nnoremap <leader>cd :cd /mnt/storage/media/desktop/<CR>
 nnoremap <leader>cl :cd /mnt/storage/media/downloads/<CR>
-nnoremap <leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
-nnoremap <leader>l :set list!<CR>
+
+nnoremap <leader>gs :Gstatus<CR>
+nnoremap <leader>gr :Gread<CR>
+nnoremap <leader>gw :Gwrite<CR>
+nnoremap <leader>gm :Gremove<CR>
+nnoremap <leader>gd :Gdiff<CR>
+nnoremap <leader>gv :Gmove<Space>
+
+nnoremap <leader>dp :diffput<CR>
+nnoremap <leader>dg :diffget<CR>
+nnoremap <leader>du :diffupdate<CR>
+
 
 " mappings
 inoremap <Tab> <C-x><C-f>
