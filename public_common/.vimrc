@@ -28,9 +28,8 @@ Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-repeat'
 Plugin 'mhinz/vim-startify'
-Plugin 'godlygeek/csapprox'
 Plugin 'tommcdo/vim-exchange'
-Plugin 'klen/python-mode'
+Plugin 'godlygeek/csapprox'
 call vundle#end()
 filetype plugin indent on
 
