@@ -41,10 +41,7 @@ autocmd BufWritePre .vimrc,*.py,*.js,*.html call Preserve("%s/\\s\\+$//e")
 colorscheme desert
 set guifont=Consolas:h10
 set listchars=tab:>\ ,eol:¬,trail:.
-
-" highlight >79 col
-autocmd FileType python highlight Excess ctermbg=DarkGrey guibg=Black
-autocmd FileType python match Excess /\%79v.*/
+set statusline=%<\ %f\ %m%r%y%w%=%l\/%-6L\ %3c
 
 " jump to last known cursor position (except in commit messages)
 autocmd BufReadPost *
