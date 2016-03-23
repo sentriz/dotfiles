@@ -34,6 +34,10 @@ Plugin 'Valloric/YouCompleteMe'
 call vundle#end()
 filetype plugin indent on
 
+" plugin settings
+let g:ycm_path_to_python_interpreter = "/usr/bin/python3"
+let g:startify_session_dir = '~/.vim/session'
+
 " trim trailing on save
 autocmd BufWritePre .vimrc,*.py,*.js,*.html call Preserve("%s/\\s\\+$//e")
 
