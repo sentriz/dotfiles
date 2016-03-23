@@ -29,7 +29,6 @@ Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-repeat'
 Plugin 'mhinz/vim-startify'
 Plugin 'godlygeek/csapprox'
-Plugin 'easymotion/vim-easymotion'
 Plugin 'tommcdo/vim-exchange'
 Plugin 'klen/python-mode'
 call vundle#end()
