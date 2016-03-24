@@ -125,6 +125,10 @@ nnoremap <leader>dp :diffput<CR>
 nnoremap <leader>dg :diffget<CR>
 nnoremap <leader>du :diffupdate<CR>
 
+nnoremap <leader>yg :YcmCompleter GoTo<CR>
+nnoremap <leader>yr :YcmCompleter GoToReferences<CR>
+nnoremap <leader>yd :YcmCompleter GetDoc<CR>
+
 
 " mappings
 inoremap <Tab> <C-x><C-f>
