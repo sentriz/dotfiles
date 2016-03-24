@@ -9,7 +9,7 @@
     interactive = true
     status = true
 [help]
-    autocorrect = true
+    autocorrect = 5
 [alias]
     c = commit
     s = status
