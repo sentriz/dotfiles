@@ -1,8 +1,8 @@
-# 256 colours
+## 256 colours
 
 export TERM=xterm-256color
 
-# aliases
+## aliases
 
 alias ls='ls --color=auto'
 alias l='ls -lpAh --color=auto'
@@ -24,11 +24,11 @@ for n in `seq 1 9`; do
     alias w$n="i3-msg workspace $n";
 done
 
-# vi keybindings 
+## vi keybindings 
 
 set -o vi
 
-# functions
+## functions
 
 extract() {
     if [ -f $1 ] ; then
@@ -51,7 +51,7 @@ extract() {
     fi
 }
 
-# colours
+## colours
 
 Color_Off='\e[0m'
 
@@ -75,7 +75,7 @@ BIWhite='\e[1;97m'
 
 c_Blue='\033[38;5;39m'
 
-# source local
+## source local
 
 export ssh_ps1_string=""
 
@@ -83,7 +83,12 @@ if [ -f ~/.bash_local ]; then
     . ~/.bash_local
 fi
 
-# ps1
+## ps1
 
 git_branch='`git branch 2> /dev/null | grep -e ^* | sed -E s/^\\\\\*\ \(.+\)$/\ \\\\\1\\/ `'
 export PS1="\[$Color_Off\]\[$ssh_ps1_string\]\[$BIGreen\]\u\[$Green\]@\h \[$c_Blue\]\w\[$Red\]$git_branch \[$White\]\$\[$Color_Off\] "
+
+## bash completion
+
+completion_path='/usr/share/bash-completion/bash_completion'
+[[ -f $completion_path ]] && . $completion_path
