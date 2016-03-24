@@ -129,7 +129,6 @@ nnoremap <leader>yg :YcmCompleter GoTo<CR>
 nnoremap <leader>yr :YcmCompleter GoToReferences<CR>
 nnoremap <leader>yd :YcmCompleter GetDoc<CR>
 
-
 " mappings
 inoremap <Tab> <C-x><C-f>
 nnoremap <Tab> <C-w><C-w>
