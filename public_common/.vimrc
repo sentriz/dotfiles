@@ -132,6 +132,8 @@ nnoremap <leader>yd :YcmCompleter GetDoc<CR>
 
 " mappings
 nnoremap <Tab> <C-w><C-w>
+nnoremap [ :bp<CR>
+nnoremap ] :bn<CR>
 nnoremap Y y$
 
 " use C-e and C-y to copy word above and below the current line
