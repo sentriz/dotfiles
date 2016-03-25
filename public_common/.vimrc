@@ -104,9 +104,10 @@ endfunction
 " leader mappings
 let mapleader = "\<Space>"
 
-nnoremap <leader>o :call OpenChangedFiles()<CR>
-nnoremap <leader>e :e <C-R>=expand("%:p:h") . "/"<CR>
-nnoremap <leader>l :set list!<CR>
+nnoremap <leader>en :e <C-R>=expand("%:p:h") . "/"<CR>
+nnoremap <leader>ev :vsplit <C-R>=expand("%:p:h") . "/"<CR>
+nnoremap <leader>eh :split <C-R>=expand("%:p:h") . "/"<CR>
+nnoremap <leader>eg :call OpenChangedFiles()<CR>
 
 nnoremap <leader>cg :cd /mnt/storage/dev/github/<CR>
 nnoremap <leader>cd :cd /mnt/storage/media/desktop/<CR>
