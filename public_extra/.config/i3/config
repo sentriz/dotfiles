@@ -165,13 +165,14 @@ bindsym $mod+Shift+8 move container to workspace $work8
 bindsym $mod+Shift+9 move container to workspace $work9
 
 # startup programs
-exec_always feh --no-startup-id --bg-scale /home/senan/.wallpaper.jpg
-exec            --no-startup-id            nm-applet
-exec            --no-startup-id            megasync
-exec            --no-startup-id            mpd
-exec            --no-startup-id            mpdscribble
-exec            --no-startup-id            pasystray
-exec            --no-startup-id            mnemosyne
+exec_always --no-startup-id feh --bg-scale /home/senan/.wallpaper.jpg
+exec        --no-startup-id compton -b
+exec        --no-startup-id nm-applet
+exec        --no-startup-id megasync
+exec        --no-startup-id mpd
+exec        --no-startup-id mpdscribble
+exec        --no-startup-id pasystray
+exec        --no-startup-id mnemosyne
 
 # lock screen after 15 minutes
 exec xautolock -time 10 -locker '~/bin/i3lf' &
