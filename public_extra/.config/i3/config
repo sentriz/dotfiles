@@ -206,7 +206,7 @@ bindsym Ctrl+Print --release exec scrot '%Y%m%d_%H%M%S.png' -s -e 'mv $f /mnt/st
 # keybindings (programs)
 bindsym $mod+Return exec --no-startup-id urxvt
 bindsym $mod+Ctrl+m exec --no-startup-id urxvt -name ncmpcpp -e ncmpcpp -s playlist
-bindsym $mod+Ctrl+i exec --no-startup-id urxvt -name weechat -e 'ssh osmc -t screen -c /etc/screenrc -R -S weechat weechat'
+bindsym $mod+Ctrl+i exec --no-startup-id urxvt -name weechat -e irc
 bindsym $mod+Ctrl+e exec --no-startup-id nautilus
 bindsym $mod+Ctrl+b exec --no-startup-id chromium
 bindsym $mod+Ctrl+k exec --no-startup-id keepass
