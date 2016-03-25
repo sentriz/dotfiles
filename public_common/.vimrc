@@ -29,6 +29,7 @@ Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-repeat'
 Plugin 'mhinz/vim-startify'
 Plugin 'tommcdo/vim-exchange'
+Plugin 'PotatoesMaster/i3-vim-syntax'
 Plugin 'godlygeek/csapprox'
 Plugin 'Valloric/YouCompleteMe'
 call vundle#end()
