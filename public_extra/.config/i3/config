@@ -188,9 +188,14 @@ assign [class="Mnemosyne"] $work7
 # keeping programs floating/fullscreen
 for_window [class="Pavucontrol"] floating enable
 for_window [class="Mnemosyne"] floating enable
+for_window [class="feh"] fullscreen enable
+
 for_window [window_type="menu"] floating enable
 for_window [window_role="app"] floating enable
-for_window [class="feh"] fullscreen enable
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="task_dialog"] floating enable
+
+# border rules
 for_window [class="URxvt"] border none
 for_window [class="chromium"] border none
 
