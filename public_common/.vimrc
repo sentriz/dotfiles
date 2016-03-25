@@ -136,6 +136,9 @@ nnoremap [ :bp<CR>
 nnoremap ] :bn<CR>
 nnoremap Y y$
 
+inoremap jk <Esc>
+inoremap kj <Esc>
+
 " use C-e and C-y to copy word above and below the current line
 inoremap <expr> <c-y> pumvisible() ? "\<c-y>" : matchstr(getline(line('.')-1), '\%' . virtcol('.') . 'v\%(\k\+\\|.\)')
 inoremap <expr> <c-e> pumvisible() ? "\<c-e>" : matchstr(getline(line('.')+1), '\%' . virtcol('.') . 'v\%(\k\+\\|.\)')
