@@ -166,7 +166,7 @@ bindsym $mod+Shift+9 move container to workspace $work9
 
 # startup programs
 exec_always --no-startup-id feh --bg-scale /home/senan/.wallpaper.jpg
-exec        --no-startup-id compton -b
+exec        --no-startup-id compton -bCG --no-fading-openclose
 exec        --no-startup-id nm-applet
 exec        --no-startup-id megasync
 exec        --no-startup-id mpd
