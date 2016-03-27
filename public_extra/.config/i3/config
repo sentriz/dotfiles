@@ -10,24 +10,8 @@ new_float pixel 4
 # keybindings (i3)
 bindsym $mod+Shift+r restart
 
-# system power options
-set $mode_system  [l]ock, log[o]ut, [s]uspend, [h]ibernate, [r]eboot, shut[d]own
-mode "$mode_system" {
-    bindsym l exec --no-startup-id i3lf, mode "default"
-    bindsym o exec --no-startup-id "i3-nagbar -t warning -m 'sure you want to log out?' -b 'yes' 'i3-msg exit'", mode "default"
-    bindsym s exec --no-startup-id i3lock, mode default; exec --no-startup-id /bin/systemctl suspend, mode "default"
-    bindsym h exec --no-startup-id i3lock, mode default; exec --no-startup-id /bin/systemctl hibernate, mode "default"
-    bindsym r exec --no-startup-id "i3-nagbar -t warning -m 'sure you want to reboot?' -b 'yes' '/bin/systemctl reboot'", mode "default"
-    bindsym d exec --no-startup-id "i3-nagbar -t warning -m 'sure you want to shutdown?' -b 'yes' '/bin/systemctl poweroff'", mode "default"
-
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
-bindsym $mod+Shift+x mode "$mode_system"
-
 # keybindings (tiles)
 bindsym $mod+q kill
-bindsym $mod+r mode "resize"
 bindsym $mod+f fullscreen toggle
 bindsym $mod+space floating toggle
 
@@ -53,27 +37,6 @@ bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
-# move floating windows with keys
-bindsym $mod+Shift+space mode "move floating" focus floating
-
-mode "move floating" {
-    bindsym $mod+Tab focus right
-
-    bindsym Left  move left
-    bindsym Down  move down
-    bindsym Up    move up
-    bindsym Right move right
-
-    bindsym h     move left
-    bindsym j     move down
-    bindsym k     move up
-    bindsym l     move right
-
-    # back to normal: Enter or Escape
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
-
 # set split direction
 bindsym $mod+n split h
 bindsym $mod+m split v
@@ -89,8 +52,10 @@ bar {
         tray_output VGA-0
 }
 
-# resizing tiles
-mode "resize" {
+# resizing tiles mode
+set $mode_resize_tile "resize window: [h][j][k][l]"
+
+mode $mode_resize_tile {
 
         bindsym h resize shrink width 10 px or 10 ppt
         bindsym j resize grow height 10 px or 10 ppt
@@ -105,6 +70,62 @@ mode "resize" {
         bindsym Return mode "default"
         bindsym Escape mode "default"
 }
+
+# system power options mode
+set $mode_system  "[l]ock, log[o]ut, [s]uspend, [h]ibernate, [r]eboot, shut[d]own"
+
+mode $mode_system {
+    bindsym l exec --no-startup-id i3lf, mode "default"
+    bindsym o exec --no-startup-id "i3-nagbar -t warning -m 'sure you want to log out?' -b 'yes' 'i3-msg exit'", mode "default"
+    bindsym s exec --no-startup-id i3lock, mode default; exec --no-startup-id /bin/systemctl suspend, mode "default"
+    bindsym h exec --no-startup-id i3lock, mode default; exec --no-startup-id /bin/systemctl hibernate, mode "default"
+    bindsym r exec --no-startup-id "i3-nagbar -t warning -m 'sure you want to reboot?' -b 'yes' '/bin/systemctl reboot'", mode "default"
+    bindsym d exec --no-startup-id "i3-nagbar -t warning -m 'sure you want to shutdown?' -b 'yes' '/bin/systemctl poweroff'", mode "default"
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+# audio menu mode
+set $mode_audio "volume: [+]10%,  [-]10%,  [m]ute,  [r]eset"
+
+mode $mode_audio {
+    bindsym plus          exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -- +10%
+    bindsym minus         exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -- -10%
+    bindsym KP_Add        exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -- +10%
+    bindsym KP_Subtract   exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -- -10%
+    bindsym m             exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
+    bindsym r             exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -- 100%
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+# move floating windows mode
+set $mode_move_floating "move floating: [h][j][k][l]"
+
+mode $mode_move_floating {
+    bindsym $mod+Tab focus right
+
+    bindsym Left  move left
+    bindsym Down  move down
+    bindsym Up    move up
+    bindsym Right move right
+
+    bindsym h     move left
+    bindsym j     move down
+    bindsym k     move up
+    bindsym l     move right
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+# mode keybinding
+bindsym $mod+F1 mode $mode_resize_tile
+bindsym $mod+F2 mode $mode_move_floating focus floating
+bindsym $mod+F3 mode $mode_system
+bindsym $mod+F4 mode $mode_audio
 
 # colours
 set $base00 #101218
