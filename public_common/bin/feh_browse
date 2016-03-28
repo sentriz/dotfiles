@@ -1,0 +1,2 @@
+#!/bin/sh
+feh -. "$(dirname "$1")" --start-at "$1" -d
