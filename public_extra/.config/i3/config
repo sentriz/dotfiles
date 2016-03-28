@@ -225,6 +225,7 @@ for_window [class="chromium"] border none
 # dialog rules
 for_window [window_type="dialog"] floating enable, move position center
 for_window [window_type="dialog"] floating_minimum_size 75 x 20
+for_window [title="youfl_stream"] fullscreen disable, floating enable, resize set 320 px 180 px, sticky enable, move window to position 1046 px 0 px
 popup_during_fullscreen smart
 
 # keybindings (sreenshotting)
