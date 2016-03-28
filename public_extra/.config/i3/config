@@ -242,4 +242,4 @@ bindsym $mod+Ctrl+i exec --no-startup-id urxvt -name weechat -e irc
 bindsym $mod+Ctrl+e exec --no-startup-id nautilus
 bindsym $mod+Ctrl+b exec --no-startup-id chromium
 bindsym $mod+Ctrl+k exec --no-startup-id keepass
-bindsym $mod+Ctrl+a exec --no-startup-id i3-dmenu-desktop
+bindsym $mod+Ctrl+a exec --no-startup-id j4-dmenu-desktop
