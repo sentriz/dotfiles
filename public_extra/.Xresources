@@ -6,12 +6,14 @@ Xft.autohint: false
 Xft.hintstyle: hintslight
 Xft.lcdfilter: lcddefault
 
-URxvt.font:     xft:bitstream vera sans mono:size=10:antialias=true
+URxvt.font: xft:bitstream vera sans mono:size=10:antialias=true
 URxvt.boldFont: xft:bitstream vera sans mono:bold:size=10:antialias=true
 URxvt.scrollBar: false
 URxvt.foreground: white
 URxvt.background: black
 URxvt.letterSpace: -1
+
+URxvt.perl-ext-common: fullscreen
 
 URxvt*color0:  #000000 // black
 URxvt*color1:  #B40000 // red
