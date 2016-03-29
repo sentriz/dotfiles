@@ -236,10 +236,10 @@ bindsym Print                exec scrot '%Y%m%d_%H%M%S.png' -e 'mv $f /mnt/stora
 bindsym Ctrl+Print --release exec scrot '%Y%m%d_%H%M%S.png' -s -e 'mv $f /mnt/storage/media/pictures/screenshots'
 
 # keybindings (programs)
-bindsym $mod+Return exec --no-startup-id urxvt
-bindsym $mod+Ctrl+m exec --no-startup-id urxvt -name ncmpcpp -e ncmpcpp -s playlist
-bindsym $mod+Ctrl+i exec --no-startup-id urxvt -name weechat -e irc
-bindsym $mod+Ctrl+e exec --no-startup-id nautilus
-bindsym $mod+Ctrl+b exec --no-startup-id chromium
-bindsym $mod+Ctrl+k exec --no-startup-id keepass
-bindsym $mod+Ctrl+a exec --no-startup-id j4-dmenu-desktop
+bindsym $mod+Return exec urxvt
+bindsym $mod+Ctrl+m exec urxvt -name ncmpcpp -e ncmpcpp -s playlist
+bindsym $mod+Ctrl+i exec urxvt -name weechat -e irc
+bindsym $mod+Ctrl+e exec nautilus
+bindsym $mod+Ctrl+b exec chromium
+bindsym $mod+Ctrl+k exec keepass
+bindsym $mod+Ctrl+a exec j4-dmenu-desktop
