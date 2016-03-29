@@ -175,6 +175,7 @@ bindsym $mod+Shift+9 move container to workspace $work9
 # startup programs
 exec_always --no-startup-id feh --bg-scale /home/senan/.wallpaper.jpg
 exec_always --no-startup-id compton -b
+exec        --no-startup-id urxvtd
 exec        --no-startup-id nm-applet
 exec        --no-startup-id mpd
 exec        --no-startup-id mpdscribble
@@ -221,9 +222,9 @@ bindsym Print                 exec scrot '%Y%m%d_%H%M%S.png' -e 'mv $f /mnt/stor
 bindsym shift+Print --release exec scrot '%Y%m%d_%H%M%S.png' -s -e 'mv $f /mnt/storage/media/pictures/screenshots'
 
 # keybindings (programs)
-bindsym $mod+Return exec urxvt
-bindsym $mod+Ctrl+m exec urxvt -name ncmpcpp -e ncmpcpp -s playlist
-bindsym $mod+Ctrl+i exec urxvt -name weechat -e irc
+bindsym $mod+Return exec urxvtc
+bindsym $mod+Ctrl+m exec urxvtc -name ncmpcpp -e ncmpcpp -s playlist
+bindsym $mod+Ctrl+i exec urxvtc -name weechat -e irc
 bindsym $mod+Ctrl+e exec nautilus
 bindsym $mod+Ctrl+b exec chromium
 bindsym $mod+Ctrl+k exec keepass
