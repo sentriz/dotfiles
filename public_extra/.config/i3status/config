@@ -30,10 +30,10 @@ wireless _first_ {
     format_down = " down"
 }
 
-ethernet enp3s0 {
-    format_up = " %ip"
-    format_down = " down"
-}
+#ethernet enp3s0 {
+#    format_up = " %ip"
+#    format_down = " down"
+#}
 
 load {
     format = " %1min"
