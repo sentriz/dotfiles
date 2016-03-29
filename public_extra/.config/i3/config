@@ -7,8 +7,9 @@
 # mod + alt + ...   => modes                #
 #############################################
 
-font pango:bitstream vera sans mono 10
 set $mod Mod4
+set $alt Mod1
+font pango:bitstream vera sans mono 10
 floating_modifier $mod
 new_window none
 new_float none
@@ -49,10 +50,10 @@ bindsym $mod+x layout tabbed
 bindsym $mod+c layout toggle split
 
 ## keybindings (modes)
-bindsym $mod+alt+r mode $mode_resize_tile
-bindsym $mod+alt+space mode $mode_move_floating focus floating
-bindsym $mod+alt+q mode $mode_system
-bindsym $mod+alt+v mode $mode_audio
+bindsym $mod+$alt+r mode $mode_resize_tile
+bindsym $mod+$alt+space mode $mode_move_floating focus floating
+bindsym $mod+$alt+q mode $mode_system
+bindsym $mod+$alt+v mode $mode_audio
 
 # resizing tiles mode
 set $mode_resize_tile "resize window: [h][j][k][l]"
