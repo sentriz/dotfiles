@@ -1,16 +1,28 @@
-# modifiers
+#############################################
+# bindsym format                            #
+#############################################
+# mod + ...         => window/float related #
+# mod + shift + ... => i3 related           #
+# mod + ctrl + ...  => lauching software    #
+# mod + alt + ...   => modes                #
+#############################################
+
+font pango:bitstream vera sans mono 10
 set $mod Mod4
 floating_modifier $mod
-
-# misc. config
-font pango:bitstream vera sans mono 10
 new_window none
 new_float none
 
-# keybindings (i3)
+## bar settings
+bar {
+        status_command i3status
+        tray_output VGA-0
+}
+
+## keybindings (i3 related)
 bindsym $mod+Shift+r restart
 
-# keybindings (tiles)
+## keybindings (window/float related)
 bindsym $mod+q kill
 bindsym $mod+f fullscreen toggle
 bindsym $mod+space floating toggle
@@ -21,21 +33,11 @@ bindsym $mod+j focus down
 bindsym $mod+k focus up
 bindsym $mod+l focus right
 
-bindsym $mod+Left focus left
-bindsym $mod+Down focus down
-bindsym $mod+Up focus up
-bindsym $mod+Right focus right
-
 # move focused window
-bindsym $mod+Shift+h move left
-bindsym $mod+Shift+j move down
-bindsym $mod+Shift+k move up
-bindsym $mod+Shift+l move right
-
-bindsym $mod+Shift+Left move left
-bindsym $mod+Shift+Down move down
-bindsym $mod+Shift+Up move up
-bindsym $mod+Shift+Right move right
+bindsym $mod+Left move left
+bindsym $mod+Down move down
+bindsym $mod+Up move up
+bindsym $mod+Right move right
 
 # set split direction
 bindsym $mod+n split h
@@ -46,26 +48,19 @@ bindsym $mod+z layout stacking
 bindsym $mod+x layout tabbed
 bindsym $mod+c layout toggle split
 
-# bar settings
-bar {
-        status_command i3status
-        tray_output VGA-0
-}
+## keybindings (modes)
+bindsym $mod+alt+r mode $mode_resize_tile
+bindsym $mod+alt+space mode $mode_move_floating focus floating
+bindsym $mod+alt+q mode $mode_system
+bindsym $mod+alt+v mode $mode_audio
 
 # resizing tiles mode
 set $mode_resize_tile "resize window: [h][j][k][l]"
-
 mode $mode_resize_tile {
-
         bindsym h resize shrink width 10 px or 10 ppt
         bindsym j resize grow height 10 px or 10 ppt
         bindsym k resize shrink height 10 px or 10 ppt
         bindsym l resize grow width 10 px or 10 ppt
-
-        bindsym Left resize shrink width 10 px or 10 ppt
-        bindsym Down resize grow height 10 px or 10 ppt
-        bindsym Up resize shrink height 10 px or 10 ppt
-        bindsym Right resize grow width 10 px or 10 ppt
 
         bindsym Return mode "default"
         bindsym Escape mode "default"
@@ -73,7 +68,6 @@ mode $mode_resize_tile {
 
 # system power options mode
 set $mode_system  "[l]ock, log[o]ut, [s]uspend, [h]ibernate, [r]eboot, shut[d]own"
-
 mode $mode_system {
     bindsym l exec --no-startup-id i3lf, mode "default"
     bindsym o exec --no-startup-id "i3-nagbar -t warning -m 'sure you want to log out?' -b 'yes' 'i3-msg exit'", mode "default"
@@ -88,7 +82,6 @@ mode $mode_system {
 
 # audio menu mode
 set $mode_audio "volume: [+]10%,  [-]10%,  [m]ute,  [r]eset"
-
 mode $mode_audio {
     bindsym plus          exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -- +10%
     bindsym minus         exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -- -10%
@@ -103,14 +96,8 @@ mode $mode_audio {
 
 # move floating windows mode
 set $mode_move_floating "move floating: [h][j][k][l]"
-
 mode $mode_move_floating {
     bindsym $mod+Tab focus right
-
-    bindsym Left  move left
-    bindsym Down  move down
-    bindsym Up    move up
-    bindsym Right move right
 
     bindsym h     move left
     bindsym j     move down
@@ -121,13 +108,7 @@ mode $mode_move_floating {
     bindsym Escape mode "default"
 }
 
-# mode keybinding
-bindsym $mod+F1 mode $mode_resize_tile
-bindsym $mod+F2 mode $mode_move_floating focus floating
-bindsym $mod+F3 mode $mode_system
-bindsym $mod+F4 mode $mode_audio
-
-# colours
+## colours
 set $base00 #101218
 set $base01 #1f222d
 set $base02 #252936
@@ -153,6 +134,7 @@ client.unfocused        $base02 $base02    $base03 $base02
 client.urgent           $base02 $base08    $base00 $base02
 
 
+## workspaces
 set $work1 "1 main "
 set $work2 "2 web "
 set $work3 "3 term "
@@ -187,13 +169,13 @@ bindsym $mod+Shift+9 move container to workspace $work9
 
 # startup programs
 exec_always --no-startup-id feh --bg-scale /home/senan/.wallpaper.jpg
-exec        --no-startup-id compton -b
+exec_always --no-startup-id compton -b
 exec        --no-startup-id nm-applet
-exec        --no-startup-id megasync
 exec        --no-startup-id mpd
 exec        --no-startup-id mpdscribble
 exec        --no-startup-id pasystray
 exec        --no-startup-id mnemosyne
+exec        --no-startup-id megasync
 
 # lock screen after 15 minutes
 exec xautolock -time 10 -locker '~/bin/i3lf' &
@@ -221,15 +203,17 @@ for_window [title="Preferences$"] floating enable
 # dialog rules
 for_window [window_type="dialog"] floating enable, move position center
 for_window [window_type="dialog"] floating_minimum_size 75 x 20
+popup_during_fullscreen smart
+
+# youfl script custom (~/bin/youfl)
 for_window [title="youfl_stream"] fullscreen disable, floating enable, resize set 640 px 360 px, sticky enable, move window to position 726 px 0 px
 # values:                                                                         ^a^    ^b^                                            ^c^
 # c = monitorwidth - a      (width is 1366 for me)                                ^a^    ^b^                                            ^c^
 # b = 9a/16                 (for 16:9 default size)                               ^a^    ^b^                                            ^c^
-popup_during_fullscreen smart
 
 # keybindings (sreenshotting)
-bindsym Print                exec scrot '%Y%m%d_%H%M%S.png' -e 'mv $f /mnt/storage/media/pictures/screenshots'
-bindsym Ctrl+Print --release exec scrot '%Y%m%d_%H%M%S.png' -s -e 'mv $f /mnt/storage/media/pictures/screenshots'
+bindsym Print                 exec scrot '%Y%m%d_%H%M%S.png' -e 'mv $f /mnt/storage/media/pictures/screenshots'
+bindsym shift+Print --release exec scrot '%Y%m%d_%H%M%S.png' -s -e 'mv $f /mnt/storage/media/pictures/screenshots'
 
 # keybindings (programs)
 bindsym $mod+Return exec urxvt
