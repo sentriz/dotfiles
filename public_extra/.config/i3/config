@@ -90,6 +90,8 @@ mode $mode_audio {
     bindsym minus         exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10%
     bindsym KP_Add        exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10%
     bindsym KP_Subtract   exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10%
+    bindsym Right         exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10%
+    bindsym Left          exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10%
     bindsym m             exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
     bindsym r             exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ 100%
 
