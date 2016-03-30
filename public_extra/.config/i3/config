@@ -7,10 +7,10 @@
 # mod + alt + ...   => modes                #
 #############################################
 
-set $mod Mod4
+set $super Mod4
 set $alt Mod1
 font pango:bitstream vera sans mono 10
-floating_modifier $mod
+floating_modifier $super
 
 ## border rules
 new_window none
@@ -23,39 +23,39 @@ bar {
 }
 
 ## keybindings (i3 related)
-bindsym $mod+Shift+r restart
+bindsym $super+Shift+r restart
 
 ## keybindings (window/float related)
-bindsym $mod+q kill
-bindsym $mod+f fullscreen toggle
-bindsym $mod+space floating toggle
+bindsym $super+q kill
+bindsym $super+f fullscreen toggle
+bindsym $super+space floating toggle
 
 # change focus
-bindsym $mod+h focus left
-bindsym $mod+j focus down
-bindsym $mod+k focus up
-bindsym $mod+l focus right
+bindsym $super+h focus left
+bindsym $super+j focus down
+bindsym $super+k focus up
+bindsym $super+l focus right
 
 # move focused window
-bindsym $mod+Left move left
-bindsym $mod+Down move down
-bindsym $mod+Up move up
-bindsym $mod+Right move right
+bindsym $super+Left move left
+bindsym $super+Down move down
+bindsym $super+Up move up
+bindsym $super+Right move right
 
 # set split direction
-bindsym $mod+n split h
-bindsym $mod+m split v
+bindsym $super+n split h
+bindsym $super+m split v
 
 # change container layout (stacked, tabbed, toggle split)
-bindsym $mod+z layout stacking
-bindsym $mod+x layout tabbed
-bindsym $mod+c layout toggle split
+bindsym $super+z layout stacking
+bindsym $super+x layout tabbed
+bindsym $super+c layout toggle split
 
 ## keybindings (modes)
-bindsym $mod+$alt+r mode $mode_resize_tile
-bindsym $mod+$alt+space mode $mode_move_floating focus floating
-bindsym $mod+$alt+q mode $mode_system
-bindsym $mod+$alt+v mode $mode_audio
+bindsym $super+$alt+r mode $mode_resize_tile
+bindsym $super+$alt+space mode $mode_move_floating focus floating
+bindsym $super+$alt+q mode $mode_system
+bindsym $super+$alt+v mode $mode_audio
 
 # resizing tiles mode
 set $mode_resize_tile "resize window: [h][j][k][l]"
@@ -102,7 +102,7 @@ mode $mode_audio {
 # move floating windows mode
 set $mode_move_floating "move floating: [h][j][k][l]"
 mode $mode_move_floating {
-    bindsym $mod+Tab focus right
+    bindsym $super+Tab focus right
 
     bindsym h     move left
     bindsym j     move down
@@ -151,26 +151,26 @@ set $work8 "8"
 set $work9 "9"
 
 # switch to workspace
-bindsym $mod+1 workspace $work1
-bindsym $mod+2 workspace $work2
-bindsym $mod+3 workspace $work3
-bindsym $mod+4 workspace $work4
-bindsym $mod+5 workspace $work5
-bindsym $mod+6 workspace $work6
-bindsym $mod+7 workspace $work7
-bindsym $mod+8 workspace $work8
-bindsym $mod+9 workspace $work9
+bindsym $super+1 workspace $work1
+bindsym $super+2 workspace $work2
+bindsym $super+3 workspace $work3
+bindsym $super+4 workspace $work4
+bindsym $super+5 workspace $work5
+bindsym $super+6 workspace $work6
+bindsym $super+7 workspace $work7
+bindsym $super+8 workspace $work8
+bindsym $super+9 workspace $work9
 
 # move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace $work1
-bindsym $mod+Shift+2 move container to workspace $work2
-bindsym $mod+Shift+3 move container to workspace $work3
-bindsym $mod+Shift+4 move container to workspace $work4
-bindsym $mod+Shift+5 move container to workspace $work5
-bindsym $mod+Shift+6 move container to workspace $work6
-bindsym $mod+Shift+7 move container to workspace $work7
-bindsym $mod+Shift+8 move container to workspace $work8
-bindsym $mod+Shift+9 move container to workspace $work9
+bindsym $super+Shift+1 move container to workspace $work1
+bindsym $super+Shift+2 move container to workspace $work2
+bindsym $super+Shift+3 move container to workspace $work3
+bindsym $super+Shift+4 move container to workspace $work4
+bindsym $super+Shift+5 move container to workspace $work5
+bindsym $super+Shift+6 move container to workspace $work6
+bindsym $super+Shift+7 move container to workspace $work7
+bindsym $super+Shift+8 move container to workspace $work8
+bindsym $super+Shift+9 move container to workspace $work9
 
 # startup programs
 exec_always --no-startup-id feh --bg-scale /home/senan/.wallpaper.jpg
@@ -222,10 +222,10 @@ bindsym Print                 exec scrot '%Y%m%d_%H%M%S.png' -e 'mv $f /mnt/stor
 bindsym shift+Print --release exec scrot '%Y%m%d_%H%M%S.png' -s -e 'mv $f /mnt/storage/media/pictures/screenshots'
 
 # keybindings (programs)
-bindsym $mod+Return exec urxvtc
-bindsym $mod+Ctrl+m exec urxvtc -name ncmpcpp -e ncmpcpp -s playlist
-bindsym $mod+Ctrl+i exec urxvtc -name weechat -e irc
-bindsym $mod+Ctrl+e exec nautilus
-bindsym $mod+Ctrl+b exec chromium
-bindsym $mod+Ctrl+k exec keepass
-bindsym $mod+Ctrl+a exec j4-dmenu-desktop
+bindsym $super+Return exec urxvtc
+bindsym $super+Ctrl+m exec urxvtc -name ncmpcpp -e ncmpcpp -s playlist
+bindsym $super+Ctrl+i exec urxvtc -name weechat -e irc
+bindsym $super+Ctrl+e exec nautilus
+bindsym $super+Ctrl+b exec chromium
+bindsym $super+Ctrl+k exec keepass
+bindsym $super+Ctrl+a exec j4-dmenu-desktop
