@@ -7,5 +7,5 @@ echo $string
 scrot $shot
 convert $shot -blur 0x3 -gravity north -fill "#ababab" -pointsize 40 -annotate +0+90 "$string" $shot
 convert $shot ~/bin/lock.png -gravity center -geometry +0+0 -composite $shot
-i3lock-color -u -i $shot
+i3lock -u -i $shot
 rm $shot
