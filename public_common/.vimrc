@@ -36,7 +36,6 @@ call vundle#end()
 filetype plugin indent on
 
 " plugin settings
-let g:ycm_path_to_python_interpreter = "/usr/bin/python3"
 let g:ycm_filetype_whitelist = {'python' : 1, 'javascript' : 1, 'c' : 1}
 let g:startify_session_dir = '~/.vim/session'
 
