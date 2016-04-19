@@ -214,9 +214,30 @@ bindsym shift+Print --release exec scrot '%Y%m%d_%H%M%S.png' -s -e 'mv $f /mnt/s
 
 # keybindings (programs)
 bindsym $super+Return exec urxvtc
+
 bindsym $super+Ctrl+m exec urxvtc -name ncmpcpp -e ncmpcpp -s playlist
 bindsym $super+Ctrl+i exec urxvtc -name weechat -e irc
-bindsym $super+Ctrl+e exec nautilus
+bindsym $super+Ctrl+e exec thunar
 bindsym $super+Ctrl+b exec chromium
 bindsym $super+Ctrl+k exec keepass
 bindsym $super+Ctrl+a exec j4-dmenu-desktop
+
+bindsym $super+Ctrl+c exec urxvtc -name nmtui -e nmtui connect
+bindsym $super+Ctrl+n exec urxvtc -name nmtui -e nmtui edit
+
+# keybindings (xf86 on thinkpad x220)
+bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 20
+bindsym XF86MonBrightnessDown exec --no-startup-id  xbacklight -dec 20
+
+bindsym XF86TouchpadToggle exec --no-startup-id thinkpad-touchpad
+bindsym XF86ScreenSaver exec --no-startup-id dm-tool lock
+bindsym XF86Sleep exec --no-startup-id systemctl suspend
+
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle 
+
+bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
+bindsym XF86AudioStop exec --no-startup-id playerctl stop
+bindsym XF86AudioNext exec --no-startup-id playerctl next
+bindsym XF86AudioPrev exec --no-startup-id playerctl previous
