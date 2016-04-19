@@ -132,8 +132,8 @@ nnoremap <leader>yd :YcmCompleter GetDoc<CR>
 
 " mappings
 nnoremap <Tab> <C-w><C-w>
-nnoremap [ :bp<CR>
-nnoremap ] :bn<CR>
+nnoremap [25~ :bp<CR>
+nnoremap [26~ :bn<CR>
 nnoremap Y y$
 
 inoremap jk <Esc>
