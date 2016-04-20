@@ -6,8 +6,8 @@ tpset "Evdev Wheel Emulation Axes" 6 7 4 5
 tpset "Device Accel Constant Deceleration" 0.95
 
 setxkbmap ie &
-xmodmap -e "keycode 166=F13"
-xmodmap -e "keycode 167=F14"
+xmodmap -e "keycode 166=F13" &
+xmodmap -e "keycode 167=F14" &
 
 feh --bg-scale /usr/share/wallpapers/.wallpaper.jpg &
 compton -b &
