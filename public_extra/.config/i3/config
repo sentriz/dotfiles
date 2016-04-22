@@ -229,9 +229,11 @@ bindsym $super+Ctrl+n exec urxvtc -name nmtui -e nmtui edit
 # keybindings (xf86 on thinkpad x220)
 bindsym XF86TouchpadToggle exec --no-startup-id thinkpad-touchpad
 bindsym XF86ScreenSaver exec --no-startup-id dm-tool lock
-bindsym XF86Sleep exec --no-startup-id systemctl suspend
 bindsym XF86WLAN exec urxvtc -name nmtui -e nmtui
 bindsym XF86Battery exec urxvtc -name powertop -e sudo powertop
+
+bindsym XF86Suspend exec --no-startup-id systemctl hibernate
+bindsym XF86Sleep exec --no-startup-id systemctl suspend
 
 bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 20
 bindsym XF86MonBrightnessDown exec --no-startup-id  xbacklight -dec 20
