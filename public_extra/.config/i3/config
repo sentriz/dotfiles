@@ -209,8 +209,8 @@ for_window [title="youfl_stream"] fullscreen disable, floating enable, resize se
 # b = 9a/16                 (for 16:9 default size)                               ^a^    ^b^                                            ^c^
 
 # keybindings (sreenshotting)
-bindsym Print                 exec scrot '%Y%m%d_%H%M%S.png' -e 'mv $f /mnt/storage/media/pictures/screenshots'
-bindsym shift+Print --release exec scrot '%Y%m%d_%H%M%S.png' -s -e 'mv $f /mnt/storage/media/pictures/screenshots'
+bindsym Print                 exec scrot '%Y%m%d_%H%M%S.png' -e 'mv $f /home/senan/pictures/screenshots'
+bindsym shift+Print --release exec scrot '%Y%m%d_%H%M%S.png' -s -e 'mv $f /home/senan/pictures/screenshots'
 
 # keybindings (programs)
 bindsym $super+Return exec urxvtc
