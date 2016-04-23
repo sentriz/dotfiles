@@ -83,6 +83,8 @@ colors() {
 	done
 }
 
+play () { youtube-dl ytsearch:"$@" -q -f bestaudio --ignore-config --console-title --print-traffic --max-downloads 1 --no-call-home --no-playlist -o - | mpv --no-terminal --no-video --cache=256 -; }
+
 ## colours
 
 Color_Off='\e[0m'
