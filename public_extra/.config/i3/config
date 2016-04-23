@@ -173,7 +173,7 @@ bindsym $super+Shift+8 move container to workspace $work8
 bindsym $super+Shift+9 move container to workspace $work9
 
 # lock screen after 15 minutes
-exec --no-startup-id xautolock -time 10 -locker 'dm-tool lock' &
+exec --no-startup-id xautolock -time 10 -locker 'dm-tool lock'
 
 # keeping programs on workspaces
 assign [class="Firefox"] $work2
