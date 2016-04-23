@@ -109,9 +109,9 @@ nnoremap <leader>ev :vsplit <C-R>=expand("%:p:h") . "/"<CR>
 nnoremap <leader>eh :split <C-R>=expand("%:p:h") . "/"<CR>
 nnoremap <leader>eg :call OpenChangedFiles()<CR>
 
-nnoremap <leader>cg :cd /mnt/storage/dev/github/<CR>
-nnoremap <leader>cd :cd /mnt/storage/media/desktop/<CR>
-nnoremap <leader>cl :cd /mnt/storage/media/downloads/<CR>
+nnoremap <leader>cg :cd ~/dev/github/<CR>
+nnoremap <leader>cd :cd ~/desktop/<CR>
+nnoremap <leader>cl :cd ~/downloads/<CR>
 
 nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gr :Gread<CR>
