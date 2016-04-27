@@ -1,7 +1,8 @@
 ## aliases
 
 alias ls='ls --color=auto'
-alias l='ls -lpAh --color=auto'
+alias ll='ls -lpAh --color=auto'
+alias l='ls -lph --color=auto'
 alias pg='ping 8.8.8.8'
 
 c() { cd "$@" && ls -lpAh; }
