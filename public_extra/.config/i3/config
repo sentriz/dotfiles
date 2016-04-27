@@ -147,7 +147,7 @@ set $work4 "4 music "
 set $work5 "5 keepass "
 set $work6 "6 irc "
 set $work7 "7 mnem "
-set $work8 "8"
+set $work8 "8 gimp "
 set $work9 "9"
 
 # switch to workspace
@@ -180,6 +180,7 @@ assign [class="URxvt" instance="ncmpcpp"] $work4
 assign [class="Wine" instance="foobar2000.exe"] $work4
 assign [class="URxvt" instance="weechat"] $work6
 assign [class="Mnemosyne"] $work7
+assign [class="Gimp*"] $work8
 
 # keeping programs floating/fullscreen
 for_window [class="Pavucontrol"] floating enable
