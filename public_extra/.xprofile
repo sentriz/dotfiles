@@ -10,6 +10,7 @@ xmodmap -e "keycode 166=F13" &
 xmodmap -e "keycode 167=F14" &
 
 feh --bg-scale /usr/share/wallpapers/.wallpaper.jpg &
+xrandr --output LVDS1 --primary &
 thinkpad-touchpad off &
 compton -b &
 urxvtd &
@@ -17,3 +18,4 @@ megasync &
 mnemosyne &
 mpd &
 mpdscribble &
+xautolock -time 10 -locker 'dm-tool lock' &
