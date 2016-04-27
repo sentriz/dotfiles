@@ -1,12 +1,3 @@
-## 256 colours
-
-export TERM=xterm-256color
-
-## history settings
-
-export HISTCONTROL=erasedups
-export HISTIGNORE="l:ls:c:cd:please:git s:exit"
-
 ## aliases
 
 alias ls='ls --color=auto'
