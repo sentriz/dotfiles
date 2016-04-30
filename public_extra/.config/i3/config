@@ -9,12 +9,12 @@
 
 set $super Mod4
 set $alt Mod1
+set $locker "dm-tool lock"
 font pango:bitstream vera sans mono 10
 floating_modifier $super
 
 ## border rules
 new_window none
-new_float none
 
 ## bar settings
 bar {
@@ -72,12 +72,12 @@ mode $mode_resize_tile {
 # system power options mode
 set $mode_system  "[l]ock, log[o]ut, [s]uspend, [h]ibernate, [r]eboot, shut[d]own"
 mode $mode_system {
-    bindsym l exec --no-startup-id i3lf, mode "default"
+    bindsym l exec --no-startup-id $locker, mode default
+    bindsym s exec --no-startup-id $locker, mode default; exec --no-startup-id systemctl suspend, mode "default"
+    bindsym h exec --no-startup-id $locker, mode default; exec --no-startup-id systemctl hibernate, mode "default"
     bindsym o exec --no-startup-id "i3-nagbar -t warning -m 'sure you want to log out?' -b 'yes' 'i3-msg exit'", mode "default"
-    bindsym s exec --no-startup-id i3lock, mode default; exec --no-startup-id /bin/systemctl suspend, mode "default"
-    bindsym h exec --no-startup-id i3lock, mode default; exec --no-startup-id /bin/systemctl hibernate, mode "default"
-    bindsym r exec --no-startup-id "i3-nagbar -t warning -m 'sure you want to reboot?' -b 'yes' '/bin/systemctl reboot'", mode "default"
-    bindsym d exec --no-startup-id "i3-nagbar -t warning -m 'sure you want to shutdown?' -b 'yes' '/bin/systemctl poweroff'", mode "default"
+    bindsym r exec --no-startup-id "i3-nagbar -t warning -m 'sure you want to reboot?' -b 'yes' 'systemctl reboot'", mode "default"
+    bindsym d exec --no-startup-id "i3-nagbar -t warning -m 'sure you want to shutdown?' -b 'yes' 'systemctl poweroff'", mode "default"
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
@@ -226,12 +226,12 @@ bindsym $super+Ctrl+n exec urxvtc -name nmtui -e nmtui edit
 
 # keybindings (xf86 on thinkpad x220)
 bindsym XF86TouchpadToggle exec --no-startup-id thinkpad-touchpad
-bindsym XF86ScreenSaver exec --no-startup-id dm-tool lock
 bindsym XF86WLAN exec urxvtc -name nmtui -e nmtui
 bindsym XF86Battery exec urxvtc -name powertop -e sudo powertop
 
-bindsym XF86Suspend exec --no-startup-id systemctl hibernate
-bindsym XF86Sleep exec --no-startup-id systemctl suspend
+bindsym XF86ScreenSaver exec --no-startup-id $locker
+bindsym XF86Suspend exec --no-startup-id $locker; exec --no-startup-id systemctl hibernate
+bindsym XF86Sleep exec --no-startup-id $locker; exec --no-startup-id systemctl suspend
 
 bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 20
 bindsym XF86MonBrightnessDown exec --no-startup-id  xbacklight -dec 20
