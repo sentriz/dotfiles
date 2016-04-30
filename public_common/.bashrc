@@ -3,19 +3,21 @@
 alias ls='ls --color=auto'
 alias ll='ls -lpAh --color=auto'
 alias l='ls -lph --color=auto'
-alias pg='ping 8.8.8.8'
 
 c() { cd "$@" && ls -lpAh; }
-alias please='sudo $(history -p \!\!)' 
+f() { find . -readable -type f 2> /dev/null | fzf --reverse --black --multi | xclip; }
+fr() { find / -readable -type f 2> /dev/null | fzf --reverse --black --multi | xclip; }
 
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 
+alias pg='ping 8.8.8.8'
 alias temp='expr `cat /sys/class/thermal/thermal_zone0/temp` / 1000'
 alias tb='nc termbin.com 9999'
 alias ascreen='screen -dRR'
-alias home="cd ~"
+alias please='sudo $(history -p \!\!)' 
+alias sedo="sudo -E"
 
 for n in `seq 1 9`; do
     alias w$n="i3-msg workspace $n";
