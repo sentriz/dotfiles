@@ -148,7 +148,7 @@ set $work5 "5 keepass "
 set $work6 "6 irc "
 set $work7 "7 mnem "
 set $work8 "8 gimp "
-set $work9 "9"
+set $work9 "9 office "
 
 # switch to workspace
 bindsym $super+1 workspace $work1
@@ -181,6 +181,7 @@ assign [class="Wine" instance="foobar2000.exe"] $work4
 assign [class="URxvt" instance="weechat"] $work6
 assign [class="Mnemosyne"] $work7
 assign [class="Gimp*"] $work8
+assign [class="libreoffice-*"] $work9
 
 # keeping programs floating/fullscreen
 for_window [class="Pavucontrol"] floating enable
