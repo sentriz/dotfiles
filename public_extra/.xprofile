@@ -15,6 +15,7 @@ thinkpad-touchpad off &
 compton -b &
 urxvtd &
 megasync &
+clipit -d &
 mnemosyne &
 mpd &
 mpdscribble &
