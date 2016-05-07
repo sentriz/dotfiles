@@ -19,8 +19,17 @@ new_window none
 
 ## bar settings
 bar {
-        status_command i3status
+  status_command i3status
         tray_output primary
+  colors {
+    separator #666666
+    background #222222
+    statusline #dddddd
+    focused_workspace #0088CC #0088CC #ffffff
+    active_workspace #333333 #333333 #ffffff
+    inactive_workspace #333333 #333333 #888888
+    urgent_workspace #2f343a #900000 #ffffff
+  }
 }
 
 ## keybindings (i3 related)
@@ -113,32 +122,6 @@ mode $mode_move_floating {
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
-
-## colours
-set $base00 #101218
-set $base01 #1f222d
-set $base02 #252936
-set $base03 #7780a1
-set $base04 #C0C5CE
-set $base05 #d1d4e0
-set $base06 #C9CCDB
-set $base07 #ffffff
-set $base08 #ee829f
-set $base09 #f99170
-set $base0A #ffefcc
-set $base0B #a5ffe1
-set $base0C #97e0ff
-set $base0D #97bbf7
-set $base0E #c0b7f9
-set $base0F #fcc09e
-
-# widow colours
-#                       border  background text    indicator
-client.focused          $base01 $base01    $base07 $base01
-client.focused_inactive $base02 $base02    $base03 $base02
-client.unfocused        $base02 $base02    $base03 $base02
-client.urgent           $base02 $base08    $base00 $base02
-
 
 ## workspaces
 set $work1 "1 main "
@@ -249,3 +232,10 @@ bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
 bindsym XF86AudioStop exec --no-startup-id playerctl stop
 bindsym XF86AudioNext exec --no-startup-id playerctl next
 bindsym XF86AudioPrev exec --no-startup-id playerctl previous
+
+# colours
+
+client.focused #0088CC #0088CC #ffffff #dddddd
+client.focused_inactive #333333 #333333 #888888 #292d2e
+client.unfocused #333333 #333333 #888888 #292d2e
+client.urgent #2f343a #900000 #ffffff #900000
