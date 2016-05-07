@@ -6,6 +6,7 @@ set autowrite
 set nobackup
 set nowritebackup
 set laststatus=2
+set sidescroll=1
 set nowrap
 syntax on
 filetype off
