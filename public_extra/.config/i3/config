@@ -160,6 +160,7 @@ bindsym $super+6 workspace $work6
 bindsym $super+7 workspace $work7
 bindsym $super+8 workspace $work8
 bindsym $super+9 workspace $work9
+bindsym $super+0 [urgent=latest] focus
 
 # move focused container to workspace
 bindsym $super+Shift+1 move container to workspace $work1
