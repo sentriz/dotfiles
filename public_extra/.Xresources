@@ -12,6 +12,7 @@ URxvt.scrollBar: false
 URxvt.foreground: white
 URxvt.background: black
 URxvt.letterSpace: -1
+URxvt.urgentOnBell: true
 
 URxvt.perl-ext-common: fullscreen
 
