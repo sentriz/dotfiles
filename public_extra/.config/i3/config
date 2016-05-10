@@ -166,15 +166,15 @@ bindsym $super+7 workspace $work7
 bindsym $super+8 workspace $work8
 bindsym $super+9 workspace $work9
 
-bindsym $super+q workspace $work1
-bindsym $super+w workspace $work2
-bindsym $super+e workspace $work3
-bindsym $super+r workspace $work4
-bindsym $super+t workspace $work5
-bindsym $super+y workspace $work6
-bindsym $super+u workspace $work7
-bindsym $super+i workspace $work8
-bindsym $super+o workspace $work9
+bindsym $super+q workspace $work21
+bindsym $super+w workspace $work22
+bindsym $super+e workspace $work23
+bindsym $super+r workspace $work24
+bindsym $super+t workspace $work25
+bindsym $super+y workspace $work26
+bindsym $super+u workspace $work27
+bindsym $super+i workspace $work28
+bindsym $super+o workspace $work29
 
 bindsym $super+0 [urgent=latest] focus
 bindsym $super+grave workspace back_and_forth
