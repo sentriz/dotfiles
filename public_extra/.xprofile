@@ -19,5 +19,6 @@ clipit &
 mnemosyne &
 mpd &
 mpdscribble &
+thunar --daemon &
 dunst &
 xautolock -time 10 -locker 'dm-tool lock' &
