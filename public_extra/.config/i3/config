@@ -1,11 +1,11 @@
-#############################################
-# bindsym format                            #
-#############################################
-# mod + ...         => window/float related #
-# mod + shift + ... => i3 related           #
-# mod + ctrl + ...  => lauching software    #
-# mod + alt + ...   => modes                #
-#############################################
+##################################################
+# bindsym format                                 #
+##################################################
+# mod + ...         => window/float related      #
+# mod + shift + ... => window/float move related #
+# mod + ctrl + ...  => lauching software         #
+# mod + alt + ...   => modes                     #
+##################################################
 
 set $super Mod4
 set $alt Mod1
@@ -32,11 +32,8 @@ bar {
   }
 }
 
-## keybindings (i3 related)
-bindsym $super+Shift+r restart
-
 ## keybindings (window/float related)
-bindsym $super+q kill
+bindsym $super+d kill
 bindsym $super+f fullscreen toggle
 bindsym $super+space floating toggle
 bindsym $super+b move position center
@@ -81,8 +78,9 @@ mode $mode_resize_tile {
 }
 
 # system power options mode
-set $mode_system  "[l]ock, log[o]ut, [s]uspend, [h]ibernate, [r]eboot, shut[d]own"
+set $mode_system  "[l]ock, log[o]ut, [s]uspend, [h]ibernate, [r]eboot, shut[d]own, i3 r[e]start"
 mode $mode_system {
+    bindsym e restart, mode default
     bindsym l exec --no-startup-id $locker, mode default
     bindsym s exec --no-startup-id $locker, mode default; exec --no-startup-id systemctl suspend, mode "default"
     bindsym h exec --no-startup-id $locker, mode default; exec --no-startup-id systemctl hibernate, mode "default"
@@ -135,6 +133,28 @@ set $work7 "7 mnem "
 set $work8 "8 gimp "
 set $work9 "9 office "
 
+## workspaces (second monitor)
+set $work21 "21 main "
+set $work22 "22 web "
+set $work23 "23 term "
+set $work24 "24 music "
+set $work25 "25 keepass "
+set $work26 "26 irc "
+set $work27 "27 mnem "
+set $work28 "28 gimp "
+set $work29 "29 office "
+
+# workspace assignment
+workspace $work21 output VGA1
+workspace $work22 output VGA1
+workspace $work23 output VGA1
+workspace $work24 output VGA1
+workspace $work25 output VGA1
+workspace $work26 output VGA1
+workspace $work27 output VGA1
+workspace $work28 output VGA1
+workspace $work29 output VGA1
+
 # switch to workspace
 bindsym $super+1 workspace $work1
 bindsym $super+2 workspace $work2
@@ -145,6 +165,17 @@ bindsym $super+6 workspace $work6
 bindsym $super+7 workspace $work7
 bindsym $super+8 workspace $work8
 bindsym $super+9 workspace $work9
+
+bindsym $super+q workspace $work1
+bindsym $super+w workspace $work2
+bindsym $super+e workspace $work3
+bindsym $super+r workspace $work4
+bindsym $super+t workspace $work5
+bindsym $super+y workspace $work6
+bindsym $super+u workspace $work7
+bindsym $super+i workspace $work8
+bindsym $super+o workspace $work9
+
 bindsym $super+0 [urgent=latest] focus
 bindsym $super+grave workspace back_and_forth
 
@@ -158,6 +189,16 @@ bindsym $super+Shift+6 move container to workspace $work6
 bindsym $super+Shift+7 move container to workspace $work7
 bindsym $super+Shift+8 move container to workspace $work8
 bindsym $super+Shift+9 move container to workspace $work9
+
+bindsym $super+Shift+q move container to workspace $work21
+bindsym $super+Shift+w move container to workspace $work22
+bindsym $super+Shift+e move container to workspace $work23
+bindsym $super+Shift+r move container to workspace $work24
+bindsym $super+Shift+t move container to workspace $work25
+bindsym $super+Shift+y move container to workspace $work26
+bindsym $super+Shift+u move container to workspace $work27
+bindsym $super+Shift+i move container to workspace $work28
+bindsym $super+Shift+o move container to workspace $work29
 
 # keeping programs on workspaces
 assign [class="Firefox"] $work2
