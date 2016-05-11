@@ -32,10 +32,11 @@ bar {
 }
 
 ## keybindings (window/float related)
-bindsym $super+d kill
+bindsym $super+q kill
 bindsym $super+f fullscreen toggle
 bindsym $super+space floating toggle
 bindsym $super+b move position center
+
 bindsym $super+bracketleft move workspace to output left
 bindsym $super+bracketright move workspace to output right
 
