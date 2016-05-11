@@ -10,11 +10,10 @@
 set $super Mod4
 set $alt Mod1
 set $locker "dm-tool lock"
+
 font pango:bitstream vera sans mono 10
 floating_modifier $super
 workspace_auto_back_and_forth yes
-
-## border rules
 new_window none
 
 ## bar settings
@@ -37,6 +36,8 @@ bindsym $super+d kill
 bindsym $super+f fullscreen toggle
 bindsym $super+space floating toggle
 bindsym $super+b move position center
+bindsym $super+bracketleft move workspace to output left
+bindsym $super+bracketright move workspace to output right
 
 # change focus
 bindsym $super+h focus left
@@ -133,28 +134,6 @@ set $work7 "7 mnem "
 set $work8 "8 gimp "
 set $work9 "9 office "
 
-## workspaces (second monitor)
-set $work21 "21 main "
-set $work22 "22 web "
-set $work23 "23 term "
-set $work24 "24 music "
-set $work25 "25 keepass "
-set $work26 "26 irc "
-set $work27 "27 mnem "
-set $work28 "28 gimp "
-set $work29 "29 office "
-
-# workspace assignment
-workspace $work21 output VGA1
-workspace $work22 output VGA1
-workspace $work23 output VGA1
-workspace $work24 output VGA1
-workspace $work25 output VGA1
-workspace $work26 output VGA1
-workspace $work27 output VGA1
-workspace $work28 output VGA1
-workspace $work29 output VGA1
-
 # switch to workspace
 bindsym $super+1 workspace $work1
 bindsym $super+2 workspace $work2
@@ -165,16 +144,6 @@ bindsym $super+6 workspace $work6
 bindsym $super+7 workspace $work7
 bindsym $super+8 workspace $work8
 bindsym $super+9 workspace $work9
-
-bindsym $super+q workspace $work21
-bindsym $super+w workspace $work22
-bindsym $super+e workspace $work23
-bindsym $super+r workspace $work24
-bindsym $super+t workspace $work25
-bindsym $super+y workspace $work26
-bindsym $super+u workspace $work27
-bindsym $super+i workspace $work28
-bindsym $super+o workspace $work29
 
 bindsym $super+0 [urgent=latest] focus
 bindsym $super+grave workspace back_and_forth
@@ -189,16 +158,6 @@ bindsym $super+Shift+6 move container to workspace $work6
 bindsym $super+Shift+7 move container to workspace $work7
 bindsym $super+Shift+8 move container to workspace $work8
 bindsym $super+Shift+9 move container to workspace $work9
-
-bindsym $super+Shift+q move container to workspace $work21
-bindsym $super+Shift+w move container to workspace $work22
-bindsym $super+Shift+e move container to workspace $work23
-bindsym $super+Shift+r move container to workspace $work24
-bindsym $super+Shift+t move container to workspace $work25
-bindsym $super+Shift+y move container to workspace $work26
-bindsym $super+Shift+u move container to workspace $work27
-bindsym $super+Shift+i move container to workspace $work28
-bindsym $super+Shift+o move container to workspace $work29
 
 # keeping programs on workspaces
 assign [class="Firefox"] $work2
