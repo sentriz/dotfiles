@@ -257,6 +257,7 @@ bindsym $super+Ctrl+n exec urxvtc -name nmtui -e nmtui edit
 bindsym XF86TouchpadToggle exec --no-startup-id thinkpad-touchpad
 bindsym XF86WLAN exec urxvtc -name nmtui -e nmtui
 bindsym XF86Battery exec urxvtc -name powertop -e sudo powertop
+bindsym XF86Display exec --no-startup-id projector
 
 bindsym XF86ScreenSaver exec --no-startup-id $locker
 bindsym XF86Suspend exec --no-startup-id $locker; exec --no-startup-id systemctl hibernate
