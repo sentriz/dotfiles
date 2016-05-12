@@ -197,8 +197,8 @@ for_window [title="youfl_stream"] fullscreen disable, floating enable, resize se
 # b = 9a/16                 (for 16:9 default size)                               ^a^    ^b^                                            ^c^
 
 # keybindings (sreenshotting)
-bindsym Print                 exec scrot '%Y%m%d_%H%M%S.png' -e 'mv $f /home/senan/pictures/screenshots'
-bindsym shift+Print --release exec scrot '%Y%m%d_%H%M%S.png' -s -e 'mv $f /home/senan/pictures/screenshots'
+bindsym Print                 exec scrot '%Y%m%d_%H%M%S.png' -e 'mv $f $HOME/pictures/screenshots' && notify-send 'screnshot taken' 'in ~/pictures/screenshots'
+bindsym shift+Print --release exec notify-send 'screenshot' 'select an area' && scrot '%Y%m%d_%H%M%S.png' -s -e 'mv $f $HOME/pictures/screenshots' && notify-send 'screnshot taken' 'in ~/pictures/screenshots'
 
 # keybindings (programs)
 bindsym $super+Return exec urxvtc
@@ -214,7 +214,7 @@ bindsym $super+Ctrl+c exec urxvtc -name nmtui -e nmtui connect
 bindsym $super+Ctrl+n exec urxvtc -name nmtui -e nmtui edit
 
 # keybindings (xf86 on thinkpad x220)
-bindsym XF86TouchpadToggle exec --no-startup-id thinkpad-touchpad
+bindsym XF86TouchpadToggle exec --no-startup-id thinkpad-touchpad && notify-send "touchpad toggled"
 bindsym XF86WLAN exec urxvtc -name nmtui -e nmtui
 bindsym XF86Battery exec urxvtc -name powertop -e sudo powertop
 bindsym XF86Display exec --no-startup-id projector
