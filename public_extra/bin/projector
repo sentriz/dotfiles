@@ -5,6 +5,8 @@ EXT="VGA1"
 
 if (xrandr | grep "$EXT disconnected"); then
     xrandr --output $IN --auto --output $EXT --off 
+    notify-send "Projector" "only using $IN"
 else
     xrandr --output $IN --auto --primary --output $EXT --auto --right-of $IN
+    notify-send "Projector" "extended to $EXT"
 fi
