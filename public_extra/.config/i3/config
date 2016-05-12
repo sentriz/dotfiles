@@ -208,6 +208,7 @@ bindsym $super+Ctrl+i exec urxvtc -name weechat -e irc
 bindsym $super+Ctrl+e exec thunar
 bindsym $super+Ctrl+b exec chromium
 bindsym $super+Ctrl+k exec keepass
+bindsym $super+Ctrl+l exec keepass -auto-type-selected
 bindsym $super+Ctrl+a exec j4-dmenu-desktop
 
 bindsym $super+Ctrl+c exec urxvtc -name nmtui -e nmtui connect
