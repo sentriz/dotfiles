@@ -66,9 +66,15 @@ bindsym $super+$alt+r mode $mode_resize_tile
 bindsym $super+$alt+space mode $mode_move_floating focus floating
 bindsym $super+$alt+q mode $mode_system
 bindsym $super+$alt+v mode $mode_audio
+bindsym $super+$alt+i mode $mode_i3
+
+set $mode_resize_tile "resize mode: [h][j][k][l]"
+set $mode_move_floating "floating move mode: [h][j][k][l]"
+set $mode_system  "system mode: [l]ock, log[o]ut, [s]uspend, [h]ibernate, [r]eboot, shut[d]own"
+set $mode_i3  "i3 mode: e[x]it, [r]estart, reload [c]onfig"
+set $mode_audio "volume mode: [+|Right] +5%/+10%,  [-|Left] +5%/+10%,  [m]ute,  [r]eset"
 
 # resizing tiles mode
-set $mode_resize_tile "resize window: [h][j][k][l]"
 mode $mode_resize_tile {
         bindsym h resize shrink width 10 px or 10 ppt
         bindsym j resize grow height 10 px or 10 ppt
@@ -80,9 +86,7 @@ mode $mode_resize_tile {
 }
 
 # system power options mode
-set $mode_system  "[l]ock, log[o]ut, [s]uspend, [h]ibernate, [r]eboot, shut[d]own, i3 r[e]start"
 mode $mode_system {
-    bindsym e restart, mode default
     bindsym l exec --no-startup-id $locker, mode default
     bindsym s exec --no-startup-id $locker, mode default; exec --no-startup-id systemctl suspend, mode "default"
     bindsym h exec --no-startup-id $locker, mode default; exec --no-startup-id systemctl hibernate, mode "default"
@@ -94,8 +98,17 @@ mode $mode_system {
     bindsym Escape mode "default"
 }
 
+# i3 options mode
+mode $mode_i3 {
+    bindsym x exit
+    bindsym r restart
+    bindsym c reload
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
 # audio menu mode
-set $mode_audio "volume: [+|Right] +5%/+10%,  [-|Left] +5%/+10%,  [m]ute,  [r]eset"
 mode $mode_audio {
     bindsym plus          exec --no-startup-id ponymix increase 5%
     bindsym minus         exec --no-startup-id ponymix decrease 5%
@@ -111,7 +124,6 @@ mode $mode_audio {
 }
 
 # move floating windows mode
-set $mode_move_floating "move floating: [h][j][k][l]"
 mode $mode_move_floating {
     bindsym $super+Tab focus right
 
