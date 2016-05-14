@@ -1,0 +1,4 @@
+#!/usr/bin/bash
+
+scrot '%Y%m%d_%H%M%S.png' -e 'mv $f /home/senan/pictures/screenshots'
+notify-send 'screnshot taken' 'in ~/pictures/screenshots'

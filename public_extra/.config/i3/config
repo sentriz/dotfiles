@@ -197,8 +197,8 @@ for_window [title="youfl_stream"] fullscreen disable, floating enable, resize se
 # b = 9a/16                 (for 16:9 default size)                               ^a^    ^b^                                            ^c^
 
 # keybindings (sreenshotting)
-bindsym Print                 exec scrot '%Y%m%d_%H%M%S.png' -e 'mv $f $HOME/pictures/screenshots' && notify-send 'screnshot taken' 'in ~/pictures/screenshots'
-bindsym shift+Print --release exec notify-send 'screenshot' 'select an area' && scrot '%Y%m%d_%H%M%S.png' -s -e 'mv $f $HOME/pictures/screenshots' && notify-send 'screnshot taken' 'in ~/pictures/screenshots'
+bindsym Print exec screens
+bindsym shift+Print --release exec screens_select
 
 # keybindings (programs)
 bindsym $super+Return exec urxvtc
