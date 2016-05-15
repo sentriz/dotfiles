@@ -186,7 +186,7 @@ assign [class="libreoffice-*"] $work9
 # keeping programs floating/fullscreen
 for_window [class="Pavucontrol"] floating enable
 for_window [class="Mnemosyne"] floating enable
-for_window [class="URxvt" instance="nmtui"] floating enable
+for_window [class="URxvt" instance="nmtui"] floating enable, resize set 800 600, move position center
 for_window [class="URxvt" instance="powertop"] floating enable
 
 for_window [window_type="menu"] floating enable
