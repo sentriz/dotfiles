@@ -14,14 +14,14 @@ xmodmap -e "clear Lock" &
 feh --bg-scale /usr/share/wallpapers/.wallpaper.jpg &
 xrandr --output LVDS1 --primary &
 thinkpad-touchpad off &
-compton -b &
 urxvtd &
+thunar --daemon &
+light-locker &
+xautolock -locker 'light-locker-command -l' -notify 10 -notifier 'notify-send xautolock "locking in 10 seconds"' &
 megasync &
 clipit &
 mnemosyne &
 mpd &
 mpdscribble &
-thunar --daemon &
 dunst &
-xautolock -time 10 -locker 'dm-tool lock' &
 transmission-daemon &
