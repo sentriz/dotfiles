@@ -227,10 +227,10 @@ bindsym $super+Ctrl+c exec urxvtc -name nmtui -e nmtui connect
 bindsym $super+Ctrl+n exec urxvtc -name nmtui -e nmtui edit
 
 ## quick terminal
-exec_always --no-startup-id urxvtc -name scrachterm
+exec --no-startup-id urxvtc -name scrachterm
 for_window [instance="scrachterm"] floating enable;
 for_window [instance="scrachterm"] move scratchpad; [instance="scrachterm"] scratchpad show; floating enable; resize set 1300 702; move position center
-bindsym $super+t [instance="scrachterm"] scratchpad show
+bindsym F15 [instance="scrachterm"] scratchpad show
 
 # keybindings (xf86 on thinkpad x220)
 bindsym XF86TouchpadToggle exec --no-startup-id thinkpad-touchpad && notify-send "touchpad toggled"
