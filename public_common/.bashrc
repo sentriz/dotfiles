@@ -18,6 +18,7 @@ alias tb='nc termbin.com 9999'
 alias ascreen='screen -dRR'
 alias please='sudo $(history -p \!\!)' 
 alias sedo="sudo -E"
+alias weather="curl --silent http://wttr.in/ | head -7"
 
 for n in `seq 1 9`; do
     alias w$n="i3-msg workspace $n";
