@@ -9,7 +9,7 @@
 
 set $super Mod4
 set $alt Mod1
-set $locker "dm-tool lock"
+set $locker "i3lf"
 
 font pango:bitstream vera sans mono 10
 floating_modifier $super
@@ -186,8 +186,9 @@ assign [class="libreoffice-*"] $work9
 # keeping programs floating/fullscreen
 for_window [class="Pavucontrol"] floating enable
 for_window [class="Mnemosyne"] floating enable
-for_window [class="URxvt" instance="nmtui"] floating enable, resize set 800 600, move position center
+for_window [class="URxvt" instance="nmtui"] floating enable, resize set 800 600
 for_window [class="URxvt" instance="powertop"] floating enable
+for_window [class="Galculator"] floating enable
 
 for_window [window_type="menu"] floating enable
 for_window [window_role="app"] floating enable
@@ -219,6 +220,7 @@ bindsym $super+Ctrl+m exec urxvtc -name ncmpcpp -e ncmpcpp -s playlist
 bindsym $super+Ctrl+i exec urxvtc -name weechat -e irc
 bindsym $super+Ctrl+e exec thunar
 bindsym $super+Ctrl+b exec chromium
+bindsym $super+Ctrl+g exec galculator
 bindsym $super+Ctrl+k exec keepass
 bindsym $super+Ctrl+l exec keepass -auto-type-selected
 bindsym $super+Ctrl+a exec j4-dmenu-desktop
