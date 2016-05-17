@@ -1,9 +1,9 @@
 tpset() { xinput set-prop "TPPS/2 IBM TrackPoint" "$@"; }
-tpset "Evdev Wheel Emulation" 1
-tpset "Evdev Wheel Emulation Button" 2
-tpset "Evdev Wheel Emulation Timeout" 200
-tpset "Evdev Wheel Emulation Axes" 6 7 4 5
-tpset "Device Accel Constant Deceleration" 0.95
+tpset "Evdev Wheel Emulation" 1 &
+tpset "Evdev Wheel Emulation Button" 2 &
+tpset "Evdev Wheel Emulation Timeout" 200 &
+tpset "Evdev Wheel Emulation Axes" 6 7 4 5 &
+tpset "Device Accel Constant Deceleration" 0.957 &
 
 setxkbmap ie &
 xmodmap -e "keycode 166 = F13" &
@@ -16,8 +16,7 @@ xrandr --output LVDS1 --primary &
 thinkpad-touchpad off &
 urxvtd &
 thunar --daemon &
-light-locker &
-xautolock -locker 'light-locker-command -l' -notify 10 -notifier 'notify-send xautolock "locking in 10 seconds"' &
+xautolock -locker '/home/senan/bin/i3lf' -notify 10 -notifier 'notify-send xautolock "locking in 10 seconds"' &
 megasync &
 clipit &
 mnemosyne &
