@@ -15,8 +15,9 @@ feh --bg-scale /usr/share/wallpapers/.wallpaper.jpg &
 xrandr --output LVDS1 --primary &
 thinkpad-touchpad off &
 urxvtd &
+urxvtc -name scratch &
 thunar --daemon &
-xautolock -locker '/home/senan/bin/i3lf' -notify 10 -notifier 'notify-send xautolock "locking in 10 seconds"' &
+xautolock -locker '/home/senan/bin/blur_lock' -notify 10 -notifier 'notify-send xautolock "locking in 10 seconds"' &
 megasync &
 clipit &
 mnemosyne &
