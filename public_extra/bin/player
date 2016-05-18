@@ -1,0 +1,97 @@
+#!/bin/bash
+# This is a (not so) simple bash script to check for running
+# media players to run a command.
+# 
+# From the PLAYERS list, check if any of then is running
+# (in order) and, if so, run the command for that player.
+# 
+# @author Paulo Diovani <paulo@diovani.com>
+# 
+# Current supported players:
+# * Audacious
+# * MPD/mpc
+
+# Avaiable commands (same as mpc)
+COMMANDS="play pause toggle stop prev next"
+
+# Commands list for each player
+# 
+# params:   name       command      play  pause  toggle     stop  prev     next
+                                                                          
+PLAYERS[0]="mpv        mpvctl       play  pause  play-pause stop  previous next"
+PLAYERS[1]="mpd        mpc          play  pause  toggle     stop  prev     next"
+
+# Write error message and exit
+err() {
+    echo "$1" 1>&2
+    exit 1
+}
+
+# Get index of an element in a string list
+indexof() {
+    needle="$1"
+    haystack=($2)
+
+    for (( i = 0; i < ${#haystack[@]}; i++ )); do
+       if [ "${haystack[$i]}" = "${needle}" ]; then
+           echo $i
+           return
+       fi
+    done
+
+    echo -1
+}
+
+# Get the program name
+getname() {
+    list=($1)
+    echo ${list[0]}
+}
+
+# Get the comand to run
+getcmd() {
+    list=($1)
+    index="$2"
+    cmd=""
+
+    # start in 1: first string is the app/process name
+    for (( i = 1; i < ${#list[@]}; i++ )); do
+        if [ $i -eq $index ]; then
+            break
+        fi
+
+        c="${list[$i]}"
+        cmd="$cmd$c "
+    done
+
+    echo "$cmd"
+}
+
+cmdarray=($COMMANDS)
+cmdindex=$(indexof "$1" "$COMMANDS")
+
+# First, check if a valid command was provided
+if [ $cmdindex -eq -1 ]; then
+    err "Invalid command: $1"
+fi
+
+# Check for running players, and then exec the command for the first one
+for p in ${!PLAYERS[@]}; do
+    plist=${PLAYERS[$p]}    # command list for the player
+    pname=$(getname $plist) # player name
+
+    if [ $(ps -ef | grep "$pname" | grep -v "grep" | wc -l) -gt 0 ]; then
+        parray=($plist)                                       # player list to array
+        pstart="$(( ${#parray[@]} - ${#cmdarray[@]} ))"       # start index for commands
+        pindex="$(( $pstart + $cmdindex ))"                   # index for command to run
+    
+        cmd="$(getcmd "$plist" "$pstart") ${parray[$pindex]}" # command to run
+        break
+    fi
+done
+
+# Run the command
+if [ ! -z "$cmd" ]; then
+    eval "$cmd" &> /dev/null
+    exit 0
+fi

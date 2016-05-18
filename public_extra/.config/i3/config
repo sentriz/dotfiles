@@ -252,10 +252,10 @@ bindsym XF86AudioLowerVolume exec --no-startup-id ponymix decrease 5%
 bindsym XF86AudioMute exec --no-startup-id ponymix toggle
 bindsym XF86AudioMicMute exec --no-startup-id thinkpad-mutemic
 
-bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
-bindsym XF86AudioStop exec --no-startup-id playerctl stop
-bindsym XF86AudioNext exec --no-startup-id playerctl next
-bindsym XF86AudioPrev exec --no-startup-id playerctl previous
+bindsym XF86AudioPlay exec --no-startup-id player toggle
+bindsym XF86AudioStop exec --no-startup-id player stop
+bindsym XF86AudioNext exec --no-startup-id player next
+bindsym XF86AudioPrev exec --no-startup-id player prev
 
 # colours
 client.focused #0088CC #0088CC #ffffff #dddddd
