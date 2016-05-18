@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# needed for multimonitors
+# monitor width: 1366
+# image width: 215
+# left offset: (monitor_width / 2) - (image_width / 2)
+left_offset="630"
+
+echo locking
+
+shot=$(mktemp --tmpdir XXXX.png)
+scrot $shot
+convert $shot -blur 0x3 ~/bin/lock.png -gravity West -geometry +"$left_offset"-6 -composite $shot
+
+start_t=$(date +%s)
+i3lock -be -i $shot
+end_t=$(date +%s)
+
+notify-send "blur lock" "locked for $((end_t-start_t))"
+
+rm $shot

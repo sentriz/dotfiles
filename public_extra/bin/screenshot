@@ -1,0 +1,9 @@
+#!/usr/bin/bash
+
+if [ ! "$1" ==  "--select" ]; then
+    scrot '%Y%m%d_%H%M%S.png' -e 'mv $f /home/senan/pictures/screenshots'
+else
+    notify-send 'screenshot' 'select an area'
+    scrot '%Y%m%d_%H%M%S.png' -s -e 'mv $f /home/senan/pictures/screenshots'
+fi
+notify-send 'screnshot taken' 'in ~/pictures/screenshots'
