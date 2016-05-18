@@ -41,10 +41,11 @@
 <action>
 	<icon>text-editor-symbolic</icon>
 	<name>Join Files</name>
-	<unique-id>1463526029400862-9</unique-id>
+	<unique-id>1463541600707260-1</unique-id>
 	<command>cat %F &gt; joined</command>
 	<description></description>
 	<patterns>*</patterns>
+	<other-files/>
 	<text-files/>
 </action>
 </actions>
