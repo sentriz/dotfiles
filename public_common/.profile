@@ -18,7 +18,9 @@ fi
 
 # set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/bin" ]; then
-    PATH="$HOME/bin:$PATH"
+    for f in $(find $HOME/bin -type d); do
+        PATH="$PATH:$f"
+    done
 fi
 
 [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx
