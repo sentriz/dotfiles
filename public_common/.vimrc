@@ -32,6 +32,7 @@ Plugin 'mhinz/vim-startify'
 Plugin 'tommcdo/vim-exchange'
 Plugin 'PotatoesMaster/i3-vim-syntax'
 Plugin 'godlygeek/csapprox'
+Plugin 'FooSoft/vim-argwrap'
 " Plugin 'Valloric/YouCompleteMe'
 call vundle#end()
 filetype plugin indent on
@@ -130,6 +131,8 @@ nnoremap <leader>du :diffupdate<CR>
 nnoremap <leader>yg :YcmCompleter GoTo<CR>
 nnoremap <leader>yr :YcmCompleter GoToReferences<CR>
 nnoremap <leader>yd :YcmCompleter GetDoc<CR>
+
+nnoremap <leader>a :ArgWrap<CR>
 
 " mappings
 nnoremap <Tab> <C-w><C-w>
