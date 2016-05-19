@@ -103,6 +103,14 @@ function! Preserve(command)
   call setpos(".", cursor)
 endfunction
 
+function! s:NiceNext(cmd)
+  let view = winsaveview()
+  execute "normal! " . a:cmd
+  if view.topline != winsaveview().topline
+    normal! zz
+  endif
+endfunction
+
 " leader mappings
 let mapleader = "\<Space>"
 
@@ -147,6 +155,9 @@ nnoremap <Left> :vertical resize +2<CR>
 nnoremap <Right> :vertical resize -2<CR>
 nnoremap <Up> :resize -2<CR>
 nnoremap <Down> :resize +2<CR>
+
+nnoremap <silent> n :call <SID>NiceNext('n')<cr>
+nnoremap <silent> N :call <SID>NiceNext('N')<cr>
 
 " use C-e and C-y to copy word above and below the current line
 inoremap <expr> <c-y> pumvisible() ? "\<c-y>" : matchstr(getline(line('.')-1), '\%' . virtcol('.') . 'v\%(\k\+\\|.\)')
