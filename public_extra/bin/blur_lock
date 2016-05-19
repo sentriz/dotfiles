@@ -11,11 +11,5 @@ echo locking
 shot=$(mktemp --tmpdir XXXX.png)
 scrot $shot
 convert $shot -blur 0x3 ~/bin/lock.png -gravity West -geometry +"$left_offset"-6 -composite $shot
-
-start_t=$(date +%s)
-i3lock -be -i $shot
-end_t=$(date +%s)
-
-notify-send "blur lock" "locked for $((end_t-start_t))"
-
+i3lock -S 0 --insidevercolor=0000a0bf --insidewrongcolor=ff8000bf --insidecolor=ffffffbf --ringvercolor=0020ffff --ringwrongcolor=4040ffff --ringcolor=404090ff --textcolor=ffffffff --separatorcolor=aaaaaaff --keyhlcolor=30ccccff --bshlcolor=ff8000ff -be -i $shot
 rm $shot
