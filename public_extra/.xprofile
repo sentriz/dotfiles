@@ -11,13 +11,16 @@ xmodmap -e "keycode 167 = F14" &
 xmodmap -e "keycode 66 = F15" &
 xmodmap -e "clear Lock" &
 
+home="/home/senan"
+
+$home/bin/battery_thres &
 feh --bg-scale /usr/share/wallpapers/.wallpaper.jpg &
 xrandr --output LVDS1 --primary &
 thinkpad-touchpad off &
 urxvtd &
 urxvtc -name scratch &
 thunar --daemon &
-xautolock -locker '/home/senan/bin/blur_lock' -notify 10 -notifier 'notify-send xautolock "locking in 10 seconds"' &
+xautolock -locker '$home/bin/blur_lock' -notify 10 -notifier 'notify-send xautolock "locking in 10 seconds"' &
 megasync &
 clipit &
 mnemosyne &
