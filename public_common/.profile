@@ -18,7 +18,7 @@ fi
 
 # set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/bin" ]; then
-    for f in $(find $HOME/bin -type d); do
+    for f in $(find -L $HOME/bin -type d); do
         PATH="$PATH:$f"
     done
 fi
