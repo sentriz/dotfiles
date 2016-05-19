@@ -1,0 +1,28 @@
+#!/bin/bash
+
+foobarDirectory="$HOME/.foobar2000"
+wineCommand="wine"
+
+command="$wineCommand $foobarDirectory/foobar2000.exe"
+
+if [ ! -z "$1" ]; then
+    ARGUMENTS=()
+    
+    for argument in "$@"
+    do
+        if [[ "$argument" == --* ]]; then
+            argument=${argument/--/"/"}
+            argument=${argument//-/"\ "}
+        else
+            argument=$(readlink -f "$argument")
+            argument=`echo z:$argument | sed 's/\\//\\\\/g'`
+            argument="\"$argument\""
+        fi      
+        ARGUMENTS+=($argument)
+    done
+    
+    command=$command" ""${ARGUMENTS[*]}"
+fi
+
+cd $foobarDirectory
+bash -c "$command &"
