@@ -9,7 +9,7 @@
 
 set $super Mod4
 set $alt Mod1
-set $locker "blur_lock"
+set $locker blur_lock
 
 font pango:bitstream vera sans mono 10
 floating_modifier $super
@@ -89,8 +89,8 @@ mode $mode_resize_tile {
 # system power options mode
 mode $mode_system {
     bindsym l exec --no-startup-id $locker, mode default
-    bindsym s exec --no-startup-id $locker, mode default; exec --no-startup-id systemctl suspend, mode "default"
-    bindsym h exec --no-startup-id $locker, mode default; exec --no-startup-id systemctl hibernate, mode "default"
+    bindsym s exec --no-startup-id $locker && systemctl suspend, mode default
+    bindsym h exec --no-startup-id $locker && systemctl hibernate, mode default
     bindsym o exec --no-startup-id "i3-nagbar -t warning -m 'sure you want to log out?' -b 'yes' 'i3-msg exit'", mode "default"
     bindsym r exec --no-startup-id "i3-nagbar -t warning -m 'sure you want to reboot?' -b 'yes' 'systemctl reboot'", mode "default"
     bindsym d exec --no-startup-id "i3-nagbar -t warning -m 'sure you want to shutdown?' -b 'yes' 'systemctl poweroff'", mode "default"
@@ -235,8 +235,8 @@ bindsym XF86Battery exec urxvtc -name powertop -e sudo powertop
 bindsym XF86Display exec --no-startup-id projector
 
 bindsym XF86ScreenSaver exec --no-startup-id $locker
-bindsym XF86Suspend exec --no-startup-id $locker; exec --no-startup-id systemctl hibernate
-bindsym XF86Sleep exec --no-startup-id $locker; exec --no-startup-id systemctl suspend
+bindsym XF86Suspend exec $locker && systemctl hibernate
+bindsym XF86Sleep exec $locker && systemctl suspend
 
 bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 20
 bindsym XF86MonBrightnessDown exec --no-startup-id  xbacklight -dec 20
