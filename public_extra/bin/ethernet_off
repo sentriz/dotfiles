@@ -1,5 +1,0 @@
-#!/usr/bin/bash
-
-fusermount -u $HOME/dynamic
-nmcli device disconnect enp0s25
-mount $HOME/dynamic
