@@ -1,0 +1,15 @@
+#!/usr/bin/bash
+
+
+if (! grep -qs "10.0.0.1" /tmp/osmc_host) && [ -S $XDG_RUNTIME_DIR/keeagent.socket ]; then
+    mpd --kill
+    fusermount -qu $HOME/dynamic -z
+    nmcli device connect enp0s25 &> /dev/null
+    mount $HOME/dynamic
+    mpd
+else
+    notify-send "didn't mount dynamic"
+fi
+
+projector
+# battery_thres_on
