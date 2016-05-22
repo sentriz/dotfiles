@@ -5,22 +5,18 @@ tpset "Evdev Wheel Emulation Timeout" 200 &
 tpset "Evdev Wheel Emulation Axes" 6 7 4 5 &
 tpset "Device Accel Constant Deceleration" 0.957 &
 
-setxkbmap ie &
-xmodmap -e "keycode 166 = F13" &
-xmodmap -e "keycode 167 = F14" &
-xmodmap -e "keycode 66 = F15" &
-xmodmap -e "clear Lock" &
+setxkbmap ie
+xmodmap -e "keycode 166 = F13"
+xmodmap -e "keycode 167 = F14"
+xmodmap -e "keycode 66 = F15"
+xmodmap -e "clear Lock"
 
-home="/home/senan"
-
-$home/bin/battery_thres &
 feh --bg-scale /usr/share/wallpapers/.wallpaper.jpg &
 xrandr --output LVDS1 --primary &
 thinkpad-touchpad off &
 urxvtd &
-urxvtc -name scratch &
 thunar --daemon &
-xautolock -locker '$home/bin/blur_lock' -notify 10 -notifier 'notify-send xautolock "locking in 10 seconds"' &
+xautolock -locker '/home/senan/bin/blur_lock' &
 megasync &
 clipit &
 mnemosyne &
