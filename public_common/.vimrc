@@ -8,6 +8,8 @@ set nowritebackup
 set laststatus=2
 set sidescroll=1
 set nowrap
+set wildmode=longest,list,full
+set wildmenu
 syntax on
 filetype off
 
