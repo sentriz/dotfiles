@@ -53,6 +53,19 @@ extract() {
     fi
 }
 
+confirm () {
+    # call with a prompt string or use a default
+    read -r -p "${1:-Are you sure? [y/N]} " response
+    case $response in
+        [yY][eE][sS]|[yY]) 
+            true
+            ;;
+        *)
+            false
+            ;;
+    esac
+}
+
 colors() {
 	local fgc bgc vals seq0
 
@@ -92,7 +105,12 @@ man() {
       man "$@"
 }
 
-play () { youtube-dl ytsearch:"$@" -q -f bestaudio --ignore-config --console-title --print-traffic --max-downloads 1 --no-call-home --no-playlist -o - | mpv --no-terminal --no-video --cache=256 -; }
+play () { 
+    youtube-dl ytsearch:"$@" -q -f bestaudio --ignore-config --console-title --print-traffic --max-downloads 1 --no-call-home --no-playlist -o - | \
+    mpv --no-terminal --no-video --cache=256 -; 
+}
+
+export -f confirm play
 
 ## colours
 
