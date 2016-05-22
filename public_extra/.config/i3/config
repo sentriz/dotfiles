@@ -88,9 +88,9 @@ mode $mode_resize_tile {
 
 # system power options mode
 mode $mode_system {
-    bindsym l exec --no-startup-id $locker, mode default
-    bindsym s exec --no-startup-id $locker && systemctl suspend, mode default
-    bindsym h exec --no-startup-id $locker && systemctl hibernate, mode default
+    bindsym l exec $locker, mode default
+    bindsym s exec $locker && systemctl suspend, mode default
+    bindsym h exec $locker && systemctl hibernate, mode default
     bindsym o exec --no-startup-id "i3-nagbar -t warning -m 'sure you want to log out?' -b 'yes' 'i3-msg exit'", mode "default"
     bindsym r exec --no-startup-id "i3-nagbar -t warning -m 'sure you want to reboot?' -b 'yes' 'systemctl reboot'", mode "default"
     bindsym d exec --no-startup-id "i3-nagbar -t warning -m 'sure you want to shutdown?' -b 'yes' 'systemctl poweroff'", mode "default"
@@ -223,6 +223,7 @@ bindsym $super+Ctrl+g exec galculator
 bindsym $super+Ctrl+k exec keepass
 bindsym $super+Ctrl+l exec keepass -auto-type-selected
 bindsym $super+Ctrl+a exec j4-dmenu-desktop
+bindsym $super+Ctrl+v exec pavucontrol
 
 bindsym $super+Ctrl+c exec urxvtc -name nmtui -e nmtui connect
 bindsym $super+Ctrl+n exec urxvtc -name nmtui -e nmtui edit
@@ -257,4 +258,4 @@ client.focused_inactive #333333 #333333 #888888 #292d2e
 client.unfocused #333333 #333333 #888888 #292d2e
 client.urgent #2f343a #900000 #ffffff #900000
 
-# exec --no-startup-id urxvtc -name scratch
+exec --no-startup-id urxvtc -name scratch
