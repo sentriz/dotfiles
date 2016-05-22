@@ -1,0 +1,9 @@
+#!/bin/sh
+
+if ! confirm; then
+    exit 1
+fi
+
+for fname in *; do
+    mv "$fname" $(echo "$fname" | sha1sum | cut -f1 -d' ')
+done
