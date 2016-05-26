@@ -5,3 +5,5 @@ progressbar_look = "--"
 playlist_separate_albums = yes
 mpd_music_dir = /home/senan/music/library
 execute_on_song_change = /home/senan/bin/now_playing
+ignore_leading_the = yes
+tag_editor_extended_numeration = yes
