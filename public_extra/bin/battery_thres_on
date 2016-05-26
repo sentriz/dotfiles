@@ -1,5 +1,0 @@
-#!/bin/sh
-
-# set the battery charging thresholds to extend battery lifespan
-echo 50 > /sys/devices/platform/smapi/BAT0/start_charge_thresh
-echo 80 > /sys/devices/platform/smapi/BAT0/stop_charge_thresh

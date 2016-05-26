@@ -1,4 +1,0 @@
-#!/bin/sh
-
-echo 0 > /sys/devices/platform/smapi/BAT0/start_charge_thresh
-echo 100 > /sys/devices/platform/smapi/BAT0/stop_charge_thresh
