@@ -7,9 +7,9 @@ general {
 }
 
 order += "disk /home"
-order += "disk /"
+#order += "disk /"
 order += "wireless _first_"
-order += "ethernet enp3s0"
+#order += "ethernet enp3s0"
 order += "battery 0"
 order += "load"
 order += "cpu_temperature 0"
@@ -21,9 +21,9 @@ disk /home {
     format = "   home %percentage_used"
 }
 
-disk / {
-    format = " root %percentage_used"
-}
+#disk / {
+#    format = " root %percentage_used"
+#}
 
 wireless _first_ {
     format_up = " %quality %ip"
@@ -51,7 +51,7 @@ volume master {
 }
 
 tztime local {
-    format = "%d %b %Y %H:%M:%S "
+    format = "%d %b %H:%M:%S "
 }
 
 battery 0 {
