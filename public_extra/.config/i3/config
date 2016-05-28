@@ -187,7 +187,7 @@ assign [class="libreoffice-*"] $work9
 ## keeping programs floating/fullscreen
 for_window [class="URxvt" instance="nmtui"] floating enable, resize set 800 600, move position center
 for_window [class="URxvt" instance="powertop"] floating enable, resize set 800 600, move position center
-for_window [class="URxvt" instance="scratch"] floating enable, resize set 1300 702, move scratchpad, move position center
+for_window [class="URxvt" instance="scratch"] floating enable, resize set 1292 694, move scratchpad, move position center
 for_window [class="feh"] fullscreen enable
 
 for_window [class="Pavucontrol"] floating enable
