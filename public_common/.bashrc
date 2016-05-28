@@ -21,6 +21,7 @@ alias sedo="sudo -E"
 alias weather="curl --silent http://wttr.in/ | head -7"
 alias monoff="xset dpms force off"
 alias scratch="urxvtc -name scratchterm"
+alias latest_here="ls -Art | tail -n 1"
 
 for n in `seq 1 9`; do
     alias w$n="i3-msg workspace $n";
