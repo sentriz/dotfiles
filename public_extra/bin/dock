@@ -1,5 +1,11 @@
 #!/usr/bin/bash
 
+if [ -S $XDG_RUNTIME_DIR/keeagent.socket ]; then
+	export SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/keeagent.socket
+    export ssh_ps1_string="[keeagent \[$Green\]✓\[$Color_Off\]] "
+else
+    export ssh_ps1_string="[keeagent \[$Red\]✗\[$Color_Off\]] "
+fi
 
 if (! grep -qs "10.0.0.1" /tmp/osmc_host) && [ -S $XDG_RUNTIME_DIR/keeagent.socket ]; then
     mpd --kill
