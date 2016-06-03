@@ -18,20 +18,37 @@ popup_during_fullscreen smart
 new_window none
 
 ## bar settings
+# main
 bar {
-  status_command i3status
-        tray_output primary
-  colors {
-    separator #666666
-    background #222222
-    statusline #dddddd
-    focused_workspace #0088CC #0088CC #ffffff
-    active_workspace #333333 #333333 #ffffff
-    inactive_workspace #333333 #333333 #888888
-    urgent_workspace #2f343a #900000 #ffffff
-  }
+    output LVDS1
+    status_command i3status
+    tray_output primary
+    colors {
+        separator #666666
+        background #222222
+        statusline #dddddd
+        focused_workspace #0088CC #0088CC #ffffff
+        active_workspace #333333 #333333 #ffffff
+        inactive_workspace #333333 #333333 #888888
+        urgent_workspace #2f343a #900000 #ffffff
+    }
 }
 
+# second
+bar {
+    output VGA1
+    output DP1
+    status_command now_playing --stream
+    colors {
+        separator #666666
+        background #222222
+        statusline #dddddd
+        focused_workspace #0088CC #0088CC #ffffff
+        active_workspace #333333 #333333 #ffffff
+        inactive_workspace #333333 #333333 #888888
+        urgent_workspace #2f343a #900000 #ffffff
+    }
+}
 ## keybindings (window/float related)
 bindsym $super+q kill
 bindsym $super+f fullscreen toggle
