@@ -1,20 +1,14 @@
-#!/usr/bin/bash
+#!/bin/bash
 
-if [ -S $XDG_RUNTIME_DIR/keeagent.socket ]; then
-	export SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/keeagent.socket
-    export ssh_ps1_string="[keeagent \[$Green\]✓\[$Color_Off\]] "
-else
-    export ssh_ps1_string="[keeagent \[$Red\]✗\[$Color_Off\]] "
-fi
+SSH_AUTH_SOCK = /run/user/1000/keeagent.socket
 
-if (! grep -qs "10.0.0.1" /tmp/osmc_host) && [ -S $XDG_RUNTIME_DIR/keeagent.socket ]; then
-    mpd --kill
-    fusermount -qu $HOME/dynamic -z
+if (! grep -qs "10.0.0.1" /tmp/osmc_host) && [ -S "$SSH_AUTH_SOCK" ]; then
+    notify-send "starting dock"
+    mpd --kill &> /dev/null
+    fusermount -qu /home/senan/dynamic -z
     nmcli device connect enp0s25 &> /dev/null
-    mount $HOME/dynamic
+    mount /home/senan/dynamic
     mpd
-else
-    notify-send "didn't mount dynamic"
 fi
 
 projector

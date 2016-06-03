@@ -1,0 +1,22 @@
+#!/bin/bash
+
+if [ -f /tmp/dock_watching ]; then
+    echo "already watching"
+    exit 1
+fi
+
+touch /tmp/dock_watching
+
+inotifywait -m -q -e moved_to /tmp/ --format "%f" | while read line
+do
+    echo $line
+
+    if [ "$line" == "docked" ]; then
+        sleep 1.8
+        dock
+    elif [ "$line" == "not_docked" ]; then
+        undock
+        notify-send "okay to undock"
+    fi
+
+done

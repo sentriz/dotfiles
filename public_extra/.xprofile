@@ -3,13 +3,26 @@ tpset "Evdev Wheel Emulation" 1 &
 tpset "Evdev Wheel Emulation Button" 2 &
 tpset "Evdev Wheel Emulation Timeout" 200 &
 tpset "Evdev Wheel Emulation Axes" 6 7 4 5 &
-tpset "Device Accel Constant Deceleration" 0.957 &
+tpset "Device Accel Constant Deceleration" 0.5 &
 
 setxkbmap ie
 xmodmap -e "keycode 166 = F13"
 xmodmap -e "keycode 167 = F14"
 xmodmap -e "keycode 66 = F15"
 xmodmap -e "clear Lock"
+
+dock_watch &
+
+touch /tmp/abc
+
+# dock_watch only checks for file movments to avoid the "delete_self" event
+if grep "1" /sys/devices/platform/dock.*/docked; then
+    sleep 1
+    mv /tmp/abc /tmp/docked
+else
+    mv /tmp/abc /tmp/not_docked
+fi
+
 
 feh --bg-scale /usr/share/wallpapers/.wallpaper.jpg &
 xrandr --output LVDS1 --primary &

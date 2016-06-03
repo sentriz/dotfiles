@@ -1,12 +1,9 @@
-#!/usr/bin/bash
+#!/bin/bash
 
-
-if grep -qs "10.0.0.1" /tmp/osmc_host && grep -qs "$HOME/dynamic" /proc/mounts; then
-    mpd --kill
-    fusermount -qu $HOME/dynamic -z
+if grep -qs "10.0.0.1" /tmp/osmc_host && grep -qs "/home/senan/dynamic" /proc/mounts; then
+    mpd --kill &> /dev/null
+    fusermount -qu /home/senan/dynamic -z
     nmcli device disconnect enp0s25 &> /dev/null
-else
-    notify-send "didn't unmount dynamic"
 fi
 
 projector --single
