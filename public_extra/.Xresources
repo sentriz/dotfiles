@@ -6,8 +6,8 @@ Xft.autohint: false
 Xft.hintstyle: hintslight
 Xft.lcdfilter: lcddefault
 
-URxvt.font: xft:bitstream vera sans mono:size=10:antialias=true
-URxvt.boldFont: xft:bitstream vera sans mono:bold:size=10:antialias=true
+URxvt.font: xft:bitstream vera sans mono:size=8:antialias=true
+URxvt.boldFont: xft:bitstream vera sans mono:bold:size=8:antialias=true
 URxvt.scrollBar: false
 URxvt.foreground: white
 URxvt.background: black
@@ -16,19 +16,35 @@ URxvt.urgentOnBell: true
 
 URxvt.perl-ext-common: fullscreen
 
-URxvt*color0:  #000000 // black
-URxvt*color1:  #B40000 // red
-URxvt*color2:  #00AA00 // green
-URxvt*color3:  #AAAA00 // yellow
-URxvt*color4:  #0088CC // blue
-URxvt*color5:  #AA00AA // magenta
-URxvt*color6:  #00AAAA // cyan
-URxvt*color7:  #AAAAAA // white
-URxvt*color8:  #555555 // bright black
-URxvt*color9:  #FF0000 // bright red
-URxvt*color10: #00FF00 // bright green
-URxvt*color11: #FFFF00 // bright yellow
-URxvt*color12: #0088CC // bright blue
-URxvt*color13: #FF00FF // bright magenta
-URxvt*color14: #00FFFF // bright cyan
-URxvt*color15: #FFFFFF // bright white
+*.foreground:   #c2c2b0
+*.background:   #222222
+*.cursorColor:  #c2c2b0
+! black
+*.color0:       #222222
+*.color8:       #272822
+! red
+*.color1:       #aa4450
+*.color9:       #ff6a6a
+! green
+*.color2:       #719611
+*.color10:      #b1d631
+! yellow
+!*.color3:      #cc8800
+*.color3:       #ff9800
+*.color11:      #87875f
+! blue
+*.color4:       #6688aa
+*.color12:      #90b0d1
+! magenta
+*.color5:       #8f6f8f
+*.color13:      #8181a6
+! cyan
+*.color6:       #528b8b
+*.color14:      #87ceeb
+! white
+*.color7:       #d3d3d3
+*.color15:      #c1cdc1
+! others
+URxvt.colorIT:  #719611
+URxvt.colorBD:  #d3d3d3
+URxvt.colorUL:  #528b8b
