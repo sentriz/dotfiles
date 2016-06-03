@@ -18,7 +18,7 @@ order += "volume master"
 order += "tztime local"
 
 disk /home {
-    format = "   home %percentage_used"
+    format = " home %percentage_used"
 }
 
 #disk / {
@@ -51,7 +51,7 @@ volume master {
 }
 
 tztime local {
-    format = "%d %b %H:%M:%S "
+    format = "%d %b %H:%M:%S |"
 }
 
 battery 0 {
