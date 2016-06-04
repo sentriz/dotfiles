@@ -39,6 +39,7 @@ bar {
     output VGA1
     output DP1
     status_command now_playing --stream
+    tray_output none
     colors {
         separator #666666
         background #222222
