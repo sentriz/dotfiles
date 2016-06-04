@@ -4,7 +4,7 @@ if [ "$1" == "--stream" ]; then
     while :
     do
         echo " " $(mpc | head -n 1)
-        sleep 3
+        sleep 1.5
     done
 else
     notify-send -t 2 "$(mpc | head -n 1)" "$(mpc | head -n 2 | tail -n 1)"
