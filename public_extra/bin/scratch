@@ -11,12 +11,15 @@ export -f irc
 
 case "$1" in 
     kpcli)
-        urxvtc -name kpcli -e kpcli --kdb ~/mega/senan_kelly.kdbx
+        #            red
+        urxvtc -bg "#220000" -name kpcli -e kpcli --kdb ~/mega/senan_kelly.kdbx
         ;;
     weechat)
-        urxvtc -hold -name weechat -e bash -c irc
+        #            blue
+        urxvtc -bg "#000022" -name weechat -hold -e bash -c irc
         ;;
     *)
-        urxvtc -name scratch
+        #            green
+        urxvtc -bg "#002200" -name scratch
         ;;
 esac
