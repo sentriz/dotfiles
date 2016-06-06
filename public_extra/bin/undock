@@ -1,9 +1,10 @@
 #!/bin/bash
 
 if grep -qs "10.0.0.1" /tmp/osmc_host && grep -qs "/home/senan/dynamic" /proc/mounts; then
-    mpd --kill &> /dev/null
+    mpc stop &> /dev/null
     fusermount -qu /home/senan/dynamic -z
     nmcli device disconnect enp0s25 &> /dev/null
+    echo "none" > /tmp/osmc_host
 fi
 
 projector --single
