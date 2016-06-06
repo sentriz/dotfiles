@@ -20,8 +20,12 @@ alias please='sudo $(history -p \!\!)'
 alias sedo="sudo -E"
 alias weather="curl --silent http://wttr.in/ | head -7"
 alias monoff="xset dpms force off"
-alias scratch="urxvtc -name scratchterm"
 alias latest_here="ls -Art | tail -n 1"
+alias package_count="pacman -Q | wc -l"
+alias :wq="exit"
+alias :qw="exit"
+alias :q="exit"
+alias :q!="exit"
 
 for n in `seq 1 9`; do
     alias w$n="i3-msg workspace $n";
@@ -137,20 +141,18 @@ BIWhite='\e[1;97m'
 
 c_Blue='\033[38;5;39m'
 
-## source local
+# PS1
 
-export ssh_ps1_string=""
-
-if [ -f ~/.bash_local ]; then
-    . ~/.bash_local
-fi
-
-## ps1
-
-git_branch='`git branch 2> /dev/null | grep -e ^* | sed -E s/^\\\\\*\ \(.+\)$/\ \\\\\1\\/ `'
-export PS1="\[$Color_Off\]\[$ssh_ps1_string\]\[$BIGreen\]\u\[$Green\]@\h \[$c_Blue\]\w\[$Red\]$git_branch \[$White\]\$\[$Color_Off\]\a "
+git_branch='$(git branch 2> /dev/null | grep -e ^* | sed -E s/^\\\\\*\ \(.+\)$/\ \\\\\1\\/ )'
+export PS1="\[$BIGreen\]\u\[$Green\]@\h \[$c_Blue\]\w\[$Red\]$git_branch \[$White\]\$\[$Color_Off\]\[\a\] "
 
 ## bash completion
 
 completion_path='/usr/share/bash-completion/bash_completion'
 [[ -f $completion_path ]] && . $completion_path
+
+## source local
+
+if [ -f ~/.bash_local ]; then
+    . ~/.bash_local
+fi

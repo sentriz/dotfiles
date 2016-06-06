@@ -1,0 +1,22 @@
+#!/bin/bash
+
+irc() {
+    until ssh osmc -t TERM=screen screen -R -S weechat weechat; do
+        sleep 300
+        echo "waiting for ssh agent"
+    done
+}
+
+export -f irc
+
+case "$1" in 
+    kpcli)
+        urxvtc -name kpcli -e kpcli --kdb ~/mega/senan_kelly.kdbx
+        ;;
+    weechat)
+        urxvtc -hold -name weechat -e bash -c irc
+        ;;
+    *)
+        urxvtc -name scratch
+        ;;
+esac
