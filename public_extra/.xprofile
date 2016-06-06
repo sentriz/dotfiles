@@ -13,9 +13,8 @@ xmodmap -e "clear Lock"
 
 dock_watch &
 
-touch /tmp/abc
-
 # dock_watch only checks for file movments to avoid the "delete_self" event
+touch /tmp/abc
 if grep "1" /sys/devices/platform/dock.*/docked; then
     sleep 1
     mv /tmp/abc /tmp/docked
