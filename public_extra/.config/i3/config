@@ -50,6 +50,7 @@ bar {
         urgent_workspace #2f343a #900000 #ffffff
     }
 }
+
 ## keybindings (window/float related)
 bindsym $super+q kill
 bindsym $super+f fullscreen toggle
@@ -160,8 +161,8 @@ set $work1 "1 main "
 set $work2 "2 web "
 set $work3 "3 term "
 set $work4 "4 music "
-set $work5 "5 keepass "
-set $work6 "6 irc "
+set $work5 "5 video "
+set $work6 "6"
 set $work7 "7 mnem "
 set $work8 "8 gimp "
 set $work9 "9 office "
@@ -194,24 +195,26 @@ bindsym $super+Shift+9 move container to workspace $work9
 ## keeping programs on workspaces
 assign [class="Firefox"] $work2
 assign [class="chromium"] $work2
-assign [class="KeePass2"] $work5
 assign [class="URxvt" instance="ncmpcpp"] $work4
 assign [class="Wine" instance="foobar2000.exe"] $work4
-assign [class="URxvt" instance="weechat"] $work6
+assign [class="mpv"] $work5
 assign [class="Mnemosyne"] $work7
 assign [class="Gimp*"] $work8
 assign [class="libreoffice-*"] $work9
 
 ## keeping programs floating/fullscreen
-for_window [class="URxvt" instance="nmtui"] floating enable, resize set 800 600, move position center
-for_window [class="URxvt" instance="powertop"] floating enable, resize set 800 600, move position center
-for_window [class="URxvt" instance="scratch"] floating enable, resize set 1292 694, move scratchpad, move position center
-for_window [class="feh"] fullscreen enable
+for_window [class="URxvt" instance="nmtui"] floating enable, resize set 795 589, move position center
+for_window [class="URxvt" instance="powertop"] floating enable, resize set 795 589 move position center
+for_window [class="URxvt" instance="scratch"] floating enable, resize set 1292 694, move position center, move scratchpad
+for_window [class="URxvt" instance="kpcli"] floating enable, resize set 1292 694, move position center, move scratchpad
+for_window [class="URxvt" instance="weechat"] floating enable, resize set 1292 694, move position center, move scratchpad
 
+# floating
 for_window [class="Pavucontrol"] floating enable
 for_window [class="Mnemosyne"] floating enable
 for_window [class="Galculator"] floating enable
 
+# floating generic
 for_window [window_type="menu"] floating enable
 for_window [window_role="app"] floating enable
 for_window [window_role="pop-up"] floating enable
@@ -219,38 +222,42 @@ for_window [window_role="task_dialog"] floating enable
 for_window [window_type="dialog"] floating enable
 for_window [title="Preferences$"] floating enable
 
+## fullscreening
+for_window [class="feh"] fullscreen enable
+for_window [class="mpv"] fullscreen enable
+
 # youfl script custom (~/bin/youfl)
 for_window [title="youfl_stream"] fullscreen disable, floating enable, resize set 640 px 360 px, sticky enable, move window to position 726 px 0 px
 # values:                                                                         ^a^    ^b^                                            ^c^
 # c = monitorwidth - a      (width is 1366 for me)                                ^a^    ^b^                                            ^c^
 # b = 9a/16                 (for 16:9 default size)                               ^a^    ^b^                                            ^c^
 
-## keybindings (no modifiers)
+## keybindings (scrot)
 bindsym Print exec screenshot
 bindsym shift+Print --release exec screenshot --select
+
+## keybindings (scratchpads)
 bindsym F15 [class="URxvt" instance="scratch"] scratchpad show
+bindsym $super+F1 [class="URxvt" instance="kpcli"] scratchpad show
+bindsym $super+F2 [class="URxvt" instance="weechat"] scratchpad show
 
 ## keybindings (programs)
 bindsym $super+Return exec urxvtc
 
 bindsym $super+Ctrl+m exec urxvtc -name ncmpcpp -e ncmpcpp -s playlist
-bindsym $super+Ctrl+i exec urxvtc -name weechat -e irc
 bindsym $super+Ctrl+e exec thunar
 bindsym $super+Ctrl+b exec chromium
 bindsym $super+Ctrl+g exec galculator
-bindsym $super+Ctrl+k exec keepass
-bindsym $super+Ctrl+l exec keepass -auto-type-selected
 bindsym $super+Ctrl+a exec j4-dmenu-desktop
 bindsym $super+Ctrl+v exec pavucontrol
 
 bindsym $super+Ctrl+c exec urxvtc -name nmtui -e nmtui connect
 bindsym $super+Ctrl+n exec urxvtc -name nmtui -e nmtui edit
 
-
 # keybindings (xf86 on thinkpad x220)
 bindsym XF86TouchpadToggle exec --no-startup-id thinkpad-touchpad && notify-send "touchpad toggled"
 bindsym XF86WLAN exec urxvtc -name nmtui -e nmtui
-bindsym XF86Battery exec urxvtc -name powertop -e sudo powertop
+#bindsym XF86Battery exec urxvtc -name powertop -e sudo powertop
 bindsym XF86Display exec --no-startup-id projector
 
 bindsym XF86ScreenSaver exec --no-startup-id $locker
@@ -276,4 +283,6 @@ client.focused_inactive #333333 #333333 #888888 #292d2e
 client.unfocused #333333 #333333 #888888 #292d2e
 client.urgent #2f343a #900000 #ffffff #900000
 
-exec --no-startup-id urxvtc -name scratch
+exec --no-startup-id scratch
+exec --no-startup-id scratch kpcli
+exec --no-startup-id scratch weechat
