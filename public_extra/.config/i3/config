@@ -57,8 +57,8 @@ bindsym $super+f fullscreen toggle
 bindsym $super+space floating toggle
 bindsym $super+b move position center
 
-bindsym $super+bracketleft move workspace to output left
-bindsym $super+bracketright move workspace to output right
+bindsym $super+bracketleft move workspace to output down
+bindsym $super+bracketright move workspace to output up
 
 # change focus
 bindsym $super+h focus left
@@ -76,10 +76,11 @@ bindsym $super+Right move right
 bindsym $super+n split h
 bindsym $super+m split v
 
-# change container layout (stacked, tabbed, toggle split)
+# change container layout (stacked, tabbed, toggle split, focus parent)
 bindsym $super+z layout stacking
 bindsym $super+x layout tabbed
 bindsym $super+c layout toggle split
+bindsym $super+v focus parent
 
 ## keybindings (modes)
 bindsym $super+$alt+r mode $mode_resize_tile
@@ -240,6 +241,7 @@ bindsym shift+Print --release exec screenshot --select
 bindsym F15 [class="URxvt" instance="scratch"] scratchpad show
 bindsym $super+F1 [class="URxvt" instance="kpcli"] scratchpad show
 bindsym $super+F2 [class="URxvt" instance="weechat"] scratchpad show
+bindsym $super+F15 scratchpad show
 
 ## keybindings (programs)
 bindsym $super+Return exec urxvtc
@@ -248,7 +250,7 @@ bindsym $super+Ctrl+m exec urxvtc -name ncmpcpp -e ncmpcpp -s playlist
 bindsym $super+Ctrl+e exec thunar
 bindsym $super+Ctrl+b exec chromium
 bindsym $super+Ctrl+g exec galculator
-bindsym $super+Ctrl+a exec j4-dmenu-desktop
+bindsym $super+Ctrl+a exec dmenu_custom
 bindsym $super+Ctrl+v exec pavucontrol
 
 bindsym $super+Ctrl+c exec urxvtc -name nmtui -e nmtui connect
