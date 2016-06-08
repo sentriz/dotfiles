@@ -137,26 +137,15 @@ BIWhite='\e[1;97m'
 c_Blue='\033[38;5;39m'
 
 
-## PS1
-git_branch='$(git branch 2> /dev/null | grep -e ^* | sed -E s/^\\\\\*\ \(.+\)$/\ \\\\\1\\/ )'
-case $HOSTNAME in
-    manjaro)
-        main_string="\[$BIGreen\]\u\[$Green\]@\h"
-        ;;
-    osmc)
-        main_string="\[$BIYellow\]\u\[$Yellow\]@\h"
-        ;;
-    *)
-        main_string="\[$BIWhite\]\u\[$White\]@\h"
-        ;;
-esac
-
-export PS1="$main_string \[$c_Blue\]\w\[$Red\]$git_branch \[$White\]\$\[$Color_Off\]\[\a\] "
-
-
 ## bash completion
 completion_path='/usr/share/bash-completion/bash_completion'
 [[ -f $completion_path ]] && . $completion_path
+
+
+## PS1
+if [ -f ~/.bash_psone ]; then
+    . ~/.bash_psone
+fi
 
 
 ## source local
