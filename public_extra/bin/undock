@@ -8,3 +8,4 @@ if grep -qs "10.0.0.1" /tmp/osmc_host && grep -qs "/home/senan/dynamic" /proc/mo
 fi
 
 projector --single
+i3-msg restart
