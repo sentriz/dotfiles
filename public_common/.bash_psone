@@ -1,0 +1,15 @@
+git_branch='$(git branch 2> /dev/null | grep -e ^* | sed -E s/^\\\\\*\ \(.+\)$/\ \\\\\1\\/ )'
+
+case $HOSTNAME in
+    manjaro)
+        main_string="\[$BIGreen\]\u\[$Green\]@\h"
+        ;;
+    osmc)
+        main_string="\[$BIYellow\]\u\[$Yellow\]@\h"
+        ;;
+    *)
+        main_string="\[$BIWhite\]\u\[$White\]@\h"
+        ;;
+esac
+
+export PS1="$main_string \[$c_Blue\]\w\[$Red\]$git_branch \[$White\]\$\[$Color_Off\]\[\a\] "
