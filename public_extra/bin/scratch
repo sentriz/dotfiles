@@ -19,7 +19,7 @@ case "$1" in
         urxvtc -bg "#000022" -name weechat -hold -e bash -c irc
         ;;
     *)
-        #            green
-        urxvtc -bg "#002200" -name scratch
+        #            grey
+        urxvtc -bg "#303030" -name scratch
         ;;
 esac
