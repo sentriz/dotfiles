@@ -1,15 +1,15 @@
 #!/bin/bash
 
-# needed for multimonitors
-# monitor width: 1366
-# image width: 215
-# left offset: (monitor_width / 2) - (image_width / 2)
-left_offset="630"
-
-echo locking
+if ! xrandr | grep "VGA1 connected 1366x768+1366+0"; then
+    top_offset="+390"
+else
+    top_offset="-6"
+fi
 
 shot=$(mktemp --tmpdir XXXX.png)
 scrot $shot
-convert $shot -blur 0x3 ~/bin/lock.png -gravity West -geometry +"$left_offset"-6 -composite $shot
+# 630 ~= monitor_width/2 - image_width/2
+#     ~= 1366/2          - 105/2
+convert $shot -blur 0x3 ~/bin/lock.png -gravity West -geometry +630$top_offset -composite $shot
 i3lock -b -S 0 --insidevercolor=0000a0bf --insidewrongcolor=ff8000bf --insidecolor=ffffffbf --ringvercolor=0020ffff --ringwrongcolor=4040ffff --ringcolor=404090ff --textcolor=ffffffff --separatorcolor=aaaaaaff --keyhlcolor=30ccccff --bshlcolor=ff8000ff -be -i $shot
 rm $shot

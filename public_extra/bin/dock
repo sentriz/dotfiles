@@ -11,4 +11,4 @@ if (! grep -qs "10.0.0.1" /tmp/osmc_host) && [ -S "$SSH_AUTH_SOCK" ]; then
     mount /home/senan/dynamic
 fi
 
-projector
+projector --above
