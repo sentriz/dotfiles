@@ -114,7 +114,7 @@
     # Draw a line of "separator_height" pixel height between two
     # notifications.
     # Set to 0 to disable.
-    separator_height = 2
+    separator_height = 1
 
     # Padding between text and separator.
     padding = 8
@@ -139,7 +139,7 @@
     dmenu = /usr/bin/dmenu -p dunst:
 
     # Browser for opening urls in context menu.
-    browser = /usr/bin/firefox -new-tab
+    browser = /usr/bin/chromium -new-tab
 
     # Align icons left/right/off
     icon_position = off
@@ -159,10 +159,10 @@
     # Xev might be helpful to find names for keys.
 
     # Close notification.
-    close = ctrl+space
+    close = ctrl+shift+space
 
     # Close all notifications.
-    close_all = ctrl+shift+space
+    close_all = ctrl+space
 
     # Redisplay last message(s).
     # On the US keyboard layout "grave" is normally above TAB and left
