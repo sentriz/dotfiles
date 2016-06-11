@@ -6,4 +6,4 @@ done &
 
 ssh osmc -t TERM=screen screen -R -S weechat weechat
 
-pkill -f "nc -l -p 3333"
+pkill -f "ncat -kl 3333"
