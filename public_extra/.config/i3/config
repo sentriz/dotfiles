@@ -287,4 +287,3 @@ client.urgent #2f343a #900000 #ffffff #900000
 
 exec --no-startup-id scratch
 exec --no-startup-id scratch kpcli
-exec --no-startup-id scratch weechat
