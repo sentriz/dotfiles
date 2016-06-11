@@ -1,14 +1,5 @@
 #!/bin/bash
 
-irc() {
-    until ssh osmc -t TERM=screen screen -R -S weechat weechat; do
-        sleep 300
-        echo "waiting for ssh agent"
-    done
-}
-
-export -f irc
-
 case "$1" in 
     kpcli)
         #            red
