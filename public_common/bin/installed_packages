@@ -1,0 +1,14 @@
+#!/bin/python3
+
+import subprocess
+
+pacs = []
+
+for pac in subprocess.getoutput("pacman -Q").split("\n"):
+    pacs.append(pac)
+
+for pac in subprocess.getoutput("pacman -Q --deps").split("\n"):
+    pacs.remove(pac)
+
+for pac in pacs:
+    print(pac)
