@@ -23,6 +23,7 @@ alias latest_here="ls -Art | tail -n 1"
 alias package_count="pacman -Q | wc -l"
 alias av_scan="sudo freshclam && sudo clamscan -r --bell -i /"
 alias ncs="ps u | egrep '\sn(cat|c|etcat)\s'"
+alias td="vim ~/todo"
 
 alias :wq="exit"
 alias :qw="exit"
@@ -154,4 +155,12 @@ fi
 ## source local
 if [ -f ~/.bash_local ]; then
     . ~/.bash_local
+fi
+
+
+## show todo
+if [ -f ~/todo ]; then
+    echo "[todo]"
+    cat todo
+    echo
 fi
