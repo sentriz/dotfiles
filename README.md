@@ -21,4 +21,4 @@ install [GNU Stow](https://www.gnu.org/software/stow/), then:
 ![ncmpcpp](screens/ncmpcpp.png)
 
 pictured: GNU screen, i3, i3lock, i3bar (w/ i3status), URxvt, vim, ncmpcpp  
-note: the first rectangular image are power controls that appear with Win+Shift+x
+note: the first rectangular image are power controls that appear with Mod+Shift+x
