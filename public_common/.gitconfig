@@ -1,15 +1,19 @@
 [user]
     email = senan.f.b.kelly+github@gmail.com
     name = sentriz
+
 [push]
     default = matching
+
 [color]
     ui = true
     branch = true
     interactive = true
     status = true
+
 [help]
     autocorrect = 5
+
 [alias]
     c = commit
     s = status
@@ -17,12 +21,22 @@
     ignore = update-index --assume-unchanged
     unignore = update-index --no-assume-unchanged
     ignored = !git ls-files -v | grep "^[[:lower:]]"
+
 [diff "zip"]
     textconv = unzip -c -a
+
+[diff]
+    compactionHeuristic = true
+
 [github]
     user = sentriz
+
 [advice]
     statusHints = false
+
 [core]
     editor = vim
     excludesfile = ~/.gitignore_global
+
+[interactive]
+    diffFilter = diff-highlight
