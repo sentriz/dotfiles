@@ -1,9 +1,9 @@
 #!/bin/bash
 
-ncat -kl 3333 | while read message; do
-    notify-send "weechat highlight" "$message"
-done &
+# ncat -kl 3333 | while read message; do
+#     notify-send "weechat highlight" "$message"
+# done &
 
-ssh osmc -t TERM=screen screen -R -S weechat weechat
+autossh -t blinken 'screen -Dr weechat'
 
-pkill -f "ncat -kl 3333"
+# pkill -f "ncat -kl 3333"
