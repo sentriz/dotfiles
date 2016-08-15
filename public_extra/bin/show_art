@@ -1,0 +1,32 @@
+#!/usr/bin/env python3
+# Senan Kelly 2016
+
+import subprocess
+import os
+import json
+import time
+from PIL import Image
+import tempfile
+
+mpc_out = subprocess.getoutput('ssh osmc mpc --format %file%')
+track_path = '/home/senan/dynamic/' + mpc_out.split('\n')[0]
+track_base = os.path.dirname(track_path)
+
+
+art_file = None
+for file in os.listdir(track_base):
+    if 'folder.' in file:
+        art_file = track_base + '/' + file
+
+art_size = 200
+
+term_width = int(subprocess.getoutput("tput cols")) * 7
+term_height = int(subprocess.getoutput("tput lines")) * 13
+
+x_pos = term_width - art_size - 2
+y_pos = term_height - art_size - 28
+
+format_sting = "0;1;{0};{1};{2};{2};;;;;{3}\n4;\n3;".format(x_pos, y_pos, art_size, art_file)
+
+img_format = subprocess.Popen(["echo", format_sting], stdout=subprocess.PIPE)
+img_show = subprocess.Popen(["/usr/lib/w3m/w3mimgdisplay"], stdin=img_format.stdout)
