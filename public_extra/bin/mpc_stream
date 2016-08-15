@@ -1,0 +1,13 @@
+#!/bin/sh
+
+while :
+do
+    if pgrep "^mpd"; then
+        string=$(mpc)
+    else
+        string=$(ssh osmc mpc)
+    fi
+
+    echo "" "$string" | head -n 1
+    sleep 5
+done
