@@ -1,0 +1,23 @@
+#!/bin/bash
+
+socket="$HOME/.config/mpv/socket"
+
+command() {
+    local tosend='{ "command": ['
+    for arg in "$@"; do
+        tosend="$tosend \"$arg\","
+    done
+    tosend=${tosend%?}' ] }'
+    echo $tosend | socat - $socket &> /dev/null
+}
+
+[ "$1" = "stop" ] && command 'quit'
+[ "$1" = "play-pause" ] && command 'cycle' 'pause'
+[ "$1" = "pause" ] && command 'set' 'pause' 'yes'
+[ "$1" = "play" ] && command 'set' 'pause' 'no'
+[ "$1" = "next" ] && command 'playlist_next'
+[ "$1" = "previous" ] && command 'playlist_prev'
+[ "$1" = "add" ] && shift &&
+    for video in "$@"; do
+        command 'loadfile' "$video" 'append-play';
+    done;
