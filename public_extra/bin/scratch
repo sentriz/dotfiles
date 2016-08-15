@@ -1,16 +1,3 @@
 #!/bin/bash
 
-case "$1" in 
-    kpcli)
-        #            red
-        urxvtc -bg "#220000" -name kpcli -e kpcli --kdb ~/mega/senan_kelly.kdbx
-        ;;
-    weechat)
-        #            blue
-        urxvtc -bg "#000022" -name weechat -hold -e bash -c irc
-        ;;
-    *)
-        #            grey
-        urxvtc -bg "#303030" -name scratch
-        ;;
-esac
+urxvtc -bg "#303030" -name scratch
