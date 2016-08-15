@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+set -o pipefail
+
+pass_dir=~/.password-store/
+
+if [ $# -eq 0 ]; then
+    pass_files=$( find "$pass_dir" -type f -name "*.gpg" )
+    pass_files=$( sed -n s@^$pass_dir@@p <<< "$pass_files" )
+    pass_files=$( sed -n s@.gpg@@p <<< "$pass_files" )
+    multi=false
+elif [ $# -gt 0 ]; then
+    pass_files=$( find "$pass_dir" -type f -name "*.gpg" | xargs dirname )
+    pass_files=$( sed -n s@^$pass_dir@@p <<< "$pass_files" )
+    pass_files=$( sort -u <<< "${pass_files}" )
+    multi=true
+fi
+
+selection=$( echo "$pass_files" | dmenu_custom -p "pass:" )
+test -z $selection && exit
+
+if ! $multi ; then
+    pass show $selection | xdotool type --clearmodifiers --file -
+    exit
+fi
+
+while [ ! $# -eq 0 ]; do
+    case "$1" in
+        --tuser)
+            pass show "$selection/username" | xdotool type --clearmodifiers --file - ||
+            pass show "$selection/email" | xdotool type --clearmodifiers --file - ||
+            (notify-send "dmenu pass" "no username entry" && false)
+            [ $? -eq 0 ] && xdotool key 23 # tab
+            ;;
+        --tpass)
+            pass show $selection"/password" | xdotool type --clearmodifiers --file - ||
+            (notify-send "dmenu pass" "no password entry" && false)
+            [ $? -eq 0 ] && xdotool key 36 # enter
+            ;;
+    esac
+    shift
+done
