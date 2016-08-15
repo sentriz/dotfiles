@@ -13,14 +13,17 @@ URxvt.foreground: white
 URxvt.background: black
 URxvt.letterSpace: -1
 URxvt.urgentOnBell: true
+URxvt.dynamicColors: on
 
-URxvt.perl-ext-common: fullscreen
+URxvt.perl-ext-common: default,matcher
+URxvt.url-launcher: /usr/bin/chromium
+URxvt.matcher.button: 1
 
 *.foreground:   #c2c2b0
 *.background:   #222222
 *.cursorColor:  #c2c2b0
 ! black
-*.color0:       #222222
+*.color0:       #303030
 *.color8:       #272822
 ! red
 *.color1:       #aa4450
