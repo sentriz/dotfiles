@@ -1,34 +1,61 @@
 ## aliases
-alias ls='ls --color=auto'
-alias ll='ls -lpAh --color=auto'
-alias l='ls -lph --color=auto'
 
+# needed argument or couldn't quote
 c() { cd "$@" && ls -lpAh; }
-f() { find . -readable -type f 2> /dev/null | fzf --reverse --black --multi | xclip; }
-fr() { find / -readable -type f 2> /dev/null | fzf --reverse --black --multi | xclip; }
+fuzz_here() { find . -readable -type f 2> /dev/null | fzf --reverse --black --multi | xclip; }
+fuzz_root() { find / -readable -type f 2> /dev/null | fzf --reverse --black --multi | xclip; }
+find_key() { xev | awk -F'[ )]+' '/^KeyPress/ { a[NR+2] } NR in a { printf "%-3s %s\n", $5, $8 }'; }
 
+# listing
+alias ls='ls --color=auto --group-directories-first'
+alias ll='ls -lpAh --color=auto --group-directories-first'
+alias l='ls -lph --color=auto --group-directories-first'
+
+# safety/better
+alias rm='rm -Iv --preserve-root'
+alias sudo='sudo '
+alias wget='wget -c'
+alias cp='cp -aiv'
+alias mkdir='mkdir -p -v'
+alias du='du -d1 -h'
+alias df='df -hT'
+
+# fasd
+alias p='a -e mpv'
+alias v='a -e vim'
+
+# grep
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 
+# action
+alias td="vim ~/todo"
 alias pg='ping 8.8.8.8'
-alias temp='expr `cat /sys/class/thermal/thermal_zone0/temp` / 1000'
-alias tb='nc termbin.com 9999'
 alias ascreen='screen -dRR'
-alias please='sudo $(history -p \!\!)' 
-alias sedo="sudo -E"
-alias weather="curl --silent http://wttr.in/ | head -7"
 alias monoff="xset dpms force off"
+alias av_scan="sudo freshclam && sudo clamscan -r --bell -i /"
+alias watched="sed -i s/watched\>false/watched\>true/"
+
+# info
+alias ncs="ps aux | egrep '\sn(cat|c|etcat)\s'"
+alias sshs="ps aux | grep '[s]sh'"
+alias cal="cal --three --monday"
+alias temp='expr `cat /sys/class/thermal/thermal_zone0/temp` / 1000'
+alias weather="curl --silent http://wttr.in/ | head -7"
 alias latest_here="ls -Art | tail -n 1"
 alias package_count="pacman -Q | wc -l"
-alias av_scan="sudo freshclam && sudo clamscan -r --bell -i /"
-alias ncs="ps u | egrep '\sn(cat|c|etcat)\s'"
-alias td="vim ~/todo"
+alias speed="speedtest-cli --simple"
 
+# with other command
+alias tb='nc termbin.com 9999'
+alias please='sudo $(history -p \!\!)' 
+alias sedo="sudo -E"
+
+# exit
 alias :wq="exit"
 alias :qw="exit"
 alias :q="exit"
-alias :q!="exit"
 
 
 ## vi keybindings 
@@ -97,6 +124,14 @@ colours() {
 	done
 }
 
+swap()         
+{
+    local TMPFILE=tmp.$$
+    mv "$1" $TMPFILE
+    mv "$2" "$1"
+    mv $TMPFILE "$2"
+}
+
 man() {
   env \
     LESS_TERMCAP_mb=$(printf "\e[1;35m") \
@@ -114,7 +149,7 @@ play () {
     mpv --no-terminal --no-video --cache=256 -; 
 }
 
-export -f confirm play
+export -f confirm play swap
 
 
 ## colours
@@ -152,11 +187,15 @@ if [ -f ~/.bash_psone ]; then
 fi
 
 
+## keychain
+. ~/.keychain/$HOSTNAME-sh &> /dev/null
+. ~/.keychain/$HOSTNAME-sh-gpg &> /dev/null
+
+
 ## source local
 if [ -f ~/.bash_local ]; then
     . ~/.bash_local
 fi
-
 
 ## show todo
 if [ -f ~/todo ]; then
