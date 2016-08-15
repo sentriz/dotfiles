@@ -1,0 +1,10 @@
+#!/bin/bash
+
+echo "locking"
+
+killall -qu -SIGUSR1 dunst # pause dunst
+i3lock -bf --insidevercolor=0000a0bf --insidewrongcolor=ff8000bf --insidecolor=ffffffbf --ringvercolor=0020ffff --ringwrongcolor=4040ffff --ringcolor=404090ff --textcolor=ffffffff --separatorcolor=aaaaaaff --keyhlcolor=30ccccff --bshlcolor=ff8000ff -be -i /usr/share/wallpapers/lockscreen_vert.png
+killall -qu -SIGUSR2 dunst # resume dunst
+# killall -qu -SIGUSR1 autossh # restart ssh sessions
+
+exit 0
