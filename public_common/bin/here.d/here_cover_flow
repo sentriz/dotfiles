@@ -1,0 +1,3 @@
+#!/bin/sh
+
+find . -name "*.jpg" -or -name "*.png" | feh -VmsqXP. -B black -f - -E 170 -y 170 -W 1366 -H 768
