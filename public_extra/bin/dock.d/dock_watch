@@ -1,0 +1,27 @@
+#!/bin/bash
+
+if [ -f /tmp/dock_watching ]; then
+    echo "already running"
+    exit 1
+fi
+touch /tmp/dock_watching
+
+last_state="none"
+
+while true; do
+
+    if grep -q "1" /sys/devices/platform/dock.*/docked; then
+        if [ "$last_state" == "undocked" ] || [ "$last_state" == "none" ]; then
+            sleep 2
+            dock
+        fi
+        last_state="docked"
+    else
+        if [ "$last_state" == "docked" ]; then
+            undock
+        fi
+        last_state="undocked"
+    fi
+    sleep 0.75
+
+done

@@ -1,0 +1,16 @@
+#!/bin/bash
+
+if [ "$(id -u)" != "0" ]; then
+    exec sudo "$0" "$@" 
+fi
+
+ifconfig enp0s25 up
+nmcli connection up "home wired"
+nmcli connection down "home wifi"
+ifconfig wlp3s0 down
+
+projector
+/home/senan/.fehbg
+killall -SIGUSR1 autossh
+
+touch /tmp/docked
