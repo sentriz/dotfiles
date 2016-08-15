@@ -1,40 +1,40 @@
+# executed by startx from .bash_profile
+# ssh keys should be loaded by now
+# vim: ft=sh
+
 tpset() { xinput set-prop "TPPS/2 IBM TrackPoint" "$@"; }
-tpset "Evdev Wheel Emulation" 1 &
-tpset "Evdev Wheel Emulation Button" 2 &
-tpset "Evdev Wheel Emulation Timeout" 200 &
-tpset "Evdev Wheel Emulation Axes" 6 7 4 5 &
+tpset "Evdev Wheel Emulation" 1
+tpset "Evdev Wheel Emulation Button" 2
+tpset "Evdev Wheel Emulation Timeout" 200
+tpset "Evdev Wheel Emulation Axes" 6 7 4 5
 tpset "Device Accel Constant Deceleration" 0.25 &
 
 setxkbmap ie
 xmodmap -e "keycode 166 = F13"
 xmodmap -e "keycode 167 = F14"
 xmodmap -e "keycode 66 = F15"
-xmodmap -e "clear Lock"
+xmodmap -e "clear Lock" &
 xset r rate 300 &
 
-dock_watch &
-
-# dock_watch only checks for file movments to avoid the "delete_self" event
-touch /tmp/abc
-if grep "1" /sys/devices/platform/dock.*/docked; then
-    sleep 1
-    mv /tmp/abc /tmp/docked
-else
-    mv /tmp/abc /tmp/not_docked
-fi
-
-
-feh --bg-scale /usr/share/wallpapers/.wallpaper.jpg &
-xrandr --output LVDS1 --primary &
+# x
+xrandr --output LVDS1 --primary
+~/.fehbg &
 thinkpad-touchpad off &
 urxvtd &
 redshift-gtk &
-xautolock -locker '/home/senan/bin/blur_lock' &
 megasync &
-clipit &
-mnemosyne &
-mpd &
-mpdscribble &
-unclutter &
+clipmenud &
 dunst &
-transmission-daemon &
+# xdotool behave_screen_edge bottom-right exec --sync ~/bin/lock &
+telegram-desktop &
+
+# non x
+dock_watch &
+
+# start tunnels
+export AUTOSSH_PORT=0
+export AUTOSSH_FIRST_POLL=5
+autossh -f -N osmc_tunnels
+
+# sshfs mount
+mount dynamic &

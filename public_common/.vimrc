@@ -35,6 +35,7 @@ Plugin 'tommcdo/vim-exchange'
 Plugin 'PotatoesMaster/i3-vim-syntax'
 Plugin 'godlygeek/csapprox'
 Plugin 'FooSoft/vim-argwrap'
+Plugin 'christoomey/vim-tmux-navigator'
 " Plugin 'Valloric/YouCompleteMe'
 call vundle#end()
 filetype plugin indent on
@@ -143,15 +144,13 @@ nnoremap <leader>yr :YcmCompleter GoToReferences<CR>
 nnoremap <leader>yd :YcmCompleter GetDoc<CR>
 
 nnoremap <leader>a :ArgWrap<CR>
+nnoremap <leader>c :!column -t<CR>
 
 " mappings
 nnoremap <Tab> <C-w><C-w>
 nnoremap [25~ :bp<CR>
 nnoremap [26~ :bn<CR>
 nnoremap Y y$
-
-inoremap jk <Esc>
-inoremap kj <Esc>
 
 nnoremap <Left> :vertical resize +2<CR>
 nnoremap <Right> :vertical resize -2<CR>

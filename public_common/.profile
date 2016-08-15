@@ -1,26 +1,25 @@
-# ~/.profile: executed by the command interpreter for login shells.
-# This file is not read by bash(1), if ~/.bash_profile or ~/.bash_login
-# exists.
-# see /usr/share/doc/bash/examples/startup-files for examples.
-# the files are located in the bash-doc package.
-
-# the default umask is set in /etc/profile; for setting the umask
-# for ssh logins, install and configure the libpam-umask package.
 #umask 022
 
-# if running bash
+# source .bashrc if bash
 if [ -n "$BASH_VERSION" ]; then
-    # include .bashrc if it exists
     if [ -f "$HOME/.bashrc" ]; then
-	. "$HOME/.bashrc"
+	. "$HOME/.bashrc" &> /dev/null
     fi
 fi
 
-# set PATH so it includes user's private bin if it exists
+# recursive $PATH
 if [ -d "$HOME/bin" ]; then
     for f in $(find -L $HOME/bin -type d); do
         PATH="$PATH:$f"
     done
 fi
 
-[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx
+# # load keys
+keychain --systemd --quiet --nogui --agents ssh,gpg id_home 609FCE8BB45971C8293040AC9A8DAE1CA907B862
+. ~/.keychain/$HOSTNAME-sh &> /dev/null
+. ~/.keychain/$HOSTNAME-sh-gpg &> /dev/null
+
+rm ~/mega/senan_kelly.kdbx.lock &> /dev/null
+
+[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && 
+exec startx -- -keeptty -nolisten tcp 1> ~/.xorg.log 2>&1
