@@ -9,18 +9,22 @@
 
 set $super Mod4
 set $alt Mod1
-set $locker blur_lock
+set $locker lock
 
 font pango:bitstream vera sans mono 10
 floating_modifier $super
-workspace_auto_back_and_forth yes
 popup_during_fullscreen smart
-new_window none
+
+for_window [class="^.*"] border pixel 0
+gaps inner 7
+smart_gaps on
+smart_borders on
 
 ## bar settings
 # main
 bar {
     output LVDS1
+    output HDMI2
     status_command i3status
     tray_output primary
     colors {
@@ -37,8 +41,7 @@ bar {
 # second
 bar {
     output VGA1
-    output DP1
-    status_command now_playing --stream
+    status_command mpc_stream
     tray_output none
     colors {
         separator #666666
@@ -57,8 +60,8 @@ bindsym $super+f fullscreen toggle
 bindsym $super+space floating toggle
 bindsym $super+b move position center
 
-bindsym $super+bracketleft move workspace to output down
-bindsym $super+bracketright move workspace to output up
+bindsym $super+bracketleft move workspace to output left
+bindsym $super+bracketright move workspace to output right
 
 # change focus
 bindsym $super+h focus left
@@ -88,12 +91,16 @@ bindsym $super+$alt+space mode $mode_move_floating focus floating
 bindsym $super+$alt+q mode $mode_system
 bindsym $super+$alt+v mode $mode_audio
 bindsym $super+$alt+i mode $mode_i3
+bindsym $super+$alt+p mode $mode_pass
+bindsym Print Mode $mode_scrot
 
 set $mode_resize_tile "resize mode: [h][j][k][l]"
 set $mode_move_floating "floating move mode: [h][j][k][l]"
 set $mode_system  "system mode: [l]ock, log[o]ut, [s]uspend, [h]ibernate, [r]eboot, shut[d]own"
 set $mode_i3  "i3 mode: e[x]it, [r]estart, reload [c]onfig"
 set $mode_audio "volume mode: [+|Right] +5%/+10%,  [-|Left] +5%/+10%,  [m]ute,  [r]eset"
+set $mode_scrot "screenshot mode: [n]ormal, [s]elect, [N]ormal upload, [S]elect upload"
+set $mode_pass "pass mode: [m]anual, [u]ser, [p]assword, [b]oth"
 
 # resizing tiles mode
 mode $mode_resize_tile {
@@ -108,9 +115,9 @@ mode $mode_resize_tile {
 
 # system power options mode
 mode $mode_system {
-    bindsym l exec $locker, mode default
-    bindsym s exec $locker && systemctl suspend, mode default
-    bindsym h exec $locker && systemctl hibernate, mode default
+    bindsym l exec --no-startup-id $locker, mode default
+    bindsym s exec --no-startup-id $locker && systemctl suspend, mode default
+    bindsym h exec --no-startup-id $locker && systemctl hibernate, mode default
     bindsym o exec --no-startup-id "i3-nagbar -t warning -m 'sure you want to log out?' -b 'yes' 'i3-msg exit'", mode "default"
     bindsym r exec --no-startup-id "i3-nagbar -t warning -m 'sure you want to reboot?' -b 'yes' 'systemctl reboot'", mode "default"
     bindsym d exec --no-startup-id "i3-nagbar -t warning -m 'sure you want to shutdown?' -b 'yes' 'systemctl poweroff'", mode "default"
@@ -146,12 +153,32 @@ mode $mode_audio {
 
 # move floating windows mode
 mode $mode_move_floating {
-    bindsym $super+Tab focus right
-
     bindsym h     move left
     bindsym j     move down
     bindsym k     move up
     bindsym l     move right
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+# screenshot mode
+mode $mode_scrot {
+    bindsym n                 exec "screenshot",                                                                             mode "default"
+    bindsym Shift+n           exec "screenshot | imgur_up | xclip && notify-send 'screenshot' 'link in clipboard'",          mode "default"
+    bindsym --release s       exec "screenshot --select",                                                                    mode "default"
+    bindsym --release Shift+s exec "screenshot --select | imgur_up | xclip && notify-send 'screenshot' 'link in clipboard'", mode "default"
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+# pass mode
+mode $mode_pass {
+    bindsym m exec dmenu_pass,                 mode "default"
+    bindsym u exec dmenu_pass --tuser,         mode "default"
+    bindsym p exec dmenu_pass --tpass,         mode "default"
+    bindsym b exec dmenu_pass --tuser --tpass, mode "default"
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
@@ -163,7 +190,7 @@ set $work2 "2 web "
 set $work3 "3 term "
 set $work4 "4 music "
 set $work5 "5 video "
-set $work6 "6"
+set $work6 "6 irc "
 set $work7 "7 mnem "
 set $work8 "8 gimp "
 set $work9 "9 office "
@@ -197,74 +224,60 @@ bindsym $super+Shift+9 move container to workspace $work9
 assign [class="Firefox"] $work2
 assign [class="chromium"] $work2
 assign [class="URxvt" instance="ncmpcpp"] $work4
-assign [class="Wine" instance="foobar2000.exe"] $work4
+assign [class="URxvt" instance="weechat"] $work6
 assign [class="mpv"] $work5
 assign [class="Mnemosyne"] $work7
 assign [class="Gimp*"] $work8
 assign [class="libreoffice-*"] $work9
 
-## keeping programs floating/fullscreen
-for_window [class="URxvt" instance="nmtui"] floating enable, resize set 795 589, move position center
-for_window [class="URxvt" instance="powertop"] floating enable, resize set 795 589 move position center
-for_window [class="URxvt" instance="scratch"] floating enable, resize set 1292 694, move position center, move scratchpad
-for_window [class="URxvt" instance="kpcli"] floating enable, resize set 1292 694, move position center, move scratchpad
-for_window [class="URxvt" instance="weechat"] floating enable, resize set 1292 694, move position center, move scratchpad
-
 # floating
 for_window [class="Pavucontrol"] floating enable
-for_window [class="Mnemosyne"] floating enable
-for_window [class="Galculator"] floating enable
+for_window [class="Mnemosyne"]   floating enable
+for_window [class="Galculator"]  floating enable
 
 # floating generic
-for_window [window_type="menu"] floating enable
-for_window [window_role="app"] floating enable
-for_window [window_role="pop-up"] floating enable
+for_window [window_type="menu"]        floating enable
+for_window [window_role="app"]         floating enable
+for_window [window_role="pop-up"]      floating enable
 for_window [window_role="task_dialog"] floating enable
-for_window [window_type="dialog"] floating enable
-for_window [title="Preferences$"] floating enable
+for_window [window_type="dialog"]      floating enable
+for_window [title="Preferences$"]      floating enable
 
-## fullscreening
+## special rules
 for_window [class="feh"] fullscreen enable
 for_window [class="mpv"] fullscreen enable
 
-# youfl script custom (~/bin/youfl)
-for_window [title="youfl_stream"] fullscreen disable, floating enable, resize set 640 px 360 px, sticky enable, move window to position 726 px 0 px
-# values:                                                                         ^a^    ^b^                                            ^c^
-# c = monitorwidth - a      (width is 1366 for me)                                ^a^    ^b^                                            ^c^
-# b = 9a/16                 (for 16:9 default size)                               ^a^    ^b^                                            ^c^
+## keybindings (scratchpad)
+bindsym F15        [class="URxvt" instance="^scratch$"] scratchpad show, move position center
 
-## keybindings (scrot)
-bindsym Print exec screenshot
-bindsym shift+Print --release exec screenshot --select
-
-## keybindings (scratchpads)
-bindsym F15 [class="URxvt" instance="scratch"] scratchpad show
-bindsym $super+F1 [class="URxvt" instance="kpcli"] scratchpad show
-bindsym $super+F2 [class="URxvt" instance="weechat"] scratchpad show
-bindsym $super+F15 scratchpad show
+## keeping programs floating/fullscreen
+for_window [class="URxvt" instance="^nmtui$"]     floating enable, resize set 795 589,  move position center
+for_window [class="URxvt" instance="^scratch$"] floating enable, resize set 1292 694, move scratchpad, border pixel 2
 
 ## keybindings (programs)
-bindsym $super+Return exec urxvtc
-
-bindsym $super+Ctrl+m exec urxvtc -name ncmpcpp -e ncmpcpp -s playlist
 bindsym $super+Ctrl+e exec thunar
 bindsym $super+Ctrl+b exec chromium
 bindsym $super+Ctrl+g exec galculator
-bindsym $super+Ctrl+a exec dmenu_custom
 bindsym $super+Ctrl+v exec pavucontrol
+bindsym $super+Ctrl+a exec dmenu_pacs
+bindsym $super+Ctrl+f exec dmenu_sinks
+bindsym $super+Ctrl+r exec dmenu_radio
+bindsym $super+Ctrl+h exec dmenu_clipboard
 
+bindsym $super+Return exec urxvtc
+bindsym $super+Ctrl+m exec urxvtc -depth 16 -name ncmpcpp -e ncmpcpp
+bindsym $super+Ctrl+i exec urxvtc -bg "#000022" -name weechat -hold -e bash -c irc
 bindsym $super+Ctrl+c exec urxvtc -name nmtui -e nmtui connect
 bindsym $super+Ctrl+n exec urxvtc -name nmtui -e nmtui edit
 
 # keybindings (xf86 on thinkpad x220)
 bindsym XF86TouchpadToggle exec --no-startup-id thinkpad-touchpad && notify-send "touchpad toggled"
 bindsym XF86WLAN exec urxvtc -name nmtui -e nmtui
-#bindsym XF86Battery exec urxvtc -name powertop -e sudo powertop
 bindsym XF86Display exec --no-startup-id projector
 
 bindsym XF86ScreenSaver exec --no-startup-id $locker
-bindsym XF86Suspend exec $locker && systemctl hibernate
-bindsym XF86Sleep exec $locker && systemctl suspend
+bindsym XF86Suspend exec --no-startup-id $locker && systemctl hibernate
+bindsym XF86Sleep exec --no-startup-id $locker && systemctl suspend
 
 bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 20
 bindsym XF86MonBrightnessDown exec --no-startup-id  xbacklight -dec 20
@@ -279,11 +292,10 @@ bindsym XF86AudioStop exec --no-startup-id ctl_player stop
 bindsym XF86AudioNext exec --no-startup-id ctl_player next
 bindsym XF86AudioPrev exec --no-startup-id ctl_player prev
 
-# colours
-client.focused #0088CC #0088CC #ffffff #dddddd
+# colours               # bord  # bg    # text  # indic
+client.focused          #dddddd #ffffff #000000 #dddddd
 client.focused_inactive #333333 #333333 #888888 #292d2e
-client.unfocused #333333 #333333 #888888 #292d2e
-client.urgent #2f343a #900000 #ffffff #900000
+client.unfocused        #333333 #333333 #888888 #292d2e
+client.urgent           #2f343a #900000 #ffffff #900000
 
 exec --no-startup-id scratch
-exec --no-startup-id scratch kpcli

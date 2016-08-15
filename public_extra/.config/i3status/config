@@ -15,6 +15,7 @@ order += "load"
 order += "cpu_temperature 0"
 order += "cpu_usage"
 order += "volume master"
+order += "path_exists docked"
 order += "tztime local"
 
 disk /home {
@@ -26,7 +27,7 @@ disk /home {
 #}
 
 wireless _first_ {
-    format_up = " %quality %ip"
+    format_up = " %quality"
     format_down = " down"
 }
 
@@ -52,6 +53,20 @@ volume master {
 
 tztime local {
     format = "%d %b %H:%M:%S |"
+}
+
+path_exists docked {
+       # file containing the PID of a vpnc process
+       path = "/tmp/docked"
+       format_down = "docked"
+       format = "%title"
+}
+
+run_watch tun {
+       # file containing the PID of a vpnc process
+       pidfile = "/home/senan/.mpd/mpd.pid"
+       format_down = ""
+       format = "%title"
 }
 
 battery 0 {
