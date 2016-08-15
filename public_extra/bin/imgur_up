@@ -1,0 +1,11 @@
+#/bin/bash
+
+read image
+
+clientid='3e7a4deb7ac67da'
+response=$(curl -sH "Authorization: Client-ID $clientid" -F "image=@$image" "https://api.imgur.com/3/upload")
+
+echo $response | grep -qo '"status":200' && 
+link=$(echo $response | sed -e 's/.*"link":"\([^"]*\).*/\1/' -e 's/\\//g')
+
+echo $link
