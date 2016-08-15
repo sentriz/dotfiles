@@ -3,13 +3,15 @@
 IN="LVDS1"
 EXT="VGA1"
 
+rm /tmp/projector_* 2> /dev/null
+
 if (xrandr | grep "$EXT disconnected") || [ "$1" == "--single" ]; then
     xrandr --output $IN --auto --output $EXT --off 
     notify-send "projector" "only using $IN"
-elif [ "$1" == "--above" ]; then
-    xrandr --output $IN --auto --primary --pos 0x768 --output $EXT --auto --pos 0x0
-    notify-send "projector" "extended to $EXT"
+    touch /tmp/projector_single
+
 else
-    xrandr --output $IN --auto --primary --output $EXT --auto --right-of $IN
+    xrandr --output $IN --primary --mode 1366x768 --pos 0x598 --rotate normal --output $EXT --mode 1366x768 --pos 1366x0 --rotate left
     notify-send "projector" "extended to $EXT"
+    touch /tmp/projector_right
 fi
