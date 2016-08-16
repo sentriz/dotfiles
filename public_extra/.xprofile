@@ -18,6 +18,7 @@ xset r rate 300 &
 
 # x
 xrandr --output LVDS1 --primary
+compton -b &
 ~/.fehbg &
 thinkpad-touchpad off &
 urxvtd &
