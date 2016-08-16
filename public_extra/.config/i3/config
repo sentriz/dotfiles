@@ -190,7 +190,7 @@ set $work2 "2 web "
 set $work3 "3 term "
 set $work4 "4 music "
 set $work5 "5 video "
-set $work6 "6 irc "
+set $work6 "6 chat "
 set $work7 "7 mnem "
 set $work8 "8 gimp "
 set $work9 "9 office "
@@ -225,6 +225,7 @@ assign [class="Firefox"] $work2
 assign [class="chromium"] $work2
 assign [class="URxvt" instance="ncmpcpp"] $work4
 assign [class="URxvt" instance="weechat"] $work6
+assign [class="*elegra*"] $work6
 assign [class="mpv"] $work5
 assign [class="Mnemosyne"] $work7
 assign [class="Gimp*"] $work8
@@ -263,6 +264,7 @@ bindsym $super+Ctrl+a exec dmenu_pacs
 bindsym $super+Ctrl+f exec dmenu_sinks
 bindsym $super+Ctrl+r exec dmenu_radio
 bindsym $super+Ctrl+h exec dmenu_clipboard
+bindsym $super+Ctrl+p exec dmenu_pass --tuser --tpass
 
 bindsym $super+Return exec urxvtc
 bindsym $super+Ctrl+m exec urxvtc -depth 16 -name ncmpcpp -e ncmpcpp
