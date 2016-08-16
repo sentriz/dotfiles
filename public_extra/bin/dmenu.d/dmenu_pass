@@ -14,15 +14,16 @@ elif [ $# -gt 0 ]; then
     pass_files=$( sed -n s@^$pass_dir@@p <<< "$pass_files" )
     pass_files=$( sort -u <<< "${pass_files}" )
     multi=true
+    if [ $# -eq 2 ]; then
+        type_extra_keys=true
+    fi
 fi
 
 selection=$( echo "$pass_files" | dmenu_custom -p "pass:" )
 test -z $selection && exit
 
-if ! $multi ; then
-    pass show $selection | xdotool type --clearmodifiers --file -
-    exit
-fi
+"$multi" || 
+(pass show $selection | xdotool type --clearmodifiers --file - && exit)
 
 while [ ! $# -eq 0 ]; do
     case "$1" in
@@ -30,12 +31,12 @@ while [ ! $# -eq 0 ]; do
             pass show "$selection/username" | xdotool type --clearmodifiers --file - ||
             pass show "$selection/email" | xdotool type --clearmodifiers --file - ||
             (notify-send "dmenu pass" "no username entry" && false)
-            [ $? -eq 0 ] && xdotool key 23 # tab
+            [ $? -eq 0 ] && "$type_extra_keys" && xdotool key 23 # tab
             ;;
         --tpass)
             pass show $selection"/password" | xdotool type --clearmodifiers --file - ||
             (notify-send "dmenu pass" "no password entry" && false)
-            [ $? -eq 0 ] && xdotool key 36 # enter
+            [ $? -eq 0 ] && "$type_extra_keys" && xdotool key 36 # enter
             ;;
     esac
     shift
