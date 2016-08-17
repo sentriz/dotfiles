@@ -30,7 +30,6 @@ alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 
 # action
-alias td="vim ~/todo"
 alias pg='ping 8.8.8.8'
 alias ascreen='screen -dRR'
 alias monoff="xset dpms force off"
