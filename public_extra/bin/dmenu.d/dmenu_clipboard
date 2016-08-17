@@ -1,3 +1,4 @@
 #!/bin/bash
 
+# clipmenu $(cat $(which dmenu_custom) | tail -n 1 | sed 's/\w*$//' | sed 's/^\w*//') -p "clipboard:"
 clipmenu -i -l 20 -nb "#222222" -sb "#0088cc" -y 20 -x 20 -w 1326 -p "clipboard:"

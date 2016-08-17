@@ -1,0 +1,23 @@
+#!/bin/bash
+
+file=~/todo
+height=$(cat $file | wc -l)
+
+menu="cat $file | dmenu_custom -p 'todo:' -l $height"
+selection=$(eval $menu)
+
+while [ -n "$selection" ]; do
+	if grep -q "^$selection" $file; then
+		grep -v "^$selection" $file > /tmp/todo
+		mv /tmp/todo $file
+        height=$(($height - 1))
+        menu="cat $file | dmenu_custom -p 'todo:' -l $height"
+	else
+		echo "$selection" >> $file
+        height=$(($height + 1))
+        menu="cat $file | dmenu_custom -p 'todo:' -l $height"
+	fi
+	selection=$(eval $menu)
+done
+
+exit
