@@ -14,6 +14,6 @@ test -z "$station" && exit 1
 
 mpc pause &> /dev/null
 pkill -f "^mpv.*radio"
-mpv --no-ytdl --no-video --no-cache --quiet ~/radio/"$station" &
+mpv --no-ytdl --no-video --no-cache --quiet --no-resume-playback ~/radio/"$station" &
 
 notify-send "started radio station" "$station"
