@@ -18,7 +18,10 @@ for file in os.listdir(track_base):
     if 'folder.' in file:
         art_file = track_base + '/' + file
 
-art_size = 200
+if not art_file:
+    exit(1)
+
+art_size = 252
 
 term_width = int(subprocess.getoutput("tput cols")) * 7
 term_height = int(subprocess.getoutput("tput lines")) * 13
@@ -29,4 +32,4 @@ y_pos = term_height - art_size - 28
 format_sting = "0;1;{0};{1};{2};{2};;;;;{3}\n4;\n3;".format(x_pos, y_pos, art_size, art_file)
 
 img_format = subprocess.Popen(["echo", format_sting], stdout=subprocess.PIPE)
-img_show = subprocess.Popen(["/usr/lib/w3m/w3mimgdisplay"], stdin=img_format.stdout)
+img_show = subprocess.Popen(["/usr/lib/w3m/w3mimgdisplay"], stdin=img_format.stdout, stdout=subprocess.DEVNULL)
