@@ -92,7 +92,7 @@ bindsym $super+$alt+q mode $mode_system
 bindsym $super+$alt+v mode $mode_audio
 bindsym $super+$alt+i mode $mode_i3
 bindsym $super+$alt+p mode $mode_pass
-bindsym Print Mode $mode_scrot
+bindsym $super+$alt+s mode $mode_scrot
 
 set $mode_resize_tile "resize mode: [h][j][k][l]"
 set $mode_move_floating "floating move mode: [h][j][k][l]"
@@ -225,7 +225,7 @@ assign [class="Firefox"] $work2
 assign [class="chromium"] $work2
 assign [class="URxvt" instance="ncmpcpp"] $work4
 assign [class="URxvt" instance="weechat"] $work6
-assign [class="*elegra*"] $work6
+assign [class="Franz"] $work6
 assign [class="Mnemosyne"] $work7
 assign [class="Gimp*"] $work8
 assign [class="libreoffice-*"] $work9
@@ -259,6 +259,7 @@ bindsym $super+Ctrl+e exec thunar
 bindsym $super+Ctrl+b exec chromium
 bindsym $super+Ctrl+g exec galculator
 bindsym $super+Ctrl+v exec pavucontrol
+bindsym $super+Ctrl+w exec morc_menu
 bindsym $super+Ctrl+a exec dmenu_pacs
 bindsym $super+Ctrl+f exec dmenu_sinks
 bindsym $super+Ctrl+r exec dmenu_radio
@@ -271,6 +272,7 @@ bindsym $super+Ctrl+m exec urxvtc -depth 16 -name ncmpcpp -e ncmpcpp
 bindsym $super+Ctrl+i exec urxvtc -bg "#000022" -name weechat -hold -e bash -c irc
 bindsym $super+Ctrl+c exec urxvtc -name nmtui -e nmtui connect
 bindsym $super+Ctrl+n exec urxvtc -name nmtui -e nmtui edit
+bindsym $super+Ctrl+s exec ctl_mpv_watch
 
 # keybindings (xf86 on thinkpad x220)
 bindsym XF86TouchpadToggle exec --no-startup-id thinkpad-touchpad && notify-send "touchpad toggled"
@@ -293,6 +295,9 @@ bindsym XF86AudioPlay exec --no-startup-id ctl_player toggle
 bindsym XF86AudioStop exec --no-startup-id ctl_player stop
 bindsym XF86AudioNext exec --no-startup-id ctl_player next
 bindsym XF86AudioPrev exec --no-startup-id ctl_player prev
+
+bindsym Print                 exec screenshot
+bindsym --release Shift+Print exec screenshot --select
 
 # colours               # bord  # bg    # text  # indic
 client.focused          #dddddd #ffffff #000000 #dddddd
