@@ -143,8 +143,8 @@ nnoremap <leader>yg :YcmCompleter GoTo<CR>
 nnoremap <leader>yr :YcmCompleter GoToReferences<CR>
 nnoremap <leader>yd :YcmCompleter GetDoc<CR>
 
-nnoremap <leader>bb <Esc>ggO<Esc>cc#!/usr/bin/env bash<Esc>
-nnoremap <leader>bp <Esc>ggO<Esc>cc#!/usr/bin/env python<Esc>
+nnoremap <leader>bb ggO#!/usr/bin/env bash<Esc>
+nnoremap <leader>bp ggO#!/usr/bin/env python<Esc>
 
 nnoremap <leader>a :ArgWrap<CR>
 nnoremap <leader>c :!column -t<CR>
