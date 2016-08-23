@@ -1,3 +1,0 @@
-#!/bin/bash
-
-urxvtc -bg "#303030" -name scratch

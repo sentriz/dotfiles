@@ -1,3 +1,0 @@
-#!/bin/bash
-
-youtube-dl -q -o - $@ | mpv --cache='4096' --title='youfl_stream' --really-quiet -
