@@ -27,7 +27,6 @@ megasync &
 clipmenud &
 dunst &
 # xdotool behave_screen_edge bottom-right exec --sync ~/bin/lock &
-telegram-desktop &
 
 # non x
 dock_watch &
