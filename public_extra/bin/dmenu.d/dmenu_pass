@@ -22,20 +22,18 @@ fi
 
 selection=$( echo "$pass_files" | dmenu_custom -p "pass:" )
 test -z $selection && exit
-
-"$multi" || 
-(pass show $selection | xdotool type --clearmodifiers --file - && exit)
+"$multi" || (pass show $selection | tr -d '\n' | xdotool type --clearmodifiers --file - && exit)
 
 while [ ! $# -eq 0 ]; do
     case "$1" in
         --tuser)
-            pass show "$selection/username" | xdotool type --clearmodifiers --file - ||
-            pass show "$selection/email" | xdotool type --clearmodifiers --file - ||
+            pass show "$selection/username" | tr -d '\n' | xdotool type --clearmodifiers --file - ||
+            pass show "$selection/email" | tr -d '\n' | xdotool type --clearmodifiers --file - ||
             (notify-send "dmenu pass" "no username entry" && false)
-            [ $? -eq 0 ] && "$type_extra_keys" && sleep 1.2 && xdotool key 23 # tab
+            [ $? -eq 0 ] && "$type_extra_keys" && sleep 0.8 && xdotool key 23 # tab
             ;;
         --tpass)
-            pass show $selection"/password" | xdotool type --clearmodifiers --file - ||
+            pass show $selection"/password" | tr -d '\n' | xdotool type --clearmodifiers --file - ||
             (notify-send "dmenu pass" "no password entry" && false)
             [ $? -eq 0 ] && "$type_extra_keys" && xdotool key 36 # enter
             ;;
