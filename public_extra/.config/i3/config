@@ -166,8 +166,8 @@ mode $mode_move_floating {
 mode $mode_scrot {
     bindsym n                 exec "screenshot",                                                                             mode "default"
     bindsym Shift+n           exec "screenshot | imgur_up | xclip && notify-send 'screenshot' 'link in clipboard'",          mode "default"
-    bindsym --release s       exec "screenshot --select",                                                                    mode "default"
-    bindsym --release Shift+s exec "screenshot --select | imgur_up | xclip && notify-send 'screenshot' 'link in clipboard'", mode "default"
+    bindsym --release s       exec "screenshot --select";                                                                    mode "default"
+    bindsym --release Shift+s exec "screenshot --select | imgur_up | xclip && notify-send 'screenshot' 'link in clipboard'"; mode "default"
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
