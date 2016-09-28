@@ -58,13 +58,6 @@ tztime local {
 path_exists docked {
        # file containing the PID of a vpnc process
        path = "/tmp/docked"
-       format_down = "docked"
-       format = "%title"
-}
-
-run_watch tun {
-       # file containing the PID of a vpnc process
-       pidfile = "/home/senan/.mpd/mpd.pid"
        format_down = ""
        format = "%title"
 }
