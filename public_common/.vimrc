@@ -1,5 +1,6 @@
 " basic settings
 set nocompatible
+set autoread
 set incsearch
 set noswapfile
 set autowrite
@@ -10,6 +11,8 @@ set sidescroll=1
 set nowrap
 set wildmode=longest,list,full
 set wildmenu
+set mouse+=a
+
 syntax on
 filetype off
 
@@ -29,6 +32,7 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-commentary'
+Plugin 'vimwiki/vimwiki'
 Plugin 'tpope/vim-repeat'
 Plugin 'mhinz/vim-startify'
 Plugin 'tommcdo/vim-exchange'
@@ -143,11 +147,13 @@ nnoremap <leader>yg :YcmCompleter GoTo<CR>
 nnoremap <leader>yr :YcmCompleter GoToReferences<CR>
 nnoremap <leader>yd :YcmCompleter GetDoc<CR>
 
-nnoremap <leader>bb ggO#!/usr/bin/env bash<Esc>
-nnoremap <leader>bp ggO#!/usr/bin/env python<Esc>
+nnoremap <leader>bb mzggO#!/usr/bin/env bash<Esc>o<Esc>`z
+nnoremap <leader>bp mzggO#!/usr/bin/env python3<Esc>o<Esc>`z
 
 nnoremap <leader>a :ArgWrap<CR>
 nnoremap <leader>c :!column -t<CR>
+nnoremap <leader>r :!clear && %:p<CR>
+nnoremap <leader>x :w<CR>:!chmod +x %:p<CR><CR>
 
 " mappings
 nnoremap <Tab> <C-w><C-w>
