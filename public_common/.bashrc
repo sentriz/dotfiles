@@ -1,4 +1,8 @@
-## aliases
+## misc ##
+
+set -o vi
+
+## aliases ##
 
 # needed argument or couldn't quote
 c() { cd "$@" && ls -lpAh; }
@@ -7,9 +11,15 @@ fuzz_root() { find / -readable -type f 2> /dev/null | fzf --reverse --black --mu
 find_key() { xev | awk -F'[ )]+' '/^KeyPress/ { a[NR+2] } NR in a { printf "%-3s %s\n", $5, $8 }'; }
 
 # listing
-alias ls='ls --color=auto --group-directories-first'
-alias ll='ls -lpAh --color=auto --group-directories-first'
-alias l='ls -lph --color=auto --group-directories-first'
+l() {
+    ls -vFqrloth --color=yes --time-style=long-iso "$@" \
+    | sed "s/$(date +%Y-%m-%d)/\x1b[32m     TODAY\x1b[m/; s/$(date +'%Y-%m-%d' -d yesterday)/\x1b[33m YESTERDAY\x1b[m/"
+}
+
+ll() {
+    ls -vFqrlothA --color=yes  --time-style=long-iso "$@" \
+    | sed "s/$(date +%Y-%m-%d)/\x1b[32m     TODAY\x1b[m/; s/$(date +'%Y-%m-%d' -d yesterday)/\x1b[33m YESTERDAY\x1b[m/"
+}
 
 # safety/better
 alias rm='rm -Iv --preserve-root'
@@ -19,6 +29,7 @@ alias cp='cp -aiv'
 alias mkdir='mkdir -p -v'
 alias du='du -d1 -h'
 alias df='df -hT'
+alias ssh="autossh"
 
 # fasd
 alias p='a -e mpv'
@@ -35,6 +46,7 @@ alias ascreen='screen -dRR'
 alias monoff="xset dpms force off"
 alias av_scan="sudo freshclam && sudo clamscan -r --bell -i /"
 alias watched="sed -i s/watched\>false/watched\>true/"
+alias calc="python3 -ic 'from math import *; import cmath'"
 
 # info
 alias ncs="ps aux | egrep '\sn(cat|c|etcat)\s'"
@@ -50,42 +62,39 @@ alias speed="speedtest-cli --simple"
 alias tb='nc termbin.com 9999'
 alias please='sudo $(history -p \!\!)' 
 alias sedo="sudo -E"
+alias sudo="sudo "
 
 # exit
 alias :wq="exit"
 alias :qw="exit"
 alias :q="exit"
 
+## functions ##
 
-## vi keybindings 
-set -o vi
-
-
-## functions
 extract() {
-    if [ -f $1 ] ; then
+    if [ -f $1 ]; then
         case $1 in
-            *.tar.bz2)   tar xjf $1     ;;
-            *.tar.gz)    tar xzf $1     ;;
-            *.bz2)       bunzip2 $1     ;;
-            *.rar)       unrar e $1     ;;
-            *.gz)        gunzip $1      ;;
-            *.tar)       tar xf $1      ;;
-            *.tbz2)      tar xjf $1     ;;
-            *.tgz)       tar xzf $1     ;;
-            *.zip)       unzip $1       ;;
-            *.Z)         uncompress $1  ;;
-            *.7z)        7z x $1        ;;
-            *)           echo "'$1' cannot be extracted via extract()" ;;
+            *.tar.bz2)   tar xjf $1 ;;
+            *.tar.gz)    tar xzf $1 ;;
+            *.bz2)       bunzip2 $1 ;;
+            *.rar)       unrar e $1 ;;
+            *.gz)        gunzip $1 ;;
+            *.tar)       tar xf $1 ;;
+            *.tbz2)      tar xjf $1 ;;
+            *.tgz)       tar xzf $1 ;;
+            *.zip)       unzip $1 ;;
+            *.Z)         uncompress $1 ;;
+            *.7z)        7z x $1 ;;
+            *)           echo "can't do" ;;
         esac
     else
-        echo "'$1' is not a valid file"
+        echo "not a file"
     fi
 }
 
 confirm () {
-    # call with a prompt string or use a default
     read -r -p "${1:-Are you sure? [y/N]} " response
+
     case $response in
         [yY][eE][sS]|[yY]) 
             true
@@ -96,35 +105,7 @@ confirm () {
     esac
 }
 
-colours() {
-	local fgc bgc vals seq0
-
-	printf "Color escapes are %s\n" '\e[${value};...;${value}m'
-	printf "Values 30..37 are \e[33mforeground colors\e[m\n"
-	printf "Values 40..47 are \e[43mbackground colors\e[m\n"
-	printf "Value  1 gives a  \e[1mbold-faced look\e[m\n\n"
-
-	# foreground colors
-	for fgc in {30..37}; do
-		# background colors
-		for bgc in {40..47}; do
-			fgc=${fgc#37} # white
-			bgc=${bgc#40} # black
-
-			vals="${fgc:+$fgc;}${bgc}"
-			vals=${vals%%;}
-
-			seq0="${vals:+\e[${vals}m}"
-			printf "  %-9s" "${seq0:-(default)}"
-			printf " ${seq0}TEXT\e[m"
-			printf " \e[${vals:+${vals+$vals;}}1mBOLD\e[m"
-		done
-		echo; echo
-	done
-}
-
-swap()         
-{
+swap() {
     local TMPFILE=tmp.$$
     mv "$1" $TMPFILE
     mv "$2" "$1"
@@ -148,12 +129,33 @@ play () {
     mpv --no-terminal --no-video --cache=256 -; 
 }
 
-export -f confirm play swap
+function proxy_on() {
+    export no_proxy="localhost,127.0.0.1,localaddress,.localdomain.com"
 
+    sudo -E ssh -Nf "$1" -D 8080
 
-## colours
+    export http_proxy="http://localhost:8080/"
+    export https_proxy=$http_proxy
+    export ftp_proxy=$http_proxy
+    export rsync_proxy=$http_proxy
+    export HTTP_PROXY=$http_proxy
+    export HTTPS_PROXY=$http_proxy
+    export FTP_PROXY=$http_proxy
+    export RSYNC_PROXY=$http_proxy
+}
+
+function proxy_off(){
+    unset http_proxy
+    unset https_proxy
+    unset ftp_proxy
+    unset rsync_proxy
+}
+
+export -f confirm play swap proxy_on proxy_off
+
+## colours ##
+
 Color_Off='\e[0m'
-
 Black='\e[0;30m'
 Red='\e[0;31m'
 Green='\e[0;32m'
@@ -162,7 +164,6 @@ Blue='\e[0;34m'
 Purple='\e[0;35m'
 Cyan='\e[0;36m'
 White='\e[0;37m'
-
 BIBlack='\e[1;90m'
 BIRed='\e[1;91m'
 BIGreen='\e[1;92m'
@@ -171,34 +172,30 @@ BIBlue='\e[1;94m'
 BIPurple='\e[1;95m'
 BICyan='\e[1;96m'
 BIWhite='\e[1;97m'
-
 c_Blue='\033[38;5;39m'
 
+## bash completion ##
 
-## bash completion
 completion_path='/usr/share/bash-completion/bash_completion'
 [[ -f $completion_path ]] && . $completion_path
 
+## PS1 ##
 
-## PS1
-if [ -f ~/.bash_psone ]; then
-    . ~/.bash_psone
-fi
+. ~/.bash_psone &> /dev/null
 
+## keychain ##
 
-## keychain
 . ~/.keychain/$HOSTNAME-sh &> /dev/null
 . ~/.keychain/$HOSTNAME-sh-gpg &> /dev/null
 
+## source local ##
 
-## source local
-if [ -f ~/.bash_local ]; then
-    . ~/.bash_local
-fi
+. ~/.bash_local &> /dev/null
 
-## show todo
+## show todo ##
+
 if [ -f ~/todo ]; then
     echo "[todo]"
-    cat todo
+    cat ~/todo
     echo
 fi
