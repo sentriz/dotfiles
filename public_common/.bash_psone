@@ -8,6 +8,9 @@ case $HOSTNAME in
     osmc)
         main_string="\[$BIYellow\]\u\[$Yellow\]@\h"
         ;;
+    shmig)
+        main_string="\[$BIRed\]\u\[$White\]@\h"
+        ;;
     *)
         main_string="\[$BIWhite\]\u\[$White\]@\h"
         ;;
