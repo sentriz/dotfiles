@@ -16,7 +16,7 @@ floating_modifier $super
 popup_during_fullscreen smart
 
 for_window [class="^.*"] border pixel 0
-gaps inner 7
+gaps inner 9
 smart_gaps on
 smart_borders on
 
@@ -28,12 +28,12 @@ bar {
     status_command i3status
     tray_output primary
     colors {
-        separator #666666
-        background #222222
+        separator #303030
+        background #303030
         statusline #dddddd
         focused_workspace #0088CC #0088CC #ffffff
-        active_workspace #333333 #333333 #ffffff
-        inactive_workspace #333333 #333333 #888888
+        active_workspace #333333 #303030 #ffffff
+        inactive_workspace #303030 #303030 #888888
         urgent_workspace #2f343a #900000 #ffffff
     }
 }
@@ -45,11 +45,11 @@ bar {
     tray_output none
     colors {
         separator #666666
-        background #222222
+        background #303030
         statusline #dddddd
         focused_workspace #0088CC #0088CC #ffffff
-        active_workspace #333333 #333333 #ffffff
-        inactive_workspace #333333 #333333 #888888
+        active_workspace #333333 #303030 #ffffff
+        inactive_workspace #303030 #303030 #888888
         urgent_workspace #2f343a #900000 #ffffff
     }
 }
@@ -267,9 +267,9 @@ bindsym $super+Ctrl+h exec dmenu_clipboard
 bindsym $super+Ctrl+p exec dmenu_pass --tuser --tpass
 bindsym $super+Ctrl+t exec dmenu_todo
 
-bindsym $super+Return exec urxvtc
-bindsym $super+Ctrl+m exec urxvtc -depth 16 -name ncmpcpp -e ncmpcpp
-bindsym $super+Ctrl+i exec urxvtc -bg "#000022" -name weechat -hold -e bash -c irc
+bindsym $super+Return exec urxvtc -bg "#303030"
+bindsym $super+Ctrl+m exec urxvtc -bg "#303030" -depth 16 -name ncmpcpp -e ncmpcpp
+bindsym $super+Ctrl+i exec urxvtc -bg "#303030" -name weechat -hold -e bash -c irc
 bindsym $super+Ctrl+c exec urxvtc -name nmtui -e nmtui connect
 bindsym $super+Ctrl+n exec urxvtc -name nmtui -e nmtui edit
 bindsym $super+Ctrl+s exec ctl_mpv_watch
