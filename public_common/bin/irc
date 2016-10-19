@@ -4,6 +4,7 @@
 #     notify-send "weechat highlight" "$message"
 # done &
 
-autossh -t blinken 'screen -Dr weechat'
+mosh shmig -- sh -c 'screen -Dr weechat'
+
 
 # pkill -f "ncat -kl 3333"
