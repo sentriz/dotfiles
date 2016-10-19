@@ -24,16 +24,10 @@ thinkpad-touchpad off &
 urxvtd &
 redshift-gtk &
 megasync &
-clipmenud &
 dunst &
 # xdotool behave_screen_edge bottom-right exec --sync ~/bin/lock &
 
-# non x
-dock_watch &
-
 # start tunnels
-export AUTOSSH_PORT=0
-export AUTOSSH_FIRST_POLL=5
 autossh -f -N osmc_tunnels
 
 # sshfs mount
