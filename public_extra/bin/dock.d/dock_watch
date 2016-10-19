@@ -8,14 +8,16 @@ last_state="none"
 while true; do
 
     if grep -q "1" /sys/devices/platform/dock.*/docked; then
+        touch /tmp/fdock
         if [ "$last_state" == "undocked" ] || [ "$last_state" == "none" ]; then
             sleep 2
-            dock
+            sudo -E dock
         fi
         last_state="docked"
     else
+        touch /tmp/fudock
         if [ "$last_state" == "docked" ]; then
-            undock
+            sudo -E undock
         fi
         last_state="undocked"
     fi

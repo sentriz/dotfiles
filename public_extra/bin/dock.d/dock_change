@@ -1,0 +1,35 @@
+#!/bin/bash
+
+sleep 0.8
+
+if grep -q "1" /sys/devices/platform/dock.*/docked; then
+
+    # dock
+
+    ifconfig enp0s25 up
+    # nmcli connection up "home wired"
+    # nmcli connection down "home wifi"
+    ifconfig wlp3s0 down
+
+    projector
+    /home/senan/.fehbg
+    killall -SIGUSR1 autossh
+
+    touch /tmp/docked
+
+else 
+
+    # undock
+
+    ifconfig wlp3s0 up
+    # nmcli connection up "home wifi"
+    # nmcli connection down "home wired"
+    ifconfig enp0s25 down
+
+    projector --single
+    /home/senan/.fehbg
+    killall -SIGUSR1 autossh
+
+    rm /tmp/docked
+
+fi
