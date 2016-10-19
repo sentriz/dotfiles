@@ -3,10 +3,10 @@ git_branch='$(git branch 2> /dev/null | grep -e ^* | sed -E s/^\\\\\*\ \(.+\)$/\
 
 case $HOSTNAME in
     manjaro)
-        main_string="\[$BIGreen\]\u\[$Green\]@\h"
+        main_string="\[$BIGreen\]\u\[$White\]@\h"
         ;;
     osmc)
-        main_string="\[$BIYellow\]\u\[$Yellow\]@\h"
+        main_string="\[$BIYellow\]\u\[$White\]@\h"
         ;;
     shmig)
         main_string="\[$BIRed\]\u\[$White\]@\h"
