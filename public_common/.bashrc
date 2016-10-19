@@ -31,6 +31,9 @@ alias du='du -d1 -h'
 alias df='df -hT'
 alias ssh="autossh"
 
+alias qmv="qmv --format destination-only"
+alias qrm="qrm --format destination-only"
+
 # fasd
 alias p='a -e mpv'
 alias v='a -e vim'
