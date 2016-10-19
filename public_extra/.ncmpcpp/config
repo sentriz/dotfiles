@@ -5,9 +5,18 @@ mpd_music_dir = /home/senan/dynamic/music_library
 media_library_primary_tag = album_artist
 visualizer_fifo_path = /home/senan/.mpd.fifo
 visualizer_output_name = fifo
-progressbar_look = "--"
 playlist_separate_albums = yes
 execute_on_song_change = /home/senan/bin/show_art
 ignore_leading_the = yes
 tag_editor_extended_numeration = yes
 titles_visibility = yes
+
+song_list_format = "%l | {%a - %t}|{%f} $R %b"
+cyclic_scrolling = no
+lines_scrolled = 1
+playlist_display_mode = classic
+
+progressbar_look = "─╼─"
+main_window_color = white
+main_window_highlight_color = white
+active_column_color = green
