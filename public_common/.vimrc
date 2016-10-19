@@ -3,6 +3,7 @@ set nocompatible
 set autoread
 set incsearch
 set noswapfile
+" set clipboard=unnamed
 set autowrite
 set nobackup
 set nowritebackup
@@ -40,6 +41,7 @@ Plugin 'PotatoesMaster/i3-vim-syntax'
 Plugin 'godlygeek/csapprox'
 Plugin 'FooSoft/vim-argwrap'
 Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'jpalardy/vim-slime'
 " Plugin 'Valloric/YouCompleteMe'
 call vundle#end()
 filetype plugin indent on
@@ -47,15 +49,24 @@ filetype plugin indent on
 " plugin settings
 let g:ycm_filetype_whitelist = {'python' : 1, 'javascript' : 1, 'c' : 1}
 let g:startify_session_dir = '~/.vim/session'
-
-" trim trailing on save
-autocmd BufWritePre .vimrc,*.py,*.js,*.html call Preserve("%s/\\s\\+$//e")
+let g:slime_paste_file = '/tmp/slime_paste'
+let g:slime_paste_file = '/tmp/slime_paste'
+let g:slime_target = 'tmux'
+let g:netrw_winsize = -28
+let g:netrw_banner = 0
+let g:netrw_liststyle = 3
+let g:netrw_sort_sequence = '[\/]$,*'
+let g:netrw_altv = 1
+let g:netrw_browse_split = 2
 
 " colorscheme, term colours, hidden chars and font
 colorscheme desert
 set guifont=Consolas:h10
 set listchars=tab:>\ ,eol:¬,trail:.
 set statusline=%<\ %f\ %m%r%y%w%=%l\/%-6L\ %3c
+
+" trim trailing on save
+autocmd BufWritePre .vimrc,*.py,*.js,*.html call Preserve("%s/\\s\\+$//e")
 
 " jump to last known cursor position (except in commit messages)
 autocmd BufReadPost *
@@ -81,10 +92,10 @@ set shiftwidth=4
 set expandtab
 
 " text bubbling
-nmap <C-k> ddkP
-nmap <C-j> ddp
-vmap <C-k> xkP`[V`]
-vmap <C-j> xp`[V`]
+nmap <S-k> ddkP
+nmap <S-j> ddp
+vmap <S-k> xkP`[V`]
+vmap <S-j> xp`[V`]
 
 " functions
 function! OpenChangedFiles()
@@ -121,9 +132,10 @@ endfunction
 " leader mappings
 let mapleader = "\<Space>"
 
-nnoremap <leader>en :e <C-R>=expand("%:p:h") . "/"<CR>
+nnoremap <leader>e :e <C-R>=expand("%:p:h") . "/"<CR>
 nnoremap <leader>ev :vsplit <C-R>=expand("%:p:h") . "/"<CR>
 nnoremap <leader>eh :split <C-R>=expand("%:p:h") . "/"<CR>
+nnoremap <leader>en :Lexplore<CR>
 nnoremap <leader>eg :call OpenChangedFiles()<CR>
 
 nnoremap <leader>cg :cd ~/dev/github/<CR>
@@ -152,11 +164,12 @@ nnoremap <leader>bp mzggO#!/usr/bin/env python3<Esc>o<Esc>`z
 
 nnoremap <leader>a :ArgWrap<CR>
 nnoremap <leader>c :!column -t<CR>
-nnoremap <leader>r :!clear && %:p<CR>
+nnoremap <leader>r :w<CR>:!clear && %:p<CR>
 nnoremap <leader>x :w<CR>:!chmod +x %:p<CR><CR>
+nnoremap <leader>t :w<CR>:!ctags -R %:h<CR><CR>
 
 " mappings
-nnoremap <Tab> <C-w><C-w>
+nnoremap <Tab> :Lexplore<CR>
 nnoremap [25~ :bp<CR>
 nnoremap [26~ :bn<CR>
 nnoremap Y y$
@@ -166,8 +179,8 @@ nnoremap <Right> :vertical resize -2<CR>
 nnoremap <Up> :resize -2<CR>
 nnoremap <Down> :resize +2<CR>
 
-nnoremap <silent> n :call <SID>NiceNext('n')<cr>
-nnoremap <silent> N :call <SID>NiceNext('N')<cr>
+nnoremap <silent> n :silent call <SID>NiceNext('n')<cr>
+nnoremap <silent> N :silent call <SID>NiceNext('N')<cr>
 
 " use C-e and C-y to copy word above and below the current line
 inoremap <expr> <c-y> pumvisible() ? "\<c-y>" : matchstr(getline(line('.')-1), '\%' . virtcol('.') . 'v\%(\k\+\\|.\)')
