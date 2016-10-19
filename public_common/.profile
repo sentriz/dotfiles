@@ -15,11 +15,15 @@ if [ -d "$HOME/bin" ]; then
 fi
 
 # # load keys
-keychain --systemd --quiet --nogui --agents ssh,gpg id_home 609FCE8BB45971C8293040AC9A8DAE1CA907B862
+
+if [$HOSTNAME == "manjaro"]; then
+    keychain --quiet --nogui --agents ssh,gpg id_home 609FCE8BB45971C8293040AC9A8DAE1CA907B862
+else
+    keychain --quiet --nogui --agents ssh id_raspberry
+fi
+
 . ~/.keychain/$HOSTNAME-sh &> /dev/null
 . ~/.keychain/$HOSTNAME-sh-gpg &> /dev/null
-
-rm ~/mega/senan_kelly.kdbx.lock &> /dev/null
 
 [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && 
 exec startx -- -keeptty -nolisten tcp 1> ~/.xorg.log 2>&1
