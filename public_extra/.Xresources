@@ -19,8 +19,8 @@ URxvt.perl-ext-common: default,matcher
 URxvt.url-launcher: /usr/bin/chromium
 URxvt.matcher.button: 1
 
-*.foreground:   #c2c2b0
-*.background:   #222222
+*.foreground:   #f2f2ef
+*.background:   #303030
 *.cursorColor:  #c2c2b0
 ! black
 *.color0:       #303030
