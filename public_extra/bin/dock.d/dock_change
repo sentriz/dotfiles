@@ -6,10 +6,10 @@ if grep -q "1" /sys/devices/platform/dock.*/docked; then
 
     # dock
 
-    ifconfig enp0s25 up
+    # ifconfig enp0s25 up
     # nmcli connection up "home wired"
     # nmcli connection down "home wifi"
-    ifconfig wlp3s0 down
+    # ifconfig wlp3s0 down
 
     projector
     /home/senan/.fehbg
@@ -21,10 +21,10 @@ else
 
     # undock
 
-    ifconfig wlp3s0 up
+    # ifconfig wlp3s0 up
     # nmcli connection up "home wifi"
     # nmcli connection down "home wired"
-    ifconfig enp0s25 down
+    # ifconfig enp0s25 down
 
     projector --single
     /home/senan/.fehbg
