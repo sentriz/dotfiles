@@ -1,0 +1,57 @@
+#!/usr/bin/env python3
+
+shitty_files = (
+    '~/.adobe',
+    '~/.macromedia',
+    '~/.recently-used',
+    '~/.local/share/recently-used.xbel',
+    '~/Desktop',
+    '~/.thumbnails',
+    '~/.gconfd',
+    '~/.gconf',
+    '~/.local/share/gegl-0.2',
+    '~/.FRD/log/app.log',
+    '~/.FRD/links.txt',
+    '~/.objectdb',
+    '~/.gstreamer-0.10',
+    '~/.pulse',
+    '~/.esd_auth',
+    '~/.config/enchant',
+    '~/.spicec',
+    '~/.dropbox-dist',
+    '~/.parallel',
+    '~/.dbus',
+    '~/ca2',
+    '~/ca2~',
+    '~/.distlib/',
+    '~/.bazaar/',
+    '~/.bzr.log',
+    '~/.nv/',
+    '~/.viminfo',
+    '~/.npm/',
+    '~/.java/',
+    '~/.oracle_jre_usage/',
+    '~/.jssc/',
+    '~/.tox/',
+    '~/.pylint.d/',
+    '~/.emacs.d/',
+)
+
+
+if __name__ == '__main__':
+
+    import os
+    import sys
+    import shutil
+
+    for raw_file in shitty_files:
+        file = os.path.expanduser(raw_file)
+
+        if not os.path.exists(file):
+            continue
+        if os.path.isfile(file):
+            os.remove(file)
+        elif os.path.isdir(file):
+            shutil.rmtree(file)
+
+        print("removed", file)
