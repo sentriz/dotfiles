@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+name=$( echo $* | sed 's/ /-/g' )
+date=$( date +%F )
+file=~/dev/github/xyz/_posts/$date-$name.md
+git_file=~/dev/github/xyz/.git
+
+touch $file &&
+echo -e "---\ntitle:  \n---" > $file &&
+vim +2 -c "normal $" $file &&
+# test -z "$(git --git-dir=$git_file status --porcelain)" &&
+# git --git-dir=$git_file add $file &&
+# git --git-dir=$git_file commit -m "add post $name"
