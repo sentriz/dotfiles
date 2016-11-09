@@ -9,7 +9,7 @@
 
 set $super Mod4
 set $alt Mod1
-set $locker lock
+set $locker lock &
 
 font pango:bitstream vera sans mono 10
 floating_modifier $super
@@ -20,8 +20,7 @@ gaps inner 9
 smart_gaps on
 smart_borders on
 
-## bar settings
-# main
+## main bar
 bar {
     output LVDS1
     output HDMI2
@@ -38,7 +37,7 @@ bar {
     }
 }
 
-# second
+## second bar
 bar {
     output VGA1
     status_command mpc_stream
@@ -93,16 +92,19 @@ bindsym $super+$alt+v mode $mode_audio
 bindsym $super+$alt+i mode $mode_i3
 bindsym $super+$alt+p mode $mode_pass
 bindsym $super+$alt+s mode $mode_scrot
+bindsym $super+$alt+g mode $mode_gaps
 
 set $mode_resize_tile "resize mode: [h][j][k][l]"
 set $mode_move_floating "floating move mode: [h][j][k][l]"
 set $mode_system  "system mode: [l]ock, log[o]ut, [s]uspend, [h]ibernate, [r]eboot, shut[d]own"
 set $mode_i3  "i3 mode: e[x]it, [r]estart, reload [c]onfig"
-set $mode_audio "volume mode: [+|Right] +5%/+10%,  [-|Left] +5%/+10%,  [m]ute,  [r]eset"
+set $mode_audio "volume mode: +|right +5%/+10%,  -|left +5%/+10%,  [m]ute,  [r]eset"
 set $mode_scrot "screenshot mode: [n]ormal, [s]elect, [N]ormal upload, [S]elect upload"
 set $mode_pass "pass mode: [m]anual, [u]ser, [p]assword, [b]oth"
+set $mode_gaps "gaps: [o]uter, [i]nner"
+set $mode_gaps_outer "gaps outer: +|-|0 (local), shift +|-|0 (global)"
+set $mode_gaps_inner "gaps inner: +|-|0 (local), shift +|-|0 (global)"
 
-# resizing tiles mode
 mode $mode_resize_tile {
         bindsym h resize shrink width 10 px or 10 ppt
         bindsym j resize grow height 10 px or 10 ppt
@@ -113,7 +115,6 @@ mode $mode_resize_tile {
         bindsym Escape mode "default"
 }
 
-# system power options mode
 mode $mode_system {
     bindsym l exec --no-startup-id $locker, mode default
     bindsym s exec --no-startup-id $locker && systemctl suspend, mode default
@@ -126,7 +127,6 @@ mode $mode_system {
     bindsym Escape mode "default"
 }
 
-# i3 options mode
 mode $mode_i3 {
     bindsym x exit
     bindsym r restart
@@ -136,7 +136,6 @@ mode $mode_i3 {
     bindsym Escape mode "default"
 }
 
-# audio menu mode
 mode $mode_audio {
     bindsym plus          exec --no-startup-id ponymix increase 5%
     bindsym minus         exec --no-startup-id ponymix decrease 5%
@@ -151,7 +150,6 @@ mode $mode_audio {
     bindsym Escape mode "default"
 }
 
-# move floating windows mode
 mode $mode_move_floating {
     bindsym h     move left
     bindsym j     move down
@@ -162,7 +160,6 @@ mode $mode_move_floating {
     bindsym Escape mode "default"
 }
 
-# screenshot mode
 mode $mode_scrot {
     bindsym n                 exec "screenshot",                                                                             mode "default"
     bindsym Shift+n           exec "screenshot | imgur_up | xclip && notify-send 'screenshot' 'link in clipboard'",          mode "default"
@@ -173,12 +170,45 @@ mode $mode_scrot {
     bindsym Escape mode "default"
 }
 
-# pass mode
 mode $mode_pass {
     bindsym m exec dmenu_pass,                 mode "default"
     bindsym u exec dmenu_pass --tuser,         mode "default"
     bindsym p exec dmenu_pass --tpass,         mode "default"
     bindsym b exec dmenu_pass --tuser --tpass, mode "default"
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+ 
+mode $mode_gaps {
+    bindsym o      mode "$mode_gaps_outer"
+    bindsym i      mode "$mode_gaps_inner"
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+ 
+mode $mode_gaps_inner {
+    bindsym plus  gaps inner current plus 5
+    bindsym minus gaps inner current minus 5
+    bindsym 0     gaps inner current set 0
+
+    bindsym Shift+plus  gaps inner all plus 5
+    bindsym Shift+minus gaps inner all minus 5
+    bindsym Shift+0     gaps inner all set 0
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+mode $mode_gaps_outer {
+    bindsym plus  gaps outer current plus 5
+    bindsym minus gaps outer current minus 5
+    bindsym 0     gaps outer current set 0
+
+    bindsym Shift+plus  gaps outer all plus 5
+    bindsym Shift+minus gaps outer all minus 5
+    bindsym Shift+0     gaps outer all set 0
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
@@ -234,6 +264,7 @@ assign [class="libreoffice-*"] $work9
 for_window [class="Pavucontrol"] floating enable
 for_window [class="Mnemosyne"]   floating enable
 for_window [class="Galculator"]  floating enable
+for_window [class="etcher"]      floating enable
 
 # floating generic
 for_window [window_type="menu"]        floating enable
@@ -269,7 +300,7 @@ bindsym $super+Ctrl+t exec dmenu_todo
 
 bindsym $super+Return exec urxvtc -bg "#303030"
 bindsym $super+Ctrl+m exec urxvtc -bg "#303030" -depth 16 -name ncmpcpp -e ncmpcpp
-bindsym $super+Ctrl+i exec urxvtc -bg "#303030" -name weechat -hold -e bash -c irc
+bindsym $super+Ctrl+i exec urxvtc -bg "#303030" -name weechat -hold -e irc
 bindsym $super+Ctrl+c exec urxvtc -name nmtui -e nmtui connect
 bindsym $super+Ctrl+n exec urxvtc -name nmtui -e nmtui edit
 bindsym $super+Ctrl+s exec ctl_mpv_watch
@@ -306,3 +337,4 @@ client.unfocused        #333333 #333333 #888888 #292d2e
 client.urgent           #2f343a #900000 #ffffff #900000
 
 exec --no-startup-id scratch
+

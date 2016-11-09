@@ -42,7 +42,7 @@ volume master {
 }
 
 tztime local {
-    format = "%a %d, %H:%M:%S "
+    format = "%a %d, %I:%M:%S "
 }
 
 path_exists docked {
