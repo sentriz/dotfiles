@@ -23,12 +23,6 @@ compton -b &
 thinkpad-touchpad off &
 urxvtd &
 redshift-gtk &
-megasync &
 dunst &
+clipit &
 # xdotool behave_screen_edge bottom-right exec --sync ~/bin/lock &
-
-# start tunnels
-autossh -f -N osmc_tunnels
-
-# sshfs mount
-mount dynamic &
