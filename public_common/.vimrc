@@ -2,8 +2,9 @@
 set nocompatible
 set autoread
 set incsearch
+set hlsearch
 set noswapfile
-" set clipboard=unnamed
+set clipboard=unnamed
 set autowrite
 set nobackup
 set nowritebackup
@@ -32,7 +33,9 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
+Plugin 'chrisbra/Colorizer'
 Plugin 'tpope/vim-commentary'
+Plugin 'tpope/vim-vinegar'
 Plugin 'vimwiki/vimwiki'
 Plugin 'tpope/vim-repeat'
 Plugin 'mhinz/vim-startify'
@@ -52,12 +55,12 @@ let g:startify_session_dir = '~/.vim/session'
 let g:slime_paste_file = '/tmp/slime_paste'
 let g:slime_paste_file = '/tmp/slime_paste'
 let g:slime_target = 'tmux'
-let g:netrw_winsize = -28
-let g:netrw_banner = 0
-let g:netrw_liststyle = 3
-let g:netrw_sort_sequence = '[\/]$,*'
-let g:netrw_altv = 1
-let g:netrw_browse_split = 2
+" let g:netrw_winsize = -28
+" let g:netrw_banner = 0
+" let g:netrw_liststyle = 3
+" let g:netrw_sort_sequence = '[\/]$,*'
+" let g:netrw_altv = 1
+" let g:netrw_browse_split = 2
 
 " colorscheme, term colours, hidden chars and font
 colorscheme desert
@@ -163,10 +166,13 @@ nnoremap <leader>bb mzggO#!/usr/bin/env bash<Esc>o<Esc>`z
 nnoremap <leader>bp mzggO#!/usr/bin/env python3<Esc>o<Esc>`z
 
 nnoremap <leader>a :ArgWrap<CR>
-nnoremap <leader>c :!column -t<CR>
+nnoremap <leader>h :ColorToggle<CR>
 nnoremap <leader>r :w<CR>:!clear && %:p<CR>
 nnoremap <leader>x :w<CR>:!chmod +x %:p<CR><CR>
 nnoremap <leader>t :w<CR>:!ctags -R %:h<CR><CR>
+nnoremap <leader>n :noh<CR>
+
+nnoremap <leader>s :%s/<c-r><c-w>/<c-r><c-w>/gc<c-f>$F/
 
 " mappings
 nnoremap <Tab> :Lexplore<CR>
