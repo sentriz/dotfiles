@@ -6,12 +6,14 @@ set -o vi
 
 # needed argument or couldn't quote
 c() { cd "$@" && ls -lpAh; }
+xkill() { xkill -id "$(xwininfo | awk '/Window id:/ {print $4}')"; }
 fuzz_here() { find . -readable -type f 2> /dev/null | fzf --reverse --black --multi | xclip; }
 fuzz_root() { find / -readable -type f 2> /dev/null | fzf --reverse --black --multi | xclip; }
 find_key() { xev | awk -F'[ )]+' '/^KeyPress/ { a[NR+2] } NR in a { printf "%-3s %s\n", $5, $8 }'; }
 
 # listing
 l() {
+    test -d .git && git status && echo
     ls -vFqrloth --color=yes --time-style=long-iso "$@" \
     | sed "s/$(date +%Y-%m-%d)/\x1b[32m     TODAY\x1b[m/; s/$(date +'%Y-%m-%d' -d yesterday)/\x1b[33m YESTERDAY\x1b[m/"
 }
@@ -62,8 +64,9 @@ alias package_count="pacman -Q | wc -l"
 alias speed="speedtest-cli --simple"
 
 # with other command
-alias tb='nc termbin.com 9999'
-alias please='sudo $(history -p \!\!)' 
+alias tb="nc termbin.com 9999"
+alias please='sudo $(history -p \!\!)'
+alias what='clear && $(history -p \!\!)'
 alias sedo="sudo -E"
 alias sudo="sudo "
 
@@ -177,6 +180,11 @@ BICyan='\e[1;96m'
 BIWhite='\e[1;97m'
 c_Blue='\033[38;5;39m'
 
+## ruby
+ 
+export GEM_HOME=$(ruby -e 'print Gem.user_dir')
+export PATH=$PATH:$GEM_HOME/bin
+
 ## bash completion ##
 
 completion_path='/usr/share/bash-completion/bash_completion'
@@ -202,3 +210,8 @@ if [ -f ~/todo ]; then
     cat ~/todo
     echo
 fi
+
+# start tunnels
+! pgrep -f "^autossh.*shmig_tunnels$" > /dev/null 2>&1 && autossh -M 0 -T -f -N shmig_tunnels
+! pgrep -f "^autossh.*osmc_tunnels$" > /dev/null 2>&1 && autossh -M 0 -T -f -N osmc_tunnels
+
