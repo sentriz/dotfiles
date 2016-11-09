@@ -181,8 +181,8 @@ mode $mode_pass {
 }
  
 mode $mode_gaps {
-    bindsym o      mode "$mode_gaps_outer"
-    bindsym i      mode "$mode_gaps_inner"
+    bindsym o      mode $mode_gaps_outer
+    bindsym i      mode $mode_gaps_inner
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
