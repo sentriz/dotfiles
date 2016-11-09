@@ -1,5 +1,3 @@
-#umask 022
-
 # source .bashrc if bash
 if [ -n "$BASH_VERSION" ]; then
     if [ -f "$HOME/.bashrc" ]; then
@@ -14,16 +12,13 @@ if [ -d "$HOME/bin" ]; then
     done
 fi
 
-# # load keys
-
+# start agents
 if [ "$HOSTNAME" == "manjaro" ]; then
-    keychain --quiet --nogui --agents ssh,gpg id_home 609FCE8BB45971C8293040AC9A8DAE1CA907B862
+    keychain --quiet --nogui --agents ssh,gpg id_home 609FCE8BB45971C8293040AC9A8DAE1CA907B862 &> /dev/null
 else
-    keychain --quiet --nogui --agents ssh id_raspberry
+    keychain --quiet --nogui --agents ssh id_raspberry &> /dev/null
 fi
 
-. ~/.keychain/$HOSTNAME-sh &> /dev/null
-. ~/.keychain/$HOSTNAME-sh-gpg &> /dev/null
-
+# start x
 [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && 
 exec startx -- -keeptty -nolisten tcp 1> ~/.xorg.log 2>&1
