@@ -16,6 +16,7 @@
 
 [alias]
     c = commit
+    caa = commit -a --amend -C HEAD
     s = status
     d = diff
     ignore = update-index --assume-unchanged
