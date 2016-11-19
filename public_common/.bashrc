@@ -1,6 +1,8 @@
 ## misc ##
 
 set -o vi
+shopt -s autocd
+
 
 ## aliases ##
 
