@@ -150,11 +150,15 @@ function proxy_on() {
     export RSYNC_PROXY=$http_proxy
 }
 
-function proxy_off(){
+function proxy_off() {
     unset http_proxy
     unset https_proxy
     unset ftp_proxy
     unset rsync_proxy
+}
+
+print_error() {
+	echo -e code $BIRed$?$Reset
 }
 
 export -f confirm play swap proxy_on proxy_off
@@ -216,3 +220,4 @@ fi
 ! pgrep -f "^autossh.*shmig_tunnels$" > /dev/null 2>&1 && autossh -M 0 -T -f -N shmig_tunnels
 ! pgrep -f "^autossh.*osmc_tunnels$" > /dev/null 2>&1 && autossh -M 0 -T -f -N osmc_tunnels
 
+trap print_error ERR
