@@ -18,15 +18,8 @@ set mouse+=a
 syntax on
 filetype off
 
-if has("win32")
-    source $VIMRUNTIME/mswin.vim
-    behave mswin
-    " vundle setup
-    set rtp+=~\vimfiles\bundle\vundle\
-else
-    " vundle setup
-    set rtp+=~/.vim/bundle/Vundle.vim
-endif
+" vundle setup
+set rtp+=~/.vim/bundle/Vundle.vim
 
 " plugins via vundle
 call vundle#begin()
