@@ -1,0 +1,3 @@
+#!/bin/bash
+
+mpv --no-ytdl --no-video --no-cache --quiet --no-resume-playback "$*" &> /dev/null &
