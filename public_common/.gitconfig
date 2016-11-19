@@ -3,7 +3,7 @@
     name = sentriz
 
 [push]
-    default = matching
+	default = current
 
 [color]
     ui = true
