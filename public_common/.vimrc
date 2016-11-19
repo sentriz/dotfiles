@@ -170,6 +170,9 @@ nnoremap <leader>n :noh<CR>
 nnoremap <leader>s :%s/<c-r><c-w>/<c-r><c-w>/gc<c-f>$F/
 
 " mappings
+nmap <silent> <unique> + <Plug>nextvalInc
+nmap <silent> <unique> - <Plug>nextvalDec
+
 nnoremap <Tab> :Lexplore<CR>
 nnoremap [25~ :bp<CR>
 nnoremap [26~ :bn<CR>
