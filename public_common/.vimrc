@@ -23,23 +23,25 @@ set rtp+=~/.vim/bundle/Vundle.vim
 
 " plugins via vundle
 call vundle#begin()
+Plugin 'FooSoft/vim-argwrap'
+Plugin 'PotatoesMaster/i3-vim-syntax'
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-surround'
 Plugin 'chrisbra/Colorizer'
-Plugin 'tpope/vim-commentary'
-Plugin 'tpope/vim-vinegar'
-Plugin 'vimwiki/vimwiki'
-Plugin 'tpope/vim-repeat'
+Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'godlygeek/csapprox'
+Plugin 'jpalardy/vim-slime'
 Plugin 'mhinz/vim-startify'
 Plugin 'tommcdo/vim-exchange'
-Plugin 'PotatoesMaster/i3-vim-syntax'
-Plugin 'godlygeek/csapprox'
-Plugin 'FooSoft/vim-argwrap'
-Plugin 'christoomey/vim-tmux-navigator'
-Plugin 'jpalardy/vim-slime'
-" Plugin 'Valloric/YouCompleteMe'
+Plugin 'tpope/vim-commentary'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-vinegar'
+Plugin 'vim-scripts/nextval'
+Plugin 'vimwiki/vimwiki'
 call vundle#end()
+
+" vundle finish
 filetype plugin indent on
 
 " plugin settings
