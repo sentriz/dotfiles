@@ -1,5 +1,5 @@
-mpd_host = localhost
-mpd_port = 8985
+mpd_host = 192.168.0.101
+mpd_port = 6600
 mpd_music_dir = /home/senan/dynamic/music_library
 
 media_library_primary_tag = album_artist
