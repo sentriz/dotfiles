@@ -265,6 +265,7 @@ for_window [class="Pavucontrol"] floating enable
 for_window [class="Mnemosyne"]   floating enable
 for_window [class="Galculator"]  floating enable
 for_window [class="etcher"]      floating enable
+for_window [class="Qpaeq"]       floating enable
 
 # floating generic
 for_window [window_type="menu"]        floating enable
@@ -290,6 +291,7 @@ bindsym $super+Ctrl+e exec thunar
 bindsym $super+Ctrl+b exec chromium
 bindsym $super+Ctrl+g exec galculator
 bindsym $super+Ctrl+v exec pavucontrol
+bindsym $super+Ctrl+q exec qpaeq
 bindsym $super+Ctrl+w exec morc_menu
 bindsym $super+Ctrl+a exec dmenu_pacs
 bindsym $super+Ctrl+f exec dmenu_sinks
