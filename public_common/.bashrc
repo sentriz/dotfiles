@@ -134,7 +134,7 @@ man() {
 
 play () { 
     youtube-dl ytsearch:"$@" -q -f bestaudio --ignore-config --console-title --print-traffic --max-downloads 1 --no-call-home --no-playlist -o - | \
-    mpv --no-terminal --no-video --cache=256 -; 
+    mpv --no-terminal --no-video --cache=256 - &> /dev/null; 
 }
 
 function proxy_on() {
@@ -164,6 +164,7 @@ print_error() {
 }
 
 export -f confirm play swap proxy_on proxy_off
+trap print_error ERR
 
 ## colours ##
 
@@ -219,7 +220,7 @@ if [ -f ~/todo ]; then
 fi
 
 # start tunnels
-! pgrep -f "^autossh.*shmig_tunnels$" > /dev/null 2>&1 && autossh -M 0 -T -f -N shmig_tunnels
-! pgrep -f "^autossh.*osmc_tunnels$" > /dev/null 2>&1 && autossh -M 0 -T -f -N osmc_tunnels
-
-trap print_error ERR
+export AUTOSSH_PORT=0
+export AUTOSSH_FIRST_POLL=0
+! pgrep -f "^autossh.*shmig_tunnels$" > /dev/null 2>&1 && autossh -f -N shmig_tunnels
+! pgrep -f "^autossh.*osmc_tunnels$" > /dev/null 2>&1 && autossh -f -N osmc_tunnels
