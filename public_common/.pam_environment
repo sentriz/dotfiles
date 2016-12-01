@@ -1,7 +1,6 @@
 GPODDER_HOME         DEFAULT=/home/senan/.config/gpodder/
 GPODDER_DOWNLOAD_DIR DEFAULT=/home/senan/downloads/_podcasts/
 TZ                   DEFAULT=Europe/Dublin
-TERM                 DEFAULT=rxvt-unicode-256color
 HISTCONTROL          DEFAULT=erasedups
 HISTIGNORE           DEFAULT="l:ls:c:cd:please:git s:exit:clear"
 BROWSER              DEFAULT=chromium
