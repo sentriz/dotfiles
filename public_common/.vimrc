@@ -39,6 +39,10 @@ Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-vinegar'
 Plugin 'vim-scripts/nextval'
 Plugin 'vimwiki/vimwiki'
+Plugin 'dhruvasagar/vim-table-mode'
+Plugin 'mattn/gist-vim'
+Plugin 'mattn/webapi-vim'
+
 call vundle#end()
 
 " vundle finish
@@ -182,6 +186,9 @@ nnoremap <Left> :vertical resize +2<CR>
 nnoremap <Right> :vertical resize -2<CR>
 nnoremap <Up> :resize -2<CR>
 nnoremap <Down> :resize +2<CR>
+
+inoremap " '
+inoremap ' "
 
 nnoremap <silent> n :silent call <SID>NiceNext('n')<cr>
 nnoremap <silent> N :silent call <SID>NiceNext('N')<cr>
