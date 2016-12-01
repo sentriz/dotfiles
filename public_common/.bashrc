@@ -164,7 +164,6 @@ print_error() {
 }
 
 export -f confirm play swap proxy_on proxy_off
-trap print_error ERR
 
 ## colours ##
 
@@ -209,7 +208,7 @@ completion_path='/usr/share/bash-completion/bash_completion'
 
 ## source local ##
 
-. ~/.bash_local &> /dev/null
+. ~/.bash_local
 
 ## show todo ##
 
@@ -219,8 +218,6 @@ if [ -f ~/todo ]; then
     echo
 fi
 
-# start tunnels
-export AUTOSSH_PORT=0
-export AUTOSSH_FIRST_POLL=0
-! pgrep -f "^autossh.*shmig_tunnels$" > /dev/null 2>&1 && autossh -f -N shmig_tunnels
-! pgrep -f "^autossh.*osmc_tunnels$" > /dev/null 2>&1 && autossh -f -N osmc_tunnels
+## finally trap errors
+
+trap print_error ERR
