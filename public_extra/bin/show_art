@@ -1,37 +1,58 @@
 #!/usr/bin/env python3
 # Senan Kelly 2016
+# pip install --user python-mpd2
 
-# import subprocess
-# import os
-# import json
-# import time
-# from PIL import Image
-# import tempfile
+from PIL import Image
+from mpd import MPDClient
+import os
+import subprocess
+import sys
 
-# mpc_out = subprocess.getoutput('ssh osmc mpc --format %file%')
-# try:
-#     track_path = '/home/senan/dynamic/' + mpc_out.split('\n')[0]
-#     track_base = os.path.dirname(track_path)
-# except FileNotFoundError:
-#     exit(1)
 
-# art_file = None
-# for file in os.listdir(track_base):
-#     if 'folder.' in file:
-#         art_file = track_base + '/' + file
+def get_mpd_path(host, port):
+    client = MPDClient()
+    client.connect(host, port)
+    mpd_path = client.currentsong()['file']
+    client.close()
+    client.disconnect()
+    return os.path.dirname(mpd_path)
 
-# if not art_file:
-#     exit(1)
 
-# art_size = 252
+def get_art_file(mpd_root, mpd_path):
+    full_path = os.path.join(mpd_root, mpd_path)
+    for file in os.listdir(full_path):
+        if 'folder.' in file:
+            return os.path.join(full_path, file)
 
-# term_width = int(subprocess.getoutput("tput cols")) * 7
-# term_height = int(subprocess.getoutput("tput lines")) * 13
 
-# x_pos = term_width - art_size - 2
-# y_pos = term_height - art_size - 28
+def show_art(art_file, size=252):
+    term_width = int(subprocess.getoutput("tput cols")) * 7
+    term_height = int(subprocess.getoutput("tput lines")) * 13
 
-# format_sting = "0;1;{0};{1};{2};{2};;;;;{3}\n4;\n3;".format(x_pos, y_pos, art_size, art_file)
+    x_pos = term_width - size - 2
+    y_pos = term_height - size - 28
 
-# img_format = subprocess.Popen(["echo", format_sting], stdout=subprocess.PIPE)
-# img_show = subprocess.Popen(["/usr/lib/w3m/w3mimgdisplay"], stdin=img_format.stdout, stdout=subprocess.DEVNULL)
+    format_sting = "0;1;{x_pos};{y_pos};{size};{size};;;;;{art_file}\n4;\n3;"
+    format_sting = format_sting.format(**locals())
+    img_format = subprocess.Popen(
+        ["echo", format_sting], stdout=subprocess.PIPE)
+    img_show = subprocess.Popen(
+        ["/usr/lib/w3m/w3mimgdisplay"], stdin=img_format.stdout, stdout=subprocess.DEVNULL)
+
+
+if __name__ == '__main__':
+
+    if len(sys.argv) != 4:
+        print('args should be <mpd_root> <host> <port>')
+        sys.exit(1)
+
+    mpd_root, host, port = sys.argv[1:]
+    try:
+        mpd_path = get_mpd_path(host, port)
+    except ConnectionRefusedError:
+        sys.exit(1)
+    except KeyError:
+        sys.exit(1)
+
+    art_file = get_art_file(mpd_root, mpd_path)
+    show_art(art_file)
