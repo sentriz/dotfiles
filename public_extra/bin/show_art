@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
+
 # Senan Kelly 2016
-# pip install --user python-mpd2
+# $ pip install --user python-mpd2
+# $ echo 'execute_on_song_change = show_art ~/music localhost 6600' >> .ncmpcpp/config
 
 from PIL import Image
 from mpd import MPDClient
@@ -48,7 +50,8 @@ if __name__ == '__main__':
         sys.exit(1)
 
     mpd_root, host, port = sys.argv[1:]
-    with suppress():
+    with suppress(Exception):
         mpd_path = get_mpd_path(host, port)
         art_file = get_art_file(mpd_root, mpd_path)
+        show_art(art_file)
         show_art(art_file)
