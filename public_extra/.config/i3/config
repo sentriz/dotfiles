@@ -23,27 +23,10 @@ smart_borders on
 ## main bar
 bar {
     output LVDS1
-    output HDMI2
     status_command i3status
     tray_output primary
     colors {
         separator #303030
-        background #303030
-        statusline #dddddd
-        focused_workspace #0088CC #0088CC #ffffff
-        active_workspace #333333 #303030 #ffffff
-        inactive_workspace #303030 #303030 #888888
-        urgent_workspace #2f343a #900000 #ffffff
-    }
-}
-
-## second bar
-bar {
-    output VGA1
-    status_command mpc_stream
-    tray_output none
-    colors {
-        separator #666666
         background #303030
         statusline #dddddd
         focused_workspace #0088CC #0088CC #ffffff
@@ -339,4 +322,3 @@ client.unfocused        #333333 #333333 #888888 #292d2e
 client.urgent           #2f343a #900000 #ffffff #900000
 
 exec --no-startup-id scratch
-
