@@ -4,6 +4,7 @@
 
 from PIL import Image
 from mpd import MPDClient
+from contextlib import suppress
 import os
 import subprocess
 import sys
@@ -47,12 +48,7 @@ if __name__ == '__main__':
         sys.exit(1)
 
     mpd_root, host, port = sys.argv[1:]
-    try:
+    with suppress():
         mpd_path = get_mpd_path(host, port)
-    except ConnectionRefusedError:
-        sys.exit(1)
-    except KeyError:
-        sys.exit(1)
-
-    art_file = get_art_file(mpd_root, mpd_path)
-    show_art(art_file)
+        art_file = get_art_file(mpd_root, mpd_path)
+        show_art(art_file)
