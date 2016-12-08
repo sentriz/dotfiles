@@ -11,7 +11,6 @@ import os
 import subprocess
 import sys
 
-
 def get_mpd_path(host, port):
     client = MPDClient()
     client.connect(host, port)
@@ -22,7 +21,7 @@ def get_mpd_path(host, port):
 
 
 def get_art_file(mpd_root, mpd_path):
-    full_path = os.path.join(mpd_root, mpd_path)
+    full_path = os.path.join(os.path.expanduser(mpd_root), mpd_path)
     for file in os.listdir(full_path):
         if 'folder.' in file:
             return os.path.join(full_path, file)
@@ -53,5 +52,4 @@ if __name__ == '__main__':
     with suppress(Exception):
         mpd_path = get_mpd_path(host, port)
         art_file = get_art_file(mpd_root, mpd_path)
-        show_art(art_file)
         show_art(art_file)
