@@ -6,12 +6,6 @@ shopt -s autocd
 
 ## aliases ##
 
-# needed argument or couldn't quote
-c() { cd "$@" && ls -lpAh; }
-xkill() { xkill -id "$(xwininfo | awk '/Window id:/ {print $4}')"; }
-fuzz_here() { find . -readable -type f 2> /dev/null | fzf --reverse --black --multi | xclip; }
-fuzz_root() { find / -readable -type f 2> /dev/null | fzf --reverse --black --multi | xclip; }
-find_key() { xev | awk -F'[ )]+' '/^KeyPress/ { a[NR+2] } NR in a { printf "%-3s %s\n", $5, $8 }'; }
 
 # listing
 l() {
@@ -25,6 +19,13 @@ ll() {
     | sed "s/$(date +%Y-%m-%d)/\x1b[32m     TODAY\x1b[m/; s/$(date +'%Y-%m-%d' -d yesterday)/\x1b[33m YESTERDAY\x1b[m/"
 }
 
+# needed argument or couldn't quote
+c() { cd "$@" && l -lpAh; }
+xkill() { xkill -id "$(xwininfo | awk '/Window id:/ {print $4}')"; }
+fuzz_here() { find . -readable -type f 2> /dev/null | fzf --reverse --black --multi | xclip; }
+fuzz_root() { find / -readable -type f 2> /dev/null | fzf --reverse --black --multi | xclip; }
+find_key() { xev | awk -F'[ )]+' '/^KeyPress/ { a[NR+2] } NR in a { printf "%-3s %s\n", $5, $8 }'; }
+
 # safety/better
 alias rm='rm -Iv --preserve-root'
 alias sudo='sudo '
@@ -33,7 +34,6 @@ alias cp='cp -aiv'
 alias mkdir='mkdir -p -v'
 alias du='du -d1 -h'
 alias df='df -hT'
-alias ssh="autossh"
 
 alias qmv="qmv --format destination-only"
 alias qrm="qrm --format destination-only"
@@ -221,3 +221,5 @@ fi
 ## finally trap errors
 
 trap print_error ERR
+
+#exec fish
