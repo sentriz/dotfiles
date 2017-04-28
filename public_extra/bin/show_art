@@ -1,15 +1,14 @@
 #!/usr/bin/env python3
-
 # Senan Kelly 2016
-# $ pip install --user python-mpd2
-# $ echo 'execute_on_song_change = show_art ~/music localhost 6600' >> .ncmpcpp/config
+# pip install --user python-mpd2
 
-from PIL import Image
-from mpd import MPDClient
 from contextlib import suppress
+from mpd import MPDClient
+from shutil import copyfile, rmtree
 import os
 import subprocess
 import sys
+
 
 def get_mpd_path(host, port):
     client = MPDClient()
@@ -21,25 +20,24 @@ def get_mpd_path(host, port):
 
 
 def get_art_file(mpd_root, mpd_path):
-    full_path = os.path.join(os.path.expanduser(mpd_root), mpd_path)
+    full_path = os.path.join(mpd_root, mpd_path)
     for file in os.listdir(full_path):
         if 'folder.' in file:
             return os.path.join(full_path, file)
 
 
-def show_art(art_file, size=252):
-    term_width = int(subprocess.getoutput("tput cols")) * 7
-    term_height = int(subprocess.getoutput("tput lines")) * 13
+def show_art(art_file, size=50, x_pos=33, y_pos=33):
+    ''' show art in urxvt-backgronud
+        https://www.freebsd.org/cgi/man.cgi?query=urxvt&sektion=7
+    '''
+    format_string = '\e]20;{art_file};{size}x{size}+{x_pos}+{y_pos}:op=keep-aspect\a'
+    subprocess.Popen(['/usr/bin/printf', format_string.format(**locals())])
 
-    x_pos = term_width - size - 2
-    y_pos = term_height - size - 28
 
-    format_sting = "0;1;{x_pos};{y_pos};{size};{size};;;;;{art_file}\n4;\n3;"
-    format_sting = format_sting.format(**locals())
-    img_format = subprocess.Popen(
-        ["echo", format_sting], stdout=subprocess.PIPE)
-    img_show = subprocess.Popen(
-        ["/usr/lib/w3m/w3mimgdisplay"], stdin=img_format.stdout, stdout=subprocess.DEVNULL)
+def move_art(art_file, directory):
+    with suppress(FileExistsError):
+        os.makedirs(directory)
+    copyfile(art_file, os.path.join(directory, 'folder.jpg'))
 
 
 if __name__ == '__main__':
@@ -52,4 +50,4 @@ if __name__ == '__main__':
     with suppress(Exception):
         mpd_path = get_mpd_path(host, port)
         art_file = get_art_file(mpd_root, mpd_path)
-        show_art(art_file)
+        move_art(art_file, '/tmp/ncmpcpp_art')
