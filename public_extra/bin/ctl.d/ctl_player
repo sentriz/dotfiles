@@ -16,11 +16,11 @@ COMMANDS="play pause toggle stop prev next"
 
 # Commands list for each player
 # 
-# params:   name           command        play   pause   toggle      stop   prev     next
-
-PLAYERS[0]="foobar2000.exe ctl_foobar2000 --play --pause --playpause --stop --prev   --next"
-PLAYERS[1]="mpv            ctl_mpv        play   pause   play-pause  stop   previous next"
-PLAYERS[2]="mpd            mpc            play   pause   toggle      stop   prev     next"
+# params:   name           command          play   pause   toggle      stop   prev     next
+                                            
+PLAYERS[0]="mpv            ctl_mpv          play   pause   play-pause  stop   previous next"
+PLAYERS[1]="foobar2000.exe ctl_foobar2000   --play --pause --playpause --stop --prev   --next"
+PLAYERS[2]="mpd            mpc -h osmc.lan  play   pause   toggle      stop   prev     next"
 
 # Write error message and exit
 err() {
