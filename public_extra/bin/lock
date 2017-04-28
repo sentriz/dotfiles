@@ -1,3 +1,7 @@
 #!/bin/bash
 
-i3lock -bf --insidevercolor=0000a0bf --insidewrongcolor=ff8000bf --insidecolor=ffffffbf --ringvercolor=0020ffff --ringwrongcolor=4040ffff --ringcolor=404090ff --textcolor=ffffffff --separatorcolor=aaaaaaff --keyhlcolor=30ccccff --bshlcolor=ff8000ff -be -i /usr/share/wallpapers/lockscreen_vert.png
+image=/tmp/i3lock.png
+scrot $image
+convert $image -blur 8x8 -fill white -font 'Bitstream-Vera-Sans-Mono' -stroke black -gravity North -pointsize 40 -annotate +0+50 "desktop locked since $(date +%H:%M:%S)" -fill white -font 'Bitstream-Vera-Sans-Mono' -stroke black -gravity South -pointsize 40 -annotate +0+50 "gone for a shmig" $image
+i3lock -bf --insidevercolor=0000a0bf --insidewrongcolor=ff8000bf --insidecolor=ffffffbf --ringvercolor=0020ffff --ringwrongcolor=4040ffff --ringcolor=404090ff --textcolor=ffffffff --separatorcolor=aaaaaaff --keyhlcolor=30ccccff --bshlcolor=ff8000ff -ben -i $image
+rm $image
