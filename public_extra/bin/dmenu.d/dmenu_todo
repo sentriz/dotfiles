@@ -11,13 +11,10 @@ while [ -n "$selection" ]; do
 		grep -v "^$selection" $file > /tmp/todo
 		mv /tmp/todo $file
         height=$(($height - 1))
-        menu="cat $file | dmenu_custom -p 'todo:' -l $height"
 	else
 		echo "$selection" >> $file
         height=$(($height + 1))
-        menu="cat $file | dmenu_custom -p 'todo:' -l $height"
 	fi
+    menu="cat $file | dmenu_custom -p 'todo:' -l $height"
 	selection=$(eval $menu)
 done
-
-exit
