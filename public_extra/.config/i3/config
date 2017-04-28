@@ -9,15 +9,15 @@
 
 set $super Mod4
 set $alt Mod1
-set $locker lock &
+set $locker lock
 
 font pango:bitstream vera sans mono 10
 floating_modifier $super
 popup_during_fullscreen smart
-
 for_window [class="^.*"] border pixel 0
+
 gaps inner 9
-smart_gaps on
+# smart_gaps on
 smart_borders on
 
 ## main bar
@@ -93,28 +93,25 @@ mode $mode_resize_tile {
         bindsym j resize grow height 10 px or 10 ppt
         bindsym k resize shrink height 10 px or 10 ppt
         bindsym l resize grow width 10 px or 10 ppt
-
         bindsym Return mode "default"
         bindsym Escape mode "default"
 }
 
 mode $mode_system {
-    bindsym l exec --no-startup-id $locker, mode default
-    bindsym s exec --no-startup-id $locker && systemctl suspend, mode default
-    bindsym h exec --no-startup-id $locker && systemctl hibernate, mode default
-    bindsym o exec --no-startup-id "i3-nagbar -t warning -m 'sure you want to log out?' -b 'yes' 'i3-msg exit'", mode "default"
-    bindsym r exec --no-startup-id "i3-nagbar -t warning -m 'sure you want to reboot?' -b 'yes' 'systemctl reboot'", mode "default"
-    bindsym d exec --no-startup-id "i3-nagbar -t warning -m 'sure you want to shutdown?' -b 'yes' 'systemctl poweroff'", mode "default"
-
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
+    bindsym l exec --no-startup-id $locker;                                           mode default
+    bindsym d exec --no-startup-id $locker; exec --no-startup-id systemctl poweroff;  mode default
+    bindsym h exec --no-startup-id $locker; exec --no-startup-id systemctl hibernate; mode default
+    bindsym o exec --no-startup-id $locker; exec --no-startup-id systemctl suspend;   mode default
+    bindsym r exec --no-startup-id $locker; exec --no-startup-id systemctl reboot;    mode default
+    bindsym s exec --no-startup-id $locker; exec --no-startup-id systemctl suspend;   mode default
+    bindsym Return mode default
+    bindsym Escape mode default
 }
 
 mode $mode_i3 {
     bindsym x exit
     bindsym r restart
     bindsym c reload
-
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
@@ -128,7 +125,6 @@ mode $mode_audio {
     bindsym Left          exec --no-startup-id ponymix decrease 10%
     bindsym m             exec --no-startup-id ponymix toggle
     bindsym r             exec --no-startup-id ponymix set-volume 100%
-
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
@@ -138,17 +134,15 @@ mode $mode_move_floating {
     bindsym j     move down
     bindsym k     move up
     bindsym l     move right
-
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
 
 mode $mode_scrot {
-    bindsym n                 exec "screenshot",                                                                             mode "default"
-    bindsym Shift+n           exec "screenshot | imgur_up | xclip && notify-send 'screenshot' 'link in clipboard'",          mode "default"
-    bindsym --release s       exec "screenshot --select";                                                                    mode "default"
-    bindsym --release Shift+s exec "screenshot --select | imgur_up | xclip && notify-send 'screenshot' 'link in clipboard'"; mode "default"
-
+    bindsym n                 exec "screenshot",                                                                               mode "default"
+    bindsym Shift+n           exec "screenshot | imgur_up | xclip; and notify-send 'screenshot' 'link in clipboard'",          mode "default"
+    bindsym --release s       exec "screenshot --select";                                                                      mode "default"
+    bindsym --release Shift+s exec "screenshot --select | imgur_up | xclip; and notify-send 'screenshot' 'link in clipboard'"; mode "default"
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
@@ -158,7 +152,6 @@ mode $mode_pass {
     bindsym u exec dmenu_pass --tuser,         mode "default"
     bindsym p exec dmenu_pass --tpass,         mode "default"
     bindsym b exec dmenu_pass --tuser --tpass, mode "default"
-
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
@@ -166,7 +159,6 @@ mode $mode_pass {
 mode $mode_gaps {
     bindsym o      mode $mode_gaps_outer
     bindsym i      mode $mode_gaps_inner
-
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
@@ -175,11 +167,9 @@ mode $mode_gaps_inner {
     bindsym plus  gaps inner current plus 5
     bindsym minus gaps inner current minus 5
     bindsym 0     gaps inner current set 0
-
     bindsym Shift+plus  gaps inner all plus 5
     bindsym Shift+minus gaps inner all minus 5
     bindsym Shift+0     gaps inner all set 0
-
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
@@ -188,11 +178,9 @@ mode $mode_gaps_outer {
     bindsym plus  gaps outer current plus 5
     bindsym minus gaps outer current minus 5
     bindsym 0     gaps outer current set 0
-
     bindsym Shift+plus  gaps outer all plus 5
     bindsym Shift+minus gaps outer all minus 5
     bindsym Shift+0     gaps outer all set 0
-
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
@@ -235,7 +223,7 @@ bindsym $super+Shift+9 move container to workspace $work9
 
 ## keeping programs on workspaces
 assign [class="Firefox"] $work2
-assign [class="chromium"] $work2
+assign [class="Chromium"] $work2
 assign [class="URxvt" instance="ncmpcpp"] $work4
 assign [class="URxvt" instance="weechat"] $work6
 assign [class="Franz"] $work6
@@ -257,16 +245,18 @@ for_window [window_role="pop-up"]      floating enable
 for_window [window_role="task_dialog"] floating enable
 for_window [window_type="dialog"]      floating enable
 for_window [title="Preferences$"]      floating enable
+for_window [title="^bobby$"]           floating enable
 
 ## special rules
 for_window [class="feh"] fullscreen enable
 for_window [class="mpv"] fullscreen enable
+for_window [title="^ncmpcpp_show_art$"] fullscreen disable
 
 ## keybindings (scratchpad)
 bindsym F15        [class="URxvt" instance="^scratch$"] scratchpad show, move position center
 
 ## keeping programs floating/fullscreen
-for_window [class="URxvt" instance="^nmtui$"]     floating enable, resize set 795 589,  move position center
+for_window [class="URxvt" instance="^nmtui$"]   floating enable, resize set 795 589,  move position center
 for_window [class="URxvt" instance="^scratch$"] floating enable, resize set 1292 694, move scratchpad, border pixel 2
 
 ## keybindings (programs)
@@ -279,13 +269,16 @@ bindsym $super+Ctrl+w exec morc_menu
 bindsym $super+Ctrl+a exec dmenu_pacs
 bindsym $super+Ctrl+f exec dmenu_sinks
 bindsym $super+Ctrl+r exec dmenu_radio
+bindsym $super+Ctrl+u exec dmenu_clipfav
 bindsym $super+Ctrl+h exec dmenu_clipboard
 bindsym $super+Ctrl+p exec dmenu_pass --tuser --tpass
 bindsym $super+Ctrl+t exec dmenu_todo
 
-bindsym $super+Return exec urxvtc -bg "#303030"
-bindsym $super+Ctrl+m exec urxvtc -bg "#303030" -depth 16 -name ncmpcpp -e ncmpcpp
+bindsym $super+Return exec urxvtc -bg "#303030" 
+bindsym $super+Ctrl+m exec ncmpcpp_layout
 bindsym $super+Ctrl+i exec urxvtc -bg "#303030" -name weechat -hold -e irc
+
+
 bindsym $super+Ctrl+c exec urxvtc -name nmtui -e nmtui connect
 bindsym $super+Ctrl+n exec urxvtc -name nmtui -e nmtui edit
 bindsym $super+Ctrl+s exec ctl_mpv_watch
@@ -296,11 +289,11 @@ bindsym XF86WLAN exec urxvtc -name nmtui -e nmtui
 bindsym XF86Display exec --no-startup-id projector
 
 bindsym XF86ScreenSaver exec --no-startup-id $locker
-bindsym XF86Suspend exec --no-startup-id $locker && systemctl hibernate
-bindsym XF86Sleep exec --no-startup-id $locker && systemctl suspend
+bindsym XF86Suspend exec --no-startup-id gksudo systemctl hibernate
+bindsym XF86Sleep exec --no-startup-id gksudo systemctl suspend
 
-bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 20
-bindsym XF86MonBrightnessDown exec --no-startup-id  xbacklight -dec 20
+bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 5
+bindsym XF86MonBrightnessDown exec --no-startup-id  xbacklight -dec 5
 
 bindsym XF86AudioRaiseVolume exec --no-startup-id ponymix increase 5%
 bindsym XF86AudioLowerVolume exec --no-startup-id ponymix decrease 5%
