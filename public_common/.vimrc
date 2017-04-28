@@ -14,6 +14,8 @@ set nowrap
 set wildmode=longest,list,full
 set wildmenu
 set mouse+=a
+set shell=bash
+set path+=**
 
 syntax on
 filetype off
@@ -38,11 +40,7 @@ Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-vinegar'
 Plugin 'vim-scripts/nextval'
-Plugin 'vimwiki/vimwiki'
-Plugin 'dhruvasagar/vim-table-mode'
-Plugin 'mattn/gist-vim'
-Plugin 'mattn/webapi-vim'
-
+Plugin 'aliva/vim-fish'
 call vundle#end()
 
 " vundle finish
@@ -51,9 +49,6 @@ filetype plugin indent on
 " plugin settings
 let g:ycm_filetype_whitelist = {'python' : 1, 'javascript' : 1, 'c' : 1}
 let g:startify_session_dir = '~/.vim/session'
-let g:slime_paste_file = '/tmp/slime_paste'
-let g:slime_paste_file = '/tmp/slime_paste'
-let g:slime_target = 'tmux'
 " let g:netrw_winsize = -28
 " let g:netrw_banner = 0
 " let g:netrw_liststyle = 3
@@ -89,9 +84,9 @@ set directory=$TEMP,.
 
 " tab settings
 set tabstop=4
-set softtabstop=4
-set shiftwidth=4
 set expandtab
+set shiftwidth=4
+set softtabstop=4
 
 " text bubbling
 nmap <S-k> ddkP
