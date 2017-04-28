@@ -3,7 +3,7 @@ general {
     color_good = "#2ECC71"
     color_bad = "#E74C3C"
     color_degraded = "#1793D1"        
-    interval = 1
+    interval = 5
     output_format = "i3bar"
 }
 
@@ -22,7 +22,7 @@ disk /home {
 }
 
 wireless _first_ {
-    format_up = " %quality"
+    format_up = " %quality %essid"
     format_down = ""
 }
 
