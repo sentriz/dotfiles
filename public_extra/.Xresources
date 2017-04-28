@@ -1,4 +1,4 @@
-Xft.dpi: 96
+Xft.dpi: 102
 Xft.antialias: true
 Xft.hinting: true
 Xft.rgba: rgb
@@ -6,12 +6,12 @@ Xft.autohint: false
 Xft.hintstyle: hintslight
 Xft.lcdfilter: lcddefault
 
-URxvt.font: xft:bitstream vera sans mono:size=8:antialias=true
-URxvt.boldFont: xft:bitstream vera sans mono:bold:size=8:antialias=true
+URxvt.font: xft:bitstream vera sans mono:size=9:antialias=true
+URxvt.boldFont: xft:bitstream vera sans mono:bold:size=9:antialias=true
 URxvt.scrollBar: false
 URxvt.foreground: white
 URxvt.background: black
-URxvt.letterSpace: -1
+URxvt.letterSpace: 0
 URxvt.urgentOnBell: true
 URxvt.dynamicColors: on
 
