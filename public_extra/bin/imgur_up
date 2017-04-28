@@ -1,11 +1,13 @@
-#/bin/bash
+#!/usr/bin/fish
 
 read image
 
-clientid='3e7a4deb7ac67da'
-response=$(curl -sH "Authorization: Client-ID $clientid" -F "image=@$image" "https://api.imgur.com/3/upload")
+set client_id 'c9a6efb3d7932fd'
+set upload_url 'https://api.imgur.com/3/upload'
 
-echo $response | grep -qo '"status":200' && 
-link=$(echo $response | sed -e 's/.*"link":"\([^"]*\).*/\1/' -e 's/\\//g')
-
-echo $link
+set response (curl -sH "Authorization: Client-ID $client_id" -F image=@$image $upload_url)
+if echo $response | grep -qo '"status":200'
+    echo $response | sed -e 's/.*"link":"\([^"]*\).*/\1/' -e 's/\\\//g'
+else
+    exit 1
+end
