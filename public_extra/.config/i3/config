@@ -249,7 +249,6 @@ for_window [title="^bobby$"]           floating enable
 
 ## special rules
 for_window [class="feh"] fullscreen enable
-for_window [class="mpv"] fullscreen enable
 for_window [title="^ncmpcpp_show_art$"] fullscreen disable
 
 ## keybindings (scratchpad)
@@ -258,6 +257,7 @@ bindsym F15        [class="URxvt" instance="^scratch$"] scratchpad show, move po
 ## keeping programs floating/fullscreen
 for_window [class="URxvt" instance="^nmtui$"]   floating enable, resize set 795 589,  move position center
 for_window [class="URxvt" instance="^scratch$"] floating enable, resize set 1292 694, move scratchpad, border pixel 2
+for_window [class="mpv"]                        floating enable, resize set 600 337,  sticky enable, move window to position 758 8
 
 ## keybindings (programs)
 bindsym $super+Ctrl+e exec thunar
@@ -265,14 +265,14 @@ bindsym $super+Ctrl+b exec chromium
 bindsym $super+Ctrl+g exec galculator
 bindsym $super+Ctrl+v exec pavucontrol
 bindsym $super+Ctrl+q exec qpaeq
-bindsym $super+Ctrl+w exec morc_menu
-bindsym $super+Ctrl+a exec dmenu_pacs
-bindsym $super+Ctrl+f exec dmenu_sinks
-bindsym $super+Ctrl+r exec dmenu_radio
-bindsym $super+Ctrl+u exec dmenu_clipfav
-bindsym $super+Ctrl+h exec dmenu_clipboard
-bindsym $super+Ctrl+p exec dmenu_pass --tuser --tpass
-bindsym $super+Ctrl+t exec dmenu_todo
+bindsym $super+Ctrl+w exec --no-startup-idmorc_menu
+bindsym $super+Ctrl+a exec --no-startup-id dmenu_pacs
+bindsym $super+Ctrl+f exec --no-startup-id dmenu_sinks
+bindsym $super+Ctrl+r exec --no-startup-id dmenu_radio
+bindsym $super+Ctrl+u exec --no-startup-id dmenu_clipfav
+bindsym $super+Ctrl+h exec --no-startup-id dmenu_clipboard
+bindsym $super+Ctrl+p exec --no-startup-id dmenu_pass --tuser --tpass
+bindsym $super+Ctrl+t exec --no-startup-id dmenu_todo
 
 bindsym $super+Return exec urxvtc -bg "#303030" 
 bindsym $super+Ctrl+m exec ncmpcpp_layout
@@ -281,7 +281,7 @@ bindsym $super+Ctrl+i exec urxvtc -bg "#303030" -name weechat -hold -e irc
 
 bindsym $super+Ctrl+c exec urxvtc -name nmtui -e nmtui connect
 bindsym $super+Ctrl+n exec urxvtc -name nmtui -e nmtui edit
-bindsym $super+Ctrl+s exec ctl_mpv_watch
+bindsym $super+Ctrl+s exec --no-startup-id ctl_mpv_watch
 
 # keybindings (xf86 on thinkpad x220)
 bindsym XF86TouchpadToggle exec --no-startup-id thinkpad-touchpad && notify-send "touchpad toggled"
