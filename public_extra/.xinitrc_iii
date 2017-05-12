@@ -7,7 +7,7 @@ compton -b &
 ~/.fehbg &
 thinkpad-touchpad off &
 urxvtd &
-redshift &
+redshift-gtk &
 dunst &
 clipit &
 xss-lock -- ~/bin/lock &
