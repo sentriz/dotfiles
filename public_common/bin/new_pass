@@ -1,0 +1,7 @@
+#!/usr/bin/env fish
+
+pass edit "$argv/username"
+pass generate -n "$argv/password" 16
+read -l -n 1 -p "echo 'press `e` to add email: '" confirm
+test $confirm = 'e'; or exit
+pass edit "$argv/email"
