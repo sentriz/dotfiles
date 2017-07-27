@@ -1,3 +1,4 @@
+# path stuff
 set -x PATH /usr/local/sbin                  $PATH
 set -x PATH /usr/local/bin                   $PATH
 set -x PATH /usr/sbin /sbin                  $PATH
@@ -7,10 +8,8 @@ set -x PATH $HOME/.local/bin                 $PATH
 set -x PATH $HOME/.local/lib/python3.6/site-packages/ $PATH
 set -x PATH $HOME/.local/lib/python3.5/site-packages/ $PATH
 set -x JAVA_HOME /usr/lib/jvm/java-8-openjdk/
-#set -x GEM_HOME (ruby -e 'print Gem.user_dir')
-#set -x PATH $GEM_HOME/bin   $PATH
 
-# recurisve bin
+# recurisve ~/bin in path
 if test -d $HOME/bin
     set -x PATH (find -L $HOME/bin -type d) $PATH
 end
@@ -24,11 +23,12 @@ if test -f $HOME/.config/fish/(hostname).fish
     source $HOME/.config/fish/(hostname).fish
 end
 
-# enable virtualfish
-eval (python -m virtualfish auto_activation) > /dev/null 2>&1
-
 # misc
 set -U fish_prompt_pwd_dir_length 0
+set -U fish_escape_delay_ms 50
+
+# fisher plugin settings
+set -g VIRTUALFISH_PLUGINS "auto_activation"
 
 # needed argument or couldn't quote
 alias xkill "xkill -id \"(xwininfo | awk '/Window id:/ {print $4}')\""
