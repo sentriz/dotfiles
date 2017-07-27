@@ -25,7 +25,7 @@ if test -f $HOME/.config/fish/(hostname).fish
 end
 
 # enable virtualfish
-eval (python -m virtualfish auto_activation)
+eval (python -m virtualfish auto_activation) > /dev/null 2>&1
 
 # misc
 set -U fish_prompt_pwd_dir_length 0
