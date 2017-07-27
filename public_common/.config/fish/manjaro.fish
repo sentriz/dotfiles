@@ -1,6 +1,6 @@
 #!/usr/bin/env fish
 
-set -x prompt_host_colour 'green'
+set -x host_prompt_colour 'green'
 
 # start x
 if status --is-login; and test -z $DISPLAY; and test -z $TMUX

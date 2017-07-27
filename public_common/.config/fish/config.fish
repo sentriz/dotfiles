@@ -10,6 +10,7 @@ set -x JAVA_HOME /usr/lib/jvm/java-8-openjdk/
 #set -x GEM_HOME (ruby -e 'print Gem.user_dir')
 #set -x PATH $GEM_HOME/bin   $PATH
 
+# recurisve bin
 if test -d $HOME/bin
     set -x PATH (find -L $HOME/bin -type d) $PATH
 end
@@ -22,6 +23,9 @@ source $HOME/.keychain/(hostname)-fish-gpg > /dev/null 2>&1
 if test -f $HOME/.config/fish/(hostname).fish
     source $HOME/.config/fish/(hostname).fish
 end
+
+# enable virtualfish
+eval (python -m virtualfish auto_activation)
 
 # misc
 set -U fish_prompt_pwd_dir_length 0

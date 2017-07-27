@@ -5,7 +5,7 @@ set yellow (set_color yellow)
 set green (set_color green)
 set red (set_color red)
 set gray (set_color -o black)
-set prompt_host_colour (set_color $prompt_host_colour)
+set host_colour (set_color $host_prompt_colour)
 
 # git prompt
 set __fish_git_prompt_showdirtystate 'yes'
@@ -24,10 +24,13 @@ set __fish_git_prompt_char_stashstate '↩'
 set __fish_git_prompt_char_upstream_ahead '+'
 set __fish_git_prompt_char_upstream_behind '-'
 
-
 function fish_prompt
-  set last_status $status
+	set last_status $status
+  set env_string ''
+  if set -q VIRTUAL_ENV
+    set env_string ' ['(basename "$VIRTUAL_ENV")' env]'
+  end
   set_color normal
-  printf "%s@$prompt_host_colour%s $bold%s " (whoami) (hostname) (prompt_pwd)
+  printf "%s@$host_colour%s$normal$env_string $bold%s " (whoami) (hostname) (prompt_pwd)
   set_color normal
 end
