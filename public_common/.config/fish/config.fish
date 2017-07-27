@@ -6,8 +6,7 @@ set -x PATH /bin /usr/bin                    $PATH
 set -x PATH /opt/android-sdk/platform-tools/ $PATH
 set -x PATH $HOME/.local/bin                 $PATH
 set -x PATH $HOME/.local/lib/python3.6/site-packages/ $PATH
-set -x PATH $HOME/.local/lib/python3.5/site-packages/ $PATH
-set -x JAVA_HOME /usr/lib/jvm/java-8-openjdk/
+
 
 # recurisve ~/bin in path
 if test -d $HOME/bin

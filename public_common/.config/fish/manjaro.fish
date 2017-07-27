@@ -1,5 +1,10 @@
 #!/usr/bin/env fish
 
+# extra path
+set -x JAVA_HOME /usr/lib/jvm/java-8-openjdk/
+set -x PATH $HOME/.local/lib/python3.5/site-packages/ $PATH
+
+# extra config
 set -x host_prompt_colour 'green'
 
 # start x
