@@ -4,3 +4,5 @@ misc
 public_common/.vim/bundle/
 public_common/.vim/.netrwhist
 public_extra/.ncmpcpp/error.log
+public_common/.config/fish/fishd.*
+fishd.*
