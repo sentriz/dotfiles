@@ -6,4 +6,5 @@ public_common/.vim/.netrwhist
 public_extra/.ncmpcpp/error.log
 public_common/.config/fish/fishd.*
 public_common/.config/fish/fish_history
+public_common/.config/fish/fish_read_history
 fishd.*
