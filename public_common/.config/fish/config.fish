@@ -15,7 +15,6 @@ if test -d $HOME/bin
 end
 
 # keychain
-keychain > /dev/null 2>&1
 source $HOME/.keychain/(hostname)-fish > /dev/null 2>&1
 source $HOME/.keychain/(hostname)-fish-gpg > /dev/null 2>&1
 
