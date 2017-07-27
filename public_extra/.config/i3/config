@@ -22,9 +22,7 @@ smart_borders on
 
 ## main bar
 bar {
-    output LVDS1
     status_command i3status
-    tray_output primary
     colors {
         separator #303030
         background #303030
@@ -225,6 +223,7 @@ bindsym $super+Shift+9 move container to workspace $work9
 assign [class="Firefox"] $work2
 assign [class="Chromium"] $work2
 assign [class="URxvt" instance="ncmpcpp"] $work4
+assign [class="Deadbeef"] $work4
 assign [class="URxvt" instance="weechat"] $work6
 assign [class="Franz"] $work6
 assign [class="Mnemosyne"] $work7
