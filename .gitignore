@@ -19,6 +19,7 @@ public_common/.config/fish/completions
 !public_common/.config/fish/functions/keyc.fish
 !public_common/.config/fish/functions/l.fish
 !public_common/.config/fish/functions/ll.fish
+!public_common/.config/fish/functions/fisher.fish
 !public_common/.config/fish/functions/play.fish
 !public_common/.config/fish/functions/start_tunnels.fish
 !public_common/.config/fish/functions/swap.fish
