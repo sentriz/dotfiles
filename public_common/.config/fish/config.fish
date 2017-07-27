@@ -3,7 +3,6 @@ set -x PATH /usr/local/sbin                  $PATH
 set -x PATH /usr/local/bin                   $PATH
 set -x PATH /usr/sbin /sbin                  $PATH
 set -x PATH /bin /usr/bin                    $PATH
-set -x PATH /opt/android-sdk/platform-tools/ $PATH
 set -x PATH $HOME/.local/bin                 $PATH
 set -x PATH $HOME/.local/lib/python3.6/site-packages/ $PATH
 
