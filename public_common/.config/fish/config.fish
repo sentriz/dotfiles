@@ -27,6 +27,7 @@ set -U fish_escape_delay_ms 50
 
 # fisher plugin settings
 set -g VIRTUALFISH_PLUGINS "auto_activation"
+set -g VIRTUALFISH_PYTHON_EXEC (which python3)
 
 # needed argument or couldn't quote
 alias xkill "xkill -id \"(xwininfo | awk '/Window id:/ {print $4}')\""
