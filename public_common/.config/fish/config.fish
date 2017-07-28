@@ -6,15 +6,15 @@ set -x PATH /bin /usr/bin                    $PATH
 set -x PATH $HOME/.local/bin                 $PATH
 set -x PATH $HOME/.local/lib/python3.6/site-packages/ $PATH
 
-
 # recurisve ~/bin in path
 if test -d $HOME/bin
     set -x PATH (find -L $HOME/bin -type d) $PATH
 end
 
-# keychain
+# sourcy stuff
 source $HOME/.keychain/(hostname)-fish > /dev/null 2>&1
 source $HOME/.keychain/(hostname)-fish-gpg > /dev/null 2>&1
+eval (python -m virtualfish)
 
 # host specific
 if test -f $HOME/.config/fish/(hostname).fish
