@@ -14,7 +14,7 @@ end
 # sourcy stuff
 source $HOME/.keychain/(hostname)-fish > /dev/null 2>&1
 source $HOME/.keychain/(hostname)-fish-gpg > /dev/null 2>&1
-eval (python -m virtualfish)
+eval (python3 -m virtualfish)
 
 # host specific
 if test -f $HOME/.config/fish/(hostname).fish
