@@ -27,3 +27,5 @@ public_common/.config/fish/conf.d
 #probably made on first run of fisher func, which is not in gitignore
 public_common/.config/fish/completions/fisher.fish
 public_common/.config/fish/completions/get.fish
+public_common/.config/fish/functions/fuck.fish
+public_common/.config/fish/functions/thefuck-command-line.fish
