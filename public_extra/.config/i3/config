@@ -227,6 +227,7 @@ assign [class="Deadbeef"] $work4
 assign [class="URxvt" instance="weechat"] $work6
 assign [class="Franz"] $work6
 assign [class="Mnemosyne"] $work7
+assign [class="Anki"] $work7
 assign [class="Gimp*"] $work8
 assign [class="libreoffice-*"] $work9
 
@@ -236,6 +237,7 @@ for_window [class="Mnemosyne"]   floating enable
 for_window [class="Galculator"]  floating enable
 for_window [class="etcher"]      floating enable
 for_window [class="Qpaeq"]       floating enable
+for_window [class="Anki"]        floating enable
 
 # floating generic
 for_window [window_type="menu"]        floating enable
