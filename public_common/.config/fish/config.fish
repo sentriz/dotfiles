@@ -14,20 +14,12 @@ end
 # sourcy stuff
 source $HOME/.keychain/(hostname)-fish > /dev/null 2>&1
 source $HOME/.keychain/(hostname)-fish-gpg > /dev/null 2>&1
-eval (python3 -m virtualfish)
+eval (python3 -m virtualfish auto_activation)
 
 # host specific
 if test -f $HOME/.config/fish/(hostname).fish
     source $HOME/.config/fish/(hostname).fish
 end
-
-# misc
-set -U fish_prompt_pwd_dir_length 0
-set -U fish_escape_delay_ms 50
-
-# fisher plugin settings
-set -g VIRTUALFISH_PLUGINS "auto_activation"
-set -g VIRTUALFISH_PYTHON_EXEC (which python3)
 
 # needed argument or couldn't quote
 alias xkill "xkill -id \"(xwininfo | awk '/Window id:/ {print $4}')\""
