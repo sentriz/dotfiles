@@ -11,7 +11,7 @@ alias wget "wget -c"
 alias cp "cp -aiv"
 alias mkdir "mkdir -p -v"
 alias du "du -d1 -h"
-alias df "df -hT"
+alias df "df -hT | grep -C 1000 '^.*/home\$' - "
 
 # arrangment
 alias qmv "qmv --format destination-only"
@@ -32,7 +32,7 @@ alias ascreen "screen -dRR"
 alias monoff "xset dpms force off"
 alias av_scan "sudo freshclam; and sudo clamscan -r --bell -i /"
 alias watched "sed -i s/watched\>false/watched\>true/"
-alias calc "python3 -ic 'from math import *; import cmath'"
+alias calc "python3 -ic 'from math import *; from cmath import *'"
 alias ace "acestream-launcher --player mpv"
 
 # info
