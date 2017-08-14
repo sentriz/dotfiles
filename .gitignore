@@ -29,3 +29,6 @@ public_common/.config/fish/completions/fisher.fish
 public_common/.config/fish/completions/get.fish
 public_common/.config/fish/functions/fuck.fish
 public_common/.config/fish/functions/thefuck-command-line.fish
+public_common/.config/fish/completions/shark.fish
+public_common/.config/fish/functions/shark.fish
+
