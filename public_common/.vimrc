@@ -49,12 +49,12 @@ filetype plugin indent on
 " plugin settings
 let g:ycm_filetype_whitelist = {'python' : 1, 'javascript' : 1, 'c' : 1}
 let g:startify_session_dir = '~/.vim/session'
-" let g:netrw_winsize = -28
-" let g:netrw_banner = 0
-" let g:netrw_liststyle = 3
-" let g:netrw_sort_sequence = '[\/]$,*'
-" let g:netrw_altv = 1
-" let g:netrw_browse_split = 2
+let g:netrw_winsize = -28
+let g:netrw_banner = 0
+let g:netrw_liststyle = 3
+let g:netrw_sort_sequence = '[\/]$,*'
+let g:netrw_altv = 1
+let g:netrw_browse_split = 0
 
 " colorscheme, term colours, hidden chars and font
 colorscheme desert
