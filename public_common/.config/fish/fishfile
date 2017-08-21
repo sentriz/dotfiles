@@ -3,5 +3,6 @@ fisherman/fzf
 fisherman/get
 fisherman/getopts
 fisherman/last_job_id
+fisherman/shark
 oh-my-fish/plugin-thefuck
 fisherman/z
