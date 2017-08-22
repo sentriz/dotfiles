@@ -1,5 +1,5 @@
 # keep updated with 
-# printf "set -g %s\n" (set -U |grep fish_color) > ~/.config/fish/conf.d/colours.fish
+# printf "set -g %s\n" (set -U | grep fish_color) > ~/.config/fish/conf.d/colours.fish
 set -g fish_color_autosuggestion '555'  'brblack'
 set -g fish_color_command normal
 set -g fish_color_comment red
