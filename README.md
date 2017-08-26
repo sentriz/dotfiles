@@ -1,5 +1,5 @@
 # installation 
-hmm, i wouldn't actually install my dotfiles, there are like personal notes
+hmm, i wouldn't actually install my dotfiles, these are like personal notes
 
     $ install git stow fish vim
     $ git clone https://github.com/sentriz/dotfiles.git ~/dotfiles
