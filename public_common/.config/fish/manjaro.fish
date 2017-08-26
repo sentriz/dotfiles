@@ -22,6 +22,7 @@ source $HOME/.keychain/(hostname)-fish > /dev/null 2>&1
 source $HOME/.keychain/(hostname)-fish-gpg > /dev/null 2>&1
 eval (python3 -m virtualfish auto_activation)
 
+# x login
 if status --is-login; and test -z $DISPLAY; and test -z $TMUX
     xlogin
 end
