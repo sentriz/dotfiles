@@ -1,5 +1,5 @@
-mpd_host = osmc.lan
-mpd_port = 6600
+mpd_host = 192.168.1.201
+mpd_port = 6680
 mpd_music_dir = /home/senan/mounts/drum_music/music_library
 
 media_library_primary_tag = album_artist
