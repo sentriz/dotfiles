@@ -188,7 +188,7 @@ set $work1 "1 main "
 set $work2 "2 web "
 set $work3 "3 term "
 set $work4 "4 music "
-set $work5 "5 video "
+set $work5 "5 vm "
 set $work6 "6 chat "
 set $work7 "7 mnem "
 set $work8 "8 gimp "
@@ -230,6 +230,7 @@ assign [class="Mnemosyne"] $work7
 assign [class="Anki"] $work7
 assign [class="Gimp*"] $work8
 assign [class="libreoffice-*"] $work9
+assign [class="VirtualBox"] $work5
 
 # floating
 for_window [class="Pavucontrol"] floating enable
@@ -238,6 +239,7 @@ for_window [class="Galculator"]  floating enable
 for_window [class="etcher"]      floating enable
 for_window [class="Qpaeq"]       floating enable
 for_window [class="Anki"]        floating enable
+for_window [class="Gui.py"]      floating enable
 
 # floating generic
 for_window [window_type="menu"]        floating enable
@@ -264,9 +266,6 @@ for_window [class="mpv"]                        floating enable, resize set 600 
 bindsym $super+Ctrl+e exec thunar
 bindsym $super+Ctrl+b exec chromium
 bindsym $super+Ctrl+g exec galculator
-bindsym $super+Ctrl+v exec pavucontrol
-bindsym $super+Ctrl+q exec qpaeq
-bindsym $super+Ctrl+w exec --no-startup-idmorc_menu
 bindsym $super+Ctrl+a exec --no-startup-id dmenu_pacs
 bindsym $super+Ctrl+f exec --no-startup-id dmenu_sinks
 bindsym $super+Ctrl+r exec --no-startup-id dmenu_radio
@@ -274,15 +273,13 @@ bindsym $super+Ctrl+u exec --no-startup-id dmenu_clipfav
 bindsym $super+Ctrl+h exec --no-startup-id dmenu_clipboard
 bindsym $super+Ctrl+p exec --no-startup-id dmenu_pass --tuser --tpass
 bindsym $super+Ctrl+t exec --no-startup-id dmenu_todo
+bindsym $super+Ctrl+v exec --no-startup-id dmenu_vms
 
 bindsym $super+Return exec urxvtc -bg "#303030" 
-bindsym $super+Ctrl+m exec ncmpcpp_layout
 bindsym $super+Ctrl+i exec urxvtc -bg "#303030" -name weechat -hold -e irc
-
-
 bindsym $super+Ctrl+c exec urxvtc -name nmtui -e nmtui connect
 bindsym $super+Ctrl+n exec urxvtc -name nmtui -e nmtui edit
-bindsym $super+Ctrl+s exec --no-startup-id ctl_mpv_watch
+bindsym $super+Ctrl+m exec ncmpcpp
 
 # keybindings (xf86 on thinkpad x220)
 bindsym XF86TouchpadToggle exec --no-startup-id thinkpad-touchpad && notify-send "touchpad toggled"

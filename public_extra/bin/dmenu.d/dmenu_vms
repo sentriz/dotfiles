@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+# Senan Kelly 2017
+
+vm_names=$(ls ~/virtualbox/)
+picked_vm_name=$(dmenu_custom -p "virtual machine:" <<< "$vm_names")
+test -z "$picked_vm_name" && exit 1
+
+virtualbox --fullscreen --startvm "$picked_vm_name" 
