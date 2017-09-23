@@ -39,19 +39,15 @@ shitty_files = (
 
 
 if __name__ == '__main__':
-
     import os
     import sys
     import shutil
-
     for raw_file in shitty_files:
         file = os.path.expanduser(raw_file)
-
         if not os.path.exists(file):
             continue
         if os.path.isfile(file):
             os.remove(file)
         elif os.path.isdir(file):
             shutil.rmtree(file)
-
         print("removed", file)
