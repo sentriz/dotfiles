@@ -126,6 +126,24 @@ function! s:NiceNext(cmd)
   endif
 endfunction
 
+function! HLNext (blinktime)
+    highlight RedOnRed ctermfg=red ctermbg=red
+    let [bufnum, lnum, col, off] = getpos('.')
+    let matchlen = strlen(matchstr(strpart(getline('.'),col-1),@/))
+    echo matchlen
+    let ring_pat = (lnum > 1 ? '\%'.(lnum-1).'l\%>'.max([col-4,1]) .'v\%<'.(col+matchlen+3).'v.\|' : '')
+            \ . '\%'.lnum.'l\%>'.max([col-4,1]) .'v\%<'.col.'v.'
+            \ . '\|'
+            \ . '\%'.lnum.'l\%>'.max([col+matchlen-1,1]) .'v\%<'.(col+matchlen+3).'v.'
+            \ . '\|'
+            \ . '\%'.(lnum+1).'l\%>'.max([col-4,1]) .'v\%<'.(col+matchlen+3).'v.'
+    let ring = matchadd('RedOnRed', ring_pat, 101)
+    redraw
+    exec 'sleep ' . float2nr(a:blinktime * 1000) . 'm'
+    call matchdelete(ring)
+    redraw
+endfunction
+
 " leader mappings
 let mapleader = "\<Space>"
 
@@ -163,7 +181,7 @@ nnoremap <leader>a :ArgWrap<CR>
 nnoremap <leader>h :ColorToggle<CR>
 nnoremap <leader>r :w<CR>:!clear && %:p<CR>
 nnoremap <leader>x :w<CR>:!chmod +x %:p<CR><CR>
-nnoremap <leader>t :w<CR>:!ctags -R %:h<CR><CR>
+" nnoremap <leader>t :w<CR>:!ctags -R %:h<CR><CR>
 nnoremap <leader>n :noh<CR>
 
 nnoremap <leader>s :%s/<c-r><c-w>/<c-r><c-w>/gc<c-f>$F/
@@ -182,11 +200,8 @@ nnoremap <Right> :vertical resize -2<CR>
 nnoremap <Up> :resize -2<CR>
 nnoremap <Down> :resize +2<CR>
 
-inoremap " '
-inoremap ' "
-
-nnoremap <silent> n :silent call <SID>NiceNext('n')<cr>
-nnoremap <silent> N :silent call <SID>NiceNext('N')<cr>
+nnoremap <silent> n   n:call HLNext(0.1)<cr>
+nnoremap <silent> N   N:call HLNext(0.1)<cr>
 
 " use C-e and C-y to copy word above and below the current line
 inoremap <expr> <c-y> pumvisible() ? "\<c-y>" : matchstr(getline(line('.')-1), '\%' . virtcol('.') . 'v\%(\k\+\\|.\)')
