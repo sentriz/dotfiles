@@ -1,7 +1,46 @@
-#!/bin/bash
+#!/usr/bin/env fish
 
-image=/tmp/i3lock.png
+# triangle_swirl by https://github.com/EdwardDowling
+
+set -l image (mktemp /tmp/lock_XXXX.png)
+set -l text "locked since "(date +%H:%M)
+set -l colour (random choice red blue green violet indigo \#feca1e \#dad15dead)
+
 scrot $image
-convert $image -blur 8x8 -fill white -font 'Bitstream-Vera-Sans-Mono' -stroke black -gravity North -pointsize 40 -annotate +0+50 "desktop locked since $(date +%H:%M:%S)" $image
-i3lock -bf --insidevercolor=0000a0bf --insidewrongcolor=ff8000bf --insidecolor=ffffffbf --ringvercolor=0020ffff --ringwrongcolor=4040ffff --ringcolor=404090ff --textcolor=ffffffff --separatorcolor=aaaaaaff --keyhlcolor=30ccccff --bshlcolor=ff8000ff -ben -i $image
-rm $image
+triangle_swirl $image \
+               $image \
+               (random 6 30)
+test 0 -eq (random 0 10); and \
+    convert $image \
+            \( ~/pictures/misc/fiji.png -thumbnail x(random 150 500) -background none -rotate (random 0 360) \) -gravity center -geometry  +(math (random 0 1000) - 500)+(math (random 0 1000) - 500) -composite \
+            \( ~/pictures/misc/fiji.png -thumbnail x(random 150 500) -background none -rotate (random 0 360) \) -gravity center -geometry  +(math (random 0 1000) - 500)+(math (random 0 1000) - 500) -composite \
+            \( ~/pictures/misc/fiji.png -thumbnail x(random 150 500) -background none -rotate (random 0 360) \) -gravity center -geometry  +(math (random 0 1000) - 500)+(math (random 0 1000) - 500) -composite \
+            \( ~/pictures/misc/fiji.png -thumbnail x(random 150 500) -background none -rotate (random 0 360) \) -gravity center -geometry  +(math (random 0 1000) - 500)+(math (random 0 1000) - 500) -composite \
+            \( ~/pictures/misc/bust.png -thumbnail x(random 150 500) -background none -rotate (random 0 360) \) -gravity center -geometry  +(math (random 0 1000) - 500)+(math (random 0 1000) - 500) -composite \
+            \( ~/pictures/misc/bust.png -thumbnail x(random 150 500) -background none -rotate (random 0 360) \) -gravity center -geometry  +(math (random 0 1000) - 500)+(math (random 0 1000) - 500) -composite \
+            \( ~/pictures/misc/bust.png -thumbnail x(random 150 500) -background none -rotate (random 0 360) \) -gravity center -geometry  +(math (random 0 1000) - 500)+(math (random 0 1000) - 500) -composite \
+            \( ~/pictures/misc/bust.png -thumbnail x(random 150 500) -background none -rotate (random 0 360) \) -gravity center -geometry  +(math (random 0 1000) - 500)+(math (random 0 1000) - 500) -composite \
+            $image
+convert $image \
+    -font 'Bitstream-Vera-Sans-Mono' \
+    -gravity North \
+    -fill $colour \
+    -pointsize 80 \
+    -annotate -5+55 "$text" \
+    -fill white \
+    -pointsize 80 \
+    -annotate +0+50 "$text" \
+    $image
+i3lock -bfen \
+       --insidevercolor=0000a0bf \
+       --insidewrongcolor=ff8000bf \
+       --insidecolor=ffffffbf \
+       --ringvercolor=0020ffff \
+       --ringwrongcolor=4040ffff \
+       --ringcolor=404090ff \
+       --textcolor=ffffffff \
+       --separatorcolor=aaaaaaff \
+       --keyhlcolor=30ccccff \
+       --bshlcolor=ff8000ff \
+       -i $image
+rm $image > /dev/null
