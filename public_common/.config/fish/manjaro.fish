@@ -6,6 +6,9 @@ set -x host_prompt_colour 'green'
 # java
 set -x JAVA_HOME /usr/lib/jvm/java-8-openjdk/
 
+# cargo path
+set -x PATH $HOME/.cargo/bin $PATH
+
 # python path
 set -x PATH $HOME/.local/lib/python*/site-packages/ $PATH
 
