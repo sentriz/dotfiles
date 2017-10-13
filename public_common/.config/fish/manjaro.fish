@@ -1,7 +1,7 @@
 #!/usr/bin/env fish
 
 # extra config
-set -x host_prompt_colour 'green'
+set -x host_prompt_colour 'brgreen'
 
 # java
 set -x JAVA_HOME /usr/lib/jvm/java-8-openjdk/
