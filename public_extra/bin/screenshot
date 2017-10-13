@@ -4,9 +4,9 @@ screen_dir=/home/senan/pictures/screenshots
 
 if [ "$1" ==  "--select" ]; then
     notify-send 'screenshot' 'select an area'
-    scrot "$screen_dir/%Y%m%d_%H%M%S.png" -s -e 'echo $f'
+    scrot "$screen_dir/%Y%m%d_%H%M%S.png" -s -e 'echo $f && xclip $f && echo $f'
 else
-    scrot "$screen_dir/%Y%m%d_%H%M%S.png" -e 'echo $f'
+    scrot "$screen_dir/%Y%m%d_%H%M%S.png" -e 'echo $f && xclip $f'
 fi
 
 notify-send "screnshot taken" "in ~/pictures/screenshots"
