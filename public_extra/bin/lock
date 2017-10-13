@@ -9,14 +9,12 @@ set -l colour (random choice red blue green violet indigo \#feca1e \#dad15dead)
 scrot $image
 triangle_swirl $image \
                $image \
-               (random 6 30)
+               (random 8 30)
 test 0 -eq (random 0 10); and \
     convert $image \
             \( ~/pictures/misc/fiji.png -thumbnail x(random 150 500) -background none -rotate (random 0 360) \) -gravity center -geometry  +(math (random 0 1000) - 500)+(math (random 0 1000) - 500) -composite \
             \( ~/pictures/misc/fiji.png -thumbnail x(random 150 500) -background none -rotate (random 0 360) \) -gravity center -geometry  +(math (random 0 1000) - 500)+(math (random 0 1000) - 500) -composite \
             \( ~/pictures/misc/fiji.png -thumbnail x(random 150 500) -background none -rotate (random 0 360) \) -gravity center -geometry  +(math (random 0 1000) - 500)+(math (random 0 1000) - 500) -composite \
-            \( ~/pictures/misc/fiji.png -thumbnail x(random 150 500) -background none -rotate (random 0 360) \) -gravity center -geometry  +(math (random 0 1000) - 500)+(math (random 0 1000) - 500) -composite \
-            \( ~/pictures/misc/bust.png -thumbnail x(random 150 500) -background none -rotate (random 0 360) \) -gravity center -geometry  +(math (random 0 1000) - 500)+(math (random 0 1000) - 500) -composite \
             \( ~/pictures/misc/bust.png -thumbnail x(random 150 500) -background none -rotate (random 0 360) \) -gravity center -geometry  +(math (random 0 1000) - 500)+(math (random 0 1000) - 500) -composite \
             \( ~/pictures/misc/bust.png -thumbnail x(random 150 500) -background none -rotate (random 0 360) \) -gravity center -geometry  +(math (random 0 1000) - 500)+(math (random 0 1000) - 500) -composite \
             \( ~/pictures/misc/bust.png -thumbnail x(random 150 500) -background none -rotate (random 0 360) \) -gravity center -geometry  +(math (random 0 1000) - 500)+(math (random 0 1000) - 500) -composite \
@@ -26,7 +24,7 @@ convert $image \
     -gravity North \
     -fill $colour \
     -pointsize 80 \
-    -annotate -5+55 "$text" \
+    -annotate -3+53 "$text" \
     -fill white \
     -pointsize 80 \
     -annotate +0+50 "$text" \
