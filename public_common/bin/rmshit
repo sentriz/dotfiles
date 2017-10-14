@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-shitty_files = (
+SHIT = (
     '~/.adobe',
     '~/.macromedia',
     '~/.recently-used',
@@ -42,12 +42,16 @@ if __name__ == '__main__':
     import os
     import sys
     import shutil
-    for raw_file in shitty_files:
-        file = os.path.expanduser(raw_file)
-        if not os.path.exists(file):
+
+    for path in SHIT:
+        path = os.path.expanduser(path)
+        if not os.path.exists(path):
             continue
-        if os.path.isfile(file):
-            os.remove(file)
-        elif os.path.isdir(file):
-            shutil.rmtree(file)
-        print("removed", file)
+        if os.path.isfile(path):
+            os.remove(path)
+        elif os.path.isdir(path):
+            shutil.rmtree(path)
+        else:
+            print(f"can't remove {path}")
+            continue
+        print(f"removed {path}")

@@ -1,13 +1,17 @@
-#!/usr/bin/env bash
+#!/usr/bin/env fish
 
-name=$( echo $* | sed 's/ /-/g' )
-date=$( date +%F )
-file=~/dev/github/xyz/_posts/$date-$name.md
-git_file=~/dev/github/xyz/.git
-
-touch $file &&
-echo -e "---\ntitle:  \n---" > $file &&
-vim +2 -c "normal $" $file &&
-# test -z "$(git --git-dir=$git_file status --porcelain)" &&
-# git --git-dir=$git_file add $file &&
-# git --git-dir=$git_file commit -m "add post $name"
+if test (count $argv) -eq 0
+    echo need name of post >&2
+    exit 1
+end
+set -l name (echo "$argv" | sed 's/ /-/g')
+set -l date (date +%F)
+set -l folder "~/dev/github/xyz/_posts"
+if test ! -e "$folder"
+    echo "post folder doesn't exist" >&2
+    exit 1
+end
+set -l file "$folder/$date-$name.md"
+touch "$file"
+echo -e "---\ntitle:  \n---" > "$file"
+vim +2 -c 'normal $' "$file"
