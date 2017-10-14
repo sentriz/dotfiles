@@ -6,11 +6,9 @@ alias please "eval command sudo $history[1]"
 
 # safety/better
 alias rm "rm -Iv --preserve-root"
-alias sudo "sudo "
 alias wget "wget -c"
 alias cp "cp -aiv"
 alias mkdir "mkdir -p -v"
-alias du "du -d1 -h"
 alias df "df -hT | grep -C 1000 '^.*/home\$' - "
 
 # arrangment
@@ -55,3 +53,7 @@ alias sudo "sudo "
 alias :wq "exit"
 alias :qw "exit"
 alias :q  "exit"
+
+# abbreviations
+abbr sudo "sudo -E"
+abbr du "du -d1 -h"
