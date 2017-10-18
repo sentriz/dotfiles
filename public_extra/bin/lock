@@ -1,6 +1,10 @@
 #!/usr/bin/env fish
 
-# triangle_swirl by https://github.com/EdwardDowling
+# extra requirements:
+# - scrot
+# - imagemagic
+# - i3lock-color
+# - triangle_swirl by https://github.com/EdwardDowling
 
 set -l image (mktemp /tmp/lock_XXXX.png)
 set -l text "locked since "(date +%H:%M)
