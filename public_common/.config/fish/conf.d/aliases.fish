@@ -45,7 +45,7 @@ alias speed         "speedtest-cli --simple"
 
 # with other command
 alias tb   "nc -N shmig.senan.xyz 17643 | tee /dev/tty | xclip -i; and echo 'is in the clipboard'"
-alias tbo  "nc termbin.com 9999"
+alias tbo  "nc -N termbin.com 9999"
 alias sedo "sudo -E"
 alias sudo "sudo "
 
