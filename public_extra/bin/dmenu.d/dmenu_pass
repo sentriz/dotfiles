@@ -1,5 +1,17 @@
 #!/usr/bin/env bash
 
+# Senan Kelly 2016
+
+# requirements:           - pass
+#                         - xdotool
+#                         - dmenu
+# .password_store format: - ~/password_store/{sitename}/username   # THIS
+#                           ~/password_store/{sitename}/email      # OR THIS 
+#                           ~/password_store/{sitename}/password 
+#                           ~/password_store/{sitename}/url        # optional
+#                         - {sitename} can be multiple folders
+#                         - {sitename} one line per file
+
 set -o pipefail
 
 pass_dir=~/.password-store/
