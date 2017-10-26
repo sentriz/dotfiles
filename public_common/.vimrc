@@ -210,3 +210,5 @@ inoremap <expr> <c-e> pumvisible() ? "\<c-e>" : matchstr(getline(line('.')+1), '
 " :Q -> :q | :W -> :w
 com Q q
 com W w
+
+autocmd BufWritePre COMMIT_EDITMSG 1,/^#/s/b/🅱/g
