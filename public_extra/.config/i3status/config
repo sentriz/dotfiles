@@ -5,21 +5,16 @@ general {
     color_degraded = "#1793D1"        
     interval = 5
     output_format = "i3bar"
+
 }
 
-order += "disk /home"
 order += "wireless _first_"
 order += "battery 0"
 order += "load"
 order += "cpu_temperature 0"
-order += "cpu_usage"
 order += "volume master"
 order += "path_exists docked"
 order += "tztime local"
-
-disk /home {
-    format = " home %percentage_used"
-}
 
 wireless _first_ {
     format_up = " %quality %essid"
@@ -30,10 +25,6 @@ load {
     format = " %1min"
 }
 
-cpu_usage {
-    format = " %usage"
-}
-
 volume master {
     format = " %volume"
     device = "default"
@@ -42,21 +33,26 @@ volume master {
 }
 
 tztime local {
-    format = "%a %d, %I:%M:%S "
+    format = " %a %d, %I:%M:%S"
 }
 
 path_exists docked {
-       # file containing the PID of a vpnc process
-       path = "/tmp/docked"
-       format_down = ""
-       format = "%title"
+   # file containing the PID of a vpnc process
+   path = "/tmp/docked"
+   format_down = ""
+   format = "%title"
 }
 
 battery 0 {
-    format = "%status %percentage %remaining"
+    format = "%status %percentage"
+    #format = "%status %percentage %remaining"
     path = "/sys/class/power_supply/BAT0/uevent"
     status_full = " full"
-    status_bat = " bat"
-    status_chr = " chr"
+    status_bat = " "
+    status_chr = " "
     hide_seconds = true
+}
+
+cpu_temperature 0 {
+    format = " %degrees°C"
 }
