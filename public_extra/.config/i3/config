@@ -24,13 +24,13 @@ smart_borders on
 bar {
     status_command i3status
     colors {
-        separator #303030
-        background #303030
-        statusline #dddddd
-        focused_workspace #0088CC #0088CC #ffffff
-        active_workspace #333333 #303030 #ffffff
+        separator          #303030
+        background         #303030
+        statusline         #dddddd
+        focused_workspace  #0088CC #0088CC #ffffff
+        active_workspace   #333333 #303030 #ffffff
         inactive_workspace #303030 #303030 #888888
-        urgent_workspace #2f343a #900000 #ffffff
+        urgent_workspace   #2f343a #900000 #ffffff
     }
 }
 
@@ -75,16 +75,16 @@ bindsym $super+$alt+p mode $mode_pass
 bindsym $super+$alt+s mode $mode_scrot
 bindsym $super+$alt+g mode $mode_gaps
 
-set $mode_resize_tile "resize mode: [h][j][k][l]"
+set $mode_resize_tile   "resize mode: [h][j][k][l]"
 set $mode_move_floating "floating move mode: [h][j][k][l]"
-set $mode_system  "system mode: [l]ock, log[o]ut, [s]uspend, [h]ibernate, [r]eboot, shut[d]own"
-set $mode_i3  "i3 mode: e[x]it, [r]estart, reload [c]onfig"
-set $mode_audio "volume mode: +|right +5%/+10%,  -|left +5%/+10%,  [m]ute,  [r]eset"
-set $mode_scrot "screenshot mode: [n]ormal, [s]elect, [N]ormal upload, [S]elect upload"
-set $mode_pass "pass mode: [m]anual, [u]ser, [p]assword, [b]oth"
-set $mode_gaps "gaps: [o]uter, [i]nner"
-set $mode_gaps_outer "gaps outer: +|-|0 (local), shift +|-|0 (global)"
-set $mode_gaps_inner "gaps inner: +|-|0 (local), shift +|-|0 (global)"
+set $mode_system        "system mode: [l]ock, log[o]ut, [s]uspend, [h]ibernate, [r]eboot, shut[d]own"
+set $mode_i3            "i3 mode: e[x]it, [r]estart, reload [c]onfig"
+set $mode_audio         "volume mode: +|right +5%/+10%,  -|left +5%/+10%,  [m]ute,  [r]eset"
+set $mode_scrot         "screenshot mode: [n]ormal, [s]elect, [N]ormal upload, [S]elect upload"
+set $mode_pass          "pass mode: [m]anual, [u]ser, [p]assword, [b]oth"
+set $mode_gaps          "gaps: [o]uter, [i]nner"
+set $mode_gaps_outer    "gaps outer: +|-|0 (local), shift +|-|0 (global)"
+set $mode_gaps_inner    "gaps inner: +|-|0 (local), shift +|-|0 (global)"
 
 mode $mode_resize_tile {
         bindsym h resize shrink width 10 px or 10 ppt
