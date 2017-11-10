@@ -1,6 +1,7 @@
 [user]
-    email = senan.f.b.kelly+github@gmail.com
+    email = senan@senan.xyz
     name = sentriz
+	signingkey = 609FCE8BB45971C8293040AC9A8DAE1CA907B862
 
 [push]
 	default = current
@@ -44,3 +45,5 @@
 
 [pull]
 	rebase = true
+[commit]
+	gpgsign = true
