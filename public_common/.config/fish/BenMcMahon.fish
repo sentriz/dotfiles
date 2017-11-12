@@ -1,7 +1,7 @@
 #!/usr/bin/env fish
 
 # extra config
-set -x host_prompt_colour 'cyan'
+set -x host_colour 'cyan'
 
 # sourcy stuff
 source $HOME/.keychain/(hostname)-fish > /dev/null 2>&1

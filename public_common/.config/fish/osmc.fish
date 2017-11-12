@@ -1,3 +1,3 @@
 #!/usr/bin/env fish
 
-set -x prompt_host_colour 'blue'
+set -x prompt_colour 'blue'
