@@ -1,8 +1,8 @@
-if exists("b:did_ftplugin")
+" don't load twice in one buffer
+if exists("b:did_git_ftplugin")
   finish
 endif
-
-" don't load twice in one buffer
-let b:did_ftplugin = 1
+let b:did_git_ftplugin = 1
 
 setlocal spell
+autocmd BufWritePre COMMIT_EDITMSG 1,/^#/s/b/🅱/gi
