@@ -3,14 +3,13 @@
 source ~/.xprofile
 
 xrandr --output LVDS1 --primary
-compton -b &
-~/.fehbg &
+feh --bg-scale "$(find ~/pictures/wallpapers_on/ | shuf -n 1)"
 thinkpad-touchpad off &
 urxvtd &
 redshift-gtk &
 dunst &
 clipit &
 xss-lock -- ~/bin/lock &
-# xdotool behave_screen_edge bottom-right exec --sync ~/bin/lock &
+#xdotool behave_screen_edge bottom-right exec --sync ~/bin/lock &
 
 exec i3
