@@ -1,0 +1,3 @@
+#!/bin/bash
+
+stow -v --ignore='.ssh' --ignore='running' --target ~ -R private
