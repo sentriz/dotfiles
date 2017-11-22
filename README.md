@@ -9,4 +9,7 @@ hmm, i wouldn't actually install my dotfiles, these are like personal notes
     $ ~/dotfiles/install_extra # if on an x11 system
     $ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
     $ vim +PluginInstall +qall
+    $ wget https://bootstrap.pypa.io/get-pip.py
+    $ python3 get-pip.py --user
+    $ python3 -m pip install --user virtualfish
     $ chsh -s $(which fish)
