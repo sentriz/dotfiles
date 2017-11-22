@@ -1,9 +1,9 @@
 # path stuff
-set -x PATH /usr/local/sbin                  $PATH
-set -x PATH /usr/local/bin                   $PATH
-set -x PATH /usr/sbin /sbin                  $PATH
-set -x PATH /bin /usr/bin                    $PATH
-set -x PATH $HOME/.local/bin                 $PATH
+set -x PATH /usr/local/sbin  $PATH 2> /dev/null
+set -x PATH /usr/local/bin   $PATH 2> /dev/null
+set -x PATH /usr/sbin /sbin  $PATH 2> /dev/null
+set -x PATH /bin /usr/bin    $PATH 2> /dev/null
+set -x PATH $HOME/.local/bin $PATH 2> /dev/null
 
 # recurisve ~/bin in path
 if test -d $HOME/bin
