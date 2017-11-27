@@ -229,6 +229,7 @@ assign [class="Franz"] $work6
 assign [class="Mnemosyne"] $work7
 assign [class="Anki"] $work7
 assign [class="Gimp*"] $work8
+assign [class="Inkscape"] $work8
 assign [class="libreoffice-*"] $work9
 assign [class="VirtualBox"] $work5
 
