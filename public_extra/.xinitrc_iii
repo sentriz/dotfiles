@@ -3,13 +3,14 @@
 source ~/.xprofile
 
 xrandr --output LVDS1 --primary
-feh --bg-scale "$(find ~/pictures/wallpapers_on/ | shuf -n 1)"
+~/dev/github/lock/lock.sh --update "$(find ~/pictures/wallpapers_on/* | shuf -n 1)" &
+feh --bg-scale "$(find ~/pictures/wallpapers_on/* | shuf -n 1)" &
 thinkpad-touchpad off &
 urxvtd &
 redshift-gtk &
 dunst &
 clipit &
-xss-lock -- ~/bin/lock &
+xss-lock -- ~/dev/github/betterlockscreen/lock.sh -l &
 #xdotool behave_screen_edge bottom-right exec --sync ~/bin/lock &
 
 exec i3
