@@ -11,6 +11,6 @@ if test -d $HOME/bin
 end
 
 # host specific
-if test -f $HOME/.config/fish/(hostname).fish
-    source $HOME/.config/fish/(hostname).fish
+if test -f /home/senan/.config/fish/host_specific/(hostname).fish
+    source /home/senan/.config/fish/host_specific/(hostname).fish
 end
