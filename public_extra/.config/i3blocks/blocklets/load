@@ -1,0 +1,17 @@
+#!/bin/sh
+load="$(cut -d ' ' -f1 /proc/loadavg)"
+cores="$(nproc)"
+
+echo "$load"
+echo "$load"
+awk -v cores=$cores -v load_=$load '
+    BEGIN {
+        if (cores <= load_) {
+            print "#c62828";
+            exit 33;
+        }
+        else {
+            print "#039be5";
+        }
+    }
+'

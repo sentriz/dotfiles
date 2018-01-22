@@ -1,0 +1,48 @@
+#!/usr/bin/env python3
+
+import re
+from subprocess import check_output
+
+ICONS = {
+    "Charging":    "\uf1e6",
+    "Discharging": "\uf240",
+    "Unknown":     "\uf128"
+}
+STATUS_EXPRESSION = re.compile(
+    r'^Battery\s\d+:\s'
+     '(?P<state>Discharging|Charging|Full|Unknown),\s'
+     '(?P<percent>\d+)%,\s'
+     '(?P<left>\d{2}:\d{2})'
+)
+
+
+def parse_status(status):
+    match = re.match(STATUS_EXPRESSION, status)
+    return match.groupdict()
+
+
+def gen_string(status):
+    icon = ICONS[status['state']]
+    output = f'{icon} {status["percent"]}%'
+    if status["state"] == "Charging":
+        output += f' ({status["left"]})'
+    return output
+
+
+def gen_colour(status):
+    if int(status["percent"]) < 10:
+        return "#c62828"
+    return "#7cb342"
+
+
+def gen_output():
+    raw_status = check_output(['acpi'], universal_newlines=True)
+    status = parse_status(raw_status)
+    return gen_string(status), gen_colour(status)
+
+
+if __name__ == "__main__":
+    string, colour = gen_output()
+    print(string)
+    print(string)
+    print(colour)

@@ -9,7 +9,8 @@
 
 set $super Mod4
 set $alt Mod1
-set $locker lock
+set $locker ~/dev/github/lock/lock.sh --lock
+set $update_blocks_audio pkill -RTMIN+1 i3blocks
 
 font pango:bitstream vera sans mono 10
 floating_modifier $super
@@ -22,7 +23,7 @@ smart_borders on
 
 ## main bar
 bar {
-    status_command i3status
+    status_command i3blocks
     colors {
         separator          #303030
         background         #303030
@@ -87,12 +88,12 @@ set $mode_gaps_outer    "gaps outer: +|-|0 (local), shift +|-|0 (global)"
 set $mode_gaps_inner    "gaps inner: +|-|0 (local), shift +|-|0 (global)"
 
 mode $mode_resize_tile {
-        bindsym h resize shrink width 10 px or 10 ppt
-        bindsym j resize grow height 10 px or 10 ppt
-        bindsym k resize shrink height 10 px or 10 ppt
-        bindsym l resize grow width 10 px or 10 ppt
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
+    bindsym h resize shrink width 10 px or 10 ppt
+    bindsym j resize grow height 10 px or 10 ppt
+    bindsym k resize shrink height 10 px or 10 ppt
+    bindsym l resize grow width 10 px or 10 ppt
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
 }
 
 mode $mode_system {
@@ -115,14 +116,14 @@ mode $mode_i3 {
 }
 
 mode $mode_audio {
-    bindsym plus          exec --no-startup-id ponymix increase 5%
-    bindsym minus         exec --no-startup-id ponymix decrease 5%
-    bindsym KP_Add        exec --no-startup-id ponymix increase 5%
-    bindsym KP_Subtract   exec --no-startup-id ponymix decrease 5%
-    bindsym Right         exec --no-startup-id ponymix increase 10%
-    bindsym Left          exec --no-startup-id ponymix decrease 10%
-    bindsym m             exec --no-startup-id ponymix toggle
-    bindsym r             exec --no-startup-id ponymix set-volume 100%
+    bindsym plus          exec --no-startup-id ponymix increase 5%;     exec --no-startup-id $update_blocks_audio
+    bindsym minus         exec --no-startup-id ponymix decrease 5%;     exec --no-startup-id $update_blocks_audio
+    bindsym KP_Add        exec --no-startup-id ponymix increase 5%;     exec --no-startup-id $update_blocks_audio
+    bindsym KP_Subtract   exec --no-startup-id ponymix decrease 5%;     exec --no-startup-id $update_blocks_audio
+    bindsym Right         exec --no-startup-id ponymix increase 10%;    exec --no-startup-id $update_blocks_audio 
+    bindsym Left          exec --no-startup-id ponymix decrease 10%;    exec --no-startup-id $update_blocks_audio
+    bindsym m             exec --no-startup-id ponymix toggle;          exec --no-startup-id $update_blocks_audio
+    bindsym r             exec --no-startup-id ponymix set-volume 100%; exec --no-startup-id $update_blocks_audio
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
@@ -187,7 +188,7 @@ mode $mode_gaps_outer {
 set $work1 "1 main "
 set $work2 "2 web "
 set $work3 "3 term "
-set $work4 "4 music "
+set $work4 "4 music "
 set $work5 "5 vm "
 set $work6 "6 chat "
 set $work7 "7 mnem "
@@ -266,7 +267,7 @@ for_window [class="mpv"]                        floating enable, resize set 600 
 
 ## keybindings (programs)
 bindsym $super+Ctrl+e exec thunar
-bindsym $super+Ctrl+b exec chromium
+bindsym $super+Ctrl+b exec google-chrome-stable
 bindsym $super+Ctrl+g exec galculator
 bindsym $super+Ctrl+a exec --no-startup-id dmenu_pacs
 bindsym $super+Ctrl+f exec --no-startup-id dmenu_sinks
@@ -295,10 +296,10 @@ bindsym XF86Sleep exec --no-startup-id gksudo systemctl suspend
 bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 5
 bindsym XF86MonBrightnessDown exec --no-startup-id  xbacklight -dec 5
 
-bindsym XF86AudioRaiseVolume exec --no-startup-id ponymix increase 5%
-bindsym XF86AudioLowerVolume exec --no-startup-id ponymix decrease 5%
-bindsym XF86AudioMute exec --no-startup-id ponymix toggle
-bindsym XF86AudioMicMute exec --no-startup-id thinkpad-mutemic
+bindsym XF86AudioRaiseVolume exec --no-startup-id "ponymix increase 5% && $update_blocks_audio"
+bindsym XF86AudioLowerVolume exec --no-startup-id "ponymix decrease 5% && $update_blocks_audio"
+bindsym XF86AudioMute exec --no-startup-id        "ponymix toggle      && $update_blocks_audio"
+bindsym XF86AudioMicMute exec --no-startup-id     "thinkpad-mutemic    && $update_blocks_audio"
 
 bindsym XF86AudioPlay exec --no-startup-id ctl_player toggle
 bindsym XF86AudioStop exec --no-startup-id ctl_player stop
