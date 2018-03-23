@@ -1,3 +1,3 @@
 function activate_virtualfish
-    eval (python3 -m virtualfish auto_activation)
+    eval (python3.6 -m virtualfish auto_activation)
 end
