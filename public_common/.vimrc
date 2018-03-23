@@ -16,6 +16,8 @@ set wildmenu
 set mouse+=a
 set shell=bash
 set path+=**
+set complete-=t
+set complete-=i
 
 syntax on
 filetype off
@@ -23,23 +25,21 @@ filetype off
 " vundle setup
 set rtp+=~/.vim/bundle/Vundle.vim
 
-" plugins via vundle
+" plugins
 call vundle#begin()
-Plugin 'FooSoft/vim-argwrap'
 Plugin 'PotatoesMaster/i3-vim-syntax'
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'chrisbra/Colorizer'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'godlygeek/csapprox'
-Plugin 'jpalardy/vim-slime'
 Plugin 'mhinz/vim-startify'
 Plugin 'tommcdo/vim-exchange'
 Plugin 'tpope/vim-commentary'
+Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'tpope/vim-fugitive'
+Plugin 'nvie/vim-flake8'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-vinegar'
-Plugin 'vim-scripts/nextval'
 Plugin 'aliva/vim-fish'
 call vundle#end()
 
@@ -47,7 +47,6 @@ call vundle#end()
 filetype plugin indent on
 
 " plugin settings
-let g:ycm_filetype_whitelist = {'python' : 1, 'javascript' : 1, 'c' : 1}
 let g:startify_session_dir = '~/.vim/session'
 let g:netrw_winsize = -28
 let g:netrw_banner = 0
@@ -55,15 +54,14 @@ let g:netrw_liststyle = 3
 let g:netrw_sort_sequence = '[\/]$,*'
 let g:netrw_altv = 1
 let g:netrw_browse_split = 0
+let g:ctrlp_working_path_mode = 0
+let g:ctrlp_custom_ignore = '\*.pyc'
 
 " colorscheme, term colours, hidden chars and font
 colorscheme desert
 set guifont=Consolas:h10
 set listchars=tab:>\ ,eol:¬,trail:.
 set statusline=%<\ %f\ %m%r%y%w%=%l\/%-6L\ %3c
-
-" trim trailing on save
-autocmd BufWritePre .vimrc,*.py,*.js,*.html call Preserve("%s/\\s\\+$//e")
 
 " jump to last known cursor position (except in commit messages)
 autocmd BufReadPost *
@@ -118,32 +116,6 @@ function! Preserve(command)
   call setpos(".", cursor)
 endfunction
 
-function! s:NiceNext(cmd)
-  let view = winsaveview()
-  execute "normal! " . a:cmd
-  if view.topline != winsaveview().topline
-    normal! zz
-  endif
-endfunction
-
-function! HLNext (blinktime)
-    highlight RedOnRed ctermfg=red ctermbg=red
-    let [bufnum, lnum, col, off] = getpos('.')
-    let matchlen = strlen(matchstr(strpart(getline('.'),col-1),@/))
-    echo matchlen
-    let ring_pat = (lnum > 1 ? '\%'.(lnum-1).'l\%>'.max([col-4,1]) .'v\%<'.(col+matchlen+3).'v.\|' : '')
-            \ . '\%'.lnum.'l\%>'.max([col-4,1]) .'v\%<'.col.'v.'
-            \ . '\|'
-            \ . '\%'.lnum.'l\%>'.max([col+matchlen-1,1]) .'v\%<'.(col+matchlen+3).'v.'
-            \ . '\|'
-            \ . '\%'.(lnum+1).'l\%>'.max([col-4,1]) .'v\%<'.(col+matchlen+3).'v.'
-    let ring = matchadd('RedOnRed', ring_pat, 101)
-    redraw
-    exec 'sleep ' . float2nr(a:blinktime * 1000) . 'm'
-    call matchdelete(ring)
-    redraw
-endfunction
-
 " leader mappings
 let mapleader = "\<Space>"
 
@@ -186,11 +158,6 @@ nnoremap <leader>n :noh<CR>
 
 nnoremap <leader>s :%s/<c-r><c-w>/<c-r><c-w>/gc<c-f>$F/
 
-" mappings
-nmap <silent> <unique> + <Plug>nextvalInc
-nmap <silent> <unique> - <Plug>nextvalDec
-
-nnoremap <Tab> :Lexplore<CR>
 nnoremap [25~ :bp<CR>
 nnoremap [26~ :bn<CR>
 nnoremap Y y$
@@ -200,9 +167,6 @@ nnoremap <Right> :vertical resize -2<CR>
 nnoremap <Up> :resize -2<CR>
 nnoremap <Down> :resize +2<CR>
 
-nnoremap <silent> n   n:call HLNext(0.1)<cr>
-nnoremap <silent> N   N:call HLNext(0.1)<cr>
-
 " use C-e and C-y to copy word above and below the current line
 inoremap <expr> <c-y> pumvisible() ? "\<c-y>" : matchstr(getline(line('.')-1), '\%' . virtcol('.') . 'v\%(\k\+\\|.\)')
 inoremap <expr> <c-e> pumvisible() ? "\<c-e>" : matchstr(getline(line('.')+1), '\%' . virtcol('.') . 'v\%(\k\+\\|.\)')
@@ -210,5 +174,3 @@ inoremap <expr> <c-e> pumvisible() ? "\<c-e>" : matchstr(getline(line('.')+1), '
 " :Q -> :q | :W -> :w
 com Q q
 com W w
-
-autocmd BufNewFile,BufRead *.prolog set filetype=prolog
