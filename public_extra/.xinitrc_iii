@@ -7,6 +7,8 @@ xrandr --output LVDS1 --primary
 feh --bg-scale "$(find ~/pictures/wallpapers_on/* | shuf -n 1)" &
 thinkpad-touchpad off &
 urxvtd &
+/usr/lib/xfce-polkit/xfce-polkit &
+thunar --daemon &
 redshift-gtk &
 dunst &
 clipit &
