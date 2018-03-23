@@ -29,4 +29,4 @@ command=~/.config/i3blocks/blocklets/battery
 [time]
 signal=5
 interval=10
-command=date "+%H:%M, %A %d %B" | tr '[:upper:]' '[:lower:]'
+command=date "+%A %d %B, %H:%M" | tr '[:upper:]' '[:lower:]'
