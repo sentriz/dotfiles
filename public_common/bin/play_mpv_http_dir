@@ -1,0 +1,3 @@
+#!/usr/bin/fish
+
+mpv (wget -O - "$argv[1]" | grep -oP "(?<=<li><a href=\").*\.(flac|mp3)(?=\">)" | sed -e "s@^@$argv[1]@")

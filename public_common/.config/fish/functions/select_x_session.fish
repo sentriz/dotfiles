@@ -1,4 +1,4 @@
-function xlogin 
+function select_x_session
     set -l option \
            (dialog \
                --stdout \

@@ -1,6 +1,3 @@
-#!/usr/bin/env fish
-
-# extra config
 set -x host_colour 'brgreen'
 
 # homes
@@ -19,12 +16,11 @@ for path in $paths
     end
 end
 
-# sourcy stuff
-source $HOME/.keychain/(hostname)-fish > /dev/null 2>&1
-source $HOME/.keychain/(hostname)-fish-gpg > /dev/null 2>&1
-eval (python -m virtualfish auto_activation)
+# includes
+activate_keychain
+activate_virtualfish
 
-# x login
+# x
 if status --is-login; and test -z $DISPLAY; and test -z $TMUX
-    xlogin
+    select_x_session
 end

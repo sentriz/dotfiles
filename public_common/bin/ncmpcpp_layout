@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-# mount ~/mounts/drum_music/
-i3-msg "workspace 4 music ; append_layout /home/senan/.config/i3/music_ws.json"
-urxvtc -bg "#303030" -title ncmpcpp_lib -e ncmpcpp -s media_library &
-urxvtc -bg "#303030" -title ncmpcpp_vis -e ncmpcpp -c $HOME/.ncmpcpp/config_vis -s playlist &
-feh --title ncmpcpp_show_art /tmp/ncmpcpp_art --borderless --image-bg black --geometry 300x300 --zoom fill --no-menus --reload 1 &
