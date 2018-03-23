@@ -1,1 +1,1 @@
-/home/senan/.config/fish/host_specific/pygmalion.fish
+./pygmalion.fish
