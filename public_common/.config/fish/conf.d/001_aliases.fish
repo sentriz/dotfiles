@@ -2,14 +2,12 @@
 alias xkill "xkill -id \"(xwininfo | awk '/Window id:/ {print $4}')\""
 alias fuzz_here "find . -readable -type f | fzf --reverse --black --multi | xclip"
 alias fuzz_root "find / -readable -type f | fzf --reverse --black --multi | xclip"
-alias please "eval command sudo $history[1]"
 
 # safety/better
 alias rm "rm -Iv --preserve-root"
 alias wget "wget -c"
 alias cp "cp -aiv"
 alias mkdir "mkdir -p -v"
-alias df "df -hT | grep -C 1000 '^.*/home\$' - "
 
 # arrangment
 alias qmv "qmv --format destination-only"
@@ -34,8 +32,6 @@ alias calc    "python3 -ic 'from math import *; from cmath import *'"
 alias ace     "acestream-launcher --player mpv"
 
 # info
-alias ncs           "ps aux | egrep '\sn(cat|c|etcat)\s'"
-alias sshs          "ps aux | grep '[s]sh'"
 alias cal           "cal --three --monday"
 alias temp          "math (cat /sys/class/thermal/thermal_zone0/temp) / 1000"
 alias weather       "curl --silent http://wttr.in/ | head -7"
@@ -44,8 +40,7 @@ alias package_count "pacman -Q | wc -l"
 alias speed         "speedtest-cli --simple"
 
 # with other command
-alias tb   "nc -N shmig.senan.xyz 17643 | tee /dev/tty | xclip -i; and echo 'is in the clipboard'"
-alias tbo  "nc -N termbin.com 9999"
+alias tb  "nc -N termbin.com 9999"
 alias sedo "sudo -E"
 alias sudo "sudo "
 
@@ -55,5 +50,6 @@ alias :qw "exit"
 alias :q  "exit"
 
 # abbreviations
-abbr sudo "sudo -E"
+# abbr sudo "sudo -E"
+abbr sev "sudo -E vim"
 abbr du "du -d1 -h"
