@@ -1,33 +1,12 @@
-#meta
+# meta
 misc
 
 # vim
 public_common/.vim/bundle/
 public_common/.vim/.netrwhist
 
-# misc
+# logs
 public_extra/.ncmpcpp/error.log
 
-# fisherman
-public_common/.config/fish/functions/*.awk
-public_common/.config/fish/functions/*.awk
-public_common/.config/fish/functions/__*
-public_common/.config/fish/functions/await.fish
-public_common/.config/fish/functions/get.fish
-public_common/.config/fish/functions/getopts.fish
-public_common/.config/fish/functions/last_job_id.fish
-
-# probably made on first run of fisher func, which is not in gitignore
-public_common/.config/fish/completions/fisher.fish
-public_common/.config/fish/completions/get.fish
-public_common/.config/fish/completions/shark.fish
-public_common/.config/fish/functions/fuck.fish
-public_common/.config/fish/functions/shark.fish
-public_common/.config/fish/functions/thefuck-command-line.fish
-
-# misc fish
+# fish
 public_common/.config/fish/fishd.*
-public_common/.config/fish/*history*
-public_common/.config/fish/conf.d/*
-!public_common/.config/fish/conf.d/aliases.fish
-!public_common/.config/fish/conf.d/colours.fish
