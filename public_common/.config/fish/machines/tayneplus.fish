@@ -1,2 +1,2 @@
-set -x host_colour 'cyan'
+set_prompt_colour cyan
 activate_virtualfish

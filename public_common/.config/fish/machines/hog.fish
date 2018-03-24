@@ -1,1 +1,1 @@
-set -x host_colour 'blue'
+set_prompt_colour blue
