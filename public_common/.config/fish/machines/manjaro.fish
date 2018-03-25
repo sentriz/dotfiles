@@ -11,8 +11,13 @@ set -gx fish_user_paths $HOME/.local/lib/python*/site-packages/ \
                         $fish_user_paths
 
 # includes
-activate_keychain
-activate_virtualfish
+if status --is-login
+    start_keychain
+end
+if status --is-interactive
+    activate_virtualfish
+    activate_keychain
+end
 
 # x
 if status --is-login; and test -z $DISPLAY; and test -z $TMUX

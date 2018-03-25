@@ -1,2 +1,5 @@
 set_prompt_colour cyan
-activate_virtualfish
+
+if status --is-interactive
+    activate_virtualfish
+end
