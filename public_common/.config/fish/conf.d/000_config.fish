@@ -1,13 +1,15 @@
-# path stuff
-set -x PATH /usr/local/sbin  $PATH 2> /dev/null
-set -x PATH /usr/local/bin   $PATH 2> /dev/null
-set -x PATH /usr/sbin /sbin  $PATH 2> /dev/null
-set -x PATH /bin /usr/bin    $PATH 2> /dev/null
-set -x PATH $HOME/.local/bin $PATH 2> /dev/null
+# path
+set -gx fish_user_paths /usr/local/sbin \
+                        /usr/local/bin \
+                        /usr/sbin /sbin \
+                        /bin /usr/bin \
+                        $HOME/.local/bin \
+                        $fish_user_paths
 
-# recurisve ~/bin in path
+# recurisve ~/bin path
 if test -d $HOME/bin
-    set -x PATH (find -L $HOME/bin -type d) $PATH
+    set -gx fish_user_paths (find -L $HOME/bin -type d) \
+                            $fish_user_paths
 end
 
 # host specific
