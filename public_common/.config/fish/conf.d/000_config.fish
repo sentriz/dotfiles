@@ -12,6 +12,14 @@ if test -d $HOME/bin
                             $fish_user_paths
 end
 
+# fundle
+fundle plugin 'laughedelic/fish_logo'
+fundle plugin 'laughedelic/pisces'
+fundle plugin 'fisherman/z'
+fundle plugin 'fisherman/done'
+fundle plugin 'fisherman/humanize_duration'
+fundle init
+
 # host specific
 if test -f $HOME/.config/fish/machines/(hostname).fish
     source $HOME/.config/fish/machines/(hostname).fish

@@ -17,11 +17,17 @@ python stuff
     remote $ wget https://bootstrap.pypa.io/get-pip.py
     remote $ python3 get-pip.py --user
     
-fish stuff
+fish setup
 
-    remote $ python3 -m pip install --user virtualfish
+    remote $ rm ~/bash* ~/.profile ~/whateverelse
     remote $ chsh -s $(which fish)
+
+fish extras
     
+    remote $ wget https://git.io/fundle -O ~/.config/fish/functions/fundle.fish
+    remote $ fundle install
+    remote $ python3 -m pip install --user virtualfish
+
 term stuff
 
     remote $ mkdir -p ~/.terminfo/r/
