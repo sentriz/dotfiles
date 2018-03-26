@@ -32,4 +32,4 @@ term stuff
 
     remote $ mkdir -p ~/.terminfo/r/
     local  $ scp /usr/share/terminfo/r/rxvt-unicode-256color \
-                 shmig:/home/user/.terminfo/r/rxvt-unicode-256color
+                 remote:/home/user/.terminfo/r/rxvt-unicode-256color
