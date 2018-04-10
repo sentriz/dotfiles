@@ -1,0 +1,7 @@
+#!/bin/sh
+
+balance=`boi_balance | jq -r ".Summary.Accounts | .[] | select(.Name == \"${BLOCK_INSTANCE}\") | .Balance"`
+
+echo "$balance"
+echo "$balance"
+echo "#ffff00"
