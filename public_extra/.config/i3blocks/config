@@ -28,7 +28,7 @@ command=~/.config/i3blocks/blocklets/battery
 
 [boi_balance]
 signal=5
-interval=1800
+interval=600
 label=€
 instance=Current Account ~ 9093
 command=~/.config/i3blocks/blocklets/boi_balance
