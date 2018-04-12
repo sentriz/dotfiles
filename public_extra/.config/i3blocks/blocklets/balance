@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+# setup
+cache_dir="${XDG_CACHE_HOME:-"$HOME/.cache/boi_balance"}"
+mkdir -p "$cache_dir"
+balance_file="$cache_dir/balance"
+
+# getting balance takes time,
+# can't seem to call subprocess from blocklet,
+# nohup, &, setsid, etc. no worky,
+# so running balance_write to file using `at`.
+# it later sends SIGRTMIN to i3blocks to run this again,
+# and cat $balance_file
+
+if test -e "$balance_file"; then
+    cat "$balance_file"
+    mv "$balance_file"{,.old}
+else
+    echo "updating"
+    echo "$HOME/.config/i3blocks/blocklets/balance_write \"$BLOCK_INSTANCE\"" | at now
+fi

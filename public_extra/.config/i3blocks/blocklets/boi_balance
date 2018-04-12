@@ -1,9 +1,0 @@
-#!/bin/sh
-
-test -n "$BLOCK_BUTTON" && notify-send 'boi balance' 'updating'
-balance=`boi_balance | jq -r ".Summary.Accounts | .[] | select(.Name == \"${BLOCK_INSTANCE}\") | .Balance"`
-test -n "$BLOCK_BUTTON" && notify-send 'boi balance' 'done'
-
-echo "$balance"
-echo "$balance"
-echo "#ffff00"
