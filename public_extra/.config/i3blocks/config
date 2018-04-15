@@ -31,7 +31,6 @@ interval=1500
 color=#ffff00
 label=€
 signal=5
-instance=Current Account ~ 9093
 command=~/.config/i3blocks/blocklets/balance
 
 [time]

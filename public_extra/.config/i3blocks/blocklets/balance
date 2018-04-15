@@ -5,6 +5,13 @@ cache_dir="${XDG_CACHE_HOME:-"$HOME/.cache/boi_balance"}"
 mkdir -p "$cache_dir"
 balance_file="$cache_dir/balance"
 
+if ! echo "KEYINFO --no-ask C092E4122F7B70E3B29C57300887D28A57706A76 Err Pmt Des" \
+     | gpg-connect-agent \
+     | grep "D - - 1" > /dev/null; then
+    echo "no gpg"
+    exit
+fi
+
 # getting balance takes time,
 # can't seem to call subprocess from blocklet,
 # nohup, &, setsid, etc. no worky,
@@ -17,5 +24,5 @@ if test -e "$balance_file"; then
     mv "$balance_file"{,.old}
 else
     echo "updating"
-    echo "$HOME/.config/i3blocks/blocklets/balance_write \"$BLOCK_INSTANCE\"" | at now
+    echo "$HOME/.config/i3blocks/blocklets/balance_write" | at now
 fi
