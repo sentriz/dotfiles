@@ -29,8 +29,8 @@ if test -e "$old_balance_file"; then
     if ! test "$delta" -eq "0"; then
         [[ "$delta" == -* ]] || delta="+$delta"
         notify-send -- 'boi balance' "$delta"
-    else
-        notify-send -- 'boi balance' 'updated'
+    # else
+    #     notify-send -- 'boi balance' 'updated'
     fi
 fi
 
