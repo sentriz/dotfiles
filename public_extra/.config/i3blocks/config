@@ -27,7 +27,7 @@ interval=5
 command=~/.config/i3blocks/blocklets/battery
 
 [boi_balance]
-interval=1500
+interval=3600
 color=#ffff00
 label=€
 signal=5
