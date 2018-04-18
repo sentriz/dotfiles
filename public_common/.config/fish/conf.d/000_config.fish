@@ -4,13 +4,8 @@ set -gx fish_user_paths /usr/local/sbin \
                         /usr/sbin /sbin \
                         /bin /usr/bin \
                         $HOME/.local/bin \
+                        (find -L $HOME/bin -type d) \
                         $fish_user_paths
-
-# recurisve ~/bin path
-if test -d $HOME/bin
-    set -gx fish_user_paths (find -L $HOME/bin -type d) \
-                            $fish_user_paths
-end
 
 # fundle
 fundle plugin 'laughedelic/fish_logo'
