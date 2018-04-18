@@ -5,17 +5,17 @@ cache_dir="${XDG_CACHE_HOME:-"$HOME/.cache/boi_balance"}"
 mkdir -p "$cache_dir"
 balance_file="$cache_dir/balance"
 
+# check for internet
+if ! ping -q -w 1 -c 1 "8.8.8.8" > /dev/null; then
+    echo "no wan"
+    exit
+fi
+
 # check for gpg
 if ! echo "KEYINFO --no-ask C092E4122F7B70E3B29C57300887D28A57706A76 Err Pmt Des" \
      | gpg-connect-agent \
      | grep "D - - 1" > /dev/null; then
     echo "no gpg"
-    exit
-fi
-
-# check for internet
-if ! ping -q -w 1 -c 1 "8.8.8.8" > /dev/null; then
-    echo "no wan"
     exit
 fi
 
