@@ -11,3 +11,4 @@ public_extra/.ncmpcpp/error.log
 # fish
 public_common/.config/fish/fishd.*
 public_common/.config/fish/functions/fundle.fish
+public_common/.config/fish/fundle/
