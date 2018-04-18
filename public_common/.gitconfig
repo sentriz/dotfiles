@@ -39,6 +39,7 @@
 [core]
     editor = vim
     excludesfile = ~/.gitignore_global
+    pager = less -r
 
 [interactive]
     diffFilter = diff-highlight
