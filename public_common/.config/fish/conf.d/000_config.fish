@@ -9,7 +9,6 @@ set -gx fish_user_paths /usr/local/sbin \
 
 # fundle
 fundle plugin 'laughedelic/fish_logo'
-fundle plugin 'laughedelic/pisces'
 fundle plugin 'fisherman/z'
 fundle plugin 'fisherman/done'
 fundle plugin 'fisherman/humanize_duration'
