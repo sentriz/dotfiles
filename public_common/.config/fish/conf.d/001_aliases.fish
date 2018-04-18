@@ -8,14 +8,11 @@ alias rm "rm -Iv --preserve-root"
 alias wget "wget -c"
 alias cp "cp -aiv"
 alias mkdir "mkdir -p -v"
+alias pip "pip --disable-pip-version-check"
 
 # arrangment
 alias qmv "qmv --format destination-only"
 alias qrm "qrm --format destination-only"
-
-# fasd
-alias p "a -e mpv"
-alias v "a -e vim"
 
 # grep
 alias grep "grep --color=auto"
@@ -29,7 +26,6 @@ alias monoff  "xset dpms force off"
 alias av_scan "sudo freshclam; and sudo clamscan -r --bell -i /"
 alias watched "sed -i s/watched\>false/watched\>true/"
 alias calc    "python3 -ic 'from math import *; from cmath import *'"
-alias ace     "acestream-launcher --player mpv"
 
 # info
 alias cal           "cal --three --monday"
@@ -41,8 +37,6 @@ alias speed         "speedtest-cli --simple"
 
 # with other command
 alias tb  "nc -N termbin.com 9999"
-alias sedo "sudo -E"
-alias sudo "sudo "
 
 # exit
 alias :wq "exit"
@@ -53,3 +47,4 @@ alias :q  "exit"
 # abbr sudo "sudo -E"
 abbr sev "sudo -E vim"
 abbr du "du -d1 -h"
+abbr g "git"

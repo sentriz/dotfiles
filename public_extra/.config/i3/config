@@ -17,7 +17,7 @@ floating_modifier $super
 popup_during_fullscreen smart
 for_window [class="^.*"] border pixel 0
 
-gaps inner 9
+gaps inner 10
 # smart_gaps on
 smart_borders on
 
@@ -242,7 +242,7 @@ for_window [class="etcher"]               floating enable
 for_window [class="Qpaeq"]                floating enable
 for_window [class="Anki"]                 floating enable
 for_window [class="Gui.py"]               floating enable
-for_window [class="Simplescreenrecorder"] floating enable
+for_window [class="SimpleScreenRecorder"] floating enable
 for_window [title="^bobby$"]              floating enable
 
 # floating generic

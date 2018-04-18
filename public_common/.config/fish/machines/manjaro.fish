@@ -4,10 +4,12 @@ set_prompt_colour brgreen
 set -gx JAVA_HOME /usr/lib/jvm/java-8-openjdk/
 set -gx GEM_HOME (ls -t -U | ruby -e 'puts Gem.user_dir')
 set -gx GEM_PATH $GEM_HOME $GEM_PATH
+set -gx ANDROID_HOME /opt/android-sdk/
 
 # paths
 set -gx fish_user_paths $HOME/.local/lib/python*/site-packages/ \
                         $GEM_HOME/bin \
+                        /opt/Etcher \
                         $fish_user_paths
 
 # includes

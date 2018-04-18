@@ -26,7 +26,14 @@ signal=4
 interval=5
 command=~/.config/i3blocks/blocklets/battery
 
-[time]
+[boi_balance]
+interval=3600
+color=#ffff00
+label=€
 signal=5
+command=~/.config/i3blocks/blocklets/balance
+
+[time]
+signal=6
 interval=10
 command=date "+%A %d %B, %H:%M" | tr '[:upper:]' '[:lower:]'

@@ -25,22 +25,26 @@ filetype off
 " vundle setup
 set rtp+=~/.vim/bundle/Vundle.vim
 
-" plugins
 call vundle#begin()
-Plugin 'PotatoesMaster/i3-vim-syntax'
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'chrisbra/Colorizer'
+" syntax
+Plugin 'PotatoesMaster/i3-vim-syntax'
+Plugin 'aliva/vim-fish'
+" nav
 Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'ctrlpvim/ctrlp.vim'
+" quiet
 Plugin 'godlygeek/csapprox'
+" vis
 Plugin 'mhinz/vim-startify'
+" text
+Plugin 'tpope/vim-repeat'
 Plugin 'tommcdo/vim-exchange'
 Plugin 'tpope/vim-commentary'
-Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'tpope/vim-fugitive'
-Plugin 'nvie/vim-flake8'
-Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
-Plugin 'aliva/vim-fish'
+" ide
+Plugin 'tpope/vim-fugitive'
+" Plugin 'davidhalter/jedi-vim'
 call vundle#end()
 
 " vundle finish

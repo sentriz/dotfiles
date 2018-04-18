@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+
+# setup
+cache_dir="${XDG_CACHE_HOME:-"$HOME/.cache/boi_balance"}"
+mkdir -p "$cache_dir"
+balance_file="$cache_dir/balance"
+old_balance_file="$cache_dir/balance.old"
+lock_file="$cache_dir/lock"
+
+if test -e "$lock_file"; then
+    >&2 echo "already running"
+    exit 1
+else
+    touch "$lock_file"
+fi
+
+# start
+balance=$(
+    boi_balance $(pass money/boi_365/username) \
+                $(pass money/boi_365/phone_number) \
+                $(pass money/boi_365/password) \
+                $(pass money/boi_365/date_of_birth)
+)
+
+# notify change in balance
+if test -e "$old_balance_file"; then
+    last_balance=$(cat "$old_balance_file")
+    delta=$(echo "$balance" - "$last_balance" | bc)
+    if ! test "$delta" -eq "0"; then
+        [[ "$delta" == -* ]] || delta="+$delta"
+        notify-send -- 'boi balance' "$delta"
+    # else
+    #     notify-send -- 'boi balance' 'updated'
+    fi
+fi
+
+# write balance to file, and tell i3blocks to call main script,
+# which will see and cat the new balance
+echo "$balance" > "$balance_file"
+pkill -RTMIN+5 i3blocks
+
+# remove lock
+rm "$lock_file"
