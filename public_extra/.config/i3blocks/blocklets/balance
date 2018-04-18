@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+# setup
+cache_dir="${XDG_CACHE_HOME:-"$HOME/.cache/boi_balance"}"
+mkdir -p "$cache_dir"
+balance_file="$cache_dir/balance"
+
+# check for internet
+if ! ping -q -w 1 -c 1 "8.8.8.8" > /dev/null; then
+    echo "no wan"
+    exit
+fi
+
+# check for gpg
+if ! echo "KEYINFO --no-ask C092E4122F7B70E3B29C57300887D28A57706A76 Err Pmt Des" \
+     | gpg-connect-agent \
+     | grep "D - - 1" > /dev/null; then
+    echo "no gpg"
+    exit
+fi
+
+# getting balance takes time,
+# can't seem to call subprocess from blocklet,
+# nohup, &, setsid, etc. no worky,
+# so running balance_write to file using `at`.
+# it later sends SIGRTMIN to i3blocks to run this again,
+# and cat $balance_file
+
+if test -e "$balance_file"; then
+    cat "$balance_file"
+    mv "$balance_file"{,.old}
+else
+    echo "updating"
+    echo "$HOME/.config/i3blocks/blocklets/balance_write" | at now
+fi

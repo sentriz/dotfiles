@@ -2,14 +2,15 @@
 
 source ~/.xprofile
 
-xrandr --output LVDS1 --primary
+xrandr --output LVDS1 --primary &
 ~/dev/github/lock/lock.sh --update "$(find ~/pictures/wallpapers_on/* | shuf -n 1)" &
 feh --bg-scale "$(find ~/pictures/wallpapers_on/* | shuf -n 1)" &
 thinkpad-touchpad off &
+# compton --config ~/.config/compton.conf -b &
 urxvtd &
 /usr/lib/xfce-polkit/xfce-polkit &
 thunar --daemon &
-redshift-gtk &
+redshift-qt &
 dunst &
 clipit &
 xss-lock -- ~/dev/github/betterlockscreen/lock.sh -l &
