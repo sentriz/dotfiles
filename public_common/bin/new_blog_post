@@ -6,7 +6,7 @@ if test (count $argv) -eq 0
 end
 set -l name (echo "$argv" | sed 's/ /-/g')
 set -l date (date +%F)
-set -l folder "~/dev/github/xyz/_posts"
+set -l folder ~/dev/github/xyz/_posts
 if test ! -e "$folder"
     echo "post folder doesn't exist" >&2
     exit 1
