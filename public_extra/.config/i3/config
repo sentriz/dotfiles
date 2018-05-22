@@ -7,6 +7,7 @@
 # mod + alt + ...   => modes                     #
 ##################################################
 
+
 set $super Mod4
 set $alt Mod1
 set $locker ~/dev/github/lock/lock.sh --lock
@@ -24,14 +25,16 @@ smart_borders on
 ## main bar
 bar {
     status_command i3blocks
+    i3bar_command i3bar -t
+    tray_output primary
     colors {
-        separator          #303030
-        background         #303030
+        separator          #00000000
+        background         #30303060
         statusline         #dddddd
-        focused_workspace  #0088CC #0088CC #ffffff
-        active_workspace   #333333 #303030 #ffffff
-        inactive_workspace #303030 #303030 #888888
-        urgent_workspace   #2f343a #900000 #ffffff
+        focused_workspace  #0088CC #0088CC #ffffff00
+        active_workspace   #333333 #303030 #ffffff00
+        inactive_workspace #303030 #303030 #88888800
+        urgent_workspace   #2f343a #900000 #ffffff00
     }
 }
 
@@ -140,8 +143,8 @@ mode $mode_move_floating {
 mode $mode_scrot {
     bindsym n                 exec "screenshot",                                                                               mode "default"
     bindsym Shift+n           exec "screenshot | imgur_up | xclip; and notify-send 'screenshot' 'link in clipboard'",          mode "default"
-    bindsym --release s       exec "screenshot --select";                                                                      mode "default"
-    bindsym --release Shift+s exec "screenshot --select | imgur_up | xclip; and notify-send 'screenshot' 'link in clipboard'"; mode "default"
+    bindsym --release s       exec "screenshot --select",                                                                      mode "default"
+    bindsym --release Shift+s exec "screenshot --select | imgur_up | xclip; and notify-send 'screenshot' 'link in clipboard'", mode "default"
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
@@ -235,15 +238,18 @@ assign [class="libreoffice-*"] $work9
 assign [class="VirtualBox"] $work5
 
 # floating
-for_window [class="Pavucontrol"]          floating enable
-for_window [class="Mnemosyne"]            floating enable
-for_window [class="Galculator"]           floating enable
-for_window [class="etcher"]               floating enable
-for_window [class="Qpaeq"]                floating enable
-for_window [class="Anki"]                 floating enable
-for_window [class="Gui.py"]               floating enable
-for_window [class="SimpleScreenRecorder"] floating enable
-for_window [title="^bobby$"]              floating enable
+for_window [class="Pavucontrol"]              floating enable
+for_window [class="Mnemosyne"]                floating enable
+for_window [class="Galculator"]               floating enable
+for_window [class="etcher"]                   floating enable
+for_window [class="Qpaeq"]                    floating enable
+for_window [class="Anki"]                     floating enable
+for_window [class="Gui.py"]                   floating enable
+for_window [class="SimpleScreenRecorder"]     floating enable
+for_window [title="^bobby$"]                  floating enable
+for_window [class="feh"]                      floating enable
+for_window [class="^nmtui$"]                  floating enable, resize set 795 575,  move window to position center
+for_window [class="mpv"]                      floating enable, resize set 600 337,  move window to position 758 8, sticky enable
 
 # floating generic
 for_window [window_type="menu"]        floating enable
@@ -253,19 +259,24 @@ for_window [window_role="task_dialog"] floating enable
 for_window [window_type="dialog"]      floating enable
 for_window [title="Preferences$"]      floating enable
 
-## special rules
-for_window [class="feh"] fullscreen enable
-for_window [title="^ncmpcpp_show_art$"] fullscreen disable
+## scratchpads (known)
+for_window         [instance="^scratch$"] move scratchpad, border pixel 1
+bindsym $super+F1  [instance="^scratch$"] scratchpad show, resize set 1344 575, move position center
+for_window         [class="Keybase"]      move scratchpad, border pixel 1 
+bindsym $super+F2  [class="Keybase"]      scratchpad show, resize set 1344 575, move position center
+for_window         [class="Plexamp"]      move scratchpad, border pixel 1
+bindsym $super+F3  [class="Plexamp"]      scratchpad show
+#, resize set 300 377,  move position 1058 359
 
-## keybindings (scratchpad)
-bindsym F15 [class="URxvt" instance="^scratch$"] scratchpad show, move position center
-bindsym $super+F15 [class="Plexamp"] scratchpad show
-
-## keeping programs floating/fullscreen
-for_window [class="URxvt" instance="^nmtui$"]   floating enable, resize set 795 589,  move position center
-for_window [class="URxvt" instance="^scratch$"] floating enable, resize set 1292 694, move scratchpad, border pixel 2
-for_window [class="Plexamp"]                    floating enable, resize set 300 377,  sticky enable, move scratchpad, move window to position 1058 359
-for_window [class="mpv"]                        floating enable, resize set 600 337,  sticky enable, move window to position 758 8
+## scratchpads (unknown)
+bindsym $super+Shift+F5 mark "c_scratch_1", move scratchpad
+bindsym $super+F5 [con_mark="c_scratch_1"] scratchpad show
+bindsym $super+Shift+F6 mark "c_scratch_2", move scratchpad
+bindsym $super+F6 [con_mark="c_scratch_2"] scratchpad show
+bindsym $super+Shift+F7 mark "c_scratch_3", move scratchpad
+bindsym $super+F7 [con_mark="c_scratch_3"] scratchpad show
+bindsym $super+Shift+F8 mark "c_scratch_4", move scratchpad
+bindsym $super+F8 [con_mark="c_scratch_4"] scratchpad show
 
 ## keybindings (programs)
 bindsym $super+Ctrl+e exec thunar
@@ -280,11 +291,10 @@ bindsym $super+Ctrl+p exec --no-startup-id dmenu_pass --tuser --tpass
 bindsym $super+Ctrl+t exec --no-startup-id dmenu_todo
 bindsym $super+Ctrl+v exec --no-startup-id dmenu_vms
 
-bindsym $super+Return exec urxvtc -bg "#303030" 
-bindsym $super+Ctrl+i exec urxvtc -bg "#303030" -name weechat -hold -e irc
-bindsym $super+Ctrl+c exec urxvtc -name nmtui -e nmtui connect
-bindsym $super+Ctrl+n exec urxvtc -name nmtui -e nmtui edit
-bindsym $super+Ctrl+m exec ncmpcpp
+bindsym F15 exec winmenu
+bindsym $super+Return exec alacritty 
+bindsym $super+Ctrl+c exec alacritty --title nmtui --dimensions 0 0 --command nmtui connect
+bindsym $super+Ctrl+n exec alacritty --title nmtui --dimensions 0 0 --command nmtui edit
 
 # keybindings (xf86 on thinkpad x220)
 bindsym XF86TouchpadToggle exec --no-startup-id thinkpad-touchpad && notify-send "touchpad toggled"
@@ -317,5 +327,4 @@ client.focused_inactive #333333 #333333 #888888 #292d2e
 client.unfocused        #333333 #333333 #888888 #292d2e
 client.urgent           #2f343a #900000 #ffffff #900000
 
-exec --no-startup-id scratch
-exec --no-startup-id plexamp
+exec --no-startup-id i3_statup

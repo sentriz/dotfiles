@@ -15,9 +15,6 @@ if [[ -d /etc/X11/xinit/xinitrc.d ]]; then
     unset file
 fi
 
-source $HOME/.keychain/$(hostname)-sh 2>&1 > /dev/null
-source $HOME/.keychain/$(hostname)-sh-gpg 2>&1 > /dev/null
-
 setxkbmap ie
 xmodmap -e "keycode 166 = F13"
 xmodmap -e "keycode 167 = F14"

@@ -2,15 +2,4 @@
 
 source ~/.xprofile
 
-xrandr --output LVDS1 --primary
-compton -b &
-~/.fehbg &
-thinkpad-touchpad off &
-urxvtd &
-redshift &
-dunst &
-clipit &
-xss-lock -- ~/bin/lock &
-# xdotool behave_screen_edge bottom-right exec --sync ~/bin/lock &
-
 exec bspwm
