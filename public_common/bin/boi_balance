@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+# based on: https://github.com/conormag/ireland-scrapers/blob/master/boi365online.py
+
 from requests_html import HTMLSession
 import sys
 
