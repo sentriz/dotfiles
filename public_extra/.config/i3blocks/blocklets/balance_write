@@ -25,7 +25,7 @@ balance=$(
 # notify change in balance
 if test -e "$old_balance_file"; then
     last_balance=$(cat "$old_balance_file")
-    delta=$(echo "$balance" - "$last_balance" | bc)
+    delta=$(echo "$balance" - "$last_balance" | sed 's/,//g' | bc)
     if ! test "$delta" -eq "0"; then
         [[ "$delta" == -* ]] || delta="+$delta"
         notify-send -- 'boi balance' "$delta"
