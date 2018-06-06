@@ -3,33 +3,34 @@ markup=pango
 
 [volume]
 signal=1
-label=♪
+label=sound
 instance=Master
 interval=once
 command=~/.config/i3blocks/blocklets/volume
 
 [wifi]
 signal=2
-label=
+label=wifi
 instance=wlp3s0
 interval=5
 command=~/.config/i3blocks/blocklets/wifi
 
 [load]
 signal=3
-label=
+label=load
 interval=5
 command=~/.config/i3blocks/blocklets/load
 
 [battery]
 signal=4
 interval=5
+label=battery
 command=~/.config/i3blocks/blocklets/battery
 
 [boi_balance]
 interval=900
 color=#ffff00
-label=€
+label=balance
 signal=5
 command=~/.config/i3blocks/blocklets/balance
 
