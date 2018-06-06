@@ -1,4 +1,0 @@
-#!/usr/bin/env sh
-
-i3lock -bfenu \
-       -i $HOME/pictures/lockscreens/fagen.png
