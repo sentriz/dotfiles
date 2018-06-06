@@ -10,13 +10,16 @@
 
 set $super Mod4
 set $alt Mod1
-set $locker ~/dev/github/lock/lock.sh --lock
+set $locker betterlockscreen --lock
 set $update_blocks_audio pkill -RTMIN+1 i3blocks
 
-font pango:bitstream vera sans mono 10
+font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
+font pango:DejaVu Sans Mono 17px
+
 floating_modifier $super
 popup_during_fullscreen smart
 for_window [class="^.*"] border pixel 0
+
 
 gaps inner 10
 # smart_gaps on
@@ -31,10 +34,11 @@ bar {
         separator          #00000000
         background         #30303060
         statusline         #dddddd
-        focused_workspace  #0088CC #0088CC #ffffff00
-        active_workspace   #333333 #303030 #ffffff00
-        inactive_workspace #303030 #303030 #88888800
-        urgent_workspace   #2f343a #900000 #ffffff00
+        #                  border    background  text
+        focused_workspace  #0088CC   #0088CC     #ffffff
+        active_workspace   #303030   #303030     #ffffff
+        inactive_workspace #30303060 #30303060   #ffffff
+        urgent_workspace   #2f343a00 #ff000090   #ffffff
     }
 }
 
@@ -188,15 +192,15 @@ mode $mode_gaps_outer {
 }
 
 ## workspaces
-set $work1 "1 main "
-set $work2 "2 web "
-set $work3 "3 term "
-set $work4 "4 music "
-set $work5 "5 vm "
-set $work6 "6 chat "
-set $work7 "7 mnem "
-set $work8 "8 gimp "
-set $work9 "9 office "
+set $work1 "1 main"
+set $work2 "2 web"
+set $work3 "3 term"
+set $work4 "4 music"
+set $work5 "5 vm"
+set $work6 "6 chat"
+set $work7 "7 mnem"
+set $work8 "8 gimp"
+set $work9 "9 office"
 
 # switch to workspace
 bindsym $super+1 workspace $work1
@@ -248,7 +252,7 @@ for_window [class="Gui.py"]                   floating enable
 for_window [class="SimpleScreenRecorder"]     floating enable
 for_window [title="^bobby$"]                  floating enable
 for_window [class="feh"]                      floating enable
-for_window [class="^nmtui$"]                  floating enable, resize set 795 575,  move window to position center
+for_window [instance="^scratch$"]             floating enable
 for_window [class="mpv"]                      floating enable, resize set 600 337,  move window to position 758 8, sticky enable
 
 # floating generic
@@ -293,26 +297,18 @@ bindsym $super+Ctrl+v exec --no-startup-id dmenu_vms
 
 bindsym F15 exec winmenu
 bindsym $super+Return exec alacritty 
-bindsym $super+Ctrl+c exec alacritty --title nmtui --dimensions 0 0 --command nmtui connect
-bindsym $super+Ctrl+n exec alacritty --title nmtui --dimensions 0 0 --command nmtui edit
 
 # keybindings (xf86 on thinkpad x220)
 bindsym XF86TouchpadToggle exec --no-startup-id thinkpad-touchpad && notify-send "touchpad toggled"
-bindsym XF86WLAN exec urxvtc -name nmtui -e nmtui
-bindsym XF86Display exec --no-startup-id projector
-
 bindsym XF86ScreenSaver exec --no-startup-id $locker
 bindsym XF86Suspend exec --no-startup-id gksudo systemctl hibernate
 bindsym XF86Sleep exec --no-startup-id gksudo systemctl suspend
-
 bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 5
 bindsym XF86MonBrightnessDown exec --no-startup-id  xbacklight -dec 5
-
 bindsym XF86AudioRaiseVolume exec --no-startup-id "ponymix increase 5% && $update_blocks_audio"
 bindsym XF86AudioLowerVolume exec --no-startup-id "ponymix decrease 5% && $update_blocks_audio"
 bindsym XF86AudioMute exec --no-startup-id        "ponymix toggle      && $update_blocks_audio"
 bindsym XF86AudioMicMute exec --no-startup-id     "thinkpad-mutemic    && $update_blocks_audio"
-
 bindsym XF86AudioPlay exec --no-startup-id ctl_player toggle
 bindsym XF86AudioStop exec --no-startup-id ctl_player stop
 bindsym XF86AudioNext exec --no-startup-id ctl_player next
