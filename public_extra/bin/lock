@@ -1,0 +1,5 @@
+#!/bin/sh
+
+i3lock --no-unlock-indicator \
+       --tiling \
+       --image $HOME/pictures/wallpapers/mes.png
