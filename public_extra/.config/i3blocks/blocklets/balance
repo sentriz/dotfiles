@@ -27,7 +27,7 @@ fi
 # and cat $balance_file
 
 if test -e "$balance_file"; then
-    cat "$balance_file"
+    echo €$(cat "$balance_file")
     mv "$balance_file"{,.old}
 else
     echo "updating"
