@@ -11,7 +11,7 @@ command=~/.config/i3blocks/blocklets/volume
 [wifi]
 signal=2
 label=wifi
-instance=wlp3s0
+instance=wlp4s0
 interval=5
 command=~/.config/i3blocks/blocklets/wifi
 
@@ -25,6 +25,8 @@ command=~/.config/i3blocks/blocklets/load
 signal=4
 interval=5
 label=battery
+instance=0
+color=#e184c2
 command=~/.config/i3blocks/blocklets/battery
 
 [boi_balance]
