@@ -18,10 +18,10 @@ font pango:DejaVu Sans Mono 17px
 
 floating_modifier $super
 popup_during_fullscreen smart
-for_window [class="^.*"] border pixel 0
+for_window [class="^.*"] border pixel 2
 
 
-gaps inner 10
+gaps inner 12
 # smart_gaps on
 smart_borders on
 
