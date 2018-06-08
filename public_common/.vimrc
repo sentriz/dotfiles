@@ -34,7 +34,6 @@ Plugin 'aliva/vim-fish'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'ctrlpvim/ctrlp.vim'
 " quiet
-Plugin 'godlygeek/csapprox'
 " vis
 Plugin 'mhinz/vim-startify'
 " text
@@ -68,7 +67,7 @@ Plugin 'fatih/vim-go'
     let g:go_fmt_command = "goimports"
 
     " colorscheme, term colours, hidden chars and font
-    colorscheme desert
+    colorscheme custom
     set guifont=Consolas:h10
     set listchars=tab:>\ ,eol:¬,trail:.
     set statusline=%<\ %f\ %m%r%y%w%=%l\/%-6L\ %3c
