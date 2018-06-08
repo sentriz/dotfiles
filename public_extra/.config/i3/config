@@ -10,7 +10,7 @@
 
 set $super Mod4
 set $alt Mod1
-set $locker betterlockscreen --lock
+set $locker lock
 set $update_blocks_audio pkill -RTMIN+1 i3blocks
 
 font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
@@ -230,7 +230,10 @@ bindsym $super+Shift+9 move container to workspace $work9
 ## keeping programs on workspaces
 assign [class="Firefox"] $work2
 assign [class="Chromium"] $work2
+assign [class="Google-chrome"] $work2
 assign [class="URxvt" instance="ncmpcpp"] $work4
+for_window [class="Spotify"] move to workspace $work4
+assign [class="Spotify"] $work4
 assign [class="Deadbeef"] $work4
 assign [class="URxvt" instance="weechat"] $work6
 assign [class="Franz"] $work6
@@ -242,18 +245,17 @@ assign [class="libreoffice-*"] $work9
 assign [class="VirtualBox"] $work5
 
 # floating
-for_window [class="Pavucontrol"]              floating enable
-for_window [class="Mnemosyne"]                floating enable
-for_window [class="Galculator"]               floating enable
-for_window [class="etcher"]                   floating enable
-for_window [class="Qpaeq"]                    floating enable
-for_window [class="Anki"]                     floating enable
-for_window [class="Gui.py"]                   floating enable
-for_window [class="SimpleScreenRecorder"]     floating enable
-for_window [title="^bobby$"]                  floating enable
-for_window [class="feh"]                      floating enable
-for_window [instance="^scratch$"]             floating enable
-for_window [class="mpv"]                      floating enable, resize set 600 337,  move window to position 758 8, sticky enable
+for_window [class="Pavucontrol"]                   floating enable
+for_window [class="Mnemosyne"]                     floating enable
+for_window [class="Galculator"]                    floating enable
+for_window [class="etcher"]                        floating enable
+for_window [class="Qpaeq"]                         floating enable
+for_window [class="Anki"]                          floating enable
+for_window [class="Gui.py"]                        floating enable
+for_window [class="SimpleScreenRecorder"]          floating enable
+for_window [title="^bobby$"]                       floating enable
+for_window [class="feh"]                           floating enable
+for_window [class="^Terminator$" window_role="^scratch$"] floating enable
 
 # floating generic
 for_window [window_type="menu"]        floating enable
@@ -264,12 +266,12 @@ for_window [window_type="dialog"]      floating enable
 for_window [title="Preferences$"]      floating enable
 
 ## scratchpads (known)
-for_window         [instance="^scratch$"] move scratchpad, border pixel 1
-bindsym $super+F1  [instance="^scratch$"] scratchpad show, resize set 1344 575, move position center
-for_window         [class="Keybase"]      move scratchpad, border pixel 1 
-bindsym $super+F2  [class="Keybase"]      scratchpad show, resize set 1344 575, move position center
-for_window         [class="Plexamp"]      move scratchpad, border pixel 1
-bindsym $super+F3  [class="Plexamp"]      scratchpad show
+for_window         [class="^Terminator$" window_role="^scratch$"] move scratchpad, border pixel 1
+bindsym $super+F1  [class="^Terminator$" window_role="^scratch$"] scratchpad show, resize set 1344 575, move position center
+for_window         [class="Keybase"] move scratchpad, border pixel 1 
+bindsym $super+F2  [class="Keybase"] scratchpad show, resize set 1344 575, move position center
+for_window         [class="Plexamp"] move scratchpad, border pixel 1
+bindsym $super+F3  [class="Plexamp"] scratchpad show
 #, resize set 300 377,  move position 1058 359
 
 ## scratchpads (unknown)
@@ -296,7 +298,7 @@ bindsym $super+Ctrl+t exec --no-startup-id dmenu_todo
 bindsym $super+Ctrl+v exec --no-startup-id dmenu_vms
 
 bindsym F15 exec winmenu
-bindsym $super+Return exec alacritty 
+bindsym $super+Return exec terminator
 
 # keybindings (xf86 on thinkpad x220)
 bindsym XF86TouchpadToggle exec --no-startup-id thinkpad-touchpad && notify-send "touchpad toggled"
