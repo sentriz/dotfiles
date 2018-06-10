@@ -1,4 +1,4 @@
-set_prompt_colour brgreen
+set -xg fish_color_host brgreen
 
 # homes
 set -gx JAVA_HOME /usr/lib/jvm/java-8-openjdk/

@@ -1,1 +1,1 @@
-set_prompt_colour blue
+set -xg fish_color_host blue

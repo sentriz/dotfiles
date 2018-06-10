@@ -1,4 +1,4 @@
-set_prompt_colour brmagenta
+set -xg fish_color_host brmagenta
 
 if status --is-login
     start_keychain &
