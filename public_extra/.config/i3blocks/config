@@ -25,7 +25,7 @@ command=~/.config/i3blocks/blocklets/load
 signal=4
 interval=5
 label=battery
-instance=0
+instance=1
 color=#e184c2
 command=~/.config/i3blocks/blocklets/battery
 
