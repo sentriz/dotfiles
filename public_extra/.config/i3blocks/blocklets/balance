@@ -27,7 +27,7 @@ fi
 # and cat $balance_file
 
 if test -e "$balance_file"; then
-    echo €$(cat "$balance_file")
+    echo $(cat "$balance_file") | sed -E 's/(\-?)(.*)/\1€\2/'
     mv "$balance_file"{,.old}
 else
     echo "updating"
