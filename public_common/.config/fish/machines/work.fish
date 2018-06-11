@@ -5,6 +5,7 @@ if status --is-login
 end
 
 set -gx GOPATH $HOME/go
+set -gx GOBIN $GOPATH/bin
 set -gx fish_user_paths $GOPATH/bin \
                         $fish_user_paths
 
