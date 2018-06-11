@@ -21,7 +21,7 @@ popup_during_fullscreen smart
 for_window [class="^.*"] border pixel 2
 
 
-gaps inner 12
+gaps inner 24
 # smart_gaps on
 smart_borders on
 
@@ -30,6 +30,7 @@ bar {
     status_command i3blocks
     i3bar_command i3bar -t
     tray_output primary
+    # strip_workspace_numbers yes
     colors {
         separator          #00000000
         background         #30303060
