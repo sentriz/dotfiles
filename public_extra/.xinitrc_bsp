@@ -1,5 +1,0 @@
-# vim: ft=sh
-
-source ~/.xprofile
-
-exec bspwm
