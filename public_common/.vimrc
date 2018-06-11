@@ -24,19 +24,18 @@ syntax on
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'PotatoesMaster/i3-vim-syntax'
 Plugin 'aliva/vim-fish'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'godlygeek/csapprox'
+Plugin 'fatih/vim-go'
 Plugin 'mhinz/vim-startify'
-Plugin 'tpope/vim-repeat'
+Plugin 'PotatoesMaster/i3-vim-syntax'
 Plugin 'tommcdo/vim-exchange'
 Plugin 'tpope/vim-commentary'
-Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-fugitive'
-Plugin 'fatih/vim-go'
+Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-surround'
+Plugin 'VundleVim/Vundle.vim'
 call vundle#end()
 filetype plugin indent on
 
@@ -57,8 +56,7 @@ let g:ctrlp_prompt_mappings = {
 let g:go_fmt_command = "goimports"
 
 " colorscheme, term colours, hidden chars and font
-colorscheme desert
-set guifont=Consolas:h10
+colorscheme custom
 set listchars=tab:>\ ,eol:¬,trail:.
 set statusline=%<\ %f\ %m%r%y%w%=%l\/%-6L\ %3c
 
@@ -148,8 +146,8 @@ nnoremap <leader>r :w<CR>:!clear && %:p<CR>
 nnoremap <leader>x :w<CR>:!chmod +x %:p<CR><CR>
 nnoremap <leader>n :noh<CR>
 nnoremap <leader>s :%s/<c-r><c-w>/<c-r><c-w>/gc<c-f>$F/
-nnoremap [25~ :bp<CR>
-nnoremap [26~ :bn<CR>
+nnoremap [25~ :bp<CR>
+nnoremap [26~ :bn<CR>
 nnoremap Y y$
 nnoremap <Left> :vertical resize +2<CR>
 nnoremap <Right> :vertical resize -2<CR>

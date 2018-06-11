@@ -10,15 +10,18 @@
 
 set $super Mod4
 set $alt Mod1
-set $locker ~/dev/github/lock/lock.sh --lock
+set $locker lock
 set $update_blocks_audio pkill -RTMIN+1 i3blocks
 
-font pango:bitstream vera sans mono 10
+font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
+font pango:DejaVu Sans Mono 17px
+
 floating_modifier $super
 popup_during_fullscreen smart
-for_window [class="^.*"] border pixel 0
+for_window [class="^.*"] border pixel 2
 
-gaps inner 10
+
+gaps inner 24
 # smart_gaps on
 smart_borders on
 
@@ -27,14 +30,16 @@ bar {
     status_command i3blocks
     i3bar_command i3bar -t
     tray_output primary
+    # strip_workspace_numbers yes
     colors {
         separator          #00000000
         background         #30303060
         statusline         #dddddd
-        focused_workspace  #0088CC #0088CC #ffffff00
-        active_workspace   #333333 #303030 #ffffff00
-        inactive_workspace #303030 #303030 #88888800
-        urgent_workspace   #2f343a #900000 #ffffff00
+        #                  border    background  text
+        focused_workspace  #0088CC   #0088CC     #ffffff
+        active_workspace   #303030   #303030     #ffffff
+        inactive_workspace #30303060 #30303060   #ffffff
+        urgent_workspace   #2f343a00 #ff000090   #ffffff
     }
 }
 
@@ -188,15 +193,15 @@ mode $mode_gaps_outer {
 }
 
 ## workspaces
-set $work1 "1 main "
-set $work2 "2 web "
-set $work3 "3 term "
-set $work4 "4 music "
-set $work5 "5 vm "
-set $work6 "6 chat "
-set $work7 "7 mnem "
-set $work8 "8 gimp "
-set $work9 "9 office "
+set $work1 "1 main"
+set $work2 "2 web"
+set $work3 "3 term"
+set $work4 "4 music"
+set $work5 "5 vm"
+set $work6 "6 chat"
+set $work7 "7 mnem"
+set $work8 "8 gimp"
+set $work9 "9 office"
 
 # switch to workspace
 bindsym $super+1 workspace $work1
@@ -226,7 +231,10 @@ bindsym $super+Shift+9 move container to workspace $work9
 ## keeping programs on workspaces
 assign [class="Firefox"] $work2
 assign [class="Chromium"] $work2
+assign [class="Google-chrome"] $work2
 assign [class="URxvt" instance="ncmpcpp"] $work4
+for_window [class="Spotify"] move to workspace $work4
+assign [class="Spotify"] $work4
 assign [class="Deadbeef"] $work4
 assign [class="URxvt" instance="weechat"] $work6
 assign [class="Franz"] $work6
@@ -238,18 +246,17 @@ assign [class="libreoffice-*"] $work9
 assign [class="VirtualBox"] $work5
 
 # floating
-for_window [class="Pavucontrol"]              floating enable
-for_window [class="Mnemosyne"]                floating enable
-for_window [class="Galculator"]               floating enable
-for_window [class="etcher"]                   floating enable
-for_window [class="Qpaeq"]                    floating enable
-for_window [class="Anki"]                     floating enable
-for_window [class="Gui.py"]                   floating enable
-for_window [class="SimpleScreenRecorder"]     floating enable
-for_window [title="^bobby$"]                  floating enable
-for_window [class="feh"]                      floating enable
-for_window [class="^nmtui$"]                  floating enable, resize set 795 575,  move window to position center
-for_window [class="mpv"]                      floating enable, resize set 600 337,  move window to position 758 8, sticky enable
+for_window [class="Pavucontrol"]                   floating enable
+for_window [class="Mnemosyne"]                     floating enable
+for_window [class="Galculator"]                    floating enable
+for_window [class="etcher"]                        floating enable
+for_window [class="Qpaeq"]                         floating enable
+for_window [class="Anki"]                          floating enable
+for_window [class="Gui.py"]                        floating enable
+for_window [class="SimpleScreenRecorder"]          floating enable
+for_window [title="^bobby$"]                       floating enable
+for_window [class="feh"]                           floating enable
+for_window [class="^Terminator$" window_role="^scratch$"] floating enable
 
 # floating generic
 for_window [window_type="menu"]        floating enable
@@ -260,12 +267,12 @@ for_window [window_type="dialog"]      floating enable
 for_window [title="Preferences$"]      floating enable
 
 ## scratchpads (known)
-for_window         [instance="^scratch$"] move scratchpad, border pixel 1
-bindsym $super+F1  [instance="^scratch$"] scratchpad show, resize set 1344 575, move position center
-for_window         [class="Keybase"]      move scratchpad, border pixel 1 
-bindsym $super+F2  [class="Keybase"]      scratchpad show, resize set 1344 575, move position center
-for_window         [class="Plexamp"]      move scratchpad, border pixel 1
-bindsym $super+F3  [class="Plexamp"]      scratchpad show
+for_window         [class="^Terminator$" window_role="^scratch$"] move scratchpad, border pixel 1
+bindsym $super+F1  [class="^Terminator$" window_role="^scratch$"] scratchpad show, resize set 1344 575, move position center
+for_window         [class="Keybase"] move scratchpad, border pixel 1 
+bindsym $super+F2  [class="Keybase"] scratchpad show, resize set 1344 575, move position center
+for_window         [class="Plexamp"] move scratchpad, border pixel 1
+bindsym $super+F3  [class="Plexamp"] scratchpad show
 #, resize set 300 377,  move position 1058 359
 
 ## scratchpads (unknown)
@@ -292,27 +299,19 @@ bindsym $super+Ctrl+t exec --no-startup-id dmenu_todo
 bindsym $super+Ctrl+v exec --no-startup-id dmenu_vms
 
 bindsym F15 exec winmenu
-bindsym $super+Return exec alacritty 
-bindsym $super+Ctrl+c exec alacritty --title nmtui --dimensions 0 0 --command nmtui connect
-bindsym $super+Ctrl+n exec alacritty --title nmtui --dimensions 0 0 --command nmtui edit
+bindsym $super+Return exec terminator
 
 # keybindings (xf86 on thinkpad x220)
 bindsym XF86TouchpadToggle exec --no-startup-id thinkpad-touchpad && notify-send "touchpad toggled"
-bindsym XF86WLAN exec urxvtc -name nmtui -e nmtui
-bindsym XF86Display exec --no-startup-id projector
-
 bindsym XF86ScreenSaver exec --no-startup-id $locker
 bindsym XF86Suspend exec --no-startup-id gksudo systemctl hibernate
 bindsym XF86Sleep exec --no-startup-id gksudo systemctl suspend
-
 bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 5
 bindsym XF86MonBrightnessDown exec --no-startup-id  xbacklight -dec 5
-
 bindsym XF86AudioRaiseVolume exec --no-startup-id "ponymix increase 5% && $update_blocks_audio"
 bindsym XF86AudioLowerVolume exec --no-startup-id "ponymix decrease 5% && $update_blocks_audio"
 bindsym XF86AudioMute exec --no-startup-id        "ponymix toggle      && $update_blocks_audio"
 bindsym XF86AudioMicMute exec --no-startup-id     "thinkpad-mutemic    && $update_blocks_audio"
-
 bindsym XF86AudioPlay exec --no-startup-id ctl_player toggle
 bindsym XF86AudioStop exec --no-startup-id ctl_player stop
 bindsym XF86AudioNext exec --no-startup-id ctl_player next

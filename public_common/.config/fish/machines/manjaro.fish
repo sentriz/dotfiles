@@ -1,4 +1,4 @@
-set_prompt_colour brgreen
+set -xg fish_color_host brgreen
 
 # homes
 set -gx JAVA_HOME /usr/lib/jvm/java-8-openjdk/
@@ -14,16 +14,15 @@ set -gx fish_user_paths $HOME/.local/lib/python*/site-packages/ \
                         $GOPATH/bin \
                         $fish_user_paths
 
-# includes
 if status --is-login
     start_keychain
 end
+
 if status --is-interactive
     activate_virtualfish
     activate_keychain
 end
 
-# x
 if status --is-login; and test -z $DISPLAY; and test -z $TMUX
     select_x_session
 end

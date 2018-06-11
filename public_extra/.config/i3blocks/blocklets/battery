@@ -1,48 +1,65 @@
-#!/usr/bin/env python3
+#!/usr/bin/perl
+#
+# Copyright 2014 Pierre Mavro <deimos@deimos.fr>
+# Copyright 2014 Vivien Didelot <vivien@didelot.org>
+#
+# Licensed under the terms of the GNU GPL v3, or any later version.
+#
+# This script is meant to use with i3blocks. It parses the output of the "acpi"
+# command (often provided by a package of the same name) to read the status of
+# the battery, and eventually its remaining time (to full charge or discharge).
+#
+# The color will gradually change for a percentage below 85%, and the urgency
+# (exit code 33) is set if there is less that 5% remaining.
 
-import re
-from subprocess import check_output
+use strict;
+use warnings;
+use utf8;
 
-ICONS = {
-    "Charging":    "\uf1e6",
-    "Discharging": "\uf240",
-    "Unknown":     "\uf128"
+my $acpi;
+my $status;
+my $percent;
+my $ac_adapt;
+my $full_text;
+my $short_text;
+my $bat_number = $ENV{BLOCK_INSTANCE} || 0;
+
+# read the first line of the "acpi" command output
+open (ACPI, "acpi -b | grep 'Battery $bat_number' |") or die;
+$acpi = <ACPI>;
+close(ACPI);
+
+# fail on unexpected output
+if ($acpi !~ /: (\w+), (\d+)%/) {
+	die "$acpi\n";
 }
-STATUS_EXPRESSION = re.compile(
-    r'^Battery\s\d+:\s'
-     '(?P<state>Discharging|Charging|Full|Unknown),\s'
-     '(?P<percent>\d+)%,\s'
-     '(?P<left>\d{2}:\d{2})'
-)
 
+$status = $1;
+$percent = $2;
+$full_text = "$percent%";
 
-def parse_status(status):
-    match = re.match(STATUS_EXPRESSION, status)
-    return match.groupdict()
+if ($status eq 'Discharging') {
+	$full_text .= ' dis';
+} elsif ($status eq 'Charging') {
+	$full_text .= ' chr';
+} elsif ($status eq 'Unknown') {
+	open (AC_ADAPTER, "acpi -a |") or die;
+	$ac_adapt = <AC_ADAPTER>;
+	close(AC_ADAPTER);
 
+	if ($ac_adapt =~ /: ([\w-]+)/) {
+		$ac_adapt = $1;
 
-def gen_string(status):
-    icon = ICONS[status['state']]
-    output = f'{icon} {status["percent"]}%'
-    if status["state"] == "Charging":
-        output += f' ({status["left"]})'
-    return output
+		if ($ac_adapt eq 'on-line') {
+			$full_text .= ' chr';
+		} elsif ($ac_adapt eq 'off-line') {
+			$full_text .= ' dis';
+		}
+	}
+}
 
+if ($acpi =~ /(\d\d:\d\d):/) {
+	$full_text .= " ($1)";
+}
 
-def gen_colour(status):
-    if int(status["percent"]) < 10:
-        return "#c62828"
-    return "#7cb342"
-
-
-def gen_output():
-    raw_status = check_output(['acpi'], universal_newlines=True)
-    status = parse_status(raw_status)
-    return gen_string(status), gen_colour(status)
-
-
-if __name__ == "__main__":
-    string, colour = gen_output()
-    print(string)
-    print(string)
-    print(colour)
+print "$full_text\n";

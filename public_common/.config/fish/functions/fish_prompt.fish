@@ -4,7 +4,7 @@ function fish_prompt
     # else;                    set prefix_colour red
     # end
     #         (set_color "$prefix_colour")'■'(set_color normal) \
-    set items (set_color "$host_colour")(hostname)(set_color normal) \
+    set items (set_color "$fish_color_host")(hostname)(set_color normal) \
               (set -q VIRTUAL_ENV; and printf "%s env" (basename "$VIRTUAL_ENV")) \
               (prompt_pwd)
     printf '%s, ' (string join ', ' $items)

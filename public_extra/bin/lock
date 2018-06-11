@@ -1,4 +1,5 @@
-#!/usr/bin/env sh
+#!/bin/sh
 
-i3lock -bfenu \
-       -i $HOME/pictures/lockscreens/fagen.png
+i3lock --no-unlock-indicator \
+       --tiling \
+       --image $HOME/pictures/wallpapers/mes.png

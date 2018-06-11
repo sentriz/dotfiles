@@ -20,6 +20,6 @@ out=$(printf '%s %s' \
           $(awk '{printf "%d%%\n", int($0 * 100)}' <<< "$QUALITY")
 )
 
-echo "$out"
-echo "$out"
+printf "%b\n" "$out"
+printf "%b\n" "$out"
 echo "#ffb300"

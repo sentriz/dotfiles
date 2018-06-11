@@ -1,4 +1,4 @@
-set_prompt_colour cyan
+set -xg fish_color_host cyan
 
 if status --is-interactive
     activate_virtualfish

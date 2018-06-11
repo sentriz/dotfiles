@@ -1,4 +1,4 @@
-set_prompt_colour red
+set -xg fish_color_host red
 
 if status --is-interactive
     activate_virtualfish

@@ -1,5 +1,6 @@
+# Defined in /tmp/fish.MAtCKx/select_x_session.fish @ line 2
 function select_x_session
-    set -l option \
+	set -l option \
            (dialog \
                --stdout \
                --colors \
@@ -17,7 +18,7 @@ function select_x_session
     clear
     switch "$option"
         case i3wm
-            eval "exec startx $HOME/.xinitrc_iii -- -keeptty -nolisten tcp 2> /dev/null 1>&2"
+            eval "exec startx $HOME/.xinitrc -- -keeptty -nolisten tcp 2> /dev/null 1>&2"
         case fish
             exit
         case shutdown
