@@ -1,3 +1,0 @@
-#!/bin/bash
-
-mpv --cache='2048' --ytdl-format="[height<=720]" --title='mpv_stream' $(xclip -o)
