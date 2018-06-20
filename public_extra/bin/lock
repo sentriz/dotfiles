@@ -2,4 +2,4 @@
 
 i3lock --no-unlock-indicator \
        --tiling \
-       --image $HOME/pictures/wallpapers/mes.png
+       --image $HOME/pictures/wallpapers/fagan_crop.png
