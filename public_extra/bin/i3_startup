@@ -13,5 +13,5 @@ xss-lock -- ~/dev/github/betterlockscreen/lock.sh -l &
 nm-applet &
 compton -b &
 scratch &
-plexamp &
+# plexamp &
 run_keybase &
