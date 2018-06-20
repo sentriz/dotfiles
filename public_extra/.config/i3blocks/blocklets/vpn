@@ -1,0 +1,3 @@
+#!/usr/bin/sh
+
+nmcli -t -f name,type,state connection | grep -Po '\w+(?=:vpn:activated)' || echo none

@@ -15,6 +15,12 @@ instance=wlp4s0
 interval=5
 command=~/.config/i3blocks/blocklets/wifi
 
+[vpn]
+label=vpn
+interval=5
+color=#f24b74
+command=~/.config/i3blocks/blocklets/vpn
+
 [load]
 signal=3
 label=load
