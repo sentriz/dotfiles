@@ -1,35 +1,52 @@
-#!/usr/bin/env bash
+#!/usr/bin/bash
 
-# setup
-cache_dir="${XDG_CACHE_HOME:-"$HOME/.cache/boi_balance"}"
-mkdir -p "$cache_dir"
-balance_file="$cache_dir/balance"
+function remove-comma() {
+    sed 's/,//g'
+}
 
-# check for internet
-if ! ping -q -w 1 -c 1 "8.8.8.8" > /dev/null; then
-    echo "no wan"
-    exit
-fi
+function add-euro() {
+    sed -E 's/(\-|\+)?(.*)/\1€\2/'
+}
 
-# check for gpg
-if ! echo "KEYINFO --no-ask C092E4122F7B70E3B29C57300887D28A57706A76 Err Pmt Des" \
-     | gpg-connect-agent \
-     | grep "D - - 1" > /dev/null; then
-    echo "no gpg"
-    exit
-fi
+function add-delta-sign() {
+    sed -E 's/^([^-]*)$/+\1/'
+}
 
-# getting balance takes time,
-# can't seem to call subprocess from blocklet,
-# nohup, &, setsid, etc. no worky,
-# so running balance_write to file using `at`.
-# it later sends SIGRTMIN to i3blocks to run this again,
-# and cat $balance_file
+function get-delta() {
+    [ -f "$balance_file" ] || return 1
+    last_balance=$(cat "$balance_file")
+    [ -z "$last_balance" ] && return 1
+    delta="$(bc <<< "$1 - $last_balance")"
+    [ "$delta" = "0" ] && return 1
+    echo "$delta"
+}
 
-if test -e "$balance_file"; then
-    echo $(cat "$balance_file") | sed -E 's/(\-?)(.*)/\1€\2/'
-    mv "$balance_file"{,.old}
-else
-    echo "updating"
-    echo "$HOME/.config/i3blocks/blocklets/balance_write" | at now
-fi
+function notify() {
+    notify-send -- 'boi balance' "$1" 
+}
+
+function get-balance() {
+    boi_balance $(pass money/boi/365/username) \
+                $(pass money/boi/365/phone_number) \
+                $(pass money/boi/365/password) \
+                $(pass money/boi/365/date_of_birth)
+}
+
+
+# get balance
+balance_file="$HOME/.cache/boi_balance"
+balance="$(get-balance 2> /dev/null | remove-comma)" 
+[ -z "$balance" ] && exit 1
+
+# notify of delta (before saving later)
+(   
+    delta="$(get-delta "$balance")"
+    test -z "$delta" && exit
+    notify "$(add-delta-sign <<< "$delta" | add-euro)"
+)
+
+# save and print
+(   
+    echo "$balance" > "$balance_file"
+    add-euro <<< "$balance"
+)

@@ -54,7 +54,8 @@ def get_balance(pin_response):
 
 if __name__ == "__main__":
     if len(sys.argv) is not 5:
-        print(f'usage: {sys.argv[0]} <user id> <phone> <dob> <pin>')
+        print(f'usage: {sys.argv[0]} <user id> <phone> <dob> <pin>',
+              file=sys.stderr)
         sys.exit(1)
     # parse arge
     user_id, phone, pin, dob = sys.argv[1:]
