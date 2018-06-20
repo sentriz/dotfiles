@@ -27,10 +27,9 @@ smart_borders on
 
 ## main bar
 bar {
-    status_command i3blocks
     i3bar_command i3bar -t
     tray_output primary
-    # strip_workspace_numbers yes
+    status_command i3blocks
     colors {
         separator          #00000000
         background         #30303060
@@ -312,10 +311,10 @@ bindsym XF86AudioRaiseVolume exec --no-startup-id "ponymix increase 5% && $updat
 bindsym XF86AudioLowerVolume exec --no-startup-id "ponymix decrease 5% && $update_blocks_audio"
 bindsym XF86AudioMute exec --no-startup-id        "ponymix toggle      && $update_blocks_audio"
 bindsym XF86AudioMicMute exec --no-startup-id     "thinkpad-mutemic    && $update_blocks_audio"
-bindsym XF86AudioPlay exec --no-startup-id ctl_player toggle
-bindsym XF86AudioStop exec --no-startup-id ctl_player stop
-bindsym XF86AudioNext exec --no-startup-id ctl_player next
-bindsym XF86AudioPrev exec --no-startup-id ctl_player prev
+bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
+bindsym XF86AudioStop exec --no-startup-id playerctl stop
+bindsym XF86AudioNext exec --no-startup-id playerctl next
+bindsym XF86AudioPrev exec --no-startup-id playerctl previous
 
 bindsym Print                 exec screenshot
 bindsym --release Shift+Print exec screenshot --select
