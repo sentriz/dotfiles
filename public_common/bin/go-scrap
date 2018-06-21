@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-vim "$(mktemp -d ~/scrap/go.XXX)/main.go"
