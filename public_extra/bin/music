@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# ln -s $(which surf) /tmp/plex_surf
+# /tmp/plex_surf -pkg "https://app.plex.tv"
+## assign [class="Surf" instance="^plex_surf$"] $work4
+
+google-chrome-stable --class="samsam" --new-window --app="https://app.plex.tv"

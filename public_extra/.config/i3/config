@@ -195,7 +195,7 @@ mode $mode_gaps_outer {
 set $work1 "1 main"
 set $work2 "2 web"
 set $work3 "3 term"
-set $work4 "4 music"
+set $work4 "4 media"
 set $work5 "5 vm"
 set $work6 "6 chat"
 set $work7 "7 mnem"
@@ -232,10 +232,9 @@ assign [class="Firefox"] $work2
 assign [class="Chromium"] $work2
 assign [class="Google-chrome"] $work2
 assign [class="URxvt" instance="ncmpcpp"] $work4
-for_window [class="Spotify"] move to workspace $work4
 assign [class="Spotify"] $work4
 assign [class="Deadbeef"] $work4
-assign [class="URxvt" instance="weechat"] $work6
+assign [class="Surf" instance="^plex_surf$"] $work4
 assign [class="Franz"] $work6
 assign [class="Mnemosyne"] $work7
 assign [class="Anki"] $work7
@@ -243,6 +242,8 @@ assign [class="Gimp*"] $work8
 assign [class="Inkscape"] $work8
 assign [class="libreoffice-*"] $work9
 assign [class="VirtualBox"] $work5
+for_window [title="^Plex$"] move to workspace $work4, floating disable
+for_window [class="Spotify"] move to workspace $work4
 
 # floating
 for_window [class="Pavucontrol"]                   floating enable
@@ -285,20 +286,8 @@ bindsym $super+Shift+F8 mark "c_scratch_4", move scratchpad
 bindsym $super+F8 [con_mark="c_scratch_4"] scratchpad show
 
 ## keybindings (programs)
-bindsym $super+Ctrl+e exec thunar
-bindsym $super+Ctrl+b exec google-chrome-stable
-bindsym $super+Ctrl+g exec galculator
-bindsym $super+Ctrl+a exec --no-startup-id dmenu_pacs
-bindsym $super+Ctrl+f exec --no-startup-id dmenu_sinks
-bindsym $super+Ctrl+r exec --no-startup-id dmenu_radio
-bindsym $super+Ctrl+u exec --no-startup-id dmenu_clipfav
-bindsym $super+Ctrl+h exec --no-startup-id dmenu_clipboard
-bindsym $super+Ctrl+p exec --no-startup-id dmenu_pass --tuser --tpass
-bindsym $super+Ctrl+t exec --no-startup-id dmenu_todo
-bindsym $super+Ctrl+v exec --no-startup-id dmenu_vms
-
-bindsym F15 exec winmenu
-bindsym $super+Return exec terminator
+bindsym F15 exec --no-startup-id dmenu_pacs
+bindsym $super+Return exec --no-startup-id terminator
 
 # keybindings (xf86 on thinkpad x220)
 bindsym XF86TouchpadToggle exec --no-startup-id thinkpad-touchpad && notify-send "touchpad toggled"
