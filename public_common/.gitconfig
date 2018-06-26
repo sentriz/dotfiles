@@ -12,9 +12,6 @@
     interactive = true
     status = true
 
-[help]
-    autocorrect = 5
-
 [alias]
     c = commit
     caa = commit -a --amend -C HEAD
