@@ -1,15 +1,11 @@
 #!/usr/bin/bash
 
-function remove-comma() {
-    sed 's/,//g'
-}
-
-function add-euro() {
-    sed -E 's/(\-|\+)?(.*)/\1€\2/'
-}
-
 function add-delta-sign() {
     sed -E 's/^([^-]*)$/+\1/'
+}
+
+function format() {
+    printf "%'.2f\n" "$1" | sed -E 's/(\-|\+)?(.*)/\1€\2/' 
 }
 
 function get-delta() {
@@ -35,18 +31,19 @@ function get-balance() {
 
 # get balance
 balance_file="$HOME/.cache/boi_balance"
-balance="$(get-balance 2> /dev/null | remove-comma)" 
+balance="$(get-balance 2> /dev/null)" 
 [ -z "$balance" ] && exit 1
 
 # notify of delta (before saving later)
 (   
     delta="$(get-delta "$balance")"
     test -z "$delta" && exit
-    notify "$(add-delta-sign <<< "$delta" | add-euro)"
+    pretty_delta="$(format "$delta" | add-delta-sign)"
+    notify "$pretty_delta"
 )
 
 # save and print
 (   
     echo "$balance" > "$balance_file"
-    add-euro <<< "$balance"
+    format "$balance"
 )
