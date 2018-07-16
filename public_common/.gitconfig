@@ -16,7 +16,7 @@
     c = commit
     caa = commit -a --amend -C HEAD
     s = status
-    d = diff
+	d = difftool
     ignore = update-index --assume-unchanged
     unignore = update-index --no-assume-unchanged
     ignored = !git ls-files -v | grep "^[[:lower:]]"
@@ -26,6 +26,7 @@
 
 [diff]
     compactionHeuristic = true
+	tool = vimdiff
 
 [github]
     user = sentriz
@@ -47,3 +48,8 @@
 	gpgsign = true
 [protocol "keybase"]
 	allow = always
+[difftool]
+	prompt = false
+[status]
+	short = true
+	branch = true
