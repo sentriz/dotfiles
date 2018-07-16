@@ -5,7 +5,7 @@ if status --is-login
 end
 
 if status --is-interactive
-    # activate_virtualfish
+    activate_virtualfish
     activate_keychain &
 end
 
