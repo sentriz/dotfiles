@@ -22,9 +22,13 @@ function get-balance() {
     case "$BLOCK_INSTANCE" in
         'boi')     get-balance-boi;;
         'revolut') get-balance-revolut;;
-        *)         echo '0.00';;
     esac
 }
 
 balance="$(get-balance 2> /dev/null)" 
-[ -n "$balance" ] && format "$balance"
+[ -z "$balance" ] && \
+    exit 1
+case "$BLOCK_BUTTON" in
+    1|2|3) notify-send -- "$BLOCK_INSTANCE updated";;
+esac
+format "$balance"
