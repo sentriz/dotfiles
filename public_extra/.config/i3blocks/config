@@ -35,12 +35,21 @@ instance=1
 color=#e184c2
 command=~/.config/i3blocks/blocklets/battery
 
-[boi_balance]
-interval=900
-color=#ffff00
-label=balance
-signal=5
+[balance]
+color=#e6e600
 command=~/.config/i3blocks/blocklets/balance
+instance=boi
+interval=900
+label=boi
+signal=5
+
+[balance]
+color=#ffb31a
+command=~/.config/i3blocks/blocklets/balance
+instance=revolut
+interval=900
+label=revolut
+signal=5
 
 [time]
 signal=6

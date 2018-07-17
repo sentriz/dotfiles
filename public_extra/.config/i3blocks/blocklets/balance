@@ -1,49 +1,30 @@
 #!/usr/bin/bash
 
-function add-delta-sign() {
-    sed -E 's/^([^-]*)$/+\1/'
-}
-
 function format() {
     printf "%'.2f\n" "$1" | sed -E 's/(\-|\+)?(.*)/\1€\2/' 
 }
 
-function get-delta() {
-    [ -f "$balance_file" ] || return 1
-    last_balance=$(cat "$balance_file")
-    [ -z "$last_balance" ] && return 1
-    delta="$(bc <<< "$1 - $last_balance")"
-    [ "$delta" = "0" ] && return 1
-    echo "$delta"
-}
-
-function notify() {
-    notify-send -- 'boi balance' "$1" 
-}
-
-function get-balance() {
+function get-balance-boi() {
     boi_balance $(pass money/boi/365/username) \
                 $(pass money/boi/365/phone_number) \
                 $(pass money/boi/365/password) \
                 $(pass money/boi/365/date_of_birth)
 }
 
+function get-balance-revolut() {
+    revolut_cli.py --language en \
+                   --token $(pass money/revolut/token) \
+        | sed '2q;d' \
+        | awk -F ',' '{print $2}'
+}
 
-# get balance
-balance_file="$HOME/.cache/boi_balance"
+function get-balance() {
+    case "$BLOCK_INSTANCE" in
+        'boi')     get-balance-boi;;
+        'revolut') get-balance-revolut;;
+        *)         echo '0.00';;
+    esac
+}
+
 balance="$(get-balance 2> /dev/null)" 
-[ -z "$balance" ] && exit 1
-
-# notify of delta (before saving later)
-(   
-    delta="$(get-delta "$balance")"
-    test -z "$delta" && exit
-    pretty_delta="$(format "$delta" | add-delta-sign)"
-    notify "$pretty_delta"
-)
-
-# save and print
-(   
-    echo "$balance" > "$balance_file"
-    format "$balance"
-)
+[ -n "$balance" ] && format "$balance"
