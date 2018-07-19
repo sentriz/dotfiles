@@ -1,0 +1,3 @@
+#!/usr/bin/sh
+
+date "+%A %d %B, %H:%M" | tr '[:upper:]' '[:lower:]'

@@ -1,57 +1,39 @@
 separator_block_width=15
-markup=pango
+command=~/.config/i3blocks/blocklets/$BLOCK_NAME
+interval=5
 
 [volume]
-signal=1
-label=sound
 instance=Master
 interval=once
-command=~/.config/i3blocks/blocklets/volume
+label=volume
+signal=1
 
 [wifi]
-signal=2
-label=wifi
 instance=wlp4s0
-interval=5
-command=~/.config/i3blocks/blocklets/wifi
+label=wifi
 
 [vpn]
-label=vpn
-interval=5
 color=#f24b74
-command=~/.config/i3blocks/blocklets/vpn
+label=vpn
 
 [load]
-signal=3
 label=load
-interval=5
-command=~/.config/i3blocks/blocklets/load
 
 [battery]
-signal=4
-interval=5
-label=battery
-instance=1
 color=#e184c2
-command=~/.config/i3blocks/blocklets/battery
+instance=1
+label=battery
 
 [balance]
 color=#e6e600
-command=~/.config/i3blocks/blocklets/balance
 instance=boi
 interval=900
 label=boi
-signal=5
 
 [balance]
-color=#ffb31a
-command=~/.config/i3blocks/blocklets/balance
+color=#ffbb33
 instance=revolut
 interval=900
 label=revolut
-signal=5
 
 [time]
-signal=6
-interval=10
-command=date "+%A %d %B, %H:%M" | tr '[:upper:]' '[:lower:]'
