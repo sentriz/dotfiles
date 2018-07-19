@@ -1,12 +1,29 @@
-#!/usr/bin/bash
+#!/usr/bin/fish
 
-screen_dir=/home/senan/pictures/screenshots
+set screen_dir "$HOME/pictures/screenshots"
 
-if [ "$1" ==  "--select" ]; then
+getopts $argv | while read -l key value
+    switch $key
+        case upload
+            set upload 'true'
+        case select
+            set select_option '-s'
+    end
+end
+
+if test -n "$select_option"
     notify-send 'screenshot' 'select an area'
-    scrot "$screen_dir/%Y%m%d_%H%M%S.png" -s -e 'echo $f && xclip $f'
-else
-    scrot "$screen_dir/%Y%m%d_%H%M%S.png" -e 'echo $f && xclip $f'
-fi
+end
 
-notify-send "screnshot taken" "in ~/pictures/screenshots"
+set filename (
+    scrot "$screen_dir/%Y%m%d_%H%M%S.png" \
+        $select_option \
+        -e 'echo $f'
+)
+
+if test "$upload" = 'true'
+    echo "$filename" | imgur_up | xclip -i
+    notify-send 'screenshot' 'link in clipboad'
+else
+    notify-send 'screnshot taken' (basename "$filename")
+end

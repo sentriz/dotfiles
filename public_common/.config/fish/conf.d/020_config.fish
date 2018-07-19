@@ -3,6 +3,7 @@ fundle plugin 'laughedelic/fish_logo'
 fundle plugin 'fisherman/z'
 fundle plugin 'fisherman/done'
 fundle plugin 'fisherman/humanize_duration'
+fundle plugin 'fisherman/getopts'
 fundle init
 
 # host specific
