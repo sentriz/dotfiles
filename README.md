@@ -19,7 +19,7 @@ python stuff
     
 fish setup
 
-    remote $ rm ~/bash* ~/.profile ~/whateverelse
+    remote $ rm ~/.bash* ~/.profile ~/whateverelse
     remote $ chsh -s $(which fish)
 
 fish extras
