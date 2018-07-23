@@ -5,7 +5,8 @@ dmenu_sinks
 dmenu_todo
 dmenu_vms
 galculator
-google-chrome-stable
+google-chrome-stable --profile-directory="Profile 1" # work
+google-chrome-stable --profile-directory="Profile 3" # home
 plex
 terminator
 thunar
