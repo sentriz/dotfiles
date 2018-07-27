@@ -21,9 +21,14 @@ set filename (
         -e 'echo $f'
 )
 
+# add to socr database
+# see https://github.com/sentriz/socr
+socr add "$filename" &
+
 if test "$upload" = 'true'
     echo "$filename" | imgur_up | xclip -i
     notify-send 'screenshot' 'link in clipboad'
 else
     notify-send 'screnshot taken' (basename "$filename")
 end
+
