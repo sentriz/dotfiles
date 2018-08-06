@@ -14,8 +14,7 @@ basic stuff
     
 python stuff
 
-    remote $ wget https://bootstrap.pypa.io/get-pip.py
-    remote $ python3 get-pip.py --user
+    remote $ curl https://bootstrap.pypa.io/get-pip.py | python - --user
     
 fish setup
 
