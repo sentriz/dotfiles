@@ -288,6 +288,7 @@ bindsym $super+F8 [con_mark="c_scratch_4"] scratchpad show
 ## keybindings (programs)
 bindsym F15 exec --no-startup-id dmenu_pacs
 bindsym $super+Return exec --no-startup-id terminator
+bindsym ISO_Level3_Shift exec --no-startup-id emojione-picker
 
 # keybindings (xf86 on thinkpad x220)
 bindsym XF86TouchpadToggle exec --no-startup-id thinkpad-touchpad && notify-send "touchpad toggled"
