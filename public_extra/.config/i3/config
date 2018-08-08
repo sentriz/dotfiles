@@ -246,17 +246,18 @@ for_window [title="^Plex$"] move to workspace $work4, floating disable
 for_window [class="Spotify"] move to workspace $work4
 
 # floating
-for_window [class="Pavucontrol"]                   floating enable
-for_window [class="Mnemosyne"]                     floating enable
-for_window [class="Galculator"]                    floating enable
-for_window [class="etcher"]                        floating enable
-for_window [class="Qpaeq"]                         floating enable
-for_window [class="Anki"]                          floating enable
-for_window [class="Gui.py"]                        floating enable
-for_window [class="SimpleScreenRecorder"]          floating enable
-for_window [title="^bobby$"]                       floating enable
-for_window [class="feh"]                           floating enable
+for_window [class="Pavucontrol"]                          floating enable
+for_window [class="Mnemosyne"]                            floating enable
+for_window [class="Galculator"]                           floating enable
+for_window [class="etcher"]                               floating enable
+for_window [class="Qpaeq"]                                floating enable
+for_window [class="Anki"]                                 floating enable
+for_window [class="Gui.py"]                               floating enable
+for_window [class="SimpleScreenRecorder"]                 floating enable
+for_window [title="^bobby$"]                              floating enable
+for_window [class="feh"]                                  floating enable
 for_window [class="^Terminator$" window_role="^scratch$"] floating enable
+for_window [class="Blueman-manager"]                      floating enable
 
 # floating generic
 for_window [window_type="menu"]        floating enable
