@@ -1,15 +1,17 @@
-set -l possible_paths /bin \
-              /sbin \
-              /usr/bin \
-              /usr/local/bin \
-              /usr/local/sbin \
-              /usr/sbin \
-              /opt/Etcher \
-              $GEM_HOME/bin \
-              $GOPATH/bin \
-              $HOME/.local/bin \
-              $HOME/node_modules/.bin \
-              (find -L $HOME/bin -type d)
+set -l possible_paths \
+    $GEM_HOME/bin \
+    $GOPATH/bin \
+    $HOME/.local/bin \
+    $HOME/node_modules/.bin \
+    (find -L $HOME/bin -type d) \
+    /bin \
+    /opt/Etcher \
+    /sbin \
+    /usr/bin \
+    /usr/bin/vendor_perl \
+    /usr/local/bin \
+    /usr/local/sbin \
+    /usr/sbin
 
 for path in $possible_paths
     test -d "$path"
