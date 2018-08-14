@@ -44,10 +44,11 @@ call vundle#end()
 filetype plugin indent on
 
 " plugin settings
+let g:netrw_list_hide = '.*\.pyc$,^__pycache__$'
 let g:hardtime_default_on = 1
 let g:startify_session_dir = '~/.vim/session'
 let g:ctrlp_working_path_mode = 0
-let g:ctrlp_custom_ignore = '\*.pyc'
+let g:ctrlp_custom_ignore = '\v[\/](node_modules|target|dist)|(\.(swp|ico|git|svn|pyc|png|jpg))$'
 let g:go_fmt_command = "goimports"
 let g:go_disable_autoinstall = 0
 let g:go_highlight_functions = 1
@@ -164,3 +165,12 @@ inoremap <expr> <c-e> pumvisible() ? "\<c-e>" : matchstr(getline(line('.')+1), '
 " :Q -> :q | :W -> :w
 com Q q
 com W w
+com Wa wa
+
+let g:tmux_navigator_no_mappings = 1
+let g:tmux_navigator_save_on_switch = 1
+nnoremap <silent> <c-h> :TmuxNavigateLeft<cr>
+nnoremap <silent> <c-j> :TmuxNavigateDown<cr>
+nnoremap <silent> <c-k> :TmuxNavigateUp<cr>
+nnoremap <silent> <c-l> :TmuxNavigateRight<cr>
+nnoremap <silent> <c-g> :TmuxNavigatePrevious<cr>
