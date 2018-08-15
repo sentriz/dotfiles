@@ -1,58 +1,51 @@
 [user]
     email = senan@senan.xyz
     name = sentriz
-	signingkey = 609FCE8BB45971C8293040AC9A8DAE1CA907B862
-
+    signingkey = 609FCE8BB45971C8293040AC9A8DAE1CA907B862
 [push]
-	default = current
-
+    default = current
 [color]
     ui = true
     branch = true
     interactive = true
     status = true
-
 [alias]
     c = commit
     caa = commit -a --amend -C HEAD
     s = status
-	d = difftool
+    d = difftool
     ignore = update-index --assume-unchanged
     unignore = update-index --no-assume-unchanged
     ignored = !git ls-files -v | grep "^[[:lower:]]"
-
 [diff "zip"]
     textconv = unzip -c -a
-
 [diff]
     compactionHeuristic = true
-	tool = vimdiff
-
+    tool = vimdiff
 [github]
     user = sentriz
-
 [advice]
     statusHints = false
-
 [core]
     editor = vim
     excludesfile = ~/.gitignore_global
     pager = less -r
-
 [interactive]
     diffFilter = diff-highlight
-
 [pull]
-	rebase = true
+    rebase = true
 [commit]
-	gpgsign = true
+    gpgsign = true
 [protocol "keybase"]
-	allow = always
-[difftool]
-	prompt = false
+    allow = always
 [status]
-	short = true
-	branch = true
-
+    short = true
+    branch = true
 [merge]
     tool = meld
+[diff]
+    tool = meld
+[difftool]
+    prompt = false
+[difftool "meld"]
+    cmd = meld "$LOCAL" "$REMOTE"
