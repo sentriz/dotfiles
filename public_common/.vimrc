@@ -18,6 +18,8 @@ set path+=**
 set complete-=t
 set complete-=i
 set diffopt+=vertical
+set undofile
+set undodir=~/.cache/vimundo
 syntax on
 
 " vundle setup
