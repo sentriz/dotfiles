@@ -24,7 +24,7 @@ def get_base_post_data(execution):
 
 
 def enter_username_and_unknown():
-    params    = {'execution': 'e1s1'}
+    params = {'execution': 'e1s1'}
     post_data = get_base_post_data(params['execution'])
     response = session.get(URL)
     if response.html.find('#form\:phoneNumber'):
@@ -54,7 +54,7 @@ def get_balance(pin_response):
 
 if __name__ == "__main__":
     if len(sys.argv) is not 5:
-        print(f'usage: {sys.argv[0]} <user id> <phone> <dob> <pin>',
+        print(f'usage: {sys.argv[0]} <user id> <phone> <pin> <dob>',
               file=sys.stderr)
         sys.exit(1)
     # parse arge
