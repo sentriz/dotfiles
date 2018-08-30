@@ -9,8 +9,12 @@ if status --is-interactive
     activate_keychain &
 end
 
-# work aliases
-alias work_paste 'curl -F c=@- pb'
+# aliases
+alias work_paste "curl -sF c=@- pb | grep -Po --color=never 'url:\s\K(.*)'"
+
+# env
+set -xg ANDROID_NDK /opt/android-ndk
+set -xg ANDROID_NDK_HOME /opt/android-ndk
 
 if status --is-login; and test -z $DISPLAY; and test -z $TMUX
     select_x_session

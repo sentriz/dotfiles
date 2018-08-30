@@ -11,7 +11,8 @@ set -l possible_paths \
     /usr/bin/vendor_perl \
     /usr/local/bin \
     /usr/local/sbin \
-    /usr/sbin
+    /usr/sbin \
+    /opt/android-ndk
 
 for path in $possible_paths
     test -d "$path"
