@@ -4,17 +4,19 @@ dmenu_radio
 dmenu_sinks
 dmenu_todo
 dmenu_vms
+electrum
 galculator
 google-chrome-stable --profile-directory="Profile 1" # work
 google-chrome-stable --profile-directory="Profile 3" # home
+pavucontrol
 plex
-terminator
-thunar
 quadrapassel
 scratch
+simplescreenrecorder
+terminator
+thunar
 tor-browser-en
 transmission-remote-gtk
-electrum
-blueman-manager
-pavucontrol
-simplescreenrecorder
+virtualbox
+~/.screenlayout/home.sh; ~/.fehbg
+~/.screenlayout/work.sh; ~/.fehbg
