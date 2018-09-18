@@ -9,6 +9,7 @@ alias wget "wget -c"
 alias cp "cp -aiv"
 alias mkdir "mkdir -p -v"
 alias pip "pip --disable-pip-version-check"
+alias cat "bat"
 
 # arrangment
 alias qmv "qmv --format destination-only"

@@ -4,6 +4,7 @@ fundle plugin 'fisherman/z'
 fundle plugin 'fisherman/done'
 fundle plugin 'fisherman/humanize_duration'
 fundle plugin 'fisherman/getopts'
+fundle plugin 'fisherman/fzf'
 fundle init
 
 # host specific
