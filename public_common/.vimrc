@@ -91,6 +91,7 @@ let g:tagbar_type_go = {
 " colorscheme, term colours, hidden chars and font
 colorscheme custom
 set listchars=tab:>\ ,eol:¬,trail:.
+set fillchars+=vert:│
 set statusline=%<\ %f\ %m%r%y%w%=%l\/%-6L\ %3c
 
 " jump to last known cursor position (except in commit messages)

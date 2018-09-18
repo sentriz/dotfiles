@@ -13,7 +13,7 @@ hi CursorLineNr term=bold cterm=bold ctermfg=226 gui=bold guifg=Yellow
 hi Question term=standout cterm=bold ctermfg=48 gui=bold guifg=springgreen
 hi StatusLine term=bold,reverse ctermfg=16 ctermbg=145 guifg=black guibg=#c2bfa5
 hi StatusLineNC term=reverse ctermfg=244 ctermbg=145 guifg=grey50 guibg=#c2bfa5
-hi VertSplit term=reverse ctermfg=244 ctermbg=145 guifg=grey50 guibg=#c2bfa5
+hi VertSplit ctermfg=236 ctermbg=7 guifg=#303030 guibg=grey50
 hi Title term=bold cterm=bold ctermfg=167 gui=bold guifg=indianred
 hi Visual term=reverse ctermfg=222 ctermbg=64 guifg=khaki guibg=olivedrab
 hi clear VisualNOS
