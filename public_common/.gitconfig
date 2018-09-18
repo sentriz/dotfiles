@@ -10,13 +10,14 @@
     interactive = true
     status = true
 [alias]
-    c = commit
-    caa = commit -a --amend -C HEAD
-    s = status
-    d = difftool
-    ignore = update-index --assume-unchanged
-    unignore = update-index --no-assume-unchanged
-    ignored = !git ls-files -v | grep "^[[:lower:]]"
+    c         = commit
+    d         = diff
+    l         = log --pretty=oneline --abbrev-commit
+    s         = status
+    addf      = !git add -- $(git ls-files --modified --others --exclude-standard | fzf -m)
+    checkoutf = !git checkout -- $(git ls-files --modified --exclude-standard | fzf -m)
+    fixupf    = !git commit --fixup=$(git log --pretty=oneline --abbrev-commit | fzf +s | awk '{print $1'})
+    showf     = !git show $(git log --pretty=oneline --abbrev-commit | fzf +s | awk '{print $1'})
 [diff "zip"]
     textconv = unzip -c -a
 [diff]
