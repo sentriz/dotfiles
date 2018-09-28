@@ -258,6 +258,7 @@ for_window [title="^bobby$"]                              floating enable
 for_window [class="feh"]                                  floating enable
 for_window [class="^Terminator$" window_role="^scratch$"] floating enable
 for_window [class="Blueman-manager"]                      floating enable
+for_window [class="Woeusbgui"]                            floating enable
 
 # floating generic
 for_window [window_type="menu"]        floating enable
