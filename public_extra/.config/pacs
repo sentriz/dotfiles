@@ -8,6 +8,7 @@ electrum
 galculator
 google-chrome-stable --profile-directory="Profile 1" # work
 google-chrome-stable --profile-directory="Profile 3" # home
+minecraft
 pavucontrol
 plex
 quadrapassel
@@ -18,5 +19,6 @@ thunar
 tor-browser-en
 transmission-remote-gtk
 virtualbox
+woeusbgui
 ~/.screenlayout/home.sh; ~/.fehbg
 ~/.screenlayout/work.sh; ~/.fehbg
