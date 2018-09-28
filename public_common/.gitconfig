@@ -18,6 +18,7 @@
     checkoutf = !git checkout -- $(git ls-files --modified --exclude-standard | fzf -m)
     fixupf    = !git commit --fixup=$(git log --pretty=oneline --abbrev-commit | fzf +s | awk '{print $1'})
     showf     = !git show $(git log --pretty=oneline --abbrev-commit | fzf +s | awk '{print $1'})
+    difff     = !git diff $(git ls-files --modified --exclude-standard | fzf -m)
 [diff "zip"]
     textconv = unzip -c -a
 [diff]
