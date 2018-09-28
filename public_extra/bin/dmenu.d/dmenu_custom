@@ -2,4 +2,4 @@
 
 # x = y = offset
 # w = (screen width) - (offset * 2)
-dmenu -i -l 20 -nb "#222222" -sb "#0088cc" -y 100 -x 100 -w 1720 "$@"
+dmenu -i -l 20 -nb "#303030" -sb "#0088cc" -y 100 -x 100 -w 1720 "$@"
