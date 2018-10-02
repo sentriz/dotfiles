@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-offset=100
+offset=24
 current_monitor_width=$(
     monitor_sizes \
         | grep --color=never -Po "$(current_monitor)\s\K([0-9]+)(?=x.*)"
