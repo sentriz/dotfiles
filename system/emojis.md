@@ -2,7 +2,7 @@
 
   - ttf-emojione
 
-### file
+### files
 `~/.config/fontconfig/conf.d/50-emojione-color.conf`
 
     <?xml version="1.0" encoding="UTF-8"?>
