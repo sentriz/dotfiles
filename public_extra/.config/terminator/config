@@ -74,9 +74,9 @@
 [profiles]
   [[default]]
     allow_bold = False
+    audible_bell = True
     background_color = "#303030"
     copy_on_selection = True
-    cursor_blink = False
     cursor_color = "#aaaaaa"
     cursor_shape = ibeam
     font = Source Code Pro 10
