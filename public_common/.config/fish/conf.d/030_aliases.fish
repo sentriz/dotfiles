@@ -37,7 +37,8 @@ alias package_count "pacman -Q | wc -l"
 alias speed         "speedtest-cli --simple"
 
 # with other command
-alias tb  "nc -N termbin.com 9999"
+alias paste "nc -N termbin.com 9999"
+alias haste "env HASTE_SERVER=https://haste.home.senan.xyz haste"
 
 # exit
 alias :wq "exit"
