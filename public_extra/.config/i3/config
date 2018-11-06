@@ -12,17 +12,15 @@ set $super Mod4
 set $alt Mod1
 set $locker lock
 set $update_blocks_audio pkill -RTMIN+1 i3blocks
+floating_modifier $super
 
 font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
 font pango:DejaVu Sans Mono 17px
 
-floating_modifier $super
+## goodies
 popup_during_fullscreen smart
 for_window [class="^.*"] border pixel 2
-
-
 gaps inner 24
-# smart_gaps on
 smart_borders on
 
 ## main bar
