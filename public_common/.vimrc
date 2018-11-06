@@ -26,21 +26,21 @@ syntax on
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
+Plugin 'PotatoesMaster/i3-vim-syntax'
+Plugin 'Shougo/neocomplete.vim'
 Plugin 'aliva/vim-fish'
 Plugin 'christoomey/vim-tmux-navigator'
-Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'fatih/vim-go'
+Plugin 'junegunn/fzf.vim'
+Plugin 'majutsushi/tagbar'
 Plugin 'mhinz/vim-startify'
-Plugin 'PotatoesMaster/i3-vim-syntax'
+Plugin 'posva/vim-vue'
 Plugin 'tommcdo/vim-exchange'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-repeat'
-Plugin 'tpope/vim-vinegar'
 Plugin 'tpope/vim-surround'
-Plugin 'posva/vim-vue'
-Plugin 'majutsushi/tagbar'
-Plugin 'Shougo/neocomplete.vim'
+Plugin 'tpope/vim-vinegar'
 Plugin 'VundleVim/Vundle.vim'
 call vundle#end()
 filetype plugin indent on
@@ -129,24 +129,6 @@ endfunction
 " leader mappings
 let mapleader = "\<Space>"
 
-nnoremap <leader>e :e <C-R>=expand("%:p:h") . "/"<CR>
-nnoremap <leader>ev :vsplit <C-R>=expand("%:p:h") . "/"<CR>
-nnoremap <leader>eh :split <C-R>=expand("%:p:h") . "/"<CR>
-nnoremap <leader>en :Lexplore<CR>
-nnoremap <leader>cg :cd ~/dev/github/<CR>
-nnoremap <leader>cd :cd ~/desktop/<CR>
-nnoremap <leader>cl :cd ~/downloads/<CR>
-nnoremap <leader>gs :Gstatus<CR>
-nnoremap <leader>gr :Gread<CR>
-nnoremap <leader>gw :Gwrite<CR>
-nnoremap <leader>gm :Gremove<CR>
-nnoremap <leader>gd :Gdiff<CR>
-nnoremap <leader>gc :Gcommit<CR>
-nnoremap <leader>gb :Gbrowse!<CR>
-nnoremap <leader>gv :Gmove<Space>
-nnoremap <leader>dp :diffput<CR>
-nnoremap <leader>dg :diffget<CR>
-nnoremap <leader>du :diffupdate<CR>
 nnoremap <leader>bb mzggO#!/usr/bin/env bash<Esc>o<Esc>`z
 nnoremap <leader>bp mzggO#!/usr/bin/env python3<Esc>o<Esc>`z
 nnoremap <leader>r :w<CR>:!clear && %:p<CR>
@@ -154,6 +136,8 @@ nnoremap <leader>x :w<CR>:!chmod +x %:p<CR><CR>
 nnoremap <leader>n :noh<CR>
 nnoremap <leader>s :%s/<c-r><c-w>/<c-r><c-w>/gc<c-f>$F/
 nnoremap <leader>t :TagbarToggle<CR>
+nnoremap <leader>f :GFiles<CR>
+nnoremap <leader>l :Rg<CR>
 nnoremap [25~ :bp<CR>
 nnoremap [26~ :bn<CR>
 nnoremap Y y$
@@ -180,7 +164,7 @@ nnoremap <silent> <c-l> :TmuxNavigateRight<cr>
 nnoremap <silent> <c-g> :TmuxNavigatePrevious<cr>
 
 if has("mouse_sgr")
-	set ttymouse=sgr
+    set ttymouse=sgr
 else
-	set ttymouse=xterm2
+    set ttymouse=xterm2
 end
