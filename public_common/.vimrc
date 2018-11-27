@@ -28,6 +28,7 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'PotatoesMaster/i3-vim-syntax'
 Plugin 'Shougo/neocomplete.vim'
+Plugin 'VundleVim/Vundle.vim'
 Plugin 'aliva/vim-fish'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'fatih/vim-go'
@@ -36,12 +37,12 @@ Plugin 'majutsushi/tagbar'
 Plugin 'mhinz/vim-startify'
 Plugin 'posva/vim-vue'
 Plugin 'tommcdo/vim-exchange'
+Plugin 'tpope/vim-abolish'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-vinegar'
-Plugin 'VundleVim/Vundle.vim'
 call vundle#end()
 filetype plugin indent on
 
