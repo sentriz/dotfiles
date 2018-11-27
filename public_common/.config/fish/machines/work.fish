@@ -2,6 +2,7 @@ set -xg fish_color_host brmagenta
 
 if status --is-login
     start_keychain
+    fish -c 'start_tunnels' &
 end
 
 if status --is-interactive
