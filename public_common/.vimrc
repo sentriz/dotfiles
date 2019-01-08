@@ -3,6 +3,7 @@ set nocompatible
 set autoread
 set incsearch
 set noswapfile
+set ignorecase
 set clipboard=unnamedplus
 set autowrite
 set nobackup
