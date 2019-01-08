@@ -4,6 +4,8 @@ set -l possible_paths \
     $HOME/.gem/ruby/*/bin \
     $HOME/.local/bin \
     $HOME/node_modules/.bin \
+    /opt/android-sdk/tools \
+    /opt/android-sdk/tools/bin \
     (find -L $HOME/bin -type d) \
     /bin \
     /opt/Etcher \

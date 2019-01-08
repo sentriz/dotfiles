@@ -4,8 +4,6 @@ alias py_scrap_new 'vim (mktemp -d ~/scrap/python.XXX)/main.py'
 alias go_scrap_find 'vim (rg -g \'**/main.go\' --line-number --no-heading --smart-case --color=never . ~/scrap/ | fzf | awk -F \':\' \'{print $1, "+" $2}\' | sed \'s/\s/\n/g\')'
 alias py_scrap_find 'vim (rg -g \'**/main.py\' --line-number --no-heading --smart-case --color=never . ~/scrap/ | fzf | awk -F \':\' \'{print $1, "+" $2}\' | sed \'s/\s/\n/g\')'
 
-alias sam "echo a $argv[2]"
-
 # needed argument or couldn't quote
 alias xkill "xkill -id \"(xwininfo | awk '/Window id:/ {print $4}')\""
 alias fuzz_here "find . -readable -type f | fzf --reverse --black --multi | xclip"
@@ -59,3 +57,4 @@ abbr sev "sudo -E vim"
 abbr du "du -d1 -h"
 abbr g "git"
 abbr docker "sudo docker"
+abbr rg "rg -g '!*node_modules*'"
