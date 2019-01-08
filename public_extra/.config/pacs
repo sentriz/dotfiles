@@ -6,8 +6,8 @@ dmenu_todo
 dmenu_vms
 electrum
 galculator
-google-chrome-stable --profile-directory="Profile 1" # work
-google-chrome-stable --profile-directory="Profile 3" # home
+chromium --profile-directory="Profile 2" # work
+chromium --profile-directory="Default" # home
 minecraft
 pavucontrol
 plex
