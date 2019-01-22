@@ -10,15 +10,16 @@
     interactive = true
     status = true
 [alias]
-    c         = commit
-    d         = diff
-    l         = log --pretty=oneline --abbrev-commit
-    s         = status
-    addf      = !git add -- $(git ls-files --modified --others --exclude-standard | fzf -m --preview 'cat {}')
-    checkoutf = !git checkout -- $(git ls-files --modified --exclude-standard | fzf -m)
-    fixupf    = !git commit --fixup=$(git log --pretty=oneline --abbrev-commit | fzf +s | awk '{print $1'})
-    showf     = !git show $(git log --pretty=oneline --abbrev-commit | fzf +s | awk '{print $1'})
-    difff     = !git diff $(git ls-files --modified --exclude-standard | fzf -m)
+    c          = commit
+    d          = diff
+    l          = log --pretty=oneline --abbrev-commit
+    s          = status
+    addf       = !git add -- $(git ls-files --modified --others --exclude-standard | fzf -m --preview 'cat {}')
+    checkoutf  = !git checkout -- $(git ls-files --modified --exclude-standard | fzf -m)
+    fixupf     = !git commit --fixup=$(git log --pretty=oneline --abbrev-commit | fzf +s | awk '{print $1'})
+    showf      = !git show $(git log --pretty=oneline --abbrev-commit | fzf +s | awk '{print $1'})
+    difff      = !git diff $(git ls-files --modified --exclude-standard | fzf -m)
+    autosquash = !GIT_SEQUENCE_EDITOR=true git rebase --interactive --autosquash
 [diff "zip"]
     textconv = unzip -c -a
 [diff]
@@ -51,3 +52,12 @@
     prompt = false
 [difftool "meld"]
     cmd = meld "$LOCAL" "$REMOTE"
+[sendemail]
+	annotate = yes
+    smtpencryption = tls
+    smtpserver = smtps-proxy.fastmail.com
+    smtpuser = senan@senan.xyz
+    smtpserverport = 21
+	confirm = auto
+[rebase]
+	autosquash = true
