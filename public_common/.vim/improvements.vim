@@ -1,3 +1,4 @@
+" basics
 set autoread
 set autowrite
 set clipboard=unnamedplus
@@ -26,3 +27,11 @@ if has("mouse_sgr")
 else
     set ttymouse=xterm2
 end
+
+" oopsies
+command WQ wq
+command Wq wq
+command WQa wqa
+command Wqa wqa
+command W w
+command Q q
