@@ -13,11 +13,11 @@ nnoremap <leader>l :Rg<CR>
 " better
 nnoremap Y y$
 
-" bubbling
-nmap <S-k> ddkP
-nmap <S-j> ddp
-vmap <S-k> xkP`[V`]
-vmap <S-j> xp`[V`]
+" 'bubbling'
+nnoremap <S-k> ddkP
+nnoremap <S-j> ddp
+vnoremap <S-k> xkP`[V`]
+vnoremap <S-j> xp`[V`]
 
 " movement
 nnoremap <silent> <c-k> :TmuxNavigateUp<cr>
