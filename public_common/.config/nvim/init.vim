@@ -18,15 +18,17 @@ if dein#load_state(s:dein_dir)
     call dein#add('mhinz/vim-startify')
     call dein#add('junegunn/fzf.vim')
     call dein#add('tpope/vim-vinegar')
+    call dein#add('christoomey/vim-tmux-navigator')
     " text operations
     call dein#add('tommcdo/vim-exchange')
     call dein#add('tpope/vim-commentary')
     call dein#add('tpope/vim-repeat')
     call dein#add('tpope/vim-surround')
-    " misc
-    call dein#add('christoomey/vim-tmux-navigator')
+    " panels
     call dein#add('majutsushi/tagbar')
     call dein#add('tpope/vim-fugitive')
+    " appearance
+    call dein#add('machakann/vim-highlightedyank')
     " langs
     call dein#add('fatih/vim-go',
         \ {'on_ft': ['go']})
