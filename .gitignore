@@ -2,8 +2,7 @@
 misc
 
 # vim
-public_common/.vim/bundle/
-public_common/.vim/.netrwhist
+public_common/.config/nvim/.netrwhist
 
 # logs
 public_extra/.ncmpcpp/error.log

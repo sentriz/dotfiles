@@ -30,7 +30,7 @@
 [advice]
     statusHints = false
 [core]
-    editor = vim
+    editor = nvim
     excludesfile = ~/.gitignore_global
     pager = less -r
 [interactive]

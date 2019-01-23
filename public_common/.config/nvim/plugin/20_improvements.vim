@@ -1,3 +1,7 @@
+" filetype detection and plugin loading
+filetype on
+filetype plugin on
+
 " basics
 set autoread
 set autowrite
@@ -9,7 +13,6 @@ set ignorecase
 set incsearch
 set laststatus=2
 set nobackup
-set nocompatible
 set noswapfile
 set nowrap
 set nowritebackup
@@ -22,11 +25,6 @@ set wildmenu
 set directory=$TEMP,.
 set backupdir=$TEMP,.
 set mouse+=a
-if has("mouse_sgr")
-    set ttymouse=sgr
-else
-    set ttymouse=xterm2
-end
 
 " oopsies
 command WQ wq

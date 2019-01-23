@@ -6,15 +6,20 @@ basic stuff
     remote $ install git stow fish vim
     remote $ git clone https://github.com/sentriz/dotfiles.git ~/dotfiles
     remote $ chkstow -t ~ # ensure home is clean
-    remote $ mkdir -p ~/.vim/bundle # ensure stow unfolds .vim for second last step
     remote $ ~/dotfiles/install_common
     remote $ ~/dotfiles/install_extra # if on an x11 system
-    remote $ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-    remote $ vim +PluginInstall +qall
     
+
 python stuff
 
     remote $ curl https://bootstrap.pypa.io/get-pip.py | python - --user
+
+neovim stuff
+
+    remote $ python3.x -m pip install --user pynvim
+    remote $ git clone https://github.com/Shougo/dein.vim \
+                 ~/.cache/dein/repos/github.com/Shougo/dein.vim
+    remote $ vim '+call dein#install()' '+qall'
     
 fish setup
 
