@@ -11,6 +11,7 @@ set complete-=t
 set diffopt+=vertical
 set ignorecase
 set incsearch
+set inccommand=nosplit
 set laststatus=2
 set nobackup
 set noswapfile
