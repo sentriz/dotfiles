@@ -33,5 +33,7 @@ command WQ wq
 command Wq wq
 command WQa wqa
 command Wqa wqa
+command WA wa
+command Wa wa
 command W w
 command Q q

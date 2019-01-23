@@ -47,7 +47,7 @@ hi StatusLineTermNC term=reverse ctermfg=236 ctermbg=120 guifg=bg guibg=LightGre
 hi MatchParen term=reverse ctermbg=30 guibg=DarkCyan
 hi ToolbarLine term=underline ctermbg=244 guibg=Grey50
 hi ToolbarButton cterm=bold ctermfg=16 ctermbg=252 gui=bold guifg=Black guibg=LightGrey
-hi Comment term=bold ctermfg=116 guifg=SkyBlue
+hi Comment term=bold ctermfg=244 guifg=SkyBlue
 hi Constant term=underline ctermfg=217 guifg=#ffa0a0
 hi Special term=bold ctermfg=223 guifg=navajowhite
 hi Identifier term=underline ctermfg=120 guifg=palegreen
