@@ -25,7 +25,8 @@ if dein#load_state(s:dein_dir)
     call dein#add('tpope/vim-repeat')
     call dein#add('tpope/vim-surround')
     " panels
-    call dein#add('majutsushi/tagbar')
+    call dein#add('majutsushi/tagbar',
+        \ {'on_ft': ['go']})
     call dein#add('tpope/vim-fugitive')
     " appearance
     call dein#add('machakann/vim-highlightedyank')

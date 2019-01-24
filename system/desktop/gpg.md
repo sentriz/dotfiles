@@ -1,5 +1,8 @@
+### packages
+
+  - keybase
+
 ### commands
 
-    $ curl https://keybase.io/sentriz/key.asc | gpg --import
-    # ^ import the public key
-    # get the private key from elsewhere
+    $ keybase pgp export | gpg --import                                    # import public
+    $ keybase pgp export --secret | gpg --allow-secret-key-import --import # import private
