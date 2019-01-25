@@ -74,7 +74,6 @@
 [profiles]
   [[default]]
     allow_bold = False
-    audible_bell = True
     background_color = "#303030"
     copy_on_selection = True
     cursor_color = "#aaaaaa"
