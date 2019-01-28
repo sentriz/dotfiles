@@ -10,4 +10,4 @@
     $ keybase pgp export --secret | gpg --allow-secret-key-import --import
 
 ### see also
-  - [server gpg](https://github.com/sentriz/dotfiles/blob/master/system/server/gpg.md)
+  - [server gpg](https://github.com/sentriz/dotfiles/blob/master/server/gpg.md)
