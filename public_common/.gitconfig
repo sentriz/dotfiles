@@ -61,3 +61,5 @@
 	confirm = auto
 [rebase]
 	autosquash = true
+[gpg]
+	program = gpg2
