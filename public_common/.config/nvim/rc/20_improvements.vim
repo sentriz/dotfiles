@@ -1,7 +1,3 @@
-" filetype detection and plugin loading
-filetype on
-filetype plugin on
-
 " basics
 set autoread
 set autowrite

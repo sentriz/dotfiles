@@ -1,12 +1,14 @@
-" set dein helper paths
+" define dein helper variables
 let s:cache_home = empty($XDG_CACHE_HOME) 
     \ ? expand('~/.cache')
     \ : $XDG_CACHE_HOME
 let s:dein_dir = s:cache_home . '/dein'
 let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
-let &runtimepath = s:dein_repo_dir . ',' . &runtimepath
 
-" start dein
+" append dein repo to runtimepath
+let &runtimepath = &runtimepath . ',' . s:dein_repo_dir
+
+" load dein plugins
 if dein#load_state(s:dein_dir)
     call dein#begin(s:dein_dir)
     " dein
@@ -26,17 +28,26 @@ if dein#load_state(s:dein_dir)
     call dein#add('tpope/vim-surround')
     " panels
     call dein#add('majutsushi/tagbar',
-        \ {'on_ft': ['go']})
+        \ {'on_ft': 'go'})
     call dein#add('tpope/vim-fugitive')
     " appearance
     call dein#add('machakann/vim-highlightedyank')
     " langs
     call dein#add('fatih/vim-go',
-        \ {'on_ft': ['go']})
+        \ {'on_ft': 'go'})
     call dein#add('zchee/deoplete-go',
-        \ {'on_ft': ['go']})
+        \ {'on_ft': 'go'})
     call dein#add('posva/vim-vue',
         \ {'on_ft': ['vue', 'js']})
     call dein#end()
     call dein#save_state()
 endif
+
+" source the rest of the rc
+for rc_path in split(globpath('~/.config/nvim/rc/', '*.vim'), '\n')
+  execute 'source' rc_path
+endfor
+
+" enable filetype detection and plugin loading
+filetype on
+filetype plugin on
