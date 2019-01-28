@@ -1,9 +1,0 @@
-GPODDER_HOME         DEFAULT=/home/senan/.config/gpodder/
-GPODDER_DOWNLOAD_DIR DEFAULT=/home/senan/downloads/_podcasts/
-TZ                   DEFAULT=Europe/Dublin
-HISTCONTROL          DEFAULT=erasedups
-HISTIGNORE           DEFAULT="l:ls:c:cd:please:git s:exit:clear"
-BROWSER              DEFAULT=google-chrome-stable
-VISUAL               DEFAULT=vim
-EDITOR               DEFAULT=vim
-QT_STYLE_OVERRIDE    DEFAULT=adwaita
