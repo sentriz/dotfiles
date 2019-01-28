@@ -18,7 +18,6 @@ set path+=**
 set shell=bash
 set undodir=~/.cache/vimundo
 set undofile
-set wildmenu
 set directory=$TEMP,.
 set backupdir=$TEMP,.
 set mouse+=a
