@@ -4,5 +4,10 @@
 
 ### commands
 
-    $ keybase pgp export | gpg --import                                    # import public
-    $ keybase pgp export --secret | gpg --allow-secret-key-import --import # import private
+    $ # import public key
+    $ keybase pgp export | gpg --import
+    $ # import private key
+    $ keybase pgp export --secret | gpg --allow-secret-key-import --import
+
+### see also
+  - [server gpg](https://github.com/sentriz/dotfiles/blob/master/system/server/gpg.md)
