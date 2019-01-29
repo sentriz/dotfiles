@@ -30,4 +30,4 @@ fish extras
 
     remote $ wget https://git.io/fundle -O ~/.config/fish/functions/fundle.fish
     remote $ fundle install
-    remote $ python3 -m pip install --user virtualfish
+    remote $ python3.x -m pip install --user virtualfish
