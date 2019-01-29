@@ -29,11 +29,7 @@ alias egrep "egrep --color=auto"
 
 # action
 alias pg      "ping 8.8.8.8"
-alias ascreen "screen -dRR"
-alias monoff  "xset dpms force off"
-alias av_scan "sudo freshclam; and sudo clamscan -r --bell -i /"
-alias watched "sed -i s/watched\>false/watched\>true/"
-alias calc    "python3 -ic 'from math import *; from cmath import *'"
+alias calc    "python3 -ic 'from math import *; from cmath import *; exit = type(\'\', (), {\'__repr__\': lambda _: __import__(\'sys\').exit()})()'"
 
 # info
 alias cal           "cal --three --monday"
@@ -49,7 +45,6 @@ alias :qw "exit"
 alias :q  "exit"
 
 # abbreviations
-# abbr sudo "sudo -E"
 abbr sev "sudo -E vim"
 abbr du "du -d1 -h"
 abbr g "git"
