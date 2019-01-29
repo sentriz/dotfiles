@@ -31,9 +31,3 @@ fish extras
     remote $ wget https://git.io/fundle -O ~/.config/fish/functions/fundle.fish
     remote $ fundle install
     remote $ python3 -m pip install --user virtualfish
-
-term stuff
-
-    remote $ mkdir -p ~/.terminfo/r/
-    local  $ scp /usr/share/terminfo/r/rxvt-unicode-256color \
-                 remote:/home/user/.terminfo/r/rxvt-unicode-256color
