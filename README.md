@@ -1,5 +1,5 @@
 # installation
-hmm, i wouldn't actually install my dotfiles, these are like personal notes
+hmm, i wouldn't actually install my dotfiles. these are personal notes
 
 basic stuff
 
@@ -11,7 +11,8 @@ basic stuff
 
 python stuff
 
-    remote $ curl https://bootstrap.pypa.io/get-pip.py | python - --user
+    remote $ # if no pip for pythonx.x
+    remote $ curl https://bootstrap.pypa.io/get-pip.py | pythonx.x - --user
 
 neovim stuff
 
