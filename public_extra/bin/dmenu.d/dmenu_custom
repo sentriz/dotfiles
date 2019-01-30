@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+# if you're using gaps, set this to your gap width
 offset=24
 current_monitor_width=$(
     monitor_sizes \
@@ -7,4 +8,12 @@ current_monitor_width=$(
 )
 width=$(bc -l <<< "$current_monitor_width - ($offset * 2)")
 
-dmenu -i -l 20 -nb "#303030" -sb "#0088cc" -y $offset -x $offset -w $width "$@"
+dmenu \
+    -i \
+    -l 20 \
+    -nb "#303030" \
+    -sb "#0088cc" \
+    -y $offset \
+    -x $offset \
+    -w $width \
+    "$@"
