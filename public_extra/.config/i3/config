@@ -17,13 +17,13 @@ floating_modifier $super
 font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
 font pango:DejaVu Sans Mono 17px
 
-## goodies
+### goodies
 popup_during_fullscreen smart
 for_window [class="^.*"] border pixel 2
 gaps inner 24
 smart_borders on
 
-## main bar
+### main bar
 bar {
     i3bar_command i3bar -t
     tray_output primary
@@ -40,7 +40,7 @@ bar {
     }
 }
 
-## keybindings (window/float related)
+### keybindings (window/float related)
 bindsym $super+q kill
 bindsym $super+f fullscreen toggle
 bindsym $super+space floating toggle
@@ -71,27 +71,17 @@ bindsym $super+x layout tabbed
 bindsym $super+c layout toggle split
 bindsym $super+v focus parent
 
-## keybindings (modes)
-bindsym $super+$alt+r mode $mode_resize_tile
+### keybindings (modes)
+bindsym $super+$alt+r     mode $mode_resize_tile
 bindsym $super+$alt+space mode $mode_move_floating focus floating
-bindsym $super+$alt+q mode $mode_system
-bindsym $super+$alt+v mode $mode_audio
-bindsym $super+$alt+i mode $mode_i3
-bindsym $super+$alt+p mode $mode_pass
-bindsym $super+$alt+s mode $mode_scrot
-bindsym $super+$alt+g mode $mode_gaps
+bindsym $super+$alt+q     mode $mode_system
+bindsym $super+$alt+v     mode $mode_audio
+bindsym $super+$alt+i     mode $mode_i3
+bindsym $super+$alt+p     mode $mode_pass
+bindsym $super+$alt+s     mode $mode_scrot
+bindsym $super+$alt+g     mode $mode_gaps
 
-set $mode_resize_tile   "resize mode: [h][j][k][l]"
-set $mode_move_floating "floating move mode: [h][j][k][l]"
-set $mode_system        "system mode: [l]ock, log[o]ut, [s]uspend, [h]ibernate, [r]eboot, shut[d]own"
-set $mode_i3            "i3 mode: e[x]it, [r]estart, reload [c]onfig"
-set $mode_audio         "volume mode: +|right +5%/+10%,  -|left +5%/+10%,  [m]ute,  [r]eset"
-set $mode_scrot         "screenshot mode: [n]ormal, [s]elect, [N]ormal upload, [S]elect upload"
-set $mode_pass          "pass mode: [m]anual, [u]ser, [p]assword, [b]oth"
-set $mode_gaps          "gaps: [o]uter, [i]nner"
-set $mode_gaps_outer    "gaps outer: +|-|0 (local), shift +|-|0 (global)"
-set $mode_gaps_inner    "gaps inner: +|-|0 (local), shift +|-|0 (global)"
-
+set $mode_resize_tile "resize mode: [h][j][k][l]"
 mode $mode_resize_tile {
     bindsym h resize shrink width 10 px or 10 ppt
     bindsym j resize grow height 10 px or 10 ppt
@@ -101,6 +91,7 @@ mode $mode_resize_tile {
     bindsym Escape mode "default"
 }
 
+set $mode_system "system mode: [l]ock, log[o]ut, [s]uspend, [h]ibernate, [r]eboot, shut[d]own"
 mode $mode_system {
     bindsym l exec --no-startup-id $locker;                                           mode default
     bindsym d exec --no-startup-id $locker; exec --no-startup-id systemctl poweroff;  mode default
@@ -112,6 +103,7 @@ mode $mode_system {
     bindsym Escape mode default
 }
 
+set $mode_i3 "i3 mode: e[x]it, [r]estart, reload [c]onfig"
 mode $mode_i3 {
     bindsym x exit
     bindsym r restart
@@ -120,6 +112,7 @@ mode $mode_i3 {
     bindsym Escape mode "default"
 }
 
+set $mode_audio "volume mode: +|right +5%/+10%,  -|left +5%/+10%,  [m]ute,  [r]eset"
 mode $mode_audio {
     bindsym plus          exec --no-startup-id ponymix increase 5%;     exec --no-startup-id $update_blocks_audio
     bindsym minus         exec --no-startup-id ponymix decrease 5%;     exec --no-startup-id $update_blocks_audio
@@ -133,6 +126,7 @@ mode $mode_audio {
     bindsym Escape mode "default"
 }
 
+set $mode_move_floating "floating move mode: [h][j][k][l]"
 mode $mode_move_floating {
     bindsym h     move left
     bindsym j     move down
@@ -142,6 +136,7 @@ mode $mode_move_floating {
     bindsym Escape mode "default"
 }
 
+set $mode_scrot "screenshot mode: [n]ormal, [s]elect, [N]ormal upload, [S]elect upload"
 mode $mode_scrot {
     bindsym n                 exec screenshot,                   mode "default"
     bindsym Shift+n           exec screenshot --upload,          mode "default"
@@ -151,6 +146,7 @@ mode $mode_scrot {
     bindsym Escape mode "default"
 }
 
+set $mode_pass "pass mode: [m]anual, [u]ser, [p]assword, [b]oth"
 mode $mode_pass {
     bindsym m exec dmenu_pass,                 mode "default"
     bindsym u exec dmenu_pass --tuser,         mode "default"
@@ -160,6 +156,7 @@ mode $mode_pass {
     bindsym Escape mode "default"
 }
  
+set $mode_gaps "gaps: [o]uter, [i]nner"
 mode $mode_gaps {
     bindsym o      mode $mode_gaps_outer
     bindsym i      mode $mode_gaps_inner
@@ -167,6 +164,7 @@ mode $mode_gaps {
     bindsym Escape mode "default"
 }
  
+set $mode_gaps_inner "gaps inner: -|+|0 (local), shift -|+|0 (global)"
 mode $mode_gaps_inner {
     bindsym plus  gaps inner current plus 5
     bindsym minus gaps inner current minus 5
@@ -178,6 +176,7 @@ mode $mode_gaps_inner {
     bindsym Escape mode "default"
 }
 
+set $mode_gaps_outer "gaps outer: -|+|0 (local), shift -|+|0 (global)"
 mode $mode_gaps_outer {
     bindsym plus  gaps outer current plus 5
     bindsym minus gaps outer current minus 5
@@ -189,7 +188,7 @@ mode $mode_gaps_outer {
     bindsym Escape mode "default"
 }
 
-## workspaces
+### workspaces
 set $work1 "1 main"
 set $work2 "2 web"
 set $work3 "3 term"
@@ -225,7 +224,7 @@ bindsym $super+Shift+7 move container to workspace $work7
 bindsym $super+Shift+8 move container to workspace $work8
 bindsym $super+Shift+9 move container to workspace $work9
 
-## keeping programs on workspaces
+### keeping programs on workspaces
 assign [class="Firefox"] $work2
 assign [class="Chromium"] $work2
 assign [class="Google-chrome"] $work2
@@ -266,7 +265,7 @@ for_window [window_role="task_dialog"] floating enable
 for_window [window_type="dialog"]      floating enable
 for_window [title="Preferences$"]      floating enable
 
-## scratchpads (known)
+### scratchpads (known)
 for_window         [class="^Terminator$" window_role="^scratch$"] move scratchpad, border pixel 1
 bindsym $super+F1  [class="^Terminator$" window_role="^scratch$"] scratchpad show, resize set 1344 575, move position center
 for_window         [class="Keybase"] move scratchpad, border pixel 1 
@@ -275,7 +274,7 @@ for_window         [class="Plexamp"] move scratchpad, border pixel 1
 bindsym $super+F3  [class="Plexamp"] scratchpad show
 #, resize set 300 377,  move position 1058 359
 
-## scratchpads (unknown)
+### scratchpads (unknown)
 bindsym $super+Shift+F5 mark "c_scratch_1", move scratchpad
 bindsym $super+F5 [con_mark="c_scratch_1"] scratchpad show
 bindsym $super+Shift+F6 mark "c_scratch_2", move scratchpad
@@ -285,7 +284,7 @@ bindsym $super+F7 [con_mark="c_scratch_3"] scratchpad show
 bindsym $super+Shift+F8 mark "c_scratch_4", move scratchpad
 bindsym $super+F8 [con_mark="c_scratch_4"] scratchpad show
 
-## keybindings (programs)
+### keybindings (programs)
 bindsym F15 exec --no-startup-id dmenu_pacs
 bindsym $super+Return exec --no-startup-id terminator
 bindsym ISO_Level3_Shift exec --no-startup-id emojione-picker
@@ -315,4 +314,5 @@ client.focused_inactive #333333 #333333 #888888 #292d2e
 client.unfocused        #333333 #333333 #888888 #292d2e
 client.urgent           #2f343a #900000 #ffffff #900000
 
+### todo: move this to systemd user units
 exec --no-startup-id i3_startup
