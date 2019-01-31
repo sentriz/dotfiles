@@ -20,11 +20,11 @@ hi WarningMsg term=standout ctermfg=209 guifg=salmon
 hi WildMenu term=standout ctermfg=16 ctermbg=226 guifg=Black guibg=Yellow
 hi Folded term=standout ctermfg=220 ctermbg=239 guifg=gold guibg=grey30
 hi FoldColumn term=standout ctermfg=180 ctermbg=239 guifg=tan guibg=grey30
-hi DiffAdd term=bold ctermbg=18 guibg=DarkBlue
-hi DiffChange term=bold ctermbg=90 guibg=DarkMagenta
-hi DiffDelete term=bold cterm=bold ctermfg=21 ctermbg=30 gui=bold guifg=Blue guibg=DarkCyan
-hi DiffText term=reverse cterm=bold ctermbg=196 gui=bold guibg=Red
-hi SignColumn term=standout ctermfg=51 ctermbg=250 guifg=Cyan guibg=Grey
+hi DiffAdd ctermbg=NONE ctermfg=15
+hi DiffChange ctermbg=NONE ctermfg=15
+hi DiffDelete ctermbg=NONE ctermfg=15
+hi DiffText ctermbg=NONE ctermfg=15
+hi SignColumn ctermbg=NONE
 hi Conceal ctermfg=252 ctermbg=248 guifg=LightGrey guibg=DarkGrey
 hi SpellBad term=reverse cterm=undercurl ctermfg=196 gui=undercurl guisp=Red
 hi SpellCap term=reverse cterm=undercurl ctermfg=21 gui=undercurl guisp=Blue

@@ -32,6 +32,7 @@ if dein#load_state(s:dein_dir)
     call dein#add('tpope/vim-fugitive')
     " appearance
     call dein#add('machakann/vim-highlightedyank')
+    call dein#add('mhinz/vim-signify')
     " langs
     call dein#add('fatih/vim-go',
         \ {'on_ft': 'go'})
