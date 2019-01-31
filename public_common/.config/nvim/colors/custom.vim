@@ -12,7 +12,7 @@ hi CursorLineNr term=bold cterm=bold ctermfg=226 gui=bold guifg=Yellow
 hi Question term=standout cterm=bold ctermfg=48 gui=bold guifg=springgreen
 hi StatusLine term=bold,reverse ctermfg=16 ctermbg=145 guifg=black guibg=#c2bfa5
 hi StatusLineNC term=reverse ctermfg=244 ctermbg=145 guifg=grey50 guibg=#c2bfa5
-hi VertSplit ctermfg=236 ctermbg=7 guifg=#303030 guibg=grey50
+hi VertSplit ctermfg=236 ctermbg=236
 hi Title term=bold cterm=bold ctermfg=167 gui=bold guifg=indianred
 hi Visual term=reverse ctermfg=222 ctermbg=64 guifg=khaki guibg=olivedrab
 hi clear VisualNOS
@@ -20,10 +20,10 @@ hi WarningMsg term=standout ctermfg=209 guifg=salmon
 hi WildMenu term=standout ctermfg=16 ctermbg=226 guifg=Black guibg=Yellow
 hi Folded term=standout ctermfg=220 ctermbg=239 guifg=gold guibg=grey30
 hi FoldColumn term=standout ctermfg=180 ctermbg=239 guifg=tan guibg=grey30
-hi DiffAdd ctermbg=NONE ctermfg=15
-hi DiffChange ctermbg=NONE ctermfg=15
-hi DiffDelete ctermbg=NONE ctermfg=15
-hi DiffText ctermbg=NONE ctermfg=15
+hi DiffAdd ctermbg=NONE ctermfg=248
+hi DiffChange ctermbg=NONE ctermfg=248
+hi DiffDelete ctermbg=NONE ctermfg=248
+hi DiffText ctermbg=NONE ctermfg=248
 hi SignColumn ctermbg=NONE
 hi Conceal ctermfg=252 ctermbg=248 guifg=LightGrey guibg=DarkGrey
 hi SpellBad term=reverse cterm=undercurl ctermfg=196 gui=undercurl guisp=Red
@@ -41,8 +41,8 @@ hi CursorColumn term=reverse ctermbg=241 guibg=Grey40
 hi CursorLine term=underline ctermbg=241 guibg=Grey40
 hi ColorColumn term=reverse ctermbg=88 guibg=DarkRed
 hi link QuickFixLine Search
-hi StatusLineTerm term=bold,reverse cterm=bold ctermfg=236 ctermbg=120 gui=bold guifg=bg guibg=LightGreen
-hi StatusLineTermNC term=reverse ctermfg=236 ctermbg=120 guifg=bg guibg=LightGreen
+hi StatusLine ctermbg=255 ctermfg=237
+hi StatusLineNC ctermbg=239 ctermfg=237
 hi MatchParen term=reverse ctermbg=30 guibg=DarkCyan
 hi ToolbarLine term=underline ctermbg=244 guibg=Grey50
 hi ToolbarButton cterm=bold ctermfg=16 ctermbg=252 gui=bold guifg=Black guibg=LightGrey
@@ -57,6 +57,8 @@ hi Underlined term=underline cterm=underline ctermfg=111 gui=underline guifg=#80
 hi Ignore ctermfg=241 guifg=grey40
 hi Error term=reverse ctermfg=231 ctermbg=196 guifg=White guibg=Red
 hi Todo term=standout ctermfg=202 ctermbg=226 guifg=orangered guibg=yellow2
+hi LineNr ctermfg=238
+hi CursorLineNr ctermfg=248
 hi link String Constant
 hi link Character Constant
 hi link Number Constant
@@ -154,3 +156,6 @@ hi link goSameId Search
 hi goCoverageCovered ctermfg=10 guifg=#A6E22E
 hi goCoverageUncover ctermfg=9 guifg=#F92672
 hi EndOfBuffer ctermbg=NONE ctermfg=236
+
+hi statusModifided ctermfg=217 ctermbg=237
+hi link statusReadOnly statusModifided
