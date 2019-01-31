@@ -26,6 +26,7 @@ if dein#load_state(s:dein_dir)
     call dein#add('tpope/vim-commentary')
     call dein#add('tpope/vim-repeat')
     call dein#add('tpope/vim-surround')
+    call dein#add('wellle/targets.vim')
     " panels
     call dein#add('majutsushi/tagbar',
         \ {'on_ft': 'go'})
