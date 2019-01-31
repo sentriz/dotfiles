@@ -36,9 +36,4 @@ instance=revolut
 interval=900
 label=revolut
 
-[pay]
-color=#90caf9
-interval=10800
-label=pay
-
 [time]
