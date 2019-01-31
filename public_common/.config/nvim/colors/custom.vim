@@ -1,6 +1,5 @@
 set background="aphi cleaif exists("syntax_on"    syntax reseendilet g:colors_name=""apa"ft)ra
 hi SpecialKey term=bold ctermfg=113 guifg=yellowgreen
-hi link EndOfBuffer NonText
 hi NonText term=bold cterm=bold ctermfg=152 gui=bold guifg=LightBlue guibg=grey30
 hi Directory term=bold ctermfg=51 guifg=Cyan
 hi ErrorMsg term=standout ctermfg=231 ctermbg=196 guifg=White guibg=Red
@@ -154,3 +153,4 @@ hi link goCoverageNormalText Comment
 hi link goSameId Search
 hi goCoverageCovered ctermfg=10 guifg=#A6E22E
 hi goCoverageUncover ctermfg=9 guifg=#F92672
+hi EndOfBuffer ctermbg=NONE ctermfg=236
