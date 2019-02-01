@@ -1,6 +1,11 @@
 # installation
 hmm, i wouldn't actually install my dotfiles. these are personal notes
 
+meta stuff
+
+    remote $ # setup git hooks
+    remote $ find hooks/ -type f -exec ln -sf '../../{}' .git/hooks/ \;
+
 basic stuff
 
     remote $ install git stow fish vim
