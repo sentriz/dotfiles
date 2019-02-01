@@ -1,3 +1,8 @@
+" helpers
+function! TagbarStatusFunc(current, sort, fname, flags, ...)
+    return " "
+endfunction
+
 " for netrw / tpope/vim-vinegar
 let g:netrw_list_hide = '.*\.pyc$,^__pycache__$'
 
@@ -48,3 +53,5 @@ let g:tagbar_type_go = {
     \ 'ctagsbin' : 'gotags',
     \ 'ctagsargs' : '-sort -silent'
 \ }
+
+let g:tagbar_status_func = 'TagbarStatusFunc'
