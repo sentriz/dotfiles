@@ -31,3 +31,5 @@ command WA wa
 command Wa wa
 command W w
 command Q q
+command Qa qa
+command QA qa
