@@ -1,14 +1,17 @@
 " basics
 set autoread
 set autowrite
+set backupdir=$TEMP,.
 set clipboard=unnamedplus
 set complete-=i
 set complete-=t
 set diffopt+=vertical
+set directory=$TEMP,.
 set ignorecase
-set incsearch
 set inccommand=nosplit
+set incsearch
 set laststatus=2
+set mouse+=a
 set nobackup
 set noswapfile
 set nowrap
@@ -18,9 +21,7 @@ set path+=**
 set shell=bash
 set undodir=~/.cache/vimundo
 set undofile
-set directory=$TEMP,.
-set backupdir=$TEMP,.
-set mouse+=a
+set virtualedit=block
 
 " oopsies
 command WQ wq
