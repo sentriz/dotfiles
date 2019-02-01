@@ -1,3 +1,0 @@
-#!/bin/bash
-
-cat ~/clipfavs | dmenu_custom -p "clip:" | xclip -i

@@ -1,6 +1,0 @@
-#!/usr/bin/fish
-
-while true
-    printf "\r%s, %sdegC" (date '+%H:%M:%S') (temp)
-    sleep 1
-end

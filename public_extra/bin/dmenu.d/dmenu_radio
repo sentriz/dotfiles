@@ -1,7 +1,9 @@
-#!/bin/bash
+#!/bin/env/bash
 
 # Senan Kelly 2016
+#
 # stick your station.pls' in ~/radio/, and give them a nice name
+#
 # requirements:
 #   - pkill
 #   - mpv
@@ -11,10 +13,8 @@
 stations=$(find ~/radio/ -not -name ".stfolder" -maxdepth 1 -type f -printf "%f\n")
 station=$(dmenu_custom -p "station:" <<< "$stations")
 test -z "$station" && exit 1
-
 mpc pause &> /dev/null
 pkill -f "^mpv.*radio"
 mpv --no-ytdl --no-video --no-cache --quiet --no-resume-playback ~/radio/"$station" &
-
 station=$(echo "$station" | sed 's/_/ /g')
 notify-send "started radio station" "$station"

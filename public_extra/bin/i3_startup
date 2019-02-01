@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 ~/dev/github/lock/lock.sh --update "$(find ~/pictures/wallpapers_on/* | shuf -n 1)" &
 feh --bg-fill "$(find ~/pictures/wallpapers_on/* | shuf -n 1)" &
@@ -8,12 +8,9 @@ redshift-qt &
 dunst &
 clipit &
 xss-lock -- ~/dev/github/betterlockscreen/lock.sh -l &
-# xdotool behave_screen_edge bottom-right exec --sync ~/bin/lock &
-# compton --config ~/.config/compton.conf -b &
 nm-applet &
 compton -b &
 scratch &
-# plexamp &
 run_keybase &
 dockd --daemon &
 emojione-picker &

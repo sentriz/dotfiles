@@ -1,10 +1,9 @@
-#!/usr/bin/fish
+#!/usr/bin/env fish
+
+set -l client_id 'c9a6efb3d7932fd'
+set -l upload_url 'https://api.imgur.com/3/upload'
 
 read image
-
-set client_id 'c9a6efb3d7932fd'
-set upload_url 'https://api.imgur.com/3/upload'
-
 set response (curl -sH "Authorization: Client-ID $client_id" -F image=@$image $upload_url)
 if echo $response | grep -qo '"status":200'
     echo $response | sed -e 's/.*"link":"\([^"]*\).*/\1/' -e 's/\\\//g'

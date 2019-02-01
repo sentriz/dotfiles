@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+gimp $(ls -Art ~/pictures/screenshots | tail -n 1)

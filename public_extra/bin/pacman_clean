@@ -1,5 +1,0 @@
-#!/bin/bash
-
-pacman -Rscn $(pacman -Qtdq)
-pacman -Sc
-pacman-optimize && sync

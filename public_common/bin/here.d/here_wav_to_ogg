@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
-for a in ./*.wav; do
-      ffmpeg -i "$a" -qscale:a 0 "${a[@]/%wav/ogg}"
+for filename in ./*.wav; do
+      ffmpeg -i "$filename" -qscale:a 0 "${filename[@]/%wav/ogg}"
 done

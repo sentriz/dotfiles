@@ -1,4 +1,4 @@
-#!/usr/bin/fish
+#!/usr/bin/env fish
 
 set screen_dir "$HOME/pictures/screenshots"
 

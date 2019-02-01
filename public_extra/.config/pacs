@@ -1,16 +1,11 @@
-dmenu_clipboard
-dmenu_clipfav
-dmenu_radio
-dmenu_sinks
-dmenu_todo
-dmenu_vms
-electrum
-galculator
-chromium --profile-directory="Profile 2" # work
 chromium --profile-directory="Default" # home
+chromium --profile-directory="Profile 2" # work
+electrum
+etcher-electon
+galculator
+gimp_last_screenshot
 minecraft
 pavucontrol
-plex
 quadrapassel
 scratch
 simplescreenrecorder
@@ -20,6 +15,9 @@ tor-browser-en
 transmission-remote-gtk
 virtualbox
 woeusbgui
-etcher-electon
 ~/.screenlayout/home.sh; ~/.fehbg
 ~/.screenlayout/work.sh; ~/.fehbg
+dmenu_radio
+dmenu_sinks
+dmenu_todo
+dmenu_vms

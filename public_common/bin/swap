@@ -1,4 +1,4 @@
-#!/usr/bin/fish
+#!/usr/bin/env fish
 
 set -l TMPFILE (random)
 mv $argv[1] $TMPFILE
