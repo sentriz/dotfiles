@@ -9,6 +9,7 @@ set -l possible_paths \
     (find -L $HOME/bin -type d) \
     /bin \
     /opt/Etcher \
+    /opt/balenaEtcher \
     /opt/android-ndk \
     /sbin \
     /usr/bin \
