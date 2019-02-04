@@ -47,9 +47,13 @@ endif
 
 " source the rest of the rc
 for rc_path in split(globpath('~/.config/nvim/rc/', '*.vim'), '\n')
-  execute 'source' rc_path
+    execute 'source' rc_path
 endfor
 
 " enable filetype detection and plugin loading
 filetype on
 filetype plugin on
+
+" apply colorscheme
+syntax on
+colorscheme custom

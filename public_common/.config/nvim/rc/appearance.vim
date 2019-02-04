@@ -1,6 +1,4 @@
 " basics
-syntax on
-colorscheme custom
 set listchars=tab:>\ ,eol:¬,trail:.
 set relativenumber
 set sidescroll=1
