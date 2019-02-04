@@ -30,13 +30,13 @@ nnoremap <Down> :resize +2<CR>
 nnoremap <Left> :vertical resize +2<CR>
 nnoremap <Right> :vertical resize -2<CR>
 
-" quickfix list
-nnoremap [q :cprev<CR>
+" lists (quickfix, location list, buffer)
+nnoremap [q :cprevious<CR>
 nnoremap ]q :cnext<CR>
-
-" location list
-nnoremap [l :lprev<CR>
+nnoremap [l :lprevious<CR>
 nnoremap ]l :lnext<CR>
+nnoremap [b :bprevious<CR>
+nnoremap ]b :bnext<CR>
 
 " copy above / below
 inoremap <expr> <c-y> pumvisible()
