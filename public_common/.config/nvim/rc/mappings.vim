@@ -2,13 +2,13 @@
 let mapleader = "\<Space>"
 nnoremap <leader>bb mzggO#!/usr/bin/env bash<Esc>o<Esc>`z
 nnoremap <leader>bp mzggO#!/usr/bin/env python3<Esc>o<Esc>`z
-nnoremap <leader>r :w<CR>:!clear && %:p<CR>
-nnoremap <leader>x :w<CR>:!chmod +x %:p<CR><CR>
-nnoremap <leader>n :noh<CR>
+nnoremap <leader>r :write<CR>:!clear && %:p<CR>
+nnoremap <leader>x :write<CR>:!chmod +x %:p<CR><CR>
+nnoremap <leader>n :set hlsearch!<CR>
+nnoremap <leader>l :set list!<CR>
 nnoremap <leader>s :%s/<c-r><c-w>/<c-r><c-w>/gc<c-f>$F/
 nnoremap <leader>t :TagbarToggle<CR>
 nnoremap <leader>f :GFiles<CR>
-nnoremap <leader>l :Rg<CR>
 
 " better
 nnoremap Y y$

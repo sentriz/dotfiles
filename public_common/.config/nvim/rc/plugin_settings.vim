@@ -3,6 +3,9 @@ function! TagbarStatusFunc(current, sort, fname, flags, ...)
     return " "
 endfunction
 
+" for Shougo/deoplete.nvim
+let g:deoplete#enable_at_startup = 1
+
 " for netrw / tpope/vim-vinegar
 let g:netrw_list_hide = '.*\.pyc$,^__pycache__$'
 
@@ -17,6 +20,7 @@ let g:tmux_navigator_no_mappings = 1
 let g:tmux_navigator_save_on_switch = 1
 
 " for fatih/vim-go
+let g:go_auto_sameids = 1
 let g:go_fmt_command = "goimports"
 let g:go_disable_autoinstall = 0
 let g:go_highlight_functions = 1
@@ -26,6 +30,7 @@ let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
 
 " for majutsushi/tagbar
+let g:tagbar_status_func = 'TagbarStatusFunc'
 let g:tagbar_type_go = {
     \ 'ctagstype' : 'go',
     \ 'kinds' : [
@@ -54,4 +59,3 @@ let g:tagbar_type_go = {
     \ 'ctagsargs' : '-sort -silent'
 \ }
 
-let g:tagbar_status_func = 'TagbarStatusFunc'
