@@ -59,3 +59,5 @@ highlight WildMenu term=standout ctermfg=16 ctermbg=226
 
 highlight statusModifided ctermfg=217 ctermbg=237
 highlight link statusReadOnly statusModifided
+
+highlight goSameId ctermfg=255 ctermbg=238
