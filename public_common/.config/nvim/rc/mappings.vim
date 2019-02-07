@@ -37,6 +37,8 @@ nnoremap [l :lprevious<CR>
 nnoremap ]l :lnext<CR>
 nnoremap [b :bprevious<CR>
 nnoremap ]b :bnext<CR>
+nnoremap [p :bprevious<CR>
+nnoremap ]p :bnext<CR>
 
 " copy above / below
 inoremap <expr> <c-y> pumvisible()
