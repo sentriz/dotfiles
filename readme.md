@@ -1,11 +1,6 @@
 # installation
 hmm, i wouldn't actually install my dotfiles. these are personal notes
 
-meta stuff
-
-    remote $ # setup git hooks
-    remote $ find hooks/ -type f -exec ln -sf '../../{}' .git/hooks/ \;
-
 basic stuff
 
     remote $ install git stow fish vim
@@ -13,6 +8,11 @@ basic stuff
     remote $ chkstow -t ~ # ensure home is clean
     remote $ ~/dotfiles/install_common
     remote $ ~/dotfiles/install_extra # if on an x11 system
+
+meta stuff
+
+    remote $ # setup git hooks
+    remote $ find hooks/ -type f -exec ln -sf '../../{}' .git/hooks/ \;
 
 python stuff
 
