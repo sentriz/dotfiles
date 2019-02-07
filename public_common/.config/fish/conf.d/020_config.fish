@@ -1,7 +1,7 @@
 # fundle
 fundle plugin 'jethrokuan/z' --url 'git@github.com:jethrokuan/z.git#pre27'
 fundle plugin 'fisherman/done'
-fundle plugin 'fisherman/humanize_duration'
+fundle plugin 'fishpkg/fish-humanize-duration'
 fundle plugin 'fisherman/getopts'
 fundle plugin 'fisherman/fzf'
 fundle init
