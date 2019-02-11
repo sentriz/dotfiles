@@ -27,7 +27,7 @@ highlight ModeMsg ctermfg=178
 highlight MoreMsg ctermfg=29
 highlight NonText ctermfg=152
 highlight Normal ctermfg=231
-highlight Pmenu ctermbg=201
+highlight Pmenu ctermfg=255 ctermbg=237
 highlight PmenuSbar ctermbg=250
 highlight PmenuSel ctermbg=248
 highlight PmenuThumb ctermbg=231
