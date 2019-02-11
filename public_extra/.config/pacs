@@ -1,5 +1,6 @@
 chromium --profile-directory="Default" # home
 chromium --profile-directory="Profile 2" # work
+google-chrome-stable
 electrum
 etcher-electon
 galculator
