@@ -1,13 +1,10 @@
 #!/usr/bin/env bash
 
-~/dev/github/lock/lock.sh --update "$(find ~/pictures/wallpapers_on/* | shuf -n 1)" &
 feh --bg-fill "$(find ~/pictures/wallpapers_on/* | shuf -n 1)" &
 thinkpad-touchpad off &
 thunar --daemon &
-redshift-qt &
 dunst &
 clipit &
-xss-lock -- ~/dev/github/betterlockscreen/lock.sh -l &
 nm-applet &
 compton -b &
 scratch &
