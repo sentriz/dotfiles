@@ -14,7 +14,7 @@ highlight DiffAdd ctermbg=NONE ctermfg=248
 highlight DiffChange ctermbg=NONE ctermfg=248
 highlight DiffDelete ctermbg=NONE ctermfg=248
 highlight DiffText ctermbg=NONE ctermfg=248
-highlight Directory ctermfg=51
+highlight Directory ctermfg=81
 highlight EndOfBuffer ctermbg=NONE ctermfg=236
 highlight Error term=reverse ctermfg=231 ctermbg=196
 highlight ErrorMsg term=standout ctermfg=231 ctermbg=196
