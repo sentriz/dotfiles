@@ -24,13 +24,15 @@ set undofile
 set virtualedit=block
 
 " oopsies
+command! Q quit
+command! QA qall
+command! Qa qall
+command! W write
+command! WA wall
+command! Wa wall
 command! WQ wq
 command! Wq wq
-command! WQa wqa
-command! Wqa wqa
-command! WA wa
-command! Wa wa
-command! W w
-command! Q q
-command! Qa qa
-command! QA qa
+command! WQa wqall
+command! Wqa wqall
+command! VS vsplit
+command! Vs vsplit

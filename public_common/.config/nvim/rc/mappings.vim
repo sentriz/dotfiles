@@ -9,6 +9,7 @@ nnoremap <leader>l :set list!<CR>
 nnoremap <leader>s :%s/<c-r><c-w>/<c-r><c-w>/gc<c-f>$F/
 nnoremap <leader>t :TagbarToggle<CR>
 nnoremap <leader>f :GFiles<CR>
+nnoremap <leader>/ :echo expand('%:p')<CR>
 
 " better
 nnoremap Y y$
@@ -30,7 +31,7 @@ nnoremap <Down> :resize +2<CR>
 nnoremap <Left> :vertical resize +2<CR>
 nnoremap <Right> :vertical resize -2<CR>
 
-" lists (quickfix, location list, buffer)
+" back and forth
 nnoremap [q :cprevious<CR>
 nnoremap ]q :cnext<CR>
 nnoremap [l :lprevious<CR>
@@ -39,6 +40,8 @@ nnoremap [b :bprevious<CR>
 nnoremap ]b :bnext<CR>
 nnoremap [p :bprevious<CR>
 nnoremap ]p :bnext<CR>
+nnoremap [t :tabprevious<CR>
+nnoremap ]t :tabnext<CR>
 
 " copy above / below
 inoremap <expr> <c-y> pumvisible()

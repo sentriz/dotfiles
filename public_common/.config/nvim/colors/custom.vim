@@ -1,4 +1,6 @@
 " background colour is 236 (#303030)
+" bottom bar colour is 237 (#3a3a3a)
+" top bar colour is 238 (#444444)
 
 highlight ColorColumn term=reverse ctermbg=88
 highlight Comment ctermfg=244
@@ -44,8 +46,8 @@ highlight SpellRare term=reverse cterm=undercurl ctermfg=201
 highlight Statement ctermfg=222
 highlight StatusLine ctermbg=255 ctermfg=237
 highlight StatusLineNC ctermbg=239 ctermfg=237
-highlight TabLine term=underline cterm=underline ctermbg=248
-highlight TabLineFill term=reverse cterm=reverse
+highlight TabLine ctermbg=238 cterm=NONE
+highlight TabLineFill ctermfg=238
 highlight Title ctermfg=167
 highlight Todo term=standout ctermfg=202 ctermbg=2262
 highlight ToolbarButton ctermfg=16 ctermbg=252
