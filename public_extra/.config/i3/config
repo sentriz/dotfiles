@@ -301,20 +301,18 @@ bindsym $super+Return exec --no-startup-id terminator
 bindsym ISO_Level3_Shift exec --no-startup-id emojione-picker
 
 # keybindings (xf86 on thinkpad x220)
-bindsym XF86TouchpadToggle exec --no-startup-id thinkpad-touchpad && notify-send "touchpad toggled"
-bindsym XF86ScreenSaver exec --no-startup-id $locker
-bindsym XF86Suspend exec --no-startup-id gksudo systemctl hibernate
-bindsym XF86Sleep exec --no-startup-id gksudo systemctl suspend
-bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 5
-bindsym XF86MonBrightnessDown exec --no-startup-id  xbacklight -dec 5
-bindsym XF86AudioRaiseVolume exec --no-startup-id "ponymix increase 5% && $update_blocks_audio"
-bindsym XF86AudioLowerVolume exec --no-startup-id "ponymix decrease 5% && $update_blocks_audio"
-bindsym XF86AudioMute exec --no-startup-id        "ponymix toggle      && $update_blocks_audio"
-bindsym XF86AudioMicMute exec --no-startup-id     "thinkpad-mutemic    && $update_blocks_audio"
-bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
-bindsym XF86AudioStop exec --no-startup-id playerctl stop
-bindsym XF86AudioNext exec --no-startup-id playerctl next
-bindsym XF86AudioPrev exec --no-startup-id playerctl previous
+bindsym XF86ScreenSaver       exec --no-startup-id $locker
+bindsym XF86Suspend           exec --no-startup-id gksudo systemctl hibernate
+bindsym XF86Sleep             exec --no-startup-id gksudo systemctl suspend
+bindsym XF86MonBrightnessUp   exec --no-startup-id xbacklight -inc 5
+bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 5
+bindsym XF86AudioRaiseVolume  exec --no-startup-id ponymix increase 5% && $update_blocks_audio
+bindsym XF86AudioLowerVolume  exec --no-startup-id ponymix decrease 5% && $update_blocks_audio
+bindsym XF86AudioMute         exec --no-startup-id ponymix toggle && $update_blocks_audio
+bindsym XF86AudioPlay         exec --no-startup-id playerctl play-pause
+bindsym XF86AudioStop         exec --no-startup-id playerctl stop
+bindsym XF86AudioNext         exec --no-startup-id playerctl next
+bindsym XF86AudioPrev         exec --no-startup-id playerctl previous
 
 bindsym Print                 exec screenshot
 bindsym --release Shift+Print exec screenshot --select
