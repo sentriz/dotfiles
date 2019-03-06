@@ -15,11 +15,6 @@ esac
 QUALITY=$(grep "$INTERFACE" /proc/net/wireless | awk '{print $3 / 70}')
 ESSID=$(iw dev "$INTERFACE" link | awk '/SSID/{print substr($0, 8)}')
 
-out=$(printf '%s %s' \
-          "$ESSID" \
-          $(awk '{printf "%d%%\n", int($0 * 100)}' <<< "$QUALITY")
-)
-
-printf "%b\n" "$out"
-printf "%b\n" "$out"
-echo "#ffb300"
+printf '%s %s\n' \
+    "$ESSID" \
+    $(awk '{printf "%d%%\n", int($0 * 100)}' <<< "$QUALITY")

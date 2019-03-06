@@ -3,12 +3,14 @@ command=~/.config/i3blocks/blocklets/$BLOCK_NAME
 interval=5
 
 [volume]
+color=#7cb342
 instance=Master
 interval=once
 label=volume
 signal=1
 
 [wifi]
+color=#ffb300
 instance=wlp4s0
 label=wifi
 
