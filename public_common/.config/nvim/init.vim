@@ -40,7 +40,7 @@ if dein#load_state(s:dein_dir)
     call dein#add('zchee/deoplete-go',
         \ {'on_ft': 'go'})
     call dein#add('posva/vim-vue',
-        \ {'on_ft': ['vue', 'js']})
+        \ {'on_ft': 'vue'})
     call dein#end()
     call dein#save_state()
 endif
