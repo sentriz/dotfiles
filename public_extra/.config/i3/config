@@ -23,11 +23,28 @@ for_window [class="^.*"] border pixel 2
 gaps inner 24
 smart_borders on
 
-### main bar
 bar {
     i3bar_command i3bar -t
-    tray_output primary
     status_command i3blocks
+    output primary
+    tray_padding 0
+    tray_output primary
+    colors {
+        separator          #00000000
+        background         #30303060
+        statusline         #dddddd
+        #                  border    background  text
+        focused_workspace  #0088CC   #0088CC     #ffffff
+        active_workspace   #303030   #303030     #ffffff
+        inactive_workspace #30303060 #30303060   #ffffff
+        urgent_workspace   #2f343a00 #ff000090   #ffffff
+    }
+}
+
+bar {
+    i3bar_command i3bar -t
+    output DP2-1
+    tray_output primary
     colors {
         separator          #00000000
         background         #30303060
@@ -201,8 +218,8 @@ mode $mode_gamma {
 ### workspaces
 set $work1 "1 main"
 set $work2 "2 web"
-set $work3 "3 term"
-set $work4 "4 media"
+set $work3 "3 term i"
+set $work4 "4 term ii"
 set $work5 "5 vm"
 set $work6 "6 chat"
 set $work7 "7 mnem"
