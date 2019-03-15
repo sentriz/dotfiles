@@ -11,3 +11,4 @@ scratch &
 run_keybase &
 dockd --daemon &
 emojione-picker &
+blueman-applet &
