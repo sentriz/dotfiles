@@ -4,6 +4,7 @@
     signingkey = 609FCE8BB45971C8293040AC9A8DAE1CA907B862
 [push]
     default = current
+	followTags = true
 [color]
     ui = true
     branch = true
@@ -63,3 +64,5 @@
 	autosquash = true
 [gpg]
 	program = gpg2
+[tag]
+	forceSignAnnotated = true
