@@ -1,6 +1,6 @@
 #!/usr/bin/env fish
 
-set -l client_id 'c9a6efb3d7932fd'
+set -l client_id (pass 'misc/imgur/api_key')
 set -l upload_url 'https://api.imgur.com/3/upload'
 
 read image
