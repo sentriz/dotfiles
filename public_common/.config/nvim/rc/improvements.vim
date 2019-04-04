@@ -1,6 +1,6 @@
 " basics
 set autoread
-set autowrite
+set autowriteall
 set backupdir=$TEMP,.
 set clipboard=unnamedplus
 set complete-=i
