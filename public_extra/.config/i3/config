@@ -252,6 +252,8 @@ bindsym $super+Shift+8 move container to workspace $work8
 bindsym $super+Shift+9 move container to workspace $work9
 
 ### keeping programs on workspaces
+assign [class="Sqliteman"] $work1
+assign [class="DB Browser for SQLite"] $work1
 assign [class="Firefox"] $work2
 assign [class="Chromium"] $work2
 assign [class="Google-chrome"] $work2
