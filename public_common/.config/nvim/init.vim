@@ -11,9 +11,8 @@ let &runtimepath = &runtimepath . ',' . s:dein_repo_dir
 " load dein plugins
 if dein#load_state(s:dein_dir)
     call dein#begin(s:dein_dir)
-    " dein
     call dein#add(s:dein_repo_dir)
-    call dein#add('Shougo/deoplete.nvim')
+    " meta
     call dein#add('roxma/nvim-yarp')
     call dein#add('roxma/vim-hug-neovim-rpc')
     " getting around
@@ -27,20 +26,21 @@ if dein#load_state(s:dein_dir)
     call dein#add('tpope/vim-repeat')
     call dein#add('tpope/vim-surround')
     call dein#add('wellle/targets.vim')
+    call dein#add('rhysd/clever-f.vim')
     " panels
-    call dein#add('majutsushi/tagbar',
-        \ {'on_ft': 'go'})
+    call dein#add('majutsushi/tagbar', {'on_ft': 'go'})
     call dein#add('tpope/vim-fugitive')
     " appearance
     call dein#add('machakann/vim-highlightedyank')
     call dein#add('mhinz/vim-signify')
     " langs
-    call dein#add('fatih/vim-go',
-        \ {'on_ft': 'go'})
-    call dein#add('zchee/deoplete-go',
-        \ {'on_ft': 'go'})
-    call dein#add('posva/vim-vue',
-        \ {'on_ft': 'vue'})
+    call dein#add('Shougo/deoplete.nvim')
+    call dein#add('ambv/black', {'on_ft': 'python'})
+    call dein#add('fatih/vim-go', {'on_ft': 'go'})
+    call dein#add('zchee/deoplete-go', {'on_ft': 'go'})
+    call dein#add('posva/vim-vue', {'on_ft': 'vue'})
+    " misc
+    call dein#add('rhysd/committia.vim')
     call dein#end()
     call dein#save_state()
 endif

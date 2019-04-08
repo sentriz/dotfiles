@@ -5,3 +5,9 @@ augroup AutoCursorLastPosition
         \   exe "normal g`\"" |
         \ endif
 augroup END
+
+augroup AutoBlack
+    autocmd! AutoBlack
+    autocmd BufWritePre *.py
+        \ execute ':Black'
+augroup END

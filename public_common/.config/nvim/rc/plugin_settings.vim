@@ -60,3 +60,5 @@ let g:tagbar_type_go = {
     \ 'ctagsargs' : '-sort -silent'
 \ }
 
+" for ambv/black
+let g:black_linelength = 79
