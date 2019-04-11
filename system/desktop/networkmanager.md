@@ -1,4 +1,4 @@
-### file
+### files
 `/etc/NetworkManager/NetworkManager.conf`
 
     [device]

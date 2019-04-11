@@ -2,7 +2,7 @@
 
   - cups
 
-### file
+### files
 `/etc/cups/cupsd.conf`
 
     SystemGroup sys root wheel
