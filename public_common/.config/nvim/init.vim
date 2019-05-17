@@ -1,8 +1,5 @@
 " define dein helper variables
-let s:cache_home = empty($XDG_CACHE_HOME) 
-    \ ? expand('~/.cache')
-    \ : $XDG_CACHE_HOME
-let s:dein_dir = s:cache_home . '/dein'
+let s:dein_dir = expand('~/.cache/dein')
 let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
 
 " append dein repo to runtimepath
@@ -37,7 +34,6 @@ if dein#load_state(s:dein_dir)
     call dein#add('Shougo/deoplete.nvim')
     call dein#add('ambv/black', {'on_ft': 'python'})
     call dein#add('fatih/vim-go', {'on_ft': 'go'})
-    call dein#add('zchee/deoplete-go', {'on_ft': 'go'})
     call dein#add('posva/vim-vue', {'on_ft': 'vue'})
     " misc
     call dein#add('rhysd/committia.vim')

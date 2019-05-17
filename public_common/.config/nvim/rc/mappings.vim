@@ -50,3 +50,11 @@ inoremap <expr> <c-y> pumvisible()
 inoremap <expr> <c-e> pumvisible()
     \ ? "\<c-e>"
     \ : matchstr(getline(line('.')+1), '\%' . virtcol('.') . 'v\%(\k\+\\|.\)')
+
+" alternative escaping
+inoremap <esc> <nop>
+inoremap jj <esc>
+
+" center the cursor while searching
+nnoremap n nzz
+nnoremap N Nzz
