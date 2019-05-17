@@ -2,9 +2,10 @@ chromium --profile-directory="Default" # home
 chromium --profile-directory="Profile 2" # work
 google-chrome-stable
 electrum
-etcher-electon
+gksu etcher-electron
 galculator
 gimp_last_screenshot
+feh_last_screenshot
 minecraft
 pavucontrol
 quadrapassel
