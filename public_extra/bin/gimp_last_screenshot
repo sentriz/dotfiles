@@ -1,4 +1,3 @@
 #!/usr/bin/env bash
 
 gimp $(ls -t ~/pictures/screenshots/* | head -n 1)
-

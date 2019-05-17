@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+feh $(ls -t ~/pictures/screenshots/* | head -n 1)
