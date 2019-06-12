@@ -27,3 +27,4 @@ arandr
 sqlitebrowser
 inkscape
 gimp
+np -username sentriz -apikey (pass lastfm/main/np_api_key) | xclip -i
