@@ -8,8 +8,6 @@ highlight Conceal ctermfg=252 ctermbg=248
 highlight Constant term=underline ctermfg=217#ffa0a0
 highlight Cursor ctermfg=66 ctermbg=222
 highlight CursorColumn term=reverse ctermbg=241
-highlight CursorLine term=underline ctermbg=241
-highlight CursorLineNr ctermfg=248
 highlight DiffAdd ctermbg=none ctermfg=248
 highlight DiffChange ctermbg=none ctermfg=246
 highlight DiffDelete ctermbg=none ctermfg=248
