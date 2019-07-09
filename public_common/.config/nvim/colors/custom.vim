@@ -37,10 +37,7 @@ highlight Search term=reverse ctermfg=223 ctermbg=173
 highlight SignColumn ctermbg=none
 highlight Special ctermfg=223
 highlight SpecialKey ctermfg=113
-highlight SpellBad term=reverse cterm=undercurl ctermfg=196
-highlight SpellCap term=reverse cterm=undercurl ctermfg=21
-highlight SpellLocal term=underline cterm=undercurl ctermfg=51
-highlight SpellRare term=reverse cterm=undercurl ctermfg=201
+highlight SpellBad cterm=underline ctermfg=none ctermbg=none
 highlight Statement ctermfg=222
 highlight StatusLine ctermbg=255 ctermfg=237
 highlight StatusLineNC ctermbg=239 ctermfg=237
