@@ -34,6 +34,8 @@ nnoremap <right> :vertical resize -2<cr>
 " back and forth
 nnoremap [q :cprevious<cr>
 nnoremap ]q :cnext<cr>
+nnoremap [k :cprevious<cr>
+nnoremap ]k :cnext<cr>
 nnoremap [l :lprevious<cr>
 nnoremap ]l :lnext<cr>
 nnoremap [b :bprevious<cr>
