@@ -62,6 +62,7 @@ bindsym $super+q kill
 bindsym $super+f fullscreen toggle
 bindsym $super+space floating toggle
 bindsym $super+b move position center
+bindsym $super+s sticky toggle
 
 bindsym $super+bracketleft move workspace to output left
 bindsym $super+bracketright move workspace to output right
@@ -252,6 +253,7 @@ bindsym $super+Shift+9 move container to workspace $work9
 
 ### keeping programs on workspaces
 assign [class="Sqliteman"] $work1
+assign [class="Meld"] $work1
 assign [class="DB Browser for SQLite"] $work1
 assign [class="Firefox"] $work2
 assign [class="Chromium"] $work2
