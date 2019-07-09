@@ -29,7 +29,6 @@ if dein#load_state(s:dein_dir)
     call dein#add('tpope/vim-fugitive')
     " appearance
     call dein#add('machakann/vim-highlightedyank')
-    call dein#add('mhinz/vim-signify')
     " langs
     call dein#add('Shougo/deoplete.nvim')
     call dein#add('ambv/black', {'on_ft': 'python'})
