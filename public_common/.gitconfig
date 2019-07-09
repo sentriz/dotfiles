@@ -56,10 +56,12 @@
 [sendemail]
 	annotate = yes
     smtpencryption = tls
-    smtpserver = smtps-proxy.fastmail.com
+    smtpserver = smtp.fastmail.com
     smtpuser = senan@senan.xyz
-    smtpserverport = 21
+    smtpserverport = 587
 	confirm = auto
+[credential "smtp://senan%40senan.xyz@smtp.fastmail.com%3a587"]
+	helper = !pass social/fastmail/git_app_password
 [rebase]
 	autosquash = true
 [gpg]
