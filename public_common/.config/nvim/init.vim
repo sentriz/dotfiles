@@ -36,6 +36,7 @@ if dein#load_state(s:dein_dir)
     call dein#add('posva/vim-vue', {'on_ft': 'vue'})
     " misc
     call dein#add('rhysd/committia.vim')
+    call dein#add('romainl/vim-qf')
     call dein#end()
     call dein#save_state()
 endif
