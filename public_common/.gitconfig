@@ -14,7 +14,7 @@
     c          = commit
     d          = diff
     l          = log --pretty=oneline --abbrev-commit
-    s          = !custom_git_status
+    s          = status
     addf       = !git add -- $(git ls-files --modified --others --exclude-standard | fzf -m --preview 'cat {}')
     checkoutf  = !git checkout -- $(git ls-files --modified --exclude-standard | fzf -m)
     fixupf     = !git commit --fixup=$(git log --pretty=oneline --abbrev-commit | fzf +s | awk '{print $1'})
