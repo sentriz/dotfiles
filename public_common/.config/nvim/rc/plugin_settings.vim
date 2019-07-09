@@ -22,11 +22,12 @@ let g:tmux_navigator_save_on_switch = 1
 " for fatih/vim-go
 let g:go_updatetime = 0
 let g:go_auto_sameids = 1
-let g:go_fmt_command = "goimports"
+let g:go_fmt_command = "gofumports"
 let g:go_fmt_options = {
-    \ 'goimports': '-local github.com/sentriz/',
+    \ 'goimports': '-local github.com/sentriz/,senan.xyz/g/',
+    \ 'gofumports': '-local github.com/sentriz/,senan.xyz/g/',
 \ }
-let g:go_disable_autoinstall = 0
+let g:go_disable_autoinstall = 1
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
 let g:go_highlight_structs = 1
