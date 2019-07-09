@@ -5,5 +5,5 @@ if ! confirm; then
 fi
 
 for filename in *; do
-    mv "$filename" $(echo "$filename" | sha1sum | cut -f 1 -d ' ')
+    mv "$filename" "$(echo "$filename" | sha1sum | cut -f 1 -d ' ')"
 done
