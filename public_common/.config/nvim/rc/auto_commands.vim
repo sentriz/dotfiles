@@ -11,3 +11,8 @@ augroup AutoBlack
     autocmd BufWritePre *.py
         \ execute ':Black'
 augroup END
+
+augroup AutoNetrwOnStart
+    autocmd!
+    autocmd VimEnter * if argc() == 0 | Explore! | endif
+augroup END

@@ -13,7 +13,6 @@ if dein#load_state(s:dein_dir)
     call dein#add('roxma/nvim-yarp')
     call dein#add('roxma/vim-hug-neovim-rpc')
     " getting around
-    call dein#add('mhinz/vim-startify')
     call dein#add('junegunn/fzf.vim')
     call dein#add('tpope/vim-vinegar')
     call dein#add('christoomey/vim-tmux-navigator')
