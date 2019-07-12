@@ -57,7 +57,3 @@ inoremap <expr> <c-e> pumvisible()
 " alternative escaping
 inoremap <esc> <nop>
 inoremap jj <esc>
-
-" center the cursor while searching
-nnoremap n nzz
-nnoremap N Nzz
