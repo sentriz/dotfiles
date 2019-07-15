@@ -1,6 +1,7 @@
 #!/usr/bin/env fish
 
-set screen_dir "$HOME/pictures/screenshots"
+set -l screen_dir "$HOME/pictures/screenshots"
+set -l remote_host 'https://image.home.senan.xyz'
 
 getopts $argv | while read -l key value
     switch $key
@@ -15,20 +16,25 @@ if test -n "$select_option"
     notify-send 'screenshot' 'select an area'
 end
 
-set filename (
-    scrot "$screen_dir/%Y%m%d_%H%M%S.png" \
-        $select_option \
-        -e 'echo $f'
+set filename (scrot \
+    "$screen_dir/%Y%m%d_%H%M%S.png" \
+    $select_option \
+    -e 'echo $f'
 )
 
 # add to socr database
 # see https://github.com/sentriz/socr
 socr add "$filename" &
 
-if test "$upload" = 'true'
-    echo "$filename" | imgur_up | xclip -i
-    notify-send 'screenshot' 'link in clipboad'
-else
+if test "$upload" != 'true'
     notify-send 'screnshot taken' (basename "$filename")
+    exit
 end
 
+set -l remote (curl \
+    "$remote_host/upload" \
+    --user (printf "%s:%s" (pass boxes/hog/image/username) (pass boxes/hog/image/password)) \
+    --form "img=@$filename"
+)
+echo "$remote_host/$remote" | xclip -i
+notify-send 'screenshot' 'link in clipboad'
