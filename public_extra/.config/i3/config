@@ -156,10 +156,10 @@ mode $mode_move_floating {
 
 set $mode_scrot "screenshot mode: [n]ormal, [s]elect, [N]ormal upload, [S]elect upload"
 mode $mode_scrot {
-    bindsym n                 exec screenshot,                   mode "default"
-    bindsym Shift+n           exec screenshot --upload,          mode "default"
-    bindsym --release s       exec screenshot --select,          mode "default"
-    bindsym --release Shift+s exec screenshot --select --upload, mode "default"
+    bindsym n                 exec screenshot,               mode "default"
+    bindsym Shift+n           exec screenshot upload,        mode "default"
+    bindsym --release s       exec screenshot select,        mode "default"
+    bindsym --release Shift+s exec screenshot select upload, mode "default"
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }

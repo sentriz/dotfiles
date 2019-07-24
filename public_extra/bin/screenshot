@@ -1,40 +1,35 @@
 #!/usr/bin/env fish
 
-set -l screen_dir "$HOME/pictures/screenshots"
-set -l remote_host 'https://image.home.senan.xyz'
+# requires https://github.com/naelstrof/maim
 
-getopts $argv | while read -l key value
-    switch $key
-        case upload
-            set upload 'true'
-        case select
-            set select_option '-s'
-    end
-end
+set -g screen_dir "$HOME/pictures/screenshots"
+set -g remote_host 'https://image.home.senan.xyz'
+set -g maim_options
 
-if test -n "$select_option"
+if contains 'select' $argv
     notify-send 'screenshot' 'select an area'
+    set -a maim_options '--select'
+    set -a maim_options '--bordersize=3'
 end
 
-set filename (scrot \
-    "$screen_dir/%Y%m%d_%H%M%S.png" \
-    $select_option \
-    -e 'echo $f'
-)
+set -g filename "$screen_dir/"(date '+%Y%m%d_%H%M%S.png')
+maim $maim_options "$filename"
+notify-send 'screenshot' 'taken '(basename $filename)
 
 # add to socr database
 # see https://github.com/sentriz/socr
 socr add "$filename" &
 
-if test "$upload" != 'true'
-    notify-send 'screnshot taken' (basename "$filename")
-    exit
-end
-
+contains 'upload' $argv; or exit
+set -l credentials (printf \
+    '%s:%s' \
+    (pass boxes/hog/image/username) \
+    (pass boxes/hog/image/password)
+)
 set -l remote (curl \
     "$remote_host/upload" \
-    --user (printf "%s:%s" (pass boxes/hog/image/username) (pass boxes/hog/image/password)) \
+    --user "$credentials" \
     --form "img=@$filename"
 )
 echo "$remote_host/$remote" | xclip -i
-notify-send 'screenshot' 'link in clipboad'
+notify-send 'screenshot' 'link in clipboard'
