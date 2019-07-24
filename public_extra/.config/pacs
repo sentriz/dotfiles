@@ -21,7 +21,6 @@ woeusbgui
 ~/.screenlayout/work.sh; ~/.fehbg
 dmenu_radio
 dmenu_sinks
-dmenu_todo
 dmenu_vms
 arandr
 sqlitebrowser
