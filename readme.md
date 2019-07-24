@@ -37,6 +37,4 @@ python stuff
 ```shell
 remote $ # if no pip for pythonx.x:
 remote $ curl https://bootstrap.pypa.io/get-pip.py | pythonx.x - --user
-remote $
-remote $ python3.x -m pip install --user virtualfish
 ```
