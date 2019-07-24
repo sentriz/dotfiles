@@ -1,3 +1,7 @@
+if ! status --is-interactive
+    exit
+end
+
 # scrap
 alias go_scrap_new 'vim (mktemp -d ~/scrap/go.XXX)/main.go'
 alias py_scrap_new 'vim (mktemp -d ~/scrap/python.XXX)/main.py'

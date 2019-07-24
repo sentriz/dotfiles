@@ -1,3 +1,7 @@
+if ! status --is-interactive
+    exit
+end
+
 # keep updated with 
 # printf "set -g %s\n" (set -U | grep fish_color) > ~/.config/fish/conf.d/colours.fish
 set -g fish_color_autosuggestion '555'  'brblack'
