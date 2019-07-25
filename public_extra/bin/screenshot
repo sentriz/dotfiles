@@ -1,20 +1,42 @@
 #!/usr/bin/env fish
 
-# requires https://github.com/naelstrof/maim
+# senan kelly
+# 2017-
+
+if ! which maim > /dev/null 2>&1
+    echo "maim required" >&2
+    echo "https://github.com/naelstrof/maim"
+    exit 1
+end
+
+if ! notify-send --help 2>&1 | grep -Eq -- --print-id
+    echo "notify-send with `--print-id` and `--replace-id` required" >&2
+    echo "https://aur.archlinux.org/packages/?O=0&K=libnotify-id" >&2
+    exit 1
+end
 
 set -g screen_dir "$HOME/pictures/screenshots"
 set -g remote_host 'https://image.home.senan.xyz'
 set -g maim_options
+set -g notify_id (random 500 1000)
+
+function __notify
+    set notify_id (notify-send \
+        --print-id \
+        --replace-id "$notify_id" \
+        $argv
+    )
+end
 
 if contains 'select' $argv
-    notify-send 'screenshot' 'select an area'
+    __notify 'screenshot' 'select an area'
     set -a maim_options '--select'
     set -a maim_options '--bordersize=3'
 end
 
 set -g filename "$screen_dir/"(date '+%Y%m%d_%H%M%S.png')
 maim $maim_options "$filename"
-notify-send 'screenshot' 'taken '(basename $filename)
+__notify 'screenshot' 'taken '(basename $filename)
 
 # add to socr database
 # see https://github.com/sentriz/socr
@@ -26,10 +48,10 @@ set -l credentials (printf \
     (pass boxes/hog/image/username) \
     (pass boxes/hog/image/password)
 )
-set -l remote (curl \
+set -l remote (curl -s \
     "$remote_host/upload" \
     --user "$credentials" \
     --form "img=@$filename"
 )
 echo "$remote_host/$remote" | xclip -i
-notify-send 'screenshot' 'link in clipboard'
+__notify 'screenshot' 'link in clipboard'
