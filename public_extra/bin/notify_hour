@@ -1,4 +1,0 @@
-#!/bin/bin/env bash
-
-pkill -RTMIN+6 i3blocks
-DISPLAY=:0 /usr/sbin/notify-send "$(date "+%-I o'clock")"
