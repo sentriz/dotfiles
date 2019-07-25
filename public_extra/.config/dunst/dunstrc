@@ -3,7 +3,7 @@
 [global]
     font = bitstream vera sans mono 10
     markup = yes
-    max_icon_size = 45
+    max_icon_size = 40
     format = "<b>%s</b>\n%b"
     sort = yes
     indicate_hidden = yes
@@ -12,11 +12,10 @@
     show_age_threshold = 60
     word_wrap = yes
     ignore_newline = no
-    geometry = "300x5-16-38"
+    geometry = "450x5-24-51"
     shrink = no
     transparency = 20
     idle_threshold = 120
-    monitor = 0
     follow = mouse
     sticky_history = yes
     history_length = 20
@@ -27,23 +26,22 @@
     horizontal_padding = 8
     separator_color = frame
     startup_notification = false
-    dmenu = /usr/bin/dmenu -p dunst:
     icon_position = left
     icon_path = /usr/share/icons/gnome/16x16/status/:/usr/share/icons/gnome/16x16/devices/:/usr/share/icons/gnome/16x16/apps/
-    frame_width = 1
-    frame_color = "#0088CC"
+    frame_width = 2
+    frame_color = "#ffffff"
 
 [urgency_low]
-    background = "#000000"
-    foreground = "#888888"
+    background = "#303030"
+    foreground = "#ffffff"
     timeout = 5
 
 [urgency_normal]
-    background = "#000000"
-    foreground = "#568081"
+    background = "#303030"
+    foreground = "#ffffff"
     timeout = 5
 
 [urgency_critical]
-    background = "#000000"
-    foreground = "#B14D4C"
+    background = "#303030"
+    foreground = "#ff6060"
     timeout = 5
