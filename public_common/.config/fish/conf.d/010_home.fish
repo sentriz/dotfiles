@@ -11,6 +11,6 @@ if which go > /dev/null >&1
 end
 
 if which ruby > /dev/null 2>&1
-    set -gx GEM_HOME (ls -t -U | ruby -e 'puts Gem.user_dir')
+    set -gx GEM_HOME /home/senan/.gem/ruby/2.6.0
     set -gx GEM_PATH $GEM_HOME $GEM_PATH
 end
