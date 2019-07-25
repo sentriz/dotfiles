@@ -1,14 +1,11 @@
 #!/usr/bin/env bash
 
 feh --bg-fill "$(find ~/pictures/wallpapers_on/* | shuf -n 1)" &
-thinkpad-touchpad off &
 thunar --daemon &
 dunst &
 clipit &
 nm-applet &
 compton -b &
 scratch &
-run_keybase &
-dockd --daemon &
 emojione-picker &
 blueman-applet &
