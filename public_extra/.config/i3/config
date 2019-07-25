@@ -11,11 +11,13 @@
 set $super Mod4
 set $alt Mod1
 set $locker lock
+set $emulator termite
+set $emulator_class ^Termite$
 set $update_blocks_audio pkill -RTMIN+1 i3blocks
 floating_modifier $super
 
 font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
-font pango:DejaVu Sans Mono 17px
+font pango:Source Code Pro 11
 
 ### goodies
 popup_during_fullscreen smart
@@ -283,7 +285,7 @@ for_window [class="Gui.py"]                               floating enable
 for_window [class="SimpleScreenRecorder"]                 floating enable
 for_window [title="^bobby$"]                              floating enable
 for_window [class="feh"]                                  floating enable
-for_window [class="^Terminator$" window_role="^scratch$"] floating enable
+for_window [class=$emulator_class window_role="^scratch$"] floating enable
 for_window [class="Blueman-manager"]                      floating enable
 for_window [class="Woeusbgui"]                            floating enable
 for_window [class="Nm-connection-editor"]                 floating enable
@@ -298,8 +300,8 @@ for_window [window_type="dialog"]      floating enable
 for_window [title="Preferences$"]      floating enable
 
 ### scratchpads (known)
-for_window         [class="^Terminator$" window_role="^scratch$"] move scratchpad, border pixel 1
-bindsym $super+F1  [class="^Terminator$" window_role="^scratch$"] scratchpad show, resize set 1344 575, move position center
+for_window         [class=$emulator_class window_role="^scratch$"] move scratchpad, border pixel 1
+bindsym $super+F1  [class=$emulator_class window_role="^scratch$"] scratchpad show, resize set 1344 575, move position center
 for_window         [class="Keybase"] move scratchpad, border pixel 1 
 bindsym $super+F2  [class="Keybase"] scratchpad show, resize set 1344 575, move position center
 for_window         [class="Plexamp"] move scratchpad, border pixel 1
@@ -318,7 +320,7 @@ bindsym $super+F8 [con_mark="c_scratch_4"] scratchpad show
 
 ### keybindings (programs)
 bindsym F15 exec --no-startup-id dmenu_pacs
-bindsym $super+Return exec --no-startup-id terminator
+bindsym $super+Return exec --no-startup-id $emulator
 bindsym ISO_Level3_Shift exec --no-startup-id emojione-picker
 
 # keybindings (xf86 on thinkpad x220)
