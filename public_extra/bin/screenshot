@@ -2,6 +2,7 @@
 
 # senan kelly
 # 2017-
+# usage: screenshot [upload] [select]
 
 if ! which maim > /dev/null 2>&1
     echo "maim required" >&2
