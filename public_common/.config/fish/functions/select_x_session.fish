@@ -1,17 +1,16 @@
 # Defined in /tmp/fish.MAtCKx/select_x_session.fish @ line 2
 function select_x_session
-	set -l option \
-           (dialog \
-               --stdout \
-               --colors \
-               --ok-label "run" \
-               --cancel-label "logout" \
-               --menu "select session" \
-               0 0 0 \
-               "i3wm"     "" \
-               "fish"     "" \
-               "shutdown" ""
-           )
+    set -l option (dialog \
+        --stdout \
+        --colors \
+        --ok-label "run" \
+        --cancel-label "logout" \
+        --menu "select session" \
+        0 0 0 \
+        "i3wm" "" \
+        "fish" "" \
+        "shutdown" ""
+    )
     if test ! $status -eq 0
         kill %self
     end
