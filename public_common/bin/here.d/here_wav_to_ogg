@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-for filename in ./*.wav; do
-      ffmpeg -i "$filename" -qscale:a 0 "${filename[@]/%wav/ogg}"
-done
