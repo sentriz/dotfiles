@@ -6,7 +6,8 @@ set -l possible_paths \
     $HOME/node_modules/.bin \
     /opt/android-sdk/tools \
     /opt/android-sdk/tools/bin \
-    (find -L $HOME/bin -type d) \
+    $HOME/bin \
+    $HOME/bin/*/ \
     /bin \
     /opt/Etcher \
     /opt/balenaEtcher \
