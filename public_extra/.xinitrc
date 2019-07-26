@@ -9,7 +9,7 @@ fi
 
 setxkbmap ie
 xmodmap ~/.Xmodmap
-xset r rate 200 40
+xset r rate 200 80
 xinput set-prop "TPPS/2 IBM TrackPoint" "libinput Accel Speed" 0.75
 
 export QT_QPA_PLATFORMTHEME=qt5ct
