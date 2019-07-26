@@ -1,30 +1,36 @@
+#########################
+## my i3 config, 2016- ##
 ##################################################
-# bindsym format                                 #
-##################################################
-# mod + ...         => window/float related      #
-# mod + shift + ... => window/float move related #
-# mod + ctrl + ...  => lauching software         #
-# mod + alt + ...   => modes                     #
+## mod, [a-z]             -> windows/postion    ##
+## mod, [num row]         -> workspaces         ##
+## mod, shift, [num row]  -> move to workspaces ##
+## mod, alt, [a-z]        -> modes              ##
+## mod, f1                -> scratchpad         ##
+## caps lock              -> dmenu packages     ##
 ##################################################
 
-
-set $super Mod4
-set $alt Mod1
-set $locker lock
-set $emulator termite
-set $emulator_class ^Termite$
-set $update_blocks_audio pkill -RTMIN+1 i3blocks
+## modifier
+set $super        Mod4
+set $alt          Mod1
 floating_modifier $super
 
+## globals
+set $locker              lock
+set $update_blocks_audio pkill -RTMIN+1 i3blocks
+set $emulator            termite
+set $emulator_search     ^Termite$
+
+## font
 font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
 font pango:Source Code Pro 11
 
-### goodies
+## gaps
 popup_during_fullscreen smart
 for_window [class="^.*"] border pixel 2
 gaps inner 24
 smart_borders on
 
+## right bar
 bar {
     i3bar_command i3bar -t
     status_command i3blocks
@@ -43,6 +49,7 @@ bar {
     }
 }
 
+## left bar
 bar {
     i3bar_command i3bar -t
     output DP2-1
@@ -59,39 +66,40 @@ bar {
     }
 }
 
-### keybindings (window/float related)
-bindsym $super+q kill
-bindsym $super+f fullscreen toggle
+## bindings: window/float
+bindsym $super+q     kill
+bindsym $super+f     fullscreen toggle
 bindsym $super+space floating toggle
-bindsym $super+b move position center
-bindsym $super+s sticky toggle
+bindsym $super+s     sticky toggle
 
-bindsym $super+bracketleft move workspace to output left
-bindsym $super+bracketright move workspace to output right
-
-# change focus
+## bindings: focus
+bindsym $super+v focus parent
 bindsym $super+h focus left
 bindsym $super+j focus down
 bindsym $super+k focus up
 bindsym $super+l focus right
 
-# move focused window
-bindsym $super+Left move left
-bindsym $super+Down move down
-bindsym $super+Up move up
-bindsym $super+Right move right
-
-# set split direction
-bindsym $super+n split h
-bindsym $super+m split v
-
-# change container layout (stacked, tabbed, toggle split, focus parent)
+## bindings: layout
 bindsym $super+z layout stacking
 bindsym $super+x layout tabbed
 bindsym $super+c layout toggle split
-bindsym $super+v focus parent
+bindsym $super+n split h
+bindsym $super+m split v
 
-### keybindings (modes)
+## bindings: position
+bindsym $super+Left         move left
+bindsym $super+Down         move down
+bindsym $super+Up           move up
+bindsym $super+Right        move right
+bindsym $super+b            move position center
+bindsym $super+bracketleft  move workspace to output left
+bindsym $super+bracketright move workspace to output right
+
+## bindings: programs
+bindsym $super+Return exec --no-startup-id $emulator
+bindsym F15           exec --no-startup-id dmenu_pacs
+
+## bindings: modes
 bindsym $super+$alt+r     mode $mode_resize_tile
 bindsym $super+$alt+space mode $mode_move_floating focus floating
 bindsym $super+$alt+q     mode $mode_system
@@ -134,14 +142,14 @@ mode $mode_i3 {
 
 set $mode_audio "volume mode: +|right +5%/+10%,  -|left +5%/+10%,  [m]ute,  [r]eset"
 mode $mode_audio {
-    bindsym plus          exec --no-startup-id ponymix increase 5%;     exec --no-startup-id $update_blocks_audio
-    bindsym minus         exec --no-startup-id ponymix decrease 5%;     exec --no-startup-id $update_blocks_audio
-    bindsym KP_Add        exec --no-startup-id ponymix increase 5%;     exec --no-startup-id $update_blocks_audio
-    bindsym KP_Subtract   exec --no-startup-id ponymix decrease 5%;     exec --no-startup-id $update_blocks_audio
-    bindsym Right         exec --no-startup-id ponymix increase 10%;    exec --no-startup-id $update_blocks_audio 
-    bindsym Left          exec --no-startup-id ponymix decrease 10%;    exec --no-startup-id $update_blocks_audio
-    bindsym m             exec --no-startup-id ponymix toggle;          exec --no-startup-id $update_blocks_audio
-    bindsym r             exec --no-startup-id ponymix set-volume 100%; exec --no-startup-id $update_blocks_audio
+    bindsym plus         exec --no-startup-id ponymix increase 5%;     exec --no-startup-id $update_blocks_audio
+    bindsym minus        exec --no-startup-id ponymix decrease 5%;     exec --no-startup-id $update_blocks_audio
+    bindsym KP_Add       exec --no-startup-id ponymix increase 5%;     exec --no-startup-id $update_blocks_audio
+    bindsym KP_Subtract  exec --no-startup-id ponymix decrease 5%;     exec --no-startup-id $update_blocks_audio
+    bindsym Right        exec --no-startup-id ponymix increase 10%;    exec --no-startup-id $update_blocks_audio 
+    bindsym Left         exec --no-startup-id ponymix decrease 10%;    exec --no-startup-id $update_blocks_audio
+    bindsym m            exec --no-startup-id ponymix toggle;          exec --no-startup-id $update_blocks_audio
+    bindsym r            exec --no-startup-id ponymix set-volume 100%; exec --no-startup-id $update_blocks_audio
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
@@ -217,113 +225,80 @@ mode $mode_gamma {
     bindsym Escape mode "default"
 }
 
-### workspaces
-set $work1 "1 main"
-set $work2 "2 web"
-set $work3 "3 term i"
-set $work4 "4 term ii"
-set $work5 "5 vm"
-set $work6 "6 chat"
-set $work7 "7 mnem"
-set $work8 "8 gimp"
-set $work9 "9 office"
+## workspaces
+set $work_1 "1 main"
+set $work_2 "2 web"
+set $work_3 "3 term i"
+set $work_4 "4 term ii"
+set $work_5 "5 vm"
+set $work_6 "6 chat"
+set $work_7 "7 mnem"
+set $work_8 "8 gimp"
+set $work_9 "9 office"
 
-# switch to workspace
-bindsym $super+1 workspace $work1
-bindsym $super+2 workspace $work2
-bindsym $super+3 workspace $work3
-bindsym $super+4 workspace $work4
-bindsym $super+5 workspace $work5
-bindsym $super+6 workspace $work6
-bindsym $super+7 workspace $work7
-bindsym $super+8 workspace $work8
-bindsym $super+9 workspace $work9
-
-bindsym $super+0 [urgent=latest] focus
 bindsym $super+grave workspace back_and_forth
+bindsym $super+1     workspace $work_1
+bindsym $super+2     workspace $work_2
+bindsym $super+3     workspace $work_3
+bindsym $super+4     workspace $work_4
+bindsym $super+5     workspace $work_5
+bindsym $super+6     workspace $work_6
+bindsym $super+7     workspace $work_7
+bindsym $super+8     workspace $work_8
+bindsym $super+9     workspace $work_9
+bindsym $super+0     [urgent=latest] focus
 
-# move focused container to workspace
-bindsym $super+Shift+1 move container to workspace $work1
-bindsym $super+Shift+2 move container to workspace $work2
-bindsym $super+Shift+3 move container to workspace $work3
-bindsym $super+Shift+4 move container to workspace $work4
-bindsym $super+Shift+5 move container to workspace $work5
-bindsym $super+Shift+6 move container to workspace $work6
-bindsym $super+Shift+7 move container to workspace $work7
-bindsym $super+Shift+8 move container to workspace $work8
-bindsym $super+Shift+9 move container to workspace $work9
+bindsym $super+Shift+1 move container to workspace $work_1
+bindsym $super+Shift+2 move container to workspace $work_2
+bindsym $super+Shift+3 move container to workspace $work_3
+bindsym $super+Shift+4 move container to workspace $work_4
+bindsym $super+Shift+5 move container to workspace $work_5
+bindsym $super+Shift+6 move container to workspace $work_6
+bindsym $super+Shift+7 move container to workspace $work_7
+bindsym $super+Shift+8 move container to workspace $work_8
+bindsym $super+Shift+9 move container to workspace $work_9
 
-### keeping programs on workspaces
-assign [class="Sqliteman"] $work1
-assign [class="Meld"] $work1
-assign [class="DB Browser for SQLite"] $work1
-assign [class="Firefox"] $work2
-assign [class="Chromium"] $work2
-assign [class="Google-chrome"] $work2
-assign [class="URxvt" instance="ncmpcpp"] $work4
-assign [class="Spotify"] $work4
-assign [class="Deadbeef"] $work4
-assign [class="Surf" instance="^plex_surf$"] $work4
-assign [class="Franz"] $work6
-assign [class="Mnemosyne"] $work7
-assign [class="Anki"] $work7
-assign [class="Gimp*"] $work8
-assign [class="Inkscape"] $work8
-assign [class="libreoffice-*"] $work9
-assign [class="VirtualBox"] $work5
-for_window [title="^Plex$"] move to workspace $work4, floating disable
-for_window [class="Spotify"] move to workspace $work4
+assign [class="Sqliteman"]                   $work_1
+assign [class="Meld"]                        $work_1
+assign [class="DB Browser for SQLite"]       $work_1
+assign [class="Firefox"]                     $work_2
+assign [class="Chromium"]                    $work_2
+assign [class="Google-chrome"]               $work_2
+assign [class="URxvt" instance="ncmpcpp"]    $work_4
+assign [class="Spotify"]                     $work_4
+assign [class="Deadbeef"]                    $work_4
+assign [class="Surf" instance="^plex_surf$"] $work_4
+assign [class="VirtualBox"]                  $work_5
+assign [class="Franz"]                       $work_6
+assign [class="Mnemosyne"]                   $work_7
+assign [class="Anki"]                        $work_7
+assign [class="Gimp*"]                       $work_8
+assign [class="Inkscape"]                    $work_8
+assign [class="libreoffice-*"]               $work_9
 
-# floating
-for_window [class="Pavucontrol"]                          floating enable
-for_window [class="Mnemosyne"]                            floating enable
-for_window [class="Galculator"]                           floating enable
-for_window [class="etcher"]                               floating enable
-for_window [class="Qpaeq"]                                floating enable
-for_window [class="Anki"]                                 floating enable
-for_window [class="Gui.py"]                               floating enable
-for_window [class="SimpleScreenRecorder"]                 floating enable
-for_window [title="^bobby$"]                              floating enable
-for_window [class="feh"]                                  floating enable
-for_window [class=$emulator_class window_role="^scratch$"] floating enable
-for_window [class="Blueman-manager"]                      floating enable
-for_window [class="Woeusbgui"]                            floating enable
-for_window [class="Nm-connection-editor"]                 floating enable
-for_window [class="electrum"]                             floating enable
+## floating windows
+for_window [window_type="menu"]           floating enable
+for_window [window_role="app"]            floating enable
+for_window [window_role="pop-up"]         floating enable
+for_window [window_role="task_dialog"]    floating enable
+for_window [window_type="dialog"]         floating enable
+for_window [title="Preferences$"]         floating enable
+for_window [class="Anki"]                 floating enable
+for_window [class="Blueman-manager"]      floating enable
+for_window [class="Galculator"]           floating enable
+for_window [class="Gui.py"]               floating enable
+for_window [class="Mnemosyne"]            floating enable
+for_window [class="Nm-connection-editor"] floating enable
+for_window [class="Pavucontrol"]          floating enable
+for_window [class="Qpaeq"]                floating enable
+for_window [class="SimpleScreenRecorder"] floating enable
+for_window [class="Woeusbgui"]            floating enable
+for_window [class="electrum"]             floating enable
+for_window [class="etcher"]               floating enable
+for_window [class="feh"]                  floating enable
+for_window [title="^bobby$"]              floating enable
 
-# floating generic
-for_window [window_type="menu"]        floating enable
-for_window [window_role="app"]         floating enable
-for_window [window_role="pop-up"]      floating enable
-for_window [window_role="task_dialog"] floating enable
-for_window [window_type="dialog"]      floating enable
-for_window [title="Preferences$"]      floating enable
-
-### scratchpads (known)
-for_window         [class=$emulator_class window_role="^scratch$"] move scratchpad, border pixel 1
-bindsym $super+F1  [class=$emulator_class window_role="^scratch$"] scratchpad show, resize set 1344 575, move position center
-for_window         [class="Keybase"] move scratchpad, border pixel 1 
-bindsym $super+F2  [class="Keybase"] scratchpad show, resize set 1344 575, move position center
-for_window         [class="Plexamp"] move scratchpad, border pixel 1
-bindsym $super+F3  [class="Plexamp"] scratchpad show
-#, resize set 300 377,  move position 1058 359
-
-### scratchpads (unknown)
-bindsym $super+Shift+F5 mark "c_scratch_1", move scratchpad
-bindsym $super+F5 [con_mark="c_scratch_1"] scratchpad show
-bindsym $super+Shift+F6 mark "c_scratch_2", move scratchpad
-bindsym $super+F6 [con_mark="c_scratch_2"] scratchpad show
-bindsym $super+Shift+F7 mark "c_scratch_3", move scratchpad
-bindsym $super+F7 [con_mark="c_scratch_3"] scratchpad show
-bindsym $super+Shift+F8 mark "c_scratch_4", move scratchpad
-bindsym $super+F8 [con_mark="c_scratch_4"] scratchpad show
-
-### keybindings (programs)
-bindsym F15 exec --no-startup-id dmenu_pacs
-bindsym $super+Return exec --no-startup-id $emulator
-bindsym ISO_Level3_Shift exec --no-startup-id emojione-picker
-
-# keybindings (xf86 on thinkpad x220)
+## keybindings (xf86 on thinkpad x220)
 bindsym XF86ScreenSaver       exec --no-startup-id $locker
 bindsym XF86Suspend           exec --no-startup-id gksudo systemctl hibernate
 bindsym XF86Sleep             exec --no-startup-id gksudo systemctl suspend
@@ -337,14 +312,22 @@ bindsym XF86AudioStop         exec --no-startup-id playerctl stop
 bindsym XF86AudioNext         exec --no-startup-id playerctl next
 bindsym XF86AudioPrev         exec --no-startup-id playerctl previous
 
-bindsym Print                 exec screenshot
-bindsym --release Shift+Print exec screenshot --select
-
-# colours               # bord  # bg    # text  # indic
+## colours              bord    bg      text    indic
 client.focused          #dddddd #ffffff #000000 #dddddd
 client.focused_inactive #333333 #333333 #888888 #292d2e
 client.unfocused        #333333 #333333 #888888 #292d2e
 client.urgent           #2f343a #900000 #ffffff #900000
 
-### todo: move this to systemd user units
-exec --no-startup-id i3_startup
+## scratchpad
+exec --no-startup-id "while :; do $emulator --role 'scratch'; done"
+for_window        [class=$emulator_search window_role="^scratch$"] floating enable, move scratchpad, border pixel 1
+bindsym $super+F1 [class=$emulator_search window_role="^scratch$"] scratchpad show, resize set 1344 575, move position center
+
+## autostarts
+exec --no-startup-id compton -b
+exec --no-startup-id feh --bg-fill "$(find ~/pictures/wallpapers_on/* | shuf -n 1)"
+exec --no-startup-id thunar --daemon
+exec --no-startup-id dunst
+exec --no-startup-id clipit
+exec --no-startup-id nm-applet
+exec --no-startup-id blueman-applet
