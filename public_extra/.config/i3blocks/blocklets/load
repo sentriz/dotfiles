@@ -1,9 +1,11 @@
-#!/bin/sh
+#!/usr/bin/env bash
+
 load="$(cut -d ' ' -f1 /proc/loadavg)"
 cores="$(nproc)"
 
 echo "$load"
 echo "$load"
+
 awk -v cores=$cores -v load_=$load '
     BEGIN {
         if (cores <= load_) {

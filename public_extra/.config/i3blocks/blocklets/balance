@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 
 function format() {
     printf "%'.2f\n" "$1" | sed -E 's/(\-|\+)?(.*)/\1€\2/' 

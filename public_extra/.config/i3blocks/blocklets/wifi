@@ -1,4 +1,4 @@
-#!/usr/bin/sh -e
+#!/usr/bin/bash
 
 INTERFACE="${BLOCK_INSTANCE:-$(awk '/^w/{print $1; exit}' /proc/net/route)}"
 
