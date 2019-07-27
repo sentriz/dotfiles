@@ -7,7 +7,7 @@ function select_x_session
         --cancel-label "logout" \
         --menu "select session" \
         0 0 0 \
-        "i3wm" "" \
+        "sway" "" \
         "fish" "" \
         "shutdown" ""
     )
@@ -16,8 +16,8 @@ function select_x_session
     end
     clear
     switch "$option"
-        case i3wm
-            eval "exec startx $HOME/.xinitrc -- -keeptty -nolisten tcp 2> /dev/null 1>&2"
+        case sway
+            exec sway
         case fish
             exit
         case shutdown
