@@ -6,7 +6,7 @@ if test -d /usr/lib/jvm
     set -gx JAVA_HOME /usr/lib/jvm/java-8-openjdk
 end
 
-if which go > /dev/null >&1
+if which go > /dev/null 2>&1
     set -gx GOPATH $HOME/go
 end
 
