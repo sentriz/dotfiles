@@ -1,0 +1,63 @@
+#!/usr/bin/env bash
+
+# senan kelly 2019
+#
+# to start the deamon (listens for new items in the clipboard):
+# $ ./cliphist listen
+#
+# to copy an old item to your clipboard example
+# $ ./cliphist select | dmenu -l 10 | ./cliphist copy
+
+if test "$#" -ne 1; then
+    echo "usage $0 <listen|select>" >&2
+    exit 1
+fi
+
+if ! which "wl-copy" > /dev/null 2>&1; then
+    echo "please install wl-clipboard" >&2
+    exit 1
+fi
+
+hist_dir=~/.local/share
+hist_path="$hist_dir/cliphist"
+hist_sep='…'
+
+function __listen () {
+    # poor man's history truncating: reseting the history file every
+    # time we call listen. in practise that will be ~once per session
+    mkdir -p "$hist_dir"  > /dev/null 2>&1
+    rm "$hist_path" > /dev/null 2>&1
+    last_copy=
+    while :; do
+        copy="$(wl-paste --no-newline --type text)"
+        if test "$copy" == "$last_copy"; then
+            sleep 1
+            continue
+        fi
+        last_copy="$copy"
+        # it seems like this we could replace the `echo $(...)` in the 
+        # line with just a `...`, but without it, the command appends 
+        # to $hist_path without an actual newline at the end
+        echo $(tr '\n' "$hist_sep" <<< "$copy") >> "$hist_path"
+    done
+}
+
+function __select () {
+    cat "$hist_path"
+}
+
+function __copy () {
+    # read the selected item from stdin, and replace the seperator
+    # with an actual newline
+    cat - \
+        | tr "$hist_sep" '\n' \
+        | wl-copy --trim-newline
+}
+
+case "$1" in
+    listen) __listen ;;
+    select) __select ;;
+    copy)   __copy ;;
+    *)      echo "invalid command \"$1\"" >&2
+	    exit 1 ;;
+esac
