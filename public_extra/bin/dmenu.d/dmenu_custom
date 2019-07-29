@@ -3,7 +3,7 @@
 bemenu \
     --list 20 \
     --ignorecase \
-    --fn "Source Code Pro 11" \
+    --fn "Source Code Pro 10" \
     --hb "#0088CC" \
     --hf "#FFFFFF" \
     --tf "#FFFFFF" \
