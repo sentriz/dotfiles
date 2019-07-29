@@ -2,10 +2,6 @@
 set -xg fish_color_host brmagenta
 
 # startup
-if status --is-login
-    start_keychain > /dev/null 2>&1
-end
-
 if status --is-interactive
     activate_keychain
 end
