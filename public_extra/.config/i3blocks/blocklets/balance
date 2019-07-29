@@ -25,9 +25,8 @@ function get-balance() {
     esac
 }
 
-balance="$(get-balance 2> /dev/null)" 
-[ -z "$balance" ] && \
-    exit 1
+balance="$(get-balance)"
+[ -z "$balance" ] && exit 1
 case "$BLOCK_BUTTON" in
     1|2|3) notify-send -- "$BLOCK_INSTANCE updated";;
 esac
