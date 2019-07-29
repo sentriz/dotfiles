@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-dmenu_custom -p 'package:' "$@" < ~/.config/pacs | ${SHELL:-"/bin/sh"} &

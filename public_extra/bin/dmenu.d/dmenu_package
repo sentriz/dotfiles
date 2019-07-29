@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+compgen -c \
+    | sort -u \
+    | tail -n +9 \
+    | dmenu_custom --prompt 'package:' \
+    | xargs swaymsg exec --

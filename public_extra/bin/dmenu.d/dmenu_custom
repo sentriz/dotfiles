@@ -1,19 +1,10 @@
 #!/usr/bin/env bash
 
-# if you're using gaps, set this to your gap width
-offset=24
-current_monitor_width=$(
-    monitor_sizes \
-        | grep --color=never -Po "$(current_monitor)\s\K([0-9]+)(?=x.*)"
-)
-width=$(bc -l <<< "$current_monitor_width - ($offset * 2)")
-
-dmenu \
-    -i \
-    -l 20 \
-    -nb "#303030" \
-    -sb "#0088cc" \
-    -y $offset \
-    -x $offset \
-    -w $width \
-    "$@"
+bemenu \
+    --list 20 \
+    --ignorecase \
+    --fn "Source Code Pro 11" \
+    --hb "#0088CC" \
+    --hf "#FFFFFF" \
+    --tf "#FFFFFF" \
+    $@
