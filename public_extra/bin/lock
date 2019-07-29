@@ -1,5 +1,0 @@
-#!/bin/sh
-
-i3lock --no-unlock-indicator \
-       --tiling \
-       --image $(ls -d -1 ~/pictures/lockscreens_on/*.* | shuf -n 1)
