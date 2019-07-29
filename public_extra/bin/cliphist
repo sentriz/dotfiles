@@ -45,9 +45,9 @@ function __select () {
 }
 
 function __copy () {
-    cat - \
-        | tr "$hist_sep" '\n' \
-        | wl-copy --trim-newline
+    to_copy="$(cat - | tr "$hist_sep" '\n')"
+    wl-copy --trim-newline <<< "$to_copy"
+    wl-copy --trim-newline --primary <<< "$to_copy"
 }
 
 case "$1" in
