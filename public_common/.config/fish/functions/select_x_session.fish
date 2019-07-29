@@ -17,7 +17,7 @@ function select_x_session
     clear
     switch "$option"
         case sway
-            exec sway
+            exec sway 2> /tmp/sway_debug_log
         case fish
             exit
         case shutdown
