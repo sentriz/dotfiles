@@ -2,6 +2,9 @@
 
 # senan kelly 2019
 #
+# recommended: wl-clipboard-rs instead of wl-clipboard
+# (wc-clipboard seems to grab keyboard focus for me)
+#
 # to start the deamon (listens for new items in the clipboard):
 # $ ./cliphist listen
 #
@@ -18,25 +21,35 @@ if ! which "wl-copy" > /dev/null 2>&1; then
     exit 1
 fi
 
-hist_dir=~/.local/share
+hist_dir=~/".local/share"
 hist_path="$hist_dir/cliphist"
 hist_sep='…'
 last_copy=
 
 function __listen_body () {
+    copy="$(wl-paste --type text --primary 2> /dev/null)"
+    if [[ "$copy" != "$last_copy" ]]; then
+        echo "$copy"
+        return
+    fi
     copy="$(wl-paste --type text 2> /dev/null)"
-    [[ -z "$copy" ]] && return
-    [[ "$copy" == "$last_copy" ]] && return
-    paste --serial --delimiters "$hist_sep" - <<< "$copy" >> "$hist_path"
-    last_copy="$copy"
+    [[ "$copy" != "$last_copy" ]] && echo "$copy"
 }
 
 function __listen () {
     mkdir -p "$hist_dir" > /dev/null 2>&1
     rm "$hist_path" > /dev/null 2>&1
     while :; do
-        __listen_body
-	sleep 0.75
+        new="$(__listen_body)"
+        if [[ -z "$new" ]]; then
+            sleep 0.8
+            continue
+        fi
+        wl-copy --trim-newline <<< "$new"
+        wl-copy --trim-newline --primary <<< "$new"
+        paste --serial --delimiters "$hist_sep" - <<< "$new" >> "$hist_path"
+        last_copy="$new"
+        sleep 0.8
     done
 }
 
@@ -55,5 +68,5 @@ case "$1" in
     select) __select ;;
     copy)   __copy ;;
     *)      echo "invalid command \"$1\"" >&2
-	    exit 1 ;;
+            exit 1 ;;
 esac
