@@ -3,7 +3,7 @@
 # senan kelly 2019
 #
 # recommended: wl-clipboard-rs instead of wl-clipboard
-# (wc-clipboard seems to grab keyboard focus for me)
+# (wl-clipboard seems to grab keyboard focus for me)
 #
 # to start the deamon (listens for new items in the clipboard):
 # $ ./cliphist listen
@@ -26,7 +26,7 @@ hist_path="$hist_dir/cliphist"
 hist_sep='…'
 last_copy=
 
-function __listen_body () {
+function __find_diff () {
     copy="$(wl-paste --type text --primary 2> /dev/null)"
     if [[ "$copy" != "$last_copy" ]]; then
         echo "$copy"
@@ -40,7 +40,7 @@ function __listen () {
     mkdir -p "$hist_dir" > /dev/null 2>&1
     rm "$hist_path" > /dev/null 2>&1
     while :; do
-        new="$(__listen_body)"
+        new="$(__find_diff)"
         if [[ -z "$new" ]]; then
             sleep 1.2
             continue
