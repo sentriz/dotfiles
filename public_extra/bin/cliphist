@@ -2,6 +2,13 @@
 
 # senan kelly 2019
 #
+# q: why is this bash so weird/bad? eg. not use of heredoc/subshell/etc
+# a: both heredocs and subshells stip trailing newlines from outputs,
+#    which really we need to respect and not merge. say copying "hello\n"
+#    should be different to coping "hello". esp. when using the recall
+#    feature. it's also the reason a lot of this isn't broken into smaller
+#    functions
+#
 # recommended: wl-clipboard-rs instead of wl-clipboard
 # (wl-clipboard seems to grab keyboard focus for me)
 #
