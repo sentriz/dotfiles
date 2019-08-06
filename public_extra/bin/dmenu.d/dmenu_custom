@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+pkill --exact bemenu
 bemenu \
     --list 20 \
     --ignorecase \
