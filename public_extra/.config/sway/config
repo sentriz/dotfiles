@@ -116,7 +116,6 @@ bindsym $super+$alt+v     mode $mode_audio
 bindsym $super+$alt+i     mode $mode_i3
 bindsym $super+$alt+s     mode $mode_scrot
 bindsym $super+$alt+g     mode $mode_gaps
-bindsym $super+$alt+b     mode $mode_gamma
 
 set $mode_resize_tile "resize mode: [h][j][k][l]"
 mode $mode_resize_tile {
@@ -208,15 +207,6 @@ set $mode_gaps "gaps: [o]uter, [i]nner"
 mode $mode_gaps {
     bindsym o      mode $mode_gaps_outer
     bindsym i      mode $mode_gaps_inner
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
-
-set $mode_gamma "gamma: -|+|0"
-mode $mode_gamma {
-    bindsym plus  exec gamma +0.1
-    bindsym minus exec gamma -0.1
-    bindsym 0     exec gamma 1
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
