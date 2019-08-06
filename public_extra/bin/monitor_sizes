@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-xrandr \
-    | grep --color=never -Po ".*\sconnected\b.*\s[0-9]+x[0-9]+" \
-    | awk '{print $1, $NF}'
