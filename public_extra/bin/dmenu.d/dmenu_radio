@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-stations="$(find ~/radio/  -maxdepth 1 -not -name '.stfolder' -type f -printf "%f\n")"
+stations="$(find ~/radio/ -maxdepth 1 -not -name '.stfolder' -type f -printf "%f\n")"
 station="$(dmenu_custom -p 'station' <<< "$stations")"
 test -z "$station" && exit 1
 pkill -f '^mpv.*radio'
