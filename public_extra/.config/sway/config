@@ -319,7 +319,7 @@ bindcode 66 [app_id="^scratchpad$"] scratchpad show, resize set 1334 575, move p
 
 ## autostarts
 exec cliphist listen
-exec thunar --deamon
+exec thunar --daemon
 exec mako \
     --background-color "$grey" \
     --margin "$default_gap" \
