@@ -9,7 +9,6 @@ all that is needed are some packages. the the following is set up in `public_ext
 |gtk3|fish select_x_session|`GTK_THEME=Adwaita`|
 |qt4|Trolltech.conf (can't configure with var like the rest)|`[Qt] style=adwaita`|
 |qt5|fish select_x_session|`QT_STYLE_OVERRIDE=adwaita`|
-```
 
 ### packages
 
