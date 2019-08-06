@@ -17,6 +17,13 @@ function select_x_session
     clear
     switch "$option"
         case sway
+            # set -gx XDG_SESSION_TYPE wayland
+            # set -gx QT_QPA_PLATFORM wayland
+            # set -gx GDK_BACKEND wayland
+            # set -gx CLUTTER_BACKEND wayland
+            set -gx GTK2_RC_FILES /usr/share/themes/Adwaita/gtk-2.0/gtkrc # gtk2
+            set -gx GTK_THEME Adwaita                                     # gtk2
+            set -gx QT_STYLE_OVERRIDE=adwaita                             # qt5
             exec sway 2> /tmp/sway_debug_log
         case fish
             exit
