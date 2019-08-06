@@ -1,22 +1,18 @@
 #!/usr/bin/env bash
 
 # senan kelly 2019
-#
-# q: why is this bash so weird/bad? eg. not use of heredoc/subshell/etc
-# a: both heredocs and subshells stip trailing newlines from outputs,
-#    which really we need to respect and not merge. say copying "hello\n"
-#    should be different to coping "hello". esp. when using the recall
-#    feature. it's also the reason a lot of this isn't broken into smaller
-#    functions
-#
+
 # recommended: wl-clipboard-rs instead of wl-clipboard
 # (wl-clipboard seems to grab keyboard focus for me)
-#
+
 # to start the deamon (listens for new items in the clipboard):
 # $ ./cliphist listen
-#
+
 # to copy an old item to your clipboard example:
 # $ ./cliphist select | dmenu -l 10 | ./cliphist copy
+
+# note: not much use of subprocesses or here doc in this becuase
+# they don't preserve trailing newlines
 
 if [[ "$#" -ne 1 ]]; then
     echo "usage $0 [listen|select|copy]" >&2
@@ -24,43 +20,39 @@ if [[ "$#" -ne 1 ]]; then
 fi
 
 if ! which "wl-copy" >/dev/null 2>&1; then
-    echo "please install wl-clipboard" >&2
+    echo "please install wl-clipboard-rs" >&2
+    echo "https://github.com/YaLTeR/wl-clipboard-rs" >&2
     exit 1
 fi
+
+set +m
+shopt -s lastpipe
 
 hist_dir=~/".local/share"
 hist_path="$hist_dir/cliphist"
 hist_sep='…'
 last_sum=
 
-function __find_diff () {
-    IFS= read -rd '' copy < <(wl-paste --type text --no-newline --primary 2>/dev/null)
+function __check_diff () {
+    IFS= read -rd '' copy
     sum="$(printf "$copy" | md5sum)"
-    if [[ "$sum" != "$last_sum" ]]; then
-	last_sum="$sum"
-	echo "primary change" >&2
-        printf "$copy" | wl-copy --regular --primary
-	printf "$copy" | tr '\n' "$hist_sep" >> "$hist_path"
-	echo "" >> "$hist_path"
-        return
-    fi
-    IFS= read -rd '' copy < <(wl-paste --type text --no-newline 2>/dev/null)
-    sum="$(printf "$copy" | md5sum)"
-    if [[ "$sum" != "$last_sum" ]]; then
-	last_sum="$sum"
-	echo "other change" >&2
-        printf "$copy" | wl-copy --regular --primary
-	printf "$copy" | tr '\n' "$hist_sep" >> "$hist_path"
-	echo "" >> "$hist_path"
-    fi
+    [[ "$sum" == "$last_sum" ]] && return 1
+    last_sum="$sum"
+    # synchronise clipboards
+    printf "$copy" | wl-copy --regular --primary
+    # write to history for recall
+    printf "$copy" | tr '\n' "$hist_sep" >> "$hist_path"
+    echo "" >> "$hist_path"
+    return 0
 }
 
 function __listen () {
     mkdir -p "$hist_dir" >/dev/null 2>&1
     rm "$hist_path" >/dev/null 2>&1
     while :; do
-        __find_diff
-        sleep 1.2
+        sleep 0.75
+        wl-paste --type text --no-newline 2>/dev/null | __check_diff && continue
+        wl-paste --type text --no-newline --primary 2>/dev/null | __check_diff
     done
 }
 
