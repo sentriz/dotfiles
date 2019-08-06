@@ -4,6 +4,8 @@ pkill --exact bemenu
 bemenu \
     --list 20 \
     --ignorecase \
+    --ifne \
+    --ignorecase \
     --fn "Source Code Pro 10" \
     --hb "#0088CC" \
     --hf "#FFFFFF" \
