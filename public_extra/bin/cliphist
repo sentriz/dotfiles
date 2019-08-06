@@ -16,7 +16,7 @@ if [[ "$#" -ne 1 ]]; then
     exit 1
 fi
 
-if ! which "wl-copy" > /dev/null 2>&1; then
+if ! which "wl-copy" >/dev/null 2>&1; then
     echo "please install wl-clipboard" >&2
     exit 1
 fi
@@ -24,31 +24,35 @@ fi
 hist_dir=~/".local/share"
 hist_path="$hist_dir/cliphist"
 hist_sep='…'
-last_copy=
+last_sum=
 
 function __find_diff () {
-    copy="$(wl-paste --type text --primary 2> /dev/null)"
-    if [[ "$copy" != "$last_copy" ]]; then
-        echo "$copy"
+    IFS= read -rd '' copy < <(wl-paste --type text --no-newline --primary 2>/dev/null)
+    sum="$(printf "$copy" | md5sum)"
+    if [[ "$sum" != "$last_sum" ]]; then
+	last_sum="$sum"
+	echo "primary change" >&2
+        printf "$copy" | wl-copy --regular --primary
+	printf "$copy" | tr '\n' "$hist_sep" >> "$hist_path"
+	echo "" >> "$hist_path"
         return
     fi
-    copy="$(wl-paste --type text 2> /dev/null)"
-    [[ "$copy" != "$last_copy" ]] && echo "$copy"
+    IFS= read -rd '' copy < <(wl-paste --type text --no-newline 2>/dev/null)
+    sum="$(printf "$copy" | md5sum)"
+    if [[ "$sum" != "$last_sum" ]]; then
+	last_sum="$sum"
+	echo "other change" >&2
+        printf "$copy" | wl-copy --regular --primary
+	printf "$copy" | tr '\n' "$hist_sep" >> "$hist_path"
+	echo "" >> "$hist_path"
+    fi
 }
 
 function __listen () {
-    mkdir -p "$hist_dir" > /dev/null 2>&1
-    rm "$hist_path" > /dev/null 2>&1
+    mkdir -p "$hist_dir" >/dev/null 2>&1
+    rm "$hist_path" >/dev/null 2>&1
     while :; do
-        new="$(__find_diff)"
-        if [[ -z "$new" ]]; then
-            sleep 1.2
-            continue
-        fi
-        wl-copy --trim-newline <<< "$new"
-        wl-copy --trim-newline --primary <<< "$new"
-        paste --serial --delimiters "$hist_sep" - <<< "$new" >> "$hist_path"
-        last_copy="$new"
+        __find_diff
         sleep 1.2
     done
 }
@@ -58,10 +62,9 @@ function __select () {
 }
 
 function __copy () {
-    to_copy="$(cat - | tr "$hist_sep" '\n')"
+    to_copy="$(cat -)"
     [[ -z "$to_copy" ]] && return
-    wl-copy --foreground --trim-newline <<< "$to_copy"
-    wl-copy --foreground --trim-newline --primary <<< "$to_copy"
+    printf "$to_copy" | tr "$hist_sep" '\n' | wl-copy --regular --primary
 }
 
 case "$1" in
