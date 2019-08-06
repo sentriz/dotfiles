@@ -39,5 +39,5 @@ remote $ # if no pip for pythonx.x:
 remote $ curl https://bootstrap.pypa.io/get-pip.py | pythonx.x - --user
 ```
 
-**optional stuff**  
+**extra stuff**  
 see [system/desktop/](https://github.com/sentriz/dotfiles/tree/wayland/system/desktop)
