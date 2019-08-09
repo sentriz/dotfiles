@@ -1,5 +1,9 @@
+# vim: ft=dosini cms=#%s
+
 [options]
 font = Source Code Pro 8
+scrollback_lines = 100000
+cursor_shape = ibeam
 
 [colors]
 background = #303030
