@@ -1,3 +1,5 @@
+set -gx EDITOR nvim
+
 # prompt colour
 set -xg fish_color_host brgreen
 
