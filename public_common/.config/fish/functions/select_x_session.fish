@@ -24,6 +24,12 @@ function select_x_session
             set -gx GTK2_RC_FILES /usr/share/themes/Adwaita/gtk-2.0/gtkrc # gtk2
             set -gx GTK_THEME Adwaita                                     # gtk2
             set -gx QT_STYLE_OVERRIDE adwaita                             # qt5
+            set -gx XDG_DESKTOP_DIR "$HOME"
+            set -gx XDG_DOWNLOAD_DIR "$HOME/downloads"
+            set -gx XDG_DOCUMENTS_DIR "$HOME/documents"
+            set -gx XDG_MUSIC_DIR "$HOME/music"
+            set -gx XDG_PICTURES_DIR "$HOME/pictures"
+            set -gx XDG_VIDEOS_DIR "$HOME/videos"
             exec sway 2> /tmp/sway_debug_log
         case fish
             exit
