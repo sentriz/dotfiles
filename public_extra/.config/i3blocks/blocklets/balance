@@ -13,7 +13,7 @@ function get-balance-boi() {
 
 function get-balance-revolut() {
     revolut_cli.py --language en \
-                   --token $(pass money/revolut/token) \
+                   --token $(pass money/revolut/account/token) \
                    --account "EUR CURRENT" \
         | awk '{print $1}'
 }
