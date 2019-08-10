@@ -4,13 +4,13 @@
 # 2017-
 # usage: screenshot [upload] [select]
 
-if ! which maim > /dev/null 2>&1
+if not which maim > /dev/null 2>&1
     echo "maim required" >&2
     echo "https://github.com/naelstrof/maim"
     exit 1
 end
 
-if ! notify-send --help 2>&1 | grep -Eq -- --print-id
+if not notify-send --help 2>&1 | grep -Eq -- --print-id
     echo "notify-send with `--print-id` and `--replace-id` required" >&2
     echo "https://aur.archlinux.org/packages/?O=0&K=libnotify-id" >&2
     exit 1
