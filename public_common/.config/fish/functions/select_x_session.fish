@@ -18,7 +18,8 @@ function select_x_session
     switch "$option"
         case sway
             # set -gx XDG_SESSION_TYPE wayland
-            # set -gx QT_QPA_PLATFORM wayland
+            set -gx QT_QPA_PLATFORM wayland
+            set -gx QT_WAYLAND_DISABLE_WINDOWDECORATION 1
             # set -gx GDK_BACKEND wayland
             # set -gx CLUTTER_BACKEND wayland
             set -gx GTK2_RC_FILES /usr/share/themes/Adwaita/gtk-2.0/gtkrc # gtk2
