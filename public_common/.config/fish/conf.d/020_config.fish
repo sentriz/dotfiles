@@ -3,7 +3,7 @@ if test -f $HOME/.config/fish/machines/(hostname).fish
     source $HOME/.config/fish/machines/(hostname).fish
 end
 
-if ! status --is-interactive
+if not status --is-interactive
     exit
 end
 
