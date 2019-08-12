@@ -1,1 +1,0 @@
-./pygmalion.fish
