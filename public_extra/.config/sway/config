@@ -146,20 +146,6 @@ mode $mode_i3 {
     bindsym Escape mode "default"
 }
 
-set $mode_audio "volume mode: +|right +5%/+10%,  -|left +5%/+10%,  [m]ute,  [r]eset"
-mode $mode_audio {
-    bindsym plus         exec ponymix increase 5%;     exec $up_block_1
-    bindsym minus        exec ponymix decrease 5%;     exec $up_block_1
-    bindsym KP_Add       exec ponymix increase 5%;     exec $up_block_1
-    bindsym KP_Subtract  exec ponymix decrease 5%;     exec $up_block_1
-    bindsym Right        exec ponymix increase 10%;    exec $up_block_1 
-    bindsym Left         exec ponymix decrease 10%;    exec $up_block_1
-    bindsym m            exec ponymix toggle;          exec $up_block_1
-    bindsym r            exec ponymix set-volume 100%; exec $up_block_1
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
-
 set $mode_move_floating "floating move mode: [h][j][k][l]"
 mode $mode_move_floating {
     bindsym h     move left
@@ -287,9 +273,9 @@ for_window [title="^bobby$"]              floating enable
 ## bindings: xf86
 bindsym XF86MonBrightnessUp   exec xbacklight -inc 5
 bindsym XF86MonBrightnessDown exec xbacklight -dec 5
-bindsym XF86AudioRaiseVolume  exec ponymix increase 5% && $up_block_1
-bindsym XF86AudioLowerVolume  exec ponymix decrease 5% && $up_block_1
-bindsym XF86AudioMute         exec ponymix toggle && $up_block_1
+bindsym XF86AudioLowerVolume  exec amixer sset Master 5%- && $up_block_1
+bindsym XF86AudioRaiseVolume  exec amixer sset Master 5%+ && $up_block_1
+bindsym XF86AudioMute         exec amixer sset Master toggle && $up_block_1
 bindsym XF86AudioPlay         exec playerctl play-pause
 bindsym XF86AudioStop         exec playerctl stop
 bindsym XF86AudioNext         exec playerctl next

@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
-if ponymix is-muted; then
+if amixer sget Master | grep -q '\[off\]'; then
     echo 'muted'
-else
-    echo "$(ponymix get-volume)%"
+    exit
 fi
+
+amixer sget Master | awk -F"[][]" '/dB/ { print $2 }'
