@@ -9,6 +9,6 @@ if status --is-interactive
 end
 
 # start x
-if status --is-login; and test -z $DISPLAY; and test -z $TMUX
-    select_x_session
+if test (tty) = '/dev/tty1'
+    start_sway
 end

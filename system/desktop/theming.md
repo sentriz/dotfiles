@@ -5,10 +5,10 @@ all that is needed are some packages. the the following is set up in `public_ext
 
 |toolkit|where|what|
 |---|---|---|
-|gtk2|fish select_x_session|`GTK2_RC_FILES=/usr/share/themes/Adwaita/gtk-2.0/gtkrc`|
-|gtk3|fish select_x_session|`GTK_THEME=Adwaita`|
+|gtk2|fish start_sway|`GTK2_RC_FILES=/usr/share/themes/Adwaita/gtk-2.0/gtkrc`|
+|gtk3|fish start_sway|`GTK_THEME=Adwaita`|
 |qt4|Trolltech.conf (can't configure with var like the rest)|`[Qt] style=adwaita`|
-|qt5|fish select_x_session|`QT_STYLE_OVERRIDE=adwaita`|
+|qt5|fish start_sway|`QT_STYLE_OVERRIDE=adwaita`|
 
 ### packages
 
