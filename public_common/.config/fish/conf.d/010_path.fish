@@ -1,3 +1,5 @@
+set -gx RIPGREP_CONFIG_PATH $HOME/.config/ripgreprc
+
 if test -d /opt/android-sdk
     set -gx ANDROID_HOME /opt/android-sdk
 end

@@ -32,7 +32,6 @@ alias :q  'exit'
 abbr sev 'sudo -E vim'
 abbr du  'du -d1 -h'
 abbr g   'git'
-abbr rg  'rg -g \'!*node_modules*\''
 abbr cal 'cal --three --monday'
 
 # misc
