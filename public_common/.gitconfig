@@ -60,7 +60,7 @@
     smtpserverport = 587
 	confirm = auto
 [credential "smtp://senan%40senan.xyz@smtp.fastmail.com%3a587"]
-	helper = !pass social/fastmail/git_app_password
+    helper = !printf "password=%s" $(secret fastmail_apppassword)
 [rebase]
 	autosquash = true
 [gpg]

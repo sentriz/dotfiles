@@ -51,8 +51,8 @@ socr add "$filename" &
 contains 'upload' $argv; or exit
 set -l credentials (printf \
     '%s:%s' \
-    (pass boxes/hog/image/username) \
-    (pass boxes/hog/image/password)
+    (secret image_username) \
+    (secret image_password)
 )
 set -l remote (curl -s \
     "$remote_host/upload" \

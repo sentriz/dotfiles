@@ -12,8 +12,7 @@ if test (count $argv) -ne 1
     exit 1
 end
 
-# TODO: pass client id in as arg instead
-set -l client_id (pass 'misc/imgur/api_key')
+set -l client_id (secret imgur_apikey)
 set -l upload_url 'https://api.imgur.com/3/upload'
 set -l image_path $argv[1]
 
