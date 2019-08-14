@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
 
 cat /sys/class/power_supply/BAT*/uevent \
-    | grep 'POWER_SUPPLY_CAPACITY=' \
-    | awk -F'=' '{sum += ($NF)/2} END {print sum"%"}'
+    | sed -rn 's/^POWER_SUPPLY_CAPACITY=([0-9]+)$/\1%/p'
