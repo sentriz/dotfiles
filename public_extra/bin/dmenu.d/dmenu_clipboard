@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
-cliphist select \
+exec cliphist select \
     | dmenu_custom --prompt 'clipboard' \
     | cliphist copy

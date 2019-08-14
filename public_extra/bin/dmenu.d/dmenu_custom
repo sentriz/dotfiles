@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 pkill --exact bemenu
-bemenu \
+exec bemenu \
     --list 20 \
     --ignorecase \
     --ifne \
