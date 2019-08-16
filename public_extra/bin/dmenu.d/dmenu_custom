@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 pkill --exact bemenu
-exec bemenu \
+exec env BEMENU_BACKEND=wayland bemenu \
     --list 20 \
     --ignorecase \
     --ifne \
