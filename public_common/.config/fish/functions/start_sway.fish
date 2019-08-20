@@ -14,5 +14,11 @@ set -gx XDG_DOCUMENTS_DIR "$HOME/documents"
 set -gx XDG_MUSIC_DIR "$HOME/music"
 set -gx XDG_PICTURES_DIR "$HOME/pictures"
 set -gx XDG_VIDEOS_DIR "$HOME/videos"
+set -gx XDG_DATA_DIRS (string join ':' \
+    '/usr/local/share' \
+    '/usr/share' \
+    '/var/lib/flatpak/exports/share' \
+    '/home/senan/.local/share/flatpak/exports/share'
+)
 
 exec sway 2> /tmp/sway_debug_log
