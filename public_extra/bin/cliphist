@@ -35,14 +35,14 @@ last_sum=
 
 function __check_diff () {
     IFS= read -rd '' copy
-    sum="$(printf "$copy" | md5sum)"
+    sum="$(echo -n "$copy" | md5sum)"
     [[ "$sum" == "$last_sum" ]] && return 1
     last_sum="$sum"
     # synchronise clipboards
-    printf "$copy" | wl-copy --regular --primary
+    echo -n "$copy" | wl-copy --regular --primary
     # write to history for recall
-    printf "$copy" | tr '\n' "$hist_sep" >> "$hist_path"
-    echo "" >> "$hist_path"
+    echo -n "$copy" | tr '\n' "$hist_sep" >> "$hist_path"
+    echo '' >> "$hist_path"
     return 0
 }
 
@@ -63,7 +63,7 @@ function __select () {
 function __copy () {
     to_copy="$(cat -)"
     [[ -z "$to_copy" ]] && return
-    printf "$to_copy" | tr "$hist_sep" '\n' | wl-copy --regular --primary
+    echo -n "$to_copy" | tr "$hist_sep" '\n' | wl-copy --regular --primary
 }
 
 case "$1" in
