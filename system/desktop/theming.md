@@ -1,14 +1,14 @@
 ### about
 
 consistent look between `gtk2`, `gtk3`, `qt4`, and `qt5`.  
-all that is needed are some packages. the the following is set up in `public_extra/`:  
+all that is needed are some packages. the the themes are set up in `public_extra/`:  
 
-|toolkit|where|what|
+|toolkit|where|
 |---|---|---|
-|gtk2|fish start_sway|`GTK2_RC_FILES=/usr/share/themes/Adwaita/gtk-2.0/gtkrc`|
-|gtk3|fish start_sway|`GTK_THEME=Adwaita`|
-|qt4|Trolltech.conf (can't configure with var like the rest)|`[Qt] style=adwaita`|
-|qt5|fish start_sway|`QT_STYLE_OVERRIDE=adwaita`|
+|gtk2|`~/.gtkrc-2.0`|
+|gtk3|`~/.config/gtk-3.0/settings.ini`|
+|qt4|`Trolltech.conf`|
+|qt5|todo|
 
 ### packages
 

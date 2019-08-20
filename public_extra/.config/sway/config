@@ -15,8 +15,6 @@ set $super        Mod4
 set $alt          Mod1
 floating_modifier $super
 
-# xwayland disable
-
 ## globals
 set $default_gap     16
 set $default_font    Source Code Pro 10
