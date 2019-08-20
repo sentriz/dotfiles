@@ -29,6 +29,8 @@ abbr sev 'sudo -E vim'
 abbr du  'du -d1 -h'
 abbr g   'git'
 abbr cal 'cal --three --monday'
+abbr cal 'cal --three --monday'
+abbr ps  'ps -axh -o pid,%cpu,cmd'
 
 # misc
 alias pg 'ping 8.8.8.8'
