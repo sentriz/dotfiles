@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
-compgen -c \
-    | sort -u \
-    | tail -n +9 \
-    | dmenu_custom --prompt 'package' \
-    | xargs swaymsg exec --
+SHELL=$(which bash)
+
+j4-dmenu-desktop \
+    --dmenu "dmenu_custom --prompt 'package'" \
+    --use-xdg-de \
+    --term 'termite'
