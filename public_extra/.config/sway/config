@@ -254,6 +254,7 @@ for_window [window_role="pop-up"]         floating enable
 for_window [window_role="task_dialog"]    floating enable
 for_window [window_type="dialog"]         floating enable
 for_window [title="Preferences$"]         floating enable
+for_window [title="^moz-extension"]       floating enable
 for_window [class="Anki"]                 floating enable
 for_window [class="Blueman-manager"]      floating enable
 for_window [class="Galculator"]           floating enable
