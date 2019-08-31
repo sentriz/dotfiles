@@ -4,6 +4,7 @@ set -gx QT_QPA_PLATFORM wayland
 set -gx QT_WAYLAND_DISABLE_WINDOWDECORATION 1
 set -gx XDG_SESSION_TYPE wayland
 
+set -gx XDG_CURRENT_DESKTOP 'sway'
 set -gx XDG_DESKTOP_DIR "$HOME"
 set -gx XDG_DOWNLOAD_DIR "$HOME/downloads"
 set -gx XDG_DOCUMENTS_DIR "$HOME/documents"
