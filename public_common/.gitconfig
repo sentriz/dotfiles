@@ -68,3 +68,6 @@
 	program = gpg2
 [tag]
 	forceSignAnnotated = true
+[rerere]
+	enabled = true
+	autoupdate = true
