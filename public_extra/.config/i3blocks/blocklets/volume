@@ -1,8 +1,15 @@
 #!/usr/bin/env bash
 
+# this is working for me with one sink and
+# - pulseaudio
+# - pulseaudio-alsa
+# - pulseaudio-bluetooth
+# - alsa-utils
+# installed
+
 if amixer sget Master | grep -q '\[off\]'; then
     echo 'muted'
     exit
 fi
 
-amixer sget Master | awk -F"[][]" '/dB/ { print $2 }'
+amixer sget Master | grep -Po 'Left.*\[\K([0-9]+%)(?=\])'
