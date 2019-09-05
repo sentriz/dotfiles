@@ -25,7 +25,6 @@
     textconv = unzip -c -a
 [diff]
     compactionHeuristic = true
-    tool = vimdiff
 [github]
     user = sentriz
 [advice]
@@ -71,3 +70,5 @@
 [rerere]
 	enabled = true
 	autoupdate = true
+[url "git@github.com:"]
+    insteadOf = https://github.com/
