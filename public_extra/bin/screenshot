@@ -4,13 +4,19 @@
 # 2017-
 # usage: screenshot [upload] [select]
 
-if ! which maim > /dev/null 2>&1
-    echo "maim required" >&2
-    echo "https://github.com/naelstrof/maim"
+if not which grim > /dev/null 2>&1
+    echo "grim required" >&2
+    echo "https://github.com/emersion/grim" >&2
     exit 1
 end
 
-if ! notify-send --help 2>&1 | grep -Eq -- --print-id
+if not which slurp > /dev/null 2>&1
+    echo "slurp required" >&2
+    echo "https://github.com/emersion/slurp" >&2
+    exit 1
+end
+
+if not notify-send --help 2>&1 | grep -Eq -- --print-id
     echo "notify-send with `--print-id` and `--replace-id` required" >&2
     echo "https://aur.archlinux.org/packages/?O=0&K=libnotify-id" >&2
     exit 1
@@ -18,7 +24,7 @@ end
 
 set -g screen_dir "$HOME/pictures/screenshots"
 set -g remote_host 'https://image.home.senan.xyz'
-set -g maim_options
+set -g grim_options
 set -g notify_id (random 500 1000)
 
 function __notify
@@ -31,12 +37,11 @@ end
 
 if contains 'select' $argv
     __notify 'screenshot' 'select an area'
-    set -a maim_options '--select'
-    set -a maim_options '--bordersize=3'
+    set -a grim_options '-g '(slurp)
 end
 
 set -g filename "$screen_dir/"(date '+%Y%m%d_%H%M%S.png')
-maim $maim_options "$filename"
+grim $grim_options "$filename"
 __notify 'screenshot' 'taken '(basename $filename)
 
 # add to socr database
@@ -46,13 +51,13 @@ socr add "$filename" &
 contains 'upload' $argv; or exit
 set -l credentials (printf \
     '%s:%s' \
-    (pass boxes/hog/image/username) \
-    (pass boxes/hog/image/password)
+    (secret image_username) \
+    (secret image_password)
 )
 set -l remote (curl -s \
     "$remote_host/upload" \
     --user "$credentials" \
     --form "img=@$filename"
 )
-echo "$remote_host/$remote" | xclip -i
+echo "$remote_host/$remote" | wl-copy
 __notify 'screenshot' 'link in clipboard'

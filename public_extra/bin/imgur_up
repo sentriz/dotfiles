@@ -1,12 +1,37 @@
 #!/usr/bin/env fish
 
-set -l client_id (pass 'misc/imgur/api_key')
-set -l upload_url 'https://api.imgur.com/3/upload'
+# senan kelly, 2019
 
-read image
-set response (curl -sH "Authorization: Client-ID $client_id" -F image=@$image $upload_url)
-if echo $response | grep -qo '"status":200'
-    echo $response | sed -e 's/.*"link":"\([^"]*\).*/\1/' -e 's/\\\//g'
-else
+if ! which jq >/dev/null 2>&1
+    echo "please install jq" >&2
     exit 1
 end
+
+if test (count $argv) -ne 1
+    echo "usage: imgur_up <path to image>" >&2
+    exit 1
+end
+
+set -l client_id (secret imgur_apikey)
+set -l upload_url 'https://api.imgur.com/3/upload'
+set -l image_path $argv[1]
+
+if ! test -e "$image_path"
+    echo "please provide a valid path to an image" >&2
+    exit 1
+end
+
+set response (curl \
+    --silent \
+    --header "Authorization: Client-ID $client_id" \
+    --form "image=@$image_path" \
+    "$upload_url"
+)
+
+if ! echo "$response" | jq -e '.success' > /dev/null
+    echo "error response from imgur:" >&2
+    echo "$response" | jq -M '.data.error' >&2
+    exit 1
+end
+
+echo "$response" | jq -r '.data.link'

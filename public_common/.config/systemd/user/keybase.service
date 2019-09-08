@@ -1,0 +1,14 @@
+[Unit]
+Description=keybase
+
+[Service]
+Type=notify
+Environment=KEYBASE_SERVICE_TYPE=systemd
+EnvironmentFile=-%t/keybase/keybase.env
+EnvironmentFile=-%h/.config/keybase/keybase.autogen.env
+EnvironmentFile=-%h/.config/keybase/keybase.env
+ExecStart=/usr/bin/keybase --use-default-log-file --debug service
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

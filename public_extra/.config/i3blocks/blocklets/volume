@@ -1,7 +1,15 @@
 #!/usr/bin/env bash
 
-if ponymix is-muted; then
+# this is working for me with one sink and
+# - pulseaudio
+# - pulseaudio-alsa
+# - pulseaudio-bluetooth
+# - alsa-utils
+# installed
+
+if amixer sget Master | grep -q '\[off\]'; then
     echo 'muted'
-else
-    echo "$(ponymix get-volume)%"
+    exit
 fi
+
+amixer sget Master | grep -Po 'Left.*\[\K([0-9]+%)(?=\])'

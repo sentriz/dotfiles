@@ -5,15 +5,15 @@ function format() {
 }
 
 function get-balance-boi() {
-    boi_balance $(pass money/boi/365/username) \
-                $(pass money/boi/365/phone_number) \
-                $(pass money/boi/365/password) \
-                $(pass money/boi/365/date_of_birth)
+    boi_balance "$(secret boi_username)" \
+                "$(secret boi_phonenumber)" \
+                "$(secret boi_password)" \
+                "$(secret boi_dob)"
 }
 
 function get-balance-revolut() {
     revolut_cli.py --language en \
-                   --token $(pass money/revolut/token) \
+                   --token "$(secret revolut_token)" \
                    --account "EUR CURRENT" \
         | awk '{print $1}'
 }
@@ -25,9 +25,8 @@ function get-balance() {
     esac
 }
 
-balance="$(get-balance 2> /dev/null)" 
-[ -z "$balance" ] && \
-    exit 1
+balance="$(get-balance)"
+[ -z "$balance" ] && exit 1
 case "$BLOCK_BUTTON" in
     1|2|3) notify-send -- "$BLOCK_INSTANCE updated";;
 esac

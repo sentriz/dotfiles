@@ -1,6 +1,6 @@
 ### packages
 
-  - (pip) git+https://github.com/nicolargo/glances.git@develop
+  - (python3 user pip) git+https://github.com/nicolargo/glances.git@develop
   - (apt) lm-sensors
   - (apt) wireless-tools
 

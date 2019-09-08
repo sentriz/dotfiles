@@ -1,11 +1,13 @@
+### about
+
+some of my scripts make use of libnotify-id's `notify-send` id and replace system. so we need the patched version. mako is like a dunst for wayland  
+it is started by sway using some of the variables defined there. so we need to delete the service that starts it automatically
+
 ### packages
 
-  - (aur) libnotify-id-git
-  - dunst
+  - (aur) libnotify-id
+  - mako
 
-### example
+### commands
 
-    noti_id=60
-    while :; do
-        noti_id=$(notify-send --print-id --replace-id "$noti_id" ...)
-    done
+    $ rm /usr/share/dbus-1/services/fr.emersion.mako.service

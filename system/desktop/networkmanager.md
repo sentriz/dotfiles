@@ -9,8 +9,13 @@
     [device]
     wifi.backend=iwd
 
+`/etc/NetworkManager/conf.d/rc-manager.conf`
+
+    [main]
+    rc-manager=resolvconf
+
 ### packages
 
-  - network-manager
-  - network-manager-openvpn
-  - network-manager-applet
+  - openresolv
+  - networkmanager
+  - networkmanager-wireguard-git

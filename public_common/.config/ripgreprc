@@ -1,0 +1,8 @@
+--smart-case
+--glob=!*node_modules*
+--glob=!*vendor*
+--glob=!\.git*
+--colors=line:none
+--colors=column:none
+--max-columns=150
+--max-columns-preview

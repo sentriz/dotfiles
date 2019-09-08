@@ -1,0 +1,75 @@
+#!/usr/bin/env bash
+
+# senan kelly 2019
+
+# recommended: wl-clipboard-rs instead of wl-clipboard
+# (wl-clipboard seems to grab keyboard focus for me)
+
+# to start the deamon (listens for new items in the clipboard):
+# $ ./cliphist listen
+
+# to copy an old item to your clipboard example:
+# $ ./cliphist select | dmenu -l 10 | ./cliphist copy
+
+# note: not much use of subprocesses or here doc in this becuase
+# they don't preserve trailing newlines
+
+if [[ "$#" -ne 1 ]]; then
+    echo "usage $0 [listen|select|copy]" >&2
+    exit 1
+fi
+
+if ! which "wl-copy" >/dev/null 2>&1; then
+    echo "please install wl-clipboard-rs" >&2
+    echo "https://github.com/YaLTeR/wl-clipboard-rs" >&2
+    exit 1
+fi
+
+set +m
+shopt -s lastpipe
+
+hist_dir=~/".local/share"
+hist_path="$hist_dir/cliphist"
+hist_sep='…'
+last_sum=
+
+function __check_diff () {
+    IFS= read -rd '' copy
+    sum="$(echo -n "$copy" | md5sum)"
+    [[ "$sum" == "$last_sum" ]] && return 1
+    last_sum="$sum"
+    # synchronise clipboards
+    echo -n "$copy" | wl-copy --regular --primary
+    # write to history for recall
+    echo -n "$copy" | tr '\n' "$hist_sep" >> "$hist_path"
+    echo '' >> "$hist_path"
+    return 0
+}
+
+function __listen () {
+    mkdir -p "$hist_dir" >/dev/null 2>&1
+    rm "$hist_path" >/dev/null 2>&1
+    while :; do
+        sleep 0.75
+        wl-paste --type text --no-newline 2>/dev/null | __check_diff && continue
+        wl-paste --type text --no-newline --primary 2>/dev/null | __check_diff
+    done
+}
+
+function __select () {
+    tac "$hist_path"
+}
+
+function __copy () {
+    to_copy="$(cat -)"
+    [[ -z "$to_copy" ]] && return
+    echo -n "$to_copy" | tr "$hist_sep" '\n' | wl-copy --regular --primary
+}
+
+case "$1" in
+    listen) __listen ;;
+    select) __select ;;
+    copy)   __copy ;;
+    *)      echo "invalid command \"$1\"" >&2
+            exit 1 ;;
+esac
