@@ -40,4 +40,4 @@ remote $ curl https://bootstrap.pypa.io/get-pip.py | pythonx.x - --user
 ```
 
 **extra stuff**  
-see [system/desktop/](https://github.com/sentriz/dotfiles/tree/wayland/system/desktop)
+see [system/desktop/](https://github.com/sentriz/dotfiles/tree/master/system/desktop)
