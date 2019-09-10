@@ -47,7 +47,7 @@ input * {
     xkb_layout ie
     xkb_options caps:none
     repeat_delay 130
-    repeat_rate 80
+    repeat_rate 75
 }
 
 input "2:7:SynPS/2_Synaptics_TouchPad" {
