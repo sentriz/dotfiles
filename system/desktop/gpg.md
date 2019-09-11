@@ -14,6 +14,8 @@ notable dotfiles:
 
 ### commands
 
+    $ # set kbfs mount point for `private/bin/secret`
+    $ keybase config set mountdir ~/mounts/kbfs
     $ # import public key
     $ keybase pgp export | gpg --import
     $ # import private key
