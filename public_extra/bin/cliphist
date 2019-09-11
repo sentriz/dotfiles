@@ -38,10 +38,9 @@ function __check_diff () {
     sum="$(echo -n "$copy" | md5sum)"
     [[ "$sum" == "$last_sum" ]] && return 1
     last_sum="$sum"
-    # synchronise clipboards
-    echo -n "$copy" | wl-copy --regular --primary
-    # write to history for recall
-    echo -n "$copy" | tr '\n' "$hist_sep" >> "$hist_path"
+    [[ ! "$copy" = *[![:space:]]* ]] && return 0
+    echo -n "$copy" | wl-copy --regular --primary         # sync clipboards
+    echo -n "$copy" | tr '\n' "$hist_sep" >> "$hist_path" # write to history
     echo '' >> "$hist_path"
     return 0
 }
