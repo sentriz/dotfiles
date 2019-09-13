@@ -1,33 +1,28 @@
 #!/usr/bin/env bash
 
-function format() {
-    printf "%'.2f\n" "$1" | sed -E 's/(\-|\+)?(.*)/\1€\2/' 
-}
-
 function get-balance-boi() {
-    boi_balance "$(secret boi_username)" \
-                "$(secret boi_phonenumber)" \
-                "$(secret boi_password)" \
-                "$(secret boi_dob)"
+    boi_balance \
+        "$(secret boi_username)" \
+        "$(secret boi_phonenumber)" \
+        "$(secret boi_password)" \
+        "$(secret boi_dob)"
 }
 
 function get-balance-revolut() {
-    revolut_cli.py --language en \
-                   --token "$(secret revolut_token)" \
-                   --account "EUR CURRENT" \
+    revolut_cli.py \
+        --language en \
+        --token "$(secret revolut_token)" \
+        --account "EUR CURRENT" \
         | awk '{print $1}'
 }
 
-function get-balance() {
+balance="$(
     case "$BLOCK_INSTANCE" in
         'boi')     get-balance-boi;;
         'revolut') get-balance-revolut;;
+        *)         exit 1;;
     esac
-}
-
-balance="$(get-balance)"
+)"
 [ -z "$balance" ] && exit 1
-case "$BLOCK_BUTTON" in
-    1|2|3) notify-send -- "$BLOCK_INSTANCE updated";;
-esac
-format "$balance"
+test "$BLOCK_BUTTON" -eq 1 && notify-send -- "$BLOCK_INSTANCE updated"
+printf "%'.2f\n" "$balance" | sed -E 's/(\-|\+)?(.*)/\1€\2/'
