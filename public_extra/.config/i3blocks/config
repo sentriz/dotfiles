@@ -19,6 +19,7 @@ color=#f24b74
 label=vpn
 
 [load]
+color=#039be5
 label=load
 
 [battery]
