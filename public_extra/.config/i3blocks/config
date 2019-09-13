@@ -10,7 +10,6 @@ signal=1
 
 [wifi]
 color=#ffb300
-instance=wlp3s0
 label=wifi
 
 [vpn]

@@ -1,20 +1,4 @@
 #!/usr/bin/bash
 
-INTERFACE="${BLOCK_INSTANCE:-$(awk '/^w/{print $1; exit}' /proc/net/route)}"
-
-[ ! -d "/sys/class/net/$INTERFACE/wireless" ] ||
-    [ "$(cat "/sys/class/net/$INTERFACE/operstate")" = 'down' ] && exit
-
-ADDRESS=$(ip a s "$INTERFACE" | awk '/inet /{print substr($2, 1, length($2)); exit}')
-[ -z "$ADDRESS" ] && exit
-
-case $BLOCK_BUTTON in
-    1) notify-send "$INTERFACE address" "$ADDRESS"
-esac
-
-QUALITY=$(grep "$INTERFACE" /proc/net/wireless | awk '{print $3 / 70}')
-ESSID=$(iw dev "$INTERFACE" link | awk '/SSID/{print substr($0, 8)}')
-
-printf '%s %s\n' \
-    "$ESSID" \
-    $(awk '{printf "%d%%\n", int($0 * 100)}' <<< "$QUALITY")
+nmcli -t -f name,type,state connection \
+    | grep -Po '[^:]+(?=:802-11-wireless:activated)'
