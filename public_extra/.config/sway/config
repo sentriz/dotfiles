@@ -1,14 +1,14 @@
-##################################################
-##            my i3 config, 2016-               ## 
-##################################################
-## mod, [a-z]             -> windows/postion    ##
-## mod, [num row]         -> workspaces         ##
-## mod, shift, [num row]  -> move to workspaces ##
-## mod, alt, [a-z]        -> modes              ##
-## mod, return            -> launch term        ##
-## mod, [f1-f9]           -> launch dmenus      ##
-## caps lock              -> scratchpad term    ##
-##################################################
+###################################################
+##              my i3 config, 2016-              ##
+###################################################
+##  mod, [a-z]            -> windows/postion     ##
+##  mod, [num row]        -> workspaces          ##
+##  mod, shift, [num row] -> move to workspaces  ##
+##  mod, alt, [a-z]       -> modes               ##
+##  mod, return           -> launch term         ##
+##  mod, [f1-f9]          -> launch dmenus       ##
+##  caps lock             -> scratchpad term     ##
+###################################################
 
 ## modifier
 set $super        Mod4
