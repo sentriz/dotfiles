@@ -5,11 +5,7 @@
 # - pulseaudio-alsa
 # - pulseaudio-bluetooth
 # - alsa-utils
-# installed
 
-if amixer sget Master | grep -q '\[off\]'; then
-    echo 'muted'
-    exit
-fi
-
-amixer sget Master | grep -Po 'Left.*\[\K([0-9]+%)(?=\])'
+resp="$(amixer sget "$BLOCK_INSTANCE")"
+grep -q '\[off\]' <<< "$resp" && echo 'muted' && exit
+grep -Po 'Left.*\[\K([0-9]+%)(?=\])' <<< "$resp"

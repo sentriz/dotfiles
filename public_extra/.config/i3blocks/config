@@ -5,7 +5,6 @@ interval=5
 [volume]
 color=#7cb342
 instance=Master
-interval=once
 label=volume
 signal=1
 
