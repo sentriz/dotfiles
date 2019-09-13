@@ -27,13 +27,13 @@ label=battery
 [balance]
 color=#e6e600
 instance=boi
-interval=900
+interval=1800
 label=boi
 
 [balance]
 color=#ffbb33
 instance=revolut
-interval=900
+interval=1200
 label=revolut
 
 [time]
