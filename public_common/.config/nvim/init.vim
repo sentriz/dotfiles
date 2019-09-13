@@ -22,9 +22,6 @@ if dein#load_state(s:dein_dir)
     call dein#add('tpope/vim-repeat')
     call dein#add('tpope/vim-surround')
     call dein#add('wellle/targets.vim')
-    " panels
-    call dein#add('majutsushi/tagbar', {'on_ft': 'go'})
-    call dein#add('tpope/vim-fugitive')
     " langs
     call dein#add('Shougo/deoplete.nvim')
     call dein#add('ambv/black', {'on_ft': 'python'})
@@ -32,6 +29,7 @@ if dein#load_state(s:dein_dir)
     call dein#add('posva/vim-vue', {'on_ft': 'vue'})
     " misc
     call dein#add('machakann/vim-highlightedyank')
+    call dein#add('majutsushi/tagbar', {'on_ft': 'go'})
     call dein#add('rhysd/committia.vim')
     call dein#add('romainl/vim-qf')
     call dein#end()
