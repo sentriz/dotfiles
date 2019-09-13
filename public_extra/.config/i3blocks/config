@@ -23,7 +23,6 @@ label=load
 
 [battery]
 color=#e184c2
-instance=1
 label=battery
 
 [balance]
