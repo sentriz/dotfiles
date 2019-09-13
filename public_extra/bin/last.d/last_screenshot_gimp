@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-exec gimp $(ls -t ~/pictures/screenshots/* | head -n 1)
