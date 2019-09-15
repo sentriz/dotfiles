@@ -1,7 +1,7 @@
 ### packages
 
-  - mpv-mpris
-  - playerctl
+- mpv-mpris
+- playerctl
 
 ### commands
 

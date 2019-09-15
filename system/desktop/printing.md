@@ -1,8 +1,9 @@
 ### packages
 
-  - cups
+- cups
 
 ### files
+
 `/etc/cups/cupsd.conf`
 
     SystemGroup sys root wheel

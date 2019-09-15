@@ -2,13 +2,14 @@ adapted from: [Wireguard VPN: Typical Setup](https://web.archive.org/web/2019071
 
 ### packages
 
-  - wireguard
-  - wireguard-dkms
-  - wireguard-tools
-  - linux-headers-$(uname -r)
-  - iptables-persistent
+- wireguard
+- wireguard-dkms
+- wireguard-tools
+- linux-headers-\$(uname -r)
+- iptables-persistent
 
 ### files
+
 `/etc/wireguard/wg0.conf`
 
     [Interface]

@@ -1,6 +1,6 @@
 ### optional packages
 
-  - keybase
+- keybase
 
 ### commands
 

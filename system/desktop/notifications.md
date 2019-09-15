@@ -5,8 +5,8 @@ it is started by sway using some of the variables defined there. so we need to d
 
 ### packages
 
-  - (aur) libnotify-id
-  - mako
+- (aur) libnotify-id
+- mako
 
 ### commands
 

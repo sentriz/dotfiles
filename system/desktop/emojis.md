@@ -1,8 +1,9 @@
 ### packages
 
-  - ttf-emojione
+- ttf-emojione
 
 ### files
+
 `~/.config/fontconfig/conf.d/50-emojione-color.conf`
 
     <?xml version="1.0" encoding="UTF-8"?>
@@ -38,6 +39,7 @@
 ### commands
 
     $ fc-cache -f -v
-    
+
 ### see also
-  - [terminal](https://github.com/sentriz/dotfiles/blob/master/system/terminal.md)
+
+- [terminal](https://github.com/sentriz/dotfiles/blob/master/system/terminal.md)

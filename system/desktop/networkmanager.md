@@ -1,4 +1,5 @@
 ### files
+
 `/etc/NetworkManager/NetworkManager.conf`
 
     [device]
@@ -16,6 +17,6 @@
 
 ### packages
 
-  - openresolv
-  - networkmanager
-  - networkmanager-wireguard-git
+- openresolv
+- networkmanager
+- networkmanager-wireguard-git

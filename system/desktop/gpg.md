@@ -1,16 +1,17 @@
 ### about
 
-`gpg-agent` will act as an `ssh-agent`  
+`gpg-agent` will act as an `ssh-agent`
 
-notable dotfiles:  
-  - `~/.gnupg/gpg-agent.conf`
-  - `~/.gnupg/sshcontrol`  
-  - `~/.config/fish/functions/activate_keychain.fish` where some env vars for ssh are set, and gnupg's `TTY` and `X-DISPLAY` variables are updated (needed for `pinentry` to work consistently)
+notable dotfiles:
+
+- `~/.gnupg/gpg-agent.conf`
+- `~/.gnupg/sshcontrol`
+- `~/.config/fish/functions/activate_keychain.fish` where some env vars for ssh are set, and gnupg's `TTY` and `X-DISPLAY` variables are updated (needed for `pinentry` to work consistently)
 
 ### packages
 
-  - keybase
-  - gnupg
+- keybase
+- gnupg
 
 ### commands
 
@@ -26,6 +27,6 @@ notable dotfiles:
     $ systemctl --user enable --now gpg-agent-browser.socket
     $ systemctl --user enable --now gpg-agent.socket
 
-
 ### see also
-  - [server gpg](https://github.com/sentriz/dotfiles/blob/master/server/gpg.md)
+
+- [server gpg](https://github.com/sentriz/dotfiles/blob/master/server/gpg.md)

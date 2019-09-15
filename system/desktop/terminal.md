@@ -1,4 +1,4 @@
 ### packages
 
-  - adobe-source-code-pro-fonts
-  - termite
+- adobe-source-code-pro-fonts
+- termite
