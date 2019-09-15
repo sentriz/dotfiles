@@ -10,5 +10,4 @@
 
 ### commands
 
-    # systemctl enable org.cups.cupsd.service
-    # systemctl start org.cups.cupsd.service
+    # systemctl enable --now org.cups.cupsd.service

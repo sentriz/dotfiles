@@ -42,4 +42,4 @@
 
 ### see also
 
-- [terminal](https://github.com/sentriz/dotfiles/blob/master/system/terminal.md)
+- [terminal](https://github.com/sentriz/dotfiles/blob/master/system/desktop/terminal.md)
