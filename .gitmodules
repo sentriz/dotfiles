@@ -1,4 +1,0 @@
-[submodule "private"]
-	path = private
-	url = keybase://private/sentriz/dotfiles_private
-	branch = master

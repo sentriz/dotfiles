@@ -1,3 +1,0 @@
-#!/bin/bash
-
-stow -v --ignore='running' --target ~ -R private
