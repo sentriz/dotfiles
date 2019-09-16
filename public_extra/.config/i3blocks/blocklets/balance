@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
 
+# requires:
+# - pip boi-balance
+# - pip revolut
+
 function get-balance-boi() {
-    boi_balance \
+    boi-balance \
         "$(secret boi_username)" \
         "$(secret boi_phonenumber)" \
         "$(secret boi_password)" \
