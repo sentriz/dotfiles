@@ -65,3 +65,7 @@ fundle plugin 'fisherman/getopts'
 fundle plugin 'fisherman/fzf'
 fundle plugin 'sentriz/fish-pipenv'
 fundle init
+
+# plugin settings
+set -g pipenv_fish_fancy no
+set -g VIRTUAL_ENV_DISABLE_PROMPT yes
