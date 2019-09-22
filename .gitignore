@@ -15,4 +15,3 @@ public_common/.config/fish/fundle/
 # misc
 public_extra/.local/share/applications
 public_common/.config/autostart/
-public_common/.config/keybase/

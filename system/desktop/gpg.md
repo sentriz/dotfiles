@@ -10,23 +10,12 @@ notable dotfiles:
 
 ### packages
 
-- keybase
 - gnupg
 
 ### commands
 
-    $ # set kbfs mount point for `private/bin/secret`
-    $ keybase config set mountdir ~/mounts/kbfs
-    $ # import public key
-    $ keybase pgp export | gpg --import
-    $ # import private key
-    $ keybase pgp export --secret | gpg --allow-secret-key-import --import
-    $ # setup gpg-agent
+    $ gpg --import <usb-stick>/senan_kelly.asc
     $ systemctl --user enable --now gpg-agent-ssh.socket
     $ systemctl --user enable --now gpg-agent-extra.socket
     $ systemctl --user enable --now gpg-agent-browser.socket
     $ systemctl --user enable --now gpg-agent.socket
-
-### see also
-
-- [server gpg](https://github.com/sentriz/dotfiles/blob/master/server/gpg.md)
