@@ -23,5 +23,5 @@ set -l possible_paths \
 
 for path in $possible_paths
     test -d "$path"
-    and set -gx fish_user_paths "$path" $fish_user_paths
+    and set -agx fish_user_paths "$path"
 end

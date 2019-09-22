@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
 
-# senan kelly 2019
+exit
 
-# recommended: wl-clipboard-rs instead of wl-clipboard
-# (wl-clipboard seems to grab keyboard focus for me)
+# senan kelly 2019
 
 # to start the deamon (listens for new items in the clipboard):
 # $ ./cliphist listen
@@ -19,9 +18,16 @@ if [[ "$#" -ne 1 ]]; then
     exit 1
 fi
 
-if ! which "wl-copy" >/dev/null 2>&1; then
-    echo "please install wl-clipboard-rs" >&2
-    echo "https://github.com/YaLTeR/wl-clipboard-rs" >&2
+if ! which "wl-paste" >/dev/null 2>&1; then
+    echo "please install wl-clipboard" >&2
+    echo "https://github.com/bugaevc/wl-clipboard" >&2
+    exit 1
+fi
+
+if ! wl-paste --help | grep -Eq "\W\--watch\W"; then
+    echo "your version of wl-clipboard doesn't have \`wl-paste --watch\`" >&2
+    echo "please upgade" >&2
+    echo "https://github.com/bugaevc/wl-clipboard" >&2
     exit 1
 fi
 
@@ -30,29 +36,15 @@ shopt -s lastpipe
 
 hist_dir=~/".local/share"
 hist_path="$hist_dir/cliphist"
+hist_sum_path="$hist_dir/cliphist_sum"
 hist_sep='…'
-last_sum=
-
-function __check_diff () {
-    IFS= read -rd '' copy
-    sum="$(echo -n "$copy" | md5sum)"
-    [[ "$sum" == "$last_sum" ]] && return 1
-    last_sum="$sum"
-    [[ ! "$copy" = *[![:space:]]* ]] && return 0
-    echo -n "$copy" | wl-copy --regular --primary         # sync clipboards
-    echo -n "$copy" | tr '\n' "$hist_sep" >> "$hist_path" # write to history
-    echo '' >> "$hist_path"
-    return 0
-}
 
 function __listen () {
     mkdir -p "$hist_dir" >/dev/null 2>&1
     rm "$hist_path" >/dev/null 2>&1
-    while :; do
-        sleep 0.75
-        wl-paste --type text --no-newline 2>/dev/null | __check_diff && continue
-        wl-paste --type text --no-newline --primary 2>/dev/null | __check_diff
-    done
+    trap 'kill %1' SIGINT
+    wl-paste --type text --no-newline --watch $0 copy & # %1
+    wl-paste --type text --no-newline --primary --watch $0 copy
 }
 
 function __select () {
@@ -60,9 +52,17 @@ function __select () {
 }
 
 function __copy () {
-    to_copy="$(cat -)"
-    [[ -z "$to_copy" ]] && return
-    echo -n "$to_copy" | tr "$hist_sep" '\n' | wl-copy --regular --primary
+    echo howdy
+    IFS= read -rd '' copy
+    sum="$(echo -n "$copy" | md5sum)"
+    [[ "$sum" == "$(cat "$hist_sum_path" 2>/dev/null)" ]] && return
+    echo "$sum" > "$hist_sum_path"
+    [[ ! "$copy" = *[![:space:]]* ]] && return
+    echo -n "$copy" | wl-copy --primary
+    echo -n "$copy" | wl-copy
+    echo -n "$copy" | tr '\n' "$hist_sep" >> "$hist_path"
+    echo '' >> "$hist_path"
+    return 0
 }
 
 case "$1" in
