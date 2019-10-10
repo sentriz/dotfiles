@@ -3,7 +3,6 @@
 # this is working for me with one sink and
 # - pulseaudio
 # - pulseaudio-alsa
-# - pulseaudio-bluetooth
 # - alsa-utils
 
 resp="$(amixer sget "$BLOCK_INSTANCE")"
