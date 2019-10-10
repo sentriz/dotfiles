@@ -261,6 +261,8 @@ for_window [class="Anki"]                  floating enable
 for_window [title="Anki$"]                 floating enable
 for_window [app_id="electrum"]             floating enable
 for_window [app_id="nm-connection-editor"] floating enable
+for_window [app_id="wdisplays"]            floating enable
+for_window [app_id="^blueman-manager"]     floating enable
 for_window [class="Blueman-manager"]       floating enable
 for_window [class="Galculator"]            floating enable
 for_window [class="Gui.py"]                floating enable
@@ -298,6 +300,7 @@ for_window  [app_id="^scratchpad$"] floating enable, move scratchpad, border pix
 bindcode 66 [app_id="^scratchpad$"] scratchpad show, resize set 1334 575, move position center
 
 ## autostarts
+exec blueman-applet
 exec cliphist listen
 exec thunar --daemon
 exec mako \
