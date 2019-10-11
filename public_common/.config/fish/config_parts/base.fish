@@ -21,7 +21,8 @@ set -l possible_paths \
     /usr/local/sbin \
     /usr/sbin
 
+# not using `set -a` for backwards compatibility
 for path in $possible_paths
     test -d "$path"
-    and set -agx fish_user_paths "$path"
+    and set -gx fish_user_paths "$path" $fish_user_paths
 end
