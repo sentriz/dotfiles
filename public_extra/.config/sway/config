@@ -231,6 +231,7 @@ bindsym $super+Shift+9 move container to workspace $work_9
 assign [class="Sqliteman"]                   $work_1
 assign [class="Meld"]                        $work_1
 assign [class="DB Browser for SQLite"]       $work_1
+assign [app_id="^sqlitebrowser$"]            $work_1
 assign [class="^minecraft-launcher$"]        $work_1
 assign [class="^Minecraft"]                  $work_1
 assign [app_id="^transmission-remote-gtk$"]  $work_1
