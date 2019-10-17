@@ -127,11 +127,11 @@ mode $mode_resize_tile {
 
 set $mode_system "system mode: [l]ock, [s]uspend, [h]ibernate, [r]eboot, shut[d]own"
 mode $mode_system {
-    bindsym l exec $lock;                                           mode default
-    bindsym d exec $lock; exec systemctl poweroff;  mode default
-    bindsym h exec $lock; exec systemctl hibernate; mode default
-    bindsym r exec $lock; exec systemctl reboot;    mode default
-    bindsym s exec $lock; exec systemctl suspend;   mode default
+    bindsym l exec $lock;               mode default
+    bindsym d exec systemctl poweroff;  mode default
+    bindsym h exec systemctl hibernate; mode default
+    bindsym r exec systemctl reboot;    mode default
+    bindsym s exec systemctl suspend;   mode default
     bindsym Return mode default
     bindsym Escape mode default
 }
