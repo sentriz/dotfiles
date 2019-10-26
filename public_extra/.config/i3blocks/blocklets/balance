@@ -20,6 +20,8 @@ function get-balance-revolut() {
         | awk '{print $1}'
 }
 
+uptime="$(bc <<< "$(awk '{print $1}' /proc/uptime) / 60")"
+test "$uptime" -le '5' && exit
 balance="$(
     case "$BLOCK_INSTANCE" in
         'boi')     get-balance-boi;;
