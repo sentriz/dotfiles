@@ -8,35 +8,35 @@ interval=300
 [volume]
 color=#7cb342
 instance=Master
-label=volume
+label=volume 
 signal=1
 
 [wifi]
 color=#ffb300
-label=wifi
+label=wifi 
 
 [vpn]
 color=#f24b74
-label=vpn
+label=vpn 
 
 [load]
 color=#039be5
-label=load
+label=load 
 
 [battery]
 color=#e184c2
-label=battery
+label=battery 
 
 [balance]
 color=#e6e600
 instance=boi
 interval=1800
-label=boi
+label=boi 
 
 [balance]
 color=#ffbb33
 instance=revolut
 interval=1200
-label=revolut
+label=revolut 
 
 [time]
