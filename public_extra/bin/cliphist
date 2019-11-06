@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-exit
-
 # senan kelly 2019
 
 # to start the deamon (listens for new items in the clipboard):
@@ -18,7 +16,7 @@ if [[ "$#" -ne 1 ]]; then
     exit 1
 fi
 
-if ! which "wl-paste" >/dev/null 2>&1; then
+if ! command -v "wl-paste" >/dev/null 2>&1; then
     echo "please install wl-clipboard" >&2
     echo "https://github.com/bugaevc/wl-clipboard" >&2
     exit 1
@@ -43,8 +41,8 @@ function __listen () {
     mkdir -p "$hist_dir" >/dev/null 2>&1
     rm "$hist_path" >/dev/null 2>&1
     trap 'kill %1' SIGINT
-    wl-paste --type text --no-newline --watch $0 copy & # %1
-    wl-paste --type text --no-newline --primary --watch $0 copy
+    wl-paste --type text --no-newline --watch "$0" write & # %1
+    wl-paste --type text --no-newline --primary --watch "$0" write
 }
 
 function __select () {
@@ -52,15 +50,21 @@ function __select () {
 }
 
 function __copy () {
-    echo howdy
-    IFS= read -rd '' copy
-    sum="$(echo -n "$copy" | md5sum)"
+    to_copy="$(cat -)"
+    [[ -z "$to_copy" ]] && return
+    echo -n "$to_copy" | tr "$hist_sep" '\n' | wl-copy
+    echo -n "$to_copy" | tr "$hist_sep" '\n' | wl-copy --primary
+}
+
+function __write () {
+    IFS= read -rd '' text
+    [[ ! "$text" = *[![:space:]]* ]] && return
+    sum="$(echo -n "$text" | md5sum)"
     [[ "$sum" == "$(cat "$hist_sum_path" 2>/dev/null)" ]] && return
     echo "$sum" > "$hist_sum_path"
-    [[ ! "$copy" = *[![:space:]]* ]] && return
-    echo -n "$copy" | wl-copy --primary
-    echo -n "$copy" | wl-copy
-    echo -n "$copy" | tr '\n' "$hist_sep" >> "$hist_path"
+    echo -n "$text" | sed -e 's/\r//' | wl-copy
+    echo -n "$text" | sed -e 's/\r//' | wl-copy --primary
+    echo -n "$text" | sed -e 's/\r//' | tr '\n' "$hist_sep" >> "$hist_path"
     echo '' >> "$hist_path"
     return 0
 }
@@ -69,6 +73,7 @@ case "$1" in
     listen) __listen ;;
     select) __select ;;
     copy)   __copy ;;
+    write)  __write ;;
     *)      echo "invalid command \"$1\"" >&2
             exit 1 ;;
 esac
