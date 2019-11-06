@@ -5,8 +5,8 @@ set -gx QT_WAYLAND_DISABLE_WINDOWDECORATION 1
 set -gx XDG_SESSION_TYPE wayland
 
 set -gx XDG_CURRENT_DESKTOP 'sway'
-set -gx XDG_DESKTOP_DIR "$HOME"
 set -gx XDG_DOWNLOAD_DIR "$HOME/downloads"
+set -gx XDG_DESKTOP_DIR "$XDG_DOWNLOAD_DIR"
 set -gx XDG_DOCUMENTS_DIR "$HOME/documents"
 set -gx XDG_MUSIC_DIR "$HOME/music"
 set -gx XDG_PICTURES_DIR "$HOME/pictures"
@@ -18,5 +18,7 @@ set -gx XDG_DATA_DIRS (string join ':' \
     '/var/lib/flatpak/exports/share' \
     '/home/senan/.local/share/flatpak/exports/share'
 )
+
+rm -rf ~/Desktop
 
 exec sway 2> /tmp/sway_debug_log
