@@ -296,14 +296,15 @@ bindsym $super+F2     exec dmenu_clipboard
 bindsym $super+F3     exec dmenu_radio
 
 ## scratchpad
-exec "while :; do $emulator --name scratchpad; done"
+exec "while :; do $emulator --name scratchpad; sleep 3; done"
 for_window  [app_id="^scratchpad$"] floating enable, move scratchpad, border pixel 2
 bindcode 66 [app_id="^scratchpad$"] scratchpad show, resize set 1334 575, move position center
 
 ## autostarts
-exec blueman-applet
+exec_always gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita'
+exec_always gsettings set org.gnome.desktop.interface icon-theme 'Adwaita'
+exec_always gsettings set org.gnome.desktop.interface cursor-theme 'Adwaita'
 exec cliphist listen
-exec thunar --daemon
 exec mako \
     --background-color "$grey" \
     --margin "$default_gap" \
