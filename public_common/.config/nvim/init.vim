@@ -22,6 +22,7 @@ if dein#load_state(s:dein_dir)
     call dein#add('tpope/vim-repeat')
     call dein#add('tpope/vim-surround')
     call dein#add('wellle/targets.vim')
+    call dein#add('tpope/vim-abolish')
     " langs
     call dein#add('Shougo/deoplete.nvim')
     call dein#add('ambv/black', {'on_ft': 'python'})
