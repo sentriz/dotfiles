@@ -21,7 +21,7 @@ let g:tmux_navigator_save_on_switch = 1
 
 " for fatih/vim-go
 let g:go_updatetime = 0
-let g:go_auto_sameids = 1
+let g:go_auto_sameids = 0
 let g:go_fmt_command = "gofumports"
 let g:go_fmt_options = {
     \ 'goimports': '-local github.com/sentriz/,senan.xyz/g/',
