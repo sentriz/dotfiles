@@ -1,10 +1,6 @@
 command=~/.config/i3blocks/blocklets/$BLOCK_NAME
 interval=5
 
-[next]
-instance=cpssd
-interval=300
-
 [volume]
 color=#7cb342
 instance=Master
@@ -18,10 +14,6 @@ label=wifi
 [vpn]
 color=#f24b74
 label=vpn 
-
-[load]
-color=#039be5
-label=load 
 
 [battery]
 color=#e184c2
