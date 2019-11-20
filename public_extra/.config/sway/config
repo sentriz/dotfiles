@@ -237,6 +237,7 @@ bindsym $super+Shift+9 move container to workspace $work_9
 
 assign [class="Sqliteman"]                   $work_1
 assign [class="Meld"]                        $work_1
+assign [app_id="org.gnome.meld"]             $work_1
 assign [class="DB Browser for SQLite"]       $work_1
 assign [app_id="^sqlitebrowser$"]            $work_1
 assign [class="^minecraft-launcher$"]        $work_1
@@ -265,6 +266,7 @@ for_window [window_role="pop-up"]          floating enable
 for_window [window_role="task_dialog"]     floating enable
 for_window [window_type="dialog"]          floating enable
 for_window [title="Preferences$"]          floating enable
+for_window [title="- Sharing Indicator$"]  floating enable
 for_window [class="Anki"]                  floating enable
 for_window [title="Anki$"]                 floating enable
 for_window [app_id="electrum"]             floating enable
