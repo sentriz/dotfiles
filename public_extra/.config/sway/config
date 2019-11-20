@@ -38,12 +38,16 @@ set $blue       #0088CC
 set $red_alpha  #ff000090
 
 ## basic appearance
-font $default_font
-gaps inner $default_gap
-default_border pixel 2
-popup_during_fullscreen smart
 smart_borders on
-titlebar_border_thickness 0
+smart_gaps off
+titlebar_border_thickness 2
+default_border pixel 2
+gaps inner $default_gap
+gaps top -$default_gap
+gaps right -$default_gap
+gaps left -$default_gap
+font $default_font
+popup_during_fullscreen smart
 
 ## input
 input * {
