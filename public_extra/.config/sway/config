@@ -22,7 +22,10 @@ set $emulator        termite
 set $emulator_search ^Termite$
 
 ## helpers
-set $lock       swaylock -u -i ~/pictures/wallpapers/fagan.png
+set $lock swaylock \
+    --daemonize \
+    --no-unlock-indicator \
+    --image ~/pictures/wallpapers/fagan.png
 set $up_block_1 pkill -RTMIN+1 i3blocks
 set $up_block_2 pkill -RTMIN+2 i3blocks
 set $up_block_3 pkill -RTMIN+3 i3blocks
@@ -305,7 +308,10 @@ bindcode 66 [app_id="^scratchpad$"] scratchpad show, resize set 1334 575, move p
 exec_always gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita'
 exec_always gsettings set org.gnome.desktop.interface icon-theme 'Adwaita'
 exec_always gsettings set org.gnome.desktop.interface cursor-theme 'Adwaita'
-exec cliphist listen
+exec cliphist listen > /tmp/cliphist_log 2>&1
+exec swayidle -w \
+    timeout 300  "$lock" \
+    before-sleep "$lock"
 exec mako \
     --background-color "$grey" \
     --margin "$default_gap" \
