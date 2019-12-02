@@ -20,6 +20,7 @@ set -l possible_paths \
     $HOME/node_modules/.bin \
     $HOME/bin \
     $HOME/bin/*/ \
+    /usr/local/go/bin \
     /bin \
     /opt/Etcher \
     /opt/balenaEtcher \
