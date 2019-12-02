@@ -14,5 +14,6 @@ complete \
          -mindepth 1 \
          -type d \
          -regextype egrep \
-         ! -regex '^\./(\.|_).*' -printf '%P\n'
+         ! -regex '^\./(\.|_).*' \
+	 -printf '%P\n'
     ))
