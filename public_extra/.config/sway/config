@@ -292,6 +292,7 @@ for_window [title="^bobby$"]               floating enable
 bindsym XF86AudioLowerVolume  exec amixer sset Master 5%- && $up_block_1
 bindsym XF86AudioRaiseVolume  exec amixer sset Master 5%+ && $up_block_1
 bindsym XF86AudioMute         exec amixer sset Master toggle && $up_block_1
+bindsym XF86AudioMicMute      exec amixer sset Capture toggle
 bindsym XF86AudioPlay         exec playerctl play-pause
 bindsym XF86AudioStop         exec playerctl stop
 bindsym XF86AudioNext         exec playerctl next
