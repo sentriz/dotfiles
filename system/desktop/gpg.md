@@ -4,9 +4,9 @@
 
 notable dotfiles:
 
-- `~/.gnupg/gpg-agent.conf`
-- `~/.gnupg/sshcontrol`
-- `~/.config/fish/functions/activate_keychain.fish` where some env vars for ssh are set, and gnupg's `TTY` and `X-DISPLAY` variables are updated (needed for `pinentry` to work consistently)
+- `public_common/.gnupg/gpg-agent.conf`
+- `public_common/.gnupg/sshcontrol`
+- `public_common/.config/fish/functions/activate_keychain.fish` where some env vars for ssh are set, and gnupg's `TTY` and `X-DISPLAY` variables are updated (needed for `pinentry` to work consistently)
 
 ### packages
 
