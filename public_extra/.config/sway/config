@@ -289,8 +289,6 @@ for_window [class="feh"]                   floating enable
 for_window [title="^bobby$"]               floating enable
 
 ## bindings: xf86
-bindsym XF86MonBrightnessUp   exec xbacklight -inc 5
-bindsym XF86MonBrightnessDown exec xbacklight -dec 5
 bindsym XF86AudioLowerVolume  exec amixer sset Master 5%- && $up_block_1
 bindsym XF86AudioRaiseVolume  exec amixer sset Master 5%+ && $up_block_1
 bindsym XF86AudioMute         exec amixer sset Master toggle && $up_block_1
