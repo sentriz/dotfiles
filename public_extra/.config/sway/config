@@ -82,7 +82,7 @@ bar colors urgent_workspace   $red_alpha  $red_alpha  #ffffff
 ## window colours       border backg text    indic   child
 client.focused          $blue  $blue #ffffff #ffffff #ffffff
 client.focused_inactive $blue  $blue #ffffff $grey   $grey
-client.unfocused        $blue  $grey #ffffff $grey   $grey
+client.unfocused        $grey  $grey #ffffff $grey   $grey
 
 ## bindings: window/float
 bindsym $super+q     kill
