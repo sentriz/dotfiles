@@ -315,6 +315,7 @@ exec_always gsettings set org.gnome.desktop.interface icon-theme 'Adwaita'
 exec_always gsettings set org.gnome.desktop.interface cursor-theme 'Adwaita'
 exec cliphist listen > /tmp/cliphist_log 2>&1
 exec swayidle -w \
+    timeout 290  "notify-send 'locking screen in 10 seconds'" \
     timeout 300  "$lock" \
     before-sleep "$lock"
 exec mako \
