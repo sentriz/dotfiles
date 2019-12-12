@@ -1,5 +1,5 @@
 " basics
-set listchars=tab:>\ ,eol:¬,trail:.
+set listchars=tab:>\ ,trail:.
 set sidescroll=1
 set noshowmode
 set laststatus=2
