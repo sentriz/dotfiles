@@ -1,5 +1,7 @@
 set -gx RIPGREP_CONFIG_PATH $HOME/.config/ripgreprc
-set -gx EDITOR nvim
+set -gx EDITOR 'nvim'
+set -gx GOPRIVATE 'github.com/CPSSD/*'
+set -gx GOPROXY 'https://proxy.golang.org,direct'
 
 if which go >/dev/null 2>&1
     set -gx GOPATH $HOME/go
