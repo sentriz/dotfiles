@@ -27,6 +27,8 @@ let g:go_fmt_options = {
     \ 'goimports': '-local github.com/sentriz/,senan.xyz/g/',
     \ 'gofumports': '-local github.com/sentriz/,senan.xyz/g/',
 \ }
+let g:go_metalinter_autosave = 1
+let g:go_metalinter_command = 'golangci-lint run'
 let g:go_disable_autoinstall = 1
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
