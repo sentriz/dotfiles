@@ -70,3 +70,6 @@ let g:tagbar_type_go = {
 
 " for ambv/black
 let g:black_linelength = 79
+
+" for airblade/vim-rooter
+let g:rooter_patterns = ['go.mod', 'go.sum', '.git/']
