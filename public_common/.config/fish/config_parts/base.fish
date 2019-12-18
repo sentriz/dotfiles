@@ -3,6 +3,12 @@ set -gx EDITOR 'nvim'
 set -gx GOPRIVATE 'github.com/CPSSD/*'
 set -gx GOPROXY 'https://proxy.golang.org,direct'
 
+# dotfiles settings
+set -gx DOTS_SCREENSHOTS_DIR "$HOME/pictures/screenshots"
+set -gx DOTS_SCREENSHOTS_REMOTE 'https://image.home.senan.xyz'
+set -gx DOTS_RADIO_DIR "$HOME/radio"
+set -gx DOTS_MOUNTS_DIR "$HOME/mounts"
+
 if which go >/dev/null 2>&1
     set -gx GOPATH $HOME/go
 end

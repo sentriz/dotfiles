@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
-stations="$(find ~/radio/ -maxdepth 1 -not -name '.st*' -type f -printf "play %f\n")"
+stations="$(find "$DOTS_RADIO_DIR" -maxdepth 1 -not -name '.st*' -type f -printf "play %f\n")"
 selection="$(printf "%s\n" "$stations" "stop" | dmenu_custom -p 'station')"
 test -z "$selection" && exit 1
 pkill -f '^mpv.*radio'
 test "$selection" = "stop" && exit 0
 station="$(awk '{print $2}' <<< "$selection")"
-mpv --no-ytdl --no-video --no-cache --quiet --no-resume-playback ~/radio/"$station" &
+mpv --no-ytdl --no-video --no-cache --quiet --no-resume-playback "$DOTS_RADIO_DIR/$station" &
 notify-send 'started radio station' "$(echo "$station" | sed 's/_/ /g')"

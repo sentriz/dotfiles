@@ -22,8 +22,8 @@ if not notify-send --help 2>&1 | grep -Eq -- --print-id
     exit 1
 end
 
-set -g screen_dir "$HOME/pictures/screenshots"
-set -g remote_host 'https://image.home.senan.xyz'
+set -g screen_dir "$DOTS_SCREENSHOTS_DIR"
+set -g remote_host "$DOTS_SCREENSHOTS_REMOTE"
 set -g grim_options
 set -g notify_id (random 500 1000)
 
