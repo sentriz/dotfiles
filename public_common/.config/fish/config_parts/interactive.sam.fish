@@ -5,6 +5,7 @@ set -g container_dir "/opt/containers"
 function cc --argument container
     cd "$container_dir/$container"
 end
+
 # need to wrap the inner subshell, so using this extra echo subshell
 complete \
     --command cc \
