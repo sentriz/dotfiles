@@ -8,4 +8,4 @@ set -gx GDK_BACKEND wayland
 set -gx QT_QPA_PLATFORM wayland
 set -gx QT_WAYLAND_DISABLE_WINDOWDECORATION 1
 
-exec sway 2> /tmp/sway_debug_log
+exec sway > ~/.cache/sway_log 2>&1
