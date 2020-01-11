@@ -289,6 +289,7 @@ for_window [class="electrum"]              floating enable
 for_window [class="etcher"]                floating enable
 for_window [class="feh"]                   floating enable
 for_window [title="^bobby$"]               floating enable
+for_window [app_id="^firefox$" title="Picture-in-Picture"] floating enable
 
 ## bindings: xf86
 bindsym XF86AudioLowerVolume  exec amixer sset Master 5%- && $up_block_1
