@@ -10,18 +10,11 @@
 ##  caps lock             -> scratchpad term     ##
 ###################################################
 
-## modifier
-set $super        Mod4
-set $alt          Mod1
-floating_modifier $super
+## var modifier
+set $super Mod4
+set $alt   Mod1
 
-## globals
-set $default_gap     16
-set $default_font    Source Code Pro 10
-set $emulator        termite
-set $emulator_search ^Termite$
-
-## helpers
+## var helpers
 set $lock swaylock \
     --daemonize \
     --no-unlock-indicator \
@@ -30,8 +23,12 @@ set $up_block_1 pkill -RTMIN+1 i3blocks
 set $up_block_2 pkill -RTMIN+2 i3blocks
 set $up_block_3 pkill -RTMIN+3 i3blocks
 set $up_block_4 pkill -RTMIN+4 i3blocks
+set $default_gap 16
+set $default_font Source Code Pro 10
+set $emulator termite
+set $emulator_search ^Termite$
 
-## colours
+## var colours
 set $grey       #303030
 set $grey_alpha #30303060
 set $blue       #0088CC
@@ -48,6 +45,10 @@ gaps right -$default_gap
 gaps left -$default_gap
 font $default_font
 popup_during_fullscreen smart
+
+## basic input
+floating_modifier $super
+focus_follows_mouse no
 
 ## input
 input * {
