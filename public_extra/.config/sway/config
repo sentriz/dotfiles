@@ -35,8 +35,9 @@ set $blue       #0088CC
 set $red_alpha  #ff000090
 
 ## basic appearance
-smart_borders on
+smart_borders off
 smart_gaps off
+hide_edge_borders both
 titlebar_border_thickness 2
 default_border pixel 2
 gaps inner $default_gap
@@ -208,11 +209,11 @@ set $work_1 "1 main"
 set $work_2 "2 web"
 set $work_3 "3 term i"
 set $work_4 "4 term ii"
-set $work_5 "5 vm"
-set $work_6 "6 chat"
-set $work_7 "7 mnem"
-set $work_8 "8 gimp"
-set $work_9 "9 office"
+set $work_5 "5"
+set $work_6 "6"
+set $work_7 "7"
+set $work_8 "8"
+set $work_9 "9"
 
 bindsym $super+grave workspace back_and_forth
 bindsym $super+1     workspace $work_1
@@ -321,7 +322,7 @@ exec swayidle -w \
     before-sleep "$lock"
 exec mako \
     --background-color "$grey" \
-    --margin "$default_gap" \
+    --margin "$default_gap,0" \
     --font "$default_font" \
     --border-size 4 \
     --border-color "#FFFFFF" \
