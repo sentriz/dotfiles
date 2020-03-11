@@ -1,5 +1,5 @@
 function fish_user_key_bindings
-    fish_vi_mode
+    fish_vi_key_bindings
     ### fzf ###
     set -q FZF_LEGACY_KEYBINDINGS
     or set -l FZF_LEGACY_KEYBINDINGS 1

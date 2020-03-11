@@ -2,6 +2,10 @@ set -gx RIPGREP_CONFIG_PATH $HOME/.config/ripgreprc
 set -gx EDITOR 'nvim'
 set -gx GOPRIVATE 'github.com/CPSSD/*'
 set -gx GOPROXY 'https://proxy.golang.org,direct'
+set -gx FNM_MULTISHELL_PATH $HOME/.fnm/current
+set -gx FNM_DIR $HOME/.fnm
+set -gx FNM_NODE_DIST_MIRROR https://nodejs.org/dist
+set -gx FNM_LOGLEVEL info
 
 # dotfiles settings
 set -gx DOTS_SCREENSHOTS_DIR "$HOME/pictures/screenshots"
@@ -20,6 +24,7 @@ set -l possible_paths \
     $HOME/node_modules/.bin \
     $HOME/bin \
     $HOME/bin/*/ \
+    $HOME/.fnm/current/bin \
     /usr/local/go/bin \
     /bin \
     /opt/Etcher \
@@ -36,3 +41,8 @@ for path in $possible_paths
     test -d "$path"
     and set -gx fish_user_paths "$path" $fish_user_paths
 end
+
+sh -c 'rm \
+    $HOME/.lesshst \
+    $HOME/.*_history \
+' > /dev/null 2>&1 &
