@@ -13,7 +13,6 @@ if dein#load_state(s:dein_dir)
     call dein#add('roxma/nvim-yarp')
     call dein#add('roxma/vim-hug-neovim-rpc')
     " getting around
-    call dein#add('junegunn/fzf.vim')
     call dein#add('tpope/vim-vinegar')
     call dein#add('christoomey/vim-tmux-navigator')
     " text operations
@@ -24,15 +23,15 @@ if dein#load_state(s:dein_dir)
     call dein#add('wellle/targets.vim')
     call dein#add('tpope/vim-abolish')
     " langs
-    call dein#add('ambv/black', {'on_ft': 'python'})
     call dein#add('fatih/vim-go', {'on_ft': 'go'})
-    call dein#add('posva/vim-vue', {'on_ft': 'vue'})
+    call dein#add('cespare/vim-toml')
     " misc
     call dein#add('machakann/vim-highlightedyank')
     call dein#add('majutsushi/tagbar', {'on_ft': 'go'})
     call dein#add('rhysd/committia.vim')
     call dein#add('romainl/vim-qf')
     call dein#add('airblade/vim-rooter')
+    call dein#add('psliwka/vim-smoothie')
     call dein#end()
     call dein#save_state()
 endif

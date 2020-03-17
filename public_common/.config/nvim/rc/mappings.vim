@@ -7,9 +7,7 @@ nnoremap <leader>x :write<cr>:!chmod +x %:p<cr><cr>
 nnoremap <leader>n :set hlsearch!<cr>
 nnoremap <leader>l :set list!<cr>
 nnoremap <leader>p :set spell!<cr>
-nnoremap <leader>s :%s/\<<c-r><c-w>\>/<c-r><c-w>/gc<c-f>$F/
-nnoremap <leader>t :TagbarToggle<cr>
-nnoremap <leader>f :GFiles<cr>
+nnoremap <leader>s :%s/\<<c-r><c-w>\>/<c-r><c-w>/c<c-f>$F/
 nnoremap <leader>/ :echo expand('%:p')<cr>
 
 " better

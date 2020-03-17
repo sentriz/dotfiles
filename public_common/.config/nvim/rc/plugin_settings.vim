@@ -27,8 +27,8 @@ let g:go_fmt_options = {
     \ 'goimports': '-local github.com/sentriz/,senan.xyz/g/',
     \ 'gofumports': '-local github.com/sentriz/,senan.xyz/g/',
 \ }
-let g:go_metalinter_autosave = 1
-let g:go_metalinter_command = 'golangci-lint run'
+let g:go_metalinter_autosave = 0
+let g:go_metalinter_command = 'golangci-lint run --disable unused'
 let g:go_disable_autoinstall = 1
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
@@ -38,7 +38,8 @@ let g:go_highlight_build_constraints = 1
 let g:go_def_mode = 'gopls'
 let g:go_info_mode = 'gopls'
 let g:go_info_mode = 'gopls'
-let g:go_gorename_command = 'gopls'
+let g:go_rename_command = 'gopls'
+let g:go_doc_popup_window = 1
 
 " for majutsushi/tagbar
 let g:tagbar_status_func = 'TagbarStatusFunc'
@@ -74,4 +75,4 @@ let g:tagbar_type_go = {
 let g:black_linelength = 79
 
 " for airblade/vim-rooter
-let g:rooter_patterns = ['go.mod', 'go.sum', '.git/']
+let g:rooter_patterns = ['go.mod', 'go.sum', 'package.json', '.git/']
