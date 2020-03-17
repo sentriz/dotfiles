@@ -14,11 +14,12 @@
     c            = commit
     s            = status
     set-upstream = !git branch --set-upstream-to=origin/`git symbolic-ref --short HEAD`
-    addf         = !git add -- $(git ls-files --modified --others --exclude-standard | fzf -m --preview 'cat {}')
-    checkoutf    = !git checkout -- $(git ls-files --modified --exclude-standard | fzf -m)
     fixupf       = !git commit --fixup=$(git log --pretty=oneline --abbrev-commit | fzf +s | awk '{print $1'})
-    showf        = !git show $(git log --pretty=oneline --abbrev-commit | fzf +s | awk '{print $1'})
-    difff        = !git diff $(git ls-files --modified --exclude-standard | fzf -m)
+    revertf      = !git revert      -- $(git log --pretty=oneline --abbrev-commit | fzf +s | awk '{print $1'})
+    showf        = !git show        -- $(git log --pretty=oneline --abbrev-commit | fzf +s | awk '{print $1'})
+    addf         = !git add      -- $(git ls-files --modified --others --exclude-standard | fzf -m --preview 'cat {}')
+    checkoutf    = !git checkout -- $(git ls-files --modified --exclude-standard | fzf -m)
+    difff        = !git diff     -- $(git ls-files --modified --exclude-standard | fzf -m)
     autosquash   = !GIT_SEQUENCE_EDITOR=true git rebase --interactive --autosquash
 [diff "zip"]
     textconv = unzip -c -a
@@ -32,8 +33,6 @@
     editor = nvim
     excludesfile = ~/.gitignore_global
     pager = less -r
-[interactive]
-    diffFilter = diff-highlight
 [pull]
     rebase = true
 [commit]
