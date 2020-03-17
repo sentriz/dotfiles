@@ -319,6 +319,7 @@ bindcode 66 [app_id="^scratchpad$"] scratchpad show, resize set 1334 575, move p
 exec_always gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita'
 exec_always gsettings set org.gnome.desktop.interface icon-theme 'Adwaita'
 exec_always gsettings set org.gnome.desktop.interface cursor-theme 'Adwaita'
+exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec cliphist listen > /tmp/cliphist_log 2>&1
 exec swayidle -w \
     timeout 290  "notify-send 'locking screen in 10 seconds'" \
