@@ -293,6 +293,8 @@ for_window [class="^XEyes$"]                   floating enable
 for_window [title="^bobby$"]                   floating enable
 for_window [app_id="^xdg-desktop-portal-gtk$"] floating enable
 for_window [app_id="^firefox$" title="Picture-in-Picture"] floating enable
+for_window [app_id="^sublime-music$"]          floating enable
+for_window [app_id="^thunar$" title="File Operation Progress"] floating enable
 
 ## bindings: xf86
 bindsym XF86AudioLowerVolume  exec amixer sset Master 5%- && $up_block_1
