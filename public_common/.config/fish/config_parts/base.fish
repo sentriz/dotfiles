@@ -42,7 +42,8 @@ for path in $possible_paths
     and set -gx fish_user_paths "$path" $fish_user_paths
 end
 
-sh -c 'rm \
+sh -c 'rm -r \
     $HOME/.lesshst \
     $HOME/.*_history \
+    $HOME/.gore \
 ' > /dev/null 2>&1 &
