@@ -8,13 +8,14 @@ end
 
 # need to wrap the inner subshell, so using this extra echo subshell
 complete \
+    -x \
     --command cc \
-    --arguments (echo (cd "$container_dir"; find \
-         . \
+    --arguments (find \
+         /opt/containers \
          -maxdepth 1 \
          -mindepth 1 \
          -type d \
          -regextype egrep \
          ! -regex '^\./(\.|_).*' \
-	 -printf '%P\n'
-    ))
+         -printf '%P '
+    )
