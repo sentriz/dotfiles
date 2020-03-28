@@ -46,4 +46,5 @@ sh -c 'rm -r \
     $HOME/.lesshst \
     $HOME/.*_history \
     $HOME/.gore \
+    $HOME/.npm \
 ' > /dev/null 2>&1 &

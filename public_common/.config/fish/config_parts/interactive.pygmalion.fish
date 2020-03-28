@@ -1,1 +1,1 @@
-set -xg fish_color_host red
+set -xg fish_color_host brred
