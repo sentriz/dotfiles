@@ -1,5 +1,0 @@
-[Unit]
-Description=Run backup-tarnsap.service daily
-
-[Timer]
-OnCalendar=*-*-* 6:10:00

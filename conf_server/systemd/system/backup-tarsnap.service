@@ -1,0 +1,30 @@
+[Unit]
+Description=Backup of important container data to tarsnap
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh -c ' \
+	tarsnap --list-archives \
+	| grep "^%H_opt_" \
+	| prunef \
+		--keep-daily 7 \
+		--keep-weekly 4 \
+		--keep-monthly 6 \
+		--keep-yearly 2 \
+		"%H_opt_%%Y%%m%%d_%%H%%M%%S" \
+	| xargs \
+		-L 1 \
+		--no-run-if-empty \
+		tarsnap -d -f \
+'
+ExecStart=/bin/sh -c ' \
+	/usr/bin/tarsnap \
+		--keyfile /root/.tarsnap.key \
+		-c \
+		-f "$(date "+%H_opt_%%Y%%m%%d_%%H%%M%%S")" \
+		/opt/containers/bitwarden/data/db.sqlite3 \
+		/opt/containers/bitwarden/data/attachments/ \
+		/opt/containers/notes/db_data/sf.db \
+		/opt/containers/firefox/data/syncserver.db \
+		/opt/containers/__* \
+'
