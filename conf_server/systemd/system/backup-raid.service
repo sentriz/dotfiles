@@ -1,0 +1,9 @@
+[Unit]
+Description=Backup to RAID with rsync_time_machine
+
+[Service]
+Type=oneshot
+ExecStart=/bin/rm -rfv /opt/containers/jellyfin/config/transcoding-temp/*
+ExecStart=/opt/rsync_time_machine \
+		/opt/containers/ \
+		/mnt/media/backup/containers
