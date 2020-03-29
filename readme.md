@@ -1,14 +1,12 @@
-# installation
-hmm, i wouldn't actually install my dotfiles. these are personal notes
-
 **basic stuff**
 ```shell
 remote $ install git stow
 remote $ git clone https://github.com/sentriz/dotfiles.git ~/dotfiles
 remote $ ~/dotfiles/install_common
-remote $
-remote $ # if on an gui system:
-remote $ ~/dotfiles/install_extra 
+remote $ # if on an gui system
+remote $ ~/dotfiles/install_extra
+remote $ # if on the server
+remote $ ~/dotfiles/install_server
 ```
 
 **meta stuff**
@@ -35,9 +33,10 @@ remote $ vim '+call dein#install()' '+qall'
 
 **python stuff**
 ```shell
-remote $ # if no pip for pythonx.x:
+remote $ # if no pip for pythonx.x
 remote $ curl https://bootstrap.pypa.io/get-pip.py | pythonx.x - --user
 ```
 
-**extra stuff**  
-see [docs/desktop/](https://github.com/sentriz/dotfiles/tree/master/docs/desktop)
+**extra stuff**
+  - desktop extras [docs/desktop/](https://github.com/sentriz/dotfiles/tree/master/docs/desktop)  
+  - server extras [docs/server/](https://github.com/sentriz/dotfiles/tree/master/docs/server)  
