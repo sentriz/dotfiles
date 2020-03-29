@@ -1,0 +1,79 @@
+#!/usr/bin/env bash
+
+# senan kelly 2019
+
+# to start the deamon (listens for new items in the clipboard):
+# $ ./cliphist listen
+
+# to copy an old item to your clipboard example:
+# $ ./cliphist select | dmenu -l 10 | ./cliphist copy
+
+# note: not much use of subprocesses or here doc in this becuase
+# they don't preserve trailing newlines
+
+if [[ "$#" -ne 1 ]]; then
+    echo "usage $0 [listen|select|copy]" >&2
+    exit 1
+fi
+
+if ! command -v "wl-paste" >/dev/null 2>&1; then
+    echo "please install wl-clipboard" >&2
+    echo "https://github.com/bugaevc/wl-clipboard" >&2
+    exit 1
+fi
+
+if ! wl-paste --help | grep -Eq "\W\--watch\W"; then
+    echo "your version of wl-clipboard doesn't have \`wl-paste --watch\`" >&2
+    echo "please upgade" >&2
+    echo "https://github.com/bugaevc/wl-clipboard" >&2
+    exit 1
+fi
+
+set +m
+shopt -s lastpipe
+
+hist_dir=~/".local/share"
+hist_path="$hist_dir/cliphist"
+hist_sum_path="$hist_dir/cliphist_sum"
+hist_sep='…'
+
+function __listen () {
+    mkdir -p "$hist_dir" >/dev/null 2>&1
+    rm "$hist_path" >/dev/null 2>&1
+    trap 'kill %1' SIGINT
+    wl-paste --type text --no-newline --watch "$0" write & # %1
+    wl-paste --type text --no-newline --primary --watch "$0" write
+}
+
+function __select () {
+    tac "$hist_path"
+}
+
+function __copy () {
+    to_copy="$(cat -)"
+    [[ -z "$to_copy" ]] && return
+    echo -n "$to_copy" | tr "$hist_sep" '\n' | wl-copy
+    echo -n "$to_copy" | tr "$hist_sep" '\n' | wl-copy --primary
+}
+
+function __write () {
+    IFS= read -rd '' text
+    [[ ! "$text" = *[![:space:]]* ]] && return
+    sum="$(echo -n "$text" | md5sum)"
+    [[ "$sum" == "$(cat "$hist_sum_path" 2>/dev/null)" ]] && return
+    echo "$sum" > "$hist_sum_path"
+    echo -n "$text" | sed -e 's/\r//' | wl-copy
+    echo -n "$text" | sed -e 's/\r//' | wl-copy --primary
+    echo -n "$text" | sed -e 's/\r//' | tr '\n' "$hist_sep" >> "$hist_path"
+    echo '' >> "$hist_path"
+    return 0
+}
+
+case "$1" in
+    listen) __listen ;;
+    select) __select ;;
+    copy)   __copy ;;
+    write)  __write ;;
+    *)      echo "invalid command \"$1\"" >&2
+            exit 1 ;;
+esac

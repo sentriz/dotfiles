@@ -1,0 +1,339 @@
+###################################################
+##              my i3 config, 2016-              ##
+###################################################
+##  mod, [a-z]            -> windows/postion     ##
+##  mod, [num row]        -> workspaces          ##
+##  mod, shift, [num row] -> move to workspaces  ##
+##  mod, alt, [a-z]       -> modes               ##
+##  mod, return           -> launch term         ##
+##  mod, [f1-f9]          -> launch dmenus       ##
+##  caps lock             -> scratchpad term     ##
+###################################################
+
+## var modifier
+set $super Mod4
+set $alt   Mod1
+
+## var helpers
+set $lock swaylock \
+    --daemonize \
+    --no-unlock-indicator \
+    --image ~/pictures/wallpapers/fagan.png
+set $up_block_1 pkill -RTMIN+1 i3blocks
+set $up_block_2 pkill -RTMIN+2 i3blocks
+set $up_block_3 pkill -RTMIN+3 i3blocks
+set $up_block_4 pkill -RTMIN+4 i3blocks
+set $default_gap 16
+set $default_font Source Code Pro 10
+set $emulator termite
+set $emulator_search ^Termite$
+
+## var colours
+set $grey       #303030
+set $grey_alpha #30303060
+set $blue       #0088CC
+set $red_alpha  #ff000090
+
+## basic appearance
+smart_borders off
+smart_gaps off
+hide_edge_borders both
+titlebar_border_thickness 2
+default_border pixel 2
+gaps inner $default_gap
+gaps top -$default_gap
+gaps right -$default_gap
+gaps left -$default_gap
+font $default_font
+popup_during_fullscreen smart
+
+## basic input
+floating_modifier $super
+focus_follows_mouse no
+
+## input
+input * {
+    xkb_layout ie
+    xkb_options caps:none
+    repeat_delay 130
+    repeat_rate 75
+}
+
+input "2:7:SynPS/2_Synaptics_TouchPad" {
+    events disabled
+}
+
+## output 
+output * {
+    bg $HOME/pictures/wallpapers/flow.jpg fill
+}
+
+## right bar
+bar status_command i3blocks
+bar tray_padding 0
+bar tray_output primary
+bar colors separator  $grey_alpha
+bar colors background $grey_alpha
+bar colors statusline #ffffff
+#                             border      background  text
+bar colors focused_workspace  $blue       $blue       #ffffff
+bar colors active_workspace   $grey       $grey       #ffffff
+bar colors inactive_workspace $grey_alpha $grey_alpha #ffffff
+bar colors urgent_workspace   $red_alpha  $red_alpha  #ffffff
+
+## window colours       border backg text    indic   child
+client.focused          $blue  $blue #ffffff #ffffff #ffffff
+client.focused_inactive $blue  $blue #ffffff $grey   $grey
+client.unfocused        $grey  $grey #ffffff $grey   $grey
+
+## bindings: window/float
+bindsym $super+q     kill
+bindsym $super+f     fullscreen toggle
+bindsym $super+space floating toggle
+bindsym $super+s     sticky toggle
+
+## bindings: focus
+bindsym $super+v focus parent
+bindsym $super+h focus left
+bindsym $super+j focus down
+bindsym $super+k focus up
+bindsym $super+l focus right
+
+## bindings: layout
+bindsym $super+z layout stacking
+bindsym $super+x layout tabbed
+bindsym $super+c layout toggle split
+bindsym $super+n split h
+bindsym $super+m split v
+
+## bindings: position
+bindsym $super+Left         move left
+bindsym $super+Down         move down
+bindsym $super+Up           move up
+bindsym $super+Right        move right
+bindsym $super+b            move position center
+bindsym $super+bracketleft  move workspace to output left
+bindsym $super+bracketright move workspace to output right
+
+## bindings: modes
+bindsym $super+$alt+r     mode $mode_resize_tile
+bindsym $super+$alt+space mode $mode_move_floating focus floating
+bindsym $super+$alt+q     mode $mode_system
+bindsym $super+$alt+v     mode $mode_audio
+bindsym $super+$alt+i     mode $mode_i3
+bindsym $super+$alt+s     mode $mode_scrot
+bindsym $super+$alt+g     mode $mode_gaps
+
+set $mode_resize_tile "resize mode: [h][j][k][l]"
+mode $mode_resize_tile {
+    bindsym h resize shrink width 10 px or 10 ppt
+    bindsym j resize grow height 10 px or 10 ppt
+    bindsym k resize shrink height 10 px or 10 ppt
+    bindsym l resize grow width 10 px or 10 ppt
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+set $mode_system "system mode: [l]ock, [s]uspend, [h]ibernate, [r]eboot, shut[d]own"
+mode $mode_system {
+    bindsym l exec $lock;               mode default
+    bindsym d exec systemctl poweroff;  mode default
+    bindsym h exec systemctl hibernate; mode default
+    bindsym r exec systemctl reboot;    mode default
+    bindsym s exec systemctl suspend;   mode default
+    bindsym Return mode default
+    bindsym Escape mode default
+}
+
+set $mode_i3 "i3 mode: e[x]it, reload [c]onfig"
+mode $mode_i3 {
+    bindsym x exit
+    bindsym c reload
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+set $mode_move_floating "floating move mode: [h][j][k][l]"
+mode $mode_move_floating {
+    bindsym h     move left
+    bindsym j     move down
+    bindsym k     move up
+    bindsym l     move right
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+set $mode_scrot "screenshot mode: [n]ormal, [s]elect, [N]ormal upload, [S]elect upload"
+mode $mode_scrot {
+    bindsym n                 exec screenshot,               mode "default"
+    bindsym Shift+n           exec screenshot upload,        mode "default"
+    bindsym --release s       exec screenshot select,        mode "default"
+    bindsym --release Shift+s exec screenshot select upload, mode "default"
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+set $mode_gaps_inner "gaps inner: -|+|0 (local), shift -|+|0 (global)"
+mode $mode_gaps_inner {
+    bindsym minus gaps inner current plus 5
+    bindsym equal gaps inner current minus 5
+    bindsym 0     gaps inner current set 0
+    bindsym Shift+minus gaps inner all plus 5
+    bindsym Shift+equal gaps inner all minus 5
+    bindsym Shift+0     gaps inner all set 0
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+set $mode_gaps_outer "gaps outer: -|+|0 (local), shift -|+|0 (global)"
+mode $mode_gaps_outer {
+    bindsym minus gaps outer current plus 5
+    bindsym equal gaps outer current minus 5
+    bindsym 0     gaps outer current set 0
+    bindsym Shift+minus gaps outer all plus 5
+    bindsym Shift+equal gaps outer all minus 5
+    bindsym Shift+0     gaps outer all set 0
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+set $mode_gaps "gaps: [o]uter, [i]nner"
+mode $mode_gaps {
+    bindsym o      mode $mode_gaps_outer
+    bindsym i      mode $mode_gaps_inner
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+## workspaces
+set $work_1 "1 main"
+set $work_2 "2 web"
+set $work_3 "3 term i"
+set $work_4 "4 term ii"
+set $work_5 "5"
+set $work_6 "6"
+set $work_7 "7"
+set $work_8 "8"
+set $work_9 "9"
+
+bindsym $super+grave workspace back_and_forth
+bindsym $super+1     workspace $work_1
+bindsym $super+2     workspace $work_2
+bindsym $super+3     workspace $work_3
+bindsym $super+4     workspace $work_4
+bindsym $super+5     workspace $work_5
+bindsym $super+6     workspace $work_6
+bindsym $super+7     workspace $work_7
+bindsym $super+8     workspace $work_8
+bindsym $super+9     workspace $work_9
+bindsym $super+0     [urgent=latest] focus
+
+bindsym $super+Shift+1 move container to workspace $work_1
+bindsym $super+Shift+2 move container to workspace $work_2
+bindsym $super+Shift+3 move container to workspace $work_3
+bindsym $super+Shift+4 move container to workspace $work_4
+bindsym $super+Shift+5 move container to workspace $work_5
+bindsym $super+Shift+6 move container to workspace $work_6
+bindsym $super+Shift+7 move container to workspace $work_7
+bindsym $super+Shift+8 move container to workspace $work_8
+bindsym $super+Shift+9 move container to workspace $work_9
+
+assign [class="Sqliteman"]                   $work_1
+assign [class="Meld"]                        $work_1
+assign [app_id="org.gnome.meld"]             $work_1
+assign [class="DB Browser for SQLite"]       $work_1
+assign [app_id="^sqlitebrowser$"]            $work_1
+assign [class="^minecraft-launcher$"]        $work_1
+assign [class="^Minecraft"]                  $work_1
+assign [app_id="^transmission-remote-gtk$"]  $work_1
+assign [class="Firefox"]                     $work_2
+assign [app_id="^firefox$"]                  $work_2
+assign [class="Chromium"]                    $work_2
+assign [class="Google-chrome"]               $work_2
+assign [class="URxvt" instance="ncmpcpp"]    $work_4
+assign [class="Spotify"]                     $work_4
+assign [class="Deadbeef"]                    $work_4
+assign [class="Surf" instance="^plex_surf$"] $work_4
+assign [class="VirtualBox"]                  $work_5
+assign [class="Franz"]                       $work_6
+assign [class="Mnemosyne"]                   $work_7
+assign [class="Anki"]                        $work_7
+assign [class="Gimp*"]                       $work_8
+assign [class="Inkscape"]                    $work_8
+assign [class="libreoffice-*"]               $work_9
+
+## floating windows
+for_window [window_type="menu"]                floating enable
+for_window [window_role="app"]                 floating enable
+for_window [window_role="pop-up"]              floating enable
+for_window [window_role="task_dialog"]         floating enable
+for_window [window_type="dialog"]              floating enable
+for_window [title="Preferences$"]              floating enable
+for_window [title="- Sharing Indicator$"]      floating enable
+for_window [class="Anki"]                      floating enable
+for_window [title="Anki$"]                     floating enable
+for_window [app_id="electrum"]                 floating enable
+for_window [app_id="nm-connection-editor"]     floating enable
+for_window [app_id="wdisplays"]                floating enable
+for_window [app_id="^blueman-manager"]         floating enable
+for_window [title="^Figure 1$"]                floating enable
+for_window [class="Blueman-manager"]           floating enable
+for_window [class="Galculator"]                floating enable
+for_window [class="Gui.py"]                    floating enable
+for_window [class="Mnemosyne"]                 floating enable
+for_window [class="Nm-connection-editor"]      floating enable
+for_window [class="Pavucontrol"]               floating enable
+for_window [app_id="pavucontrol"]              floating enable
+for_window [class="Qpaeq"]                     floating enable
+for_window [class="SimpleScreenRecorder"]      floating enable
+for_window [class="Woeusbgui"]                 floating enable
+for_window [class="electrum"]                  floating enable
+for_window [class="etcher"]                    floating enable
+for_window [class="feh"]                       floating enable
+for_window [class="^XEyes$"]                   floating enable
+for_window [title="^bobby$"]                   floating enable
+for_window [app_id="^xdg-desktop-portal-gtk$"] floating enable
+for_window [app_id="^firefox$" title="Picture-in-Picture"] floating enable
+for_window [app_id="^sublime-music$"]          floating enable
+for_window [app_id="^thunar$" title="File Operation Progress"] floating enable
+
+## bindings: xf86
+bindsym XF86AudioLowerVolume  exec amixer sset Master 5%- && $up_block_1
+bindsym XF86AudioRaiseVolume  exec amixer sset Master 5%+ && $up_block_1
+bindsym XF86AudioMute         exec amixer sset Master toggle && $up_block_1
+bindsym XF86AudioMicMute      exec amixer sset Capture toggle
+bindsym XF86AudioPlay         exec playerctl play-pause
+bindsym XF86AudioStop         exec playerctl stop
+bindsym XF86AudioNext         exec playerctl next
+bindsym XF86AudioPrev         exec playerctl previous
+
+## bindings: programs
+bindsym $super+Return exec $emulator
+bindsym $super+F1     exec dmenu_package
+bindsym $super+F2     exec dmenu_clipboard
+bindsym $super+F3     exec dmenu_radio
+
+## scratchpad
+exec "while :; do $emulator --name scratchpad; sleep 0.5; done"
+for_window  [app_id="^scratchpad$"] floating enable, move scratchpad, border pixel 2
+bindcode 66 [app_id="^scratchpad$"] scratchpad show, resize set 1334 575, move position center
+
+## autostarts
+exec_always gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita'
+exec_always gsettings set org.gnome.desktop.interface icon-theme 'Adwaita'
+exec_always gsettings set org.gnome.desktop.interface cursor-theme 'Adwaita'
+exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+exec cliphist listen > /tmp/cliphist_log 2>&1
+exec swayidle -w \
+    timeout 290  "notify-send 'locking screen in 10 seconds'" \
+    timeout 300  "$lock" \
+    before-sleep "$lock"
+exec mako \
+    --background-color "$grey" \
+    --margin "$default_gap,0" \
+    --font "$default_font" \
+    --border-size 4 \
+    --border-color "#FFFFFF" \
+    --text-color "#FFFFFF" \
+    --anchor bottom-right \
+    --ignore-timeout 1 \
+    --default-timeout 4000

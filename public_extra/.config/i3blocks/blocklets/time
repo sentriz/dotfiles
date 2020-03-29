@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-date "+%A %d %B, %H:%M" | tr '[:upper:]' '[:lower:]'

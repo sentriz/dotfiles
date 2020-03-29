@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-nmcli -t -f name,type,state connection \
-    | grep -Po '[^:]+(?=:vpn:activated)'
-exit 0

@@ -1,6 +1,0 @@
-#!/usr/bin/env fish
-
-set -l haste_url "$DOTS_PASTE_REMOTE"
-read -lz data
-set -l key (curl -sf --data-binary "$data" $haste_url"/documents" | jq -r '.key')
-printf "%s/%s\n" $haste_url $key

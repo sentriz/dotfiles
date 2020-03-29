@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+if [[ "$#" -ne 1 ]]; then
+    echo "please provide a duration" >&2
+    exit 1
+fi
+
+(
+    sleep "$1" || exit 1
+    notify-send -t 600 "timer" "$1 has passed"
+    beep -f 3520 -l 100 -r 4
+) &

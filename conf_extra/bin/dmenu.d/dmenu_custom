@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+pkill --exact bemenu
+exec env BEMENU_BACKEND=wayland bemenu \
+    --list 20 \
+    --ignorecase \
+    --ifne \
+    --ignorecase \
+    --fn "Source Code Pro 10" \
+    --hb "#0088CC" \
+    --hf "#FFFFFF" \
+    --tf "#FFFFFF" \
+    $@

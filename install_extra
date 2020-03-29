@@ -1,3 +1,3 @@
 #!/bin/bash
 
-stow -v --ignore='.ssh' --ignore='running' --target ~ -R public_extra
+stow -v --ignore='running' --target ~ -R conf_extra
