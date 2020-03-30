@@ -1,19 +1,12 @@
-# Defined in /tmp/fish.AfkQHH/fish_right_prompt.fish @ line 2
-function fish_right_prompt --description 'Write out the git right prompt'
+function fish_right_prompt
     set -l branch (git symbolic-ref --quiet --short HEAD 2> /dev/null)
-    if test -z "$branch"
-        return
-    end
-    if test "$branch" = master
-        set_color brred
-    else
-        set_color brgreen
-    end
+    test -z "$branch"; and return
+    test "$branch" = master
+        and set_color brred
+        or set_color brgreen
     echo "$branch"
     set_color normal
-    if git diff-index --quiet HEAD --
-        echo " clean"
-    else
-        echo " dirty"
-    end
+    git diff-index --quiet HEAD --
+        and echo " clean"
+        or echo " dirty"
 end
