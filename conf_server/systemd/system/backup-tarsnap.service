@@ -1,3 +1,7 @@
+# requires:
+# tarsnap	https://www.tarsnap.com/
+# prunef	https://git.sr.ht/~apreiml/prunef
+
 [Unit]
 Description=Backup of important container data to tarsnap
 
@@ -15,10 +19,8 @@ ExecStart=/bin/sh -c ' \
 	| xargs \
 		-L 1 \
 		--no-run-if-empty \
-		tarsnap -d -f \
-'
-ExecStart=/bin/sh -c ' \
-	/usr/bin/tarsnap \
+		tarsnap -d -f; \
+	tarsnap \
 		--keyfile /root/.tarsnap.key \
 		-c \
 		-f "$(date "+%H_opt_%%Y%%m%%d_%%H%%M%%S")" \
