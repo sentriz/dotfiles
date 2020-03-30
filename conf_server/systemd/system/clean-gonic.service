@@ -1,0 +1,8 @@
+[Unit]
+Description=Delete gonic transcodes
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh -c ' \
+	rm --one-file-system -rfv /opt/containers/gonic/cache/* \
+'

@@ -1,0 +1,5 @@
+[Unit]
+Description=Run clean-gonic.service weekly
+
+[Timer]
+OnCalendar=weekly

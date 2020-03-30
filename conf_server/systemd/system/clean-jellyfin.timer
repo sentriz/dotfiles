@@ -1,0 +1,5 @@
+[Unit]
+Description=Run clean-jellyfin.service weekly
+
+[Timer]
+OnCalendar=weekly

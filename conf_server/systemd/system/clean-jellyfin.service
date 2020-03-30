@@ -1,0 +1,8 @@
+[Unit]
+Description=Delete jellyfin transcodes
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh -c ' \
+	rm --one-file-system -rfv /opt/containers/jellyfin/config/transcoding-temp/* \
+'
