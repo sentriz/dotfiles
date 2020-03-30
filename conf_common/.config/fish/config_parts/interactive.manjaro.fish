@@ -6,5 +6,5 @@ function __update_termite_title --on-variable PWD
 end
 __update_termite_title &
 
-source (which set_env_gpg)
-source (which set_env_tmux_parent)
+source (type -P set_env_gpg)
+source (type -P set_env_tmux_parent)
