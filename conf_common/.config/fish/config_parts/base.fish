@@ -13,6 +13,7 @@ set -gx DOTS_SCREENSHOTS_REMOTE 'https://image.home.senan.xyz'
 set -gx DOTS_PASTE_REMOTE 'https://paste.home.senan.xyz'
 set -gx DOTS_RADIO_DIR "$HOME/radio"
 set -gx DOTS_MOUNTS_DIR "$HOME/mounts"
+set -gx DOTS_COPT_DIR '/opt/containers'
 
 if which go >/dev/null 2>&1
     set -gx GOPATH $HOME/go
