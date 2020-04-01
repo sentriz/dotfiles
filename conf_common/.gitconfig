@@ -1,65 +1,62 @@
+# vi: noet
+
 [user]
-    email = senan@senan.xyz
-    name = sentriz
-    signingkey = 609FCE8BB45971C8293040AC9A8DAE1CA907B862
-[push]
-    default = current
-	followTags = true
-[color]
-    ui = true
-    branch = true
-    interactive = true
-    status = true
-[alias]
-    c            = commit
-    s            = status
-    set-upstream = !git branch --set-upstream-to=origin/`git symbolic-ref --short HEAD`
-    fixupf       = !git commit --fixup=$(git log --pretty=oneline --abbrev-commit | fzf +s | awk '{print $1'})
-    revertf      = !git revert      -- $(git log --pretty=oneline --abbrev-commit | fzf +s | awk '{print $1'})
-    showf        = !git show        -- $(git log --pretty=oneline --abbrev-commit | fzf +s | awk '{print $1'})
-    addf         = !git add      -- $(git ls-files --modified --others --exclude-standard | fzf -m --preview 'cat {}')
-    checkoutf    = !git checkout -- $(git ls-files --modified --exclude-standard | fzf -m)
-    difff        = !git diff     -- $(git ls-files --modified --exclude-standard | fzf -m)
-    autosquash   = !GIT_SEQUENCE_EDITOR=true git rebase --interactive --autosquash
-[diff "zip"]
-    textconv = unzip -c -a
-[diff]
-    compactionHeuristic = true
+	email = senan@senan.xyz
+	name = sentriz
+	signingkey = 609FCE8BB45971C8293040AC9A8DAE1CA907B862
 [github]
-    user = sentriz
-[advice]
-    statusHints = false
-[core]
-    editor = nvim
-    excludesfile = ~/.gitignore_global
-    pager = less -r
-[pull]
-    rebase = true
-[commit]
-    gpgsign = true
-[protocol "keybase"]
-    allow = always
-[status]
-    short = true
-    branch = true
-[merge]
-    tool = meld
+	user = sentriz
+[push]
+	default = current
+	followTags = true
+[alias]
+	c            = commit
+	s            = status
+	set-upstream = !git branch --set-upstream-to=origin/`git symbolic-ref --short HEAD`
+	fixupf       = !git commit --fixup=$(git log --pretty=oneline --abbrev-commit | fzf +s | awk '{print $1'})
+	revertf      = !git revert $(git log --pretty=oneline --abbrev-commit | fzf +s | awk '{print $1}')
+	showf        = !git show $(git log --pretty=oneline --abbrev-commit | fzf +s | awk '{print $1}')
+	addf         = !git add -- $(git ls-files --modified --others --exclude-standard | fzf -m --preview 'cat {}')
+	checkoutf    = !git checkout -- $(git ls-files --modified --exclude-standard | fzf -m)
+	difff        = !git diff -- $(git ls-files --modified --exclude-standard | fzf -m)
+	autosquash   = !GIT_SEQUENCE_EDITOR=true git rebase --interactive --autosquash
+[diff "zip"]
+	textconv = unzip -c -a
 [diff]
-    tool = meld
+	compactionHeuristic = true
+[advice]
+	statusHints = false
+[core]
+	editor = nvim
+	excludesfile = ~/.gitignore_global
+	pager = less -r
+[pull]
+	rebase = true
+[commit]
+	gpgsign = true
+[protocol "keybase"]
+	allow = always
+[status]
+	short = true
+	branch = true
+[merge]
+	tool = meld
+[diff]
+	tool = meld
 	algorithm = histogram
 [difftool]
-    prompt = false
+	prompt = false
 [difftool "meld"]
-    cmd = meld "$LOCAL" "$REMOTE"
+	cmd = meld "$LOCAL" "$REMOTE"
 [sendemail]
 	annotate = yes
-    smtpencryption = tls
-    smtpserver = smtp.fastmail.com
-    smtpuser = senan@senan.xyz
-    smtpserverport = 587
+	smtpencryption = tls
+	smtpserver = smtp.fastmail.com
+	smtpuser = senan@senan.xyz
+	smtpserverport = 587
 	confirm = auto
 [credential "smtp://senan%40senan.xyz@smtp.fastmail.com%3a587"]
-    helper = !printf "password=%s" $(secret fastmail_apppassword)
+	helper = !printf "password=%s" $(secret fastmail_apppassword)
 [rebase]
 	autosquash = true
 [gpg]
@@ -70,4 +67,6 @@
 	enabled = true
 	autoupdate = true
 [url "git@github.com:"]
-    insteadOf = https://github.com/
+	insteadOf = https://github.com/
+[format]
+	pretty = format:%C(dim)%h%C(reset)  %an %C(brightmagenta)%d%C(reset) %s
