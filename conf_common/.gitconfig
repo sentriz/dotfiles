@@ -69,4 +69,6 @@
 [url "git@github.com:"]
 	insteadOf = https://github.com/
 [format]
-	pretty = format:%C(dim)%h%C(reset)  %an %C(brightmagenta)%d%C(reset) %s
+	pretty = format:%h  %C(dim)%an%Creset %C(yellow)%d%Creset %s
+[color]
+	ui = auto
