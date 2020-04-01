@@ -6,6 +6,8 @@ set -gx FNM_MULTISHELL_PATH $HOME/.fnm/current
 set -gx FNM_DIR $HOME/.fnm
 set -gx FNM_NODE_DIST_MIRROR https://nodejs.org/dist
 set -gx FNM_LOGLEVEL info
+set -gx COMPOSE_DOCKER_CLI_BUILD 1
+set -gx DOCKER_BUILDKIT 1
 
 # dotfiles settings
 set -gx DOTS_SCREENSHOTS_DIR "$HOME/pictures/screenshots"
