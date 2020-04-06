@@ -27,5 +27,7 @@ ExecStart=/bin/sh -c ' \
 		/opt/containers/bitwarden/data/attachments/ \
 		/opt/containers/notes/db_data/sf.db \
 		/opt/containers/firefox/data/syncserver.db \
-		/opt/containers/__* \
+		/opt/containers/.env \
+		/opt/containers/.backup-ignore \
+		/opt/containers/.up-ignore \
 '

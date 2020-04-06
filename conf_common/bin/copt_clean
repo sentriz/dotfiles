@@ -5,15 +5,16 @@ import os
 import sys
 import yaml
 
-if 'DOTS_COPT_DIR' not in os.environ:
+try:
+    copts_dir = os.environ['DOTS_COPT_DIR']
+except KeyError:
     print('DOTS_COPT_DIR not set', file=sys.stderr)
     sys.exit(1)
 
-glob_pattern = os.path.join(
-    os.environ['DOTS_COPT_DIR'],
-    '*/docker-compose.yml',
-)
-for filename in glob(glob_pattern):
+composeses = glob(os.path.join(copts_dir, '*/docker-compose.yml'))
+traefiks = glob(os.path.join(copts_dir, 'traefik/config/*.yml'))
+
+for filename in (*composeses, *traefiks):
     with open(filename) as file:
         before = yaml.load(file)
     with open(filename, 'w') as file:
