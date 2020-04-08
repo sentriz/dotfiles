@@ -313,7 +313,7 @@ bindsym $super+F2     exec dmenu_clipboard
 bindsym $super+F3     exec dmenu_radio
 
 ## scratchpad
-exec "while :; do $emulator --name scratchpad; sleep 0.5; done"
+exec "while :; do $emulator --name scratchpad --exec 'tmux new -A -s scratchpad'; sleep 0.5; done"
 for_window  [app_id="^scratchpad$"] floating enable, move scratchpad, border pixel 2
 bindcode 66 [app_id="^scratchpad$"] scratchpad show, resize set 1334 575, move position center
 
