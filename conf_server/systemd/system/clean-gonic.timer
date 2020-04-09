@@ -3,3 +3,6 @@ Description=Run clean-gonic.service weekly
 
 [Timer]
 OnCalendar=weekly
+
+[Install]
+WantedBy=basic.target
