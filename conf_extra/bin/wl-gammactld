@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+
+if ! command -v "wl-gammactl" >/dev/null 2>&1; then
+    echo "please install wl-gammactl" >&2
+    echo "https://github.com/mischw/wl-gammactl" >&2
+    exit 1
+fi
+if ! command -v "flock" >/dev/null 2>&1; then
+    echo "please install flock" >&2
+    exit 1
+fi
+
+path_lock='/tmp/wl-gammactld-lock'
+path_msg='/tmp/wl-gammactld'
+
+exec 9>"$path_lock"
+flock -n 9 || exit 1
+
+v_cont=1
+v_brig=1
+v_gamm=1
+
+wl-gamma-kill() { kill "$wl_gamma_pid" >/dev/null 2>&1; }
+wl-gamma() {
+    wl-gamma-kill
+    wl-gammactl -c "$v_cont" -b "$v_brig" -g "$v_gamm" &
+    wl_gamma_pid=$!
+}
+trap wl-gamma-kill EXIT
+
+mkfifo "$path_msg" >/dev/null 2>&1
+while IFS=' ' read command value <$path_msg; do
+    case "$command" in
+        c|contrast)   v_cont="$(bc <<< "$v_cont$value")" ;;
+        b|brightness) v_brig="$(bc <<< "$v_brig$value")" ;;
+        g|gamma)      v_gamm="$(bc <<< "$v_gamm$value")" ;;
+        *)            echo "unknown command $command" >&2 
+                      continue ;;
+    esac
+    wl-gamma
+done

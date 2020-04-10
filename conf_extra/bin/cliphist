@@ -38,6 +38,8 @@ hist_sum_path="$hist_dir/cliphist_sum"
 hist_sep='…'
 
 function __listen () {
+    exec 9>/tmp/cliplist-lock
+    flock -n 9 || exit 1
     mkdir -p "$hist_dir" >/dev/null 2>&1
     rm "$hist_path" >/dev/null 2>&1
     trap 'kill %1' SIGINT

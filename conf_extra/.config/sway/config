@@ -123,6 +123,7 @@ bindsym $super+$alt+v     mode $mode_audio
 bindsym $super+$alt+i     mode $mode_i3
 bindsym $super+$alt+s     mode $mode_scrot
 bindsym $super+$alt+g     mode $mode_gaps
+bindsym $super+$alt+c     mode $mode_colour_mode
 
 set $mode_resize_tile "resize mode: [h][j][k][l]"
 mode $mode_resize_tile {
@@ -130,6 +131,18 @@ mode $mode_resize_tile {
     bindsym j resize grow height 10 px or 10 ppt
     bindsym k resize shrink height 10 px or 10 ppt
     bindsym l resize grow width 10 px or 10 ppt
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+set $mode_colour_mode "colour mode: gamma [o|p], brightness [k|l], contrast [n|m]"
+mode $mode_colour_mode {
+    bindsym o exec "echo 'gamma -0.2' > /tmp/wl-gammactld"
+    bindsym p exec "echo 'gamma +0.2' > /tmp/wl-gammactld"
+    bindsym k exec "echo 'brightness -0.2' > /tmp/wl-gammactld"
+    bindsym l exec "echo 'brightness +0.2' > /tmp/wl-gammactld"
+    bindsym n exec "echo 'contrast -0.2' > /tmp/wl-gammactld"
+    bindsym m exec "echo 'contrast +0.2' > /tmp/wl-gammactld"
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
@@ -322,7 +335,8 @@ exec_always gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita'
 exec_always gsettings set org.gnome.desktop.interface icon-theme 'Adwaita'
 exec_always gsettings set org.gnome.desktop.interface cursor-theme 'Adwaita'
 exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-exec cliphist listen > /tmp/cliphist_log 2>&1
+exec cliphist listen
+exec wl-gammactld
 exec swayidle -w \
     timeout 290  "notify-send 'locking screen in 10 seconds'" \
     timeout 300  "$lock" \
