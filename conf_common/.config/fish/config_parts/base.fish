@@ -50,4 +50,5 @@ sh -c 'rm -r \
     $HOME/.*_history \
     $HOME/.gore \
     $HOME/.npm \
+    $HOME/.wget-hsts \
 ' > /dev/null 2>&1 &
