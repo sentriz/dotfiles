@@ -3,4 +3,7 @@ Description=Docker system prune
 
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/docker system prune -f
+ExecStart=/bin/sh -c ' \
+	docker system prune -f 2>&1 \
+	| mail -s "status for clean-docker.service" -- senan@senan.xyz \
+'

@@ -19,7 +19,8 @@ ExecStart=/bin/sh -c ' \
 	| sed "s/^/-f /" \
 	| xargs \
 		--no-run-if-empty \
-		tarsnap -d; \
+		tarsnap -d 2>&1 \
+	| mail -s "status for backup-tarsnap.service prune" -- senan@senan.xyz; \
 	tarsnap \
 		-c \
 		-f "$(date "+%H_opt_%%Y%%m%%d_%%H%%M%%S")" \
@@ -29,5 +30,6 @@ ExecStart=/bin/sh -c ' \
 		/opt/containers/firefox/data/syncserver.db \
 		/opt/containers/.env \
 		/opt/containers/.backup-ignore \
-		/opt/containers/.up-ignore \
+		/opt/containers/.up-ignore 2>&1 \
+	| mail -s "status for backup-tarsnap.service backup" -- senan@senan.xyz; \
 '
