@@ -1,0 +1,152 @@
+#!/usr/bin/env python3
+import argparse
+import enum
+import fnmatch
+import functools
+import os
+import re
+import shlex
+import subprocess
+import sys
+import json
+import tldextract
+
+encoding = "UTF-8"
+argument_parser = argparse.ArgumentParser(
+    description=__doc__, usage=USAGE, epilog=EPILOG,
+)
+argument_parser.add_argument("url", nargs="?", default=os.getenv("QUTE_URL"))
+group = argument_parser.add_mutually_exclusive_group()
+group.add_argument(
+    "--username-only", "-e", action="store_true", help="Only insert username"
+)
+group.add_argument(
+    "--password-only", "-w", action="store_true", help="Only insert password"
+)
+
+
+class ExitCodes(enum.IntEnum):
+    SUCCESS = 0
+    FAILURE = 1
+    # 1 is automatically used if python throws an exception
+    NO_PASS_CANDIDATES = 2
+    COULD_NOT_MATCH_USERNAME = 3
+    COULD_NOT_MATCH_PASSWORD = 4
+
+
+def qute_command(command):
+    with open(os.environ["QUTE_FIFO"], "w") as fifo:
+        fifo.write(command + "\n")
+        fifo.flush()
+
+
+def get_session_key():
+    process = subprocess.run(
+        ["secret", "bitwarden_session"],
+        universal_newlines=True,
+        stdout=subprocess.PIPE,
+    )
+    key_id = process.stdout.strip()
+    if process.returncode > 0:
+        raise Exception("couldn't get session key")
+    return key_id
+
+
+def get_bw_item(domain):
+    session_key = get_session_key()
+    process = subprocess.run(
+        ["bw", "list", "items", "--session", session_key, "--url", domain],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+    )
+    if process.returncode > 0:
+        raise Exception("couldn't get session key")
+    return process.stdout.decode(encoding).strip()
+
+
+def dmenu(items):
+    command = shlex.split('dmenu_custom -p "bitwarden"')
+    input = "\n".join(items).encode(encoding)
+    process = subprocess.run(command, input=input, stdout=subprocess.PIPE)
+    return process.stdout.decode(encoding).strip()
+
+
+def fake_key_raw(text):
+    for character in text:
+        # escape all characters by default, space requires special handling
+        sequence = '" "' if character == " " else "\{}".format(character)
+        qute_command("fake-key {}".format(sequence))
+
+
+def main(arguments):
+    if not arguments.url:
+        argument_parser.print_help()
+        return ExitCodes.FAILURE
+    extract_result = tldextract.extract(arguments.url)
+    # try to find candidates using targets in the following order: fully-qualified domain name (includes subdomains),
+    # the registered domain name and finally: the ipv4 address if that's what
+    # the url represents
+    candidates = []
+    for target in filter(
+        None,
+        [
+            extract_result.fqdn,
+            extract_result.registered_domain,
+            extract_result.subdomain + extract_result.domain,
+            extract_result.domain,
+            extract_result.ipv4,
+        ],
+    ):
+        target_candidates = json.loads(get_bw_item(target))
+        if not target_candidates:
+            continue
+        candidates = candidates + target_candidates
+        break
+    else:
+        if not candidates:
+            print(
+                f"no pass candidates for url {arguments.url!r} found", file=sys.stderr
+            )
+            return ExitCodes.NO_PASS_CANDIDATES
+    if len(candidates) == 1:
+        selection = candidates.pop()
+    else:
+        choices = [
+            "{:s} | {:s}".format(c["name"], c["login"]["username"]) for c in candidates
+        ]
+        choice = dmenu(choices)
+        choice_tokens = choice.split("|")
+        choice_name = choice_tokens[0].strip()
+        choice_username = choice_tokens[1].strip()
+        selection = next(
+            (
+                c
+                for (i, c) in enumerate(candidates)
+                if c["name"] == choice_name
+                and c["login"]["username"] == choice_username
+            ),
+            None,
+        )
+    # nothing was selected, simply return
+    if not selection:
+        return ExitCodes.SUCCESS
+    username = selection["login"]["username"]
+    password = selection["login"]["password"]
+    if arguments.username_only:
+        fake_key_raw(username)
+    elif arguments.password_only:
+        fake_key_raw(password)
+    else:
+        # enter username and password using fake-key and <tab> (which seems to
+        # work almost universally), then switch back into insert-mode, so the
+        # form can be directly submitted by hitting enter afterwards
+        fake_key_raw(username)
+        qute_command("fake-key <Tab>")
+        fake_key_raw(password)
+    qute_command("enter-mode insert")
+    return ExitCodes.SUCCESS
+
+
+if __name__ == "__main__":
+    arguments = argument_parser.parse_args()
+    sys.exit(main(arguments))
