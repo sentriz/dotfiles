@@ -38,7 +38,8 @@ set $red_alpha  #ff000090
 smart_borders off
 smart_gaps off
 hide_edge_borders both
-titlebar_border_thickness 2
+titlebar_border_thickness 0
+titlebar_padding 2
 default_border pixel 2
 gaps inner $default_gap
 gaps top -$default_gap
@@ -63,23 +64,28 @@ input "2:7:SynPS/2_Synaptics_TouchPad" {
     events disabled
 }
 
-## output 
+## output
 output * {
     bg $HOME/pictures/wallpapers/flow.jpg fill
 }
 
 ## right bar
-bar status_command i3blocks
-bar tray_padding 0
-bar tray_output primary
-bar colors separator  $grey_alpha
-bar colors background $grey_alpha
-bar colors statusline #ffffff
-#                             border      background  text
-bar colors focused_workspace  $blue       $blue       #ffffff
-bar colors active_workspace   $grey       $grey       #ffffff
-bar colors inactive_workspace $grey_alpha $grey_alpha #ffffff
-bar colors urgent_workspace   $red_alpha  $red_alpha  #ffffff
+bar {
+    font $default_font
+    height 24
+    status_command i3blocks
+    status_padding 0
+    tray_padding 0
+    tray_output primary
+    colors separator  $grey_alpha
+    colors background $grey_alpha
+    colors statusline #ffffff
+    #                         border      background  text
+    colors focused_workspace  $blue       $blue       #ffffff
+    colors active_workspace   $grey       $grey       #ffffff
+    colors inactive_workspace $grey_alpha $grey_alpha #ffffff
+    colors urgent_workspace   $red_alpha  $red_alpha  #ffffff
+}
 
 ## window colours       border backg text    indic   child
 client.focused          $blue  $blue #ffffff #ffffff #ffffff
@@ -328,7 +334,7 @@ bindsym $super+F3     exec dmenu_radio
 ## scratchpad
 exec "while :; do $emulator --name scratchpad --exec 'tmux new -A -s scratchpad'; sleep 0.5; done"
 for_window  [app_id="^scratchpad$"] floating enable, move scratchpad, border pixel 2
-bindcode 66 [app_id="^scratchpad$"] scratchpad show, resize set 1334 575, move position center
+bindcode 66 [app_id="^scratchpad$"] scratchpad show, resize set 1334 550, move position center
 
 ## autostarts
 exec_always gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita'

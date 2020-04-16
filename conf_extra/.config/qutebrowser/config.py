@@ -1,8 +1,8 @@
 padding = {
-    "top": 5,
-    "bottom": 5,
-    "left": 5,
-    "right": 5,
+    "top": 4,
+    "bottom": 4,
+    "left": 4,
+    "right": 4,
 }
 
 palette = {
@@ -122,5 +122,5 @@ c.colors.tabs.selected.even.bg = palette["background"]
 c.colors.tabs.selected.even.fg = palette["foreground"]
 c.colors.tabs.selected.odd.bg = palette["background"]
 c.colors.tabs.selected.odd.fg = palette["foreground"]
-c.fonts.monospace = '"Source Code Pro"'
+c.fonts.default_family = ["Source Code Pro"]
 c.hints.border = "1px solid " + palette["background-alt"]
