@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+
 import argparse
 import enum
 import fnmatch
@@ -12,9 +13,7 @@ import json
 import tldextract
 
 encoding = "UTF-8"
-argument_parser = argparse.ArgumentParser(
-    description=__doc__, usage=USAGE, epilog=EPILOG,
-)
+argument_parser = argparse.ArgumentParser()
 argument_parser.add_argument("url", nargs="?", default=os.getenv("QUTE_URL"))
 group = argument_parser.add_mutually_exclusive_group()
 group.add_argument(
@@ -97,6 +96,7 @@ def main(arguments):
             extract_result.ipv4,
         ],
     ):
+        print(f"searching for {target!r}", file=sys.stderr)
         target_candidates = json.loads(get_bw_item(target))
         if not target_candidates:
             continue
@@ -104,9 +104,6 @@ def main(arguments):
         break
     else:
         if not candidates:
-            print(
-                f"no pass candidates for url {arguments.url!r} found", file=sys.stderr
-            )
             return ExitCodes.NO_PASS_CANDIDATES
     if len(candidates) == 1:
         selection = candidates.pop()
