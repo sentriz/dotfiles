@@ -35,6 +35,7 @@ c.tabs.background = True
 # bindings
 config.bind('J', 'tab-prev')
 config.bind('K', 'tab-next')
+config.bind("<Ctrl-w>", "fake-key <Ctrl-backspace>", mode="insert")
 
 # appearence
 c.statusbar.padding = padding
