@@ -338,9 +338,6 @@ for_window  [app_id="^scratchpad$"] floating enable, move scratchpad, border pix
 bindcode 66 [app_id="^scratchpad$"] scratchpad show, resize set 1334 550, move position center
 
 ## autostarts
-exec_always gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita'
-exec_always gsettings set org.gnome.desktop.interface icon-theme 'Adwaita'
-exec_always gsettings set org.gnome.desktop.interface cursor-theme 'Adwaita'
 exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec cliphist listen
 exec wl-gammactld
