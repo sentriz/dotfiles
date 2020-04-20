@@ -4,9 +4,9 @@
 
 notable dotfiles:
 
-- `public_common/.gnupg/gpg-agent.conf`
-- `public_common/.gnupg/sshcontrol`
-- `public_common/bin/set_gpg_env` where some env vars for ssh are set, and gnupg's `TTY` and `X-DISPLAY` variables are updated (needed for `pinentry` to work consistently)
+- `conf_extra/.gnupg/gpg-agent.conf`
+- `conf_extra/.gnupg/sshcontrol`
+- `conf_extra/bin/set_env_gpg` where some env vars for ssh are set, and gnupg's `TTY` and `X-DISPLAY` variables are updated (needed for `pinentry` to work consistently)
 
 ### packages
 
