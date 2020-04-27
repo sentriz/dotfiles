@@ -27,25 +27,27 @@ palette = {
 
 c.auto_save.session = True
 c.backend = "webengine"
-c.content.default_encoding = 'utf-8'
+c.content.default_encoding = "utf-8"
 c.content.geolocation = False
 c.spellcheck.languages = ["en-GB"]
 c.tabs.background = True
 
 # bindings
-config.bind('J', 'tab-prev')
-config.bind('K', 'tab-next')
+config.bind("J", "tab-prev")
+config.bind("K", "tab-next")
 config.bind("<Ctrl-w>", "fake-key <Ctrl-backspace>", mode="insert")
+config.bind(",m", "spawn mpv {url}")
+config.bind(",M", "hint links spawn mpv {hint-url}")
 
 # appearence
 c.statusbar.padding = padding
-c.statusbar.widgets = ['keypress', 'url', 'scroll', 'progress']
+c.statusbar.widgets = ["keypress", "url", "scroll", "progress"]
 c.tabs.favicons.scale = 1
 c.tabs.indicator.width = 1
 c.tabs.padding = padding
 c.tabs.show = "multiple"
-c.tabs.title.format = '{current_title}'
-c.tabs.title.format_pinned = ''
+c.tabs.title.format = "{current_title}"
+c.tabs.title.format_pinned = ""
 c.tabs.max_width = 200
 
 # theme
