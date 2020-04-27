@@ -9,4 +9,4 @@ set -gx QT_QPA_PLATFORM wayland
 set -gx QT_WAYLAND_DISABLE_WINDOWDECORATION 1
 set -gx GTK_THEME Arc:dark
 
-exec sway $argv > ~/.cache/sway_log 2>&1
+exec sway -d $argv > ~/.cache/sway_log 2>&1

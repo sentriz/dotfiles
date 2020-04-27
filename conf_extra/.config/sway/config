@@ -96,7 +96,6 @@ client.unfocused        $grey  $grey #ffffff $grey   $grey
 bindsym $super+q     kill
 bindsym $super+f     fullscreen toggle
 bindsym $super+space floating toggle
-bindsym $super+s     sticky toggle
 
 ## bindings: focus
 bindsym $super+v focus parent
@@ -113,13 +112,15 @@ bindsym $super+n split h
 bindsym $super+m split v
 
 ## bindings: position
-bindsym $super+Left         move left
-bindsym $super+Down         move down
-bindsym $super+Up           move up
-bindsym $super+Right        move right
-bindsym $super+b            move position center
-bindsym $super+bracketleft  move workspace to output left
-bindsym $super+bracketright move workspace to output right
+bindsym $super+Left  move left
+bindsym $super+Down  move down
+bindsym $super+Up    move up
+bindsym $super+Right move right
+bindsym $super+b     move position center
+bindsym $super+w     move workspace to output up
+bindsym $super+a     move workspace to output left
+bindsym $super+s     move workspace to output down
+bindsym $super+d     move workspace to output right
 
 ## bindings: modes
 bindsym $super+$alt+r     mode $mode_resize_tile
@@ -282,44 +283,43 @@ assign [class="Inkscape"]                       $work_8
 assign [class="libreoffice-*"]                  $work_9
 
 ## floating windows
-for_window [window_type="menu"]                floating enable
-for_window [window_role="app"]                 floating enable
-for_window [window_role="pop-up"]              floating enable
-for_window [window_role="task_dialog"]         floating enable
-for_window [window_type="dialog"]              floating enable
-for_window [title="Preferences$"]              floating enable
-for_window [title="- Sharing Indicator$"]      floating enable
-for_window [class="Anki"]                      floating enable
-for_window [title="Anki$"]                     floating enable
-for_window [app_id="electrum"]                 floating enable
-for_window [app_id="nm-connection-editor"]     floating enable
-for_window [app_id="wdisplays"]                floating enable
-for_window [app_id="^blueman-manager"]         floating enable
-for_window [title="^Figure 1$"]                floating enable
-for_window [class="Blueman-manager"]           floating enable
-for_window [class="Galculator"]                floating enable
-for_window [class="Gui.py"]                    floating enable
-for_window [class="Mnemosyne"]                 floating enable
-for_window [class="Nm-connection-editor"]      floating enable
-for_window [class="Pavucontrol"]               floating enable
-for_window [app_id="pavucontrol"]              floating enable
-for_window [class="Qpaeq"]                     floating enable
-for_window [class="SimpleScreenRecorder"]      floating enable
-for_window [class="Woeusbgui"]                 floating enable
-for_window [class="electrum"]                  floating enable
-for_window [class="etcher"]                    floating enable
-for_window [class="feh"]                       floating enable
-for_window [class="^XEyes$"]                   floating enable
-for_window [title="^bobby$"]                   floating enable
-for_window [app_id="^xdg-desktop-portal-gtk$"] floating enable
-for_window [app_id="^firefox$" title="Picture-in-Picture"] floating enable
-for_window [app_id="^sublime-music$"]          floating enable
+for_window [window_type="menu"]                                floating enable
+for_window [window_role="app"]                                 floating enable
+for_window [window_role="pop-up"]                              floating enable
+for_window [window_role="task_dialog"]                         floating enable
+for_window [window_type="dialog"]                              floating enable
+for_window [title="Preferences$"]                              floating enable
+for_window [title="- Sharing Indicator$"]                      floating enable
+for_window [class="Anki"]                                      floating enable
+for_window [title="Anki$"]                                     floating enable
+for_window [app_id="electrum"]                                 floating enable
+for_window [app_id="nm-connection-editor"]                     floating enable
+for_window [app_id="wdisplays"]                                floating enable
+for_window [app_id="^blueman-manager"]                         floating enable
+for_window [title="^Figure 1$"]                                floating enable
+for_window [class="Blueman-manager"]                           floating enable
+for_window [class="Galculator"]                                floating enable
+for_window [class="Gui.py"]                                    floating enable
+for_window [class="Mnemosyne"]                                 floating enable
+for_window [class="Nm-connection-editor"]                      floating enable
+for_window [class="Pavucontrol"]                               floating enable
+for_window [app_id="pavucontrol"]                              floating enable
+for_window [class="Qpaeq"]                                     floating enable
+for_window [class="SimpleScreenRecorder"]                      floating enable
+for_window [class="Woeusbgui"]                                 floating enable
+for_window [class="electrum"]                                  floating enable
+for_window [class="etcher"]                                    floating enable
+for_window [class="feh"]                                       floating enable
+for_window [class="^XEyes$"]                                   floating enable
+for_window [title="^bobby$"]                                   floating enable
+for_window [app_id="^xdg-desktop-portal-gtk$"]                 floating enable
+for_window [app_id="^firefox$" title="Picture-in-Picture"]     floating enable
 for_window [app_id="^thunar$" title="File Operation Progress"] floating enable
 
 ## bindings: xf86
-bindsym XF86AudioLowerVolume  exec amixer sset Master 5%- && $up_block_1
-bindsym XF86AudioRaiseVolume  exec amixer sset Master 5%+ && $up_block_1
-bindsym XF86AudioMute         exec amixer sset Master toggle && $up_block_1
+bindsym XF86AudioLowerVolume  exec amixer sset Master 5%-     && $up_block_1
+bindsym XF86AudioRaiseVolume  exec amixer sset Master 5%+     && $up_block_1
+bindsym XF86AudioMute         exec amixer sset Master toggle  && $up_block_1
 bindsym XF86AudioMicMute      exec amixer sset Capture toggle
 bindsym XF86AudioPlay         exec playerctl play-pause
 bindsym XF86AudioStop         exec playerctl stop
@@ -339,7 +339,7 @@ bindcode 66 [app_id="^scratchpad$"] scratchpad show, resize set 1334 550, move p
 
 ## autostarts
 exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-exec cliphist listen
+# exec cliphist listen
 exec wl-gammactld
 exec swayidle -w \
     timeout 290  "notify-send 'locking screen in 10 seconds'" \
