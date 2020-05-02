@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+pushd $(mktemp -d)
+go mod init tmp
+go get -u $@
+popd
