@@ -35,6 +35,10 @@ if dein#load_state(s:dein_dir)
     call dein#save_state()
 endif
 
+" to remove old plugins
+" :call map(dein#check_clean(), "delete(v:val, 'rf')")
+" :call dein#recache_runtimepath()
+
 " source the rest of the rc
 for rc_path in split(globpath('~/.config/nvim/rc/', '*.vim'), '\n')
     execute 'source' rc_path
