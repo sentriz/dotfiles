@@ -31,7 +31,6 @@ if dein#load_state(s:dein_dir)
     call dein#add('rhysd/committia.vim')
     call dein#add('romainl/vim-qf')
     call dein#add('airblade/vim-rooter')
-    call dein#add('psliwka/vim-smoothie')
     call dein#end()
     call dein#save_state()
 endif
