@@ -10,16 +10,20 @@
 	default = current
 	followTags = true
 [alias]
-	c            = commit
-	s            = status
-	set-upstream = !git branch --set-upstream-to=origin/`git symbolic-ref --short HEAD`
-	fixupf       = !git commit --fixup=$(git log --pretty=oneline --abbrev-commit | fzf +s | awk '{print $1'})
-	revertf      = !git revert $(git log --pretty=oneline --abbrev-commit | fzf +s | awk '{print $1}')
-	showf        = !git show $(git log --pretty=oneline --abbrev-commit | fzf +s | awk '{print $1}')
-	addf         = !git add -- $(git ls-files --modified --others --exclude-standard | fzf -m --preview 'cat {}')
-	checkoutf    = !git checkout -- $(git ls-files --modified --exclude-standard | fzf -m)
-	difff        = !git diff -- $(git ls-files --modified --exclude-standard | fzf -m)
-	autosquash   = !GIT_SEQUENCE_EDITOR=true git rebase --interactive --autosquash
+	c = commit
+	s = status
+	fixupf    = !git commit --fixup=$(git log --pretty=oneline --abbrev-commit | fzf +s | awk '{print $1'})
+	revertf   = !git revert $(git log --pretty=oneline --abbrev-commit | fzf +s | awk '{print $1}')
+	showf     = !git show $(git log --pretty=oneline --abbrev-commit | fzf +s | awk '{print $1}')
+	addf      = !git add -- $(git ls-files --modified --others --exclude-standard | fzf -m --preview 'cat {}')
+	checkoutf = !git checkout -- $(git ls-files --modified --exclude-standard | fzf -m)
+	difff     = !git diff -- $(git ls-files --modified --exclude-standard | fzf -m)
+	rebase-squash = !GIT_SEQUENCE_EDITOR=true git rebase --interactive --autosquash
+	branch-set-upstream      = !git branch --set-upstream-to=origin/`git symbolic-ref --short HEAD`
+	branch-clean-remote-show = !git remote prune origin --dry-run
+	branch-clean-remote      = !git remote prune origin
+	branch-clean-local-show  = !git branch --merged | grep -Ev '(^\\*|master|dev)'
+	branch-clean-local       = !git branch --merged | grep -Ev '(^\\*|master|dev)' | xargs git branch -d
 [diff "zip"]
 	textconv = unzip -c -a
 [diff]
