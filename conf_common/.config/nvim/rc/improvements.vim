@@ -2,7 +2,7 @@
 set autoread
 set autowriteall
 set backupdir=$TEMP,.
-set clipboard=unnamedplus
+set clipboard^=unnamed,unnamedplus
 set complete-=i
 set complete-=t
 set diffopt+=vertical
