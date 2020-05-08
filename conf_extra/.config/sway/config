@@ -339,7 +339,16 @@ bindcode 66 [app_id="^scratchpad$"] scratchpad show, resize set 1334 550, move p
 
 ## autostarts
 exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-# exec cliphist listen
+exec wl-paste \
+    --type text \
+    --watch \
+    clipman store
+exec wl-paste \
+    --primary \
+    --type text \
+    --watch \
+    clipman store
+exec clipman restore
 exec wl-gammactld
 exec swayidle -w \
     timeout 290  "notify-send 'locking screen in 10 seconds'" \

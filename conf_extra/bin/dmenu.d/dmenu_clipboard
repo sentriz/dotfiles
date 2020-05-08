@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
-exec cliphist select \
-    | dmenu_custom --prompt 'clipboard' \
-    | cliphist copy
+if ! command -v "clipman" >/dev/null 2>&1; then
+    echo "please install clipman" >&2
+    echo "https://github.com/yory8/clipman/" >&2
+    exit 1
+fi
+
+exec clipman pick \
+    -t CUSTOM \
+    -T "dmenu_custom --prompt clipboard"
