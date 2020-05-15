@@ -10,6 +10,7 @@ set -gx COMPOSE_DOCKER_CLI_BUILD 1
 set -gx DOCKER_BUILDKIT 1
 
 # dotfiles settings
+set -gx DOTS_SCRAP_DIR "$HOME/scrap"
 set -gx DOTS_SCREENSHOTS_DIR "$HOME/pictures/screenshots"
 set -gx DOTS_SCREENSHOTS_REMOTE 'https://image.senan.xyz'
 set -gx DOTS_PASTE_REMOTE 'https://paste.senan.xyz'
