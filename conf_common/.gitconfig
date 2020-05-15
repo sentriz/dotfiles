@@ -59,8 +59,8 @@
 	smtpuser = senan@senan.xyz
 	smtpserverport = 587
 	confirm = auto
-[credential "smtp://senan%40senan.xyz@smtp.fastmail.com%3a587"]
-	helper = !printf "password=%s" $(secret fastmail_apppassword)
+[credential "smtp://senan%40senan.xyz@smtp.fastmail.com:587"]
+	helper = !secret-git-helper password fastmail_apppassword
 [rebase]
 	autosquash = true
 [gpg]
