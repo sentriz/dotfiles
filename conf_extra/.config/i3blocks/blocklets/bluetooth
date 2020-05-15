@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+bluetoothctl info | grep -Po "Alias: \K.*"
+exit 0

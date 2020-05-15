@@ -7,6 +7,10 @@ instance=Master
 label=volume 
 signal=1
 
+[bluetooth]
+color=#039be5
+label=bluetooth 
+
 [wifi]
 color=#ffb300
 label=wifi 
@@ -22,7 +26,7 @@ label=battery
 [balance]
 color=#e6e600
 instance=boi
-interval=1800
+interval=7200
 label=boi 
 
 [balance]
