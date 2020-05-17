@@ -1,5 +1,6 @@
 " basics
 set listchars=tab:>\ ,trail:.
+set fillchars=vert:\ 
 set sidescroll=1
 set noshowmode
 set laststatus=2

@@ -2,10 +2,11 @@
 " bottom bar colour is 237 (#3a3a3a)
 " top bar colour is 238 (#444444)
 
-highlight ColorColumn term=reverse ctermbg=88
+highlight Normal ctermbg=none ctermfg=none
+highlight VertSplit cterm=NONE ctermbg=NONE
 highlight Comment ctermfg=244
 highlight Conceal ctermfg=252 ctermbg=248
-highlight Constant term=underline ctermfg=217#ffa0a0
+highlight Constant term=underline ctermfg=217
 highlight Cursor ctermfg=66 ctermbg=222
 highlight CursorColumn term=reverse ctermbg=241
 highlight DiffAdd ctermbg=none ctermfg=248
@@ -26,7 +27,6 @@ highlight MatchParen term=reverse ctermbg=30
 highlight ModeMsg ctermfg=178
 highlight MoreMsg ctermfg=29
 highlight NonText ctermfg=152
-highlight Normal ctermfg=231
 highlight Pmenu ctermfg=255 ctermbg=237
 highlight PmenuSbar ctermbg=250
 highlight PmenuSel ctermbg=248
@@ -49,17 +49,11 @@ highlight ToolbarButton ctermfg=16 ctermbg=252
 highlight ToolbarLine term=underline ctermbg=244
 highlight Type term=underline ctermfg=143
 highlight Underlined term=underline cterm=underline ctermfg=111#80a0ff
-highlight VertSplit ctermfg=236 ctermbg=236
 highlight Visual term=reverse ctermfg=222 ctermbg=64
 highlight WarningMsg term=standout ctermfg=209
 highlight WildMenu term=standout ctermfg=16 ctermbg=226
 
-highlight statusModifided ctermfg=217 ctermbg=237
-highlight link statusReadOnly statusModifided
-
-highlight goSameId ctermfg=255 ctermbg=238
-
-hi DiffAdd ctermbg=72 ctermfg=238 cterm=none
-hi DiffDelete ctermbg=167 ctermfg=238 cterm=none
-hi DiffChange ctermbg=238 ctermfg=178 cterm=underline
-hi DiffText ctermbg=178 ctermfg=238 cterm=none
+highlight DiffAdd ctermbg=72 ctermfg=238 cterm=none
+highlight DiffDelete ctermbg=167 ctermfg=238 cterm=none
+highlight DiffChange ctermbg=238 ctermfg=178 cterm=underline
+highlight DiffText ctermbg=178 ctermfg=238 cterm=none
