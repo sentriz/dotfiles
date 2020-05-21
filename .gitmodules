@@ -1,0 +1,6 @@
+[submodule "conf_extra/bin/chrome-private"]
+	path = conf_extra/bin/chrome-private
+	url = git@github.com:sentriz/chrome-private.git
+[submodule "conf_extra/bin/wl-gammactld"]
+	path = conf_extra/bin/wl-gammactld
+	url = git@github.com:sentriz/wl-gammactld.git
