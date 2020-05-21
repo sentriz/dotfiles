@@ -339,6 +339,7 @@ bindcode 66 [app_id="^scratchpad$"] scratchpad show, resize set 1334 550, move p
 
 ## autostarts
 exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+exec redshift
 exec wl-paste \
     --type text \
     --watch \
