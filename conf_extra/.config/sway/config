@@ -342,12 +342,12 @@ exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec wl-paste \
     --type text \
     --watch \
-    clipman store
+    clipman store --max-items 500
 exec wl-paste \
     --primary \
     --type text \
     --watch \
-    clipman store
+    clipman store --max-items 500
 exec clipman restore
 exec wl-gammactld
 exec swayidle -w \
