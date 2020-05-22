@@ -1,6 +1,6 @@
 set -xg fish_color_host blue
 
-source (type -P set_env_tmux_parent)
+source (type -P set-env-tmux-parent)
 
 # jump to my containers easily with completion
 set -g container_dir "/opt/containers"

@@ -8,4 +8,4 @@ set -gx XDG_DATA_DIRS (string join ':' \
     '/home/senan/.local/share/flatpak/exports/share'
 )
 
-exec start_sway
+exec start-sway
