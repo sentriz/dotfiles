@@ -1,0 +1,70 @@
+#!/bin/bash
+
+# intended to be run from termux
+# curl -sSL "https://raw.githubusercontent.com/sentriz/dotfiles/master/install_phone" | sh -s - path/to/key
+
+set -e
+
+if [ "$#" -ne 1 ]; then
+    echo "please provide a private key" >&2
+    exit 1
+fi
+
+conf_dots_dir="$HOME/projects/dotfiles"
+conf_priv_key="$1"
+
+mkdir -p "$HOME/.cache/dein/repos/github.com/Shougo/" >/dev/null 2>&1
+mkdir -p "$HOME/.config/fish/functions/" >/dev/null 2>&1
+mkdir -p "$HOME/projects/dotfiles/" >/dev/null 2>&1
+
+once() {
+    flag="$HOME/.cache/dot_once_$1"
+    [ ! -f "$flag" ] && "$1" && touch "$1"
+}
+
+setup_pacs() {
+    apt update
+    apt upgrade
+    apt install \
+        fish \
+        git \
+        gnupg \
+        neovim \
+        openssh \
+        python \
+        stow \
+        wget
+}
+
+setup_priv_key() {
+    gpg --import "$conf_priv_key"
+    rm "$conf_priv_key"
+}
+
+setup_shell() {
+    wget 'https://git.io/fundle' -O "$HOME/.config/fish/functions/fundle.fish"
+    fish -ic "fundle install"
+    chsh -s fish
+}
+
+setup_dots() {
+    git clone "https://github.com/sentriz/dotfiles.git" "$conf_dots_dir"
+    cd "$conf_dots_dir"
+    ./install_common
+    cd
+}
+
+setup_vim() {
+    python3 -m pip install --user pynvim
+    git clone 'https://github.com/Shougo/dein.vim' \
+        "$HOME/.cache/dein/repos/github.com/Shougo/dein.vim"
+    vim '+call dein#install()' '+qall'
+}
+
+once setup_pacs
+once setup_priv_key
+once setup_shell
+once setup_dots
+once setup_vim
+
+exec fish
