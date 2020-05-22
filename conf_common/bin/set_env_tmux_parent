@@ -1,7 +1,13 @@
 #!/usr/bin/env fish
 
-set -q TMUX; or exit
+if string match -q -r 'tmux\-\d+' "$TMUX"
+    set tmux_cmd tmux
+else if string match -q -r 'tmate\-\d+' "$TMUX"
+    set tmux_cmd tmate
+else
+    exit
+end
 
-for expression in (tmux show-env | sed -n 's/^\(SSH_[^=]*\)=\(.*\)/set -x \1 "\2"/p')
+for expression in ("$tmux_cmd" show-env | sed -n 's/^\(SSH_[^=]*\)=\(.*\)/set -x \1 "\2"/p')
     eval "$expression"
 end
