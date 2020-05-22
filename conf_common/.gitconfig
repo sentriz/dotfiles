@@ -32,7 +32,6 @@
 	statusHints = false
 [core]
 	editor = nvim
-	excludesfile = ~/.gitignore_global
 	pager = less -r
 [pull]
 	rebase = true
