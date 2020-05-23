@@ -1,9 +1,3 @@
-# scrap
-alias go_scrap "vim (mktemp -d $DOTS_SCRAP_DIR/go.XXX)/main.go"
-alias py_scrap "vim (mktemp -d $DOTS_SCRAP_DIR/python.XXX)/main.py"
-alias go_scrap_find "vim (rg -g '**/main.go' --line-number --no-heading --smart-case --color=never . $DOTS_SCRAP_DIR | fzf | sed -r 's/([^:]+)\:([0-9]+).*/+\2\n\1/g')"
-alias py_scrap_find "vim (rg -g '**/main.py' --line-number --no-heading --smart-case --color=never . $DOTS_SCRAP_DIR | fzf | sed -r 's/([^:]+)\:([0-9]+).*/+\2\n\1/g')"
-
 # safety/better
 alias rm    'rm -Iv --preserve-root'
 alias wget  'wget -c'

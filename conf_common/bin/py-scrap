@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+path="$(mktemp -d "$DOTS_SCRAP_DIR/python.XXX")/main.py"
+
+cat > "$path" << EOL
+# $ python "$path"
+
+def main():
+    pass
+
+if __name__ == "__main__":
+    main()
+EOL
+
+nvim "$path"

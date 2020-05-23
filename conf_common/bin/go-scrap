@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+path="$(mktemp -d "$DOTS_SCRAP_DIR/go.XXX")/main.go"
+
+cat > "$path" << EOL
+// $ go run "$path"
+
+package main
+
+func main() {}
+EOL
+
+nvim "$path"
