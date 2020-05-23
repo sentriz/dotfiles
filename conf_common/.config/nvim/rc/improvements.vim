@@ -7,23 +7,25 @@ set complete-=i
 set complete-=t
 set diffopt+=vertical
 set directory=$TEMP,.
+set foldmethod=syntax
+set gdefault
 set ignorecase
 set inccommand=nosplit
 set incsearch
 set laststatus=2
 set mouse+=a
 set nobackup
+set nofoldenable
 set noswapfile
 set nowrap
 set nowritebackup
 set number
 set path+=**
+set scrolloff=5
 set shell=bash
 set undodir=~/.cache/vimundo
 set undofile
 set virtualedit=block
-set scrolloff=5
-set gdefault
 
 " oopsies
 command! Q quit

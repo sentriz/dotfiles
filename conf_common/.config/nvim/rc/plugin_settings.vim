@@ -32,3 +32,6 @@ let g:black_linelength = 79
 
 " for airblade/vim-rooter
 let g:rooter_patterns = ['go.mod', 'go.sum', 'package.json', '.git/']
+
+" for atimholt/spiffy_foldtext
+let g:SpiffyFoldtext_format = "%c{ } ... }%f{ }"

@@ -13,7 +13,11 @@ nnoremap <leader>/ :echo expand('%:p')<cr>
 " better
 nnoremap Y y$
 
-" 'bubbling'
+" easy folding
+nnoremap        z za                            " toggle node
+nnoremap <expr> Z &foldlevel == 0 ? "zR" : "zM" " toggle buffer
+
+" bubbling
 nnoremap <s-k> ddkP
 nnoremap <s-j> ddp
 vnoremap <s-k> xkP`[V`]

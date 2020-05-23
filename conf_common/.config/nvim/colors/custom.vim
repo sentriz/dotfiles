@@ -3,8 +3,9 @@
 " top bar colour is 238 (#444444)
 
 highlight Normal ctermbg=none ctermfg=none
-highlight VertSplit cterm=NONE ctermbg=NONE
+highlight VertSplit cterm=none ctermbg=none
 highlight Comment ctermfg=244
+highlight Folded ctermfg=244 ctermbg=none
 highlight Conceal ctermfg=252 ctermbg=248
 highlight Constant term=underline ctermfg=217
 highlight Cursor ctermfg=66 ctermbg=222
@@ -18,7 +19,6 @@ highlight EndOfBuffer ctermbg=none ctermfg=236
 highlight Error term=reverse ctermfg=231 ctermbg=196
 highlight ErrorMsg term=standout ctermfg=231 ctermbg=196
 highlight FoldColumn term=standout ctermfg=180 ctermbg=239
-highlight Folded ctermfg=178 ctermbg=none
 highlight Identifier term=underline ctermfg=120
 highlight Ignore ctermfg=241
 highlight IncSearch term=reverse cterm=reverse ctermfg=222 ctermbg=66
