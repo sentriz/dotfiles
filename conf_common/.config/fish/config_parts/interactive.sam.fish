@@ -3,12 +3,10 @@ set -xg fish_color_host blue
 source (type -P set-env-tmux-parent)
 
 # jump to my containers easily with completion
-set -g container_dir "/opt/containers"
 function cc --argument container
-    cd "$container_dir/$container"
+    cd "$DOTS_COPT_DIR/$container"
 end
 
-# need to wrap the inner subshell, so using this extra echo subshell
 complete \
     -x \
     --command cc \

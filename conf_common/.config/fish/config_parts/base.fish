@@ -17,6 +17,7 @@ set -gx DOTS_PASTE_REMOTE 'https://paste.senan.xyz'
 set -gx DOTS_RADIO_DIR "$HOME/radio"
 set -gx DOTS_MOUNTS_DIR "$HOME/mounts"
 set -gx DOTS_COPT_DIR '/opt/containers'
+set -gx DOTS_PROJECTS_DIR "$HOME/projects"
 
 if which go >/dev/null 2>&1
     set -gx GOPATH $HOME/go

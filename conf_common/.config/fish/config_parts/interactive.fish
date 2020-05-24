@@ -63,3 +63,19 @@ fundle init
 # plugin settings
 set -g pipenv_fish_fancy no
 set -g VIRTUAL_ENV_DISABLE_PROMPT yes
+
+# jump to my projects easily with completion
+function p --argument project
+    cd "$DOTS_PROJECTS_DIR/$project"
+end
+
+complete \
+    -x \
+    --command p \
+    --arguments (find \
+         "$DOTS_PROJECTS_DIR" \
+         -maxdepth 1 \
+         -mindepth 1 \
+         -type d \
+         -printf '%P '
+    )
