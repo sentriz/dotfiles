@@ -29,6 +29,7 @@ c.auto_save.session = True
 c.backend = "webengine"
 c.content.default_encoding = "utf-8"
 c.content.geolocation = False
+c.content.webgl = False
 c.spellcheck.languages = ["en-GB"]
 c.tabs.background = True
 
