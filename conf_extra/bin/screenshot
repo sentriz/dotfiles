@@ -16,23 +16,13 @@ if not which slurp > /dev/null 2>&1
     exit 1
 end
 
-if not notify-send --help 2>&1 | grep -Eq -- --print-id
-    echo "notify-send with `--print-id` and `--replace-id` required" >&2
-    echo "https://aur.archlinux.org/packages/?O=0&K=libnotify-id" >&2
-    exit 1
-end
-
 set -g screen_dir "$DOTS_SCREENSHOTS_DIR"
 set -g remote_host "$DOTS_SCREENSHOTS_REMOTE"
 set -g grim_options
-set -g notify_id (random 500 1000)
+set -g notify_file (mktemp)
 
 function __notify
-    set notify_id (notify-send \
-        --print-id \
-        --replace-id "$notify_id" \
-        $argv
-    )
+    notify-send.sh --replace-file "$notify_file" $argv
 end
 
 if contains 'select' $argv
@@ -44,9 +34,9 @@ set -g filename "$screen_dir/"(date '+%Y%m%d_%H%M%S.png')
 grim $grim_options "$filename"
 __notify 'screenshot' 'taken '(basename $filename)
 
-# add to socr database
-# see https://github.com/sentriz/socr
-socr add "$filename" &
+# # add to socr database
+# # see https://github.com/sentriz/socr
+# socr add "$filename" &
 
 contains 'upload' $argv; or exit
 set -l credentials (printf \

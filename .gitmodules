@@ -4,3 +4,6 @@
 [submodule "conf_extra/bin/wl-gammactld"]
 	path = conf_extra/bin/wl-gammactld
 	url = git@github.com:sentriz/wl-gammactld.git
+[submodule "conf_extra/bin/notify-send"]
+	path = conf_extra/bin/notify-send
+	url = git@github.com:vlevit/notify-send.sh.git

@@ -144,12 +144,12 @@ mode $mode_resize_tile {
 
 set $mode_colour_mode "colour mode: gamma [o|p], brightness [k|l], contrast [n|m]"
 mode $mode_colour_mode {
-    bindsym o exec "echo 'gamma -0.2' > /tmp/wl-gammactld"
-    bindsym p exec "echo 'gamma +0.2' > /tmp/wl-gammactld"
-    bindsym k exec "echo 'brightness -0.2' > /tmp/wl-gammactld"
-    bindsym l exec "echo 'brightness +0.2' > /tmp/wl-gammactld"
-    bindsym n exec "echo 'contrast -0.2' > /tmp/wl-gammactld"
-    bindsym m exec "echo 'contrast +0.2' > /tmp/wl-gammactld"
+    bindsym o exec "echo 'gamma -0.05'      > /tmp/wl-gammactld"
+    bindsym p exec "echo 'gamma +0.05'      > /tmp/wl-gammactld"
+    bindsym k exec "echo 'brightness -0.05' > /tmp/wl-gammactld"
+    bindsym l exec "echo 'brightness +0.05' > /tmp/wl-gammactld"
+    bindsym n exec "echo 'contrast -0.05'   > /tmp/wl-gammactld"
+
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
@@ -348,8 +348,9 @@ for_window  [app_id="^scratchpad$"] floating enable, move scratchpad, border pix
 bindcode 66 [app_id="^scratchpad$"] scratchpad show, resize set 1334 550, move position center
 
 ## autostarts
-exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-exec redshift
+# exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+# exec redshift
+exec wl-gammactld
 exec wl-paste \
     --type text \
     --watch \
@@ -360,7 +361,6 @@ exec wl-paste \
     --watch \
     clipman store --max-items 500
 exec clipman restore
-exec wl-gammactld
 exec swayidle -w \
     timeout 290  "notify-send 'locking screen in 10 seconds'" \
     timeout 300  "$lock" \
