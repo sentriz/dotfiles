@@ -106,7 +106,7 @@ Comment[zh_CN]=访问互联网
 Comment[zh_HK]=連線到網際網路
 Comment[zh_TW]=連線到網際網路
 StartupWMClass=Google-chrome
-Exec=google-chrome-stable --profile-directory="Profile 1" %U
+Exec=google-chrome-stable --profile-directory="facebook" %U
 StartupNotify=true
 Terminal=false
 Icon=google-chrome
@@ -168,7 +168,7 @@ Name[vi]=Cửa sổ Mới
 Name[zh_CN]=新建窗口
 Name[zh_TW]=開新視窗
 StartupWMClass=Google-chrome
-Exec=google-chrome-stable --profile-directory="Profile 1"
+Exec=google-chrome-stable --profile-directory="facebook"
 
 [Desktop Action new-private-window]
 Name=New Incognito Window
@@ -221,4 +221,4 @@ Name[vi]=Cửa sổ ẩn danh mới
 Name[zh_CN]=新建隐身窗口
 Name[zh_TW]=新增無痕式視窗
 StartupWMClass=Google-chrome
-Exec=google-chrome-stable --profile-directory="Profile 1" --incognito
+Exec=google-chrome-stable --profile-directory="facebook" --incognito

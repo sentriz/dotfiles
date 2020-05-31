@@ -6,7 +6,7 @@ exec env BEMENU_BACKEND=wayland bemenu \
     --ignorecase \
     --ifne \
     --ignorecase \
-    --fn "Source Code Pro 10" \
+    --fn "Source Code Pro 11" \
     --hb "#0088CC" \
     --hf "#FFFFFF" \
     --tf "#FFFFFF" \

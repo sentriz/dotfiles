@@ -1,0 +1,2 @@
+CHROME="google-chrome-stable"
+ROOT_PROFILE_DIR="$HOME/.config/chrome-private-profile"
