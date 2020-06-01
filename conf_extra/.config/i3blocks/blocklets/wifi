@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-nmcli -t -f name,type,state connection \
-    | grep -Po '[^:]+(?=:802-11-wireless:activated)'
-test "$BLOCK_BUTTON" -eq 1 2>/dev/null && \
-    notify-send -- "$(ip addr | grep -Po 'inet\s\K.*?\s')"
+nmcli -t -f name,type,state connection | grep -Po '[^:]+(?=:802-11-wireless:activated)'
+test "$BLOCK_BUTTON" -eq 1 2>/dev/null && notify-send.sh -- "$(ip addr | grep -Po 'inet\s\K.*?\s')"
 exit 0
