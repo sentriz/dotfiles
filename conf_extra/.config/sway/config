@@ -126,13 +126,13 @@ bindsym $super+d     move workspace to output right
 bindsym $super+$alt+r     mode $mode_resize_tile
 bindsym $super+$alt+space mode $mode_move_floating focus floating
 bindsym $super+$alt+q     mode $mode_system
-bindsym $super+$alt+v     mode $mode_audio
 bindsym $super+$alt+i     mode $mode_i3
 bindsym $super+$alt+s     mode $mode_scrot
 bindsym $super+$alt+g     mode $mode_gaps
-bindsym $super+$alt+c     mode $mode_colour_mode
+bindsym $super+$alt+c     mode $mode_colour
+bindsym $super+$alt+v     mode $mode_volume
 
-set $mode_resize_tile "resize mode: [h][j][k][l]"
+set $mode_resize_tile "resize mode: h|j|k|l"
 mode $mode_resize_tile {
     bindsym h resize shrink width 10 px or 10 ppt
     bindsym j resize grow height 10 px or 10 ppt
@@ -142,8 +142,8 @@ mode $mode_resize_tile {
     bindsym Escape mode "default"
 }
 
-set $mode_colour_mode "colour mode: gamma [o|p], brightness [k|l], contrast [n|m]"
-mode $mode_colour_mode {
+set $mode_colour "colour mode: gamma [o|p], brightness [k|l], contrast [n|m]"
+mode $mode_colour {
     bindsym o exec "echo 'gamma -0.05'      > /tmp/wl-gammactld"
     bindsym p exec "echo 'gamma +0.05'      > /tmp/wl-gammactld"
     bindsym k exec "echo 'brightness -0.05' > /tmp/wl-gammactld"
@@ -174,7 +174,7 @@ mode $mode_i3 {
     bindsym Escape mode "default"
 }
 
-set $mode_move_floating "floating move mode: [h][j][k][l]"
+set $mode_move_floating "floating move mode: h|j|k|l"
 mode $mode_move_floating {
     bindsym h     move left
     bindsym j     move down
@@ -222,6 +222,14 @@ set $mode_gaps "gaps: [o]uter, [i]nner"
 mode $mode_gaps {
     bindsym o      mode $mode_gaps_outer
     bindsym i      mode $mode_gaps_inner
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+set $mode_volume "volume mode: -|+"
+mode $mode_volume {
+    bindsym minus exec amixer sset Master 5%- && $up_block_1
+    bindsym equal exec amixer sset Master 5%+ && $up_block_1
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
