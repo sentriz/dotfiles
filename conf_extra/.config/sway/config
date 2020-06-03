@@ -279,6 +279,7 @@ assign [app_id="^sqlitebrowser$"]               $work_1
 assign [class="^minecraft-launcher$"]           $work_1
 assign [class="^Minecraft"]                     $work_1
 assign [app_id="^transmission-remote-gtk$"]     $work_1
+assign [app_id="^tremotesf$"]                   $work_1
 assign [class="Firefox"]                        $work_2
 assign [app_id="^firefox$"]                     $work_2
 assign [class="Chromium"]                       $work_2
