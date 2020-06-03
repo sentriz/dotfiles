@@ -10,4 +10,5 @@ exec env BEMENU_BACKEND=wayland bemenu \
     --hb "#0088CC" \
     --hf "#FFFFFF" \
     --tf "#FFFFFF" \
+    -m all \
     $@
