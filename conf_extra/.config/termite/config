@@ -1,7 +1,7 @@
 # vim: ft=dosini cms=#%s
 
 [options]
-font = Source Code Pro 9
+font = Source Code Pro 10
 scrollback_lines = 100000
 cursor_shape = ibeam
 

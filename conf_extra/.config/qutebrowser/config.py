@@ -127,4 +127,5 @@ c.colors.tabs.selected.even.fg = palette["foreground"]
 c.colors.tabs.selected.odd.bg = palette["background"]
 c.colors.tabs.selected.odd.fg = palette["foreground"]
 c.fonts.default_family = ["Source Code Pro"]
+c.fonts.default_size = '10pt'
 c.hints.border = "1px solid " + palette["background-alt"]
