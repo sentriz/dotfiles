@@ -64,6 +64,10 @@ input "2:7:SynPS/2_Synaptics_TouchPad" {
     events disabled
 }
 
+input "2:10:TPPS/2_IBM_TrackPoint" {
+    pointer_accel 0.75
+}
+
 ## output
 output * {
     bg $HOME/pictures/wallpapers/flow.jpg fill
