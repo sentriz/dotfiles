@@ -6,7 +6,7 @@ if ! which pacmd >/dev/null 2>&1; then
 fi
 
 lower() {
-    tr '[[:upper:]]' '[[:lower:]]'
+    tr '[:upper:]' '[:lower:]'
 }
 
 sinks="$(paste \
