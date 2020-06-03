@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+if ! which pacmd >/dev/null 2>&1; then
+    echo "please install pulsemixer" >&2
+    exit 1
+fi
+
+sinks="$(paste \
+    --delimiters " " \
+    <(pacmd list-sinks | grep -Po "index\: \K\d") \
+    <(pacmd list-sinks | grep -Po "device\.description \= \"\K([^\"]+)")
+)"
+sink="$(dmenu_custom <<< "$sinks")"
+sink_index="${sink::1}"
+
+pacmd set-default-sink "$sink_index"
+pacmd list-sink-inputs \
+    | grep -Po "index\: \K\d" \
+    | xargs -L 1 -I {} pacmd move-sink-input {} "$sink_index"

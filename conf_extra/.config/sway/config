@@ -354,6 +354,7 @@ bindsym $super+Return exec $emulator
 bindsym $super+F1     exec dmenu_package
 bindsym $super+F2     exec dmenu_clipboard
 bindsym $super+F3     exec dmenu_radio
+bindsym $super+F4     exec dmenu_pulse && $up_block_1
 
 ## scratchpad
 exec "while :; do $emulator --name scratchpad --exec 'tmux new -A -s scratchpad'; sleep 0.5; done"
