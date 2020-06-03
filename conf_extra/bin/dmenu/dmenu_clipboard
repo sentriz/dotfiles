@@ -6,6 +6,6 @@ if ! command -v "clipman" >/dev/null 2>&1; then
     exit 1
 fi
 
-exec clipman pick \
+clipman pick \
     -t CUSTOM \
     -T "dmenu_custom --prompt clipboard"
