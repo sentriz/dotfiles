@@ -56,7 +56,7 @@ focus_follows_mouse no
 input * {
     xkb_layout ie
     xkb_options caps:none
-    repeat_delay 130
+    repeat_delay 160
     repeat_rate 75
 }
 
