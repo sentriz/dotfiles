@@ -5,13 +5,18 @@ if ! which bluetoothctl >/dev/null 2>&1; then
     exit 1
 fi
 
-lower() {
-    tr '[:upper:]' '[:lower:]'
-}
+lower() { tr '[:upper:]' '[:lower:]'; }
+notify() { notify-send.sh --replace-file "/tmp/dmenu_bluetooth_replace" "$@"; }
 
-notify_file="$(mktemp)"
-notify() {
-    notify-send.sh --replace-file "$notify_file" "$@"
+notify_cmd() {
+    heading="$1"
+    shift
+    notify "$heading" # body will appear to be filled
+    if ! out=$("$@"); then
+        notify "$heading" "failed: $out"
+        return 1
+    fi
+    notify "$heading" "done"
 }
 
 devices="$(bluetoothctl devices | lower)"
@@ -21,20 +26,17 @@ test -z "$device" && exit 1
 device_name="$(cut -d ' ' -f 3- <<< "$device")"
 device_mac="$(awk '{print $2}' <<< "$device")"
 
-run_disconnect() {
-    notify "disconnecting bluetooth"
-    bluetoothctl disconnect
-    notify "disconnecting done"
-}
+if [ "$device" = "disconnect" ]; then
+    notify_cmd "disconnecting" \
+        bluetoothctl disconnect
+    exit
+fi
 
-run_connect() {
-    notify "connecting to $device_name"
-    if ! out=$(bluetoothctl connect "${device_mac}"); then
-        notify "connecting failed" "$out"
-        return 1
-    fi
-    notify "connecting done"
-}
+notify_cmd "powering on" \
+    bluetoothctl power on
 
-test "$device" = "disconnect" && run_disconnect && exit
-run_connect
+bluetoothctl agent on
+bluetoothctl default-agent
+
+notify_cmd "connecting to $device_name" \
+    bluetoothctl connect "$device_mac"
