@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+
+if [[ "$#" -ne 2 ]]; then
+    echo "please provide <server> <link>" >&2
+    exit 1
+fi
+
+server="$1"
+link="$2"
+notify_file="$(mktemp)"
+username="$(secret transmission_${server}_username)"
+password="$(secret transmission_${server}_password)"
+url="$(secret transmission_${server}_rpc_url)"
+
+notify() {
+    notify-send.sh --replace-file "$notify_file" "$@"
+}
+
+request() {
+    curl --silent --anyauth --user "$username:$password" "$url" "$@"
+}
+
+get_key() {
+    grep -Po "X-Transmission-Session-Id\: \w+"
+}
+
+notify "adding torrent" "$link"
+
+read -r -d '' request_data << EOF
+{ 
+  "method": "torrent-add",
+  "arguments": { "filename": "$link" }
+} 
+EOF
+
+request \
+    --header "$(request | get_key)" \
+    --data-binary "$request_data"
+
+notify "adding torrent" "done"

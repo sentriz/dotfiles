@@ -39,6 +39,11 @@ config.bind("K", "tab-next")
 config.bind("<Ctrl-w>", "fake-key <Ctrl-backspace>", mode="insert")
 config.bind(",m", "spawn mpv {url}")
 config.bind(",M", "hint links spawn mpv {hint-url}")
+config.bind(",o", "hint links spawn --userscript transmission home {hint-url}")
+config.bind(",p", "hint links spawn --userscript transmission wall {hint-url}")
+config.bind(",b", "spawn --userscript bitwarden")
+config.bind(",r", "open --tab https://redacted.ch/torrents.php?order_by=seeders&searchstr={primary}", mode="normal")
+config.bind(",y", "open --tab https://rateyourmusic.com/search?searchterm={primary}", mode="normal")
 
 # appearence
 c.statusbar.padding = padding
