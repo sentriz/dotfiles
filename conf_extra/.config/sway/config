@@ -365,10 +365,9 @@ for_window  [app_id="^scratchpad$"] floating enable, move scratchpad, border pix
 bindcode 66 [app_id="^scratchpad$"] scratchpad show, resize set 1334 550, move position center
 
 ## autostarts
-# exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-# exec redshift
-exec_always pkill kanshi; exec kanshi
-exec_always pkill redshift; exec redshift -l 53.35:-6.26
+exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+exec kanshi
+exec redshift -l 53.35:-6.26
 exec wl-gammactld
 exec wl-paste \
     --type text \
