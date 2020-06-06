@@ -1,4 +1,8 @@
-set -gx RIPGREP_CONFIG_PATH $HOME/.config/ripgreprc
+if string match -q -r '^\/dev\/tty' (tty)
+    set -gx TERM xterm-256color
+end
+
+set -gx RIPGREP_CONFIG_PATH "$HOME/.config/ripgreprc"
 set -gx EDITOR 'nvim'
 set -gx GOPRIVATE 'github.com/CPSSD/*'
 set -gx GOPROXY 'https://proxy.golang.org,direct'
