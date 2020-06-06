@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+exec flatpak run --file-forwarding --filesystem=/tmp org.gnome.meld "$@"
