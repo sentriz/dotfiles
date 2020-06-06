@@ -1,4 +1,4 @@
-set -gx fish_color_host brgreen
+set -gx fish_color_host 'brgreen'
 
 function __update_termite_title --on-variable PWD
     status --is-command-substitution; and return
