@@ -344,6 +344,7 @@ for_window [title="^bobby$"]                                   floating enable
 for_window [app_id="^xdg-desktop-portal-gtk$"]                 floating enable
 for_window [app_id="^firefox$" title="Picture-in-Picture"]     floating enable
 for_window [app_id="^thunar$" title="File Operation Progress"] floating enable
+for_window [class="^Pinentry-gtk-2$"]                          floating enable
 
 ## media
 for_window [class="^jellyfin$"]                         floating enable, resize set 1334 550, sticky enable
