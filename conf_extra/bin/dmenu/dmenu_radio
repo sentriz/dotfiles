@@ -15,4 +15,4 @@ test "$selection" = "stop" && exit 0
 
 station="$(awk '{print $2}' <<< "$selection")"
 mpv --no-ytdl --no-video --no-cache --quiet --no-resume-playback "$DOTS_RADIO_DIR/$station" &
-notify-send.sh 'started radio station' "$(echo "$station" | sed 's/_/ /g')"
+notify-send.sh 'started radio station' "${station//_/\ }"
