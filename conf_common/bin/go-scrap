@@ -1,13 +1,18 @@
 #!/usr/bin/env bash
 
-path="$(mktemp -d "$DOTS_SCRAP_DIR/go.XXX")/main.go"
+dir="$(mktemp -d "$DOTS_SCRAP_DIR/go.XXX")"
+cd "$dir" || exit 1
 
-cat > "$path" << EOL
-// $ go run "$path"
+main="main.go"
+main_abs="$dir/$main"
+
+go mod init "${dir##*\.}"
+cat > "$main" << EOL
+// $ go run "$main_abs"
 
 package main
 
 func main() {}
 EOL
 
-nvim "$path"
+nvim "$main"
