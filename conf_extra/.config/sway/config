@@ -345,6 +345,12 @@ for_window [app_id="^xdg-desktop-portal-gtk$"]                 floating enable
 for_window [app_id="^firefox$" title="Picture-in-Picture"]     floating enable
 for_window [app_id="^thunar$" title="File Operation Progress"] floating enable
 
+## media
+for_window [class="^jellyfin$"]                         floating enable, resize set 1334 550, sticky enable
+for_window [class="^Google-chrome$" title="^Jellyfin$"] floating enable, resize set 1334 550, sticky enable
+for_window [class="^mpv$"]                              floating enable, resize set 1334 550, sticky enable
+for_window [app_id="^mpv$"]                             floating enable, resize set 1334 550, sticky enable
+
 ## bindings: xf86
 bindsym XF86AudioLowerVolume  exec amixer sset Master 5%-     && $up_block_1
 bindsym XF86AudioRaiseVolume  exec amixer sset Master 5%+     && $up_block_1
