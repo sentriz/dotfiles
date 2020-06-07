@@ -11,4 +11,4 @@ env BEMENU_BACKEND=wayland bemenu \
     --hf "#FFFFFF" \
     --tf "#FFFFFF" \
     -m all \
-    $@
+    "$@"
