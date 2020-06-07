@@ -5,14 +5,14 @@ if ! which pacmd >/dev/null 2>&1; then
     exit 1
 fi
 
-lower() {
-    tr '[:upper:]' '[:lower:]'
-}
+lower() { tr '[:upper:]' '[:lower:]'; }
+get_index() { grep -Po "index\: \K\d+"; }
+get_description() { grep -Po "device\.description \= \"\K([^\"]+)"; }
 
 sinks="$(paste \
     --delimiters " " \
-    <(pacmd list-sinks | grep -Po "index\: \K\d+") \
-    <(pacmd list-sinks | grep -Po "device\.description \= \"\K([^\"]+)" | lower)
+    <(pacmd list-sinks | get_index) \
+    <(pacmd list-sinks | get_description | lower)
 )"
 sink="$(dmenu_custom -p 'sink' <<< "$sinks")"
 test -z "$sink" && exit 1
@@ -20,5 +20,5 @@ test -z "$sink" && exit 1
 sink_index="${sink/%\ */}"
 pacmd set-default-sink "$sink_index"
 pacmd list-sink-inputs \
-    | grep -Po "index\: \K\d+" \
+    | get_index \
     | xargs -L 1 -I {} pacmd move-sink-input {} "$sink_index"
