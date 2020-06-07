@@ -126,12 +126,44 @@ function __fundle_get_url -d "returns the url for the given plugin" -a repo
 	echo "https://github.com/$repo.git"
 end
 
-function __fundle_update_plugin -d "update the given plugin" -a git_dir -a remote_url
-	command git --git-dir=$git_dir remote set-url origin $remote_url 2>/dev/null; and \
-	command git --git-dir=$git_dir fetch -q 2>/dev/null
+
+function __fundle_plugin_index -d "returns the index of the plugin" -a plugin
+	for i in (__fundle_seq (count $__fundle_plugin_names))
+		if test "$__fundle_plugin_names[$i]" = "$plugin"
+			return $i
+		end
+	end
+	# NOTE: should never reach this point
+	echo "could not find plugin: $plugin"
+	exit 1
 end
 
-function __fundle_install_plugin -d "install/update the given plugin" -a plugin -a git_url
+function __fundle_checkout_revision -a plugin -a git_url
+	set -l plugin_dir (__fundle_plugins_dir)/$plugin
+	set -l git_dir $plugin_dir/.git
+
+	set -l sha (__fundle_commit_sha $git_dir (__fundle_url_rev $git_url))
+	if test $status -eq 0
+		command git --git-dir="$git_dir" --work-tree="$plugin_dir" checkout -q -f $sha
+	else
+		echo "Could not checkout $plugin revision $sha"
+		return 1
+	end
+end
+
+function __fundle_update_plugin -d "update the given plugin" -a plugin -a git_url
+	echo "Updating $plugin"
+
+	set -l remote_url (__fundle_remote_url $git_url)
+	set -l git_dir (__fundle_plugins_dir)/$plugin/.git
+
+	command git --git-dir=$git_dir remote set-url origin $remote_url 2>/dev/null
+	command git --git-dir=$git_dir fetch -q 2>/dev/null
+
+	__fundle_checkout_revision $plugin $git_url
+end
+
+function __fundle_install_plugin -d "install the given plugin" -a plugin -a git_url
 	if __fundle_no_git
 		return 1
 	end
@@ -139,31 +171,30 @@ function __fundle_install_plugin -d "install/update the given plugin" -a plugin 
 	set -l plugin_dir (__fundle_plugins_dir)/$plugin
 	set -l git_dir $plugin_dir/.git
 	set -l remote_url (__fundle_remote_url $git_url)
-	set -l update ""
-
-	if contains __update $argv
-		set update true
-	end
 
 	if test -d $plugin_dir
-		if test -n "$update"
-			echo "Updating $plugin"
-			__fundle_update_plugin $git_dir $remote_url
-		else
-			echo "$argv[1] installed in $plugin_dir"
-			return 0
-		end
+    echo "$argv[1] installed in $plugin_dir"
+    return 0
 	else
 		echo "Installing $plugin"
 		command git clone -q $remote_url $plugin_dir
+		__fundle_checkout_revision $plugin $git_url
+	end
+end
+
+function __fundle_update -d "update the given plugin, or all if unspecified" -a plugin
+	if test -n "$plugin"; and test ! -d (__fundle_plugins_dir)/$plugin/.git
+		echo "$plugin not installed. You may need to run 'fundle install'"
+		return 1
 	end
 
-	set -l sha (__fundle_commit_sha $git_dir (__fundle_url_rev $git_url))
-	if test $status -eq 0
-		command git --git-dir="$git_dir" --work-tree="$plugin_dir" checkout -q -f $sha
+	if test -n "$plugin"
+		set -l index (__fundle_plugin_index $plugin)
+		__fundle_update_plugin "$plugin" $__fundle_plugin_urls[$index]
 	else
-		echo "Could not update $plugin"
-		return 1
+		for i in (__fundle_seq (count $__fundle_plugin_names))
+			__fundle_update_plugin $__fundle_plugin_names[$i] $__fundle_plugin_urls[$i]
+		end
 	end
 end
 
@@ -196,11 +227,11 @@ function __fundle_load_plugin -a plugin -a path -a fundle_dir -a profile -d "loa
 	set -l plugin_paths $__fundle_plugin_name_paths
 
 	if begin; test -d $functions_dir; and not contains $functions_dir $fish_function_path; end
-		set fish_function_path $functions_dir $fish_function_path
+		set fish_function_path $fish_function_path[1] $functions_dir $fish_function_path[2..-1]
 	end
 
 	if begin; test -d $completions_dir; and not contains $completions_dir $fish_complete_path; end
-		set fish_complete_path $completions_dir $fish_complete_path
+		set fish_complete_path $fish_complete_path[1] $completions_dir $fish_complete_path[2..-1]
 	end
 
 	if test -f $init_file
@@ -211,10 +242,12 @@ function __fundle_load_plugin -a plugin -a path -a fundle_dir -a profile -d "loa
 			source $f
 		end
 	else
-		# read all *.fish files if no init.fish or conf.d found
-		for f in $plugin_dir/*.fish
-			source $f
-		end
+	    # For compatibility with oh-my-fish themes, if there is no `init.fish` file in the plugin,
+	    # which is the case with themses, the root directory of the plugin is trerated as a functions
+	    # folder, so we include it in the `fish_function_path` variable.
+	    if not contains $plugin_dir $fish_function_path
+		    set fish_function_path $fish_function_path[1] $plugin_dir $fish_function_path[2..-1]
+	    end
 	end
 
 	if test -f $bindings_file
@@ -287,11 +320,6 @@ end
 function __fundle_install -d "install plugin"
 	if test (count $__fundle_plugin_names) -eq 0
 		__fundle_show_doc_msg "No plugin registered. You need to call 'fundle plugin NAME' before using 'fundle install'"
-	end
-
-	if begin; contains -- -u $argv; or contains -- --upgrade $argv; end
-		echo "deprecation warning: please use 'fundle update' to update plugins"
-		set argv $argv __update
 	end
 
 	for i in (__fundle_seq (count $__fundle_plugin_names))
@@ -408,7 +436,7 @@ function fundle -d "run fundle"
 		case "install"
 			__fundle_install $sub_args
 		case "update"
-			__fundle_install __update $sub_args
+			__fundle_update $sub_args
 		case "clean"
 			__fundle_clean
 		case "self-update"
