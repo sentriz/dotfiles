@@ -1,4 +1,5 @@
 *
 !.gitignore
-!google-chrome-*
+!google-chrome*
 !sublime-music.desktop
+!termite*
