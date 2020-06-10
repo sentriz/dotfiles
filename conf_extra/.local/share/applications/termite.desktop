@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=Termite
 Comment=Use the command line
-Exec=termite --exec fish
+Exec=SHELL=/usr/bin/fish termite
 Icon=utilities-terminal
 Type=Application
 Categories=GTK;System;TerminalEmulator;
