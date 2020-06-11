@@ -275,32 +275,34 @@ bindsym $super+Shift+7 move container to workspace $work_7
 bindsym $super+Shift+8 move container to workspace $work_8
 bindsym $super+Shift+9 move container to workspace $work_9
 
-assign [class="Sqliteman"]                      $work_1
-assign [class="Meld"]                           $work_1
-assign [app_id="org.gnome.meld"]                $work_1
-assign [class="DB Browser for SQLite"]          $work_1
-assign [app_id="^sqlitebrowser$"]               $work_1
-assign [class="^minecraft-launcher$"]           $work_1
-assign [class="^Minecraft"]                     $work_1
-assign [app_id="^transmission-remote-gtk$"]     $work_1
-assign [app_id="^tremotesf$"]                   $work_1
-assign [app_id="^sublime-music$"]               $work_1
-assign [class="Firefox"]                        $work_2
-assign [app_id="^firefox$"]                     $work_2
-assign [class="Chromium"]                       $work_2
-assign [class="Google-chrome"]                  $work_2
-assign [app_id="^org.qutebrowser.qutebrowser$"] $work_2
-assign [class="URxvt" instance="ncmpcpp"]       $work_4
-assign [class="Spotify"]                        $work_4
-assign [class="Deadbeef"]                       $work_4
-assign [class="Surf" instance="^plex_surf$"]    $work_4
-assign [class="VirtualBox"]                     $work_5
-assign [class="Franz"]                          $work_6
-assign [class="Mnemosyne"]                      $work_7
-assign [class="Anki"]                           $work_7
-assign [class="Gimp*"]                          $work_8
-assign [class="Inkscape"]                       $work_8
-assign [class="libreoffice-*"]                  $work_9
+assign [class="Sqliteman"]                        $work_1
+assign [class="Meld"]                             $work_1
+assign [app_id="org.gnome.meld"]                  $work_1
+assign [class="DB Browser for SQLite"]            $work_1
+assign [app_id="^sqlitebrowser$"]                 $work_1
+assign [class="^minecraft-launcher$"]             $work_1
+assign [class="^Minecraft"]                       $work_1
+assign [app_id="^transmission-remote-gtk$"]       $work_1
+assign [app_id="^tremotesf$"]                     $work_1
+assign [app_id="^sublime-music$"]                 $work_1
+assign [class="Firefox"]                          $work_2
+assign [app_id="^firefox$"]                       $work_2
+assign [class="Chromium"]                         $work_2
+assign [class="Google-chrome"]                    $work_2
+assign [app_id="^org.qutebrowser.qutebrowser$"]   $work_2
+assign [class="^Insomnia$" instance="^insomnia$"] $work_4
+assign [class="URxvt" instance="ncmpcpp"]         $work_4
+assign [class="URxvt" instance="ncmpcpp"]         $work_4
+assign [class="Spotify"]                          $work_4
+assign [class="Deadbeef"]                         $work_4
+assign [class="Surf" instance="^plex_surf$"]      $work_4
+assign [class="VirtualBox"]                       $work_5
+assign [class="Franz"]                            $work_6
+assign [class="Mnemosyne"]                        $work_7
+assign [class="Anki"]                             $work_7
+assign [class="Gimp*"]                            $work_8
+assign [class="Inkscape"]                         $work_8
+assign [class="libreoffice-*"]                    $work_9
 
 ## don't lock for video
 for_window [class="^Firefox$"]                      inhibit_idle fullscreen
