@@ -158,7 +158,6 @@ mode $mode_colour {
     bindsym l exec "echo 'brightness +0.05' > /tmp/wl-gammactld"
     bindsym n exec "echo 'contrast -0.05'   > /tmp/wl-gammactld"
     bindsym m exec "echo 'contrast +0.05'   > /tmp/wl-gammactld"
-
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
