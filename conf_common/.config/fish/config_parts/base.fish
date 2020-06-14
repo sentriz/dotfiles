@@ -29,8 +29,6 @@ set -l possible_paths \
     $GOPATH/bin \
     $HOME/.local/bin \
     $HOME/node_modules/.bin \
-    $HOME/bin \
-    $HOME/bin/*/ \
     $HOME/.fnm/current/bin \
     /usr/local/go/bin \
     /bin \
@@ -41,7 +39,9 @@ set -l possible_paths \
     /usr/bin/vendor_perl \
     /usr/local/bin \
     /usr/local/sbin \
-    /usr/sbin
+    /usr/sbin \
+    $HOME/bin \
+    $HOME/bin/*/
 
 # not using `set -a` for backwards compatibility
 for path in $possible_paths
