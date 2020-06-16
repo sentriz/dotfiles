@@ -3,12 +3,11 @@
 # requires:
 # - playerctl
 
-strip_query() { sed -r 's/\?\w+\=.*$//g'; }
 lower() { tr '[:upper:]' '[:lower:]'; }
 pctl() { playerctl --ignore-player chromium "$@"; }
 
 print_status() {
-    title="$(pctl metadata title | strip_query)"
+    title="$(pctl metadata title)"
     test -z "$title" && echo && return
 
     status="$(pctl status | lower)"
