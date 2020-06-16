@@ -11,8 +11,16 @@ selection="$(printf "%s\n" "$stations" "stop" | dmenu_custom -p 'station')"
 test -z "$selection" && exit 1
 
 pkill -f '^mpv.*radio'
-test "$selection" = "stop" && exit 0
+test "$selection" = "stop" && exit
 
 station="$(awk '{print $2}' <<< "$selection")"
-mpv --no-ytdl --no-video --no-cache --quiet --no-resume-playback "$DOTS_RADIO_DIR/$station" &
-notify-send.sh 'started radio station' "${station//_/\ }"
+station_friendly="${station//_/\ }"
+mpv \
+    --no-ytdl \
+    --no-video \
+    --no-cache \
+    --quiet \
+    --force-media-title="$station_friendly" \
+    --no-resume-playback \
+    "$DOTS_RADIO_DIR/$station" &
+notify-send.sh 'started radio station' "$station_friendly"
