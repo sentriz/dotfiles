@@ -1,4 +1,4 @@
-command=~/.config/i3blocks/blocklets/$BLOCK_NAME
+command=~/bin/blocks/block_$BLOCK_NAME
 interval=5
 
 [playing]
