@@ -14,6 +14,8 @@
 set $super Mod4
 set $alt   Mod1
 
+floating_modifier $super
+
 ## var helpers
 set $lock swaylock \
     --daemonize \
@@ -47,10 +49,6 @@ gaps right -$default_gap
 gaps left -$default_gap
 font $default_font
 popup_during_fullscreen smart
-
-## basic input
-floating_modifier $super
-focus_follows_mouse no
 
 ## input
 input * {
