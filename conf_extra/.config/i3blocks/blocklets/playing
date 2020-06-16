@@ -4,7 +4,8 @@
 # - playerctl
 
 lower() { tr '[:upper:]' '[:lower:]'; }
-pctl() { playerctl --ignore-player chromium "$@"; }
+pctl() { playerctl "$@"; }
+# pctl() { playerctl --ignore-player chromium,chrome "$@"; }
 
 print_status() {
     title="$(pctl metadata title)"
