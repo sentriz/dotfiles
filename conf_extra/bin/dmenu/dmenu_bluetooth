@@ -9,34 +9,30 @@ lower() { tr '[:upper:]' '[:lower:]'; }
 notify() { notify-send.sh --replace-file "/tmp/dmenu_bluetooth_replace" "$@"; }
 
 notify_cmd() {
-    heading="$1"
-    shift
-    notify "$heading" # body will appear to be filled
-    if ! out=$("$@"); then
-        notify "$heading" "failed: $out"
+    # $ <heading> <to filter>
+    notify "$1"
+    if ! out="$(eval "$2")"; then
+        notify "$1" "failed: $out"
         return 1
     fi
-    notify "$heading" "done"
+    notify "$1" "done"
 }
 
 devices="$(bluetoothctl devices | lower)"
 device="$(printf "%s\n" "$devices" "disconnect" | dmenu_custom -p 'bluetooth')"
 test -z "$device" && exit 1
 
+device_mac="$(cut -d ' ' -f 2 <<< "$device")"
 device_name="$(cut -d ' ' -f 3- <<< "$device")"
-device_mac="$(awk '{print $2}' <<< "$device")"
 
 if [ "$device" = "disconnect" ]; then
-    notify_cmd "disconnecting" \
-        bluetoothctl disconnect
+    # force true here, we don't care if we're not connected currently
+    notify_cmd "disconnecting" "bluetoothctl disconnect || true"
     exit
 fi
 
-notify_cmd "powering on" \
-    bluetoothctl power on
-
-bluetoothctl agent on
-bluetoothctl default-agent
-
-notify_cmd "connecting to $device_name" \
-    bluetoothctl connect "$device_mac"
+notify_cmd "powering on"                "bluetoothctl power on"
+notify_cmd "trusting $device_name"      "bluetoothctl trust $device_mac"
+notify_cmd "setting pairible"           "bluetoothctl pairable on"
+notify_cmd "pairing $device_name"       "bluetoothctl pair $device_mac || true"
+notify_cmd "connecting to $device_name" "bluetoothctl connect $device_mac"
