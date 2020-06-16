@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
+# requires:
+# - networkmanager
+
 ssid="$(nmcli -t -f name,type,state connection | grep -Po '[^:]+(?=:802-11-wireless:activated)')"
 test -z "$ssid" && exit
 
-echo "wifi $ssid"
 test "$BLOCK_BUTTON" -eq 1 2>/dev/null && notify-send.sh -- "$(ip addr | grep -Po 'inet\s\K.*?\s')"
-exit 0
+echo "wifi $ssid"

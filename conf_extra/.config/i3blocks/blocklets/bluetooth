@@ -1,3 +1,9 @@
 #!/usr/bin/env bash
 
-echo "bluetooth $(bluetoothctl info | grep -Po "Alias: \K.*")"
+# requires:
+# - bluetoothctl
+
+device="$(bluetoothctl info | grep -Po "Alias: \K.*")"
+test -z "$device" && exit
+
+echo "bluetooth $device"

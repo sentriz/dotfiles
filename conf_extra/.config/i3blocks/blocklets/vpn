@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# requires:
+# - networkmanager
+
 profile="$(nmcli -t -f name,type,state connection | grep -Po '[^:]+(?=:vpn:activated)')"
 test -z "$profile" && exit
 
