@@ -12,7 +12,7 @@ print_status() {
     test -z "$title" && echo && return
 
     status="$(pctl status | lower)"
-    echo "$status $title"
+    echo "$status ‘${title}’"
 }
 
 # whenever the status or title changes, print an update
