@@ -3,41 +3,33 @@ interval=5
 
 [playing]
 interval=persist
-label=playing 
 
 [volume]
 color=#7cb342
 instance=Master
-label=volume 
 signal=1
 
 [bluetooth]
 color=#039be5
-label=bluetooth 
 signal=2
 
 [wifi]
 color=#ffb300
-label=wifi 
 
 [vpn]
 color=#f24b74
-label=vpn 
 
 [battery]
 color=#e184c2
-label=battery 
 
 [balance]
 color=#e6e600
 instance=boi
 interval=7200
-label=boi 
 
 [balance]
 color=#ffbb33
 instance=revolut
 interval=1200
-label=revolut 
 
 [time]

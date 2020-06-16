@@ -34,4 +34,4 @@ balance="$(
 )"
 [ -z "$balance" ] && exit 1
 test "$BLOCK_BUTTON" -eq 1 2>/dev/null && notify-send.sh -- "$BLOCK_INSTANCE updated"
-printf "%'.2f\n" "$balance" | sed -E 's/(\-|\+)?(.*)/\1€\2/'
+printf "%'.2f\n" "$balance" | sed -E "s/(\-|\+)?(.*)/$BLOCK_INSTANCE \1€\2/"

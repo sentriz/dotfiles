@@ -1,4 +1,3 @@
 #!/usr/bin/env bash
 
-bluetoothctl info | grep -Po "Alias: \K.*"
-exit 0
+echo "bluetooth $(bluetoothctl info | grep -Po "Alias: \K.*")"
