@@ -1,14 +1,16 @@
 " leader
 let mapleader = "\<Space>"
-nnoremap <leader>bb mzggO#!/usr/bin/env bash<esc>o<esc>`z
-nnoremap <leader>bp mzggO#!/usr/bin/env python3<esc>o<esc>`z
-nnoremap <leader>r :write<cr>:!clear && %:p<cr>
-nnoremap <leader>x :write<cr>:!chmod +x %:p<cr><cr>
-nnoremap <leader>n :set hlsearch!<cr>
-nnoremap <leader>l :set list!<cr>
-nnoremap <leader>p :set spell!<cr>
-nnoremap <leader>s :%s/\<<c-r><c-w>\>/<c-r><c-w>/c<c-f>$F/
-nnoremap <leader>/ :echo expand('%:p')<cr>
+nnoremap        <leader>bb mzggO#!/usr/bin/env bash<esc>o<esc>`z
+nnoremap        <leader>bp mzggO#!/usr/bin/env python3<esc>o<esc>`z
+nnoremap        <leader>r  :write<cr>:!clear && %:p<cr>
+nnoremap        <leader>x  :write<cr>:!chmod +x %:p<cr><cr>
+nnoremap        <leader>n  :set hlsearch!<cr>
+nnoremap        <leader>l  :set list!<cr>
+nnoremap        <leader>p  :set spell!<cr>
+nnoremap        <leader>s  :%s/\<<c-r><c-w>\>/<c-r><c-w>/c<c-f>$F/
+nnoremap        <leader>/  :echo expand('%:p')<cr>
+nnoremap <expr> <leader>t  ':tabnew ' . expand('$DOTS_PROJECTS_DIR') . '/'
+nnoremap <expr> <leader>y  ':tabnew ' . expand('$DOTS_PROJECTS_DIR') . '/hippl_'
 
 " better
 nnoremap Y y$
