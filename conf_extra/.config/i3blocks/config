@@ -1,6 +1,10 @@
 command=~/.config/i3blocks/blocklets/$BLOCK_NAME
 interval=5
 
+[playing]
+interval=persist
+label=playing 
+
 [volume]
 color=#7cb342
 instance=Master
