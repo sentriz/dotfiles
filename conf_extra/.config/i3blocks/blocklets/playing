@@ -1,3 +1,30 @@
 #!/usr/bin/env bash
 
-playerctl -F metadata title
+# requires:
+# - playerctl
+
+strip_query() { sed -r 's/\?\w+\=.*$//g'; }
+lower() { tr '[:upper:]' '[:lower:]'; }
+pctl() { playerctl --ignore-player chromium "$@"; }
+
+print_status() {
+    title="$(pctl metadata title | strip_query)"
+    test -z "$title" && echo && return
+
+    status="$(pctl status | lower)"
+    echo "$status $title"
+}
+
+# whenever the status or title changes, print an update
+{ pctl --follow status & pctl --follow metadata title; } | while read; do
+    print_status
+done &
+
+# whenever the button is clicked, toggle playback and print an update
+while read -r button; do
+    case "$button" in
+        1) playerctl play-pause >/dev/null 2>&1 ;; # left click
+        3) playerctl stop       >/dev/null 2>&1 ;; # right click
+    esac
+    print_status
+done
