@@ -4,6 +4,8 @@ bat_level="$(
     cat /sys/class/power_supply/BAT*/uevent \
     | sed -rn 's/^POWER_SUPPLY_CAPACITY=([0-9]+)$/\1/p'
 )"
+test "$bat_level" -gt '95' && exit
+
 echo "battery ${bat_level}%"
 
 # notify if battery is low
