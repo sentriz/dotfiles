@@ -14,6 +14,8 @@ nnoremap <expr> <leader>y  ':tabnew ' . expand('$DOTS_PROJECTS_DIR') . '/hippl_'
 
 " better
 nnoremap Y y$
+nnoremap Q <nop>
+vnoremap yP yP
 
 " easy folding
 nnoremap        z za                            " toggle node
@@ -59,5 +61,4 @@ inoremap <expr> <c-e> pumvisible()
     \ : matchstr(getline(line('.')+1), '\%' . virtcol('.') . 'v\%(\k\+\\|.\)')
 
 " alternative escaping
-inoremap <esc> <nop>
 inoremap jj <esc>
