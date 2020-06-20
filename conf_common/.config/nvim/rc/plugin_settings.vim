@@ -10,7 +10,7 @@ let g:go_auto_sameids = 0
 let g:go_def_mode = 'gopls'
 let g:go_disable_autoinstall = 1
 let g:go_doc_popup_window = 1
-let g:go_fmt_command = "gofumports"
+let g:go_fmt_command = "goimports"
 let g:go_fmt_options = {
     \ 'goimports': '-local github.com/sentriz/,senan.xyz/g/,go.senan.xyz',
     \ 'gofumports': '-local github.com/sentriz/,senan.xyz/g/,go.senan.xyz',
@@ -35,3 +35,9 @@ let g:rooter_patterns = ['go.mod', 'go.sum', 'package.json', '.git/']
 
 " for atimholt/spiffy_foldtext
 let g:SpiffyFoldtext_format = "%c{ } ... }%f{ }"
+
+" for mhartington/nvim-typescript
+let g:nvim_typescript#default_mappings = 1
+
+" for Shougo/deoplete
+let g:deoplete#enable_at_startup = 1
