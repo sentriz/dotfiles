@@ -20,9 +20,9 @@ function get-balance-revolut() {
         | awk '{print $1}'
 }
 
-# don't try to get the balance right after booting
-# (I don't wanna enter my gpg passphrase right away)
-uptime="$(bc <<< "$(awk '{print $1}' /proc/uptime) / 60")"
+# wait until system is up for 5 mins before checking balance
+# (this way i'm not prompted to enter my gpg passphrase right after logging in)
+uptime="$(awk '{print int($1/60)}' /proc/uptime)"
 test "$uptime" -le '5' && exit
 
 balance="$(
