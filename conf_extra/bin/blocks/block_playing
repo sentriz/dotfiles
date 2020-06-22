@@ -22,8 +22,8 @@ done &
 # whenever the button is clicked, toggle playback and print an update
 while read -r button; do
     case "$button" in
-        1) playerctl play-pause >/dev/null 2>&1 ;; # left click
-        3) playerctl stop       >/dev/null 2>&1 ;; # right click
+        1) pctl play-pause >/dev/null 2>&1 ;; # left click
+        3) pctl stop       >/dev/null 2>&1 ;; # right click
     esac
     print_status
 done
