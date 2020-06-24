@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+pid_file='/tmp/mpv_radio_pid'
 stations="$(find \
     "$DOTS_RADIO_DIR" \
     -maxdepth 1 \
@@ -10,7 +11,7 @@ stations="$(find \
 selection="$(printf "%s\n" "$stations" "stop" | dmenu_custom -p 'station')"
 test -z "$selection" && exit 1
 
-pkill -f '^mpv.*radio'
+test -f "$pid_file" && pkill -F "$pid_file"
 test "$selection" = "stop" && exit
 
 station="$(awk '{print $2}' <<< "$selection")"
@@ -23,4 +24,5 @@ mpv \
     --force-media-title="$station_friendly" \
     --no-resume-playback \
     "$DOTS_RADIO_DIR/$station" &
+echo "$!" >"$pid_file"
 notify-send.sh 'started radio station' "$station_friendly"
