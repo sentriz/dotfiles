@@ -2,7 +2,7 @@
 
 path="$(mktemp -d "$DOTS_SCRAP_DIR/python.XXX")/main.py"
 
-cat > "$path" << EOL
+cat >"$path" <<EOL
 # $ python "$path"
 
 def main():

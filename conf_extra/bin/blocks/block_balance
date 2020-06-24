@@ -16,8 +16,8 @@ function get-balance-revolut() {
     revolut_cli.py \
         --language en \
         --token "$(secret revolut_token)" \
-        --account "EUR CURRENT" \
-        | awk '{print $1}'
+        --account "EUR CURRENT" |
+        awk '{print $1}'
 }
 
 # wait until system is up for 5 mins before checking balance
@@ -27,9 +27,9 @@ test "$uptime" -le '5' && exit
 
 balance="$(
     case "$BLOCK_INSTANCE" in
-        'boi')     get-balance-boi;;
-        'revolut') get-balance-revolut;;
-        *)         exit 1;;
+    'boi') get-balance-boi ;;
+    'revolut') get-balance-revolut ;;
+    *) exit 1 ;;
     esac
 )"
 test -z "$balance" && exit

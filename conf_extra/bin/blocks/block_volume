@@ -4,6 +4,6 @@
 # - alsa-utils
 
 resp="$(amixer sget "$BLOCK_INSTANCE")"
-grep -q '\[off\]' <<< "$resp" && echo 'volume muted' && exit
+grep -q '\[off\]' <<<"$resp" && echo 'volume muted' && exit
 
-echo "volume $(grep -Po 'Left.*\[\K([0-9]+%)(?=\])' <<< "$resp")"
+echo "volume $(grep -Po 'Left.*\[\K([0-9]+%)(?=\])' <<<"$resp")"

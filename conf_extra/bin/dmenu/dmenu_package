@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-SHELL=$(which bash)
+SHELL="$(which bash)"
 
 j4-dmenu-desktop \
     --dmenu "dmenu_custom --prompt 'package'" \

@@ -7,9 +7,9 @@ tunnel_subdomains=(
     "tun-c"
 )
 tunnel_ports=(
-    "51401" 
-    "51402" 
-    "51403" 
+    "51401"
+    "51402"
+    "51403"
 )
 ssh_opts=(
     "ServerAliveInterval=15"
@@ -19,13 +19,14 @@ if [[ "$#" -ne 2 ]]; then
     echo "please provide <tunnel number> and <local port>" >&2
     exit 1
 fi
+
 if [[ "$1" -lt 1 ]] || [[ "$1" -gt ${#tunnel_ports[@]} ]]; then
     echo "invalid tunnel \"$1\" selected" >&2
     exit 1
 fi
 
-tunnel_subdomain="${tunnel_subdomains[$1-1]}"
-tunnel_port="${tunnel_ports[$1-1]}"
+tunnel_subdomain="${tunnel_subdomains[$1 - 1]}"
+tunnel_port="${tunnel_ports[$1 - 1]}"
 local_port="$2"
 
 echo "starting tunnel $tunnel_subdomains.$tunnel_host -> localhost:$local_port"

@@ -9,16 +9,17 @@ lower() { tr '[:upper:]' '[:lower:]'; }
 get_index() { grep -Po "index\: \K\d+"; }
 get_description() { grep -Po "device\.description \= \"\K([^\"]+)"; }
 
-sinks="$(paste \
-    --delimiters " " \
-    <(pacmd list-sinks | get_index) \
-    <(pacmd list-sinks | get_description | lower)
+sinks="$(
+    paste \
+        --delimiters " " \
+        <(pacmd list-sinks | get_index) \
+        <(pacmd list-sinks | get_description | lower)
 )"
-sink="$(dmenu_custom -p 'sink' <<< "$sinks")"
+sink="$(dmenu_custom -p 'sink' <<<"$sinks")"
 test -z "$sink" && exit 1
 
 sink_index="${sink/%\ */}"
 pacmd set-default-sink "$sink_index"
-pacmd list-sink-inputs \
-    | get_index \
-    | xargs -L 1 -I {} pacmd move-sink-input {} "$sink_index"
+pacmd list-sink-inputs |
+    get_index |
+    xargs -L 1 -I {} pacmd move-sink-input {} "$sink_index"

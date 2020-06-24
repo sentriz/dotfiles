@@ -26,7 +26,7 @@ get_key() {
 
 notify "adding torrent" "$link"
 
-read -r -d '' request_data << EOF
+read -r -d '' request_data <<EOF
 { 
   "method": "torrent-add",
   "arguments": { "filename": "$link" }

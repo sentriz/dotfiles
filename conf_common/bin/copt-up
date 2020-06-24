@@ -10,11 +10,12 @@ find \
     ! -path "$copt" \
     -regextype egrep \
     ! -regex '^\./(\.|_).*' \
-    -printf "%f\n" | \
-while read name; do
-    grep -qE "\b$name\b" "$exclude" && continue
-    (cd "$copt/$name";
-        docker-compose pull;
-        docker-compose up -d --remove-orphans;
-    )
-done
+    -printf "%f\n" |
+    while read name; do
+        grep -qE "\b$name\b" "$exclude" && continue
+        (
+            cd "$copt/$name"
+            docker-compose pull
+            docker-compose up -d --remove-orphans
+        )
+    done

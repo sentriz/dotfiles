@@ -15,15 +15,18 @@ print_status() {
 }
 
 # whenever the status or title changes, print an update
-{ pctl --follow status & pctl --follow metadata title; } | while read; do
+{
+    pctl --follow status &
+    pctl --follow metadata title
+} | while read; do
     print_status
 done &
 
 # whenever the button is clicked, toggle playback and print an update
 while read -r button; do
     case "$button" in
-        1) pctl play-pause >/dev/null 2>&1 ;; # left click
-        3) pctl stop       >/dev/null 2>&1 ;; # right click
+    1) pctl play-pause >/dev/null 2>&1 ;; # left click
+    3) pctl stop >/dev/null 2>&1 ;;       # right click
     esac
     print_status
 done

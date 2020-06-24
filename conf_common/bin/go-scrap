@@ -7,7 +7,7 @@ main="main.go"
 main_abs="$dir/$main"
 
 go mod init "${dir##*\.}"
-cat > "$main" << EOL
+cat >"$main" <<EOL
 // $ go run "$main_abs"
 
 package main
