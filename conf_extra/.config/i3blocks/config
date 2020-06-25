@@ -22,6 +22,10 @@ color=#f24b74
 [battery]
 color=#e184c2
 
+[temperature]
+color=#ff9933
+interval=25
+
 [balance]
 color=#e6e600
 instance=boi

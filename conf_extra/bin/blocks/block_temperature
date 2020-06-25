@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+# requires:
+# - lm_sensors
+# - jq
+
+query='
+    ."coretemp-isa-0000"
+    | .[keys[] | select(startswith("Core"))]
+    | .[keys[] | select(endswith("input"))]
+'
+
+temps() { sensors -j 2>/dev/null | jq "$query"; }
+average() { awk '{ sum += $1} END { print int(sum/NR) }'; }
+
+temp="$(temps | average)"
+test "$temp" -lt '65' && exit
+
+printf "temp %d°C\n" "$temp"
