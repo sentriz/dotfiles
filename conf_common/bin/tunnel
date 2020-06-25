@@ -15,12 +15,12 @@ ssh_opts=(
     "ServerAliveInterval=15"
 )
 
-if [[ "$#" -ne 2 ]]; then
+if [[ $# -ne 2 ]]; then
     echo "please provide <tunnel number> and <local port>" >&2
     exit 1
 fi
 
-if [[ "$1" -lt 1 ]] || [[ "$1" -gt ${#tunnel_ports[@]} ]]; then
+if [[ $1 -lt 1 ]] || [[ $1 -gt "${#tunnel_ports[@]}" ]]; then
     echo "invalid tunnel \"$1\" selected" >&2
     exit 1
 fi
