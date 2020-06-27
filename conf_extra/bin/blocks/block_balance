@@ -20,6 +20,12 @@ function get-balance-revolut() {
         awk '{print $1}'
 }
 
+function notify-updated() { notify-send.sh -- "$BLOCK_INSTANCE updated"; }
+function format-balance() { sed -E "s/(\-|\+)?(.*)/$BLOCK_INSTANCE \1€\2/"; }
+
+# hide balance with a right click
+test "$BLOCK_BUTTON" -eq 3 && exit
+
 # wait until system is up for 5 mins before checking balance
 # (this way i'm not prompted to enter my gpg passphrase right after logging in)
 uptime="$(awk '{print int($1/60)}' /proc/uptime)"
@@ -34,5 +40,5 @@ balance="$(
 )"
 test -z "$balance" && exit
 
-test "$BLOCK_BUTTON" -eq 1 2>/dev/null && notify-send.sh -- "$BLOCK_INSTANCE updated"
-printf "%'.2f\n" "$balance" | sed -E "s/(\-|\+)?(.*)/$BLOCK_INSTANCE \1€\2/"
+test "$BLOCK_BUTTON" -eq 1 2>/dev/null && notify-updated
+printf "%'.2f\n" "$balance" | format-balance
