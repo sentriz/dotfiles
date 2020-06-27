@@ -4,6 +4,7 @@
 # - playerctl
 
 lower() { tr '[:upper:]' '[:lower:]'; }
+truncate() { sed -E 's/(.{40})(.{1,})$/\1…/'; }
 pctl() { playerctl --ignore-player chromium,chrome "$@"; }
 
 print_status() {
@@ -11,7 +12,8 @@ print_status() {
     test -z "$title" && echo && return
 
     status="$(pctl status | lower)"
-    echo "$status ‘${title}’"
+    title_short="$(truncate <<<"$title")"
+    echo "$status ‘${title_short}’"
 }
 
 # kill potentially existing blocks (if restarting sway etc)
