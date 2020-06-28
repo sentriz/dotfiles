@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if ! command -v "clipman" >/dev/null 2>&1; then
+if ! type -p clipman >/dev/null; then
     echo "please install clipman" >&2
     echo "https://github.com/yory8/clipman/" >&2
     exit 1

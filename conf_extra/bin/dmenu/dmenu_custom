@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+if ! type -p bemenu >/dev/null; then
+    echo "please install bemenu" >&2
+    echo "https://github.com/Cloudef/bemenu" >&2
+    exit 1
+fi
+
 pkill --exact bemenu
 env BEMENU_BACKEND=wayland bemenu \
     --list 20 \

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if ! which bluetoothctl >/dev/null 2>&1; then
+if ! type -p bluetoothctl >/dev/null; then
     echo "please install bluez-utils" >&2
     exit 1
 fi

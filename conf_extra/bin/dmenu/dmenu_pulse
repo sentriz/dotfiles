@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if ! which pacmd >/dev/null 2>&1; then
+if ! type -p pacmd >/dev/null; then
     echo "please install pulsemixer" >&2
     exit 1
 fi
