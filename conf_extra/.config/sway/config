@@ -392,11 +392,6 @@ exec wl-paste \
     --type text \
     --watch \
     clipman store --max-items 500
-exec wl-paste \
-    --primary \
-    --type text \
-    --watch \
-    clipman store --max-items 500
 exec clipman restore
 exec swayidle -w \
     timeout 290  "notify-send.sh 'locking screen in 10 seconds'" \
