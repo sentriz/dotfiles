@@ -1,53 +1,18 @@
 #!/usr/bin/env fish
 
-# senan kelly
-# 2017-
-# usage: screenshot [upload] [select]
-
-if not which grim > /dev/null 2>&1
-    echo "grim required" >&2
-    echo "https://github.com/emersion/grim" >&2
+if not type -qp grim > /dev/null 2>&1
+    echo 'grim required' >&2
+    echo 'https://github.com/emersion/grim' >&2
     exit 1
 end
 
-if not which slurp > /dev/null 2>&1
-    echo "slurp required" >&2
-    echo "https://github.com/emersion/slurp" >&2
+if not type -qp slurp > /dev/null 2>&1
+    echo 'slurp required' >&2
+    echo 'https://github.com/emersion/slurp' >&2
     exit 1
 end
 
-set -g screen_dir "$DOTS_SCREENSHOTS_DIR"
-set -g remote_host "$DOTS_SCREENSHOTS_REMOTE"
-set -g grim_options
-set -g notify_file (mktemp)
+set -l filename "$DOTS_SCREENSHOTS_DIR/"(date '+%Y%m%d_%H%M%S.png')
 
-function __notify
-    notify-send.sh --replace-file "$notify_file" $argv
-end
-
-if contains 'select' $argv
-    __notify 'screenshot' 'select an area'
-    set -a grim_options '-g '(slurp)
-end
-
-set -g filename "$screen_dir/"(date '+%Y%m%d_%H%M%S.png')
-grim $grim_options "$filename"
-__notify 'screenshot' 'taken '(basename $filename)
-
-# # add to socr database
-# # see https://github.com/sentriz/socr
-# socr add "$filename" &
-
-contains 'upload' $argv; or exit
-set -l credentials (printf \
-    '%s:%s' \
-    (secret image_username) \
-    (secret image_password)
-)
-set -l remote (curl -s \
-    "$remote_host/upload" \
-    --user "$credentials" \
-    --form "img=@$filename"
-)
-echo "$remote_host/$remote" | wl-copy
-__notify 'screenshot' 'link in clipboard'
+grim '-g' (slurp) "$filename" >/dev/null
+echo "$filename"

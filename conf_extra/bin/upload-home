@@ -1,0 +1,31 @@
+#!/usr/bin/env fish
+
+# senan kelly, 2020
+
+if test (count $argv) -ne 1
+    echo "usage: upload-home <path to image>" >&2
+    exit 1
+end
+
+set -l image_path $argv[1]
+set -l remote_host "$DOTS_SCREENSHOTS_REMOTE"
+
+if ! test -e "$image_path"
+    echo "couldn't find image $image_path" >&2
+    exit 1
+end
+
+set -l credentials (printf \
+    '%s:%s' \
+    (secret image_username) \
+    (secret image_password)
+)
+set -l image_id (curl -s \
+    "$remote_host/upload" \
+    --user "$credentials" \
+    --form "img=@$image_path"
+)
+
+echo "$remote_host/$image_id"
+
+isatty stdout || notify-send.sh 'screenshot' 'uploaded to home' >/dev/null 2>&1

@@ -2,22 +2,22 @@
 
 # senan kelly, 2019
 
-if ! which jq >/dev/null 2>&1
+if not type -qp jq > /dev/null 2>&1
     echo "please install jq" >&2
     exit 1
 end
 
 if test (count $argv) -ne 1
-    echo "usage: imgur_up <path to image>" >&2
+    echo "usage: upload-imgur <path to image>" >&2
     exit 1
 end
 
+set -l image_path $argv[1]
 set -l client_id (secret imgur_apikey)
 set -l upload_url 'https://api.imgur.com/3/upload'
-set -l image_path $argv[1]
 
 if ! test -e "$image_path"
-    echo "please provide a valid path to an image" >&2
+    echo "couldn't find image $image_path" >&2
     exit 1
 end
 
@@ -35,3 +35,5 @@ if ! echo "$response" | jq -e '.success' > /dev/null
 end
 
 echo "$response" | jq -r '.data.link'
+
+isatty stdout || notify-send.sh 'screenshot' 'uploaded to imgur' >/dev/null 2>&1
