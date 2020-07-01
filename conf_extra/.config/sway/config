@@ -391,7 +391,11 @@ exec wl-gammactld
 exec wl-paste \
     --type text \
     --watch \
-    clipman store --max-items 500
+    clipman store \
+        --max-items 500 \
+        --no-persist \
+        --no-single \
+        --unix
 exec clipman restore
 exec swayidle -w \
     timeout 290  "notify-send.sh 'locking screen in 10 seconds'" \
