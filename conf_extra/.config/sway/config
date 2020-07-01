@@ -63,11 +63,11 @@ input "2:7:SynPS/2_Synaptics_TouchPad" {
 }
 
 input "6127:24647:Lenovo_ThinkPad_Compact_USB_Keyboard_with_TrackPoint" {
-    pointer_accel 0.75
+    pointer_accel 0.8
 }
 
 input "2:10:TPPS/2_IBM_TrackPoint" {
-    pointer_accel 0.75
+    pointer_accel 0.8
 }
 
 ## output
