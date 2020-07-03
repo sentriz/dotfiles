@@ -1,5 +1,6 @@
 ### commands
 
+    $ apt install apt-file
     $ apt remove --purge (apt-file search (which sendmail) | grep -Eo "^[^:]+")
 
 ### packages
