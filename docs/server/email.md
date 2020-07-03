@@ -5,9 +5,9 @@
 
 ### packages
 
-- msmtp     # the client
-- msmtp-mta # transfer agent
-- bsd-mailx # to provide the "mail" command
+- msmtp     (the client)
+- msmtp-mta (transfer agent)
+- bsd-mailx (to provide the "mail" command)
 
 ### files 
 
