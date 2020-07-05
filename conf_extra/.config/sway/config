@@ -21,20 +21,22 @@ set $lock swaylock \
     --daemonize \
     --no-unlock-indicator \
     --image ~/pictures/wallpapers/fagan.png
+
+set $default_gap 16
+set $default_font Source Code Pro 10
+
+set $emulator termite
+set $emulator_search ^Termite$
+
 set $up_block_1 pkill -RTMIN+1 i3blocks
 set $up_block_2 pkill -RTMIN+2 i3blocks
 set $up_block_3 pkill -RTMIN+3 i3blocks
 set $up_block_4 pkill -RTMIN+4 i3blocks
-set $default_gap 16
-set $default_font Source Code Pro 10
-set $emulator termite
-set $emulator_search ^Termite$
 
-## var colours
-set $grey       #303030
-set $grey_alpha #30303060
-set $blue       #0088CC
-set $red_alpha  #ff000090
+set $colour_grey       #303030
+set $colour_grey_alpha #30303060
+set $colour_blue       #0088CC
+set $colour_red_alpha  #ff000090
 
 ## basic appearance
 smart_borders off
@@ -83,20 +85,20 @@ bar {
     status_padding 0
     tray_padding 0
     tray_output primary
-    colors separator  $grey_alpha
-    colors background $grey_alpha
+    colors separator  $colour_grey_alpha
+    colors background $colour_grey_alpha
     colors statusline #ffffff
-    #                         border      background  text
-    colors focused_workspace  $blue       $blue       #ffffff
-    colors active_workspace   $grey       $grey       #ffffff
-    colors inactive_workspace $grey_alpha $grey_alpha #ffffff
-    colors urgent_workspace   $red_alpha  $red_alpha  #ffffff
+    #                         border             background         text
+    colors focused_workspace  $colour_blue       $colour_blue       #ffffff
+    colors active_workspace   $colour_grey       $colour_grey       #ffffff
+    colors inactive_workspace $colour_grey_alpha $colour_grey_alpha #ffffff
+    colors urgent_workspace   $colour_red_alpha  $colour_red_alpha  #ffffff
 }
 
-## window colours       border backg text    indic   child
-client.focused          $blue  $blue #ffffff #ffffff #ffffff
-client.focused_inactive $blue  $blue #ffffff $grey   $grey
-client.unfocused        $grey  $grey #ffffff $grey   $grey
+## window colours       border        backg        text    indic        child
+client.focused          $colour_blue  $colour_blue #ffffff #ffffff      #ffffff
+client.focused_inactive $colour_blue  $colour_blue #ffffff $colour_grey $colour_grey
+client.unfocused        $colour_grey  $colour_grey #ffffff $colour_grey $colour_grey
 
 ## bindings: window/float
 bindsym $super+q     kill
@@ -402,7 +404,7 @@ exec swayidle -w \
     timeout 300  "$lock" \
     before-sleep "$lock"
 exec mako \
-    --background-color "$grey" \
+    --background-color "$colour_grey" \
     --margin "$default_gap,0" \
     --font "$default_font" \
     --border-size 4 \
