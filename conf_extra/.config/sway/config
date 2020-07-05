@@ -365,7 +365,7 @@ for_window [app_id="^mpv$"]                             floating enable, resize 
 bindsym XF86AudioLowerVolume  exec amixer sset Master 5%-     && $up_block_1
 bindsym XF86AudioRaiseVolume  exec amixer sset Master 5%+     && $up_block_1
 bindsym XF86AudioMute         exec amixer sset Master toggle  && $up_block_1
-bindsym XF86AudioMicMute      exec amixer sset Capture toggle
+bindsym XF86AudioMicMute      exec amixer sset Capture toggle && $up_block_1
 bindsym XF86MonBrightnessDown exec xbacklight -dec 5
 bindsym XF86MonBrightnessUp   exec xbacklight -inc 5
 bindsym XF86AudioPlay         exec playerctl play-pause
@@ -378,7 +378,7 @@ bindsym $super+Return exec $emulator
 bindsym $super+F1     exec dmenu_package
 bindsym $super+F2     exec dmenu_clipboard
 bindsym $super+F3     exec dmenu_radio
-bindsym $super+F4     exec dmenu_pulse && $up_block_1
+bindsym $super+F4     exec dmenu_pulse     && $up_block_1
 bindsym $super+F5     exec dmenu_bluetooth && $up_block_2
 
 ## scratchpad
