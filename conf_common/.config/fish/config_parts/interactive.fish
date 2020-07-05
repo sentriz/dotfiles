@@ -3,7 +3,6 @@ alias rm    'rm -Iv --preserve-root'
 alias wget  'wget -c'
 alias cp    'cp -aiv'
 alias mkdir 'mkdir -p -v'
-alias pip   'pip --disable-pip-version-check'
 alias vim   'nvim'
 alias qmv   'qmv --format destination-only'
 
