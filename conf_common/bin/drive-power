@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+for drive in "$@"; do
+    smartctl -i -n standby "$drive" | grep -E "^(Device Model|Power mode)"
+done
