@@ -380,6 +380,7 @@ bindsym $super+F2     exec dmenu_clipboard
 bindsym $super+F3     exec dmenu_radio
 bindsym $super+F4     exec dmenu_pulse     && $up_block_1
 bindsym $super+F5     exec dmenu_bluetooth && $up_block_2
+bindsym $super+F6     exec dmenu_emoji
 
 ## scratchpad
 exec "while :; do $emulator --name scratchpad --exec 'tmux new -A -s scratchpad'; sleep 0.5; done"
