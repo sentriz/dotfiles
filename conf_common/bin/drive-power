@@ -1,5 +1,21 @@
 #!/usr/bin/env bash
 
+to_lower() {
+    tr '[:upper:]' '[:lower:]'
+}
+
+get_info() {
+    lsblk -J | jq -r ".blockdevices | .. | select(.name? == \"$1\") | .. | select(.mountpoint?) | \"\(.size)\t\(.mountpoint)\""
+}
+
+get_status() {
+    info="$(smartctl -i -n standby "$1")"
+    test $? -eq 2 && echo "standby" && return
+    grep -Po "^Power mode.*:\s*\K.*" <<<"$info" | to_lower
+}
+
 for drive in "$@"; do
-    smartctl -i -n standby "$drive" | grep -E "^(Device Model|Power mode)"
+    drive_status="$(get_status "$drive")"
+    drive_info="$(get_info "$(basename $drive)")"
+    printf "%s\t%s\t%s\n" "$drive" "$drive_info" "$drive_status"
 done
