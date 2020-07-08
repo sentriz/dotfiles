@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+if [[ $# -eq 0 ]]; then
+    echo "please provide some drives" >&2
+    echo "eg. $0 /dev/sd{b,d,a,c}" >&2
+    exit 1
+fi
+
 get_info() {
     lsblk -J | jq -r ".blockdevices | .. | select(.name? == \"$1\") | .. | select(.mountpoint?) | \"\(.size)\t\(.mountpoint)\""
 }
