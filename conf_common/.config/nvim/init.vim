@@ -12,7 +12,7 @@ if dein#load_state(s:dein_dir)
     " meta
     call dein#add('roxma/nvim-yarp')
     call dein#add('roxma/vim-hug-neovim-rpc')
-    call dein#add('neoclide/coc.nvim')
+    call dein#add('neoclide/coc.nvim', {'if': 'executable("node")'})
     " getting around
     call dein#add('tpope/vim-vinegar')
     call dein#add('christoomey/vim-tmux-navigator')
@@ -34,6 +34,10 @@ if dein#load_state(s:dein_dir)
     call dein#save_state()
 endif
 
+" to remove old plugins
+" :call map(dein#check_clean(), "delete(v:val, 'rf')")
+" :call dein#recache_runtimepath()
+
 " plugin settings for netrw / tpope/vim-vinegar
 let g:netrw_list_hide = '.*\.pyc$,^__pycache__$'
 
@@ -44,14 +48,15 @@ let g:tmux_navigator_save_on_switch = 1
 " plugin settings for atimholt/spiffy_foldtext
 let g:SpiffyFoldtext_format = "%c{ } ... }%f{ }"
 
-" to remove old plugins
-" :call map(dein#check_clean(), "delete(v:val, 'rf')")
-" :call dein#recache_runtimepath()
-
 " source the rest of the rc
-for rc_path in split(globpath('~/.config/nvim/rc/', '*.vim'), '\n')
-    execute 'source' rc_path
-endfor
+exec 'source' . expand("~/.config/nvim/rc/appearance.vim")
+exec 'source' . expand("~/.config/nvim/rc/auto_commands.vim")
+exec 'source' . expand("~/.config/nvim/rc/improvements.vim")
+exec 'source' . expand("~/.config/nvim/rc/mappings.vim")
+
+if dein#is_sourced("coc.nvim")
+    exec 'source' . expand("~/.config/nvim/rc/coc.vim")
+endif
 
 " enable filetype detection and plugin loading
 filetype on
