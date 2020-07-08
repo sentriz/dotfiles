@@ -12,6 +12,7 @@ if dein#load_state(s:dein_dir)
     " meta
     call dein#add('roxma/nvim-yarp')
     call dein#add('roxma/vim-hug-neovim-rpc')
+    call dein#add('neoclide/coc.nvim')
     " getting around
     call dein#add('tpope/vim-vinegar')
     call dein#add('christoomey/vim-tmux-navigator')
@@ -22,20 +23,26 @@ if dein#load_state(s:dein_dir)
     call dein#add('tpope/vim-surround')
     call dein#add('wellle/targets.vim')
     call dein#add('tpope/vim-abolish')
-    " langs
-    call dein#add('fatih/vim-go', {'on_ft': 'go'})
-    call dein#add('cespare/vim-toml')
     " misc
     call dein#add('machakann/vim-highlightedyank')
     call dein#add('majutsushi/tagbar', {'on_ft': 'go'})
     call dein#add('rhysd/committia.vim')
     call dein#add('romainl/vim-qf')
-    call dein#add('airblade/vim-rooter')
     call dein#add('atimholt/spiffy_foldtext')
     "
     call dein#end()
     call dein#save_state()
 endif
+
+" plugin settings for netrw / tpope/vim-vinegar
+let g:netrw_list_hide = '.*\.pyc$,^__pycache__$'
+
+" plugin settings for christoomey/vim-tmux-navigator
+let g:tmux_navigator_no_mappings = 1
+let g:tmux_navigator_save_on_switch = 1
+
+" plugin settings for atimholt/spiffy_foldtext
+let g:SpiffyFoldtext_format = "%c{ } ... }%f{ }"
 
 " to remove old plugins
 " :call map(dein#check_clean(), "delete(v:val, 'rf')")
@@ -49,7 +56,3 @@ endfor
 " enable filetype detection and plugin loading
 filetype on
 filetype plugin on
-
-" apply colorscheme
-syntax on
-colorscheme custom

@@ -1,9 +1,14 @@
+" apply colorscheme
+syntax on
+colorscheme custom
+
 " basics
 set listchars=tab:>\ ,trail:.
 set fillchars=vert:\ 
 set sidescroll=1
 set noshowmode
 set laststatus=2
+set signcolumn=yes
 
 " statusline
 set statusline=%#statusReadOnly#%{&readonly?'read\ only\ ':''}%*   " read only flag
