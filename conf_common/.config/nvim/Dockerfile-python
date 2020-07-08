@@ -1,0 +1,6 @@
+FROM vim-docker
+
+RUN \
+    pacman --noconfirm -S base-devel && \
+    pip install --user pip python-language-server[flake8] && \
+    pip install --user pip pyls-black
