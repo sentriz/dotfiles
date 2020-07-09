@@ -6,7 +6,7 @@ call coc#config('languageserver', {
 \         'trace.server': 'verbose'
 \     },
 \     'python': {
-\         'command': 'python',
+\         'command': 'python3',
 \         'args': ['-m', 'pyls', '-vv'],
 \         'filetypes': ['python'],
 \         'rootPatterns': ['requirements.txt', 'pyproject.toml', 'Pipfile', '.git'],
