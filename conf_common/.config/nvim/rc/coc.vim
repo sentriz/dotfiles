@@ -26,6 +26,13 @@ call coc#config('languageserver', {
 \             }
 \         },
 \         'trace.server': 'verbose'
+\     },
+\     'typescript': {
+\         'command': 'typescript-language-server',
+\         'args': ['--stdio'],
+\         'filetypes': ['javascript', 'typescript', 'typescriptreact'],
+\         'rootPatterns': ['package.json', 'node_modules', 'tsconfig.json'],
+\         'trace.server': 'verbose'
 \     }
 \ })
 
