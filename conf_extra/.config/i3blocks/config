@@ -27,10 +27,10 @@ interval=30
 color=#ff9933
 interval=25
 
-[balance]
-color=#e6e600
-instance=boi
-interval=7200
+# [balance]
+# color=#e6e600
+# instance=boi
+# interval=7200
 
 [balance]
 color=#ffbb33
