@@ -30,6 +30,7 @@ set -l possible_paths \
     $HOME/.local/bin \
     $HOME/node_modules/.bin \
     $HOME/.fnm/current/bin \
+    $HOME/.yarn/bin \
     /usr/local/go/bin \
     /bin \
     /opt/Etcher \
