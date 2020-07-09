@@ -33,6 +33,12 @@ call coc#config('languageserver', {
 \         'filetypes': ['javascript', 'typescript', 'typescriptreact'],
 \         'rootPatterns': ['package.json', 'node_modules', 'tsconfig.json'],
 \         'trace.server': 'verbose'
+\     },
+\     'bash': {
+\         'command': 'bash-language-server',
+\         'args': ['start'],
+\         'filetypes': ['sh'],
+\         'ignoredRootPaths': ['~']
 \     }
 \ })
 
