@@ -62,6 +62,7 @@
 	helper = !secret-git-helper password fastmail_apppassword
 [rebase]
 	autosquash = true
+	autoStash = true
 [gpg]
 	program = gpg2
 [tag]
