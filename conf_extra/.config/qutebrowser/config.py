@@ -33,7 +33,7 @@ c.content.webgl = False
 c.spellcheck.languages = ["en-GB"]
 c.tabs.background = True
 c.url.searchengines = {
-    'DEFAULT': 'https://www.startpage.com/do/search?query={}',
+    'DEFAULT': 'https://www.qwant.com/?q={}',
 }
 
 # bindings
