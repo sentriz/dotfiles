@@ -23,10 +23,6 @@ color=#f24b74
 color=#e184c2
 interval=30
 
-[temperature]
-color=#ff9933
-interval=25
-
 # [balance]
 # color=#e6e600
 # instance=boi
