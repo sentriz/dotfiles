@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+url="$(secret hass_url)"
+token="$(secret hass_token)"
+
+request() {
+    curl \
+        --silent \
+        --request "$1" \
+        --data '@-' \
+        --header "authorization: Bearer $token" \
+        "${url}/api/$2" 
+}
+
+switch_list() {
+    request 'GET' 'states' <<<'{}' | \
+    jq -r '.[] | select(.entity_id | startswith("switch.")) | "\(.entity_id)\t\(.state)"'
+}
+
+switch_toggle() {
+    request 'POST' 'services/switch/toggle' <<<"{\"entity_id\": \"$1\"}"
+}
+
+switches="$(switch_list)"
+test -z "$switches" && exit 1
+
+selection="$(dmenu_custom -p 'switch' <<<"$switches")"
+test -z "$selection" && exit 1
+
+switch_toggle "$(awk '{print $1}' <<<"$selection")"
