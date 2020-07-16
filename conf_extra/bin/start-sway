@@ -16,4 +16,14 @@ set -gx XDG_DATA_DIRS (string join ':' \
     '/home/senan/.local/share/flatpak/exports/share'
 )
 
+# sed 's/^\(.*\)\=\(.*\)/set -gx \1 \2/g' <~/.config/user-dirs.dirs | wl-copy
+set -gx XDG_DESKTOP_DIR "$HOME/downloads"
+set -gx XDG_DOCUMENTS_DIR "$HOME/documents"
+set -gx XDG_DOWNLOAD_DIR "$HOME/downloads"
+set -gx XDG_MUSIC_DIR "$HOME/downloads"
+set -gx XDG_PICTURES_DIR "$HOME/pictures"
+set -gx XDG_PUBLICSHARE_DIR "$HOME/downloads"
+set -gx XDG_TEMPLATES_DIR "$HOME/downloads"
+set -gx XDG_VIDEOS_DIR "$HOME/downloads"
+
 exec sway $argv >~/.cache/sway_log 2>&1
