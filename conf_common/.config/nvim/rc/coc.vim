@@ -51,13 +51,13 @@ call coc#config('coc', {
 autocmd BufWritePre *.go
     \ call CocAction('runCommand', 'editor.action.organizeImport')
 
-nnoremap <silent> [g <Plug>(coc-diagnostic-prev)
-nnoremap <silent> ]g <Plug>(coc-diagnostic-next)
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
-nnoremap <silent> <c-]> <Plug>(coc-definition)
-nnoremap <silent> gy    <Plug>(coc-type-definition)
-nnoremap <silent> gi    <Plug>(coc-implementation)
-nnoremap <silent> gr    <Plug>(coc-references)
-nnoremap <silent> gn    <Plug>(coc-rename)
+nmap <silent> <c-]> <Plug>(coc-definition)
+nmap <silent> gy    <Plug>(coc-type-definition)
+nmap <silent> gi    <Plug>(coc-implementation)
+nmap <silent> gr    <Plug>(coc-references)
+nmap <silent> gn    <Plug>(coc-rename)
 
-inoremap <silent><expr> <c-x><c-o> coc#refresh()
+imap <silent><expr> <c-x><c-o> coc#refresh()
