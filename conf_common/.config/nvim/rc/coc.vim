@@ -45,6 +45,7 @@ call coc#config('languageserver', {
 call coc#config('coc', {
 \     'preferences': {
 \          'formatOnSaveFiletypes': ['go', 'python'],
+\          'useQuickfixForLocations': 'true'
 \     }
 \ })
 
