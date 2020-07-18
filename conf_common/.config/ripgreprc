@@ -1,6 +1,7 @@
 --smart-case
 --glob=!*node_modules*
 --glob=!*vendor*
---glob=!\.git*
+--glob=!\.git/*
 --colors=line:none
 --colors=column:none
+--hidden
