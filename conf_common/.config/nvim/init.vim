@@ -34,19 +34,22 @@ if dein#load_state(s:dein_dir)
     call dein#save_state()
 endif
 
+if dein#is_sourced("vim-vinegar")
+    let g:netrw_list_hide = '.*\.pyc$,^__pycache__$'
+endif
+
+if dein#is_sourced("vim-tmux-navigator")
+    let g:tmux_navigator_no_mappings = 1
+    let g:tmux_navigator_save_on_switch = 1
+endif
+
+if dein#is_sourced("spiffy_foldtext")
+    let g:SpiffyFoldtext_format = "%c{ } ... }%f{ }"
+endif
+
 " to remove old plugins
-" :call map(dein#check_clean(), "delete(v:val, 'rf')")
-" :call dein#recache_runtimepath()
-
-" plugin settings for netrw / tpope/vim-vinegar
-let g:netrw_list_hide = '.*\.pyc$,^__pycache__$'
-
-" plugin settings for christoomey/vim-tmux-navigator
-let g:tmux_navigator_no_mappings = 1
-let g:tmux_navigator_save_on_switch = 1
-
-" plugin settings for atimholt/spiffy_foldtext
-let g:SpiffyFoldtext_format = "%c{ } ... }%f{ }"
+" call map(dein#check_clean(), "delete(v:val, 'rf')")
+" call dein#recache_runtimepath()
 
 " source the rest of the rc
 exec 'source' . expand("~/.config/nvim/rc/appearance.vim")
