@@ -57,3 +57,7 @@ highlight DiffAdd ctermbg=72 ctermfg=238 cterm=none
 highlight DiffDelete ctermbg=167 ctermfg=238 cterm=none
 highlight DiffChange ctermbg=238 ctermfg=178 cterm=underline
 highlight DiffText ctermbg=178 ctermfg=238 cterm=none
+
+" custom groups for statusline in appearance.vim
+highlight statusModifided ctermfg=217 ctermbg=237
+highlight statusReadOnly ctermfg=217 ctermbg=237

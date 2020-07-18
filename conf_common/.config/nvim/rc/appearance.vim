@@ -11,7 +11,8 @@ set laststatus=2
 set signcolumn=yes
 
 " statusline
-set statusline=%#statusReadOnly#%{&readonly?'read\ only\ ':''}%*   " read only flag
+set statusline=
+set statusline+=%#statusReadOnly#%{&readonly?'read\ only\ ':''}%*   " read only flag
 set statusline+=%{pathshorten(@%)}
 set statusline+=%#statusModifided#%{&modified?'\ \ modified':''}%* " modified flag
 set statusline+=%=                                                 " /
