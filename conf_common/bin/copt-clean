@@ -6,16 +6,39 @@ import sys
 import yaml
 
 try:
-    copts_dir = os.environ['DOTS_COPT_DIR']
+    copts_dir = os.environ["DOTS_COPT_DIR"]
 except KeyError:
-    print('DOTS_COPT_DIR not set', file=sys.stderr)
+    print("DOTS_COPT_DIR not set", file=sys.stderr)
     sys.exit(1)
 
-composeses = glob(os.path.join(copts_dir, '*/docker-compose.yml'))
-traefiks = glob(os.path.join(copts_dir, 'traefik/config/*.yml'))
+composeses = glob(os.path.join(copts_dir, "*/docker-compose.yml"))
+traefiks = glob(os.path.join(copts_dir, "traefik/config/*.yml"))
 
-for filename in (*composeses, *traefiks):
+
+def yaml_get(filename):
     with open(filename) as file:
-        before = yaml.load(file)
-    with open(filename, 'w') as file:
-        yaml.dump(before, file, default_flow_style=False)
+        return yaml.load(file, Loader=yaml.FullLoader)
+
+
+def yaml_set(filename, data):
+    with open(filename, "w") as file:
+        yaml.dump(data, file, default_flow_style=False)
+
+
+def clean_compose(data):
+    if "services" not in data:
+        return data
+    for name, service in data["services"].items() or []:
+        if "restart" in data["services"][name]:
+            del data["services"][name]["restart"]
+    return data
+
+
+if __name__ == "__main__":
+    for filename in traefiks:
+        yaml_set(filename, yaml_get(filename))
+
+    for filename in composeses:
+        before = yaml_get(filename)
+        cleaned = clean_compose(before)
+        yaml_set(filename, cleaned)
