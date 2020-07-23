@@ -1,8 +1,9 @@
 # safety/better
-alias rm    'rm -Iv --preserve-root'
-alias wget  'wget -c'
-alias cp    'cp -aiv'
-alias mkdir 'mkdir -p -v'
+alias rm    'rm -I --verbose --preserve-root'
+alias wget  'wget --continue --content-disposition'
+alias cp    'cp --archive --interactive --verbose'
+alias mkdir 'mkdir --parents --verbose'
+alias vi    'nvim'
 alias vim   'nvim'
 alias qmv   'qmv --format destination-only'
 
