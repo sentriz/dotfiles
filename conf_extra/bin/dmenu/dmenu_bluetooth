@@ -31,9 +31,12 @@ if [ "$device" = "disconnect" ]; then
     exit
 fi
 
-notify_cmd "powering on" "bluetoothctl power on"
-notify_cmd "trusting $device_name" "bluetoothctl trust $device_mac"
-notify_cmd "setting pairible" "bluetoothctl pairable on"
-notify_cmd "pairing $device_name" "bluetoothctl pair $device_mac || true"
+notify_cmd "powering on"                "bluetoothctl power on"
 notify_cmd "connecting to $device_name" "bluetoothctl connect $device_mac"
-notify_cmd "connecting to $device_name" "bluetoothctl connect $device_mac"
+
+# 🤫🤫🤫
+{ sleep 1; bluetoothctl connect "$device_mac"; } &
+{ sleep 2; bluetoothctl connect "$device_mac"; } &
+{ sleep 3; bluetoothctl connect "$device_mac"; } &
+{ sleep 4; bluetoothctl connect "$device_mac"; } &
+{ sleep 5; bluetoothctl untrust "$device_mac"; } &
