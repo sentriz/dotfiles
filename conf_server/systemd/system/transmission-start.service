@@ -1,0 +1,9 @@
+[Unit]
+Description=Start transmission container
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh -c ' \
+	cd /opt/containers/transmission && \
+	docker-compose up -d \
+'
