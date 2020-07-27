@@ -1,5 +1,5 @@
 [Unit]
-Description=Run backup-raid.service daily
+Description=Run backup-containers.service daily
 
 [Timer]
 OnCalendar=Mon,Wed,Fri,Sun *-*-* 6:00:00

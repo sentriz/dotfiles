@@ -2,14 +2,14 @@
 # rsync_time_machine	https://github.com/laurent22/rsync-time-backup
 
 [Unit]
-Description=Backup to RAID array
+Description=Backup containers
 
 [Service]
 Type=oneshot
 ExecStart=/bin/sh -c ' \
 	rsync_tm \
 		/opt/containers/ \
-		/mnt/media/backup/containers \
+		/mnt/extra/containers \
 		/opt/containers/.backup-ignore 2>&1 \
-	| mail -s "status for backup-raid.service" -- senan@senan.xyz \
+	| mail -s "status for backup-containers.service" -- senan@senan.xyz \
 '
