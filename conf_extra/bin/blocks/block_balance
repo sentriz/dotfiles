@@ -24,7 +24,7 @@ function notify-updated() { notify-send.sh -- "$BLOCK_INSTANCE updated"; }
 function format-balance() { sed -E "s/(\-|\+)?(.*)/$BLOCK_INSTANCE \1€\2/"; }
 
 # hide balance with a right click
-test "$BLOCK_BUTTON" -eq 3 && exit
+test "$BLOCK_BUTTON" -eq 3 2>/dev/null && exit
 
 # wait until system is up for 5 mins before checking balance
 # (this way i'm not prompted to enter my gpg passphrase right after logging in)
