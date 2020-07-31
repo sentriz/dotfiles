@@ -39,4 +39,3 @@ notify_cmd "connecting to $device_name" "bluetoothctl connect $device_mac"
 { sleep 2; bluetoothctl connect "$device_mac"; } &
 { sleep 3; bluetoothctl connect "$device_mac"; } &
 { sleep 4; bluetoothctl connect "$device_mac"; } &
-{ sleep 5; bluetoothctl untrust "$device_mac"; } &
