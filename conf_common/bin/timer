@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+if ! type -p beep >/dev/null; then
+    echo "please install beep" >&2
+    exit 1
+fi
+
 if [[ $# -ne 1 ]]; then
     echo "please provide a duration" >&2
     exit 1
