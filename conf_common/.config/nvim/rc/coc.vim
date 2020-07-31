@@ -39,12 +39,22 @@ call coc#config('languageserver', {
 \         'args': ['start'],
 \         'filetypes': ['sh'],
 \         'ignoredRootPaths': ['~']
+\     },
+\     'clang': {
+\         'command': 'clangd',
+\         'filetypes': ['c', 'cc', 'cpp', 'c++', 'objc', 'objcpp'],
+\         'rootPatterns': ['compile_flags.txt', 'compile_commands.json']
 \     }
 \ })
 
 call coc#config('coc', {
 \     'preferences': {
-\          'formatOnSaveFiletypes': ['go', 'python'],
+\          'formatOnSaveFiletypes': [
+\              'go',
+\              'python',
+\              'c',
+\              'cpp'
+\          ],
 \          'useQuickfixForLocations': 'true'
 \     }
 \ })
