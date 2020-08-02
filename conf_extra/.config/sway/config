@@ -416,3 +416,9 @@ exec mako \
     --anchor bottom-right \
     --ignore-timeout 1 \
     --default-timeout 4000
+exec wlr-sunclock \
+   --margins "0,0,0,$default_gap" \
+   --width 800 \
+   --layer bottom \
+   --anchors br \
+   --border-width 2
