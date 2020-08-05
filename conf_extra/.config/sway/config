@@ -304,6 +304,7 @@ assign [class="Mnemosyne"]                        $work_7
 assign [class="Anki"]                             $work_7
 assign [class="Gimp*"]                            $work_8
 assign [class="Inkscape"]                         $work_8
+assign [app_id="org.inkscape.Inkscape"]           $work_8
 assign [class="libreoffice-*"]                    $work_9
 
 ## don't lock for video
