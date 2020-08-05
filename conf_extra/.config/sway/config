@@ -422,4 +422,5 @@ exec wlr-sunclock \
    --width 800 \
    --layer bottom \
    --anchors br \
-   --border-width 2
+   --border-width 2 \
+   --monitor-index 1
