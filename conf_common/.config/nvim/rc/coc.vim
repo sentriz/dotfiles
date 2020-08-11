@@ -55,7 +55,9 @@ call coc#config('coc', {
 \              'c',
 \              'cpp'
 \          ],
-\          'useQuickfixForLocations': 'true'
+\          'useQuickfixForLocations': 'true',
+\          'promptWorkspaceEdit': 'false',
+\          'listOfWorkspaceEdit': 'none'
 \     }
 \ })
 
