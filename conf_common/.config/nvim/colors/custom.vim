@@ -3,6 +3,8 @@
 " top bar colour is 238 (#444444)
 
 highlight Normal ctermbg=none ctermfg=none
+highlight Function ctermbg=none ctermfg=none
+highlight Identifier ctermbg=none ctermfg=none
 highlight VertSplit cterm=none ctermbg=none
 highlight Comment ctermfg=244
 highlight Folded ctermfg=244 ctermbg=none
@@ -61,3 +63,19 @@ highlight DiffText ctermbg=178 ctermfg=238 cterm=none
 " custom groups for statusline in appearance.vim
 highlight statusModifided ctermfg=217 ctermbg=237
 highlight statusReadOnly ctermfg=217 ctermbg=237
+
+highlight link typescriptVariable Statement
+highlight typescriptES6SetMethod ctermbg=none ctermfg=none
+highlight typescriptObjectStaticMethod ctermbg=none ctermfg=none
+highlight typescriptJSONStaticMethod ctermbg=none ctermfg=none
+highlight typescriptPaymentShippingOptionProp ctermbg=none ctermfg=none
+highlight typescriptPaymentAddressProp ctermbg=none ctermfg=none
+highlight typescriptXHRProp ctermbg=none ctermfg=none
+highlight typescriptBOMWindowMethod ctermbg=none ctermfg=none
+highlight typescriptArrayMethod ctermbg=none ctermfg=none
+highlight typescriptStringMethod ctermbg=none ctermfg=none
+highlight typescriptDateMethod ctermbg=none ctermfg=none
+highlight typescriptGlobalJSONDot ctermbg=none ctermfg=none
+highlight typescriptObjectLabel ctermbg=none ctermfg=none
+highlight typescriptCall ctermbg=none ctermfg=none
+highlight typescriptArrowFunc ctermbg=none ctermfg=none
