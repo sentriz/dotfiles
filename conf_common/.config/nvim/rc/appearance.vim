@@ -8,7 +8,7 @@ set fillchars=vert:\
 set sidescroll=1
 set noshowmode
 set laststatus=2
-set signcolumn=yes
+set signcolumn=number
 
 " statusline
 set statusline=
