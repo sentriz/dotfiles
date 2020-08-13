@@ -7,3 +7,51 @@
 [submodule "conf_extra/bin/notify-send"]
 	path = conf_extra/bin/notify-send
 	url = git@github.com:vlevit/notify-send.sh.git
+[submodule "conf_common/.local/share/nvim/pack/text/opt/vim-exchange"]
+	path = conf_common/.local/share/nvim/pack/text/opt/vim-exchange
+	url = https://github.com/tommcdo/vim-exchange
+[submodule "conf_common/.local/share/nvim/site/pack/text/opt/vim-commentary"]
+	path = conf_common/.local/share/nvim/site/pack/text/opt/vim-commentary
+	url = https://github.com/tpope/vim-commentary
+[submodule "conf_common/.local/share/nvim/site/pack/text/opt/vim-repeat"]
+	path = conf_common/.local/share/nvim/site/pack/text/opt/vim-repeat
+	url = https://github.com/tpope/vim-repeat
+[submodule "conf_common/.local/share/nvim/site/pack/text/opt/vim-surround"]
+	path = conf_common/.local/share/nvim/site/pack/text/opt/vim-surround
+	url = https://github.com/tpope/vim-surround
+[submodule "conf_common/.local/share/nvim/site/pack/text/opt/targets.vim"]
+	path = conf_common/.local/share/nvim/site/pack/text/opt/targets.vim
+	url = https://github.com/wellle/targets.vim
+[submodule "conf_common/.local/share/nvim/site/pack/text/opt/vim-abolish"]
+	path = conf_common/.local/share/nvim/site/pack/text/opt/vim-abolish
+	url = https://github.com/tpope/vim-abolish
+[submodule "conf_common/.local/share/nvim/site/pack/look/spiffy_foldtext"]
+	path = conf_common/.local/share/nvim/site/pack/look/spiffy_foldtext
+	url = https://github.com/atimholt/spiffy_foldtext
+[submodule "conf_common/.local/share/nvim/site/pack/look/vim-vinegar"]
+	path = conf_common/.local/share/nvim/site/pack/look/vim-vinegar
+	url = https://github.com/tpope/vim-vinegar
+[submodule "conf_common/.local/share/nvim/site/pack/meta/nvim-yarp"]
+	path = conf_common/.local/share/nvim/site/pack/meta/nvim-yarp
+	url = https://github.com/roxma/nvim-yarp
+[submodule "conf_common/.local/share/nvim/site/pack/meta/vim-hug-neovim-rpc"]
+	path = conf_common/.local/share/nvim/site/pack/meta/vim-hug-neovim-rpc
+	url = https://github.com/roxma/vim-hug-neovim-rpc
+[submodule "conf_common/.local/share/nvim/site/pack/meta/coc.nvim"]
+	path = conf_common/.local/share/nvim/site/pack/meta/coc.nvim
+	url = https://github.com/neoclide/coc.nvim
+[submodule "conf_common/.local/share/nvim/site/pack/meta/vim-highlightedyank"]
+	path = conf_common/.local/share/nvim/site/pack/meta/vim-highlightedyank
+	url = https://github.com/machakann/vim-highlightedyank
+[submodule "conf_common/.local/share/nvim/site/pack/meta/committia.vim"]
+	path = conf_common/.local/share/nvim/site/pack/meta/committia.vim
+	url = https://github.com/rhysd/committia.vim
+[submodule "conf_common/.local/share/nvim/site/pack/meta/vim-qf"]
+	path = conf_common/.local/share/nvim/site/pack/meta/vim-qf
+	url = https://github.com/romainl/vim-qf
+[submodule "conf_common/.local/share/nvim/site/pack/meta/SyntaxAttr.vim"]
+	path = conf_common/.local/share/nvim/site/pack/meta/SyntaxAttr.vim
+	url = https://github.com/inkarkat/SyntaxAttr.vim
+[submodule "conf_common/.local/share/nvim/site/pack/meta/vim-tmux-navigator"]
+	path = conf_common/.local/share/nvim/site/pack/meta/vim-tmux-navigator
+	url = https://github.com/christoomey/vim-tmux-navigator
