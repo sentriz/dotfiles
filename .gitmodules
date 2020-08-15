@@ -55,3 +55,6 @@
 [submodule "conf_common/.local/share/nvim/site/pack/meta/vim-tmux-navigator"]
 	path = conf_common/.local/share/nvim/site/pack/meta/vim-tmux-navigator
 	url = https://github.com/christoomey/vim-tmux-navigator
+[submodule "conf_common/.local/share/nvim/site/pack/meta/opt/nvim-lsp"]
+	path = conf_common/.local/share/nvim/site/pack/meta/opt/nvim-lsp
+	url = https://github.com/neovim/nvim-lsp

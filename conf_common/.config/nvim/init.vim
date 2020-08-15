@@ -16,6 +16,7 @@ packadd! vim-highlightedyank
 packadd! vim-hug-neovim-rpc
 packadd! vim-qf
 packadd! vim-tmux-navigator
+packadd! nvim-lsp
 
 " plugins look
 packadd! spiffy_foldtext
@@ -34,8 +35,4 @@ exec 'source' . expand("~/.config/nvim/rc/appearance.vim")
 exec 'source' . expand("~/.config/nvim/rc/auto_commands.vim")
 exec 'source' . expand("~/.config/nvim/rc/improvements.vim")
 exec 'source' . expand("~/.config/nvim/rc/mappings.vim")
-
-if executable("node")
-    packadd! coc.nvim
-    exec 'source' . expand("~/.config/nvim/rc/coc.vim")
-endif
+exec 'source' . expand("~/.config/nvim/rc/lang_server.vim")
