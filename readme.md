@@ -26,8 +26,7 @@ $ fundle install
 **neovim stuff**
 ```shell
 $ python3.x -m pip install --user pynvim
-$ git clone https://github.com/Shougo/dein.vim ~/.cache/dein/repos/github.com/Shougo/dein.vim
-$ vim '+call dein#install()' '+qall'
+$ git submodule update --init # get vim plugins
 ```
 
 **python stuff**
