@@ -1,0 +1,68 @@
+/* --------------------------------------------------------------------------------------------
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License. See License.txt in the project root for license information.
+ * ------------------------------------------------------------------------------------------ */
+'use strict'
+
+import { CancellationToken, ClientCapabilities, Declaration, DeclarationOptions, DeclarationRegistrationOptions, DeclarationRequest, Disposable, DocumentSelector, Position, ServerCapabilities } from 'vscode-languageserver-protocol'
+import { TextDocument } from 'vscode-languageserver-textdocument'
+import languages from '../languages'
+import { DeclarationProvider, ProviderResult } from '../provider'
+import { BaseLanguageClient, TextDocumentFeature } from './client'
+import { asTextDocumentPositionParams } from './utils/converter'
+
+function ensure<T, K extends keyof T>(target: T, key: K): T[K] {
+  if (target[key] === void 0) {
+    target[key] = {} as any
+  }
+  return target[key]
+}
+
+export interface ProvideDeclarationSignature {
+  (this: void, document: TextDocument, position: Position, token: CancellationToken): ProviderResult<Declaration>
+}
+
+export interface DeclarationMiddleware {
+  provideDeclaration?: (this: void, document: TextDocument, position: Position, token: CancellationToken, next: ProvideDeclarationSignature) => ProviderResult<Declaration>
+}
+
+export class DeclarationFeature extends TextDocumentFeature<boolean | DeclarationOptions, DeclarationRegistrationOptions, DeclarationProvider> {
+
+  constructor(client: BaseLanguageClient) {
+    super(client, DeclarationRequest.type)
+  }
+
+  public fillClientCapabilities(capabilites: ClientCapabilities): void {
+    let declarationSupport = ensure(ensure(capabilites, 'textDocument')!, 'declaration')!
+    declarationSupport.dynamicRegistration = true
+    // declarationSupport.linkSupport = true
+  }
+
+  public initialize(capabilities: ServerCapabilities, documentSelector: DocumentSelector): void {
+    const [id, options] = this.getRegistration(documentSelector, capabilities.declarationProvider)
+    if (!id || !options) {
+      return
+    }
+    this.register(this.messages, { id, registerOptions: options })
+  }
+
+  protected registerLanguageProvider(options: DeclarationRegistrationOptions): [Disposable, DeclarationProvider] {
+    const provider: DeclarationProvider = {
+      provideDeclaration: (document: TextDocument, position: Position, token: CancellationToken): ProviderResult<Declaration> => {
+        const client = this._client
+        const provideDeclaration: ProvideDeclarationSignature = (document, position, token) => client.sendRequest(DeclarationRequest.type, asTextDocumentPositionParams(document, position), token).then(
+            res => res, error => {
+              client.logFailedRequest(DeclarationRequest.type, error)
+              return Promise.resolve(null)
+            }
+          )
+        const middleware = client.clientOptions.middleware
+        return middleware.provideDeclaration
+          ? middleware.provideDeclaration(document, position, token, provideDeclaration)
+          : provideDeclaration(document, position, token)
+      }
+    }
+
+    return [languages.registerDeclarationProvider(options.documentSelector, provider), provider]
+  }
+}

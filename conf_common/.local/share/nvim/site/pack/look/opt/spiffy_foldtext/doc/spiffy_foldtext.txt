@@ -1,0 +1,317 @@
+*spiffy_foldtext.txt*  Spiffy, intelligent foldtext via a format string.
+For most modern vim versions--tested in 7.4.
+
+------------------------------------------------------------------------------
+
+      _____       _ ________         ______      __    ____            __ ~
+     / ___/____  (_) __/ __/_  __   / ____/___  / /___/ / /____  _  __/ /_~
+     \__ \/ __ \/ / /_/ /_/ / / /  / /_  / __ \/ / __  / __/ _ \| |/_/ __/~
+    ___/ / /_/ / / __/ __/ /_/ /  / __/ / /_/ / / /_/ / /_/  __/>  </ /_  ~
+   /____/ .___/_/_/ /_/  \__, /  /_/    \____/_/\__,_/\__/\___/_/|_|\__/  ~
+       /_/              /____/                                            ~
+				 version 1.1
+
+==============================================================================
+CONTENTS                                            *spiffy_foldtext-contents*
+    1. Intro                        |spiffy_foldtext|
+    2. The format string            |spiffy_foldtext-format_string|
+       - %%                         |spiffy_foldtext-%%|
+       - %c  OR  %c{[fill string]}  |spiffy_foldtext-%c|
+       - %<                         |spiffy_foldtext-%<|
+       - %f{[fill string]}          |spiffy_foldtext-%f{}|
+       - %[some number]n            |spiffy_foldtext-%n|
+       - %l{[repeated string]}      |spiffy_foldtext-%l{}|
+       - %[some number]fl           |spiffy_foldtext-%fl|
+    3. Other Options                |spiffy_foldtext-options|
+       - use_multibyte              |spiffy_foldtext-use_multibyte|
+    4. Planned Features             |spiffy_foldtext-planned_features|
+    5. Suggestions?                 |spiffy_foldtext-suggestions|
+    6. Change Log                   |spiffy_foldtext-change_log|
+    7. License                      |spiffy_foldtext-license|
+
+==============================================================================
+
+INTRODUCTION                                                 *spiffy_foldtext*
+
+A customizable foldtext function that properly takes into account the actual
+width of the displayable area of your windows. You are thus able to
+right-justify a portion of it, usually meta-data like line count and fold
+level.
+
+At the center of the plugin is a special format string. By customizing its
+value, you can create your own custom foldtext in a single line in your vimrc.
+
+This plugin is meant to be drop-in-able without the need to make any
+adjustments--with nice default settings that increase the clarity of your
+partially folded windows. There are no functions mapped or in need of mapping.
+
+
+Note: this help file contains multi-byte characters. Don't worry, they’re only
+relevant if you've actually got multi-byte characters enabled.
+
+------------------------------------------------------------------------------
+THE FORMAT STRING                              *spiffy_foldtext-format_string*
+
+The format string is customizable by setting the "SpiffyFoldtext_format"
+variable, prepended with "g:" for global scope, "b:" for buffer-local scope,
+or "w:" for window-local scope--each scope overriding those listed before it.
+The format string contains control triggers and literal text describing how
+your folded lines will render. For example, here's the default (more or less):
+>
+    if has('multi_byte')
+        let g:SpiffyFoldtext_format = "%c{═}  %<%f{═}╡ %4n lines ╞═%l{╤═}"
+    else
+        let g:SpiffyFoldtext_format = "%c{=}  %<%f{=}| %4n lines |=%l{/=}"
+    endif
+<
+Or, more simply (I'll take the ascii-only version for the sake of
+explanation):
+>
+    let g:SpiffyFoldtext_format = "%c{=}  %<%f{=}| %4n lines |=%l{/=}"
+<
+The plugin parses this string upon first run, then 'compiles' it to your
+foldtext each time vim needs to determine what to display on a line that
+represents a folded region. In a display area 70 characters wide, the above
+example would make this sample text:
+
+Some text with a foldmarker {{{                                       ~
+    Some indented text        with a wide whitespace region {{{       ~
+                                                                      ~
+    }}}                                                               ~
+}}}                                                                   ~
+
+fold to look like this:
+
+Some text with a foldmarker {{{
+=== Some indented text ====== with a wide whitespace |    3 lines |=/=~
+}}}
+
+or this:
+
+Some text with a foldmarker {{{  ======================|    5 lines |=~
+
+
+Here's a sampling of what some of the example translates to. See the rest of
+this help for more information on the rest:
+
+  "%c{=}": This trigger places the text of the fold region's first line into
+           your foldtext. As given here, its indentation and wider whitespace
+           regions will be filled with the '=' character. See
+           |spiffy_foldtext-%c|
+
+  "  "   : This inserts two literal spaces.
+
+  "%<"   : This represents the split between what will be left-aligned in your
+           foldtext and what will be right aligned. The leftward angle bracket
+           is meant as a mnemonic to indicate that, should all the contents of
+           the foldtext be too wide for the display area, the content to the
+           right of this trigger will overwrite part of the content to the
+           left. See |spiffy_foldtext-%<|.
+
+  "%f{=}": If the content of the foldtext doesn't fill up the entire display
+           region, the foldtext will be filled with '='s at this point, to the
+           amount needed to right-align the right-align section. See
+           |spiffy_foldtext-%f{}|.
+
+  etc.
+
+------------------------------------------------------------------------------
+FORMAT STRING TRIGGERS                              *spiffy_foldtext-triggers*
+
+The format string consists of two types of things: literal text inserted
+exactly as it appears in the actual format string variable; and triggers
+beginning with the '%' character. Please note that, for simplicity's sake,
+your custom values for the format string are NOT checked for correctness. A
+badly formed format string won't break your vim session, though, or even
+return any sort of error message, it might just make your fold lines a little
+funny.
+
+If you're trying to test whether a format string is working properly, make
+sure to check what it looks like both when it's too long for the line (some of
+it will overlap the rest, as designed), and when it's too short (the %f{}
+trigger will expand to fill the excess space).
+
+
+%%                                                        *spiffy_foldtext-%%*
+
+	Placing two '%' characters will insert one '%' into your final fold
+	text.
+
+
+%c  OR  %c{[fill string]}          *spiffy_foldtext-%c* *spiffy_foldtext-%c{}*
+
+	Places the text of the fold region's first line into your foldtext. If
+	wavy brackets are included, its contents are used to fill in the
+	line's indentation and any wide areas of whitespace. If the fill
+	string's width is not an exact factor of the available space's width,
+	part of the fill string is used at the end.
+
+
+%<                                                        *spiffy_foldtext-%<*
+
+	This represents the split between what will be left-aligned in your
+	foldtext and what will be right aligned when the fold text is wider
+	than the display width of the window. The leftward angle bracket is
+	meant as a mnemonic to indicate that, should all the contents of the
+	foldtext be too wide for the display area, the content to the right of
+	this trigger will overwrite part of the content to the left.
+
+
+%f{[fill string]}                                       *spiffy_foldtext-%f{}*
+
+	If the rest of the fold text works out to being less wide than the
+	display area of the window, the text in the wavy brackets is repeated
+	until it makes up for the extra space. In effect, everything to the
+	right of it is right-aligned (in the case of a foldtext shorter than
+	the display width). If the fill string's width is not an exact factor
+	of the available space's width, part of the fill string is used at the
+	end.
+
+
+%[some number]n                                           *spiffy_foldtext-%n*
+
+	Inserts the number of lines in the folded region as a decimal number.
+	The number you give before the 'n' indicates a minimum number of
+	display cells to fill.
+
+
+%l{[repeated string]}                                   *spiffy_foldtext-%l{}*
+
+	Inserts a string, repeated n times--where n is the fold level of the
+	fold, minus 1. Placing it in the right-align region, in effect, let's
+	you do a sort of 'reverse indent' indicator of the fold's fold level.
+	You can, of course, place this anywhere you like in the string. For
+	example, to get something close to Vim's default fold text, you could
+	use the following format string:
+>
+	"+-%l{-} %3n lines: %c"
+<
+
+%[some number]fl                                         *spiffy_foldtext-%fl*
+
+	Inserts the fold level of the fold as a decimal number. The number you
+	give before the "fl" indicates a minimum number of display cells to
+	fill.
+
+------------------------------------------------------------------------------
+OTHER OPTIONS                                        *spiffy_foldtext-options*
+
+The example code below shows the defaults.
+
+                                               *spiffy_foldtext-use_multibyte*
+>
+ :let g:SpiffyFoldtext_use_multibyte = 1
+<    (boolean)
+
+	Whether to use the default multi-byte format string, when possible.
+	Note thath this only affects the default. Setting your own values as
+	multibytes will still attempt to display them as you have set them, no
+	matter what value you give to g:SpiffyFoldtext_use_multibyte.
+
+------------------------------------------------------------------------------
+PLANNED FEATURES                            *spiffy_foldtext-planned_features*
+
+I've finally gotten this plugin to a point where I feel good releasing it, but
+I still have some features I might want to add later:
+
+	- A special case format string for regions that encompass the insides
+	  of a bracket. It would replace it with {...}, or (...), etc.
+
+
+There's also a feature I kinda want to add, but it might be outside the scope
+of this plugin. Plus, to be honest, I can't think of a use case, it'd just be
+neat. Except, if it were to be done in a way compatible with this plugin it
+would pretty much have to be _part_ of it, anyway.
+
+	- Placing a '!', followed by a number, immediately after a fold
+	  marker, would change the %c trigger to display the line that many
+	  down from the top one, so >
+          {{{1!1
+              The next line.
+          }}}
+<          would look something like this:
+          === The next line.  =============|    3 lines |=~
+
+If you feel entusiastic about any of the above planned features, let me know.
+I'll get cracking on it sooner.
+
+
+There are some features I feel less strongly about, but if enough people want
+them, or if they want to add them themselves, they may be added in the future:
+
+	- A "%>" trigger to correspond with the "%<" trigger.
+
+	- Closer emulation of Vim's default treatment of the first line's
+	  text, where comment delimiters and fold markers are removed.
+
+
+If you want to contribute, the main repository is found at:
+https://bitbucket.org/atimholt/spiffy_foldtext
+
+
+------------------------------------------------------------------------------
+SUGGESTIONS                                      *spiffy_foldtext-suggestions*
+
+Got any good ideas I didn't come up with? send me an email at
+atimholt@gmail.com.
+
+I'd obfuscate my email address, but it's plaintext in the license, and gmail
+has real good spam filters, so eh.
+
+If you feel REALLY enthusiastic about any of the above planned or speculative
+features, try contributing some code at:
+https://bitbucket.org/atimholt/spiffy_foldtext
+But please contact me first if it's anything outside that list of features "I
+feel less strongly about". Also, please don't be offended if I don't accept,
+or if I heavily modify, your contributions. I don't want this thing to get to
+bloated, or to contradict its own purpose, or whatever have you.
+
+or even giving me money:
+bitcoin:1FGQqbjSGHrQVeUc12LJY6F2g1TEDyJ7Ts
+and make sure to let me know who sent it and why!
+
+I'm not a lawyer, but let me try to make a disclaimer: Any money sent to me is
+not a charitable donation, it does not guarantee work, and I'll be doing
+whatever I want with it. Please don't feel the need to send me any large sums,
+this is just a simple little plugin. Doesn't hurt to ask, though, eh?
+
+------------------------------------------------------------------------------
+CHANGE LOG                                        *spiffy_foldtext-change_log*
+
+1.1:
+  - Added window local fold-text, to override global fold text or buffer local
+    foldtext when present.
+  - Added buffer local fold-text, to override global fold text when present.
+  - Unit tests for stability and changeability (not really a feature)
+  - Added %[some number]fl trigger, inserting fold level
+1.0:
+  - initial release
+
+------------------------------------------------------------------------------
+LICENSE                                              *spiffy_foldtext-license*
+
+The MIT License (MIT)
+
+Copyright (c) 2014 Tim Holt (atimholt@gmail.com)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+------------------------------------------------------------------------------
+
+ vim:fmr=-v-,-^-:tw=78:ts=8:sts=8:noet:ft=help:norl:

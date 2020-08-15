@@ -1,0 +1,15 @@
+lib
+.cache
+*.map
+coverage
+__pycache__
+.pyc
+.log
+build
+doc/tags
+doc/tags-cn
+node_modules
+publish.sh
+!src/__tests__/tags
+src/__tests__/extensions/db.json
+package-lock.json

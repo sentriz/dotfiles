@@ -1,0 +1,739 @@
+*qf.txt*	A plugin to make working with the quickfix list/window smoother.
+
+
+                  VIM-QF DOCUMENTATION by Romain Lafourcade
+
+
+Help on using vim-qf                                                *qf* *vim-qf*
+
+    1. Introduction ............................... |qf-intro|
+    2. Installation ............................... |qf-installation|
+    3. Configuration .............................. |qf-configuration|
+    4. Usage ...................................... |qf-usage|
+    5. Named lists ................................ |qf-named-lists|
+    6. Acknowledgements ........................... |qf-acknowledgements|
+    7. TODO ....................................... |qf-todo|
+    8. DONE ....................................... |qf-done|
+
+==============================================================================
+ 1. INTRODUCTION                                                     *qf-intro*
+
+vim-qf--short for "vim-quickfix"--is a small collection of settings,
+commands and mappings put together to make working with the location/quickfix
+list/window smoother.
+
+These "global" features are available from any window:
+
+    - quickfix buffers are hidden from |:ls| and buffer navigation
+    - quit Vim if the last window is a location/quickfix window
+    - close the location window automatically when quitting parent window
+    - (optional) mappings for |:cnext|, |:cprevious|, |:lnext|, |:lprevious|
+      that wrap around the beginning and end of the list
+    - (optional) mapping for jumping to and from the location/quickfix window,
+    - (optional) mappings for toggling location/quickfix windows
+    - (optional) open the location/quickfix window automatically after |:make|,
+      |:grep|, |:lvimgrep| and friends if there are valid locations/errors
+    - (optional) automatically set the height of location/quickfix windows
+      to the number of list items if less than Vim's default height (10) or
+      the user's prefered height
+
+These "local" features are only available in location/quickfix windows:
+
+    - disable relative numbers
+    - filter and restore the current list
+    - perform commands on each line in the current list
+    - perform commands on each file in the current list
+    - mappings to navigate between older and newer lists
+    - jump to next group of entries belonging to same file ("file grouping")
+    - save and load named lists
+    - (optional) disable soft-wrapping
+    - (optional) Ack.vim-inspired mappings
+
+==============================================================================
+ 2. INSTALLATION                                              *qf-installation*
+
+Use your favorite plugin manager or dump the files below in their
+standard location:
+
+on Unix-like systems... >
+
+    ~/.vim/after/ftplugin/qf.vim
+    ~/.vim/autoload/qf.vim
+    ~/.vim/autoload/qf/*.vim
+    ~/.vim/doc/qf.txt
+    ~/.vim/plugin/qf.vim
+<
+on Windows... >
+
+    %userprofile%\vimfiles\after\ftplugin\qf.vim
+    %userprofile%\vimfiles\autoload\qf.vim
+    %userprofile%\vimfiles\autoload\qf\*.vim
+    %userprofile%\vimfiles\doc\qf.txt
+    %userprofile%\vimfiles\plugin\qf.vim
+<
+If you go with the manual method, don't forget to execute the following
+command to make the documentation globally available:
+
+on Unix-like systems... >
+
+    :helptags ~/.vim/doc
+<
+on Windows... >
+
+    :helptags %userprofile%\vimfiles\doc
+<
+==============================================================================
+ 3. CONFIGURATION                                            *qf-configuration*
+
+Global mappings:
+
+    <Plug>(qf_qf_previous) ..................... |<Plug>(qf_qf_previous)|
+    <Plug>(qf_qf_next) ......................... |<Plug>(qf_qf_next)|
+    <Plug>(qf_loc_previous) .................... |<Plug>(qf_loc_previous)|
+    <Plug>(qf_loc_next) ........................ |<Plug>(qf_loc_next)|
+    <Plug>(qf_qf_switch) ....................... |<Plug>(qf_qf_switch)|
+    <Plug>(qf_qf_toggle) ....................... |<Plug>(qf_qf_toggle)|
+    <Plug>(qf_qf_toggle_stay) .................. |<Plug>(qf_qf_toggle_stay)|
+    <Plug>(qf_loc_toggle) ...................... |<Plug>(qf_loc_toggle)|
+    <Plug>(qf_loc_toggle_stay) ................. |<Plug>(qf_loc_toggle_stay)|
+    <Plug>(qf_older) ........................... |<Plug>(qf_older)|
+    <Plug>(qf_newer) ........................... |<Plug>(qf_newer)|
+    <Plug>(qf_previous_file) ................... |<Plug>(qf_previous_file)|
+    <Plug>(qf_next_file) ....................... |<Plug>(qf_next_file)|
+
+Local mappings:
+
+    <Left> ..................................... |QfHistoryOlder|
+    <Right> .................................... |QfHistoryNewer|
+    { .......................................... |QfPreviousFile|
+    } .......................................... |QfNextFile|
+
+Options:
+
+    g:qf_mapping_ack_style ..................... |'g:qf_mapping_ack_style'|
+    g:qf_statusline ............................ |'g:qf_statusline'|
+    g:qf_window_bottom ......................... |'g:qf_window_bottom'|
+    g:qf_loclist_window_bottom ................. |'g:qf_loclist_window_bottom'|
+    g:qf_auto_open_quickfix .................... |'g:qf_auto_open_quickfix'|
+    g:qf_auto_open_loclist ..................... |'g:qf_auto_open_loclist'|
+    g:qf_auto_resize ........................... |'g:qf_auto_resize'|
+    g:qf_max_height ............................ |'g:qf_max_height'|
+    g:qf_auto_quit ............................. |'g:qf_auto_quit'|
+    g:qf_bufname_or_text ....................... |'g:qf_bufname_or_text'|
+    g:qf_save_win_view ......................... |'g:qf_save_win_view'|
+    g:qf_nowrap ................................ |'g:qf_nowrap'|
+    g:qf_shorten_path .......................... |'g:qf_shorten_path'|
+
+------------------------------------------------------------------------------
+                                                       *<Plug>(qf_qf_previous)*
+                                                           *<Plug>(qf_qf_next)*
+Scope: global                                                                ~
+Default: none                                                                ~
+
+Go up and down the quickfix list and wrap around.
+
+Example: >
+
+    nmap <Home> <Plug>(qf_qf_previous)
+    nmap <End>  <Plug>(qf_qf_next)
+<
+------------------------------------------------------------------------------
+                                                      *<Plug>(qf_loc_previous)*
+                                                          *<Plug>(qf_loc_next)*
+Scope: global                                                                ~
+Default: none                                                                ~
+
+Go up and down the current location list and wrap around.
+
+Example: >
+
+    nmap <C-Home> <Plug>(qf_loc_previous)
+    nmap <C-End>  <Plug>(qf_loc_next)
+<
+------------------------------------------------------------------------------
+                                                         *<Plug>(qf_qf_switch)*
+Scope: global                                                                ~
+Default: none                                                                ~
+
+Jump to and from location/quickfix windows.
+
+Example: >
+
+    nmap ç <Plug>(qf_qf_switch)
+<
+------------------------------------------------------------------------------
+                                                         *<Plug>(qf_qf_toggle)*
+Scope: global                                                                ~
+Default: none                                                                ~
+
+Toggle the quickfix window.
+Uses |:cwindow| and |:cclose| under the hood.
+
+Example: >
+
+    nmap <F5> <Plug>(qf_qf_toggle)
+<
+------------------------------------------------------------------------------
+                                                    *<Plug>(qf_qf_toggle_stay)*
+Scope: global                                                                ~
+Default: none                                                                ~
+
+Toggle the quickfix window and do not move if toggled open.
+Uses |:cwindow| and |:cclose| under the hood.
+
+Example: >
+
+    nmap <F5> <Plug>(qf_qf_toggle_stay)
+<
+------------------------------------------------------------------------------
+                                                        *<Plug>(qf_loc_toggle)*
+Scope: global                                                                ~
+Default: none                                                                ~
+
+Toggle the current window's location window or the current location window.
+Uses |:lwindow| and |:lclose| under the hood.
+
+Example: >
+
+    nmap <F6> <Plug>(qf_loc_toggle)
+<
+------------------------------------------------------------------------------
+                                                   *<Plug>(qf_loc_toggle_stay)*
+Scope: global                                                                ~
+Default: none                                                                ~
+
+Toggle the current window's location window or the current location window and
+do not move if toggled open.
+Uses |:lwindow| and |:lclose| under the hood.
+
+Example: >
+
+    nmap <F6> <Plug>(qf_loc_toggle_stay)
+<
+------------------------------------------------------------------------------
+                                                             *<Plug>(qf_older)*
+                                                             *<Plug>(qf_newer)*
+Scope: local                                                                 ~
+Default: none                                                                ~
+
+In a location/quickfix window, navigate to an older or newer list.
+
+Example (in after/ftplugin/qf.vim): >
+
+    nmap <buffer> <Left>  <Plug>(qf_older)
+    nmap <buffer> <Right> <Plug>(qf_newer)
+<
+------------------------------------------------------------------------------
+                                                     *<Plug>(qf_previous_file)*
+                                                         *<Plug>(qf_next_file)*
+Scope: local                                                                 ~
+Default: none                                                                ~
+
+In a location/quickfix window, jump to the next group of lines
+corresponding to a file.
+
+Example (in after/ftplugin/qf.vim): >
+
+    nmap <buffer> { <Plug>(qf_previous_file)
+    nmap <buffer> } <Plug>(qf_next_file)
+<
+------------------------------------------------------------------------------
+                                                               *QfHistoryOlder*
+                                                               *QfHistoryNewer*
+Scope: local                                                                 ~
+Default: <Left> and <Right>                                                  ~
+
+In a location/quickfix window, navigate to an older or newer list.
+
+------------------------------------------------------------------------------
+                                                               *QfPreviousFile*
+                                                                   *QfNextFile*
+Scope: local                                                                 ~
+Default: { and }                                                             ~
+
+In a location/quickfix window, jump to the next group of lines
+corresponding to a file.
+
+------------------------------------------------------------------------------
+                                                     *'g:qf_mapping_ack_style'*
+Value: numeric                                                               ~
+Default: 0                                                                   ~
+
+Ack.vim-inspired mappings available only in location/quickfix windows:
+
+    s - open entry in a new horizontal window
+    v - open entry in a new vertical window
+    t - open entry in a new tab
+    o - open entry and come back
+    O - open entry and close the location/quickfix window
+    p - open entry in a preview window
+
+Add the line below to your vimrc to enable this feature: >
+
+    let g:qf_mapping_ack_style = 1
+<
+------------------------------------------------------------------------------
+                                                         *'g:qf_window_bottom'*
+Value: numeric                                                               ~
+Default: 1                                                                   ~
+
+Open the quickfix window at the bottom of the screen.
+
+Add the line below to your vimrc to disable this feature: >
+
+    let g:qf_window_bottom = 0
+<
+------------------------------------------------------------------------------
+                                                 *'g:qf_loclist_window_bottom'*
+Value: numeric                                                               ~
+Default: 1                                                                   ~
+
+Open location list windows at the bottom of the screen.
+
+Add the line below to your vimrc to disable this feature: >
+
+    let g:qf_loclist_window_bottom = 0
+<
+------------------------------------------------------------------------------
+                                                            *'g:qf_statusline'*
+Value: dictionary                                                            ~
+Default: {}                                                                  ~
+
+It is possible to define what comes before and after the default information
+displayed in the |'statusline'|.
+
+Example: >
+
+    let g:qf_statusline = {}
+    let g:qf_statusline.before = '%<\ '
+    let g:qf_statusline.after = '\ %f%=%l\/%-6L\ \ \ \ \ '
+<
+------------------------------------------------------------------------------
+                                                    *'g:qf_auto_open_quickfix'*
+Value: numeric                                                               ~
+Default: 1                                                                   ~
+
+Open the quickfix window automatically if there are any errors.
+
+Add the line below to your vimrc to disable this feature: >
+
+    let g:qf_auto_open_quickfix = 0
+<
+------------------------------------------------------------------------------
+                                                     *'g:qf_auto_open_loclist'*
+Value: numeric                                                               ~
+Default: 1                                                                   ~
+
+Open the location window automatically if there are any locations.
+
+Add the line below to your vimrc to disable this feature: >
+
+    let g:qf_auto_open_loclist = 0
+<
+------------------------------------------------------------------------------
+                                                           *'g:qf_auto_resize'*
+Value: numeric                                                               ~
+Default: 1                                                                   ~
+
+Automatically adjust the height of location/quickfix windows to 10 lines
+(Vim's default) or to the number of items in the list if that number is
+inferior to 10.
+
+Add the line below to your vimrc to disable this feature: >
+
+    let g:qf_auto_resize = 0
+<
+------------------------------------------------------------------------------
+                                                            *'g:qf_max_height'*
+Value: numeric                                                               ~
+Default: 10                                                                  ~
+
+Define the maximum height of location/quickfix windows.
+
+Add the line below to your vimrc to change the default value:
+>
+    let g:qf_max_height = 8
+<
+------------------------------------------------------------------------------
+                                                             *'g:qf_auto_quit'*
+Value: numeric                                                               ~
+Default: 1                                                                   ~
+
+Automatically quit Vim if the quickfix window is the last window.
+
+Add the line below to your vimrc to disable this feature:
+>
+    let g:qf_auto_quit = 0
+<
+------------------------------------------------------------------------------
+                                                       *'g:qf_bufname_or_text'*
+Value: numeric                                                               ~
+Default: 0                                                                   ~
+
+Determines what fields to filter on. Possible values are:
+
+    `0` ........ filter on the buffer name AND the text (default)
+    `1` ........ filter ONLY on the buffer name
+    `2` ........ filter ONLY on the text
+
+Add the line below to your vimrc to change the default value:
+>
+    let g:qf_bufname_or_text = 1
+<
+------------------------------------------------------------------------------
+                                                         *'g:qf_save_win_view'*
+Value: numeric                                                               ~
+Default: 1                                                                   ~
+
+Save the view of the current window when toggling location/quickfix window.
+
+Add the line below to your vimrc to change the default value:
+>
+    let g:qf_save_win_view = 0
+<
+------------------------------------------------------------------------------
+                                                                *'g:qf_nowrap'*
+Value: numeric                                                               ~
+Default: 1                                                                   ~
+
+Enables or disables soft-wrapping in the location/quickfix window.
+The default value disables soft-wrapping.
+
+Add the line below to your vimrc to change the default value:
+>
+    let g:qf_nowrap = 0
+<
+------------------------------------------------------------------------------
+                                                          *'g:qf_shorten_path'*
+Value: numeric                                                               ~
+Default: 1                                                                   ~
+
+Enables or disables shortening of the file paths in the location/quickfix
+window.
+
+With the option set to `0` (vanilla Vim):
+>
+    very/long/path/with/lots/of/subdirectories/filename.ext|87 col 22| …
+
+With the option set to `1` (vim-qf default):
+>
+    v/l/p/w/l/o/s/filename.ext|87 col 22| …
+
+Add the line below to your vimrc to change the default value:
+>
+    let g:qf_shorten_path = 0
+<
+==============================================================================
+ 4. USAGE                                                            *qf-usage*
+
+The following commands are available when the location/quickfix window
+is focused:
+
+*:Keep*
+
+    Keep all entries that contain the given |pattern|, either in the
+    buffer name or in the description.
+
+    Example: >
+
+        :Keep
+        :Keep model
+        :Keep <C-r><C-f>
+<
+    Without an argument, the pattern used for filtering is:
+
+    - the buffer name if the cursor is on column 1,
+    - the word under the cursor if the cursor is on any other column.
+
+    With an argument, filtering is done by default on the buffer name AND the
+    text. This can be changed with the |g:qf_bufname_or_text| option.
+
+*:Reject*
+
+    Reject all entries that contain the given |pattern| in the buffer name or
+    in the description.
+
+    Example: >
+
+        :Reject
+        :Reject build
+        :Reject <C-r><C-w>
+<
+    Without an argument, the pattern used for filtering is:
+
+    - the buffer name if the cursor is on column 1,
+    - the word under the cursor if the cursor is on any other column.
+
+    With an argument, filtering is done by default on the buffer name AND the
+    text. This can be changed with the |g:qf_bufname_or_text| option.
+
+*:Restore*
+
+    Restore the list to its original state.
+
+*:Doline*
+
+    Execute an Ex command on every line in the current list.
+    Aliased to the built-in `:cdo` and `:ldo` when applicable.
+
+    Example: >
+
+        :Doline s/^/--
+<
+*:Dofile*
+
+    Execute an Ex command on every file in the current list.
+    Aliased to the built-in `:cfdo` and `:lfdo` when applicable.
+
+    Example: >
+
+        :Dofile norm @q
+<
+*:SaveList*
+
+    Save the current quickfix/location under the given name. If no name is
+    supplied the last saved list is used.
+
+    Example: >
+
+        :SaveList curlist
+<
+*:SaveListAdd*
+
+    Like |:SaveList|, but adds to an existing named list.
+
+    Example: >
+
+        :SaveListAdd curlist
+<
+*:LoadList*
+
+    Replace the current quickfix/location list with one or more saved named
+    lists. If no name is supplied, the last saved list is used.
+
+    Example: >
+
+        :LoadList curlist
+<
+*:LoadListAdd*
+
+    Like |:LoadList|, but adds to an existing quickfix/location list.
+
+    Example: >
+
+        :LoadListAdd curlist
+<
+*:ListLists*
+
+    List all currently saved lists.
+
+    Example: >
+
+        :ListLists
+        curlist
+        another_list
+<
+*:RemoveList*
+
+    Remove given lists. With a bang all saved lists are removed.
+
+NOTE: In most cases it is possible to only type a few characters to
+disembiguate commands. Assuming you don't already have custom commands with
+clashing names, you can shorten the commands above to:
+
+    |:Keep| ....................................... :K
+    |:Reject| ..................................... :Rej
+    |:Restore| .................................... :Res
+    |:Doline| ..................................... :Dol
+    |:Dofile| ..................................... :Dof
+    |:SaveList| ................................... :SaveList
+    |:SaveListAdd| ................................ :SaveListA
+    |:LoadList| ................................... :LoadList
+    |:LoadListAdd| ................................ :LoadListA
+    |:ListLists| .................................. :ListL
+    |:RemoveList| ................................. :Rem
+
+==============================================================================
+ 5. NAMED LISTS                                                *qf-named-lists*
+
+While vim remembers the last ten quickfix/location lists and provides commands
+to switch between them (|:colder|, |:lolder|, |:cnewer|, |:lnewer|), this doesn't
+necessarily suffice and doesn't include changes made with |:Reject| et al.
+
+So vim-qf provides commands to save quickfix and location lists for later reuse
+and concatenation. This can be handy to compose a long list of matches to act
+on with |:cdo|, |:ldo| and family.
+
+These named lists share the same space, so a location list can be converted to
+a quickfix list: >
+
+    :SaveList current_loclist
+    :cwindow
+    :LoadList current_loclist
+<
+Concatenating multiple location lists to use as a quickfix list: >
+
+    :SaveListAdd current_loclist
+
+< in each location list you want to use, then >
+
+    :cwindow
+    :LoadList current_loclist
+<
+Composing a list of files to attach a license to: >
+
+    :grep _GNU_SOURCE
+    :Reject false_positives
+    :SaveListAdd floss_files
+    :grep POSIX_ME_HARDER
+    :Reject false_positives
+    :SaveListAdd floss_files
+
+< and so on... >
+
+    :cwindow
+    :LoadList floss_files
+    :cdo 0r /path/to/license
+<
+==============================================================================
+ 6. ACKNOWLEGEMENTS                                       *qf-acknowledgements*
+
+The "Ack.vim-inspired mappings" are adapted from Ack.vim:
+
+    - https://github.com/mileszs/ack.vim
+
+|:Doline| and |:Dofile| are inspired by these online resources:
+
+    - http://vimcasts.org/episodes/project-wide-find-and-replace/
+    - https://github.com/nelstrom/vim-qargs
+    - https://github.com/henrik/vim-qargs
+    - http://stackoverflow.com/a/4793316/546861
+    - http://stackoverflow.com/a/5686810/546861
+
+|:Keep| and |:Reject| are adapted from the answers in this thread:
+
+    - http://stackoverflow.com/q/15406138/546861
+
+All the templates used to turn this multifarious collection of snippets into
+a proper plugin come from Barry Arthur's Area 41 plugin:
+
+    - https://github.com/dahu/Area-41
+
+The named lists feature is the brainchild of Nelo-T. Wallus:
+
+    - https://ntnn.de/
+
+The list history commands were implemented by Jon Parise.
+
+==============================================================================
+ 7. TODO                                                              *qf-todo*
+
+    - Export more options?
+    - Add a gifcast to the README?
+    - Add titles to saved lists, e.g. to display in :ListLists?
+
+==============================================================================
+ 8. DONE                                                              *qf-done*
+
+    - Use <Plug> mappings.
+    - Add proper attribution for a few features.
+    - Write a proper help file.
+    - Ask #vim's opinion.
+
+==============================================================================
+ 9. RELEASES                                                      *qf-releases*
+
+    0.2.0: Le Samouraï ....................................... 23 Sep 2017
+
+        Many new features:
+
+        - Open the qf/loc window at the bottom or the top of the screen.
+        - Automatic opening of the qf/loc window can be disabled.
+        - Automatic resizing of the qf/loc window can be enabled.
+        - Max size of the qf/loc window can be defined.
+        - Automatic quitting can be disabled.
+        - :Keep and :Reject can work on bufname or text or both or
+          neither, in which case they work on the word under the cursor.
+        - Views are saved for better comfort while toggling windows.
+        - "Stay" variants of the toggle mappings.
+
+        Potentially breaking changes:
+
+        - <Plug> mappings have new more readable names. Efforts have been
+          made to maintain backward compatibility but new mappings will
+          follow the new naming scheme so it may be a good idea to change
+          your custom mappings now. Following is a table showing the
+          new names:
+
+          Old name          | New name
+          ------------------|----------------------
+          <Plug>QfCprevious | <Plug>qf_qf_previous
+          <Plug>QfCnext     | <Plug>qf_qf_next
+          <Plug>QfLprevious | <Plug>qf_loc_previous
+          <Plug>QfLnext     | <Plug>qf_loc_next
+          <Plug>QfSwitch    | <Plug>qf_qf_switch
+          <Plug>QfCtoggle   | <Plug>qf_qf_toggle
+          <Plug>QfLtoggle   | <Plug>qf_loc_toggle
+
+    0.1.0: Le doulos ......................................... 23 Oct 2016
+
+        - New "preview" mapping:
+
+          Mapping | Description
+          --------|-------------------------------
+          p       | Open entry in a preview window
+
+    0.0.9: Requiem pour un con ............................... 11 Sep 2016
+
+        - Added two "global" commands:
+
+          Command    | Description
+          -----------|---------------------------
+          :QfCToggle | Toggle the quickfix window
+          :QfLToggle | Toggle the location window
+
+    0.0.8: Le Faucon maltais ................................. 21 Aug 2016
+
+        - Added list management feature.
+        - Fixed <Plug>QFCnext and friends.
+        - Updated the documentation.
+
+    0.0.7: Ne nous fâchons pas ................................ 5 Apr 2016
+
+        - New commands:
+
+          Command | Description
+          --------|-------------------------------
+          :Keep   | Keep entries matching the given argument
+          :Reject | Reject entries matching the given argument
+
+        - New mappings:
+
+          Mapping | Description
+          --------|-------------------------------
+          {       | Jump to previous file grouping
+          }       | jump to next file grouping
+
+        - Deprecation warning: :Filter is on its way out.
+
+    0.0.5: (No funny name this time) ......................... 13 Sep 2015
+
+        :Doline and :Dofile aliased to built-in :cdo, :ldo, :cfdo and
+        :lfdo when applicable.
+
+    v0.0.4: Mélodie en sous-sol ............................... 2 Aug 2015
+
+        Massive refactoring of the filter/restore mechanism.
+
+    0.0.3: Cargo de nuit ...................................... 4 Jul 2015
+
+        - Better statusline handling
+        - Sample configuration in the documentation
+
+    v0.0.2: Il fait chaud et il est tard. ..................... 2 Jul 2015
+
+        - Added proper documentation
+        - Fixed a few naming issues
+        - Fixed empty zip
+
+ vim:tw=78:ts=8:ft=help:norl:
