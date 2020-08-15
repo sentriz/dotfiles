@@ -4,9 +4,18 @@ filetype plugin on
 
 " plugin settings
 let g:netrw_list_hide = '.*\.pyc$,^__pycache__$'
+
+let g:SpiffyFoldtext_format = "%c{ } ... }%f{ }"
+
 let g:tmux_navigator_no_mappings = 1
 let g:tmux_navigator_save_on_switch = 1
-let g:SpiffyFoldtext_format = "%c{ } ... }%f{ }"
+
+let g:diagnostic_enable_virtual_text = 0
+let g:diagnostic_insert_delay = 1
+let g:diagnostic_show_sign = 1
+
+let g:completion_enable_auto_paren = 1
+let g:completion_enable_auto_hover = 0
 
 " plugins meta
 packadd! committia.vim
@@ -17,6 +26,8 @@ packadd! vim-hug-neovim-rpc
 packadd! vim-qf
 packadd! vim-tmux-navigator
 packadd! nvim-lsp
+packadd! diagnostic-nvim " for customising lsp messages
+packadd! completion-nvim " for customising lsp completion
 
 " plugins look
 packadd! spiffy_foldtext

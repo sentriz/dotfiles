@@ -3,8 +3,6 @@ set autoread
 set autowriteall
 set backupdir=$TEMP,.
 set clipboard^=unnamed,unnamedplus
-set complete-=i
-set complete-=t
 set diffopt+=vertical
 set directory=$TEMP,.
 set foldmethod=syntax
@@ -26,8 +24,7 @@ set shell=bash
 set undodir=~/.cache/vimundo
 set undofile
 set virtualedit=block
-set updatetime=300
-set shortmess+=c
+set updatetime=150
 
 " oopsies
 command! Q quit
