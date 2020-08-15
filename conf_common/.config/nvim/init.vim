@@ -19,7 +19,6 @@ let g:completion_enable_auto_hover = 0
 
 " plugins meta
 packadd! committia.vim
-packadd! nvim-yarp
 packadd! SyntaxAttr.vim
 packadd! vim-highlightedyank
 packadd! vim-hug-neovim-rpc

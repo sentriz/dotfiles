@@ -31,9 +31,6 @@
 [submodule "conf_common/.local/share/nvim/site/pack/look/vim-vinegar"]
 	path = conf_common/.local/share/nvim/site/pack/look/vim-vinegar
 	url = https://github.com/tpope/vim-vinegar
-[submodule "conf_common/.local/share/nvim/site/pack/meta/nvim-yarp"]
-	path = conf_common/.local/share/nvim/site/pack/meta/nvim-yarp
-	url = https://github.com/roxma/nvim-yarp
 [submodule "conf_common/.local/share/nvim/site/pack/meta/vim-hug-neovim-rpc"]
 	path = conf_common/.local/share/nvim/site/pack/meta/vim-hug-neovim-rpc
 	url = https://github.com/roxma/vim-hug-neovim-rpc
