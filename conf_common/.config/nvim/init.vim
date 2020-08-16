@@ -41,8 +41,8 @@ packadd! vim-repeat
 packadd! vim-surround
 
 " source the rest of the rc
-exec 'source' . expand("~/.config/nvim/rc/appearance.vim")
-exec 'source' . expand("~/.config/nvim/rc/auto_commands.vim")
-exec 'source' . expand("~/.config/nvim/rc/improvements.vim")
-exec 'source' . expand("~/.config/nvim/rc/mappings.vim")
-exec 'source' . expand("~/.config/nvim/rc/lang_server.vim")
+exec 'source' . expand("~/.config/nvim/conf_appearance.vim")
+exec 'source' . expand("~/.config/nvim/conf_auto_commands.vim")
+exec 'source' . expand("~/.config/nvim/conf_improvements.vim")
+exec 'source' . expand("~/.config/nvim/conf_mappings.vim")
+exec 'source' . expand("~/.config/nvim/conf_lang_server.vim")
