@@ -27,6 +27,7 @@ packadd! vim-tmux-navigator
 packadd! nvim-lsp
 packadd! diagnostic-nvim " for customising lsp messages
 packadd! completion-nvim " for customising lsp completion
+packadd! vim-polyglot
 
 " plugins look
 packadd! spiffy_foldtext

@@ -65,6 +65,8 @@ highlight statusModifided ctermfg=217 ctermbg=237
 highlight statusReadOnly ctermfg=217 ctermbg=237
 
 highlight link typescriptVariable Statement
+highlight link typescriptExport Statement
+highlight link jsTagName Function
 highlight typescriptES6SetMethod ctermbg=none ctermfg=none
 highlight typescriptObjectStaticMethod ctermbg=none ctermfg=none
 highlight typescriptJSONStaticMethod ctermbg=none ctermfg=none
