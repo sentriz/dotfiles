@@ -23,7 +23,13 @@ configs.custom_go = {
         cmd = {"gopls"},
         filetypes = {"go"},
         root_dir = util.root_pattern("go.mod", ".git"),
-        settings = {}
+        settings = {
+            gopls = {
+                usePlaceholders = true,
+                completeUnimported = true,
+                staticcheck = true
+            }
+        }
     }
 }
 
