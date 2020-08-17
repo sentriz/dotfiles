@@ -63,6 +63,35 @@ configs.custom_typescript = {
     }
 }
 
+-- -- vue -- --
+configs.custom_vue = {
+    default_config = {
+        cmd = {"vls"},
+        filetypes = {"vue"},
+        root_dir = util.root_pattern("package.json", ".git"),
+        init_options = {
+            config = {
+                vetur = {
+                    format = {
+                        defaultFormatter = {
+                            html = "prettyhtml",
+                            pug = "prettier",
+                            css = "prettier",
+                            postcss = "prettier",
+                            scss = "prettier",
+                            less = "prettier",
+                            stylus = "stylus-supremacy",
+                            js = "prettier",
+                            ts = "prettier",
+                            sass = "sass-formatter"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 -- -- bash -- --
 configs.custom_bash = {
     default_config = {
@@ -98,6 +127,7 @@ local setup_args = {
 lsp.custom_go.setup(setup_args)
 lsp.custom_python.setup(setup_args)
 lsp.custom_typescript.setup(setup_args)
+lsp.custom_vue.setup(setup_args)
 lsp.custom_bash.setup(setup_args)
 lsp.custom_clang.setup(setup_args)
 EOF
@@ -118,9 +148,9 @@ set omnifunc=v:lua.vim.lsp.omnifunc
 set completeopt=menuone,noinsert,noselect
 set shortmess+=c
 
-autocmd BufWritePre *.go          silent! lua organise_imports()
-autocmd BufWritePre *.go,*.py,*.c silent! lua vim.lsp.buf.formatting_sync(nil, 1000)
-autocmd CursorHold  *             silent! lua vim.lsp.util.show_line_diagnostics()
+autocmd BufWritePre *.go                silent! lua organise_imports()
+autocmd BufWritePre *.go,*.py,*.c,*.vue silent! lua vim.lsp.buf.formatting_sync(nil, 1000)
+autocmd CursorHold  *                   silent! lua vim.lsp.util.show_line_diagnostics()
 
 " the bar on the left symbols
 call sign_define('LspDiagnosticsErrorSign',       {'text': 'ee', 'texthl': 'LspDiagnosticsError'})
