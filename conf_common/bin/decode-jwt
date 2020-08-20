@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+cut -d '.' -f1,2 | sed 's/\./\n/g' | base64 --decode | jq
