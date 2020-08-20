@@ -137,7 +137,6 @@ nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<cr>
 nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<cr>
 nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<cr>
 nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<cr>
-nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<cr>
 nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<cr>
 nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<cr>
 nnoremap <silent> gn    <cmd>lua vim.lsp.buf.rename()<cr>
