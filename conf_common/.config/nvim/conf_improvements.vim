@@ -24,7 +24,6 @@ set shell=bash
 set undodir=~/.cache/vimundo
 set undofile
 set virtualedit=block
-set updatetime=150
 
 " oopsies
 command! Q quit
