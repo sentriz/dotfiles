@@ -1,6 +1,7 @@
-" apply colorscheme
+" app colourscheme and no background please
 syntax on
-colorscheme custom
+colorscheme monotone
+highlight Normal guibg=none ctermbg=none
 
 " basics
 set listchars=tab:>\ ,trail:.
@@ -9,6 +10,8 @@ set sidescroll=1
 set noshowmode
 set laststatus=2
 set signcolumn=number
+set termguicolors
+set fcs=eob:\ 
 
 " statusline
 set statusline=

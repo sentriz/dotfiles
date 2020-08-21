@@ -18,8 +18,11 @@ let g:completion_enable_auto_popup = 1
 let g:completion_enable_auto_paren = 1
 let g:completion_enable_auto_hover = 0
 
+let g:monotone_color = [10, 3, 100]
+let g:monotone_secondary_hue_offset = 0
 
 " plugins look
+packadd! Lokaltog/vim-monotone
 packadd! atimholt/spiffy_foldtext
 packadd! tpope/vim-vinegar
 
