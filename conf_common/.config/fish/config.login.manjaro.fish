@@ -1,6 +1,6 @@
 switch (tty)
     case '/dev/tty1'
-        exec start-sway
+        exec sway >~/.cache/sway_log 2>&1
     case '/dev/tty2'
         exec htop
 end

@@ -1,10 +1,11 @@
+# make sure we include stuff from ~/.config/environment.d/envvars.conf
+systemctl --user show-environment \
+    | sed -E 's/^([^=]+)=(.*)/set -gx \1 "\2"/g' \
+    | source
+
 if string match -q -r '^\/dev\/tty' (tty)
     set -gx TERM xterm-256color
 end
-
-set -gx XDG_CONFIG_HOME "$HOME/.config"
-set -gx XDG_DATA_HOME "$HOME/.local/share"
-set -gx XDG_CACHE_HOME "$HOME/.cache"
 
 set -gx EDITOR 'nvim'
 set -gx RIPGREP_CONFIG_PATH "$HOME/.config/ripgreprc"
