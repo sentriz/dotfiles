@@ -12,13 +12,13 @@ else
 end
 
 __source_if_exists \
-    ~/.config/fish/config_parts/base.fish \
-    ~/.config/fish/config_parts/base.$HOSTNAME.fish
+    ~/.config/fish/config.base.fish \
+    ~/.config/fish/config.base.$HOSTNAME.fish
 
 status --is-login; and __source_if_exists \
-    ~/.config/fish/config_parts/login.fish \
-    ~/.config/fish/config_parts/login.$HOSTNAME.fish
+    ~/.config/fish/config.login.fish \
+    ~/.config/fish/config.login.$HOSTNAME.fish
 
 status --is-interactive; and __source_if_exists \
-    ~/.config/fish/config_parts/interactive.fish \
-    ~/.config/fish/config_parts/interactive.$HOSTNAME.fish
+    ~/.config/fish/config.interactive.fish \
+    ~/.config/fish/config.interactive.$HOSTNAME.fish
