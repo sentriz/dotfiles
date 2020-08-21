@@ -8,6 +8,6 @@ else
     exit
 end
 
-for expression in (eval "$tmux_cmd" show-env | sed -n 's/^\(SSH_[^=]*\)=\(.*\)/set -x \1 "\2"/p')
-    eval "$expression"
-end
+"$tmux_cmd" show-env \
+    | sed -nE 's/^(SSH_[^=]+)=(.*)/set -gx \1 "\2"/p' \
+    | source
