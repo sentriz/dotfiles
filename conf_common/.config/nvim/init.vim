@@ -18,29 +18,29 @@ let g:completion_enable_auto_popup = 1
 let g:completion_enable_auto_paren = 1
 let g:completion_enable_auto_hover = 0
 
-" plugins meta
-packadd! committia.vim
-packadd! SyntaxAttr.vim
-packadd! vim-highlightedyank
-packadd! vim-hug-neovim-rpc
-packadd! vim-qf
-packadd! vim-tmux-navigator
-packadd! nvim-lsp
-packadd! diagnostic-nvim " for customising lsp messages
-packadd! completion-nvim " for customising lsp completion
-packadd! vim-polyglot
 
 " plugins look
-packadd! spiffy_foldtext
-packadd! vim-vinegar
+packadd! atimholt/spiffy_foldtext
+packadd! tpope/vim-vinegar
 
-" plugins text
-packadd! targets.vim
-packadd! vim-abolish
-packadd! vim-commentary
-packadd! vim-exchange
-packadd! vim-repeat
-packadd! vim-surround
+packadd! christoomey/vim-tmux-navigator
+packadd! inkarkat/SyntaxAttr.vim
+packadd! machakann/vim-highlightedyank
+packadd! neovim/nvim-lsp
+packadd! nvim-lua/completion-nvim
+packadd! nvim-lua/diagnostic-nvim
+packadd! rhysd/committia.vim
+packadd! romainl/vim-qf
+packadd! roxma/vim-hug-neovim-rpc
+packadd! sheerun/vim-polyglot
+
+" plugins look
+packadd! tommcdo/vim-exchange
+packadd! tpope/vim-abolish
+packadd! tpope/vim-commentary
+packadd! tpope/vim-repeat
+packadd! tpope/vim-surround
+packadd! wellle/targets.vim
 
 " source the rest of the rc
 exec 'source' . expand("~/.config/nvim/conf_appearance.vim")
