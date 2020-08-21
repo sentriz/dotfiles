@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+set -e
+
+if [[ $# -ne 1 ]]; then
+    echo "please provide a <repo>" >&2
+    exit 1
+fi
+
+name="$1"
+path=(conf_common/.local/share/nvim/site/pack/*/opt/$1)
+
+if [[ ! -d "$path" ]]; then
+    echo "plugin $name not found" >&2
+    exit 1
+fi
+
+git submodule deinit -f "$path"
+git rm -f "$path"
+
+echo "##############"
+echo "remove config:"
+echo "packadd! $name"

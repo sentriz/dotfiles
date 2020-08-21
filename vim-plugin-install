@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+set -e
+
+if [[ $# -ne 2 ]]; then
+    echo "please provide a <category> <repo>" >&2
+    exit 1
+fi
+
+category="$1"
+repo="$2"
+name="$(grep -Po '[^\/]+\/[^\/]+$' <<< "$repo")"
+path="conf_common/.local/share/nvim/site/pack/$category/opt/$name"
+
+git submodule add -f "$repo" "$path"
+
+echo "##############"
+echo "packadd! $name"
