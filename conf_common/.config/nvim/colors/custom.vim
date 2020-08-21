@@ -64,6 +64,9 @@ highlight DiffText ctermbg=178 ctermfg=238 cterm=none
 highlight statusModifided ctermfg=217 ctermbg=237
 highlight statusReadOnly ctermfg=217 ctermbg=237
 
+" lsp hover linebreaks
+highlight link mkdLineBreak Normal
+
 highlight link typescriptVariable Statement
 highlight link typescriptExport Statement
 highlight link jsTagName Function
