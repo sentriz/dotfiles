@@ -2,15 +2,22 @@ if string match -q -r '^\/dev\/tty' (tty)
     set -gx TERM xterm-256color
 end
 
-set -gx RIPGREP_CONFIG_PATH "$HOME/.config/ripgreprc"
+set -gx XDG_CONFIG_HOME "$HOME/.config"
+set -gx XDG_DATA_HOME "$HOME/.local/share"
+set -gx XDG_CACHE_HOME "$HOME/.cache"
+
 set -gx EDITOR 'nvim'
-set -gx GOPATH "$HOME/go"
+set -gx RIPGREP_CONFIG_PATH "$HOME/.config/ripgreprc"
+set -gx GOPATH "$XDG_DATA_HOME/go"
 set -gx GOPRIVATE 'github.com/CPSSD/*'
 set -gx GOPROXY 'https://proxy.golang.org,direct'
 set -gx FNM_MULTISHELL_PATH "$HOME/.fnm/current"
-set -gx FNM_DIR "$HOME/.fnm"
+set -gx FNM_DIR "$XDG_CACHE_HOME/fnm"
 set -gx FNM_NODE_DIST_MIRROR 'https://nodejs.org/dist'
 set -gx FNM_LOGLEVEL 'info'
+set -gx NPM_CONFIG_USERCONFIG "$XDG_CONFIG_HOME/npm/config"
+set -gx NPM_CONFIG_CACHE "$XDG_CACHE_HOME/npm"
+set -gx NPM_CONFIG_TMP "$XDG_RUNTIME_DIR/npm"
 set -gx COMPOSE_DOCKER_CLI_BUILD '1'
 set -gx DOCKER_BUILDKIT '1'
 
@@ -24,12 +31,10 @@ set -gx DOTS_MOUNTS_DIR "$HOME/mounts"
 set -gx DOTS_COPT_DIR '/opt/containers'
 set -gx DOTS_PROJECTS_DIR "$HOME/projects"
 
-
 set -l possible_paths \
     $GOPATH/bin \
     $HOME/.local/bin \
-    $HOME/node_modules/.bin \
-    $HOME/.fnm/current/bin \
+    $FNM_DIR/current/bin \
     $HOME/.volta/bin \
     $HOME/.yarn/bin \
     /usr/local/go/bin \

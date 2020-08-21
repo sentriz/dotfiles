@@ -8,7 +8,6 @@ set -gx GTK_THEME Arc:dark
 
 set -gx XDG_SESSION_TYPE wayland
 set -gx XDG_CURRENT_DESKTOP sway
-set -gx XDG_CONFIG_HOME "$HOME/.config"
 set -gx XDG_DATA_DIRS (string join ':' \
     '/usr/local/share' \
     '/usr/share' \
