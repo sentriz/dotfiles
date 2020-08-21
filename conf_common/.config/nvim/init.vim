@@ -14,6 +14,7 @@ let g:diagnostic_enable_virtual_text = 0
 let g:diagnostic_insert_delay = 1
 let g:diagnostic_show_sign = 1
 
+let g:completion_enable_auto_popup = 1
 let g:completion_enable_auto_paren = 1
 let g:completion_enable_auto_hover = 0
 

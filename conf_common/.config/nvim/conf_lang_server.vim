@@ -136,6 +136,7 @@ EOF
 nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<cr>
 nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<cr>
 nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<cr>
+nnoremap <silent> J     <cmd>lua vim.lsp.util.show_line_diagnostics()<cr>
 nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<cr>
 nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<cr>
 nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<cr>
@@ -149,7 +150,6 @@ set shortmess+=c
 
 autocmd BufWritePre *.go                silent! lua organise_imports()
 autocmd BufWritePre *.go,*.py,*.c,*.vue silent! lua vim.lsp.buf.formatting_sync(nil, 1000)
-autocmd CursorHold  *                   silent! lua vim.lsp.util.show_line_diagnostics()
 
 " the bar on the left symbols
 call sign_define('LspDiagnosticsErrorSign',       {'text': 'ee', 'texthl': 'LspDiagnosticsError'})
