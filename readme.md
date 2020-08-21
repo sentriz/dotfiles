@@ -2,11 +2,10 @@
 ```shell
 $ install git stow
 $ git clone https://github.com/sentriz/dotfiles.git ~/dotfiles
-$ ~/dotfiles/install_common
-$ # if on an gui system
-$ ~/dotfiles/install_extra
-$ # if on the server
-$ ~/dotfiles/install_server
+$ cd ~/dotfiles
+$ ./install-common  # always
+$ ./install-extra   # if gui system
+$ ./install-server  # if server
 ```
 
 **meta stuff**
