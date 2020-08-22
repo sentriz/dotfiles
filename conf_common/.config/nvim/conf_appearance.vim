@@ -17,6 +17,6 @@ set fcs=eob:\
 set statusline=
 set statusline+=%#statusReadOnly#%{&readonly?'read\ only\ ':''}%*   " read only flag
 set statusline+=%{pathshorten(@%)}
-set statusline+=%#statusModifided#%{&modified?'\ \ modified':''}%* " modified flag
-set statusline+=%=                                                 " /
-set statusline+=\ column\ %c                                       " column number
+set statusline+=%#statusModifided#%{&modified?'\ \ modified':''}%*  " modified flag
+set statusline+=%=                                                  " /
+set statusline+=\ column\ %c                                        " column number
