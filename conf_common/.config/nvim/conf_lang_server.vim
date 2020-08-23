@@ -104,7 +104,7 @@ configs.custom_bash = {
 -- -- clang -- --
 configs.custom_clang = {
     default_config = {
-        cmd = {"clangd", "--background-index", "--pch-storage=memory"},
+        cmd = {"clangd", "--background-index", "--pch-storage=memory", "--clang-tidy"},
         filetypes = {"c", "cpp", "objc", "objcpp"},
         root_dir = util.root_pattern("compile_commands.json", "compile_flags.txt", ".git"),
         capabilities = {
