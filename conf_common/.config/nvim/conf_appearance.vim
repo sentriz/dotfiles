@@ -10,6 +10,12 @@ highlight clear ParenMatch
 highlight clear MatchParen
 highlight MatchParen gui=bold,reverse guifg=#413e3d guibg=#f9d39e
 
+" diffing
+highlight link diffAdded DiffAdd
+highlight link diffRemoved DiffDelete
+highlight DiffAdd guifg=#4e9a06
+highlight DiffDelete guifg=#cc0000
+
 " basics
 set listchars=tab:>\ ,trail:.
 set fillchars=vert:\ 
