@@ -44,3 +44,4 @@ packadd! tpope/vim-commentary
 packadd! tpope/vim-repeat
 packadd! tpope/vim-surround
 packadd! wellle/targets.vim
+packadd! sentriz/vim-print-debug
