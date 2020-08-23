@@ -1,7 +1,14 @@
 " app colourscheme and no background please
 syntax on
 colorscheme monotone
-highlight Normal guibg=none ctermbg=none
+
+" no background
+highlight Normal guibg=none
+
+" paren/block matching
+highlight clear ParenMatch
+highlight clear MatchParen
+highlight MatchParen gui=bold,reverse guifg=#413e3d guibg=#f9d39e
 
 " basics
 set listchars=tab:>\ ,trail:.
