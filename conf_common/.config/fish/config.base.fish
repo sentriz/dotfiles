@@ -1,7 +1,5 @@
-# make sure we include stuff from ~/.config/environment.d/envvars.conf
-systemctl --user show-environment \
-    | sed -E 's/^([^=]+)=(.*)/set -gx \1 "\2"/g' \
-    | source
+# include systemd user env vars
+sed -nE 's/^([^=#]+)=(.*)/set -gx \1 "\2"/gp' <~/.config/environment.d/envvars.conf | source
 
 if string match -q -r '^\/dev\/tty' (tty)
     set -gx TERM xterm-256color
