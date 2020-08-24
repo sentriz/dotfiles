@@ -2,8 +2,9 @@
 syntax on
 colorscheme monotone
 
-" no background
+highlight Directory gui=bold
 highlight Normal guibg=none
+highlight mkdLineBreak guifg=none guibg=none
 
 " paren/block matching
 highlight clear ParenMatch
