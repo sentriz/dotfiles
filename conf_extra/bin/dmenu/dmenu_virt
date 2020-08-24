@@ -11,10 +11,15 @@ if ! type -p virt-viewer >/dev/null; then
 fi
 
 connect_uri="$(secret virt_connect_uri)"
-machines="$(virsh --connect "$connect_uri" list --name)"
+
+function virsh()       { command virsh --connect "$connect_uri" "$@"; }
+function virt-viewer() { command virt-viewer --connect "$connect_uri" "$@"; }
+
+machines="$(virsh list --name)"
 test -z "$machines" && exit 1
 
 machine="$(printf "%s\n" "$machines" | dmenu_custom -p "virtual machine")"
 test -z "$machine" && exit 1
 
-virt-viewer --connect "$connect_uri" "$machine"
+virsh resume "$machine"
+virt-viewer "$machine"
