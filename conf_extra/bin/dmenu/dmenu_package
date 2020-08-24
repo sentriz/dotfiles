@@ -6,8 +6,6 @@ if ! type -p j4-dmenu-desktop >/dev/null; then
     exit 1
 fi
 
-SHELL="$(which bash)"
-
 j4-dmenu-desktop \
     --dmenu "dmenu_custom --prompt 'package'" \
     --use-xdg-de \
