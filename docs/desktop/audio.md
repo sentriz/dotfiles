@@ -15,5 +15,5 @@
 
 ### commands
 
-    $ systemctl --user restart bluetooth.service 
+    $ systemctl restart bluetooth.service
     $ systemctl enable --now bluetooth.service
