@@ -299,6 +299,7 @@ assign [class="Spotify"]                          $work_4
 assign [class="Deadbeef"]                         $work_4
 assign [class="Surf" instance="^plex_surf$"]      $work_4
 assign [class="VirtualBox"]                       $work_5
+assign [app_id="^virt-viewer$"]                   $work_5
 assign [class="Franz"]                            $work_6
 assign [class="Mnemosyne"]                        $work_7
 assign [class="Anki"]                             $work_7
@@ -384,6 +385,7 @@ bindsym $super+F4     exec dmenu_pulse     && $up_block_1
 bindsym $super+F5     exec dmenu_bluetooth && $up_block_2
 bindsym $super+F6     exec dmenu_hass
 bindsym $super+F7     exec dmenu_emoji
+bindsym $super+F8     exec dmenu_virt
 
 ## scratchpad
 exec "while :; do $emulator --name scratchpad --exec 'tmux new -A -s scratchpad'; sleep 0.5; done"
