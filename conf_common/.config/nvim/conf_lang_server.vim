@@ -148,8 +148,8 @@ set omnifunc=v:lua.vim.lsp.omnifunc
 set completeopt=menuone,noinsert,noselect
 set shortmess+=c
 
-autocmd BufWritePre *.go                silent! lua organise_imports()
-autocmd BufWritePre *.go,*.py,*.c,*.vue silent! lua vim.lsp.buf.formatting_sync(nil, 1000)
+autocmd BufWritePre *.go                          silent! lua organise_imports()
+autocmd BufWritePre *.go,*.py,*.c,*.vue,*.ts,*.js silent! lua vim.lsp.buf.formatting_sync(nil, 1000)
 
 " the bar on the left symbols
 call sign_define('LspDiagnosticsErrorSign',       {'text': 'ee', 'texthl': 'LspDiagnosticsError'})
