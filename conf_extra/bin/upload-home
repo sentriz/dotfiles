@@ -23,7 +23,7 @@ set -l credentials (printf \
 set -l image_id (curl -s \
     "$remote_host/upload" \
     --user "$credentials" \
-    --form "img=@$image_path"
+    --form "image=@$image_path"
 )
 
 echo "$remote_host/$image_id"
