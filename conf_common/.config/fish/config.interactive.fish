@@ -3,8 +3,6 @@ alias rm    'rm -I --verbose --preserve-root'
 alias wget  'wget --continue --content-disposition'
 alias cp    'cp --archive --interactive --verbose'
 alias mkdir 'mkdir --parents --verbose'
-alias vi    'nvim'
-alias vim   'nvim'
 alias qmv   'qmv --format destination-only'
 
 # exit
@@ -77,3 +75,13 @@ end
 
 alias l  "__list $argv"
 alias ll "__list -A $argv"
+
+function __super_vim
+    test \( (count $argv) -eq 1 \) -a \( ! -w $argv[1] \);
+        and sudo -E nvim $argv
+        or command nvim $argv
+end
+
+alias vi   __super_vim
+alias vim  __super_vim
+alias nvim __super_vim
