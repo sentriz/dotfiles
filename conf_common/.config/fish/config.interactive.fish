@@ -62,13 +62,18 @@ function p --argument project
     cd "$DOTS_PROJECTS_DIR/$project"
 end
 
-complete \
-    -x \
-    --command p \
-    --arguments (find \
-         "$DOTS_PROJECTS_DIR" \
-         -maxdepth 1 \
-         -mindepth 1 \
-         -type d \
-         -printf '%P '
-    )
+complete -x --command p --arguments ( \
+    find "$DOTS_PROJECTS_DIR" \
+        -maxdepth 1 -mindepth 1 \
+        -type d \
+        -printf '%P ' \
+)
+
+# fancy listing with relative time
+function __list
+    command ls -vFqrloth --group-directories-first --color=yes --time-style=long-iso $argv \
+        | sed "s/"(date +%Y-%m-%d)"/\x1b[32m     today\x1b[m/; s/"(date +'%Y-%m-%d' -d yesterday)"/\x1b[33m yesterday\x1b[m/"
+end
+
+alias l  "__list $argv"
+alias ll "__list -A $argv"
