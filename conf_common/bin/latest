@@ -1,0 +1,9 @@
+#!/usr/bin/env fish
+
+if test \( (count $argv) -ne 1 \) -o \( ! -d "$argv[1]" \)
+    echo 'please provide a single directory' >&2
+    exit 1
+end
+
+cd "$argv[1]"
+realpath (ls -t | head -n 1)
