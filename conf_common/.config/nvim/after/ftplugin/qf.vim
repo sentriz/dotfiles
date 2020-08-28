@@ -1,2 +1,1 @@
-setlocal statusline=quickfix
-setlocal statusline+=\ %{w:quickfix_title}
+setlocal statusline=qf\ \/\ ll

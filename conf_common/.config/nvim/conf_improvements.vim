@@ -28,6 +28,7 @@ set shell=bash
 set undodir=~/.cache/vimundo
 set undofile
 set virtualedit=block
+set grepprg=rg\ --vimgrep\ --hidden
 
 " oopsies
 command! Q quit

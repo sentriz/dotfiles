@@ -16,6 +16,9 @@ let g:completion_enable_auto_hover = 0
 let g:monotone_color = [10, 3, 100]
 let g:monotone_secondary_hue_offset = 0
 
+let g:qf_auto_open_quickfix = 1
+let g:qf_auto_open_loclist = 1
+
 " category "meta"
 " ~/.local/share/nvim/site/pack/meta/opt/
 packadd! Lokaltog/vim-monotone

@@ -4,6 +4,7 @@ colorscheme monotone
 
 highlight Directory gui=bold
 highlight Normal guibg=none
+highlight QuickFixLine guibg=#444444
 highlight mkdLineBreak guifg=none guibg=none
 
 " paren/block matching

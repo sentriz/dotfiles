@@ -41,16 +41,12 @@ nnoremap <left> :vertical resize +2<cr>
 nnoremap <right> :vertical resize -2<cr>
 
 " back and forth
-nnoremap [q :cprevious<cr>
-nnoremap ]q :cnext<cr>
-nnoremap [k :cprevious<cr>
-nnoremap ]k :cnext<cr>
+nnoremap [p :cprevious<cr>
+nnoremap ]p :cnext<cr>
 nnoremap [l :lprevious<cr>
 nnoremap ]l :lnext<cr>
-nnoremap [b :bprevious<cr>
-nnoremap ]b :bnext<cr>
-nnoremap [p :bprevious<cr>
-nnoremap ]p :bnext<cr>
+nnoremap [o :bprevious<cr>
+nnoremap ]o :bnext<cr>
 nnoremap [t :tabprevious<cr>
 nnoremap ]t :tabnext<cr>
 
