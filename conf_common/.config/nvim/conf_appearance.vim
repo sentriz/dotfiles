@@ -6,6 +6,7 @@ highlight Directory gui=bold
 highlight Normal guibg=none
 highlight QuickFixLine guibg=#444444
 highlight mkdLineBreak guifg=none guibg=none
+highlight yamlKey gui=bold
 
 " paren/block matching
 highlight clear ParenMatch
