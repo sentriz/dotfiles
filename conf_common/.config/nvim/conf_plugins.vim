@@ -30,7 +30,6 @@ packadd! nvim-lua/completion-nvim
 packadd! nvim-lua/diagnostic-nvim
 packadd! rhysd/committia.vim
 packadd! romainl/vim-qf
-packadd! roxma/vim-hug-neovim-rpc
 packadd! sheerun/vim-polyglot
 
 " category "look"
