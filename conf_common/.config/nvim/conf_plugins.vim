@@ -39,10 +39,10 @@ packadd! tpope/vim-vinegar
 
 " category "text"
 " ~/.local/share/nvim/site/pack/text/opt/
+packadd! sentriz/vim-print-debug
 packadd! tommcdo/vim-exchange
 packadd! tpope/vim-abolish
 packadd! tpope/vim-commentary
 packadd! tpope/vim-repeat
 packadd! tpope/vim-surround
 packadd! wellle/targets.vim
-packadd! sentriz/vim-print-debug
