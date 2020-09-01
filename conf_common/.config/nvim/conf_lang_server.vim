@@ -5,7 +5,11 @@ local util       = require "nvim_lsp/util"
 local diagnostic = require "diagnostic"
 local completion = require "completion"
 
-function organise_imports()
+function document_format()
+    vim.lsp.buf.formatting_sync(nil, 1000)
+end
+
+function document_organise()
     local params = vim.lsp.util.make_range_params()
     params.context = { source = { organizeImports = true } }
 
@@ -15,6 +19,11 @@ function organise_imports()
     if not result then return end
     edit = result[1].edit
     vim.lsp.util.apply_workspace_edit(edit)
+end
+
+function document_format_and_organise()
+    document_format()
+    document_organise()
 end
 
 -- -- go -- --
@@ -148,8 +157,8 @@ set omnifunc=v:lua.vim.lsp.omnifunc
 set completeopt=menuone,noinsert,noselect
 set shortmess+=c
 
-autocmd BufWritePre *.go                          silent! lua organise_imports()
-autocmd BufWritePre *.go,*.py,*.c,*.vue,*.ts,*.js silent! lua vim.lsp.buf.formatting_sync(nil, 1000)
+autocmd BufWritePre *.go,*.py                 silent! lua document_format_and_organise()
+autocmd BufWritePre *.c,*.vue,*.tsx,*.ts,*.js silent! lua document_format()
 
 " the bar on the left symbols
 call sign_define('LspDiagnosticsErrorSign',       {'text': 'ee', 'texthl': 'LspDiagnosticsError'})
