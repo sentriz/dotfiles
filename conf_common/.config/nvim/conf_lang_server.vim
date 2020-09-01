@@ -36,6 +36,7 @@ configs.custom_go = {
             gopls = {
                 usePlaceholders = true,
                 completeUnimported = true,
+                deepCompletion = true,
                 staticcheck = true
             }
         }
