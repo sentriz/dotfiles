@@ -21,7 +21,6 @@ let g:qf_auto_open_loclist = 1
 
 " category "meta"
 " ~/.local/share/nvim/site/pack/meta/opt/
-packadd! Lokaltog/vim-monotone
 packadd! christoomey/vim-tmux-navigator
 packadd! inkarkat/SyntaxAttr.vim
 packadd! machakann/vim-highlightedyank
