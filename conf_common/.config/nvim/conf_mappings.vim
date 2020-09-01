@@ -22,6 +22,7 @@ vnoremap yP yP
 " easy folding
 nnoremap        z za                            " toggle node
 nnoremap <expr> Z &foldlevel == 0 ? "zR" : "zM" " toggle buffer
+nnoremap z=     z=                              " fix spell bind
 
 " bubbling
 nnoremap <s-k> ddkP
