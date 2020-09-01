@@ -5,15 +5,17 @@ local util       = require "nvim_lsp/util"
 local diagnostic = require "diagnostic"
 local completion = require "completion"
 
-function document_format()
-    vim.lsp.buf.formatting_sync(nil, 1000)
+local sync_timeout = 1000
+
+function document_format_sync()
+    vim.lsp.buf.formatting_sync(nil, sync_timeout)
 end
 
-function document_organise()
+function document_organise_sync()
     local params = vim.lsp.util.make_range_params()
-    params.context = { source = { organizeImports = true } }
+    params.context = {source = {organizeImports = true}}
 
-    local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, 1000)
+    local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, sync_timeout)
     if not result then return end
     result = result[1].result
     if not result then return end
@@ -21,9 +23,9 @@ function document_organise()
     vim.lsp.util.apply_workspace_edit(edit)
 end
 
-function document_format_and_organise()
-    document_format()
-    document_organise()
+function document_format_and_organise_sync()
+    document_format_sync()
+    document_organise_sync()
 end
 
 -- -- go -- --
@@ -128,7 +130,7 @@ configs.custom_clang = {
 }
 
 local setup_args = {
-    on_attach = function(client, bufnr)
+    on_attach = function(client, buffer)
         diagnostic.on_attach(client, buffer)
         completion.on_attach(client, buffer)
     end
@@ -158,8 +160,8 @@ set omnifunc=v:lua.vim.lsp.omnifunc
 set completeopt=menuone,noinsert,noselect
 set shortmess+=c
 
-autocmd BufWritePre *.go,*.py                 silent! lua document_format_and_organise()
-autocmd BufWritePre *.c,*.vue,*.tsx,*.ts,*.js silent! lua document_format()
+autocmd BufWritePre *.go,*.py                 silent! lua document_format_and_organise_sync()
+autocmd BufWritePre *.c,*.vue,*.tsx,*.ts,*.js silent! lua document_format_sync()
 
 " the bar on the left symbols
 call sign_define('LspDiagnosticsErrorSign',       {'text': 'ee', 'texthl': 'LspDiagnosticsError'})
