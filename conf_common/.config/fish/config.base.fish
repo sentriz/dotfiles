@@ -7,6 +7,7 @@ end
 
 set -gx EDITOR 'nvim'
 set -gx RIPGREP_CONFIG_PATH "$HOME/.config/ripgreprc"
+set -gx FZF_DEFAULT_OPTS "--info hidden --color bw"
 set -gx GOPATH "$XDG_DATA_HOME/go"
 set -gx GOPRIVATE 'github.com/CPSSD/*'
 set -gx GOPROXY 'https://proxy.golang.org,direct'
