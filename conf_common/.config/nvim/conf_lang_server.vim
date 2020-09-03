@@ -129,19 +129,23 @@ configs.custom_clang = {
     }
 }
 
-local setup_args = {
-    on_attach = function(client, buffer)
-        diagnostic.on_attach(client, buffer)
-        completion.on_attach(client, buffer)
-    end
+local configs = {
+    lsp.custom_go,
+    lsp.custom_python,
+    lsp.custom_typescript,
+    lsp.custom_vue,
+    lsp.custom_bash,
+    lsp.custom_clang,
 }
 
-lsp.custom_go.setup(setup_args)
-lsp.custom_python.setup(setup_args)
-lsp.custom_typescript.setup(setup_args)
-lsp.custom_vue.setup(setup_args)
-lsp.custom_bash.setup(setup_args)
-lsp.custom_clang.setup(setup_args)
+for i, config in pairs(configs) do
+    config.setup({
+        on_attach = function(client, buffer)
+            diagnostic.on_attach(client, buffer)
+            completion.on_attach(client, buffer)
+        end
+    })
+end
 EOF
 
 " lsp mappings
