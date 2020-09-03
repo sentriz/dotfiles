@@ -6,6 +6,7 @@
 
 ( dmenu_custom -p 'emoji' | awk '{print $1}' | wl-copy --trim-newline ) <<EOF
 ​	Misc	Zero Width Space
+…	Misc	Ellipsis
 😀	Smileys & Emotion	grinning face
 😃	Smileys & Emotion	grinning face with big eyes
 😄	Smileys & Emotion	grinning face with smiling eyes
