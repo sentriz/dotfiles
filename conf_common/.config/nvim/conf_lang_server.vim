@@ -40,6 +40,15 @@ configs.custom_go = {
                 completeUnimported = true,
                 deepCompletion = true,
                 staticcheck = true
+            },
+            capabilities = {
+                textDocument = {
+                    completion = {
+                        completionItem = {
+                            snippetSupport = true
+                        }
+                    }
+                }
             }
         }
     }
