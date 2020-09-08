@@ -64,3 +64,6 @@
 [submodule "conf_common/.local/share/nvim/site/pack/text/opt/sentriz/vim-print-debug"]
 	path = conf_common/.local/share/nvim/site/pack/text/opt/sentriz/vim-print-debug
 	url = https://github.com/sentriz/vim-print-debug
+[submodule "conf_common/.local/share/nvim/site/pack/text/opt/mattn/emmet-vim"]
+	path = conf_common/.local/share/nvim/site/pack/text/opt/mattn/emmet-vim
+	url = https://github.com/mattn/emmet-vim
