@@ -33,7 +33,6 @@
 	                            git reset --hard "HEAD~$1" && \
 	                            git checkout "$2" && \
 	                            false
-	edit = !$EDITOR $(git ls-files --modified)
 [diff "zip"]
 	textconv = unzip -c -a
 [diff]

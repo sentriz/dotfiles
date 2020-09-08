@@ -48,7 +48,8 @@ set -l possible_paths \
     /usr/local/sbin \
     /usr/sbin \
     $HOME/bin \
-    $HOME/bin/*/
+    $HOME/bin/*/ \
+    /usr/share/git/git-jump/
 
 # not using `set -a` for backwards compatibility
 for path in $possible_paths
