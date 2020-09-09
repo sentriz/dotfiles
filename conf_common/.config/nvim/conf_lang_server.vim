@@ -1,3 +1,12 @@
+" bash          npm install -g bash-language-server
+" c             <package manager> install clang
+" dockerfile    npm install -g dockerfile-language-server-nodejs
+" go            go get -u golang.org/x/tools/gopls@latest
+" python        pip install --user pyls-black
+" python        pip install --user python-language-server[flake8]
+" js, ts        npm install -g typescript-language-server
+" vue           npm install -g vls
+
 lua <<EOF
 local lsp        = require "nvim_lsp"
 local configs    = require "nvim_lsp/configs"
@@ -27,6 +36,40 @@ function document_format_and_organise_sync()
     document_format_sync()
     document_organise_sync()
 end
+
+-- -- bash -- --
+configs.custom_bash = {
+    default_config = {
+        cmd = {"bash-language-server", "start"},
+        filetypes = {"sh"},
+        root_dir = util.path.dirname
+    }
+}
+
+-- -- clang -- --
+configs.custom_clang = {
+    default_config = {
+        cmd = {"clangd", "--background-index", "--pch-storage=memory", "--clang-tidy"},
+        filetypes = {"c", "cpp", "objc", "objcpp"},
+        root_dir = util.root_pattern("compile_commands.json", "compile_flags.txt", ".git"),
+        capabilities = {
+            textDocument = {
+                completion = {
+                    editsNearCursor = true
+                }
+            }
+        }
+    }
+}
+
+-- -- docker -- --
+configs.custom_docker = {
+    default_config = {
+        cmd = {"docker-langserver", "--stdio"},
+        filetypes = {"dockerfile"},
+        root_dir = util.root_pattern("Dockerfile")
+    }
+}
 
 -- -- go -- --
 configs.custom_go = {
@@ -93,6 +136,12 @@ configs.custom_vue = {
         init_options = {
             config = {
                 vetur = {
+                    validation = {
+                        templateProps = true,
+                    },
+                    completion = {
+                        tagCasing = "initial",
+                    },
                     format = {
                         defaultFormatter = {
                             html = "prettier",
@@ -106,6 +155,9 @@ configs.custom_vue = {
                             ts = "prettier",
                             sass = "sass-formatter"
                         }
+                    },
+                    experimental = {
+                        templateInterpolationService = true,
                     }
                 }
             }
@@ -113,38 +165,14 @@ configs.custom_vue = {
     }
 }
 
--- -- bash -- --
-configs.custom_bash = {
-    default_config = {
-        cmd = {"bash-language-server", "start"},
-        filetypes = {"sh"},
-        root_dir = util.path.dirname
-    }
-}
-
--- -- clang -- --
-configs.custom_clang = {
-    default_config = {
-        cmd = {"clangd", "--background-index", "--pch-storage=memory", "--clang-tidy"},
-        filetypes = {"c", "cpp", "objc", "objcpp"},
-        root_dir = util.root_pattern("compile_commands.json", "compile_flags.txt", ".git"),
-        capabilities = {
-            textDocument = {
-                completion = {
-                    editsNearCursor = true
-                }
-            }
-        }
-    }
-}
-
 local configs = {
+    lsp.custom_bash,
+    lsp.custom_clang,
+    lsp.custom_docker,
     lsp.custom_go,
     lsp.custom_python,
     lsp.custom_typescript,
     lsp.custom_vue,
-    lsp.custom_bash,
-    lsp.custom_clang,
 }
 
 for i, config in pairs(configs) do
@@ -174,8 +202,13 @@ set omnifunc=v:lua.vim.lsp.omnifunc
 set completeopt=menuone,noinsert,noselect
 set shortmess+=c
 
-autocmd BufWritePre *.go,*.py                 silent! lua document_format_and_organise_sync()
-autocmd BufWritePre *.c,*.vue,*.tsx,*.ts,*.js silent! lua document_format_sync()
+autocmd Filetype c               autocmd BufWritePre * silent! lua document_format_sync()
+autocmd Filetype dockerfile      autocmd BufWritePre * silent! lua document_format_sync()
+autocmd Filetype javascript      autocmd BufWritePre * silent! lua document_format_sync()
+autocmd Filetype typescript      autocmd BufWritePre * silent! lua document_format_sync()
+autocmd Filetype typescriptreact autocmd BufWritePre * silent! lua document_format_sync()
+autocmd Filetype go              autocmd BufWritePre * silent! lua document_format_and_organise_sync()
+autocmd Filetype python          autocmd BufWritePre * silent! lua document_format_and_organise_sync()
 
 " the bar on the left symbols
 call sign_define('LspDiagnosticsErrorSign',       {'text': 'ee', 'texthl': 'LspDiagnosticsError'})
