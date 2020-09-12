@@ -207,6 +207,7 @@ autocmd Filetype dockerfile      autocmd BufWritePre * silent! lua document_form
 autocmd Filetype javascript      autocmd BufWritePre * silent! lua document_format_sync()
 autocmd Filetype typescript      autocmd BufWritePre * silent! lua document_format_sync()
 autocmd Filetype typescriptreact autocmd BufWritePre * silent! lua document_format_sync()
+autocmd Filetype vue             autocmd BufWritePre * silent! lua document_format_sync()
 autocmd Filetype go              autocmd BufWritePre * silent! lua document_format_and_organise_sync()
 autocmd Filetype python          autocmd BufWritePre * silent! lua document_format_and_organise_sync()
 
