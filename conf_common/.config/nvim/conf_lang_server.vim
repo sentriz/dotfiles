@@ -4,8 +4,8 @@
 " go            go get -u golang.org/x/tools/gopls@latest
 " python        pip install --user pyls-black
 " python        pip install --user python-language-server[flake8]
-" js, ts        npm install -g typescript-language-server
-" vue           npm install -g vls
+" js, ts        npm install -g typescript typescript-language-server
+" vue           npm install -g typescript vls
 
 lua <<EOF
 local lsp        = require "nvim_lsp"
