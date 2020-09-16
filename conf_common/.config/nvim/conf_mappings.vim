@@ -2,6 +2,7 @@
 let mapleader = "\<Space>"
 nnoremap          <leader>bb mzggO#!/usr/bin/env bash<esc>o<esc>`z
 nnoremap          <leader>bp mzggO#!/usr/bin/env python3<esc>o<esc>`z
+nnoremap          <leader>bj o<cr>Co-authored-by: Oskar McDermott <oskarjr@gmail.com><esc>
 nnoremap          <leader>r  :write<cr>:!clear && %:p<cr>
 nnoremap          <leader>x  :write<cr>:!chmod +x %:p<cr><cr>
 nnoremap          <leader>n  :set hlsearch!<cr>
