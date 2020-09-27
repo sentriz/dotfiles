@@ -2,7 +2,7 @@
 
 [options]
 font = Source Code Pro 10
-scrollback_lines = 100000
+scrollback_lines = 200000
 cursor_shape = ibeam
 
 [colors]
