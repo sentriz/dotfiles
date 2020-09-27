@@ -165,6 +165,22 @@ configs.custom_vue = {
     }
 }
 
+-- -- dart -- --
+configs.custom_dart = {
+    default_config = {
+        cmd = {"dart", "/opt/flutter/bin/cache/dart-sdk/bin/snapshots/analysis_server.dart.snapshot", "--lsp"},
+        filetypes = {"dart"},
+        root_dir = util.root_pattern("pubspec.yaml", ".git"),
+        init_options = {
+            closingLabels = "true",
+            flutterOutline = "false",
+            onlyAnalyzeProjectsWithOpenFiles = "false",
+            outline = "true",
+            suggestFromUnimportedLibraries = "true"
+      },
+    }
+}
+
 local configs = {
     lsp.custom_bash,
     lsp.custom_clang,
@@ -173,6 +189,7 @@ local configs = {
     lsp.custom_python,
     lsp.custom_typescript,
     lsp.custom_vue,
+    lsp.custom_dart,
 }
 
 for i, config in pairs(configs) do
@@ -208,6 +225,7 @@ autocmd Filetype javascript      autocmd BufWritePre * silent! lua document_form
 autocmd Filetype typescript      autocmd BufWritePre * silent! lua document_format_sync()
 autocmd Filetype typescriptreact autocmd BufWritePre * silent! lua document_format_sync()
 autocmd Filetype vue             autocmd BufWritePre * silent! lua document_format_sync()
+autocmd Filetype dart            autocmd BufWritePre * silent! lua document_format_sync()
 autocmd Filetype go              autocmd BufWritePre * silent! lua document_format_and_organise_sync()
 autocmd Filetype python          autocmd BufWritePre * silent! lua document_format_and_organise_sync()
 
