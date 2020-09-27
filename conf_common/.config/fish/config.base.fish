@@ -6,7 +6,7 @@ if string match -q -r '^\/dev\/tty' (tty)
 end
 
 set -gx EDITOR 'nvim'
-set -gx RIPGREP_CONFIG_PATH "$HOME/.config/ripgreprc"
+set -gx RIPGREP_CONFIG_PATH "$XDG_CONFIG_HOME/ripgreprc"
 set -gx FZF_DEFAULT_OPTS "--info hidden --color bw"
 set -gx GOPATH "$XDG_DATA_HOME/go"
 set -gx GOPRIVATE 'github.com/CPSSD/*'
@@ -20,6 +20,11 @@ set -gx NPM_CONFIG_CACHE "$XDG_CACHE_HOME/npm"
 set -gx NPM_CONFIG_TMP "$XDG_RUNTIME_DIR/npm"
 set -gx COMPOSE_DOCKER_CLI_BUILD '1'
 set -gx DOCKER_BUILDKIT '1'
+set -gx ANDROID_SDK_ROOT '/opt/android-sdk'
+set -gx ANDROID_HOME '/opt/android-sdk'
+set -gx JAVA_HOME '/usr/lib/jvm/java-8-openjdk/'
+set -gx JAVA_OPTS '-XX:+IgnoreUnrecognizedVMOptions'
+# set -gx JAVA_OPTS '-XX:+IgnoreUnrecognizedVMOptions --add-modules java.se.ee'
 
 # dotfiles settings
 set -gx DOTS_SCRAP_DIR "$HOME/scrap"
@@ -49,7 +54,12 @@ set -l possible_paths \
     /usr/sbin \
     $HOME/bin \
     $HOME/bin/*/ \
-    /usr/share/git/git-jump/
+    /usr/share/git/git-jump/ \
+    $ANDROID_HOME/tools/ \
+    $ANDROID_HOME/tools/bin \
+    $ANDROID_HOME/platform-tools \
+    $ANDROID_HOME/emulator \
+    /opt/flutter/bin/
 
 # not using `set -a` for backwards compatibility
 for path in $possible_paths
