@@ -14,7 +14,7 @@ request() {
 
 switch_list() {
     request 'GET' 'states' <<<'{}' | \
-    jq -r '.[] | select(.entity_id | startswith("switch.")) | "\(.entity_id)\t\(.state)"'
+        jq -r '.[] | select(.entity_id | startswith("switch.")) | "\(.entity_id)\t\(.state)"'
 }
 
 switch_toggle() {
