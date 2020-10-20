@@ -299,6 +299,7 @@ assign [class="URxvt" instance="ncmpcpp"]         $work_4
 assign [class="Spotify"]                          $work_4
 assign [class="Deadbeef"]                         $work_4
 assign [class="Surf" instance="^plex_surf$"]      $work_4
+assign [app_id="^DBeaver$"]                       $work_4
 assign [class="VirtualBox"]                       $work_5
 assign [app_id="^virt-viewer$"]                   $work_5
 assign [class="Franz"]                            $work_6
