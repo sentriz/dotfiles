@@ -361,6 +361,7 @@ for_window [app_id="^qjackctl$"]                               floating enable
 for_window [app_id="^Manjaro.manjaro-settings-manager$"]       floating enable
 for_window [title="^Emulator$"]                                floating enable
 for_window [title="^Android Emulator"]                         floating enable
+for_window [class="^vysor$"]                                   floating enable
 
 ## media
 for_window [class="^jellyfin$"]                         floating enable, resize set 1334 550, sticky enable
