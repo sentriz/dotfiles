@@ -14,7 +14,7 @@ local util       = require "nvim_lsp/util"
 local diagnostic = require "diagnostic"
 local completion = require "completion"
 
-local sync_timeout = 1000
+local sync_timeout = 150
 
 function document_format_sync()
     vim.lsp.buf.formatting_sync(nil, sync_timeout)
