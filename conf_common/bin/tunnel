@@ -29,5 +29,5 @@ tunnel_subdomain="${tunnel_subdomains[$1 - 1]}"
 tunnel_port="${tunnel_ports[$1 - 1]}"
 local_port="$2"
 
-echo "starting tunnel $tunnel_subdomains.$tunnel_host -> localhost:$local_port"
+echo "starting tunnel $tunnel_subdomain.$tunnel_host -> localhost:$local_port"
 exec ssh -o $ssh_opts -N -R "*:$tunnel_port:0.0.0.0:$local_port" "$tunnel_host"
