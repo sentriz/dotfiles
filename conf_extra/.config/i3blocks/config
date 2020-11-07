@@ -14,7 +14,7 @@ color=#039be5
 signal=2
 
 [wifi]
-color=#ffb300
+color=#e6e600
 
 [vpn]
 color=#f24b74
@@ -24,7 +24,7 @@ color=#e184c2
 interval=30
 
 # [balance]
-# color=#e6e600
+# color=#ffb300
 # instance=boi
 # interval=7200
 
