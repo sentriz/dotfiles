@@ -181,6 +181,31 @@ configs.custom_dart = {
     }
 }
 
+-- -- java -- --
+configs.custom_java = {
+    default_config = {
+        cmd = {
+            "java",
+            "-Declipse.application=org.eclipse.jdt.ls.core.id1",
+            "-Dosgi.bundles.defaultStartLevel=4",
+            "-Declipse.product=org.eclipse.jdt.ls.core.product",
+            "-Dlog.level=ALL",
+            "-noverify",
+            "-Xmx1G",
+            "-jar", "/usr/share/java/jdtls/plugins/org.eclipse.equinox.launcher_1.5.800.v20200727-1323.jar",
+            "-data", "workspace",
+            "--add-modules=ALL-SYSTEM",
+            "--add-opens", "java.base/java.util=ALL-UNNAMED",
+            "--add-opens", "java.base/java.lang=ALL-UNNAMED"
+        },
+        filetypes = {"java"},
+        root_dir = util.root_pattern(".git"),
+        init_options = {
+            workspace = "workspace",
+        }
+    }
+}
+
 local configs = {
     lsp.custom_bash,
     lsp.custom_clang,
@@ -190,6 +215,7 @@ local configs = {
     lsp.custom_typescript,
     lsp.custom_vue,
     lsp.custom_dart,
+    lsp.custom_java,
 }
 
 for i, config in pairs(configs) do
