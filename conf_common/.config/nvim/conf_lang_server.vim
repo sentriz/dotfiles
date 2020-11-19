@@ -8,11 +8,17 @@
 " vue           npm install -g typescript vls
 
 lua <<EOF
-local lsp        = require "nvim_lsp"
-local configs    = require "nvim_lsp/configs"
-local util       = require "nvim_lsp/util"
-local diagnostic = require "diagnostic"
-local completion = require "completion"
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+    vim.lsp.diagnostic.on_publish_diagnostics, {
+        virtual_text = false,
+        signs = true,
+        update_in_insert = false,
+    }
+)
+
+local lsp        = require "lspconfig"
+local configs    = require "lspconfig/configs"
+local util       = require "lspconfig/util"
 
 local sync_timeout = 150
 
@@ -206,33 +212,22 @@ configs.custom_java = {
     }
 }
 
-local configs = {
-    lsp.custom_bash,
-    lsp.custom_clang,
-    lsp.custom_docker,
-    lsp.custom_go,
-    lsp.custom_python,
-    lsp.custom_typescript,
-    lsp.custom_vue,
-    lsp.custom_dart,
-    lsp.custom_java,
-}
-
-for i, config in pairs(configs) do
-    config.setup({
-        on_attach = function(client, buffer)
-            diagnostic.on_attach(client, buffer)
-            completion.on_attach(client, buffer)
-        end
-    })
-end
+lsp.custom_bash.setup({})
+lsp.custom_clang.setup({})
+lsp.custom_docker.setup({})
+lsp.custom_go.setup({})
+lsp.custom_python.setup({})
+lsp.custom_typescript.setup({})
+lsp.custom_vue.setup({})
+lsp.custom_dart.setup({})
+lsp.custom_java.setup({})
 EOF
 
 " lsp mappings
 nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<cr>
 nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<cr>
 nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<cr>
-nnoremap <silent> J     <cmd>lua vim.lsp.util.show_line_diagnostics()<cr>
+nnoremap <silent> J     <cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<cr>
 nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<cr>
 nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<cr>
 nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<cr>
@@ -256,8 +251,7 @@ autocmd Filetype dart            autocmd BufWritePre * silent! lua document_form
 autocmd Filetype go              autocmd BufWritePre * silent! lua document_format_and_organise_sync()
 autocmd Filetype python          autocmd BufWritePre * silent! lua document_format_and_organise_sync()
 
-" the bar on the left symbols
-call sign_define('LspDiagnosticsErrorSign',       {'text': 'ee', 'texthl': 'LspDiagnosticsError'})
-call sign_define('LspDiagnosticsWarningSign',     {'text': 'ww', 'texthl': 'LspDiagnosticsWarning'})
-call sign_define('LspDiagnosticsInformationSign', {'text': 'ii', 'texthl': 'LspDiagnosticsInformation'})
-call sign_define('LspDiagnosticsHintSign',        {'text': 'hh', 'texthl': 'LspDiagnosticsHint'})
+sign define LspDiagnosticsSignError       text=ee texthl=LspDiagnosticsSignError
+sign define LspDiagnosticsSignWarning     text=ww texthl=LspDiagnosticsSignWarning
+sign define LspDiagnosticsSignInformation text=ii texthl=LspDiagnosticsSignInformation
+sign define LspDiagnosticsSignHint        text=hh texthl=LspDiagnosticsSignHint

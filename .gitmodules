@@ -25,12 +25,6 @@
 [submodule "conf_common/.local/share/nvim/site/pack/meta/opt/neovim/nvim-lsp"]
 	path = conf_common/.local/share/nvim/site/pack/meta/opt/neovim/nvim-lsp
 	url = https://github.com/neovim/nvim-lsp
-[submodule "conf_common/.local/share/nvim/site/pack/meta/opt/nvim-lua/completion-nvim"]
-	path = conf_common/.local/share/nvim/site/pack/meta/opt/nvim-lua/completion-nvim
-	url = https://github.com/nvim-lua/completion-nvim
-[submodule "conf_common/.local/share/nvim/site/pack/meta/opt/nvim-lua/diagnostic-nvim"]
-	path = conf_common/.local/share/nvim/site/pack/meta/opt/nvim-lua/diagnostic-nvim
-	url = https://github.com/nvim-lua/diagnostic-nvim
 [submodule "conf_common/.local/share/nvim/site/pack/meta/opt/rhysd/committia.vim"]
 	path = conf_common/.local/share/nvim/site/pack/meta/opt/rhysd/committia.vim
 	url = https://github.com/rhysd/committia.vim

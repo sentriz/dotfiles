@@ -5,14 +5,6 @@ let g:SpiffyFoldtext_format = "%c{ } ... }%f{ }"
 let g:tmux_navigator_no_mappings = 1
 let g:tmux_navigator_save_on_switch = 1
 
-let g:diagnostic_enable_virtual_text = 0
-let g:diagnostic_insert_delay = 1
-let g:diagnostic_show_sign = 1
-
-let g:completion_enable_auto_popup = 1
-let g:completion_enable_auto_paren = 1
-let g:completion_enable_auto_hover = 0
-
 let g:monotone_color = [10, 3, 100]
 let g:monotone_secondary_hue_offset = 0
 
@@ -25,8 +17,6 @@ packadd! christoomey/vim-tmux-navigator
 packadd! inkarkat/SyntaxAttr.vim
 packadd! machakann/vim-highlightedyank
 packadd! neovim/nvim-lsp
-packadd! nvim-lua/completion-nvim
-packadd! nvim-lua/diagnostic-nvim
 packadd! nvim-lua/popup.nvim
 packadd! nvim-lua/plenary.nvim
 packadd! nvim-lua/telescope.nvim
