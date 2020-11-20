@@ -104,6 +104,7 @@ client.unfocused        $colour_grey  $colour_grey #ffffff $colour_grey $colour_
 bindsym $super+q     kill
 bindsym $super+f     fullscreen toggle
 bindsym $super+space floating toggle
+bindsym $super+y     sticky toggle
 
 ## bindings: focus
 bindsym $super+v focus parent
