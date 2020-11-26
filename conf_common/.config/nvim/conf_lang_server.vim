@@ -2,8 +2,7 @@
 " c             <package manager> install clang
 " dockerfile    npm install -g dockerfile-language-server-nodejs
 " go            go get -u golang.org/x/tools/gopls@latest
-" python        pip install --user pyls-black
-" python        pip install --user python-language-server[flake8]
+" python        pip install --user python-language-server[flake8] pyls-black
 " js, ts        npm install -g typescript typescript-language-server
 " vue           npm install -g typescript vls
 
