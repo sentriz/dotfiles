@@ -39,6 +39,7 @@
 	compactionHeuristic = true
 [advice]
 	statusHints = false
+	addEmptyPathspec = false
 [core]
 	editor = nvim
 	pager = less -r
