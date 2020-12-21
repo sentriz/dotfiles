@@ -22,13 +22,12 @@ highlight DiffDelete guifg=#cc0000
 
 " basics
 set listchars=tab:>\ ,trail:.
-set fillchars=vert:\ 
+set fillchars=vert:\ ,eob:\ 
 set sidescroll=1
 set noshowmode
 set laststatus=2
 set signcolumn=number
 set termguicolors
-set fcs=eob:\ 
 
 " statusline
 set statusline=
