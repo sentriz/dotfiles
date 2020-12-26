@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+trap exit SIGINT
+
+while true; do
+    ping '1.1.1.1'
+    sleep 1
+done

@@ -17,9 +17,6 @@ abbr g   'git'
 abbr cal 'cal --three --monday'
 abbr ps  'ps -axh -o pid,%cpu,cmd'
 
-# misc
-alias pg 'ping 8.8.8.8'
-
 # keep updated with `printf "set -g %s\n" (set -U | grep fish_color)`
 set -g fish_color_autosuggestion '555'  'brblack'
 set -g fish_color_command 'normal'
