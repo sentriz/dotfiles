@@ -26,6 +26,10 @@ nnoremap        z za                            " toggle node
 nnoremap <expr> Z &foldlevel == 0 ? "zR" : "zM" " toggle buffer
 nnoremap z=     z=                              " fix spell bind
 
+" load current word or selection to cgn
+nnoremap <silent> s* :let @/='\<'.expand('<cword>').'\>'<cr>cgn
+xnoremap <silent> s* "sy:let @/=@s<cr>cgn
+
 " bubbling
 nnoremap <s-k> ddkP
 nnoremap <s-j> ddp
