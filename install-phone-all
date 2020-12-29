@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # intended to be run from termux
 # curl -sSL "https://raw.githubusercontent.com/sentriz/dotfiles/master/install_phone_all" | sh -s - path/to/key
