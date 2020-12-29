@@ -1,9 +1,9 @@
-if [[ "$#" -ne 1 ]]; then
+if [ "$#" -ne 1 ]; then
     echo "please provide a url" >&2
     exit 1
 fi
 
 case "$1" in
-    *://youtube.com/*|*://youtu.be/*) catt add "$1" ;;
-    *)                                catt cast "$1" ;;
+    *youtube.com/*|*youtu.be/*) /data/data/com.termux/files/home/.local/bin/catt add "$1" ;;
+    *)                          /data/data/com.termux/files/home/.local/bin/catt cast "$1" ;;
 esac
