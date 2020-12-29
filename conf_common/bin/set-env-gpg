@@ -2,9 +2,11 @@
 
 # for gpg-agent and it's ssh-agent emulation to work everywhere, it needs to know the current
 # startup tty to display the pinentry properly. also other programs need SSH_AUTH_SOCK, which
-# used to be set here too, but i moved it to ~/.config/environment.d/ so that systemd programs
-# and dmenu_package's programs could access it do. this solves an issue where virt-manager
-# couldn't connect to remote kvm without access to my gpg-agent
+# is also set in ~/.config/environment.d/ so that systemd programs and dmenu_package's programs
+# could access it do. this solves an issue where virt-manager couldn't connect to remote kvm
+# without access to my gpg-agent
 
 set -gx GPG_TTY (tty)
+set -gx SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
+
 gpg-connect-agent updatestartuptty /bye >/dev/null
