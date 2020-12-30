@@ -32,7 +32,6 @@ packadd! tpope/vim-vinegar
 
 " category "text"
 " ~/.local/share/nvim/site/pack/text/opt/
-packadd! mattn/emmet-vim
 packadd! sentriz/vim-print-debug
 packadd! tommcdo/vim-exchange
 packadd! tpope/vim-abolish
