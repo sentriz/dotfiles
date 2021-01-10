@@ -435,4 +435,3 @@ exec wlr-sunclock \
    --anchors br \
    --border-width 2 \
    --monitor-index 1
-exec redshift -l 53.35:-6.26
