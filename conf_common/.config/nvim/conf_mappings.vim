@@ -67,6 +67,3 @@ inoremap <expr> <c-e> pumvisible()
 
 " alternative escaping
 inoremap jj <esc>
-
-" automatic omnifunc
-inoremap . .<c-x><c-o>

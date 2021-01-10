@@ -67,3 +67,6 @@
 [submodule "conf_common/.local/share/nvim/site/pack/meta/opt/nvim-lua/telescope.nvim"]
 	path = conf_common/.local/share/nvim/site/pack/meta/opt/nvim-lua/telescope.nvim
 	url = https://github.com/nvim-lua/telescope.nvim
+[submodule "conf_common/.local/share/nvim/site/pack/meta/opt/nvim-lua/completion-nvim"]
+	path = conf_common/.local/share/nvim/site/pack/meta/opt/nvim-lua/completion-nvim
+	url = https://github.com/nvim-lua/completion-nvim

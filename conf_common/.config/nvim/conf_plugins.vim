@@ -11,12 +11,32 @@ let g:monotone_secondary_hue_offset = 0
 let g:qf_auto_open_quickfix = 1
 let g:qf_auto_open_loclist = 1
 
+let g:completion_enable_auto_hover = 0
+let g:completion_enable_auto_signature = 1
+let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
+let g:completion_items_priority = {
+    \ 'EnumMember': 11,
+    \ 'Field':      11,
+    \ 'Constant':   11,
+    \ 'Variables':  11,
+    \ 'Method':     10,
+    \ 'Property':   7,
+    \ 'Function':   7,
+    \ 'Variable':   7,
+    \ 'Interfaces': 5,
+    \ 'Class':      5,
+    \ 'Keyword':    4,
+    \ 'UltiSnips':  1,
+    \ 'File':       1,
+\ }
+
 " category "meta"
 " ~/.local/share/nvim/site/pack/meta/opt/
 packadd! christoomey/vim-tmux-navigator
 packadd! inkarkat/SyntaxAttr.vim
 packadd! machakann/vim-highlightedyank
 packadd! neovim/nvim-lsp
+packadd! nvim-lua/completion-nvim
 packadd! nvim-lua/popup.nvim
 packadd! nvim-lua/plenary.nvim
 packadd! nvim-lua/telescope.nvim

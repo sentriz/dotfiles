@@ -18,6 +18,7 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
 local lsp        = require "lspconfig"
 local configs    = require "lspconfig/configs"
 local util       = require "lspconfig/util"
+local completion = require "completion"
 
 local sync_timeout = 150
 
@@ -211,15 +212,18 @@ configs.custom_java = {
     }
 }
 
-lsp.custom_bash.setup({})
-lsp.custom_clang.setup({})
-lsp.custom_docker.setup({})
-lsp.custom_go.setup({})
-lsp.custom_python.setup({})
-lsp.custom_typescript.setup({})
-lsp.custom_vue.setup({})
-lsp.custom_dart.setup({})
-lsp.custom_java.setup({})
+local args = {
+    on_attach = completion.on_attach
+}
+lsp.custom_bash.setup(args)
+lsp.custom_clang.setup(args)
+lsp.custom_docker.setup(args)
+lsp.custom_go.setup(args)
+lsp.custom_python.setup(args)
+lsp.custom_typescript.setup(args)
+lsp.custom_vue.setup(args)
+lsp.custom_dart.setup(args)
+lsp.custom_java.setup(args)
 EOF
 
 " lsp mappings
