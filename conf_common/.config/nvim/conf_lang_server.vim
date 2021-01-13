@@ -1,10 +1,10 @@
-" bash          npm install -g bash-language-server
-" c             <package manager> install clang
-" dockerfile    npm install -g dockerfile-language-server-nodejs
-" go            go get -u golang.org/x/tools/gopls@latest
-" python        pip install --user python-language-server[flake8] pyls-black
-" js, ts        npm install -g typescript typescript-language-server
-" vue           npm install -g typescript vls
+" bash        npm install -g bash-language-server
+" c           <package manager> install clang
+" dockerfile  npm install -g dockerfile-language-server-nodejs
+" go          go get -u golang.org/x/tools/gopls@latest
+" python      npm install -g pyright
+" js, ts      npm install -g typescript typescript-language-server
+" vue         npm install -g typescript vls
 
 lua <<EOF
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
@@ -19,29 +19,6 @@ local lsp        = require "lspconfig"
 local configs    = require "lspconfig/configs"
 local util       = require "lspconfig/util"
 local completion = require "completion"
-
-local sync_timeout = 150
-
-function document_format_sync()
-    vim.lsp.buf.formatting_sync(nil, sync_timeout)
-end
-
-function document_organise_sync()
-    local params = vim.lsp.util.make_range_params()
-    params.context = {source = {organizeImports = true}}
-
-    local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, sync_timeout)
-    if not result then return end
-    result = result[1].result
-    if not result then return end
-    edit = result[1].edit
-    vim.lsp.util.apply_workspace_edit(edit)
-end
-
-function document_format_and_organise_sync()
-    document_format_sync()
-    document_organise_sync()
-end
 
 -- -- bash -- --
 configs.custom_bash = {
@@ -243,16 +220,6 @@ vnoremap <silent> ga    <cmd>'<,'>lua vim.lsp.buf.range_code_action()<cr>
 set omnifunc=v:lua.vim.lsp.omnifunc
 set completeopt=menuone,noinsert,noselect
 set shortmess+=c
-
-autocmd Filetype c               autocmd BufWritePre * silent! lua document_format_sync()
-autocmd Filetype dockerfile      autocmd BufWritePre * silent! lua document_format_sync()
-autocmd Filetype javascript      autocmd BufWritePre * silent! lua document_format_sync()
-autocmd Filetype typescript      autocmd BufWritePre * silent! lua document_format_sync()
-autocmd Filetype typescriptreact autocmd BufWritePre * silent! lua document_format_sync()
-autocmd Filetype vue             autocmd BufWritePre * silent! lua document_format_sync()
-autocmd Filetype dart            autocmd BufWritePre * silent! lua document_format_sync()
-autocmd Filetype go              autocmd BufWritePre * silent! lua document_format_and_organise_sync()
-autocmd Filetype python          autocmd BufWritePre * silent! lua document_format_and_organise_sync()
 
 sign define LspDiagnosticsSignError       text=ee texthl=LspDiagnosticsSignError
 sign define LspDiagnosticsSignWarning     text=ww texthl=LspDiagnosticsSignWarning
