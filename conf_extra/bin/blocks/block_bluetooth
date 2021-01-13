@@ -1,9 +1,25 @@
 #!/usr/bin/env bash
 
 # requires:
-# - bluetoothctl
+# - glib2
 
-device="$(bluetoothctl info | grep -Po "Alias: \K.*")"
-test -z "$device" && exit
+introspect() {
+    gdbus introspect \
+        --system \
+        --dest "org.hsphfpd" \
+        --object-path "/org/hsphfpd/hci0" \
+        --recurse \
+        --only-properties
+}
 
-echo "bluetooth $device"
+filter_parse() {
+    q_bat="BatteryLevel = (-?[0-9]+)"
+    q_conn="Connected = true"
+    q_name="Name = '([^']+)'"
+    sed -rnz "s/.*$q_bat[^\}]*$q_conn[^\}]*$q_name.*/\L\2, \1%/gp"
+}
+
+status="$(introspect | filter_parse)"
+test -z "$status" && exit
+
+echo "bluetooth $status"

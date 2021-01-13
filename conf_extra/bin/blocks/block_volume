@@ -1,9 +1,5 @@
 #!/usr/bin/env bash
 
-# requires:
-# - alsa-utils
-
-resp="$(amixer sget "$BLOCK_INSTANCE")"
-grep -q '\[off\]' <<<"$resp" && echo 'volume muted' && exit
-
-echo "volume $(grep -Po 'Left.*\[\K([0-9]+%)(?=\])' <<<"$resp")"
+ponymix --sink is-muted  \
+    && echo "volume muted" \
+    || echo "volume $(ponymix get-volume)%"

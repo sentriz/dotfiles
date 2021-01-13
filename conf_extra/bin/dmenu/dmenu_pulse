@@ -1,25 +1,19 @@
 #!/usr/bin/env bash
 
-if ! type -p pacmd >/dev/null; then
-    echo "please install pulsemixer" >&2
+if ! type -p ponymix >/dev/null; then
+    echo "please install ponymix" >&2
     exit 1
 fi
 
-lower() { tr '[:upper:]' '[:lower:]'; }
-get_index() { grep -Po "index\: \K\d+"; }
-get_description() { grep -Po "device\.description \= \"\K([^\"]+)"; }
-
-sinks="$(
-    paste \
-        --delimiters " " \
-        <(pacmd list-sinks | get_index) \
-        <(pacmd list-sinks | get_description | lower)
+sink_row="$(
+    ponymix list --short --sink  \
+        | awk -F '\t' '{print $2 "\t" tolower($4)}' \
+        | dmenu_custom -p 'sink'
 )"
-sink="$(dmenu_custom -p 'sink' <<<"$sinks")"
-test -z "$sink" && exit 1
+test -z "$sink_row" && exit 1
 
-sink_index="${sink/%\ */}"
-pacmd set-default-sink "$sink_index"
-pacmd list-sink-inputs |
-    get_index |
-    xargs -L 1 -I {} pacmd move-sink-input {} "$sink_index"
+sink_id="$(awk -F '\t' '{print $1}' <<<"$sink_row")"
+ponymix set-default --sink --device "$sink_id"
+ponymix list --short --sink-input \
+    | awk -F '\t' '{print $2}' \
+    | xargs -L 1 -I {} ponymix --sink-input --device {} move "$sink_id"

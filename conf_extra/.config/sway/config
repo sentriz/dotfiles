@@ -374,10 +374,10 @@ for_window [class="^mpv$"]                              floating enable, resize 
 for_window [app_id="^mpv$"]                             floating enable, resize set 1334 550, sticky enable
 
 ## bindings: xf86
-bindsym XF86AudioLowerVolume  exec amixer sset Master 5%-     && $up_block_1
-bindsym XF86AudioRaiseVolume  exec amixer sset Master 5%+     && $up_block_1
-bindsym XF86AudioMute         exec amixer sset Master toggle  && $up_block_1
-bindsym XF86AudioMicMute      exec amixer sset Capture toggle && $up_block_1
+bindsym XF86AudioLowerVolume  exec ponymix --sink decrease 2 && $up_block_1
+bindsym XF86AudioRaiseVolume  exec ponymix --sink increase 2 && $up_block_1
+bindsym XF86AudioMute         exec ponymix --sink toggle     && $up_block_1
+bindsym XF86AudioMicMute      exec ponymix --input toggle    && $up_block_1
 bindsym XF86MonBrightnessDown exec xbacklight -dec 5
 bindsym XF86MonBrightnessUp   exec xbacklight -inc 5
 bindsym XF86AudioPlay         exec playerctl play-pause

@@ -1,19 +1,8 @@
 ### packages
 
-- pulseaudio
-- pulseaudio-alsa
-- pulseaudio-bluetooth (if bluetooth)
-- alsa-utils (if dotfiles)
-
-### files
-
-`/etc/pulse/system.pa`
-
-    load-module module-bluetooth-policy
-    load-module module-bluetooth-discover
-    load-module module-switch-on-connect
-
-### commands
-
-    $ systemctl restart bluetooth.service
-    $ systemctl enable --now bluetooth.service
+- pipewire-common-git
+- pipewire-common-pulse-git
+- pipewire-jack
+- pipewire-jack-dropin
+- hsphfpd-git (provided by above)
+- pipewire-common-bluez5-hsphfpd-git (provided by above)
