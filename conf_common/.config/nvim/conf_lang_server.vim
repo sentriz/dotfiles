@@ -83,12 +83,15 @@ configs.custom_go = {
 -- -- python -- --
 configs.custom_python = {
     default_config = {
-        cmd = {"python3", "-m", "pyls"},
+        cmd = {"pyright-langserver", "--stdio"},
         filetypes = {"python"},
         root_dir = util.root_pattern("requirements.txt", "pyproject.toml", "Pipfile", ".git"),
         settings = {
-            pyls = {
-                configurationSources = {"flake8"}
+            python = {
+                analysis = {
+                    autoSearchPaths = true,
+                    useLibraryCodeForTypes = true
+                }
             }
         }
     }
