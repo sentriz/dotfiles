@@ -38,6 +38,13 @@ function formatter_black()
     }
 end
 
+function formatter_shfmt()
+    return {
+        exe = "shfmt",
+        args = {"-i", "4", "-bn", "-kp", "-"},
+        stdin = true
+    }
+end
 
 formatter.setup({
     logging = false,
@@ -55,6 +62,7 @@ formatter.setup({
         ["c"]                   = { formatter_clang },
         ["cpp"]                 = { formatter_clang },
         ["python"]              = { formatter_black },
+        ["sh"]                  = { formatter_shfmt },
     }
 })
 EOF
