@@ -26,3 +26,8 @@ augroup AutoEditGPGFile
     autocmd BufWritePre,FileWritePre   *.gpg '[,']!gpg --default-recipient-self -ae 2>/dev/null
     autocmd BufWritePost,FileWritePost *.gpg u
 augroup END
+
+augroup AutoFormat
+    autocmd!
+    autocmd BufWritePost * silent! FormatWrite
+augroup END

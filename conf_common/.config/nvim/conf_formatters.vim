@@ -58,17 +58,3 @@ formatter.setup({
     }
 })
 EOF
-
-autocmd Filetype javascript          autocmd BufWritePost * FormatWrite
-autocmd Filetype typescript          autocmd BufWritePost * FormatWrite
-autocmd Filetype typescriptreact     autocmd BufWritePost * FormatWrite
-autocmd Filetype vue                 autocmd BufWritePost * FormatWrite
-autocmd Filetype yaml                autocmd BufWritePost * FormatWrite
-autocmd Filetype yaml.docker-compose autocmd BufWritePost * FormatWrite
-autocmd Filetype html                autocmd BufWritePost * FormatWrite
-autocmd Filetype css                 autocmd BufWritePost * FormatWrite
-autocmd Filetype json                autocmd BufWritePost * FormatWrite
-autocmd Filetype go                  autocmd BufWritePost * FormatWrite
-autocmd Filetype c                   autocmd BufWritePost * FormatWrite
-autocmd Filetype cpp                 autocmd BufWritePost * FormatWrite
-autocmd Filetype python              autocmd BufWritePost * FormatWrite
