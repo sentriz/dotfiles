@@ -6,7 +6,7 @@ if ! type -p ponymix >/dev/null; then
 fi
 
 sink_row="$(
-    ponymix list --short --sink  \
+    ponymix list --short --sink \
         | awk -F '\t' '{print $2 "\t" tolower($4)}' \
         | dmenu_custom -p 'sink'
 )"

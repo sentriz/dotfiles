@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
-ponymix --sink is-muted  \
+ponymix --sink is-muted \
     && echo "volume muted" \
     || echo "volume $(ponymix get-volume)%"

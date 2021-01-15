@@ -9,12 +9,12 @@ request() {
         --request "$1" \
         --data '@-' \
         --header "authorization: Bearer $token" \
-        "${url}/api/$2" 
+        "${url}/api/$2"
 }
 
 switch_list() {
-    request 'GET' 'states' <<<'{}' | \
-        jq -r '.[] | select(.entity_id | startswith("switch.")) | "\(.entity_id)\t\(.state)"'
+    request 'GET' 'states' <<<'{}' \
+        | jq -r '.[] | select(.entity_id | startswith("switch.")) | "\(.entity_id)\t\(.state)"'
 }
 
 switch_toggle() {

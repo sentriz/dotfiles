@@ -16,8 +16,8 @@ function get-balance-revolut() {
     revolut_cli.py \
         --language en \
         --token "$(secret revolut_token)" \
-        --account "EUR CURRENT" |
-        awk '{print $1}'
+        --account "EUR CURRENT" \
+        | awk '{print $1}'
 }
 
 function notify-updated() { notify-send.sh -- "$BLOCK_INSTANCE updated"; }
