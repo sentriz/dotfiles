@@ -5,10 +5,10 @@ if ! type -p bluetoothctl >/dev/null; then
     exit 1
 fi
 
-lower() { tr '[:upper:]' '[:lower:]'; }
-notify() { notify-send.sh --replace-file "/tmp/dmenu_bluetooth_replace" "$@"; }
+function lower() { tr '[:upper:]' '[:lower:]'; }
+function notify() { notify-send.sh --replace-file "/tmp/dmenu_bluetooth_replace" "$@"; }
 
-notify-cmd() {
+function notify-cmd() {
     # $ <heading> <to filter>
     notify "$1"
     if ! out="$(eval "$2")"; then
@@ -25,7 +25,7 @@ test -z "$device" && exit 1
 device_mac="$(cut -d ' ' -f 2 <<<"$device")"
 device_name="$(cut -d ' ' -f 3- <<<"$device")"
 
-if [ "$device" = "disconnect" ]; then
+if test "$device" = "disconnect"; then
     # force true here, we don't care if we're not connected currently
     notify-cmd "disconnecting" "bluetoothctl disconnect || true"
     exit

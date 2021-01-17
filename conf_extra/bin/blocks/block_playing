@@ -23,7 +23,7 @@ killall playerctl
 {
     pctl --follow status &
     pctl --follow metadata title
-} | while read; do
+} | while read -r; do
     print-status
 done &
 

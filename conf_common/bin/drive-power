@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
 
-if [[ $# -eq 0 ]]; then
+if test $# -eq 0; then
     echo "please provide some drives" >&2
     echo "eg. $0 /dev/sd{b,d,a,c}" >&2
     exit 1
 fi
 
-get_info() {
+function get-info() {
     lsblk -J | jq -r ".blockdevices | .. | select(.name? == \"$1\") | .. | select(.mountpoint?) | \"\(.size)\t\(.mountpoint)\""
 }
 
-get_status() {
+function get-status() {
     info="$(smartctl -i -n standby "$1")"
     test $? -eq 2 && echo "standby" && return
     grep -Po "^Power mode.*:\s*\K.*" <<<"$info" |  tr '[:upper:]' '[:lower:]'

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-pushd "$(mktemp -d)"
+pushd "$(mktemp -d)" || exit
 go mod init tmp
 go get -u "$@"
-popd
+popd || exit

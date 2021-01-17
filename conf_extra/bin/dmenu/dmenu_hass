@@ -3,7 +3,7 @@
 url="$(secret hass_url)"
 token="$(secret hass_token)"
 
-request() {
+function request() {
     curl \
         --silent \
         --request "$1" \
@@ -12,12 +12,12 @@ request() {
         "${url}/api/$2"
 }
 
-switch-list() {
+function switch-list() {
     request 'GET' 'states' <<<'{}' \
         | jq -r '.[] | select(.entity_id | startswith("switch.")) | "\(.entity_id)\t\(.state)"'
 }
 
-switch-toggle() {
+function switch-toggle() {
     request 'POST' 'services/switch/toggle' <<<"{\"entity_id\": \"$1\"}"
 }
 

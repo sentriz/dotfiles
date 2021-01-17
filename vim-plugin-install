@@ -2,7 +2,7 @@
 
 set -e
 
-if [[ $# -ne 2 ]]; then
+if test $# -ne 2; then
     echo "please provide a <category> <repo>" >&2
     exit 1
 fi

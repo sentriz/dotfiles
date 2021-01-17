@@ -3,19 +3,22 @@
 copt="$DOTS_COPT_DIR"
 exclude="$copt/.up-ignore"
 
-find \
-    "$copt" \
-    -maxdepth 1 \
-    -type d \
-    ! -path "$copt" \
-    -regextype egrep \
-    ! -regex '^\./(\.|_).*' \
-    -printf "%f\n" |
-    while read name; do
-        grep -qE "\b$name\b" "$exclude" && continue
-        (
-            cd "$copt/$name"
-            docker-compose pull
-            docker-compose up -d --remove-orphans
-        )
-    done
+function list-paths() {
+    find \
+        "$copt" \
+        -maxdepth 1 \
+        -type d \
+        ! -path "$copt" \
+        -regextype egrep \
+        ! -regex '^\./(\.|_).*' \
+        -printf "%f\n"
+}
+
+list-paths | while read -r name; do
+    grep -qE "\b$name\b" "$exclude" && continue
+    (   
+        cd "$copt/$name" || exit
+        docker-compose pull
+        docker-compose up -d --remove-orphans
+    )
+done
