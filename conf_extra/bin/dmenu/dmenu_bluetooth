@@ -8,7 +8,7 @@ fi
 lower() { tr '[:upper:]' '[:lower:]'; }
 notify() { notify-send.sh --replace-file "/tmp/dmenu_bluetooth_replace" "$@"; }
 
-notify_cmd() {
+notify-cmd() {
     # $ <heading> <to filter>
     notify "$1"
     if ! out="$(eval "$2")"; then
@@ -27,12 +27,12 @@ device_name="$(cut -d ' ' -f 3- <<<"$device")"
 
 if [ "$device" = "disconnect" ]; then
     # force true here, we don't care if we're not connected currently
-    notify_cmd "disconnecting" "bluetoothctl disconnect || true"
+    notify-cmd "disconnecting" "bluetoothctl disconnect || true"
     exit
 fi
 
-notify_cmd "powering on"                "bluetoothctl power on"
-notify_cmd "connecting to $device_name" "bluetoothctl connect $device_mac"
+notify-cmd "powering on"                "bluetoothctl power on"
+notify-cmd "connecting to $device_name" "bluetoothctl connect $device_mac"
 
 # 🤫🤫🤫
 sleep 1

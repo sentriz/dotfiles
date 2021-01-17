@@ -12,19 +12,19 @@ request() {
         "${url}/api/$2"
 }
 
-switch_list() {
+switch-list() {
     request 'GET' 'states' <<<'{}' \
         | jq -r '.[] | select(.entity_id | startswith("switch.")) | "\(.entity_id)\t\(.state)"'
 }
 
-switch_toggle() {
+switch-toggle() {
     request 'POST' 'services/switch/toggle' <<<"{\"entity_id\": \"$1\"}"
 }
 
-switches="$(switch_list)"
+switches="$(switch-list)"
 test -z "$switches" && exit 1
 
 selection="$(dmenu_custom -p 'switch' <<<"$switches")"
 test -z "$selection" && exit 1
 
-switch_toggle "$(awk '{print $1}' <<<"$selection")"
+switch-toggle "$(awk '{print $1}' <<<"$selection")"

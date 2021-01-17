@@ -3,11 +3,11 @@
 # requires:
 # - playerctl
 
-lower() { tr '[:upper:]' '[:lower:]'; }
-truncate() { sed -E 's/(.{40})(.{1,})$/\1…/'; }
-pctl() { playerctl --ignore-player chromium,chrome,qutebrowser,firefox "$@"; }
+function lower() { tr '[:upper:]' '[:lower:]'; }
+function truncate() { sed -E 's/(.{40})(.{1,})$/\1…/'; }
+function pctl() { playerctl --ignore-player chromium,chrome,qutebrowser,firefox "$@"; }
 
-print_status() {
+function print-status() {
     title="$(pctl metadata title)"
     test -z "$title" && echo && return
 
@@ -24,7 +24,7 @@ killall playerctl
     pctl --follow status &
     pctl --follow metadata title
 } | while read; do
-    print_status
+    print-status
 done &
 
 # whenever the button is clicked, toggle playback and print an update
@@ -33,5 +33,5 @@ while read -r button; do
     1) pctl play-pause >/dev/null 2>&1 ;; # left click
     3) pctl stop >/dev/null 2>&1 ;;       # right click
     esac
-    print_status
+    print-status
 done

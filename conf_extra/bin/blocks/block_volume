@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
-ponymix --sink is-muted \
-    && echo "volume muted" \
-    || echo "volume $(ponymix get-volume)%"
+function pony() { ponymix --sink "$@"; }
+
+pony is-muted && echo "volume muted" && exit
+
+volume="$(pony get-volume)"
+test -n "$volume" && echo "volume ${volume}%"
