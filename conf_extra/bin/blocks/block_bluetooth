@@ -17,7 +17,7 @@ function filter-parse() {
     q_bat="BatteryLevel = (-?[0-9]+)"
     q_conn="Connected = true"
     q_name="Name = '([^']+)'"
-    sed -rnz "s/.*${q_bat}[^\}]*${q_conn}[^\}]*${q_name}.*/\1\t\2/gp"
+    sed -rnz "s/.*${q_bat}[^\}]*${q_conn}[^\}]*${q_name}.*/\L\1\t\2/gp"
 }
 
 IFS=$'\t' read -r battery device < <(introspect | filter-parse)
