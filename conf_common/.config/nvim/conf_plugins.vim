@@ -15,20 +15,20 @@ let g:completion_enable_auto_hover = 0
 let g:completion_enable_auto_signature = 1
 let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
 let g:completion_items_priority = {
-    \ 'EnumMember': 11,
-    \ 'Field':      11,
-    \ 'Constant':   11,
-    \ 'Variables':  11,
-    \ 'Method':     10,
-    \ 'Property':   7,
-    \ 'Function':   7,
-    \ 'Variable':   7,
-    \ 'Interfaces': 5,
-    \ 'Class':      5,
-    \ 'Keyword':    4,
-    \ 'UltiSnips':  1,
-    \ 'File':       1,
-\ }
+            \ 'EnumMember': 11,
+            \ 'Field':      11,
+            \ 'Constant':   11,
+            \ 'Variables':  11,
+            \ 'Method':     10,
+            \ 'Property':   7,
+            \ 'Function':   7,
+            \ 'Variable':   7,
+            \ 'Interfaces': 5,
+            \ 'Class':      5,
+            \ 'Keyword':    4,
+            \ 'UltiSnips':  1,
+            \ 'File':       1,
+            \ }
 
 " category "meta"
 " ~/.local/share/nvim/site/pack/meta/opt/

@@ -36,3 +36,9 @@ set statusline+=%{pathshorten(@%)}
 set statusline+=%#statusModifided#%{&modified?'\ \ modified':''}%*  " modified flag
 set statusline+=%=                                                  " /
 set statusline+=\ column\ %c                                        " column number
+
+" lsp signs
+sign define LspDiagnosticsSignError       text=ee texthl=LspDiagnosticsSignError
+sign define LspDiagnosticsSignWarning     text=ww texthl=LspDiagnosticsSignWarning
+sign define LspDiagnosticsSignInformation text=ii texthl=LspDiagnosticsSignInformation
+sign define LspDiagnosticsSignHint        text=hh texthl=LspDiagnosticsSignHint

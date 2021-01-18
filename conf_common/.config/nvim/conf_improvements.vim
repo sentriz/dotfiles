@@ -30,6 +30,11 @@ set undofile
 set virtualedit=block
 set grepprg=rg\ --vimgrep\ --hidden
 
+" completion / lsp
+set omnifunc=v:lua.vim.lsp.omnifunc
+set completeopt=menuone,noinsert,noselect
+set shortmess+=c
+
 " oopsies
 command! Q quit
 command! QA qall
