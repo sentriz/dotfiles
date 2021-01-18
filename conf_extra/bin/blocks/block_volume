@@ -6,3 +6,5 @@ pony is-muted && echo "volume muted" && exit
 
 volume="$(pony get-volume)"
 test -n "$volume" && echo "volume ${volume}%"
+
+exit 0

@@ -21,5 +21,7 @@ function filter-parse() {
 }
 
 IFS=$'\t' read -r battery device < <(introspect | filter-parse)
-test \( -n "$device" \) -a \( "$battery" -gt 0 \) && exec echo "bluetooth $device, $battery%"
-test \( -n "$device" \)                           && exec echo "bluetooth $device"
+test \( -n "$device" \) -a \( "$battery" -gt 0 \) 2>/dev/null && exec echo "bluetooth $device, $battery%"
+test \( -n "$device" \)                           2>/dev/null && exec echo "bluetooth $device"
+
+exit 0
