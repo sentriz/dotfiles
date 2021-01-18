@@ -38,9 +38,6 @@ packadd! machakann/vim-highlightedyank
 packadd! mhartington/formatter.nvim
 packadd! neovim/nvim-lsp
 packadd! nvim-lua/completion-nvim
-packadd! nvim-lua/plenary.nvim
-packadd! nvim-lua/popup.nvim
-packadd! nvim-lua/telescope.nvim
 packadd! rhysd/committia.vim
 packadd! romainl/vim-qf
 packadd! sheerun/vim-polyglot

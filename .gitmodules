@@ -58,15 +58,6 @@
 [submodule "conf_common/.local/share/nvim/site/pack/text/opt/sentriz/vim-print-debug"]
 	path = conf_common/.local/share/nvim/site/pack/text/opt/sentriz/vim-print-debug
 	url = https://github.com/sentriz/vim-print-debug
-[submodule "conf_common/.local/share/nvim/site/pack/meta/opt/nvim-lua/popup.nvim"]
-	path = conf_common/.local/share/nvim/site/pack/meta/opt/nvim-lua/popup.nvim
-	url = https://github.com/nvim-lua/popup.nvim
-[submodule "conf_common/.local/share/nvim/site/pack/meta/opt/nvim-lua/plenary.nvim"]
-	path = conf_common/.local/share/nvim/site/pack/meta/opt/nvim-lua/plenary.nvim
-	url = https://github.com/nvim-lua/plenary.nvim
-[submodule "conf_common/.local/share/nvim/site/pack/meta/opt/nvim-lua/telescope.nvim"]
-	path = conf_common/.local/share/nvim/site/pack/meta/opt/nvim-lua/telescope.nvim
-	url = https://github.com/nvim-lua/telescope.nvim
 [submodule "conf_common/.local/share/nvim/site/pack/meta/opt/nvim-lua/completion-nvim"]
 	path = conf_common/.local/share/nvim/site/pack/meta/opt/nvim-lua/completion-nvim
 	url = https://github.com/nvim-lua/completion-nvim
