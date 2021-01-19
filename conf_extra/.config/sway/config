@@ -367,11 +367,11 @@ for_window [title="^Android Emulator"]                                floating e
 for_window [class="^vysor$"]                                          floating enable
 
 ## floating sticky
-for_window [class="^jellyfin$"]                         floating enable, resize set 1334 550, sticky enable
-for_window [class="^Google-chrome$" title="^Jellyfin$"] floating enable, resize set 1334 550, sticky enable
-for_window [class="^work-meet$"]                        floating enable, resize set 1334 550, sticky enable
-for_window [class="^mpv$"]                              floating enable, resize set 1334 550, sticky enable
-for_window [app_id="^mpv$"]                             floating enable, resize set 1334 550, sticky enable
+for_window [class="^jellyfin$"]                         floating enable, resize set 1334 557, sticky enable
+for_window [class="^Google-chrome$" title="^Jellyfin$"] floating enable, resize set 1334 557, sticky enable
+for_window [class="^work-meet$"]                        floating enable, resize set 1334 557, sticky enable
+for_window [class="^mpv$"]                              floating enable, resize set 1334 557, sticky enable
+for_window [app_id="^mpv$"]                             floating enable, resize set 1334 557, sticky enable
 
 ## bindings: xf86
 bindsym XF86AudioLowerVolume  exec ponymix --sink decrease 2 && $up_block_1
@@ -399,7 +399,7 @@ bindsym $super+F8     exec dmenu_virt
 ## scratchpad
 exec "while :; do $emulator --name scratchpad --exec 'tmux new -A -s scratchpad'; sleep 0.5; done"
 for_window  [app_id="^scratchpad$"] floating enable, move scratchpad, border pixel 2
-bindcode 66 [app_id="^scratchpad$"] scratchpad show, resize set 1334 550, move position center
+bindcode 66 [app_id="^scratchpad$"] scratchpad show, resize set 1334 557, move position center
 
 ## autostarts
 exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
