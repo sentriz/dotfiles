@@ -9,9 +9,9 @@ server="$1"
 download_dir="$2"
 link="$3"
 notify_file="$(mktemp)"
-username="$(secret transmission_${server}_username)"
-password="$(secret transmission_${server}_password)"
-url="$(secret transmission_${server}_rpc_url)"
+username="$(secret transmission_"${server}"_username)"
+password="$(secret transmission_"${server}"_password)"
+url="$(secret transmission_"${server}"_rpc_url)"
 
 notify() {
     notify-send.sh --replace-file "$notify_file" "$@"

@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
-nvim "$(
+IFS=$'\t' read -r path line_no < <(
     rg -g '**/main.py' --line-number --no-heading --smart-case --color=never . "$DOTS_SCRAP_DIR" \
         | fzf \
-        | sed -r 's/([^:]+)\:([0-9]+).*/+\2 \1/g'
-)"
+        | sed -r 's/([^:]+)\:([0-9]+).*/\1\t\2/g'
+)
+
+nvim "$path" "+$line_no"

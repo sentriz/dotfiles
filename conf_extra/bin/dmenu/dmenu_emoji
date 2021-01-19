@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# shellcheck disable=SC1111
+
 # keep up to date with
 # $ curl "https://raw.githubusercontent.com/Mange/rofi-emoji/master/all_emojis.txt" \
 #       | awk '{print $1 "\t" $2 "\t" $4}'
