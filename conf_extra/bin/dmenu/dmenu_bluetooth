@@ -33,13 +33,3 @@ fi
 
 notify-cmd "powering on"                "bluetoothctl power on"
 notify-cmd "connecting to $device_name" "bluetoothctl connect $device_mac"
-
-# 🤫🤫🤫
-sleep 1
-bluetoothctl connect "$device_mac"
-sleep 1
-bluetoothctl connect "$device_mac"
-sleep 1
-bluetoothctl connect "$device_mac"
-sleep 1
-bluetoothctl connect "$device_mac"
