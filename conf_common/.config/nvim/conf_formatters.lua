@@ -1,8 +1,9 @@
--- pretter       npm install -g prettier
--- goimports     go get -u golang.org/x/tools/cmd/goimports
--- clang-format  <package manager> install clang
--- black         pip install --user black
--- luafmt        npm install -g lua-fmt
+-- prettier          npm install -g prettier
+-- prettier template npm install -g prettier prettier-plugin-go-template
+-- goimports         go get -u golang.org/x/tools/cmd/goimports
+-- clang-format      <package manager> install clang
+-- black             pip install --user black
+-- luafmt            npm install -g lua-fmt
 
 local formatter = require "formatter"
 
@@ -67,6 +68,7 @@ formatter.setup(
             ["html"] = {formatter_prettier},
             ["css"] = {formatter_prettier},
             ["json"] = {formatter_prettier},
+            ["template"] = {formatter_prettier},
             ["go"] = {formatter_goimports},
             ["c"] = {formatter_clang},
             ["cpp"] = {formatter_clang},
