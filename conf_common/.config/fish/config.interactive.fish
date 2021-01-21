@@ -46,6 +46,7 @@ fundle plugin 'fisherman/fzf'
 fundle plugin 'fishpkg/fish-humanize-duration'
 fundle plugin 'fisherman/getopts'
 # fundle plugin 'sentriz/fish-pipenv'
+fundle plugin 'brgmnn/fish-docker-compose'
 fundle init
 
 # plugin settings
