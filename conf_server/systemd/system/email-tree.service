@@ -1,0 +1,9 @@
+[Unit]
+Description=Email media tree
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh -c ' \
+	find /mnt/media \
+	| mail -s "status for email-tree.service" -- senan@senan.xyz \
+'

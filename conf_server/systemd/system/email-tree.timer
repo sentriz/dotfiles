@@ -1,0 +1,8 @@
+[Unit]
+Description=Run email-tree.service weekly 
+
+[Timer]
+OnCalendar=weekly
+
+[Install]
+WantedBy=basic.target
