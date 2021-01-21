@@ -1,8 +1,0 @@
-[Unit]
-Description=Run restart-facebook.service daily
-
-[Timer]
-OnCalendar=*-*-* 7:40:00
-
-[Install]
-WantedBy=basic.target

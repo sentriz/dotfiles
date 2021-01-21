@@ -1,8 +1,0 @@
-[Unit]
-Description=Restart mautrix-facebook container
-
-[Service]
-Type=oneshot
-ExecStart=/bin/sh -c ' \
-	docker restart "$(docker ps --filter "name=matrix_facebook_1" --format "{{.ID}}")" \
-'
