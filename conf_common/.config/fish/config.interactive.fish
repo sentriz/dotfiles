@@ -85,7 +85,7 @@ alias nvim __super_vim
 
 function __package_sudo
     test (count $argv) -eq 0; and return
-    if contains "$argv[1]" 'npm' 'yarn' 'python' 'python2' 'python3' 'pip3' 'pip' 'go'
+    if contains -- "$argv[1]" 'npm' 'yarn' 'python' 'python2' 'python3' 'pip3' 'pip' 'go'
         echo "don't do `sudo $argv[1]`"
         return 1
     end
