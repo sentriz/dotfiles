@@ -43,7 +43,7 @@ end
 function formatter_shfmt()
     return {
         exe = "shfmt",
-        args = {"-i", 4, "-bn", "-kp", "-"},
+        args = {"-i", 4, "-bn", "-"},
         stdin = true
     }
 end
