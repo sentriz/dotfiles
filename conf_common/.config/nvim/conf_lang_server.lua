@@ -5,6 +5,7 @@
 -- python      npm install -g pyright
 -- js, ts      npm install -g typescript typescript-language-server
 -- vue         npm install -g typescript vls
+-- svelte      npm install -g svelte svelte-language-server
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] =
     vim.lsp.with(
@@ -197,6 +198,15 @@ configs.custom_java = {
     }
 }
 
+-- -- svelte -- --
+configs.custom_svelte = {
+    default_config = {
+        cmd = {"svelteserver", "--stdio"},
+        filetypes = {"svelte"},
+        root_dir = util.root_pattern("package.json", ".git")
+    }
+}
+
 local args = {
     on_attach = completion.on_attach
 }
@@ -210,3 +220,4 @@ lsp.custom_typescript.setup(args)
 lsp.custom_vue.setup(args)
 lsp.custom_dart.setup(args)
 lsp.custom_java.setup(args)
+lsp.custom_svelte.setup(args)

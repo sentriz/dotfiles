@@ -1,5 +1,6 @@
 -- prettier          npm install -g prettier
 -- prettier template npm install -g prettier prettier-plugin-go-template
+-- prettier svelte   npm install -g prettier prettier-plugin-svelte svelte
 -- goimports         go get -u golang.org/x/tools/cmd/goimports
 -- clang-format      <package manager> install clang
 -- black             pip install --user black
@@ -69,6 +70,7 @@ formatter.setup(
             ["css"] = {formatter_prettier},
             ["json"] = {formatter_prettier},
             ["template"] = {formatter_prettier},
+            ["svelte"] = {formatter_prettier},
             ["go"] = {formatter_goimports},
             ["c"] = {formatter_clang},
             ["cpp"] = {formatter_clang},
