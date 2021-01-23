@@ -18,6 +18,7 @@ set -gx FNM_LOGLEVEL 'info'
 set -gx NPM_CONFIG_USERCONFIG "$XDG_CONFIG_HOME/npm/config"
 set -gx NPM_CONFIG_CACHE "$XDG_CACHE_HOME/npm"
 set -gx NPM_CONFIG_TMP "$XDG_RUNTIME_DIR/npm"
+set -gx NPM_CONFIG_PREFIX "$HOME/.local"
 set -gx COMPOSE_DOCKER_CLI_BUILD '1'
 set -gx DOCKER_BUILDKIT '1'
 set -gx ANDROID_SDK_ROOT '/opt/android-sdk'
