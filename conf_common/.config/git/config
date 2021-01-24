@@ -88,3 +88,5 @@
 	ui = auto
 [icdiff]
 	options = --highlight --line-numbers
+[init]
+	defaultBranch = master
