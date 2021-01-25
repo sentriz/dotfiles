@@ -1,1 +1,0 @@
-setlocal statusline=qf\ \/\ ll
