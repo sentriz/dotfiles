@@ -4,6 +4,6 @@ Description=Delete gonic transcodes
 [Service]
 Type=oneshot
 ExecStart=/bin/sh -c ' \
-	rm --one-file-system -rfv /opt/containers/gonic/cache/* 2>&1 \
+	rm --one-file-system -rfv /opt/containers/gonic/cache/*.opus 2>&1 \
 	| mail -s "status for clean-gonic.service" -- senan@senan.xyz \
 '
