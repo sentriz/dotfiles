@@ -29,6 +29,7 @@ set undodir=~/.cache/vimundo
 set undofile
 set virtualedit=block
 set grepprg=rg\ --vimgrep\ --hidden
+set tabstop=4
 
 " completion / lsp
 set omnifunc=v:lua.vim.lsp.omnifunc
