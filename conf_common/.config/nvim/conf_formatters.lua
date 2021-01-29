@@ -5,6 +5,7 @@
 -- clang-format      <package manager> install clang
 -- black             pip install --user black
 -- luafmt            npm install -g lua-fmt
+-- sql-formatter     npm install -g sql-formatter
 
 local formatter = require "formatter"
 
@@ -56,6 +57,14 @@ function formatter_luafmt()
     }
 end
 
+function formatter_sql()
+    return {
+        exe = "sql-formatter",
+        args = {"--uppercase", "--indent", 4},
+        stdin = true
+    }
+end
+
 formatter.setup(
     {
         logging = false,
@@ -76,7 +85,8 @@ formatter.setup(
             ["cpp"] = {formatter_clang},
             ["python"] = {formatter_black},
             ["sh"] = {formatter_shfmt},
-            ["lua"] = {formatter_luafmt}
+            ["lua"] = {formatter_luafmt},
+            ["sql"] = {formatter_sql}
         }
     }
 )
