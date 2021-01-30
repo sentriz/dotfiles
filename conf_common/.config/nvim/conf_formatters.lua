@@ -20,7 +20,7 @@ end
 function formatter_goimports()
     return {
         exe = "goimports",
-        args = {"-srcdir", vim.api.nvim_buf_get_name(0)},
+        args = {"-srcdir", vim.api.nvim_buf_get_name(0), "-local", "github.com/sentriz,go.senan.xyz"},
         stdin = true
     }
 end
