@@ -68,7 +68,11 @@ configs.custom_go = {
                 usePlaceholders = true,
                 completeUnimported = true,
                 deepCompletion = true,
-                staticcheck = true
+                staticcheck = true,
+                analyses = {
+                    unreachable = true,
+                    unusedparams = true
+                }
             },
             capabilities = {
                 textDocument = {
