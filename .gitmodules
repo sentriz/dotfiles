@@ -64,3 +64,6 @@
 [submodule "conf_common/.local/share/nvim/site/pack/meta/opt/mhartington/formatter.nvim"]
 	path = conf_common/.local/share/nvim/site/pack/meta/opt/mhartington/formatter.nvim
 	url = https://github.com/mhartington/formatter.nvim
+[submodule "conf_common/.local/share/nvim/site/pack/meta/opt/RRethy/vim-illuminate"]
+	path = conf_common/.local/share/nvim/site/pack/meta/opt/RRethy/vim-illuminate
+	url = https://github.com/RRethy/vim-illuminate

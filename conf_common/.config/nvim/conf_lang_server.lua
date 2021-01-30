@@ -21,6 +21,7 @@ local lsp = require "lspconfig"
 local configs = require "lspconfig/configs"
 local util = require "lspconfig/util"
 local completion = require "completion"
+local illuminate = require "illuminate"
 
 -- -- bash -- --
 configs.custom_bash = {
@@ -208,7 +209,10 @@ configs.custom_svelte = {
 }
 
 local args = {
-    on_attach = completion.on_attach
+    on_attach = function(client)
+        completion.on_attach(client)
+        illuminate.on_attach(client)
+    end
 }
 
 lsp.custom_bash.setup(args)

@@ -9,6 +9,10 @@ highlight mkdLineBreak guifg=none guibg=none
 highlight yamlKey gui=bold
 highlight jsExport gui=bold
 
+highlight def link LspReferenceText CursorLine
+highlight def link LspReferenceWrite CursorLine
+highlight def link LspReferenceRead CursorLine
+
 " paren/block matching
 highlight clear ParenMatch
 highlight clear MatchParen

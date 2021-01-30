@@ -32,6 +32,7 @@ let g:completion_items_priority = {
 
 " category "meta"
 " ~/.local/share/nvim/site/pack/meta/opt/
+packadd! RRethy/vim-illuminate
 packadd! christoomey/vim-tmux-navigator
 packadd! inkarkat/SyntaxAttr.vim
 packadd! machakann/vim-highlightedyank
