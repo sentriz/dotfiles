@@ -30,7 +30,7 @@ let g:completion_items_priority = {
             \ 'File':       1,
             \ }
 
-let g:Illuminate_delay = 200
+let g:Illuminate_delay = 500
 
 " category "meta"
 " ~/.local/share/nvim/site/pack/meta/opt/
