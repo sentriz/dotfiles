@@ -18,7 +18,6 @@ set -gx ANDROID_SDK_ROOT '/opt/android-sdk'
 set -gx ANDROID_HOME '/opt/android-sdk'
 set -gx JAVA_HOME '/usr/lib/jvm/java-8-openjdk/'
 set -gx JAVA_OPTS '-XX:+IgnoreUnrecognizedVMOptions'
-# set -gx JAVA_OPTS '-XX:+IgnoreUnrecognizedVMOptions --add-modules java.se.ee'
 
 # dotfiles settings
 set -gx DOTS_SCRAP_DIR "$HOME/scrap"
@@ -59,10 +58,3 @@ for path in $possible_paths
     test -d "$path"
     and set -gx fish_user_paths "$path" $fish_user_paths
 end
-
-sh -c 'rm -r \
-    $HOME/.lesshst \
-    $HOME/.*_history \
-    $HOME/.gore \
-    $HOME/.wget-hsts \
-' > /dev/null 2>&1 &
