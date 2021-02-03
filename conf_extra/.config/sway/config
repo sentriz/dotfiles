@@ -403,21 +403,6 @@ bindcode 66 [app_id="^scratchpad$"] scratchpad show, resize set 1334 557, move p
 
 ## autostarts
 exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-exec kanshi
-exec wl-gammactld
-exec wl-paste \
-    --type text \
-    --watch \
-    clipman store \
-        --max-items 500 \
-        --no-persist \
-        --no-single \
-        --unix
-exec clipman restore
-exec swayidle -w \
-    timeout 290  "notify-send.sh 'locking screen in 10 seconds'" \
-    timeout 300  "$lock" \
-    before-sleep "$lock"
 exec mako \
     --background-color "$colour_grey" \
     --margin "$default_gap,0" \
@@ -428,6 +413,23 @@ exec mako \
     --anchor bottom-right \
     --ignore-timeout 1 \
     --default-timeout 4000
+exec kanshi
+exec swayidle -w \
+    timeout 290  "notify-send.sh 'locking screen in 10 seconds'" \
+    timeout 300  "$lock" \
+    before-sleep "$lock"
+
+exec clipman restore
+exec wl-paste \
+    --type text \
+    --watch \
+    clipman store \
+        --max-items 500 \
+        --no-persist \
+        --no-single \
+        --unix
+
+exec wlsunset -l 53.3 -L -6.2
 exec wlr-sunclock \
    --margins "0,0,0,$default_gap" \
    --width 800 \
@@ -435,4 +437,7 @@ exec wlr-sunclock \
    --anchors br \
    --border-width 2 \
    --monitor-index 1
-exec wlsunset -l 53.3 -L -6.2
+
+exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK SSH_AUTH_SOCK
+exec dbus-update-activation-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK SSH_AUTH_SOCK
+exec systemd-notify --ready
