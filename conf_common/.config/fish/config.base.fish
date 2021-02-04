@@ -1,3 +1,7 @@
+set -gx XDG_CACHE_HOME "$HOME/.cache"
+set -gx XDG_CONFIG_HOME "$HOME/.config"
+set -gx XDG_DATA_HOME "$HOME/.local/share"
+
 set -gx EDITOR 'nvim'
 set -gx RIPGREP_CONFIG_PATH "$XDG_CONFIG_HOME/ripgreprc"
 set -gx FZF_DEFAULT_OPTS "--info hidden --color bw"

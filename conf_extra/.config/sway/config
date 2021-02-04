@@ -438,6 +438,6 @@ exec wlr-sunclock \
    --border-width 2 \
    --monitor-index 1
 
-exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK SSH_AUTH_SOCK
-exec dbus-update-activation-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK SSH_AUTH_SOCK
+exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK SSH_AUTH_SOCK XDG_CURRENT_DESKTOP
+exec dbus-update-activation-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK SSH_AUTH_SOCK XDG_CURRENT_DESKTOP
 exec systemd-notify --ready
