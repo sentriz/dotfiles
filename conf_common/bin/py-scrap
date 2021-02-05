@@ -1,9 +1,16 @@
 #!/usr/bin/env bash
 
-path="$(mktemp -d "$DOTS_SCRAP_DIR/python.XXX")/main.py"
+dir="$(mktemp -d "$DOTS_SCRAP_DIR/python.XXX")"
 
+file="main.py"
+path="$dir/$file"
+
+markerfile=".scrap"
+markerpath="$dir/$markerfile"
+
+touch "$markerpath"
 cat >"$path" <<EOL
-# $ python "$path"
+# $ cd "$dir"; and python "$file"
 
 def main():
     pass
