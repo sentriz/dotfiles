@@ -19,8 +19,14 @@ set -gx XDG_SESSION_TYPE 'wayland'
 # - ~/.config/gtk-3.0/settings.ini
 set -gx GTK_THEME "Arc:dark"
 
-set -gx WLR_NO_HARDWARE_CURSORS 1
-set -gx CLUTTER_BACKEND 'wayland'
-set -gx QT_QPA_PLATFORM 'wayland'
-set -gx QT_WAYLAND_DISABLE_WINDOWDECORATION 1
 # set -gx GDK_BACKEND 'wayland'
+set -gx CLUTTER_BACKEND 'wayland'
+set -gx ECORE_EVAS_ENGINE 'wayland-egl'
+set -gx ELM_ENGINE 'wayland_egl'
+set -gx MOZ_ENABLE_WAYLAND 1
+set -gx NO_AT_BRIDGE 1
+set -gx QT_QPA_PLATFORM 'wayland-egl'
+set -gx QT_WAYLAND_DISABLE_WINDOWDECORATION 1
+set -gx SDL_VIDEODRIVER 'wayland'
+set -gx WLR_NO_HARDWARE_CURSORS 1
+set -gx _JAVA_AWT_WM_NONREPARENTING 1

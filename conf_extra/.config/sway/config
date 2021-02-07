@@ -429,7 +429,6 @@ exec wl-paste \
         --no-single \
         --unix
 
-exec wlsunset -l 53.3 -L -6.2
 exec wlr-sunclock \
    --margins "0,0,0,$default_gap" \
    --width 800 \
@@ -437,7 +436,8 @@ exec wlr-sunclock \
    --anchors br \
    --border-width 2 \
    --monitor-index 1
+exec wlsunset -l 53.3 -L -6.2
 
 exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK SSH_AUTH_SOCK XDG_CURRENT_DESKTOP
-exec dbus-update-activation-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK SSH_AUTH_SOCK XDG_CURRENT_DESKTOP
-exec systemd-notify --ready
+exec hash dbus-update-activation-environment 2>/dev/null && \
+     dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK SSH_AUTH_SOCK XDG_CURRENT_DESKTOP
