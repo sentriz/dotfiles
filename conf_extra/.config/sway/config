@@ -401,7 +401,12 @@ exec "while :; do $emulator --name scratchpad --exec 'tmux new -A -s scratchpad'
 for_window  [app_id="^scratchpad$"] floating enable, move scratchpad, border pixel 2
 bindcode 66 [app_id="^scratchpad$"] scratchpad show, resize set 1334 557, move position center
 
+
 ## autostarts
+exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK SSH_AUTH_SOCK XDG_CURRENT_DESKTOP
+exec hash dbus-update-activation-environment 2>/dev/null && \
+     dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK SSH_AUTH_SOCK XDG_CURRENT_DESKTOP
+
 exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec mako \
     --background-color "$colour_grey" \
@@ -437,7 +442,3 @@ exec wlr-sunclock \
    --border-width 2 \
    --monitor-index 1
 exec wlsunset -l 53.3 -L -6.2
-
-exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK SSH_AUTH_SOCK XDG_CURRENT_DESKTOP
-exec hash dbus-update-activation-environment 2>/dev/null && \
-     dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK SSH_AUTH_SOCK XDG_CURRENT_DESKTOP
