@@ -6,6 +6,7 @@
 -- js, ts      npm install -g typescript typescript-language-server
 -- vue         npm install -g typescript vls
 -- svelte      npm install -g svelte svelte-language-server
+-- tailwind    latest vsix file https://github.com/tailwindlabs/tailwindcss-intellisense
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] =
     vim.lsp.with(
@@ -212,6 +213,15 @@ configs.custom_svelte = {
     }
 }
 
+-- -- tailwind -- --
+configs.custom_tailwind = {
+    default_config = {
+        cmd = {"node", vim.env.DOTS_PROJECTS_DIR .. "/tailwind-lsp/extension/dist/server/index.js", "--stdio"},
+        filetypes = {"html"},
+        root_dir = util.root_pattern("package.json", ".git")
+    }
+}
+
 local args = {
     on_attach = function(client)
         completion.on_attach(client)
@@ -229,3 +239,4 @@ lsp.custom_vue.setup(args)
 lsp.custom_dart.setup(args)
 lsp.custom_java.setup(args)
 lsp.custom_svelte.setup(args)
+lsp.custom_tailwind.setup(args)
