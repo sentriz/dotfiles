@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
 
-function pony() { ponymix --sink "$@"; }
+out=""
 
-pony is-muted && echo "volume muted" && exit
+ponymix --sink is-muted \
+    && out+="muted" \
+    || out+="$(ponymix --sink get-volume || echo "-1")%"
 
-volume="$(pony get-volume)"
-test -n "$volume" && echo "volume ${volume}%"
+ponymix --input is-muted \
+    && out+=", mic muted"
 
-exit 0
+echo "volume $out"
