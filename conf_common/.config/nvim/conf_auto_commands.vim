@@ -1,3 +1,8 @@
+autocmd FileType markdown            setlocal spell
+autocmd FileType gitcommit           setlocal spell
+autocmd FileType yaml                setlocal cursorcolumn
+autocmd FileType yaml.docker-compose setlocal cursorcolumn
+
 augroup AutoCursorLastPosition
     autocmd!
     autocmd BufReadPost *
