@@ -23,6 +23,7 @@ local configs = require "lspconfig/configs"
 local util = require "lspconfig/util"
 local completion = require "completion"
 local illuminate = require "illuminate"
+local sqls = require "sqls"
 
 -- -- bash -- --
 configs.custom_bash = {
@@ -222,10 +223,30 @@ configs.custom_tailwind = {
     }
 }
 
+-- -- sql -- --
+configs.custom_sql = {
+    default_config = {
+        cmd = {"sqls", "-config", "/home/senan/.config/sqls/config.yml"},
+        filetypes = {"sql"},
+        root_dir = function(filename)
+            return util.path.dirname(filename)
+        end
+    }
+}
+
 local args = {
     on_attach = function(client)
         completion.on_attach(client)
         illuminate.on_attach(client)
+    end
+}
+
+local sqls_args = {
+    on_attach = function(client)
+        client.resolved_capabilities.execute_command = true
+        completion.on_attach(client)
+        illuminate.on_attach(client)
+        sqls.setup {}
     end
 }
 
@@ -240,3 +261,4 @@ lsp.custom_dart.setup(args)
 lsp.custom_java.setup(args)
 lsp.custom_svelte.setup(args)
 lsp.custom_tailwind.setup(args)
+lsp.custom_sql.setup(sqls_args)
