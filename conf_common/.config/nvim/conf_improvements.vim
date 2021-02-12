@@ -1,6 +1,6 @@
-" enable filetype detection and plugin loading
+" set filetype detection on, indent on, plugin off
 filetype on
-filetype plugin on
+filetype plugin off
 
 " basics
 set autoread
