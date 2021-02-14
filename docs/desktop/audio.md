@@ -1,7 +1,8 @@
 ### packages
 
-- pipewire-common-bluez5-git
-- pipewire-common-alsa-git
-- pipewire-common-jack-git
-- pipewire-common-pulse-git
+- pipewire-full-alsa-git
+- pipewire-full-bluez5-git
+- pipewire-full-git
+- pipewire-full-jack-git
+- pipewire-full-pulse-git
 - pipewire-jack-dropin
