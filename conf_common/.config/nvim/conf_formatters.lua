@@ -60,7 +60,7 @@ end
 function formatter_sql()
     return {
         exe = "sql-formatter",
-        args = {"--uppercase", "--indent", 4},
+        args = {"--uppercase", "--indent", 4, "--lines-between-queries", 3},
         stdin = true
     }
 end
