@@ -17,6 +17,7 @@ set $alt   Mod1
 floating_modifier $super
 
 ## var helpers
+set $lock_warning notify-send.sh 'locking screen in 10 seconds'
 set $lock swaylock \
     --daemonize \
     --no-unlock-indicator \
@@ -398,14 +399,13 @@ exec "while :; do $emulator --name scratchpad --exec 'tmux new -A -s scratchpad'
 for_window  [app_id="^scratchpad$"] floating enable, move scratchpad, border pixel 2
 bindcode 66 [app_id="^scratchpad$"] scratchpad show, resize set 1334 557, move position center
 
-
 ## autostarts
-exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK SSH_AUTH_SOCK XDG_CURRENT_DESKTOP
-exec hash dbus-update-activation-environment 2>/dev/null && \
+exec_always systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK SSH_AUTH_SOCK XDG_CURRENT_DESKTOP
+exec_always hash dbus-update-activation-environment 2>/dev/null && \
      dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK SSH_AUTH_SOCK XDG_CURRENT_DESKTOP
 
-exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-exec mako \
+exec_always 'pkill kanshi; exec kanshi'
+exec_always 'pkill mako; exec mako \
     --background-color "$colour_grey" \
     --margin "$default_gap" \
     --font "$default_font" \
@@ -414,13 +414,13 @@ exec mako \
     --text-color "#FFFFFF" \
     --anchor bottom-right \
     --ignore-timeout 1 \
-    --default-timeout 4000
-exec kanshi
+    --default-timeout 4000'
+
+exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec swayidle -w \
-    timeout 290  "notify-send.sh 'locking screen in 10 seconds'" \
+    timeout 290  "$lock_warning" \
     timeout 300  "$lock" \
     before-sleep "$lock"
-
 exec clipman restore
 exec wl-paste \
     --type text \
@@ -431,6 +431,7 @@ exec wl-paste \
         --no-single \
         --unix
 
+exec sleep 5 && wlsunset -l 53.3 -L -6.2
 exec sleep 5 && wlr-sunclock \
    --margins "0,$default_gap,0,$default_gap" \
    --width 800 \
@@ -438,4 +439,3 @@ exec sleep 5 && wlr-sunclock \
    --anchors br \
    --border-width 2 \
    --monitor-index 1
-exec sleep 5 && wlsunset -l 53.3 -L -6.2
