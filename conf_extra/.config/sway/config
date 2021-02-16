@@ -46,9 +46,6 @@ titlebar_border_thickness 0
 titlebar_padding 2
 default_border pixel 2
 gaps inner $default_gap
-gaps top -$default_gap
-gaps right -$default_gap
-gaps left -$default_gap
 font $default_font
 popup_during_fullscreen smart
 
@@ -410,7 +407,7 @@ exec hash dbus-update-activation-environment 2>/dev/null && \
 exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec mako \
     --background-color "$colour_grey" \
-    --margin "$default_gap,0" \
+    --margin "$default_gap" \
     --font "$default_font" \
     --border-size 4 \
     --border-color "#FFFFFF" \
@@ -435,7 +432,7 @@ exec wl-paste \
         --unix
 
 exec sleep 5 && wlr-sunclock \
-   --margins "0,0,0,$default_gap" \
+   --margins "0,$default_gap,0,$default_gap" \
    --width 800 \
    --layer bottom \
    --anchors br \
