@@ -434,11 +434,11 @@ exec wl-paste \
         --no-single \
         --unix
 
-exec wlr-sunclock \
+exec sleep 5 && wlr-sunclock \
    --margins "0,0,0,$default_gap" \
    --width 800 \
    --layer bottom \
    --anchors br \
    --border-width 2 \
    --monitor-index 1
-exec wlsunset -l 53.3 -L -6.2
+exec sleep 5 && wlsunset -l 53.3 -L -6.2
