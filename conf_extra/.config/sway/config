@@ -137,7 +137,6 @@ bindsym $super+$alt+i     mode $mode_i3
 bindsym $super+$alt+s     mode $mode_scrot
 bindsym $super+$alt+g     mode $mode_gaps
 bindsym $super+$alt+c     mode $mode_colour
-bindsym $super+$alt+v     mode $mode_volume
 
 set $mode_resize_tile "resize mode: h|j|k|l"
 mode $mode_resize_tile {
@@ -231,14 +230,6 @@ set $mode_gaps "gaps: [o]uter, [i]nner"
 mode $mode_gaps {
     bindsym o      mode $mode_gaps_outer
     bindsym i      mode $mode_gaps_inner
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
-
-set $mode_volume "volume mode: -|+"
-mode $mode_volume {
-    bindsym minus exec amixer sset Master 5%- && $up_block_1
-    bindsym equal exec amixer sset Master 5%+ && $up_block_1
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
