@@ -8,7 +8,7 @@ function pctl() {
     playerctl --no-messages --ignore-player chromium,chrome,qutebrowser,firefox "$@" 2>/dev/null
 }
 
-pctl --follow metadata -f "{{lc(status)}} ‘{{title}}’" &
+pctl --follow metadata -f "{{lc(status)}} ‘{{trunc(title, 40)}}’" &
 trap "kill $!" EXIT
 
 while read -r button; do
