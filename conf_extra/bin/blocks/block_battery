@@ -11,7 +11,7 @@ echo "battery ${bat_level}%"
 # notify if battery is low
 noti_charge_threshold='10' # percent charge to warn about
 noti_time_limit='10'       # minutes minimum to wait to wait between re-notify
-noti_flag_file='/tmp/battery_warning_noti_flag'
+noti_flag_file="$XDG_CACHE_HOME/battery_warning_noti_flag"
 test ! "$bat_level" -le "$noti_charge_threshold" && exit
 
 find "$noti_flag_file" -mmin +"$noti_time_limit" -delete

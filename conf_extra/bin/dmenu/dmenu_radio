@@ -5,7 +5,7 @@ if ! type -p mpv >/dev/null; then
     exit 1
 fi
 
-pid_file='/tmp/mpv_radio_pid'
+pid_file="$XDG_CACHE_HOME/mpv_radio_pid"
 stations="$(
     find \
         "$DOTS_RADIO_DIR" \
