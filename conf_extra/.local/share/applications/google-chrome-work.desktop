@@ -1,9 +1,9 @@
 [Desktop Entry]
 Version=1.0
-Name=Google Chrome (Work)
+Name=Chrome (Work)
 GenericName=Web Browser
 StartupWMClass=Google-chrome
-Exec=google-chrome-stable --no-first-run --no-default-browser-check --profile-directory="__profile_work" %U
+Exec=chromium --no-first-run --no-default-browser-check --profile-directory="__profile_work" %U
 StartupNotify=true
 Terminal=false
 Icon=google-chrome
@@ -15,10 +15,10 @@ Actions=new-window;new-private-window;
 [Desktop Action new-window]
 Name=New Window
 StartupWMClass=Google-chrome
-Exec=google-chrome-stable --no-first-run --no-default-browser-check --profile-directory="__profile_work"
+Exec=chromium --no-first-run --no-default-browser-check --profile-directory="__profile_work"
 
 [Desktop Action new-private-window]
 Name=New Incognito Window
 StartupWMClass=Google-chrome
-Exec=google-chrome-stable --no-first-run --no-default-browser-check --profile-directory="__profile_work" --incognito
+Exec=chromium --no-first-run --no-default-browser-check --profile-directory="__profile_work" --incognito
 MimeType=x-scheme-handler/unknown;x-scheme-handler/about;application/pdf;application/rdf+xml;application/rss+xml;application/xhtml+xml;application/xhtml_xml;application/xml;image/gif;image/jpeg;image/png;image/webp;text/html;text/xml;x-scheme-handler/ftp;x-scheme-handler/http;x-scheme-handler/https;

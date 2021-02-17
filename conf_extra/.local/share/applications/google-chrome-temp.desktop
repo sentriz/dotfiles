@@ -1,6 +1,6 @@
 [Desktop Entry]
 Version=1.0
-Name=Google Chrome (Temporary)
+Name=Chrome (Temporary)
 GenericName=Web Browser
 StartupWMClass=Google-chrome
 Exec=chrome --delete %U
