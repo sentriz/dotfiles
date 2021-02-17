@@ -356,6 +356,7 @@ for_window [app_id="^Manjaro.manjaro-settings-manager$"]              floating e
 for_window [title="^Emulator$"]                                       floating enable
 for_window [title="^Android Emulator"]                                floating enable
 for_window [class="^vysor$"]                                          floating enable
+for_window [app_id="^wev$"]                                           floating enable
 
 ## floating sticky
 for_window [class="^jellyfin$"]                         floating enable, resize set 1334 557, sticky enable
