@@ -38,11 +38,11 @@ set $colour_grey       #303030
 set $colour_grey_alpha #30303060
 set $colour_blue       #0088CC
 set $colour_red_alpha  #ff000090
+set $colour_inactive   #8D8D8D
 
 ## basic appearance
-smart_borders off
+smart_borders on
 smart_gaps off
-hide_edge_borders both
 titlebar_border_thickness 0
 titlebar_padding 2
 default_border pixel 2
@@ -93,10 +93,10 @@ bar {
     colors urgent_workspace   $colour_red_alpha  $colour_red_alpha  #ffffff
 }
 
-## window colours       border        backg        text    indic        child
-client.focused          $colour_blue  $colour_blue #ffffff #ffffff      #ffffff
-client.focused_inactive $colour_blue  $colour_blue #ffffff $colour_grey $colour_grey
-client.unfocused        $colour_grey  $colour_grey #ffffff $colour_grey $colour_grey
+## window colours       border           background       text         indicator        child
+client.focused          #ffffff          #ffffff          $colour_grey #ffffff          #ffffff
+client.focused_inactive #ffffff          #ffffff          $colour_grey #ffffff          #ffffff
+client.unfocused        $colour_inactive $colour_inactive #ffffff      $colour_inactive $colour_inactive
 
 ## bindings: window/float
 bindsym $super+q     kill
@@ -301,6 +301,8 @@ assign [class="Inkscape"]                         $work_8
 assign [app_id="org.inkscape.Inkscape"]           $work_8
 assign [class="libreoffice-*"]                    $work_9
 
+for_window [floating] border full
+
 ## don't lock for video
 for_window [class="^Firefox$"]                          inhibit_idle fullscreen
 for_window [app_id="^firefox$"]                         inhibit_idle fullscreen
@@ -387,7 +389,7 @@ bindsym $super+F8     exec dmenu_virt
 
 ## scratchpad
 exec "while :; do $emulator --name scratchpad --exec 'tmux new -A -s scratchpad'; sleep 0.5; done"
-for_window  [app_id="^scratchpad$"] floating enable, move scratchpad, border pixel 2
+for_window  [app_id="^scratchpad$"] floating enable, move scratchpad
 bindcode 66 [app_id="^scratchpad$"] scratchpad show, resize set 1334 557, move position center
 
 ## autostarts
