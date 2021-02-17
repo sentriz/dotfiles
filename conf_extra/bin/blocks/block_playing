@@ -1,19 +1,17 @@
 #!/usr/bin/env bash
-# shellcheck disable=SC2064
 
 # requires:
 # - playerctl
 
 function pctl() {
-    playerctl --no-messages --ignore-player chromium,chrome,qutebrowser,firefox "$@" 2>/dev/null
+    playerctl --ignore-player chromium,chrome,qutebrowser,firefox "$@" 2>/dev/null
 }
 
-killall playerctl 2>/dev/null
-pctl --follow metadata -f "{{lc(status)}} ‘{{trunc(title, 40)}}’" &
+case "$BLOCK_BUTTON" in
+1) pctl play-pause ;; # left click
+3) pctl stop ;;       # right click
+esac
 
-while read -r button; do
-    case "$button" in
-    1) pctl play-pause >/dev/null ;; # left click
-    3) pctl stop >/dev/null ;;       # right click
-    esac
-done
+pctl metadata -f "{{lc(status)}} ‘{{trunc(title, 40)}}’"
+
+exit 0

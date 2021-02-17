@@ -2,7 +2,7 @@ command=~/bin/blocks/block_$BLOCK_NAME
 interval=5
 
 [playing]
-interval=persist
+signal=3
 
 [volume]
 color=#7cb342
