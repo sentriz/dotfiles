@@ -14,11 +14,6 @@ set -gx XDG_CURRENT_DESKTOP 'sway'
 set -gx XDG_DATA_DIRS "/usr/local/share:/usr/share:/var/lib/flatpak/exports/share:$XDG_DATA_HOME/flatpak/exports/share"
 set -gx XDG_SESSION_TYPE 'wayland'
 
-# should be reflected in:
-# - ~/.gtkrc-2.0
-# - ~/.config/gtk-3.0/settings.ini
-set -gx GTK_THEME "Arc:dark"
-
 # set -gx GDK_BACKEND 'wayland'
 set -gx CLUTTER_BACKEND 'wayland'
 set -gx ECORE_EVAS_ENGINE 'wayland-egl'

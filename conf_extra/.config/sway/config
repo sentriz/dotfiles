@@ -391,9 +391,10 @@ for_window  [app_id="^scratchpad$"] floating enable, move scratchpad, border pix
 bindcode 66 [app_id="^scratchpad$"] scratchpad show, resize set 1334 557, move position center
 
 ## autostarts
-exec_always systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK SSH_AUTH_SOCK XDG_CURRENT_DESKTOP
-exec_always hash dbus-update-activation-environment 2>/dev/null && \
-     dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK SSH_AUTH_SOCK XDG_CURRENT_DESKTOP
+exec_always {
+    gsettings set org.gnome.desktop.interface gtk-theme 'Arc-Dark'
+    gsettings set org.gnome.desktop.interface font-name 'DejaVu Sans 10'
+}
 
 exec_always 'pkill kanshi; exec kanshi'
 exec_always 'pkill mako; exec mako \
@@ -430,3 +431,7 @@ exec sleep 5 && wlr-sunclock \
    --anchors br \
    --border-width 2 \
    --monitor-index 1
+
+exec_always systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK SSH_AUTH_SOCK XDG_CURRENT_DESKTOP
+exec_always hash dbus-update-activation-environment 2>/dev/null && \
+     dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK SSH_AUTH_SOCK XDG_CURRENT_DESKTOP
