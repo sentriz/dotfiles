@@ -5,15 +5,26 @@ if ! type -p ponymix >/dev/null; then
     exit 1
 fi
 
-sink_row="$(
+function get-sinks() {
     ponymix list --short --sink \
-        | awk -F '\t' '{print $2 "\t" tolower($4)}' \
-        | dmenu_custom -p 'sink'
-)"
+        | awk -F '\t' '{print $2 "\t" tolower($4)}'
+}
+
+# $1 sink id
+function set-default-sink() {
+    ponymix set-default --sink --device "$1"
+}
+
+# $1 sink id
+function move-to-sink() {
+    ponymix list --short --sink-input \
+        | awk -F '\t' '{print $2}' \
+        | xargs -I {} ponymix --sink-input --device {} move "$1"
+}
+
+sink_row="$(get-sinks | dmenu_custom -p 'sink')"
 test -z "$sink_row" && exit 1
 
 sink_id="$(awk -F '\t' '{print $1}' <<<"$sink_row")"
-ponymix set-default --sink --device "$sink_id"
-ponymix list --short --sink-input \
-    | awk -F '\t' '{print $2}' \
-    | xargs -L 1 -I {} ponymix --sink-input --device {} move "$sink_id"
+set-default-sink "$sink_id"
+move-to-sink "$sink_id"

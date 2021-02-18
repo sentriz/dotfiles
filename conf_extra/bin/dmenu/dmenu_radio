@@ -5,15 +5,18 @@ if ! type -p mpv >/dev/null; then
     exit 1
 fi
 
-pid_file="$XDG_CACHE_HOME/mpv_radio_pid"
-stations="$(
+function get-stations() {
     find \
         "$DOTS_RADIO_DIR" \
         -maxdepth 1 \
         -not -name '.st*' \
         -type f \
         -printf "play %f\n"
-)"
+}
+
+pid_file="$XDG_CACHE_HOME/mpv_radio_pid"
+
+stations="$(get-stations)"
 selection="$(printf "%s\n" "$stations" "stop" | dmenu_custom -p 'station')"
 test -z "$selection" && exit 1
 
