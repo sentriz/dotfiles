@@ -3,7 +3,12 @@
 # requires:
 # - networkmanager
 
-profile="$(nmcli -t -f name,type,state connection | grep -Po '[^:]+(?=:vpn:activated)')"
+function get-profile() {
+    nmcli -t -f name,type,state connection \
+        | grep -Po '[^:]+(?=:vpn:activated)'
+}
+
+profile="$(get-profile)"
 test -z "$profile" && exit
 
 echo "vpn $profile"

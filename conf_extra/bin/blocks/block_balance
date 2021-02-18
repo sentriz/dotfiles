@@ -20,8 +20,13 @@ function get-balance-revolut() {
         | awk '{print $1}'
 }
 
-function notify-updated() { notify-send.sh -- "$BLOCK_INSTANCE updated"; }
-function format-balance() { sed -E "s/(\-|\+)?(.*)/$BLOCK_INSTANCE \1€\2/"; }
+function get-balance() {
+    case "$BLOCK_INSTANCE" in
+    'boi') get-balance-boi ;;
+    'revolut') get-balance-revolut ;;
+    *) return 1 ;;
+    esac
+}
 
 # hide balance with a right click
 test "$BLOCK_BUTTON" -eq 3 2>/dev/null && exit
@@ -31,14 +36,8 @@ test "$BLOCK_BUTTON" -eq 3 2>/dev/null && exit
 uptime="$(awk '{print int($1/60)}' /proc/uptime)"
 test "$uptime" -le '5' && exit
 
-balance="$(
-    case "$BLOCK_INSTANCE" in
-    'boi')     get-balance-boi ;;
-    'revolut') get-balance-revolut ;;
-    *)         exit 1 ;;
-    esac
-)"
+balance="$(get-balance)"
 test -z "$balance" && exit
 
-test "$BLOCK_BUTTON" -eq 1 2>/dev/null && notify-updated
-printf "%'.2f\n" "$balance" | format-balance
+test "$BLOCK_BUTTON" -eq 1 2>/dev/null && notify-send.sh -- "$BLOCK_INSTANCE updated"
+printf "%'.2f\n" "$balance" | sed -E "s/(\-|\+)?(.*)/$BLOCK_INSTANCE \1€\2/"

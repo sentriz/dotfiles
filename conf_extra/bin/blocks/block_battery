@@ -1,18 +1,20 @@
 #!/usr/bin/env bash
 
-bat_level="$(
+function get-battery-level() {
     cat /sys/class/power_supply/BAT*/uevent \
         | sed -rn 's/^POWER_SUPPLY_CAPACITY=([0-9]+)$/\1/p'
-)"
-test "$bat_level" -gt '92' && exit
+}
 
-echo "battery ${bat_level}%"
+batt_level="$(get-battery-level)"
+test "$batt_level" -gt '92' && exit
+
+echo "battery ${batt_level}%"
 
 # notify if battery is low
 noti_charge_threshold='10' # percent charge to warn about
 noti_time_limit='10'       # minutes minimum to wait to wait between re-notify
 noti_flag_file="$XDG_CACHE_HOME/battery_warning_noti_flag"
-test ! "$bat_level" -le "$noti_charge_threshold" && exit
+test ! "$batt_level" -le "$noti_charge_threshold" && exit
 
 find "$noti_flag_file" -mmin +"$noti_time_limit" -delete
 test -f "$noti_flag_file" && exit

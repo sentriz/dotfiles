@@ -3,8 +3,17 @@
 # requires:
 # - networkmanager
 
-ssid="$(nmcli -t -f name,type,state connection | grep -Po '[^:]+(?=:802-11-wireless:activated)')"
+function get-ssid() {
+    nmcli -t -f name,type,state connection \
+        | grep -Po '[^:]+(?=:802-11-wireless:activated)'
+}
+
+function get-ip-addr() {
+    ip addr | grep -Po 'inet\s\K.*?\s'
+}
+
+ssid="$(get-ssid)"
 test -z "$ssid" && exit
 
-test "$BLOCK_BUTTON" -eq 1 2>/dev/null && notify-send.sh -- "$(ip addr | grep -Po 'inet\s\K.*?\s')"
+test "$BLOCK_BUTTON" -eq 1 2>/dev/null && notify-send.sh -- "$(get-ip-addr)"
 echo "wifi $ssid"

@@ -3,7 +3,13 @@
 # requires:
 # - bluez
 
-device="$(bluetoothctl info | grep -Po "Alias: \K.*" | tr "[:upper:]" "[:lower:]")"
+function get-device() {
+    bluetoothctl info \
+        | grep -Po "Alias: \K.*" \
+        | tr "[:upper:]" "[:lower:]"
+}
+
+device="$(get-device)"
 test -z "$device" && exit
 
 echo "bluetooth $device"
