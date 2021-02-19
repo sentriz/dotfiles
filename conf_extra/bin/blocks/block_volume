@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
 
 case "$BLOCK_BUTTON" in
-1) ponymix --sink toggle >/dev/null 2>&1 ;;  # left click
-3) ponymix --input toggle >/dev/null 2>&1 ;; # right click
-esac
+1) ponymix --sink toggle ;;     # left click
+3) ponymix --input toggle ;;    # right click
+4) ponymix --sink increase 5 ;; # scroll up
+5) ponymix --sink decrease 5 ;; # scroll down
+esac >/dev/null 2>&1
 
 out=""
 ponymix --sink is-muted \
