@@ -1,11 +1,14 @@
 #!/usr/bin/env bash
 
-out=""
+case "$BLOCK_BUTTON" in
+1) ponymix --sink toggle >/dev/null 2>&1 ;;  # left click
+3) ponymix --input toggle >/dev/null 2>&1 ;; # right click
+esac
 
+out=""
 ponymix --sink is-muted \
     && out+="muted" \
     || out+="$(ponymix --sink get-volume || echo "-1")%"
-
 ponymix --input is-muted \
     && out+=", mic muted"
 
