@@ -25,3 +25,10 @@ set -gx QT_WAYLAND_DISABLE_WINDOWDECORATION 1
 set -gx SDL_VIDEODRIVER 'wayland'
 set -gx WLR_NO_HARDWARE_CURSORS 1
 set -gx _JAVA_AWT_WM_NONREPARENTING 1
+
+# gtk2/gtk3 theme
+# also, gsettings commands parse these vars
+set -gx GTK_THEME 'Arc-Dark'
+set -gx GTK_FONT_NAME 'DejaVu Sans 10'
+set -gx GTK_DARK 1
+set -gx GTK2_RC_FILES /usr/share/themes/Arc-Dark/gtk-2.0/gtkrc
