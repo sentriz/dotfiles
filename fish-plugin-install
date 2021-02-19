@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+set -e
+
+if test $# -ne 1; then
+    echo "please provide a <repo>" >&2
+    exit 1
+fi
+
+repo="$1"
+name="$(grep -Po '[^\/]+\/[^\/]+$' <<<"$repo")"
+path="conf_common/.config/fish/plugins/$name"
+
+git submodule add -f "$repo" "$path"

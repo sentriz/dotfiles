@@ -1,3 +1,8 @@
+set -gx HOSTNAME android
+if type -qp hostname >/dev/null 2>&1
+    set -gx HOSTNAME (hostname)
+end
+
 function __source_if_exists
     for possible in $argv
         test ! -f "$possible"; and continue
@@ -5,20 +10,14 @@ function __source_if_exists
     end
 end
 
-if string match -q -r '.*termux.*' "$HOME"
-    set -gx HOSTNAME android
-else
-    set -gx HOSTNAME (hostname)
-end
-
 __source_if_exists \
-    ~/.config/fish/config.base.fish \
-    ~/.config/fish/config.base.$HOSTNAME.fish
+    "$__fish_config_dir/config.base.fish" \
+    "$__fish_config_dir/config.base.$HOSTNAME.fish"
 
 status --is-login; and __source_if_exists \
-    ~/.config/fish/config.login.fish \
-    ~/.config/fish/config.login.$HOSTNAME.fish
+    "$__fish_config_dir/config.login.fish" \
+    "$__fish_config_dir/config.login.$HOSTNAME.fish"
 
 status --is-interactive; and __source_if_exists \
-    ~/.config/fish/config.interactive.fish \
-    ~/.config/fish/config.interactive.$HOSTNAME.fish
+    "$__fish_config_dir/config.interactive.fish" \
+    "$__fish_config_dir/config.interactive.$HOSTNAME.fish"

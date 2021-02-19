@@ -1,7 +1,7 @@
 **basic stuff**
 ```shell
 $ install git stow
-$ git clone https://github.com/sentriz/dotfiles.git ~/dotfiles
+$ git clone --recurse-submodules https://github.com/sentriz/dotfiles.git ~/dotfiles
 $ cd ~/dotfiles
 $ ./install-common  # always
 $ ./install-extra   # if gui system
@@ -18,14 +18,14 @@ $ find hooks/ -type f -exec ln -sf '../../{}' .git/hooks/ \;
 ```shell
 $ rm ~/.bash* ~/.profile ~/whateverelse
 $ chsh -s $(which fish)
-$ wget https://git.io/fundle -O ~/.config/fish/functions/fundle.fish
-$ fundle install
+$ # plugins are loaded from git submodules automatically
 ```
 
 **neovim stuff**
 ```shell
 $ python3.x -m pip install --user pynvim
-$ git submodule update --init # get vim plugins
+$ vim
+$ # plugins are loaded from git submodules automatically
 ```
 
 **python stuff**

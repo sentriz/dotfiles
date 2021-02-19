@@ -13,7 +13,6 @@ fi
 conf_dots_dir="$HOME/projects/dotfiles"
 conf_priv_key="$1"
 
-mkdir -p "$HOME/.config/fish/functions/" >/dev/null 2>&1
 mkdir -p "$HOME/projects/dotfiles/" >/dev/null 2>&1
 
 function once() {
@@ -38,12 +37,6 @@ function setup-pacs() {
 function setup-priv-key() {
     gpg --import "$conf_priv_key"
     rm "$conf_priv_key"
-}
-
-function setup-shell() {
-    wget 'https://git.io/fundle' -O "$HOME/.config/fish/functions/fundle.fish"
-    fish -ic "fundle install"
-    chsh -s fish
 }
 
 function setup-dots() {

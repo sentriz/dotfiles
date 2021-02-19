@@ -1,7 +1,0 @@
-public_extra/.local/share/applications
-public_extra/.config/mpv/scripts/
-public_common/.config/nvim/.netrwhist
-public_common/.config/autostart/
-public_common/.config/fish/fishd.*
-public_common/.config/fish/functions/fundle.fish
-public_common/.config/fish/fundle/

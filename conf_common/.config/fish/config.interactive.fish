@@ -1,3 +1,11 @@
+# load plugins
+set plugins "$XDG_CONFIG_HOME/fish/plugins/"
+set -a fish_function_path (find "$plugins" -maxdepth 3 -name "functions")
+set -a fish_complete_path (find "$plugins" -maxdepth 3 -name "completions")
+for file in (find "$plugins" -path "*conf.d/*" -name "*.fish")
+    source "$file"
+end
+
 # safety/better
 alias rm    'rm -I --verbose --preserve-root'
 alias wget  'wget --continue --content-disposition'
@@ -38,20 +46,6 @@ set -g fish_color_selection 'white'  '--bold'  '--background=brblack'
 set -g fish_color_status red
 set -g fish_color_user brgreen
 set -g fish_color_valid_path --underline
-
-# plugins
-fundle plugin 'jethrokuan/z' --url 'git@github.com:jethrokuan/z.git#pre27'
-fundle plugin 'fisherman/done'
-fundle plugin 'fisherman/fzf'
-fundle plugin 'fishpkg/fish-humanize-duration'
-fundle plugin 'fisherman/getopts'
-# fundle plugin 'sentriz/fish-pipenv'
-fundle plugin 'brgmnn/fish-docker-compose'
-fundle init
-
-# plugin settings
-set -g pipenv_fish_fancy 'no'
-set -g VIRTUAL_ENV_DISABLE_PROMPT 'yes'
 
 # jump to my projects easily with completion
 function p --argument project

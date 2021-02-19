@@ -70,3 +70,21 @@
 [submodule "conf_common/.local/share/nvim/site/pack/meta/opt/nanotee/sqls.nvim"]
 	path = conf_common/.local/share/nvim/site/pack/meta/opt/nanotee/sqls.nvim
 	url = https://github.com/nanotee/sqls.nvim
+[submodule "conf_common/.config/fish/plugins/jethrokuan/fzf"]
+	path = conf_common/.config/fish/plugins/jethrokuan/fzf
+	url = https://github.com/jethrokuan/fzf
+[submodule "conf_common/.config/fish/plugins/jethrokuan/z"]
+	path = conf_common/.config/fish/plugins/jethrokuan/z
+	url = https://github.com/jethrokuan/z
+[submodule "conf_common/.config/fish/plugins/fisherman/done"]
+	path = conf_common/.config/fish/plugins/fisherman/done
+	url = https://github.com/fisherman/done
+[submodule "conf_common/.config/fish/plugins/fishpkg/fish-humanize-duration"]
+	path = conf_common/.config/fish/plugins/fishpkg/fish-humanize-duration
+	url = https://github.com/fishpkg/fish-humanize-duration
+[submodule "conf_common/.config/fish/plugins/fisherman/getopts"]
+	path = conf_common/.config/fish/plugins/fisherman/getopts
+	url = https://github.com/fisherman/getopts
+[submodule "conf_common/.config/fish/plugins/brgmnn/fish-docker-compose"]
+	path = conf_common/.config/fish/plugins/brgmnn/fish-docker-compose
+	url = https://github.com/brgmnn/fish-docker-compose

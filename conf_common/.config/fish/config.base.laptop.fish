@@ -11,8 +11,13 @@ sed -nE 's/^([^=#]+)=(.*)/set -gx \1 \2/gp' <"$XDG_CONFIG_HOME/user-dirs.dirs" |
 set -gx SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/gnupg/S.gpg-agent.ssh"
 
 set -gx XDG_CURRENT_DESKTOP 'sway'
-set -gx XDG_DATA_DIRS "/usr/local/share:/usr/share:/var/lib/flatpak/exports/share:$XDG_DATA_HOME/flatpak/exports/share"
 set -gx XDG_SESSION_TYPE 'wayland'
+set -gx XDG_DATA_DIRS (string join ":" \
+    '/usr/local/share' \
+    '/usr/share' \
+    '/var/lib/flatpak/exports/share' \
+    "$XDG_DATA_HOME/flatpak/exports/share"
+)
 
 # set -gx GDK_BACKEND 'wayland'
 set -gx CLUTTER_BACKEND 'wayland'
