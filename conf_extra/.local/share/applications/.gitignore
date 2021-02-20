@@ -1,8 +1,6 @@
 *
 !.gitignore
 !google-chrome*
-!sublime-music.desktop
 !termite*
 !mpv*
 !firefox*
-!mime*
