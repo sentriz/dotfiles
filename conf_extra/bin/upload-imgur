@@ -2,7 +2,7 @@
 
 # senan kelly, 2019
 
-if not type -qp jq > /dev/null 2>&1
+if not type -qp jq >/dev/null 2>&1
     echo "please install jq" >&2
     exit 1
 end
@@ -28,7 +28,7 @@ set response (curl \
     "$upload_url"
 )
 
-if ! echo "$response" | jq -e '.success' > /dev/null
+if ! echo "$response" | jq -e '.success' >/dev/null
     echo "error response from imgur:" >&2
     echo "$response" | jq -M '.data.error' >&2
     exit 1
