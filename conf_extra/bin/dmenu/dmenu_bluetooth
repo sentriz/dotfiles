@@ -24,6 +24,8 @@ function notify-cmd() {
 }
 
 devices="$(bluetoothctl devices | lower)"
+test -z "$devices" && exit 1
+
 device="$(printf "%s\n" "$devices" "disconnect" | dmenu_custom -p 'bluetooth')"
 test -z "$device" && exit 1
 
