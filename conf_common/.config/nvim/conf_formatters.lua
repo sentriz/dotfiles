@@ -6,6 +6,7 @@
 -- black             pip install --user black
 -- luafmt            npm install -g lua-fmt
 -- sql-formatter     npm install -g sql-formatter
+-- pg_format         https://github.com/darold/pgFormatter
 
 local formatter = require "formatter"
 
@@ -59,8 +60,8 @@ end
 
 function formatter_sql()
     return {
-        exe = "sql-formatter",
-        args = {"--uppercase", "--indent", 4, "--lines-between-queries", 3},
+        exe = "pg_format",
+        args = {"--keyword-case", 1, "--type-case", 2},
         stdin = true
     }
 end
@@ -86,7 +87,8 @@ formatter.setup(
             ["python"] = {formatter_black},
             ["sh"] = {formatter_shfmt},
             ["lua"] = {formatter_luafmt},
-            ["sql"] = {formatter_sql}
+            ["sql"] = {formatter_sql},
+            ["pgsql"] = {formatter_sql}
         }
     }
 )
