@@ -12,10 +12,5 @@ function fish_right_prompt
         and echo " clean"
         or echo " dirty"
 
-    set -q "VIRTUAL_ENV"
-        and set_color yellow
-        and echo -e " "
-        and basename "$VIRTUAL_ENV"
-
     set_color normal
 end
