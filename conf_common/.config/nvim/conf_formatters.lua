@@ -5,7 +5,6 @@
 -- clang-format      <package manager> install clang
 -- black             pip install --user black
 -- luafmt            npm install -g lua-fmt
--- sql-formatter     npm install -g sql-formatter
 -- pg_format         https://github.com/darold/pgFormatter
 
 local formatter = require "formatter"
