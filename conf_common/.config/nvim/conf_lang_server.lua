@@ -7,6 +7,7 @@
 -- vue         npm install -g typescript vls
 -- svelte      npm install -g svelte svelte-language-server
 -- tailwind    latest vsix file https://github.com/tailwindlabs/tailwindcss-intellisense
+-- sql         go get -u github.com/lighttiger2505/sqls
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] =
     vim.lsp.with(
@@ -226,7 +227,7 @@ configs.custom_tailwind = {
 -- -- sql -- --
 configs.custom_sql = {
     default_config = {
-        cmd = {"sqls", "-config", "/home/senan/.config/sqls/config.yml"},
+        cmd = {"sqls", "-config", vim.env.XDG_CONFIG_HOME .. "/sqls/config.yml"},
         filetypes = {"sql"},
         root_dir = function(filename)
             return util.path.dirname(filename)
