@@ -60,7 +60,7 @@ end
 function formatter_sql()
     return {
         exe = "pg_format",
-        args = {"--keyword-case", 1, "--type-case", 2},
+        args = {"--keyword-case", 1, "--type-case", 1},
         stdin = true
     }
 end
