@@ -4,6 +4,8 @@ autocmd FileType yaml                setlocal cursorcolumn
 autocmd FileType yaml.docker-compose setlocal cursorcolumn
 autocmd FileType python              setlocal comments=b:#,fb:-             | setlocal commentstring=#\ %s
 autocmd FileType go                  setlocal comments=s1:/*,mb:*,ex:*/,:// | setlocal commentstring=//\ %s
+autocmd FileType lua                 setlocal comments=:--                  | setlocal commentstring=--%s
+autocmd FileType sql                 setlocal comments=s1:/*,mb:*,ex:*/,:--,://
 
 augroup AutoCursorLastPosition
     autocmd!
