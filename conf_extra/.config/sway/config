@@ -195,7 +195,7 @@ mode $mode_move_floating {
 
 set $mode_scrot "screenshot mode: [c]lipboard, [i]mgur, [h]ome"
 mode $mode_scrot {
-    bindsym c exec wl-copy < `screenshot`,              mode "default"
+    bindsym c exec wl-copy -t image/png < `screenshot`, mode "default"
     bindsym i exec upload-imgur `screenshot` | wl-copy, mode "default"
     bindsym h exec upload-home  `screenshot` | wl-copy, mode "default"
     bindsym Return mode "default"
