@@ -1,6 +1,6 @@
 *
 !.gitignore
-!google-chrome*
+!*chrom*
+!firefox*
 !termite*
 !mpv*
-!firefox*
