@@ -1,5 +1,5 @@
 # load plugins
-set plugins "$XDG_CONFIG_HOME/fish/plugins/"
+set plugins "$__fish_config_dir/plugins/"
 set -a fish_function_path (find "$plugins" -maxdepth 3 -name "functions")
 set -a fish_complete_path (find "$plugins" -maxdepth 3 -name "completions")
 for file in (find "$plugins" -path "*conf.d/*" -name "*.fish")
