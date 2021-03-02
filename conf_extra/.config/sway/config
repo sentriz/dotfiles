@@ -37,7 +37,7 @@ set $up_block_4 pkill -RTMIN+4 i3blocks
 set $colour_grey       #303030
 set $colour_grey_alpha #30303060
 set $colour_blue       #0088CC
-set $colour_red_alpha  #ff000090
+set $colour_red        #D16262
 set $colour_inactive   #8D8D8D
 
 ## basic appearance
@@ -90,13 +90,14 @@ bar {
     colors focused_workspace  $colour_blue       $colour_blue       #ffffff
     colors active_workspace   $colour_grey       $colour_grey       #ffffff
     colors inactive_workspace $colour_grey_alpha $colour_grey_alpha #ffffff
-    colors urgent_workspace   $colour_red_alpha  $colour_red_alpha  #ffffff
+    colors urgent_workspace   $colour_red        $colour_red        #ffffff
 }
 
 ## window colours       border           background       text         indicator        child
 client.focused          #ffffff          #ffffff          $colour_grey #ffffff          #ffffff
 client.focused_inactive #ffffff          #ffffff          $colour_grey #ffffff          #ffffff
 client.unfocused        $colour_inactive $colour_inactive #ffffff      $colour_inactive $colour_inactive
+client.urgent           $colour_red      $colour_red      #ffffff      $colour_red      $colour_red
 
 ## bindings: window/float
 bindsym $super+q     kill
