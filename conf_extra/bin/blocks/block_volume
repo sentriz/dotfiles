@@ -12,6 +12,6 @@ ponymix --sink is-muted \
     && out+="muted" \
     || out+="$(ponymix --sink get-volume || echo "-1")%"
 ponymix --input is-muted \
-    && out+=", mic muted"
+    && out+=" mic muted"
 
 echo "volume $out"
