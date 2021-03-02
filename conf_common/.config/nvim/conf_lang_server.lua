@@ -26,7 +26,7 @@ local completion = require "completion"
 local illuminate = require "illuminate"
 local sqls = require "sqls"
 
--- -- bash -- --
+-- -- bash
 configs.custom_bash = {
     default_config = {
         cmd = {"bash-language-server", "start"},
@@ -35,7 +35,7 @@ configs.custom_bash = {
     }
 }
 
--- -- clang -- --
+-- -- clang
 configs.custom_clang = {
     default_config = {
         cmd = {"clangd", "--background-index", "--pch-storage=memory", "--clang-tidy"},
@@ -51,7 +51,7 @@ configs.custom_clang = {
     }
 }
 
--- -- docker -- --
+-- -- docker
 configs.custom_docker = {
     default_config = {
         cmd = {"docker-langserver", "--stdio"},
@@ -60,7 +60,7 @@ configs.custom_docker = {
     }
 }
 
--- -- go -- --
+-- -- go
 configs.custom_go = {
     default_config = {
         cmd = {"gopls"},
@@ -90,7 +90,7 @@ configs.custom_go = {
     }
 }
 
--- -- python -- --
+-- -- python
 configs.custom_python = {
     default_config = {
         cmd = {"pyright-langserver", "--stdio"},
@@ -107,7 +107,7 @@ configs.custom_python = {
     }
 }
 
--- -- typescript -- --
+-- -- typescript
 configs.custom_typescript = {
     default_config = {
         cmd = {"typescript-language-server", "--stdio"},
@@ -123,7 +123,7 @@ configs.custom_typescript = {
     }
 }
 
--- -- vue -- --
+-- -- vue
 configs.custom_vue = {
     default_config = {
         cmd = {"vls"},
@@ -161,7 +161,7 @@ configs.custom_vue = {
     }
 }
 
--- -- dart -- --
+-- -- dart
 configs.custom_dart = {
     default_config = {
         cmd = {"dart", "/opt/flutter/bin/cache/dart-sdk/bin/snapshots/analysis_server.dart.snapshot", "--lsp"},
@@ -177,7 +177,7 @@ configs.custom_dart = {
     }
 }
 
--- -- java -- --
+-- -- java
 configs.custom_java = {
     default_config = {
         cmd = {
@@ -206,7 +206,7 @@ configs.custom_java = {
     }
 }
 
--- -- svelte -- --
+-- -- svelte
 configs.custom_svelte = {
     default_config = {
         cmd = {"svelteserver", "--stdio"},
@@ -215,7 +215,7 @@ configs.custom_svelte = {
     }
 }
 
--- -- tailwind -- --
+-- -- tailwind
 configs.custom_tailwind = {
     default_config = {
         cmd = {"node", vim.env.DOTS_PROJECTS_DIR .. "/tailwind-lsp/extension/dist/server/index.js", "--stdio"},
@@ -224,14 +224,12 @@ configs.custom_tailwind = {
     }
 }
 
--- -- sql -- --
+-- -- sql
 configs.custom_sql = {
     default_config = {
         cmd = {"sqls", "-config", vim.env.XDG_CONFIG_HOME .. "/sqls/config.yml"},
         filetypes = {"sql"},
-        root_dir = function(filename)
-            return util.path.dirname(filename)
-        end
+        root_dir = util.path.dirname
     }
 }
 
