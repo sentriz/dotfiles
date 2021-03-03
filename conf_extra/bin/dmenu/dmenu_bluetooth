@@ -17,6 +17,7 @@ function notify-cmd() {
     # $ <heading> <to filter>
     notify "$1"
     if ! out="$(eval "$2")"; then
+        echo "$out" >&2
         notify "$1" "failed: $out"
         return 1
     fi
