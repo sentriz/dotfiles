@@ -37,7 +37,7 @@ set $up_block_4 pkill -RTMIN+4 i3blocks
 set $colour_grey       #303030
 set $colour_grey_alpha #30303060
 set $colour_blue       #0088CC
-set $colour_red        #D16262
+set $colour_red        #BC5858
 set $colour_inactive   #8D8D8D
 
 ## basic appearance
