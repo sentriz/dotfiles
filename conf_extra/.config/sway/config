@@ -312,6 +312,7 @@ for_window [class="^Google-chrome$"]                    inhibit_idle fullscreen
 for_window [app_id="^org.qutebrowser.qutebrowser$"]     inhibit_idle fullscreen
 for_window [class="^jellyfin$"]                         inhibit_idle fullscreen
 for_window [class="^Google-chrome$" title="^Jellyfin$"] inhibit_idle fullscreen
+for_window [class="^Chromium-browser$"]                 inhibit_idle fullscreen
 for_window [class="^mpv$"]                              inhibit_idle visible
 for_window [app_id="^mpv$"]                             inhibit_idle visible
 for_window [class="^jellyfin$"]                         inhibit_idle visible
