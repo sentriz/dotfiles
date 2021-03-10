@@ -1,2 +1,0 @@
-CHROME="chromium"
-ROOT_PROFILE_DIR="$HOME/.config/chrome-private-profile"
