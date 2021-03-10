@@ -21,7 +21,7 @@ set -l image_id (
     curl -s "$url_upload" \
         --header (printf "X-API-Key: %s" $api_key) \
         --form "i=@$image_path" \
-    | jq -r '.id'
+    | jq -r '.result.id'
 )
 
 if test -n "$image_id"
