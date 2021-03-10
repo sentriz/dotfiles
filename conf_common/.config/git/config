@@ -54,6 +54,7 @@
 	branch = true
 [merge]
 	tool = meld
+	conflictstyle = diff3
 [diff]
 	tool = meld
 	algorithm = histogram
