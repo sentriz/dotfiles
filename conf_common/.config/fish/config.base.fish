@@ -6,12 +6,7 @@ set -gx EDITOR 'nvim'
 set -gx RIPGREP_CONFIG_PATH "$XDG_CONFIG_HOME/ripgreprc"
 set -gx FZF_DEFAULT_OPTS "--info hidden --color bw"
 set -gx GOPATH "$XDG_DATA_HOME/go"
-set -gx GOPRIVATE 'github.com/CPSSD/*'
 set -gx GOPROXY 'https://proxy.golang.org,direct'
-set -gx FNM_MULTISHELL_PATH "$HOME/.fnm/current"
-set -gx FNM_DIR "$XDG_CACHE_HOME/fnm"
-set -gx FNM_NODE_DIST_MIRROR 'https://nodejs.org/dist'
-set -gx FNM_LOGLEVEL 'info'
 set -gx NPM_CONFIG_USERCONFIG "$XDG_CONFIG_HOME/npm/config"
 set -gx NPM_CONFIG_CACHE "$XDG_CACHE_HOME/npm"
 set -gx NPM_CONFIG_TMP "$XDG_RUNTIME_DIR/npm"

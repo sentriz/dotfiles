@@ -19,10 +19,7 @@ alias :qw 'exit'
 alias :q  'exit'
 
 # abbreviations
-abbr sev 'sudo -E nvim'
-abbr du  'du -d1 -h'
 abbr g   'git'
-abbr cal 'cal --three --monday'
 abbr ps  'ps -axh -o pid,%cpu,cmd'
 
 # keep updated with `printf "set -g %s\n" (set -U | grep fish_color)`
