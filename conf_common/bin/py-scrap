@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-dir="$(mktemp -d "$DOTS_SCRAP_DIR/python.XXX")"
+dir="$(mktemp -d "$DOTS_SCRAP_DIR/python.XXXX")"
 
 file="main.py"
 path="$dir/$file"
