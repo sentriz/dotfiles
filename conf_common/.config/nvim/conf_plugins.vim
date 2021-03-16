@@ -45,6 +45,7 @@ packadd! rhysd/committia.vim
 packadd! romainl/vim-qf
 packadd! sheerun/vim-polyglot
 packadd! nanotee/sqls.nvim
+packadd! mkotha/conflict3
 
 " category "look"
 " ~/.local/share/nvim/site/pack/look/opt/
