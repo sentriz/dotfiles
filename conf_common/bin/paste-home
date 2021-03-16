@@ -1,6 +1,6 @@
 #!/usr/bin/env fish
 
-set -l haste_url "$DOTS_PASTE_REMOTE"
+set -l paste_url (secret paste_url)
 read -lz data
-set -l key (curl -sf --data-binary "$data" $haste_url"/documents" | jq -r '.key')
-printf "%s/raw/%s\n" $haste_url $key
+set -l key (curl -sf --data-binary "$data" "$paste_url/documents" | jq -r '.key')
+printf "%s/raw/%s\n" $paste_url $key
