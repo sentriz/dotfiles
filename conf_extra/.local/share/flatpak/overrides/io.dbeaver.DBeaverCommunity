@@ -1,0 +1,6 @@
+[Context]
+filesystems=!home
+
+[Environment]
+_JAVA_AWT_WM_NONREPARENTING=1
+GTK_THEME=
