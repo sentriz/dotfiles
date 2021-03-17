@@ -282,6 +282,8 @@ assign [class="Firefox"]                          $work_2
 assign [app_id="^firefox$"]                       $work_2
 assign [class="^Nightly$"]                        $work_2
 assign [class="Chromium"]                         $work_2
+assign [app_id="^Chromium-browser$"]              $work_2
+assign [app_id="^Google-chrome$"]                 $work_2
 assign [class="Google-chrome"]                    $work_2
 assign [app_id="^org.qutebrowser.qutebrowser$"]   $work_2
 assign [class="^Insomnia$" instance="^insomnia$"] $work_4
