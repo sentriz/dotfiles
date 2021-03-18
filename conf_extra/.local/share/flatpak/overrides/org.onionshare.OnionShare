@@ -1,0 +1,2 @@
+[Context]
+filesystems=!~/OnionShare:create;!home:ro;xdg-download
