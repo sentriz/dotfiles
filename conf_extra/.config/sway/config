@@ -307,10 +307,13 @@ assign [class="libreoffice-*"]                    $work_9
 for_window [floating] border full
 
 ## don't lock for video
-for_window [class="^Firefox$"]                          inhibit_idle fullscreen
+for_window [class="Firefox"]                            inhibit_idle fullscreen
 for_window [app_id="^firefox$"]                         inhibit_idle fullscreen
-for_window [class="^Chromium$"]                         inhibit_idle fullscreen
-for_window [class="^Google-chrome$"]                    inhibit_idle fullscreen
+for_window [class="^Nightly$"]                          inhibit_idle fullscreen
+for_window [class="Chromium"]                           inhibit_idle fullscreen
+for_window [app_id="^Chromium-browser$"]                inhibit_idle fullscreen
+for_window [app_id="^Google-chrome$"]                   inhibit_idle fullscreen
+for_window [class="Google-chrome"]                      inhibit_idle fullscreen
 for_window [app_id="^org.qutebrowser.qutebrowser$"]     inhibit_idle fullscreen
 for_window [class="^jellyfin$"]                         inhibit_idle fullscreen
 for_window [class="^Google-chrome$" title="^Jellyfin$"] inhibit_idle fullscreen
