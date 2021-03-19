@@ -91,3 +91,6 @@
 	options = --highlight --line-numbers
 [init]
 	defaultBranch = master
+[branch]
+  autosetupmerge = always
+  autosetuprebase = always
