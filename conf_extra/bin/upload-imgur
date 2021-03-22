@@ -2,7 +2,7 @@
 
 # senan kelly, 2019
 
-if not type -qp jq >/dev/null 2>&1
+if not type -q jq >/dev/null 2>&1
     echo "please install jq" >&2
     exit 1
 end

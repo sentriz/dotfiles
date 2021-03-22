@@ -1,5 +1,5 @@
 set -gx HOSTNAME android
-if type -qp hostname >/dev/null 2>&1
+if type -q hostname >/dev/null 2>&1
     set -gx HOSTNAME (hostname)
 end
 

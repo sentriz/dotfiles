@@ -1,12 +1,12 @@
 #!/usr/bin/env fish
 
-if not type -qp grim  /dev/null 2>&1
+if not type -q grim  /dev/null 2>&1
     echo 'grim required' >&2
     echo 'https://github.com/emersion/grim' >&2
     exit 1
 end
 
-if not type -qp slurp >/dev/null 2>&1
+if not type -q slurp >/dev/null 2>&1
     echo 'slurp required' >&2
     echo 'https://github.com/emersion/slurp' >&2
     exit 1
