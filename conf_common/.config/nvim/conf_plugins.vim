@@ -11,24 +11,24 @@ let g:monotone_secondary_hue_offset = 0
 let g:qf_auto_open_quickfix = 1
 let g:qf_auto_open_loclist = 1
 
-let g:completion_enable_auto_hover = 0
-let g:completion_enable_auto_signature = 1
-let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
-let g:completion_items_priority = {
-            \ 'EnumMember': 11,
-            \ 'Field':      11,
-            \ 'Constant':   11,
-            \ 'Variables':  11,
-            \ 'Method':     10,
-            \ 'Property':   7,
-            \ 'Function':   7,
-            \ 'Variable':   7,
-            \ 'Interfaces': 5,
-            \ 'Class':      5,
-            \ 'Keyword':    4,
-            \ 'UltiSnips':  1,
-            \ 'File':       1,
-            \ }
+let g:compe = {}
+let g:compe.enabled = v:true
+let g:compe.autocomplete = v:true
+let g:compe.debug = v:false
+let g:compe.min_length = 1
+let g:compe.preselect = 'enable'
+let g:compe.throttle_time = 80
+let g:compe.source_timeout = 200
+let g:compe.incomplete_delay = 400
+let g:compe.max_abbr_width = 100
+let g:compe.max_kind_width = 100
+let g:compe.max_menu_width = 100
+let g:compe.documentation = v:true
+
+let g:compe.source = {}
+let g:compe.source.path = v:true
+let g:compe.source.buffer = v:true
+let g:compe.source.nvim_lsp = v:true
 
 let g:Illuminate_delay = 500
 
@@ -36,16 +36,16 @@ let g:Illuminate_delay = 500
 " ~/.local/share/nvim/site/pack/meta/opt/
 packadd! RRethy/vim-illuminate
 packadd! christoomey/vim-tmux-navigator
+packadd! hrsh7th/nvim-compe
 packadd! inkarkat/SyntaxAttr.vim
 packadd! machakann/vim-highlightedyank
 packadd! mhartington/formatter.nvim
+packadd! mkotha/conflict3
+packadd! nanotee/sqls.nvim
 packadd! neovim/nvim-lsp
-packadd! nvim-lua/completion-nvim
 packadd! rhysd/committia.vim
 packadd! romainl/vim-qf
 packadd! sheerun/vim-polyglot
-packadd! nanotee/sqls.nvim
-packadd! mkotha/conflict3
 
 " category "look"
 " ~/.local/share/nvim/site/pack/look/opt/

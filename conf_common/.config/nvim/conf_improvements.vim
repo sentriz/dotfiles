@@ -32,9 +32,8 @@ set grepprg=rg\ --vimgrep\ --hidden
 set tabstop=4
 
 " completion / lsp
-set omnifunc=v:lua.vim.lsp.omnifunc
-set completeopt=menuone,noinsert,noselect
-set shortmess+=c
+set completeopt=menuone,noselect
+set shortmess=filnxtToOFAc
 
 " oopsies
 command! Q quit

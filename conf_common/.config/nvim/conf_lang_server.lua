@@ -22,7 +22,6 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] =
 local lsp = require "lspconfig"
 local configs = require "lspconfig/configs"
 local util = require "lspconfig/util"
-local completion = require "completion"
 local illuminate = require "illuminate"
 local sqls = require "sqls"
 
@@ -235,7 +234,6 @@ configs.custom_sql = {
 
 local args = {
     on_attach = function(client)
-        completion.on_attach(client)
         illuminate.on_attach(client)
     end
 }
@@ -243,7 +241,6 @@ local args = {
 local sqls_args = {
     on_attach = function(client)
         client.resolved_capabilities.execute_command = true
-        completion.on_attach(client)
         illuminate.on_attach(client)
         sqls.setup {}
     end

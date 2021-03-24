@@ -73,6 +73,9 @@ nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<cr>
 nnoremap <silent> ga    <cmd>lua vim.lsp.buf.code_action()<cr>
 vnoremap <silent> ga    <cmd>'<,'>lua vim.lsp.buf.range_code_action()<cr>
 
+" auto show lsp signature help
+autocmd CursorHoldI * call v:lua.vim.lsp.buf.signature_help()
+
 " copy above / below
 inoremap <expr> <c-y> pumvisible()
             \ ? "\<c-y>"
