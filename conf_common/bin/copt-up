@@ -9,6 +9,7 @@ function list-paths() {
         -maxdepth 1 \
         -type d \
         ! -path "$copt" \
+        ! -path "$copt/logs" \
         -regextype egrep \
         ! -regex '^\./(\.|_).*' \
         -printf "%f\n"
