@@ -14,7 +14,7 @@ ExecStart=/bin/sh -c ' \
 		--keep-daily 7 \
 		--keep-weekly 4 \
 		--keep-monthly 6 \
-		--keep-yearly 2 \
+		--keep-yearly 3 \
 		"%H_opt_%%Y%%m%%d_%%H%%M%%S" \
 	| sed "s/^/-f /" \
 	| xargs \
