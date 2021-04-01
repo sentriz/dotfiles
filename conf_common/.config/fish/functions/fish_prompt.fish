@@ -4,7 +4,7 @@ function fish_prompt
         and set_color brred
         and echo -n "██ "
 
-    set_color "$fish_color_host"
+    set_color "$fish_colour_host"
     echo -n "$HOSTNAME"
 
     set_color --dim white
