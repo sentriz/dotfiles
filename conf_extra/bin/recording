@@ -12,9 +12,15 @@ if not type -q slurp >/dev/null 2>&1
     exit 1
 end
 
-set -l filename "$DOTS_SCREENSHOTS_DIR/"(date '+%Y%m%d_%H%M%S.png')
+set -l command "$argv[1]"
+if test "$command" = "stop"
+    killall --signal SIGINT wf-recorder
+    exit
+end
+
+set -l filename "$DOTS_RECORDINGS_DIR/"(date '+%Y%m%d_%H%M%S.mp4')
 set -l area (slurp)
 test -z "$area"; and exit
 
-grim -g "$area" "$filename" >/dev/null
+wf-recorder -f "$filename" -g "$area" >/dev/null 2>&1
 echo "$filename"

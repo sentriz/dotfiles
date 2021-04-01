@@ -21,6 +21,7 @@ set -gx JAVA_OPTS '-XX:+IgnoreUnrecognizedVMOptions'
 # dotfiles settings
 set -gx DOTS_SCRAP_DIR "$HOME/scrap"
 set -gx DOTS_SCREENSHOTS_DIR "$HOME/pictures/screenshots"
+set -gx DOTS_RECORDINGS_DIR "$HOME/pictures/recordings"
 set -gx DOTS_RADIO_DIR "$HOME/radio"
 set -gx DOTS_MOUNTS_DIR "$HOME/mounts"
 set -gx DOTS_COPT_DIR '/opt/containers'
