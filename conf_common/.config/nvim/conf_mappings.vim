@@ -15,8 +15,6 @@ nnoremap <expr>   <leader>t  ':tabnew ' . expand('$DOTS_PROJECTS_DIR') . '/'
 nnoremap <expr>   <leader>y  ':tabnew ' . expand('$DOTS_PROJECTS_DIR') . '/hippl_'
 nnoremap          <leader>h  :call SyntaxAttr#SyntaxAttr()<cr>
 nnoremap <silent> <leader>d  :call print_debug#print_debug()<cr>
-nnoremap <silent> <leader>qq :SqlsExecuteQuery<cr>
-nnoremap <silent> <leader>qw :SqlsSwitchConnection<cr>
 
 " better
 nnoremap Y y$

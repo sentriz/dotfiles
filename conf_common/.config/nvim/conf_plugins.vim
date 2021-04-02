@@ -41,7 +41,6 @@ packadd! inkarkat/SyntaxAttr.vim
 packadd! machakann/vim-highlightedyank
 packadd! mhartington/formatter.nvim
 packadd! mkotha/conflict3
-packadd! nanotee/sqls.nvim
 packadd! neovim/nvim-lsp
 packadd! rhysd/committia.vim
 packadd! romainl/vim-qf

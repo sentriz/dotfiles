@@ -61,9 +61,6 @@
 [submodule "conf_common/.local/share/nvim/site/pack/meta/opt/RRethy/vim-illuminate"]
 	path = conf_common/.local/share/nvim/site/pack/meta/opt/RRethy/vim-illuminate
 	url = https://github.com/RRethy/vim-illuminate
-[submodule "conf_common/.local/share/nvim/site/pack/meta/opt/nanotee/sqls.nvim"]
-	path = conf_common/.local/share/nvim/site/pack/meta/opt/nanotee/sqls.nvim
-	url = https://github.com/nanotee/sqls.nvim
 [submodule "conf_common/.config/fish/plugins/jethrokuan/fzf"]
 	path = conf_common/.config/fish/plugins/jethrokuan/fzf
 	url = https://github.com/jethrokuan/fzf
