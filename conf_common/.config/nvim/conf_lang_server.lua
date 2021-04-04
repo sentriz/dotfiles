@@ -15,23 +15,22 @@ local util = require 'lspconfig/util'
 local illuminate = require 'illuminate'
 
 local function add(name, config)
-    local key = 'custom_' .. name
     local args = {
         on_attach = function(client)
             illuminate.on_attach(client)
         end
     }
-    configs[key] = {default_config = config}
-    lsp[key].setup(args)
+    configs[name] = {default_config = config}
+    lsp[name].setup(args)
 end
 
-add('bash', {
+add('custom_bash', {
     cmd = {'bash-language-server', 'start'},
     filetypes = {'sh'},
     root_dir = util.path.dirname
 })
 
-add('clang', {
+add('custom_clang', {
     cmd = {
         'clangd', '--background-index', '--pch-storage=memory', '--clang-tidy'
     },
@@ -41,13 +40,13 @@ add('clang', {
     capabilities = {textDocument = {completion = {editsNearCursor = true}}}
 })
 
-add('docker', {
+add('custom_docker', {
     cmd = {'docker-langserver', '--stdio'},
     filetypes = {'dockerfile'},
     root_dir = util.root_pattern('Dockerfile')
 })
 
-add('go', {
+add('custom_go', {
     cmd = {'gopls'},
     filetypes = {'go'},
     root_dir = util.root_pattern('go.mod', '.git'),
@@ -67,7 +66,7 @@ add('go', {
     }
 })
 
-add('python', {
+add('custom_python', {
     cmd = {'pyright-langserver', '--stdio'},
     filetypes = {'python'},
     root_dir = util.root_pattern('requirements.txt', 'pyproject.toml',
@@ -79,7 +78,7 @@ add('python', {
     }
 })
 
-add('typescript', {
+add('custom_typescript', {
     cmd = {'typescript-language-server', '--stdio'},
     filetypes = {
         'javascript', 'javascriptreact', 'javascript.jsx', 'typescript',
@@ -88,7 +87,7 @@ add('typescript', {
     root_dir = util.root_pattern('package.json', 'tsconfig.json', '.git')
 })
 
-add('svelte', {
+add('custom_svelte', {
     cmd = {'svelteserver', '--stdio'},
     filetypes = {'svelte'},
     root_dir = util.root_pattern('package.json', '.git')
