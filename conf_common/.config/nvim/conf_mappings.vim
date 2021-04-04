@@ -74,7 +74,7 @@ nnoremap <silent> H     <cmd>lua vim.lsp.diagnostic.goto_prev()<cr>
 nnoremap <silent> L     <cmd>lua vim.lsp.diagnostic.goto_next()<cr>
 
 " auto show lsp signature help
-autocmd CursorHoldI * ++once call v:lua.vim.lsp.buf.signature_help()
+autocmd CursorHoldI * call v:lua.vim.lsp.buf.signature_help()
 
 " copy above / below
 inoremap <expr> <c-y> pumvisible()
