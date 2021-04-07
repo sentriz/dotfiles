@@ -1,6 +1,6 @@
 switch (tty)
     case '/dev/tty1'
-        exec sway >"$XDG_CACHE_HOME/sway_log" 2>&1
+        exec sway -d 2>"$XDG_CACHE_HOME/sway_log" 2>&1
     case '/dev/tty2'
         exec htop
 end
