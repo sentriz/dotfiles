@@ -5,14 +5,14 @@
 -- python      npm install -g pyright
 -- js, ts      npm install -g typescript typescript-language-server
 -- svelte      npm install -g svelte svelte-language-server
-vim.lsp.handlers['textDocument/publishDiagnostics'] =
-    vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics,
-                 {virtual_text = false, signs = true, update_in_insert = false})
-
 local lsp = require 'lspconfig'
 local configs = require 'lspconfig/configs'
 local util = require 'lspconfig/util'
 local illuminate = require 'illuminate'
+
+vim.lsp.handlers['textDocument/publishDiagnostics'] =
+    vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics,
+                 {virtual_text = false, signs = true, update_in_insert = false})
 
 local function add(name, config)
     local args = {
@@ -91,4 +91,21 @@ add('custom_svelte', {
     cmd = {'svelteserver', '--stdio'},
     filetypes = {'svelte'},
     root_dir = util.root_pattern('package.json', '.git')
+})
+
+add('custom_tailwind', {
+    cmd = {
+        'node',
+        vim.env.DOTS_PROJECTS_DIR ..
+            '/tailwind-lsp/extension/dist/server/index.js', '--stdio'
+    },
+    filetypes = {'html', 'vue', 'css'},
+    root_dir = util.root_pattern('package.json', '.git'),
+    handlers = {
+        ['tailwindcss/getConfiguration'] = function(_, _, params, _, bufnr, _)
+            print('Hello')
+            vim.lsp.buf_notify(bufnr, 'tailwindcss/getConfigurationResponse',
+                               {_id = params._id})
+        end
+    }
 })
