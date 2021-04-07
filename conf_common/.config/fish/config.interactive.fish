@@ -20,6 +20,7 @@ alias :q  'exit'
 
 # abbreviations
 abbr g   'git'
+abbr gti 'git'
 abbr ps  'ps -axh -o pid,%cpu,cmd'
 
 # keep updated with `printf "set -g %s\n" (set -U | grep fish_color)`
