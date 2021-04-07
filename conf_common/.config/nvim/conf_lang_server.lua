@@ -103,7 +103,6 @@ add('custom_tailwind', {
     root_dir = util.root_pattern('package.json', '.git'),
     handlers = {
         ['tailwindcss/getConfiguration'] = function(_, _, params, _, bufnr, _)
-            print('Hello')
             vim.lsp.buf_notify(bufnr, 'tailwindcss/getConfigurationResponse',
                                {_id = params._id})
         end
