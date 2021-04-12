@@ -10,6 +10,7 @@ autocmd FileType go                  setlocal comments=s1:/*,mb:*,ex:*/,://     
 autocmd FileType lua                 setlocal comments=:--                             commentstring=--%s
 autocmd FileType vim                 setlocal comments=sO:\"\ -,mO:\"\ \ ,eO:\"\",:\"  commentstring=\"%s
 autocmd FileType sql                 setlocal comments=s1:/*,mb:*,ex:*/,:--,://
+autocmd FileType git                 syntax on
 
 augroup AutoCursorLastPosition
     autocmd!
