@@ -8,13 +8,7 @@ if test $# -ne 1; then
 fi
 
 name="$1"
-paths=(conf_common/.config/fish/plugins/"$name")
-path="${paths[0]}"
-
-if test ! -d "$path"; then
-    echo "plugin $name not found" >&2
-    exit 1
-fi
+path="conf_common/.config/fish/plugins/$name"
 
 git submodule deinit -f "$path"
 git rm -f "$path"

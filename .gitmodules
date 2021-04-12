@@ -5,49 +5,49 @@
 	path = conf_extra/bin/notify-send
 	url = git@github.com:vlevit/notify-send.sh.git
 [submodule "conf_common/.local/share/nvim/site/pack/look/opt/atimholt/spiffy_foldtext"]
-	path = conf_common/.local/share/nvim/site/pack/look/opt/atimholt/spiffy_foldtext
+	path = conf_common/.local/share/nvim/site/pack/plugins/start/spiffy_foldtext
 	url = https://github.com/atimholt/spiffy_foldtext
 [submodule "conf_common/.local/share/nvim/site/pack/look/opt/tpope/vim-vinegar"]
-	path = conf_common/.local/share/nvim/site/pack/look/opt/tpope/vim-vinegar
+	path = conf_common/.local/share/nvim/site/pack/plugins/start/vim-vinegar
 	url = https://github.com/tpope/vim-vinegar
 [submodule "conf_common/.local/share/nvim/site/pack/meta/opt/christoomey/vim-tmux-navigator"]
-	path = conf_common/.local/share/nvim/site/pack/meta/opt/christoomey/vim-tmux-navigator
+	path = conf_common/.local/share/nvim/site/pack/plugins/start/vim-tmux-navigator
 	url = https://github.com/christoomey/vim-tmux-navigator
 [submodule "conf_common/.local/share/nvim/site/pack/meta/opt/machakann/vim-highlightedyank"]
-	path = conf_common/.local/share/nvim/site/pack/meta/opt/machakann/vim-highlightedyank
+	path = conf_common/.local/share/nvim/site/pack/plugins/start/vim-highlightedyank
 	url = https://github.com/machakann/vim-highlightedyank
 [submodule "conf_common/.local/share/nvim/site/pack/meta/opt/neovim/nvim-lsp"]
-	path = conf_common/.local/share/nvim/site/pack/meta/opt/neovim/nvim-lsp
+	path = conf_common/.local/share/nvim/site/pack/plugins/start/nvim-lsp
 	url = https://github.com/neovim/nvim-lsp
 [submodule "conf_common/.local/share/nvim/site/pack/meta/opt/rhysd/committia.vim"]
-	path = conf_common/.local/share/nvim/site/pack/meta/opt/rhysd/committia.vim
+	path = conf_common/.local/share/nvim/site/pack/plugins/start/committia.vim
 	url = https://github.com/rhysd/committia.vim
 [submodule "conf_common/.local/share/nvim/site/pack/meta/opt/romainl/vim-qf"]
-	path = conf_common/.local/share/nvim/site/pack/meta/opt/romainl/vim-qf
+	path = conf_common/.local/share/nvim/site/pack/plugins/start/vim-qf
 	url = https://github.com/romainl/vim-qf
 [submodule "conf_common/.local/share/nvim/site/pack/text/opt/tpope/vim-abolish"]
-	path = conf_common/.local/share/nvim/site/pack/text/opt/tpope/vim-abolish
+	path = conf_common/.local/share/nvim/site/pack/plugins/start/vim-abolish
 	url = https://github.com/tpope/vim-abolish
 [submodule "conf_common/.local/share/nvim/site/pack/text/opt/tpope/vim-commentary"]
-	path = conf_common/.local/share/nvim/site/pack/text/opt/tpope/vim-commentary
+	path = conf_common/.local/share/nvim/site/pack/plugins/start/vim-commentary
 	url = https://github.com/tpope/vim-commentary
 [submodule "conf_common/.local/share/nvim/site/pack/text/opt/tpope/vim-repeat"]
-	path = conf_common/.local/share/nvim/site/pack/text/opt/tpope/vim-repeat
+	path = conf_common/.local/share/nvim/site/pack/plugins/start/vim-repeat
 	url = https://github.com/tpope/vim-repeat
 [submodule "conf_common/.local/share/nvim/site/pack/text/opt/tpope/vim-surround"]
-	path = conf_common/.local/share/nvim/site/pack/text/opt/tpope/vim-surround
+	path = conf_common/.local/share/nvim/site/pack/plugins/start/vim-surround
 	url = https://github.com/tpope/vim-surround
 [submodule "conf_common/.local/share/nvim/site/pack/look/opt/Lokaltog/vim-monotone"]
-	path = conf_common/.local/share/nvim/site/pack/look/opt/Lokaltog/vim-monotone
+	path = conf_common/.local/share/nvim/site/pack/plugins/start/vim-monotone
 	url = https://github.com/Lokaltog/vim-monotone
 [submodule "conf_common/.local/share/nvim/site/pack/text/opt/sentriz/vim-print-debug"]
-	path = conf_common/.local/share/nvim/site/pack/text/opt/sentriz/vim-print-debug
+	path = conf_common/.local/share/nvim/site/pack/plugins/start/vim-print-debug
 	url = https://github.com/sentriz/vim-print-debug
 [submodule "conf_common/.local/share/nvim/site/pack/meta/opt/mhartington/formatter.nvim"]
-	path = conf_common/.local/share/nvim/site/pack/meta/opt/mhartington/formatter.nvim
+	path = conf_common/.local/share/nvim/site/pack/plugins/start/formatter.nvim
 	url = https://github.com/mhartington/formatter.nvim
 [submodule "conf_common/.local/share/nvim/site/pack/meta/opt/RRethy/vim-illuminate"]
-	path = conf_common/.local/share/nvim/site/pack/meta/opt/RRethy/vim-illuminate
+	path = conf_common/.local/share/nvim/site/pack/plugins/start/vim-illuminate
 	url = https://github.com/RRethy/vim-illuminate
 [submodule "conf_common/.config/fish/plugins/jethrokuan/fzf"]
 	path = conf_common/.config/fish/plugins/jethrokuan/fzf
@@ -68,14 +68,11 @@
 	path = conf_common/.config/fish/plugins/brgmnn/fish-docker-compose
 	url = https://github.com/brgmnn/fish-docker-compose
 [submodule "conf_common/.local/share/nvim/site/pack/meta/opt/mkotha/conflict3"]
-	path = conf_common/.local/share/nvim/site/pack/meta/opt/mkotha/conflict3
+	path = conf_common/.local/share/nvim/site/pack/plugins/start/conflict3
 	url = https://github.com/mkotha/conflict3
-[submodule "conf_common/.local/share/nvim/site/pack/meta/opt/hrsh7th/nvim-compe"]
-	path = conf_common/.local/share/nvim/site/pack/meta/opt/hrsh7th/nvim-compe
-	url = https://github.com/hrsh7th/nvim-compe
 [submodule "conf_common/.local/share/nvim/site/pack/meta/opt/nvim-treesitter/nvim-treesitter"]
-	path = conf_common/.local/share/nvim/site/pack/meta/opt/nvim-treesitter/nvim-treesitter
+	path = conf_common/.local/share/nvim/site/pack/plugins/start/nvim-treesitter
 	url = https://github.com/nvim-treesitter/nvim-treesitter
 [submodule "conf_common/.local/share/nvim/site/pack/meta/opt/nvim-treesitter/nvim-treesitter-textobjects"]
-	path = conf_common/.local/share/nvim/site/pack/meta/opt/nvim-treesitter/nvim-treesitter-textobjects
+	path = conf_common/.local/share/nvim/site/pack/plugins/start/nvim-treesitter-textobjects
 	url = https://github.com/nvim-treesitter/nvim-treesitter-textobjects
