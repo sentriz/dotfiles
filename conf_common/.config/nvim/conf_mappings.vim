@@ -18,10 +18,16 @@ nnoremap <silent> <leader>d  :call print_debug#print_debug()<cr>
 
 " better
 nnoremap Y y$
-nnoremap Q <nop>
 vnoremap yP yP
 
+" disable command hist
+nnoremap Q <nop>
+nnoremap q: <nop>
+
 " easy folding
+set nofoldenable
+set foldmethod=expr
+set foldexpr=nvim_treesitter#foldexpr()
 nnoremap        z za                            " toggle node
 nnoremap <expr> Z &foldlevel == 0 ? "zR" : "zM" " toggle buffer
 nnoremap z=     z=                              " fix spell bind
@@ -31,10 +37,8 @@ nnoremap <silent> s* :let @/='\<'.expand('<cword>').'\>'<cr>cgn
 xnoremap <silent> s* "sy:let @/=@s<cr>cgn
 
 " bubbling
-nnoremap <s-k> ddkP
-nnoremap <s-j> ddp
-vnoremap <s-k> xkP`[V`]
-vnoremap <s-j> xp`[V`]
+vnoremap K xkP`[V`]
+vnoremap J xp`[V`]
 
 " movement
 nnoremap <silent> <c-k> :TmuxNavigateUp<cr>
@@ -58,31 +62,36 @@ nnoremap [t :tabprevious<cr>
 nnoremap ]t :tabnext<cr>
 
 " lsp
-nnoremap <silent> gd    :lua vim.lsp.buf.declaration()<cr>
-nnoremap <silent> <c-]> :lua vim.lsp.buf.definition()<cr>
-nnoremap <silent> K     :lua vim.lsp.buf.hover()<cr>
-nnoremap <silent> gD    :lua vim.lsp.buf.implementation()<cr>
-nnoremap <silent> 1gD   :lua vim.lsp.buf.type_definition()<cr>
-nnoremap <silent> gr    :lua vim.lsp.buf.references()<cr>
-nnoremap <silent> gn    :lua vim.lsp.buf.rename()<cr>
-nnoremap <silent> g0    :lua vim.lsp.buf.document_symbol()<cr>
-nnoremap <silent> gW    :lua vim.lsp.buf.workspace_symbol()<cr>
-nnoremap <silent> ga    :lua vim.lsp.buf.code_action()<cr>
+nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<cr>
+nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<cr>
+nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<cr>
+nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<cr>
+nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<cr>
+nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<cr>
+nnoremap <silent> gn    <cmd>lua vim.lsp.buf.rename()<cr>
+nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<cr>
+nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<cr>
+nnoremap <silent> ga    <cmd>lua vim.lsp.buf.code_action()<cr>
 vnoremap <silent> ga    :<c-u>lua vim.lsp.buf.range_code_action()<cr>
-nnoremap <silent> J     :lua vim.lsp.diagnostic.show_line_diagnostics()<cr>
-nnoremap <silent> H     :lua vim.lsp.diagnostic.goto_prev()<cr>
-nnoremap <silent> L     :lua vim.lsp.diagnostic.goto_next()<cr>
+nnoremap <silent> J     <cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<cr>
+nnoremap <silent> H     <cmd>lua vim.lsp.diagnostic.goto_prev()<cr>
+nnoremap <silent> L     <cmd>lua vim.lsp.diagnostic.goto_next()<cr>
+inoremap <silent> <c-s> <cmd>lua vim.lsp.buf.signature_help()<cr>
+
+" completion
+set omnifunc=v:lua.vim.lsp.omnifunc
+set completeopt=menuone,noselect
+set shortmess=filnxtToOFAc
 
 " auto show lsp signature help
-autocmd CursorHoldI * silent! call v:lua.vim.lsp.buf.signature_help()
+autocmd InsertCharPre *
+    \ if !pumvisible() && v:char =~# '[A-Za-z\.\_]' |
+    \     call feedkeys("\<C-x>\<C-o>", 'n') |
+    \ endif
 
 " copy above / below
-inoremap <expr> <c-y> pumvisible()
-            \ ? "\<c-y>"
-            \ : matchstr(getline(line('.')-1), '\%' . virtcol('.') . 'v\%(\k\+\\|.\)')
-inoremap <expr> <c-e> pumvisible()
-            \ ? "\<c-e>"
-            \ : matchstr(getline(line('.')+1), '\%' . virtcol('.') . 'v\%(\k\+\\|.\)')
+inoremap <expr> <c-y> matchstr(getline(line('.')-1), '\%' . virtcol('.') . 'v\%(\k\+\\|.\)')
+inoremap <expr> <c-e> matchstr(getline(line('.')+1), '\%' . virtcol('.') . 'v\%(\k\+\\|.\)')
 
 " alternative escaping
 inoremap jj <esc>

@@ -13,9 +13,6 @@
 [submodule "conf_common/.local/share/nvim/site/pack/meta/opt/christoomey/vim-tmux-navigator"]
 	path = conf_common/.local/share/nvim/site/pack/meta/opt/christoomey/vim-tmux-navigator
 	url = https://github.com/christoomey/vim-tmux-navigator
-[submodule "conf_common/.local/share/nvim/site/pack/meta/opt/inkarkat/SyntaxAttr.vim"]
-	path = conf_common/.local/share/nvim/site/pack/meta/opt/inkarkat/SyntaxAttr.vim
-	url = https://github.com/inkarkat/SyntaxAttr.vim
 [submodule "conf_common/.local/share/nvim/site/pack/meta/opt/machakann/vim-highlightedyank"]
 	path = conf_common/.local/share/nvim/site/pack/meta/opt/machakann/vim-highlightedyank
 	url = https://github.com/machakann/vim-highlightedyank
@@ -28,12 +25,6 @@
 [submodule "conf_common/.local/share/nvim/site/pack/meta/opt/romainl/vim-qf"]
 	path = conf_common/.local/share/nvim/site/pack/meta/opt/romainl/vim-qf
 	url = https://github.com/romainl/vim-qf
-[submodule "conf_common/.local/share/nvim/site/pack/meta/opt/sheerun/vim-polyglot"]
-	path = conf_common/.local/share/nvim/site/pack/meta/opt/sheerun/vim-polyglot
-	url = https://github.com/sheerun/vim-polyglot
-[submodule "conf_common/.local/share/nvim/site/pack/text/opt/tommcdo/vim-exchange"]
-	path = conf_common/.local/share/nvim/site/pack/text/opt/tommcdo/vim-exchange
-	url = https://github.com/tommcdo/vim-exchange
 [submodule "conf_common/.local/share/nvim/site/pack/text/opt/tpope/vim-abolish"]
 	path = conf_common/.local/share/nvim/site/pack/text/opt/tpope/vim-abolish
 	url = https://github.com/tpope/vim-abolish
@@ -46,9 +37,6 @@
 [submodule "conf_common/.local/share/nvim/site/pack/text/opt/tpope/vim-surround"]
 	path = conf_common/.local/share/nvim/site/pack/text/opt/tpope/vim-surround
 	url = https://github.com/tpope/vim-surround
-[submodule "conf_common/.local/share/nvim/site/pack/text/opt/wellle/targets.vim"]
-	path = conf_common/.local/share/nvim/site/pack/text/opt/wellle/targets.vim
-	url = https://github.com/wellle/targets.vim
 [submodule "conf_common/.local/share/nvim/site/pack/look/opt/Lokaltog/vim-monotone"]
 	path = conf_common/.local/share/nvim/site/pack/look/opt/Lokaltog/vim-monotone
 	url = https://github.com/Lokaltog/vim-monotone
@@ -85,3 +73,9 @@
 [submodule "conf_common/.local/share/nvim/site/pack/meta/opt/hrsh7th/nvim-compe"]
 	path = conf_common/.local/share/nvim/site/pack/meta/opt/hrsh7th/nvim-compe
 	url = https://github.com/hrsh7th/nvim-compe
+[submodule "conf_common/.local/share/nvim/site/pack/meta/opt/nvim-treesitter/nvim-treesitter"]
+	path = conf_common/.local/share/nvim/site/pack/meta/opt/nvim-treesitter/nvim-treesitter
+	url = https://github.com/nvim-treesitter/nvim-treesitter
+[submodule "conf_common/.local/share/nvim/site/pack/meta/opt/nvim-treesitter/nvim-treesitter-textobjects"]
+	path = conf_common/.local/share/nvim/site/pack/meta/opt/nvim-treesitter/nvim-treesitter-textobjects
+	url = https://github.com/nvim-treesitter/nvim-treesitter-textobjects

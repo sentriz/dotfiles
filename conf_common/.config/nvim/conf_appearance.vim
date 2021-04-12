@@ -1,5 +1,6 @@
-" app colourscheme and no background please
-syntax on
+" tree sitter will highlight
+syntax off
+
 colorscheme monotone
 
 highlight Directory gui=bold
@@ -8,10 +9,6 @@ highlight QuickFixLine guibg=#444444
 highlight mkdLineBreak guifg=none guibg=none
 highlight yamlKey gui=bold
 highlight jsExport gui=bold
-
-highlight def link LspReferenceText CursorLine
-highlight def link LspReferenceWrite CursorLine
-highlight def link LspReferenceRead CursorLine
 
 " paren/block matching
 highlight clear ParenMatch
@@ -34,6 +31,8 @@ set signcolumn=number
 set termguicolors
 
 " statusline
+highlight statusReadOnly gui=underline guifg=#f99e9e
+highlight statusModifided gui=underline guifg=#f99e9e
 set statusline=
 set statusline+=%#statusReadOnly#%{&readonly?'read\ only\ ':''}%*   " read only flag
 set statusline+=%{pathshorten(@%)}
@@ -41,8 +40,13 @@ set statusline+=%#statusModifided#%{&modified?'\ \ modified':''}%*  " modified f
 set statusline+=%=                                                  " /
 set statusline+=\ column\ %c                                        " column number
 
-" lsp signs
+" lsp
 sign define LspDiagnosticsSignError       text=ee texthl=LspDiagnosticsSignError
 sign define LspDiagnosticsSignWarning     text=ww texthl=LspDiagnosticsSignWarning
 sign define LspDiagnosticsSignInformation text=ii texthl=LspDiagnosticsSignInformation
 sign define LspDiagnosticsSignHint        text=hh texthl=LspDiagnosticsSignHint
+highlight def link LspReferenceText CursorLine
+highlight def link LspReferenceWrite CursorLine
+highlight def link LspReferenceRead CursorLine
+highlight link LspDiagnosticsFloatingError LspDiagnosticsFloatingError
+highlight link NormalFloat Pmenu

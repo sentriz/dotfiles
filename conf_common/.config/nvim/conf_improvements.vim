@@ -1,7 +1,3 @@
-" set filetype detection on, indent on, plugin off
-filetype on
-filetype plugin off
-
 " basics
 set autoread
 set autowriteall
@@ -9,7 +5,6 @@ set backupdir=$TEMP,.
 set clipboard^=unnamed,unnamedplus
 set diffopt+=vertical
 set directory=$TEMP,.
-set foldmethod=syntax
 set gdefault
 set ignorecase
 set inccommand=nosplit
@@ -17,7 +12,6 @@ set incsearch
 set laststatus=2
 set mouse+=a
 set nobackup
-set nofoldenable
 set noswapfile
 set nowrap
 set nowritebackup
@@ -30,10 +24,6 @@ set undofile
 set virtualedit=block
 set grepprg=rg\ --vimgrep\ --hidden
 set tabstop=4
-
-" completion / lsp
-set completeopt=menuone,noselect
-set shortmess=filnxtToOFAc
 
 " oopsies
 command! Q quit
