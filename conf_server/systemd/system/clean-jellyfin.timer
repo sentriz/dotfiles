@@ -1,8 +1,0 @@
-[Unit]
-Description=Run clean-jellyfin.service weekly
-
-[Timer]
-OnCalendar=weekly
-
-[Install]
-WantedBy=basic.target
