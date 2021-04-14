@@ -1,8 +1,0 @@
-[Unit]
-Description=Run backup-tarsnap.service daily
-
-[Timer]
-OnCalendar=*-*-* 6:10:00
-
-[Install]
-WantedBy=basic.target

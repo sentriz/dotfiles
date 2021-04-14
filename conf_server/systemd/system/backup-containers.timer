@@ -1,8 +1,0 @@
-[Unit]
-Description=Run backup-containers.service daily
-
-[Timer]
-OnCalendar=Mon,Wed,Fri,Sun *-*-* 6:00:00
-
-[Install]
-WantedBy=basic.target
