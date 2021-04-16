@@ -27,16 +27,12 @@ local textobjects_select = {
         ['ac'] = '@call.outer',
         ['ic'] = '@class.inner',
         ['ac'] = '@class.outer',
-        ['iC'] = '@comment.outer',
-        ['ad'] = '@conditional.inner',
-        ['id'] = '@conditional.outer',
-        ['af'] = '@function.inner',
-        ['if'] = '@function.outer',
-        ['al'] = '@loop.inner',
-        ['il'] = '@loop.outer',
-        ['aa'] = '@parameter.inner',
-        ['ia'] = '@parameter.outer',
-        ['as'] = '@statement.outer'
+        ['id'] = '@conditional.inner',
+        ['ad'] = '@conditional.outer',
+        ['if'] = '@function.inner',
+        ['af'] = '@function.outer',
+        ['ia'] = '@parameter.inner',
+        ['aa'] = '@parameter.outer'
     }
 }
 
