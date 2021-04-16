@@ -86,7 +86,7 @@ set shortmess=filnxtToOFAc
 " auto show lsp signature help
 autocmd InsertCharPre *
     \ if !pumvisible() && v:char =~# '[A-Za-z\.\_]' |
-    \     call feedkeys("\<C-x>\<C-o>", 'n') |
+    \     silent! call feedkeys("\<C-x>\<C-o>", 'n') |
     \ endif
 
 " copy above / below
