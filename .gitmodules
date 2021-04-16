@@ -79,3 +79,9 @@
 [submodule "conf_common/.local/share/nvim/site/pack/plugins/start/vim-sleuth"]
 	path = conf_common/.local/share/nvim/site/pack/plugins/start/vim-sleuth
 	url = https://github.com/tpope/vim-sleuth
+[submodule "conf_common/.local/share/nvim/site/pack/plugins/start/vim-surround"]
+	path = conf_common/.local/share/nvim/site/pack/plugins/start/vim-surround
+	url = https://github.com/tpope/vim-surround
+[submodule "conf_common/.local/share/nvim/site/pack/plugins/start/vim-exchange"]
+	path = conf_common/.local/share/nvim/site/pack/plugins/start/vim-exchange
+	url = https://github.com/tommcdo/vim-exchange
