@@ -13,11 +13,11 @@ function get-info() {
 function get-status() {
     info="$(smartctl -i -n standby "$1")"
     test $? -eq 2 && echo "standby" && return
-    grep -Po "^Power mode.*:\s*\K.*" <<<"$info" |  tr '[:upper:]' '[:lower:]'
+    grep -Po "^Power mode.*:\s*\K.*" <<<"$info" | tr '[:upper:]' '[:lower:]'
 }
 
 for drive in "$@"; do
-    drive_status="$(get_status "$drive")"
-    drive_info="$(get_info "$(basename "$drive")")"
+    drive_status="$(get-status "$drive")"
+    drive_info="$(get-info "$(basename "$drive")")"
     printf "%s\t%s\t%s\n" "$drive" "$drive_info" "$drive_status"
 done
