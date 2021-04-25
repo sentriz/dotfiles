@@ -13,7 +13,6 @@ nnoremap          <leader>s  :%s/\<<c-r><c-w>\>/<c-r><c-w>/c<c-f>$F/
 nnoremap          <leader>/  :echo expand('%:p')<cr>
 nnoremap <expr>   <leader>t  ':tabnew ' . expand('$DOTS_PROJECTS_DIR') . '/'
 nnoremap <expr>   <leader>y  ':tabnew ' . expand('$DOTS_PROJECTS_DIR') . '/hippl_'
-nnoremap          <leader>h  :call SyntaxAttr#SyntaxAttr()<cr>
 nnoremap <silent> <leader>d  :call print_debug#print_debug()<cr>
 
 " better
