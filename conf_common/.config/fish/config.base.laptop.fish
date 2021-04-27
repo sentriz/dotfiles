@@ -10,6 +10,7 @@ sed -nE 's/^([^=#]+)=(.*)/set -gx \1 \2/gp' <"$XDG_CONFIG_HOME/user-dirs.dirs" |
 # systemd user env via import-environment in sway config
 set -gx SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/gnupg/S.gpg-agent.ssh"
 
+set -gx LIBSEAT_BACKEND 'logind'
 set -gx XDG_CURRENT_DESKTOP 'sway'
 set -gx XDG_SESSION_TYPE 'wayland'
 set -gx XDG_DATA_DIRS (string join ":" \
