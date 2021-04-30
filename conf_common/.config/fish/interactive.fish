@@ -45,18 +45,6 @@ set -g fish_color_status red
 set -g fish_color_user brgreen
 set -g fish_color_valid_path --underline
 
-# jump to my projects easily with completion
-function p --argument project
-    cd "$DOTS_PROJECTS_DIR/$project"
-end
-
-complete -x --command p --arguments ( \
-    find "$DOTS_PROJECTS_DIR" \
-        -maxdepth 1 -mindepth 1 \
-        -type d \
-        -printf '%P ' \
-)
-
 # fancy listing with relative time
 function __list
     command ls -vFqrloth --group-directories-first --color=yes --time-style=long-iso $argv \
