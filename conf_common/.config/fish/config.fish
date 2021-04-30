@@ -11,13 +11,13 @@ function __source_if_exists
 end
 
 __source_if_exists \
-    "$__fish_config_dir/config.base.fish" \
-    "$__fish_config_dir/config.base.$HOSTNAME.fish"
+    "$__fish_config_dir/base.fish" \
+    "$__fish_config_dir/base.$HOSTNAME.fish"
 
 status --is-login; and __source_if_exists \
-    "$__fish_config_dir/config.login.fish" \
-    "$__fish_config_dir/config.login.$HOSTNAME.fish"
+    "$__fish_config_dir/login.fish" \
+    "$__fish_config_dir/login.$HOSTNAME.fish"
 
 status --is-interactive; and __source_if_exists \
-    "$__fish_config_dir/config.interactive.fish" \
-    "$__fish_config_dir/config.interactive.$HOSTNAME.fish"
+    "$__fish_config_dir/interactive.fish" \
+    "$__fish_config_dir/interactive.$HOSTNAME.fish"
