@@ -1,8 +1,0 @@
-[Desktop Entry]
-Name=Termite
-Comment=Use the command line
-Exec=SHELL=/usr/bin/fish termite
-Icon=utilities-terminal
-Type=Application
-Categories=GTK;System;TerminalEmulator;
-StartupNotify=true

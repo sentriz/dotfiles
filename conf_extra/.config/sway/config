@@ -26,8 +26,7 @@ set $lock swaylock \
 set $default_gap 16
 set $default_font Source Code Pro 10
 
-set $emulator termite
-set $emulator_search ^Termite$
+set $emulator foot
 
 set $up_block_1 pkill -RTMIN+1 i3blocks
 set $up_block_2 pkill -RTMIN+2 i3blocks
@@ -371,11 +370,11 @@ for_window [title="is sharing your screen.$"]                         floating e
 for_window [app_id="^com.github.tchx84.Flatseal$"]                    floating enable
 
 ## floating sticky
-for_window [class="^jellyfin$"]                         floating enable, resize set 1334 557, sticky enable
-for_window [class="^Google-chrome$" title="^Jellyfin$"] floating enable, resize set 1334 557, sticky enable
-for_window [class="^work-meet$"]                        floating enable, resize set 1334 557, sticky enable
-for_window [class="^mpv$"]                              floating enable, resize set 1334 557, sticky enable
-for_window [app_id="^mpv$"]                             floating enable, resize set 1334 557, sticky enable
+for_window [class="^jellyfin$"]                         floating enable, resize set 1334 568, sticky enable
+for_window [class="^Google-chrome$" title="^Jellyfin$"] floating enable, resize set 1334 568, sticky enable
+for_window [class="^work-meet$"]                        floating enable, resize set 1334 568, sticky enable
+for_window [class="^mpv$"]                              floating enable, resize set 1334 568, sticky enable
+for_window [app_id="^mpv$"]                             floating enable, resize set 1334 568, sticky enable
 
 ## bindings: xf86
 bindsym XF86AudioLowerVolume  exec ponymix --sink decrease 2 && $up_block_1
@@ -401,9 +400,9 @@ bindsym $super+F7     exec dmenu_emoji
 bindsym $super+F8     exec dmenu_virt
 
 ## scratchpad
-exec "while :; do $emulator --name scratchpad --exec 'tmux new -A -s scratchpad'; sleep 0.5; done"
+exec "while :; do $emulator --app-id scratchpad tmux new -A -s scratchpad; sleep 0.5; done"
 for_window  [app_id="^scratchpad$"] floating enable, move scratchpad
-bindcode 66 [app_id="^scratchpad$"] scratchpad show, resize set 1334 557, move position center
+bindcode 66 [app_id="^scratchpad$"] scratchpad show, resize set 1334 568, move position center
 
 ## autostarts
 exec_always {

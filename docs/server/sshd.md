@@ -18,9 +18,3 @@
     Subsystem sftp /usr/lib/openssh/sftp-server
     UseDNS no
     UsePAM yes
-    X11Forwarding yes
-
-### commands
-
-    $ wget https://raw.githubusercontent.com/thestinger/termite/master/termite.terminfo
-    $ tic -x termite.terminfo

@@ -8,5 +8,4 @@ fi
 
 SHELL=$(which bash) j4-dmenu-desktop \
     --dmenu "dmenu_custom --prompt 'package'" \
-    --use-xdg-de \
-    --term 'termite'
+    --use-xdg-de
