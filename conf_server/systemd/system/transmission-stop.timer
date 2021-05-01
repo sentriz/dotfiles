@@ -1,8 +1,0 @@
-[Unit]
-Description=Run transmission-stop.service daily
-
-[Timer]
-OnCalendar=*-*-* 23:00:00
-
-[Install]
-WantedBy=basic.target
