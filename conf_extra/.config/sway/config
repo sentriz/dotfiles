@@ -402,7 +402,7 @@ bindsym $super+F8     exec dmenu_virt
 ## scratchpad
 exec "while :; do $emulator --app-id scratchpad tmux new -A -s scratchpad; sleep 0.5; done"
 for_window  [app_id="^scratchpad$"] floating enable, move scratchpad
-bindcode 66 [app_id="^scratchpad$"] scratchpad show, resize set 1334 568, move position center
+bindcode 66 [app_id="^scratchpad$"] scratchpad show, resize set 1334 568
 
 ## autostarts
 exec_always {
