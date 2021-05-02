@@ -14,13 +14,59 @@ vim.lsp.handlers['textDocument/publishDiagnostics'] =
     vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics,
                  {virtual_text = false, signs = true, update_in_insert = false})
 
-local function add(name, config)
+function organise_imports_go()
+    local context = {source = {organizeImports = true}}
+    vim.validate {context = {context, 't', true}}
+    local params = vim.lsp.util.make_range_params()
+    params.context = context
+    local result = vim.lsp.buf_request_sync(0, 'textDocument/codeAction',
+                                            params, 3000)
+    if not result or next(result) == nil then return end
+    local actions = result[1].result
+    if not actions then return end
+    local action = actions[1]
+    if action.edit or type(action.command) == 'table' then
+        if action.edit then
+            vim.lsp.util.apply_workspace_edit(action.edit)
+        end
+        if type(action.command) == 'table' then
+            vim.lsp.buf.execute_command(action.command)
+        end
+    else
+        vim.lsp.buf.execute_command(action)
+    end
+end
+
+function organise_imports_ts()
+    vim.lsp.buf.execute_command({
+        command = '_typescript.organizeImports',
+        arguments = {vim.api.nvim_buf_get_name(0)}
+    })
+end
+
+function import_completed()
+    local completed_item = vim.v.completed_item
+    if not (completed_item and completed_item.user_data and
+        completed_item.user_data.nvim and completed_item.user_data.nvim.lsp and
+        completed_item.user_data.nvim.lsp.completion_item) then return end
+
+    local item = completed_item.user_data.nvim.lsp.completion_item
+    local bufnr = vim.api.nvim_get_current_buf()
+    vim.lsp.buf_request(bufnr, 'completionItem/resolve', item,
+                        function(_, _, result)
+        if result and result.additionalTextEdits then
+            vim.lsp.util.apply_text_edits(result.additionalTextEdits, bufnr)
+        end
+    end)
+end
+
+local function add(name, default_config, commands)
     local args = {
         on_attach = function(client)
             illuminate.on_attach(client)
         end
     }
-    configs[name] = {default_config = config}
+    configs[name] = {default_config = default_config, commands = commands}
     lsp[name].setup(args)
 end
 
@@ -64,7 +110,7 @@ add('custom_go', {
             }
         }
     }
-})
+}, {OrganizeImports = {organise_imports_go}})
 
 add('custom_python', {
     cmd = {'pyright-langserver', '--stdio'},
@@ -85,6 +131,9 @@ add('custom_typescript', {
         'typescriptreact', 'typescript.tsx'
     },
     root_dir = util.root_pattern('package.json', 'tsconfig.json', '.git')
+}, {
+    OrganizeImports = {organise_imports_ts},
+    ImportCompleted = {import_completed}
 })
 
 add('custom_svelte', {

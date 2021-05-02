@@ -17,14 +17,7 @@ local function formatter_prettier()
 end
 
 local function formatter_goimports()
-    return {
-        exe = 'goimports',
-        args = {
-            '-srcdir', vim.api.nvim_buf_get_name(0), '-local',
-            'github.com/sentriz,go.senan.xyz'
-        },
-        stdin = true
-    }
+    return {exe = 'gofmt', stdin = true}
 end
 
 local function formatter_clang()

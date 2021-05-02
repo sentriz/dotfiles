@@ -66,7 +66,13 @@ augroup AutoEditGPGFile
     autocmd BufWritePost,FileWritePost *.gpg undo
 augroup END
 
-augroup AutoFormat
+augroup AutoLSPSaved
     autocmd!
-    autocmd BufWritePost * silent! FormatWrite
+    autocmd BufWritePre * silent! OrganizeImports
+    autocmd BufWritePre * silent! FormatWrite
+augroup END
+
+augroup AutoLSPComplete
+    autocmd!
+    autocmd CompleteDone * silent! ImportCompleted
 augroup END
