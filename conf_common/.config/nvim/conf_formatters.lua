@@ -1,4 +1,4 @@
--- prettier             npm install -g prettier
+-- prettierd            npm install -g https://github.com/fsouza/prettierd
 -- prettier go template npm install -g prettier prettier-plugin-go-template
 -- prettier svelte      npm install -g prettier prettier-plugin-svelte svelte
 -- goimports            go get -u golang.org/x/tools/cmd/goimports
@@ -10,8 +10,8 @@ local formatter = require 'formatter'
 
 local function formatter_prettier()
     return {
-        exe = 'prettier',
-        args = {'--stdin-filepath', vim.api.nvim_buf_get_name(0)},
+        exe = 'prettierd',
+        args = {vim.api.nvim_buf_get_name(0)},
         stdin = true
     }
 end
