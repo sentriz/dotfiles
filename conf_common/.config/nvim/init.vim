@@ -66,10 +66,14 @@ augroup AutoEditGPGFile
     autocmd BufWritePost,FileWritePost *.gpg undo
 augroup END
 
+function OrganiseAndFormat()
+     silent! :AutoOrganiseImports
+     silent! :FormatWrite
+endfunction
+
 augroup AutoLSPSaved
     autocmd!
-    autocmd BufWritePre * silent! OrganizeImports
-    autocmd BufWritePre * silent! FormatWrite
+    autocmd BufWritePre * call OrganiseAndFormat()
 augroup END
 
 augroup AutoLSPComplete
