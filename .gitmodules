@@ -43,9 +43,6 @@
 [submodule "conf_common/.local/share/nvim/site/pack/text/opt/sentriz/vim-print-debug"]
 	path = conf_common/.local/share/nvim/site/pack/plugins/start/vim-print-debug
 	url = https://github.com/sentriz/vim-print-debug
-[submodule "conf_common/.local/share/nvim/site/pack/meta/opt/mhartington/formatter.nvim"]
-	path = conf_common/.local/share/nvim/site/pack/plugins/start/formatter.nvim
-	url = https://github.com/mhartington/formatter.nvim
 [submodule "conf_common/.local/share/nvim/site/pack/meta/opt/RRethy/vim-illuminate"]
 	path = conf_common/.local/share/nvim/site/pack/plugins/start/vim-illuminate
 	url = https://github.com/RRethy/vim-illuminate
@@ -85,3 +82,6 @@
 [submodule "conf_common/.local/share/nvim/site/pack/plugins/start/vim-exchange"]
 	path = conf_common/.local/share/nvim/site/pack/plugins/start/vim-exchange
 	url = https://github.com/tommcdo/vim-exchange
+[submodule "conf_common/.local/share/nvim/site/pack/plugins/start/formatter.nvim"]
+	path = conf_common/.local/share/nvim/site/pack/plugins/start/formatter.nvim
+	url = https://github.com/sentriz/formatter.nvim
