@@ -90,6 +90,15 @@ servers.python.config = {
     }
 }
 
+servers.python.commands = {}
+servers.python.commands.AutoOrganiseImports =
+    function()
+        vim.lsp.buf.execute_command({
+            command = 'pyright.organizeimports',
+            arguments = {vim.uri_from_bufnr(0)}
+        })
+    end
+
 servers.typescript = {}
 servers.typescript.config = {
     cmd = {'typescript-language-server', '--stdio'},
