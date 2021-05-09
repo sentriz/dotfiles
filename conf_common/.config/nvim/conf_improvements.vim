@@ -24,6 +24,7 @@ set undofile
 set virtualedit=block
 set grepprg=rg\ --vimgrep\ --hidden
 set tabstop=4
+set updatetime=300
 
 " oopsies
 command! Q quit

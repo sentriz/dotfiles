@@ -5,22 +5,16 @@ let g:netrw_list_hide = '.*\.pyc$,^__pycache__$'
 let g:tmux_navigator_no_mappings = 1
 let g:tmux_navigator_save_on_switch = 1
 
-let g:monotone_color = [10, 3, 100]
-let g:monotone_secondary_hue_offset = 0
-
 let g:qf_auto_open_quickfix = 1
 let g:qf_auto_open_loclist = 1
 
-let g:Illuminate_delay = 500
-
-exec 'source' . expand("$XDG_CONFIG_HOME/nvim/conf_appearance.vim")
-exec 'source' . expand("$XDG_CONFIG_HOME/nvim/conf_improvements.vim")
-exec 'source' . expand("$XDG_CONFIG_HOME/nvim/conf_mappings.vim")
-
+exec 'source'  . expand("$XDG_CONFIG_HOME/nvim/conf_appearance.vim")
+exec 'source'  . expand("$XDG_CONFIG_HOME/nvim/conf_improvements.vim")
+exec 'source'  . expand("$XDG_CONFIG_HOME/nvim/conf_mappings.vim")
+exec 'source'  . expand("$XDG_CONFIG_HOME/nvim/conf_lang_server.vim")
 exec 'luafile' . expand("$XDG_CONFIG_HOME/nvim/conf_lang_server.lua")
 exec 'luafile' . expand("$XDG_CONFIG_HOME/nvim/conf_treesitter.lua")
 exec 'luafile' . expand("$XDG_CONFIG_HOME/nvim/conf_formatters.lua")
-
 
 autocmd FileType markdown            setlocal spell
 autocmd FileType gitcommit           setlocal spell
@@ -66,17 +60,3 @@ augroup AutoEditGPGFile
     autocmd BufWritePost,FileWritePost *.gpg undo
 augroup END
 
-function OrganiseAndFormat()
-     silent! :AutoOrganiseImports
-     silent! :FormatWrite
-endfunction
-
-augroup AutoLSPSaved
-    autocmd!
-    autocmd BufWritePre * call OrganiseAndFormat()
-augroup END
-
-augroup AutoLSPComplete
-    autocmd!
-    autocmd CompleteDone * silent! ImportCompleted
-augroup END

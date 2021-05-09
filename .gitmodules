@@ -43,9 +43,6 @@
 [submodule "conf_common/.local/share/nvim/site/pack/text/opt/sentriz/vim-print-debug"]
 	path = conf_common/.local/share/nvim/site/pack/plugins/start/vim-print-debug
 	url = https://github.com/sentriz/vim-print-debug
-[submodule "conf_common/.local/share/nvim/site/pack/meta/opt/RRethy/vim-illuminate"]
-	path = conf_common/.local/share/nvim/site/pack/plugins/start/vim-illuminate
-	url = https://github.com/RRethy/vim-illuminate
 [submodule "conf_common/.config/fish/plugins/jethrokuan/fzf"]
 	path = conf_common/.config/fish/plugins/jethrokuan/fzf
 	url = https://github.com/jethrokuan/fzf

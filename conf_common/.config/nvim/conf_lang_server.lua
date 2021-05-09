@@ -8,11 +8,16 @@
 local lsp = require 'lspconfig'
 local configs = require 'lspconfig/configs'
 local util = require 'lspconfig/util'
-local illuminate = require 'illuminate'
 
 vim.lsp.handlers['textDocument/publishDiagnostics'] =
     vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics,
                  {virtual_text = false, signs = true, update_in_insert = false})
+
+vim.lsp.handlers['textDocument/hover'] =
+    vim.lsp.with(vim.lsp.handlers.hover, {border = 'single'})
+
+vim.lsp.handlers['textDocument/signatureHelp'] =
+    vim.lsp.with(vim.lsp.handlers.signature_help, {border = 'single'})
 
 local servers = {}
 
@@ -168,9 +173,5 @@ for server_name, server in pairs(servers) do
         commands[command_name] = {command}
     end
     configs[server_name] = {default_config = server.config, commands = commands}
-    lsp[server_name].setup({
-        on_attach = function(client)
-            illuminate.on_attach(client)
-        end
-    })
+    lsp[server_name].setup({})
 end

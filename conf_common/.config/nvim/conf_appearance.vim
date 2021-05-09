@@ -1,6 +1,8 @@
 " tree sitter will highlight
 syntax off
 
+let g:monotone_color = [10, 3, 100]
+let g:monotone_secondary_hue_offset = 0
 colorscheme monotone
 
 highlight Directory gui=bold
@@ -39,14 +41,3 @@ set statusline+=%{pathshorten(@%)}
 set statusline+=%#statusModifided#%{&modified?'\ \ modified':''}%*  " modified flag
 set statusline+=%=                                                  " /
 set statusline+=\ column\ %c                                        " column number
-
-" lsp
-sign define LspDiagnosticsSignError       text=ee texthl=LspDiagnosticsSignError
-sign define LspDiagnosticsSignWarning     text=ww texthl=LspDiagnosticsSignWarning
-sign define LspDiagnosticsSignInformation text=ii texthl=LspDiagnosticsSignInformation
-sign define LspDiagnosticsSignHint        text=hh texthl=LspDiagnosticsSignHint
-highlight def link LspReferenceText CursorLine
-highlight def link LspReferenceWrite CursorLine
-highlight def link LspReferenceRead CursorLine
-highlight link LspDiagnosticsFloatingError LspDiagnosticsFloatingError
-highlight link NormalFloat Pmenu
