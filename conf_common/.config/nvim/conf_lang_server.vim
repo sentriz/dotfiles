@@ -14,9 +14,9 @@ augroup AutoLSPComplete
 augroup END
 
 " highlight symbol under cursor
-autocmd CursorHold  <buffer> lua vim.lsp.buf.document_highlight()
-autocmd CursorHoldI <buffer> lua vim.lsp.buf.document_highlight()
-autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+autocmd CursorHold  <buffer> silent! lua vim.lsp.buf.document_highlight()
+autocmd CursorHoldI <buffer> silent! lua vim.lsp.buf.document_highlight()
+autocmd CursorMoved <buffer> silent! lua vim.lsp.buf.clear_references()
 
 " completion
 set omnifunc=v:lua.vim.lsp.omnifunc
