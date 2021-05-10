@@ -82,3 +82,6 @@
 [submodule "conf_common/.local/share/nvim/site/pack/plugins/start/formatter.nvim"]
 	path = conf_common/.local/share/nvim/site/pack/plugins/start/formatter.nvim
 	url = https://github.com/sentriz/formatter.nvim
+[submodule "conf_common/.local/share/nvim/site/pack/plugins/start/SyntaxAttr.vim"]
+	path = conf_common/.local/share/nvim/site/pack/plugins/start/SyntaxAttr.vim
+	url = https://github.com/inkarkat/SyntaxAttr.vim
