@@ -405,10 +405,8 @@ for_window  [app_id="^scratchpad$"] floating enable, move scratchpad
 bindcode 66 [app_id="^scratchpad$"] scratchpad show, resize set 1334 568
 
 ## autostarts
-exec_always {
-    gsettings set org.gnome.desktop.interface gtk-theme "$GTK_THEME"
-    gsettings set org.gnome.desktop.interface font-name "$GTK_FONT_NAME"
-}
+exec_always gsettings set org.gnome.desktop.interface gtk-theme "$GTK_THEME"
+exec_always gsettings set org.gnome.desktop.interface font-name "$GTK_FONT_NAME"
 
 exec_always 'pkill kanshi; exec kanshi'
 exec_always 'pkill mako; exec mako \
