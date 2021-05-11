@@ -1,17 +1,11 @@
 #!/usr/bin/env bash
 
 dir="$(mktemp -d "$DOTS_SCRAP_DIR/go.XXXX")"
-
-markerfile=".scrap"
-markerpath="$dir/$markerfile"
+cd "$dir" || exit 1
 
 file="main.go"
-path="$dir/$file"
 
-{ cd "$dir" && go mod init "${dir##*\.}"; }
-
-touch "$markerpath"
-cat >"$path" <<EOL
+cat >"$file" <<EOL
 // $ cd "$dir"; and go run "$file"
 
 package main
@@ -19,4 +13,9 @@ package main
 func main() {}
 EOL
 
-nvim "$path"
+go mod init "${dir##*\.}"
+git init
+git add -A
+git commit -m "init"
+
+nvim "$file"

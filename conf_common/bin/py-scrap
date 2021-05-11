@@ -1,15 +1,11 @@
 #!/usr/bin/env bash
 
 dir="$(mktemp -d "$DOTS_SCRAP_DIR/python.XXXX")"
+cd "$dir" || exit 1
 
 file="main.py"
-path="$dir/$file"
 
-markerfile=".scrap"
-markerpath="$dir/$markerfile"
-
-touch "$markerpath"
-cat >"$path" <<EOL
+cat >"$file" <<EOL
 # $ cd "$dir"; and python "$file"
 
 def main():
@@ -19,4 +15,8 @@ if __name__ == "__main__":
     main()
 EOL
 
-nvim "$path"
+git init
+git add -A
+git commit -m "init"
+
+nvim "$file"
