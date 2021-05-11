@@ -269,6 +269,8 @@ bindsym $super+Shift+7 move container to workspace $work_7
 bindsym $super+Shift+8 move container to workspace $work_8
 bindsym $super+Shift+9 move container to workspace $work_9
 
+bindcode 66 scratchpad show
+
 assign [class="Sqliteman"]                        $work_1
 assign [class="Meld"]                             $work_1
 assign [app_id="org.gnome.meld"]                  $work_1
@@ -399,11 +401,6 @@ bindsym $super+F6     exec dmenu_hass
 bindsym $super+F7     exec dmenu_emoji
 bindsym $super+F8     exec dmenu_virt
 
-## scratchpad
-exec "while :; do $emulator --app-id scratchpad tmux new -A -s scratchpad; sleep 0.5; done"
-for_window  [app_id="^scratchpad$"] floating enable, move scratchpad
-bindcode 66 [app_id="^scratchpad$"] scratchpad show, resize set 1334 568
-
 ## autostarts
 exec_always gsettings set org.gnome.desktop.interface gtk-theme "$GTK_THEME"
 exec_always gsettings set org.gnome.desktop.interface font-name "$GTK_FONT_NAME"
@@ -443,6 +440,9 @@ exec sleep 5 && wlr-sunclock \
    --anchors br \
    --border-width 2 \
    --monitor-index 1
+
+exec sway-scratchpad
+exec sway-scratchpad
 
 set $imp_vars "DISPLAY WAYLAND_DISPLAY SWAYSOCK SSH_AUTH_SOCK XDG_CURRENT_DESKTOP XDG_SESSION_TYPE"
 exec_always systemctl --user import-environment "$imp_vars"
