@@ -1,3 +1,11 @@
 #!/usr/bin/env bash
 
-cut -d '.' -f1,2 | sed 's/\./\n/g' | base64 --decode | jq
+if test $# -ne 1; then
+    echo "please provide token, or '-' for stdin" >&2
+    exit 1
+fi
+
+token="$1"
+test "$token" == "-" && token="$(cat)"
+
+cut -d '.' -f1,2 <<<"$token" | sed 's/\./\n/g' | base64 --decode | jq
