@@ -441,6 +441,7 @@ exec sleep 5 && wlr-sunclock \
    --border-width 2 \
    --monitor-index 1
 
+exec sway-opacity 0.9
 exec sway-scratchpad
 exec sway-scratchpad
 
