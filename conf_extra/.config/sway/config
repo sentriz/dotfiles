@@ -26,7 +26,7 @@ set $lock swaylock \
 set $default_gap 16
 set $default_font Source Code Pro 10
 
-set $emulator foot
+set $emulator footclient
 
 set $up_block_1 pkill -RTMIN+1 i3blocks
 set $up_block_2 pkill -RTMIN+2 i3blocks
@@ -441,6 +441,7 @@ exec sleep 5 && wlr-sunclock \
    --border-width 2 \
    --monitor-index 1
 
+exec foot --server
 exec sway-opacity 0.9
 exec sway-scratchpad
 exec sway-scratchpad

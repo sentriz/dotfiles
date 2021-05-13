@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-foot >/dev/null 2>&1 &
+footclient >/dev/null 2>&1 &
 pid=$!
 disown
 
