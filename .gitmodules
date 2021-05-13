@@ -85,6 +85,6 @@
 [submodule "conf_common/.local/share/nvim/site/pack/plugins/start/SyntaxAttr.vim"]
 	path = conf_common/.local/share/nvim/site/pack/plugins/start/SyntaxAttr.vim
 	url = https://github.com/inkarkat/SyntaxAttr.vim
-[submodule "conf_common/.local/share/nvim/site/pack/plugins/start/vim-osc52"]
-	path = conf_common/.local/share/nvim/site/pack/plugins/start/vim-osc52
-	url = https://github.com/fcpg/vim-osc52
+[submodule "conf_common/.local/share/nvim/site/pack/plugins/start/vim-oscyank"]
+	path = conf_common/.local/share/nvim/site/pack/plugins/start/vim-oscyank
+	url = https://github.com/ojroques/vim-oscyank

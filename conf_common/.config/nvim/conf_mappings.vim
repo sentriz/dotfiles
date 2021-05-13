@@ -20,6 +20,8 @@ nnoremap <silent> <leader>h  :call SyntaxAttr#SyntaxAttr()<cr>
 nnoremap Y y$
 vnoremap yP yP
 
+vnoremap u :OSCYank<cr>
+
 " disable command hist
 nnoremap Q <nop>
 nnoremap q: <nop>
