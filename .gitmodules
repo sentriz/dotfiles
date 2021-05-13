@@ -88,3 +88,6 @@
 [submodule "conf_common/.local/share/nvim/site/pack/plugins/start/pears.nvim"]
 	path = conf_common/.local/share/nvim/site/pack/plugins/start/pears.nvim
 	url = https://github.com/steelsojka/pears.nvim
+[submodule "conf_common/.local/share/nvim/site/pack/plugins/start/vim-osc52"]
+	path = conf_common/.local/share/nvim/site/pack/plugins/start/vim-osc52
+	url = https://github.com/fcpg/vim-osc52
