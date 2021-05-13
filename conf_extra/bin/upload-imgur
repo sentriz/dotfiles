@@ -23,17 +23,24 @@ end
 
 set response (curl \
     --silent \
+    --fail \
     --header "Authorization: Client-ID $client_id" \
     --form "image=@$image_path" \
     "$upload_url"
 )
-
-if ! echo "$response" | jq -e '.success' >/dev/null
-    echo "error response from imgur:" >&2
-    echo "$response" | jq -M '.data.error' >&2
+if test -z "$response"
+    echo "failed to upload" >&2
     exit 1
 end
 
-echo "$response" | jq -r '.data.link'
+set -l link (echo "$response" | jq -r '.data.link')
+if test -z "$link"
+    echo "server returned unexpected response $response" >&2
+    exit 1
+end
 
-isatty stdout || notify-send.sh 'screenshot' 'uploaded to imgur' >/dev/null 2>&1
+echo "$link"
+
+if ! isatty stdout
+    notify-send.sh 'screenshot' 'uploaded to imgur' >/dev/null 2>&1
+end
