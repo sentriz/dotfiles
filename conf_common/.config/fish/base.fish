@@ -27,7 +27,7 @@ set -gx DOTS_MOUNTS_DIR "$HOME/mounts"
 set -gx DOTS_COPT_DIR '/opt/containers'
 set -gx DOTS_PROJECTS_DIR "$HOME/projects"
 
-set -l possible_paths \
+set -gx fish_user_paths \
     $GOPATH/bin \
     $HOME/.local/bin \
     $FNM_DIR/current/bin \
@@ -51,9 +51,3 @@ set -l possible_paths \
     $ANDROID_HOME/platform-tools \
     $ANDROID_HOME/emulator \
     /opt/flutter/bin/
-
-# not using `set -a` for backwards compatibility
-for path in $possible_paths
-    test -d "$path"
-    and set -gx fish_user_paths "$path" $fish_user_paths
-end
