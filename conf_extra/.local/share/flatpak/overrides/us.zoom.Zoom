@@ -1,0 +1,2 @@
+[Context]
+filesystems=!~/.zoom:create;!~/Documents/Zoom:create
