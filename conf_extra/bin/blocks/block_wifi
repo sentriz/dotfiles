@@ -1,19 +1,17 @@
 #!/usr/bin/env bash
 
-# requires:
-# - networkmanager
-
-function get-ssid() {
-    nmcli -t -f name,type,state connection \
-        | grep -Po '[^:]+(?=:802-11-wireless:activated)'
+function filter-parse() {
+    q_conn="State: routable"
+    q_mac="HW Address: ([a-f0-9\:]+)"
+    q_ssid="WiFi access point: (.*) \([a-f0-9\:]+\)"
+    q_addr="Address: ([0-9\.]+)"
+    sed -rnz "s/.*${q_conn}.*${q_mac}.*${q_ssid}.*${q_addr}.*/\L\1\t\2\t\3/gp"
 }
 
-function get-ip-addr() {
-    ip addr | grep -Po 'inet\s\K.*?\s'
-}
-
-ssid="$(get-ssid)"
+IFS=$'\t' read -r mac ssid addr < <(networkctl status wlan0 | filter-parse)
 test -z "$ssid" && exit
+test -z "$addr" && exit
 
-test "$BLOCK_BUTTON" -eq 1 2>/dev/null && notify-send.sh -- "$(get-ip-addr)"
+test "$BLOCK_BUTTON" -eq 1 2>/dev/null && notify-send.sh -- "$addr" "$mac"
+
 echo "wifi $ssid"
