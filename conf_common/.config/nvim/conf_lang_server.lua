@@ -8,11 +8,6 @@
 local lsp = require 'lspconfig'
 local configs = require 'lspconfig/configs'
 local util = require 'lspconfig/util'
-local pears = require 'pears'
-
-pears.setup(function(conf)
-    conf.preset('tag_matching')
-end)
 
 vim.lsp.handlers['textDocument/publishDiagnostics'] =
     vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics,
