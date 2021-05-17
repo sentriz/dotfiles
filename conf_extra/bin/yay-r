@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+yay --query --quiet \
+    | fzf --multi --preview 'yay --query --info {1}' \
+    | xargs --no-run-if-empty --open-tty yay --remove --nosave --cascade --recursive
