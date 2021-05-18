@@ -10,6 +10,14 @@ local formatter = require 'formatter'
 
 local function formatter_prettier()
     return {
+        exe = 'prettier',
+        args = {vim.api.nvim_buf_get_name(0)},
+        stdin = true
+    }
+end
+
+local function formatter_prettierd()
+    return {
         exe = 'prettierd',
         args = {vim.api.nvim_buf_get_name(0)},
         stdin = true
@@ -58,17 +66,17 @@ end
 formatter.setup({
     logging = false,
     filetype = {
-        ['javascript'] = {formatter_prettier},
-        ['typescript'] = {formatter_prettier},
-        ['typescriptreact'] = {formatter_prettier},
-        ['vue'] = {formatter_prettier},
         ['yaml'] = {formatter_prettier},
         ['yaml.docker-compose'] = {formatter_prettier},
-        ['html'] = {formatter_prettier},
-        ['css'] = {formatter_prettier},
-        ['json'] = {formatter_prettier},
-        ['template'] = {formatter_prettier},
-        ['svelte'] = {formatter_prettier},
+        ['javascript'] = {formatter_prettierd},
+        ['typescript'] = {formatter_prettierd},
+        ['typescriptreact'] = {formatter_prettierd},
+        ['vue'] = {formatter_prettierd},
+        ['html'] = {formatter_prettierd},
+        ['css'] = {formatter_prettierd},
+        ['json'] = {formatter_prettierd},
+        ['template'] = {formatter_prettierd},
+        ['svelte'] = {formatter_prettierd},
         ['go'] = {formatter_goimports},
         ['c'] = {formatter_clang},
         ['cpp'] = {formatter_clang},
