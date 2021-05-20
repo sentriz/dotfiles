@@ -42,7 +42,7 @@ inoremap <silent> <c-s> <cmd>lua vim.lsp.buf.signature_help()<cr>
 
 " auto show lsp signature help
 autocmd InsertCharPre *
-    \ if !pumvisible() && v:char =~# '[A-Za-z\.\_]' |
+    \ if !pumvisible() && v:char =~# '[A-Za-z\.\_\>]' |
     \     silent! call feedkeys("\<C-x>\<C-o>", 'n') |
     \ endif
 
