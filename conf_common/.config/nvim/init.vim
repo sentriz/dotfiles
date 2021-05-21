@@ -29,6 +29,7 @@ autocmd FileType lua                 setlocal comments=:--                      
 autocmd FileType vim                 setlocal comments=sO:\"\ -,mO:\"\ \ ,eO:\"\",:\"  commentstring=\"%s
 autocmd FileType sql                 setlocal comments=s1:/*,mb:*,ex:*/,:--,://
 autocmd FileType sh                  setlocal commentstring=#%s
+autocmd FileType dockerfile          setlocal commentstring=#%s
 autocmd FileType git                 syntax on
 
 augroup AutoCursorLastPosition
