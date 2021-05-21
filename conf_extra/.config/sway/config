@@ -439,7 +439,9 @@ exec sleep 5 && wlr-sunclock \
    --layer bottom \
    --anchors br \
    --border-width 2 \
-   --monitor-index 1
+   --monitor-index 1 \
+   --colour-ocean "#C4B5FD" \
+   --colour-land "#6D28D9"
 
 exec foot --server
 exec sway-opacity 0.9
