@@ -13,7 +13,7 @@ a hopefully simple networking setup with systemd-networkd, systemd-resolved, and
 `/etc/systemd/network/20-wired.network`
 
     [Match]
-    Type=ether
+    Name=en*
 
     [Network]
     DHCP=yes
