@@ -1,11 +1,3 @@
 #!/usr/bin/env bash
 
-if ! type -p j4-dmenu-desktop >/dev/null; then
-    echo "please install j4-dmenu-desktop" >&2
-    echo "https://github.com/enkore/j4-dmenu-desktop/" >&2
-    exit 1
-fi
-
-SHELL=$(which bash) j4-dmenu-desktop \
-    --dmenu "dmenu_custom --prompt 'package'" \
-    --use-xdg-de
+dmenu_custom --prompt package --show drun --allow-images

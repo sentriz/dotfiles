@@ -1,20 +1,17 @@
 #!/usr/bin/env bash
 
-if ! type -p bemenu >/dev/null; then
-    echo "please install bemenu" >&2
-    echo "https://github.com/Cloudef/bemenu" >&2
+if ! type -p wofi >/dev/null; then
+    echo "please install wofi" >&2
+    echo "https://hg.sr.ht/~scoopta/wofi" >&2
     exit 1
 fi
 
-pkill --exact bemenu
-env BEMENU_BACKEND=wayland bemenu \
-    --list 20 \
-    --ignorecase \
-    --ifne \
-    --ignorecase \
-    --fn "Source Code Pro 10" \
-    --hb "#0088CC" \
-    --hf "#FFFFFF" \
-    --tf "#FFFFFF" \
-    -m all \
+pkill --exact wofi
+wofi \
+    --dmenu \
+    --insensitive \
+    --location 2 \
+    --yoffset 16 \
+    --style "$(dirname "$(realpath "$0")")/css" \
+    --term "$TERMINAL" \
     "$@"
