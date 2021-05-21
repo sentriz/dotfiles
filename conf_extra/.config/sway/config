@@ -26,8 +26,6 @@ set $lock swaylock \
 set $default_gap 16
 set $default_font Source Code Pro 10
 
-set $emulator footclient
-
 set $up_block_1 pkill -RTMIN+1 i3blocks
 set $up_block_2 pkill -RTMIN+2 i3blocks
 set $up_block_3 pkill -RTMIN+3 i3blocks
@@ -391,7 +389,7 @@ bindsym XF86AudioNext         exec playerctl next
 bindsym XF86AudioPrev         exec playerctl previous
 
 ## bindings: programs
-bindsym $super+Return exec $emulator
+bindsym $super+Return exec $TERMINAL
 bindsym $super+F1     exec dmenu_package
 bindsym $super+F2     exec dmenu_clipboard
 bindsym $super+F3     exec dmenu_radio     && $up_block_3

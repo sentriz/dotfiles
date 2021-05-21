@@ -37,3 +37,5 @@ set -gx GTK_THEME 'Arc-Dark'
 set -gx GTK_FONT_NAME 'DejaVu Sans 10'
 set -gx GTK_DARK 1
 set -gx GTK2_RC_FILES /usr/share/themes/Arc-Dark/gtk-2.0/gtkrc
+
+set -gx TERMINAL footclient
