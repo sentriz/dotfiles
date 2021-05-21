@@ -13,17 +13,6 @@ function notify() {
     notify-send.sh --replace-file "$XDG_CACHE_HOME/dmenu_bluetooth_replace" "$@"
 }
 
-function notify-cmd() {
-    # $ <heading> <to filter>
-    notify "$1"
-    if ! out="$(eval "$2")"; then
-        echo "$out" >&2
-        notify "$1" "failed: $out"
-        return 1
-    fi
-    notify "$1" "done"
-}
-
 devices="$(bluetoothctl devices | lower)"
 test -z "$devices" && exit 1
 
@@ -34,10 +23,15 @@ device_mac="$(cut -d ' ' -f 2 <<<"$device")"
 device_name="$(cut -d ' ' -f 3- <<<"$device")"
 
 if test "$device" = "disconnect"; then
-    # force true here, we don't care if we're not connected currently
-    notify-cmd "disconnecting" "bluetoothctl disconnect || true"
+    bluetoothctl disconnect >/dev/null 2>&1
     exit
 fi
 
-notify-cmd "powering on" "bluetoothctl power on"
-notify-cmd "connecting to $device_name" "bluetoothctl connect $device_mac"
+notify "bluetooth" "powering on"
+bluetoothctl power on >/dev/null 2>&1
+
+if out=$(bluetoothctl connect "$device_mac" 2>&1); then
+    notify "connected to $device_name" "$device_mac"
+else
+    notify "error connecting to $device_name" "$(lower <<<"$out")"
+fi
