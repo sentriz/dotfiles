@@ -1,2 +1,2 @@
 [Context]
-filesystems=xdg-pictures;xdg-config/chromium-flags.conf;xdg-download;!home;host-etc
+filesystems=~/projects;xdg-download;xdg-config/chromium-flags.conf;xdg-pictures;!home;host-etc
