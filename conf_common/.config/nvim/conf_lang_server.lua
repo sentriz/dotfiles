@@ -63,24 +63,23 @@ servers.go.config = {
 }
 
 servers.go.commands = {}
-servers.go.commands.AutoOrganiseImports =
-    function()
-        local context = {source = {organizeImports = true}}
-        vim.validate {context = {context, 't', true}}
+servers.go.commands.AutoOrganiseImports = function()
+    local context = {source = {organizeImports = true}}
+    vim.validate {context = {context, 't', true}}
 
-        local params = vim.lsp.util.make_range_params()
-        params.context = context
+    local params = vim.lsp.util.make_range_params()
+    params.context = context
 
-        local method = 'textDocument/codeAction'
-        local resp = vim.lsp.buf_request_sync(0, method, params, timeoutms)
-        if not resp or not resp[1] then return end
-        local result = resp[1].result
-        if not result or not result[1] then return end
+    local method = 'textDocument/codeAction'
+    local resp = vim.lsp.buf_request_sync(0, method, params, timeoutms)
+    if not resp or not resp[1] then return end
+    local result = resp[1].result
+    if not result or not result[1] then return end
 
-        local edit = result[1].edit
-        vim.lsp.util.apply_workspace_edit(edit)
-        vim.lsp.buf.formatting()
-    end
+    local edit = result[1].edit
+    vim.lsp.util.apply_workspace_edit(edit)
+    vim.lsp.buf.formatting()
+end
 
 servers.python = {}
 servers.python.config = {
@@ -96,13 +95,12 @@ servers.python.config = {
 }
 
 servers.python.commands = {}
-servers.python.commands.AutoOrganiseImports =
-    function()
-        vim.lsp.buf.execute_command({
-            command = 'pyright.organizeimports',
-            arguments = {vim.uri_from_bufnr(0)}
-        })
-    end
+servers.python.commands.AutoOrganiseImports = function()
+    vim.lsp.buf.execute_command({
+        command = 'pyright.organizeimports',
+        arguments = {vim.uri_from_bufnr(0)}
+    })
+end
 
 servers.typescript = {}
 servers.typescript.config = {
@@ -115,33 +113,29 @@ servers.typescript.config = {
 }
 
 servers.typescript.commands = {}
-servers.typescript.commands.ImportCompleted =
-    function()
-        local completed_item = vim.v.completed_item
-        if not (completed_item and completed_item.user_data and
-            completed_item.user_data.nvim and completed_item.user_data.nvim.lsp and
-            completed_item.user_data.nvim.lsp.completion_item) then
-            return
-        end
+servers.typescript.commands.ImportCompleted = function()
+    local completed_item = vim.v.completed_item
+    if not (completed_item and completed_item.user_data and
+        completed_item.user_data.nvim and completed_item.user_data.nvim.lsp and
+        completed_item.user_data.nvim.lsp.completion_item) then return end
 
-        local item = completed_item.user_data.nvim.lsp.completion_item
-        local bufnr = vim.api.nvim_get_current_buf()
-        vim.lsp.buf_request(bufnr, 'completionItem/resolve', item,
-                            function(_, _, result)
-            if result and result.additionalTextEdits then
-                vim.lsp.util.apply_text_edits(result.additionalTextEdits, bufnr)
-            end
-        end)
-    end
+    local item = completed_item.user_data.nvim.lsp.completion_item
+    local bufnr = vim.api.nvim_get_current_buf()
+    vim.lsp.buf_request(bufnr, 'completionItem/resolve', item,
+                        function(_, _, result)
+        if result and result.additionalTextEdits then
+            vim.lsp.util.apply_text_edits(result.additionalTextEdits, bufnr)
+        end
+    end)
+end
 
 servers.typescript.commands = {}
-servers.typescript.commands.OrganiseImports =
-    function()
-        vim.lsp.buf.execute_command({
-            command = '_typescript.organizeImports',
-            arguments = {vim.api.nvim_buf_get_name(0)}
-        })
-    end
+servers.typescript.commands.OrganiseImports = function()
+    vim.lsp.buf.execute_command({
+        command = '_typescript.organizeImports',
+        arguments = {vim.api.nvim_buf_get_name(0)}
+    })
+end
 
 servers.svelte = {}
 servers.svelte.config = {
