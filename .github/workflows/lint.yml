@@ -1,13 +1,14 @@
-name: "lint on push"
+name: "Lint"
 on:
   push:
     branch:
       - master
 jobs:
   shellcheck:
-    name: shellcheck
+    name: ShellCheck
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: run shellcheck
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Run ShellCheck
         uses: ludeeus/action-shellcheck@master
