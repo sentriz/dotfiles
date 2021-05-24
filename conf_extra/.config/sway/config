@@ -400,6 +400,11 @@ bindsym $super+F7     exec dmenu_emoji
 bindsym $super+F8     exec dmenu_virt
 
 ## autostarts
+set $imp_vars "DISPLAY WAYLAND_DISPLAY SWAYSOCK SSH_AUTH_SOCK XDG_CURRENT_DESKTOP XDG_SESSION_TYPE"
+exec_always systemctl --user import-environment "$imp_vars"
+exec_always hash dbus-update-activation-environment 2>/dev/null && \
+    dbus-update-activation-environment --systemd "$imp_vars"
+
 exec_always gsettings set org.gnome.desktop.interface gtk-theme "$GTK_THEME"
 exec_always gsettings set org.gnome.desktop.interface font-name "$GTK_FONT_NAME"
 
@@ -442,11 +447,3 @@ exec sleep 5 && wlr-sunclock \
    --colour-land "#6D28D9"
 
 exec foot --server
-exec sway-opacity 0.9
-exec sway-scratchpad
-exec sway-scratchpad
-
-set $imp_vars "DISPLAY WAYLAND_DISPLAY SWAYSOCK SSH_AUTH_SOCK XDG_CURRENT_DESKTOP XDG_SESSION_TYPE"
-exec_always systemctl --user import-environment "$imp_vars"
-exec_always hash dbus-update-activation-environment 2>/dev/null && \
-    dbus-update-activation-environment --systemd "$imp_vars"
