@@ -28,6 +28,7 @@ local configs = require "lspconfig/configs"
 local util = require "lspconfig/util"
 
 local compose = require "nvim-lsp-compose"
+local filetypes = compose.filetypes
 local server = compose.server
 local action = compose.action
 local linter = compose.linter
@@ -193,74 +194,19 @@ local eslint_d =
 
 compose.setup(
     {
-        {
-            filetypes = {"c", "cpp"},
-            servers = {
-                {server(clangd), auto_format}
-            }
-        },
-        {
-            filetypes = {"css", "html", "json", "yaml"},
-            servers = {
-                {server(efm), prettierd, auto_format}
-            }
-        },
-        {
-            filetypes = {"dockerfile"},
-            servers = {
-                {server(docker_ls), auto_format}
-            }
-        },
-        {
-            filetypes = {"go"},
-            servers = {
-                {server(gopls), action(gopls_organise_imports), auto_format}
-            }
-        },
-        {
-            filetypes = {"lua"},
-            servers = {
-                {server(efm), luafmt, auto_format}
-            }
-        },
-        {
-            filetypes = {"sql", "pgsql"},
-            servers = {
-                {server(efm), pg_format, auto_format}
-            }
-        },
-        {
-            filetypes = {"python"},
-            servers = {
-                {server(pyright), action(pyright_organise_imports)},
-                {server(efm), black, auto_format}
-            }
-        },
-        {
-            filetypes = {"sh"},
-            servers = {
-                {server(efm), shfmt, shellcheck, auto_format},
-                {server(bash_ls)}
-            }
-        },
-        {
-            filetypes = {"svelte"},
-            servers = {
-                {server(efm), prettierd, auto_format}
-            }
-        },
-        {
-            filetypes = {"typescript", "typescriptreact", "javascript"},
-            servers = {
-                {server(efm), prettierd, eslint_d, auto_format},
-                {server(ts_server)}
-            }
-        },
-        {
-            filetypes = {"vue"},
-            servers = {
-                {server(efm), prettierd, auto_format}
-            }
-        }
+        {filetypes("c", "cpp"), server(clangd), auto_format},
+        {filetypes("css", "html", "json", "yaml"), server(efm), prettierd, auto_format},
+        {filetypes("dockerfile"), server(docker_ls), auto_format},
+        {filetypes("go"), server(gopls), action(gopls_organise_imports), auto_format},
+        {filetypes("lua"), server(efm), luafmt, auto_format},
+        {filetypes("sql", "pgsql"), server(efm), pg_format, auto_format},
+        {filetypes("python"), server(pyright), action(pyright_organise_imports)},
+        {filetypes("python"), server(efm), black, auto_format},
+        {filetypes("sh"), server(efm), shfmt, shellcheck, auto_format},
+        {filetypes("sh"), server(bash_ls)},
+        {filetypes("svelte"), server(efm), prettierd, auto_format},
+        {filetypes("typescript", "typescriptreact", "javascript"), server(efm), prettierd, eslint_d, auto_format},
+        {filetypes("typescript", "typescriptreact", "javascript"), server(ts_server)},
+        {filetypes("vue"), server(efm), prettierd, auto_format}
     }
 )
