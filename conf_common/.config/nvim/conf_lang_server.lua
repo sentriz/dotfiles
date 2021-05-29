@@ -1,171 +1,266 @@
--- bash        npm install -g bash-language-server
--- c           <package manager> install clang
--- dockerfile  npm install -g dockerfile-language-server-nodejs
--- go          go get -u golang.org/x/tools/gopls@latest
--- python      npm install -g pyright
--- js, ts      npm install -g typescript typescript-language-server
--- svelte      npm install -g svelte svelte-language-server
-local lsp = require 'lspconfig'
-local configs = require 'lspconfig/configs'
-local util = require 'lspconfig/util'
+-- requires https://github.com/sentriz/nvim-lsp-compose
 
-vim.lsp.handlers['textDocument/publishDiagnostics'] =
-    vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics,
-                 {virtual_text = false, signs = true, update_in_insert = false})
+-- lang servers:
+--     bash       npm install -ctx bash-language-server
+--     c          <package manager> install clang
+--     dockerfile npm install -ctx dockerfile-language-server-nodejs
+--     go         go get -u golang.org/x/tools/gopls@latest
+--     python     npm install -ctx pyright
+--     js, ts     npm install -ctx typescript typescript-language-server
+--     svelte     npm install -ctx svelte svelte-language-server
 
-vim.lsp.handlers['textDocument/hover'] =
-    vim.lsp.with(vim.lsp.handlers.hover, {border = 'single'})
+-- formatters:
+--     prettierd            npm install -g https://github.com/fsouza/prettierd
+--     prettier go template npm install -g prettier prettier-plugin-go-template
+--     prettier svelte      npm install -g prettier prettier-plugin-svelte svelte
+--     goimports            go get -u golang.org/x/tools/cmd/goimports
+--     clang-format         <package manager> install clang
+--     black                pip install --user black
+--     luafmt               npm install -g lua-fmt
+--     pg_format            https://github.com/darold/pgFormatter
 
-vim.lsp.handlers['textDocument/signatureHelp'] =
-    vim.lsp.with(vim.lsp.handlers.signature_help, {border = 'single'})
+-- linters:
+--     shellcheck <package manager> install shellcheck
+--     eslint_d   npm install -g eslint_d
 
-local servers = {}
+local lsp = require "lspconfig"
+local configs = require "lspconfig/configs"
+local util = require "lspconfig/util"
 
-servers.bash = {}
-servers.bash.config = {
-    cmd = {'bash-language-server', 'start'},
-    filetypes = {'sh'},
-    root_dir = util.path.dirname
-}
+local compose = require "nvim-lsp-compose"
+local server = compose.server
+local action = compose.action
+local linter = compose.linter
+local formatter = compose.formatter
+local auto_format = compose.auto_format
 
-servers.clang = {}
-servers.clang.config = {
-    cmd = {
-        'clangd', '--background-index', '--pch-storage=memory', '--clang-tidy'
-    },
-    filetypes = {'c', 'cpp', 'objc', 'objcpp'},
-    root_dir = util.root_pattern('compile_commands.json', 'compile_flags.txt',
-                                 '.git'),
-    capabilities = {textDocument = {completion = {editsNearCursor = true}}}
-}
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {border = "single"})
+vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {border = "single"})
+vim.lsp.handlers["textDocument/publishDiagnostics"] =
+    vim.lsp.with(
+    vim.lsp.diagnostic.on_publish_diagnostics,
+    {virtual_text = false, signs = true, update_in_insert = false}
+)
 
-servers.docker = {}
-servers.docker.config = {
-    cmd = {'docker-langserver', '--stdio'},
-    filetypes = {'dockerfile'},
-    root_dir = util.root_pattern('Dockerfile')
-}
+local function bash_ls()
+    return {
+        cmd = {"bash-language-server", "start"},
+        root_dir = util.path.dirname
+    }
+end
 
-servers.go = {}
-servers.go.config = {
-    cmd = {'gopls'},
-    filetypes = {'go'},
-    root_dir = util.root_pattern('go.mod', '.git'),
-    settings = {
-        gopls = {
-            usePlaceholders = true,
-            completeUnimported = true,
-            deepCompletion = true,
-            staticcheck = true,
-            analyses = {unreachable = true, unusedparams = true}
+local function gopls()
+    return {
+        cmd = {"gopls"},
+        root_dir = util.root_pattern("go.mod", ".git"),
+        settings = {
+            gopls = {
+                usePlaceholders = true,
+                completeUnimported = true,
+                deepCompletion = true,
+                staticcheck = true,
+                analyses = {unreachable = true, unusedparams = true}
+            }
         }
     }
-}
+end
 
-servers.go.commands = {}
-servers.go.commands.AutoOrganiseImports = function()
+local function gopls_organise_imports(client, buff_num)
     local context = {source = {organizeImports = true}}
-    vim.validate {context = {context, 't', true}}
+    vim.validate {context = {context, "t", true}}
 
     local params = vim.lsp.util.make_range_params()
     params.context = context
 
-    local method = 'textDocument/codeAction'
-    local resp = vim.lsp.buf_request_sync(0, method, params, timeoutms)
-    if not resp or not resp[1] then return end
-    local result = resp[1].result
-    if not result or not result[1] then return end
+    local resp = client.request_sync("textDocument/codeAction", params, 500, buff_num)
+    if not resp then
+        return
+    end
 
-    local edit = result[1].edit
-    vim.lsp.util.apply_workspace_edit(edit)
-    vim.lsp.buf.formatting()
+    for _, v in next, resp, nil do
+        if v[1].edit then
+            vim.lsp.util.apply_workspace_edit(v[1].edit)
+        end
+    end
 end
 
-servers.python = {}
-servers.python.config = {
-    cmd = {'pyright-langserver', '--stdio'},
-    filetypes = {'python'},
-    root_dir = util.root_pattern('requirements.txt', 'pyproject.toml',
-                                 'Pipfile', '.git'),
-    settings = {
-        python = {
-            analysis = {autoSearchPaths = true, useLibraryCodeForTypes = true}
+local function efm()
+    return {
+        cmd = {"efm-langserver"},
+        init_options = {v = 1},
+        settings = {rootMarkars = {".git"}, languages = {}},
+        root_dir = function(filename)
+            return util.root_pattern(".git")(filename) or util.path.dirname(filename)
+        end
+    }
+end
+
+local function clangd()
+    return {
+        cmd = {
+            "clangd",
+            "--background-index",
+            "--pch-storage=memory",
+            "--clang-tidy"
+        },
+        root_dir = util.root_pattern("compile_commands.json", "compile_flags.txt", ".git"),
+        capabilities = {textDocument = {completion = {editsNearCursor = true}}}
+    }
+end
+
+local function docker_ls()
+    return {
+        cmd = {"docker-langserver", "--stdio"},
+        root_dir = util.root_pattern("Dockerfile")
+    }
+end
+
+local function pyright()
+    return {
+        cmd = {"pyright-langserver", "--stdio"},
+        root_dir = util.root_pattern("requirements.txt", "pyproject.toml", "Pipfile", ".git"),
+        settings = {
+            python = {
+                analysis = {
+                    autoSearchPaths = true,
+                    useLibraryCodeForTypes = true
+                }
+            }
         }
     }
-}
-
-servers.python.commands = {}
-servers.python.commands.AutoOrganiseImports = function()
-    vim.lsp.buf.execute_command({
-        command = 'pyright.organizeimports',
-        arguments = {vim.uri_from_bufnr(0)}
-    })
 end
 
-servers.typescript = {}
-servers.typescript.config = {
-    cmd = {'typescript-language-server', '--stdio'},
-    filetypes = {
-        'javascript', 'javascriptreact', 'javascript.jsx', 'typescript',
-        'typescriptreact', 'typescript.tsx'
-    },
-    root_dir = util.root_pattern('package.json', 'tsconfig.json', '.git')
-}
-
-servers.typescript.commands = {}
-servers.typescript.commands.ImportCompleted = function()
-    local completed_item = vim.v.completed_item
-    if not (completed_item and completed_item.user_data and
-        completed_item.user_data.nvim and completed_item.user_data.nvim.lsp and
-        completed_item.user_data.nvim.lsp.completion_item) then return end
-
-    local item = completed_item.user_data.nvim.lsp.completion_item
-    local bufnr = vim.api.nvim_get_current_buf()
-    vim.lsp.buf_request(bufnr, 'completionItem/resolve', item,
-                        function(_, _, result)
-        if result and result.additionalTextEdits then
-            vim.lsp.util.apply_text_edits(result.additionalTextEdits, bufnr)
-        end
-    end)
-end
-
-servers.typescript.commands = {}
-servers.typescript.commands.OrganiseImports = function()
-    vim.lsp.buf.execute_command({
-        command = '_typescript.organizeImports',
-        arguments = {vim.api.nvim_buf_get_name(0)}
-    })
-end
-
-servers.svelte = {}
-servers.svelte.config = {
-    cmd = {'svelteserver', '--stdio'},
-    filetypes = {'svelte'},
-    root_dir = util.root_pattern('package.json', '.git')
-}
-
-servers.tailwind = {}
-servers.tailwind.config = {
-    cmd = {
-        'node',
-        vim.env.DOTS_PROJECTS_DIR ..
-            '/tailwind-lsp/extension/dist/server/index.js', '--stdio'
-    },
-    filetypes = {'html', 'vue', 'css'},
-    root_dir = util.root_pattern('package.json', '.git'),
-    handlers = {
-        ['tailwindcss/getConfiguration'] = function(_, _, params, _, bufnr, _)
-            vim.lsp.buf_notify(bufnr, 'tailwindcss/getConfigurationResponse',
-                               {_id = params._id})
-        end
+local function pyright_organise_imports(client, buff_num)
+    local params = {
+        command = "pyright.organizeimports",
+        arguments = {vim.uri_from_bufnr(buff_num)}
     }
-}
-
-for server_name, server in pairs(servers) do
-    local commands = {}
-    for command_name, command in pairs((server.commands or {})) do
-        commands[command_name] = {command}
-    end
-    configs[server_name] = {default_config = server.config, commands = commands}
-    lsp[server_name].setup({})
+    client.request_sync("workspace/executeCommand", params, 2000)
 end
+
+local function ts_server()
+    return {
+        cmd = {"typescript-language-server", "--stdio"},
+        root_dir = util.root_pattern("package.json", "tsconfig.json", ".git")
+    }
+end
+
+local function ts_server_organise_imports(client, buff_num)
+    local params = {
+        command = "_typescript.organizeImports",
+        arguments = {vim.api.nvim_buf_get_name(0)}
+    }
+    client.request("workspace/executeCommand", params, 1000, buff_num)
+end
+
+local prettier = formatter("prettier", "--stdin-filepath", "${INPUT}")
+local prettierd = formatter("prettierd", "${INPUT}")
+local gofmt = formatter("gofmt")
+local goimports = formatter("goimports")
+local clang_format = formatter("clang-format", "--assume-filename", "${INPUT}", "-")
+local black = formatter("black", "--quiet", "-")
+local shfmt = formatter("shfmt", "-i", 4, "-bn", "-")
+local luafmt = formatter("luafmt", "--stdin")
+local pg_format = formatter("pg_format", "--keyword-case", 1, "--type-case", 1)
+
+local shellcheck =
+    linter(
+    {
+        lintSource = "shellcheck",
+        lintCommand = "shellcheck --format gcc -",
+        lintStdin = true,
+        lintFormats = {
+            "%f:%l:%c: %trror: %m",
+            "%f:%l:%c: %tarning: %m",
+            "%f:%l:%c: %tote: %m"
+        }
+    }
+)
+
+local eslint_d =
+    linter(
+    {
+        lintSource = "eslint",
+        lintCommand = "eslint_d --format visualstudio --stdin --stdin-filename ${INPUT}",
+        lintStdin = true,
+        lintIgnoreExitCode = true,
+        lintFormats = {
+            "%f(%l,%c): %tarning %m",
+            "%f(%l,%c): %rror %m"
+        }
+    }
+)
+
+compose.setup(
+    {
+        {
+            filetypes = {"c", "cpp"},
+            servers = {
+                {server(clangd), auto_format}
+            }
+        },
+        {
+            filetypes = {"css", "html", "json", "yaml"},
+            servers = {
+                {server(efm), prettierd, auto_format}
+            }
+        },
+        {
+            filetypes = {"dockerfile"},
+            servers = {
+                {server(docker_ls), auto_format}
+            }
+        },
+        {
+            filetypes = {"go"},
+            servers = {
+                {server(gopls), action(gopls_organise_imports), auto_format}
+            }
+        },
+        {
+            filetypes = {"lua"},
+            servers = {
+                {server(efm), luafmt, auto_format}
+            }
+        },
+        {
+            filetypes = {"sql", "pgsql"},
+            servers = {
+                {server(efm), pg_format, auto_format}
+            }
+        },
+        {
+            filetypes = {"python"},
+            servers = {
+                {server(pyright), action(pyright_organise_imports)},
+                {server(efm), black, auto_format}
+            }
+        },
+        {
+            filetypes = {"sh"},
+            servers = {
+                {server(efm), shfmt, shellcheck, auto_format},
+                {server(bash_ls)}
+            }
+        },
+        {
+            filetypes = {"svelte"},
+            servers = {
+                {server(efm), prettierd, auto_format}
+            }
+        },
+        {
+            filetypes = {"typescript", "typescriptreact", "javascript"},
+            servers = {
+                {server(efm), prettierd, eslint_d, auto_format},
+                {server(ts_server)}
+            }
+        },
+        {
+            filetypes = {"vue"},
+            servers = {
+                {server(efm), prettierd, auto_format}
+            }
+        }
+    }
+)

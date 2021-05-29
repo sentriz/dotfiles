@@ -8,6 +8,7 @@ colorscheme monotone
 highlight Directory gui=bold
 highlight Normal guibg=none
 highlight QuickFixLine guibg=#444444
+highlight Pmenu guibg=none
 highlight mkdLineBreak guifg=none guibg=none
 highlight yamlKey gui=bold
 highlight jsExport gui=bold

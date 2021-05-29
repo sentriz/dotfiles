@@ -1,18 +1,3 @@
-function OrganiseAndFormat()
-     :AutoOrganiseImports
-     :FormatWrite
-endfunction
-
-augroup AutoLSPSaved
-    autocmd!
-    autocmd BufWritePre * silent! call OrganiseAndFormat()
-augroup END
-
-augroup AutoLSPComplete
-    autocmd!
-    autocmd CompleteDone * silent! ImportCompleted
-augroup END
-
 " highlight symbol under cursor
 autocmd CursorHold  <buffer> silent! lua vim.lsp.buf.document_highlight()
 autocmd CursorHoldI <buffer> silent! lua vim.lsp.buf.document_highlight()
@@ -45,6 +30,11 @@ autocmd InsertCharPre *
     \ if !pumvisible() && v:char =~# '[A-Za-z\.\_\>]' |
     \     silent! call feedkeys("\<C-x>\<C-o>", 'n') |
     \ endif
+
+augroup AutoFormat
+    autocmd!
+    autocmd BufWritePre * lua require("nvim-lsp-compose").write()
+augroup END
 
 sign define LspDiagnosticsSignError       text=ee texthl=LspDiagnosticsSignError
 sign define LspDiagnosticsSignWarning     text=ww texthl=LspDiagnosticsSignWarning

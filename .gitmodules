@@ -79,12 +79,12 @@
 [submodule "conf_common/.local/share/nvim/site/pack/plugins/start/vim-exchange"]
 	path = conf_common/.local/share/nvim/site/pack/plugins/start/vim-exchange
 	url = https://github.com/tommcdo/vim-exchange
-[submodule "conf_common/.local/share/nvim/site/pack/plugins/start/formatter.nvim"]
-	path = conf_common/.local/share/nvim/site/pack/plugins/start/formatter.nvim
-	url = https://github.com/sentriz/formatter.nvim
 [submodule "conf_common/.local/share/nvim/site/pack/plugins/start/SyntaxAttr.vim"]
 	path = conf_common/.local/share/nvim/site/pack/plugins/start/SyntaxAttr.vim
 	url = https://github.com/inkarkat/SyntaxAttr.vim
 [submodule "conf_common/.local/share/nvim/site/pack/plugins/start/vim-oscyank"]
 	path = conf_common/.local/share/nvim/site/pack/plugins/start/vim-oscyank
 	url = https://github.com/ojroques/vim-oscyank
+[submodule "conf_common/.local/share/nvim/site/pack/plugins/start/nvim-lsp-compose"]
+	path = conf_common/.local/share/nvim/site/pack/plugins/start/nvim-lsp-compose
+	url = https://github.com/sentriz/nvim-lsp-compose

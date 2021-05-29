@@ -14,7 +14,6 @@ exec 'source'  . expand("$XDG_CONFIG_HOME/nvim/conf_mappings.vim")
 exec 'source'  . expand("$XDG_CONFIG_HOME/nvim/conf_lang_server.vim")
 exec 'luafile' . expand("$XDG_CONFIG_HOME/nvim/conf_lang_server.lua")
 exec 'luafile' . expand("$XDG_CONFIG_HOME/nvim/conf_treesitter.lua")
-exec 'luafile' . expand("$XDG_CONFIG_HOME/nvim/conf_formatters.lua")
 
 autocmd FileType markdown            setlocal spell
 autocmd FileType gitcommit           setlocal spell
