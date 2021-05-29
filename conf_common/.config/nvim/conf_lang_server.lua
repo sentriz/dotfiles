@@ -38,10 +38,7 @@ local auto_format = compose.auto_format
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {border = "single"})
 vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {border = "single"})
 vim.lsp.handlers["textDocument/publishDiagnostics"] =
-    vim.lsp.with(
-    vim.lsp.diagnostic.on_publish_diagnostics,
-    {virtual_text = false, signs = true, update_in_insert = false}
-)
+    vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {virtual_text = false, signs = true, update_in_insert = false})
 
 local function bash_ls()
     return {
@@ -89,7 +86,7 @@ local function efm()
     return {
         cmd = {"efm-langserver"},
         init_options = {v = 1},
-        settings = {rootMarkars = {".git"}, languages = {}},
+        settings = {rootMarkers = {".git"}, languages = {}},
         root_dir = function(filename)
             return util.root_pattern(".git")(filename) or util.path.dirname(filename)
         end
@@ -161,7 +158,7 @@ local goimports = formatter("goimports")
 local clang_format = formatter("clang-format", "--assume-filename", "${INPUT}", "-")
 local black = formatter("black", "--quiet", "-")
 local shfmt = formatter("shfmt", "-i", 4, "-bn", "-")
-local luafmt = formatter("luafmt", "--stdin")
+local luafmt = formatter("luafmt", "--line-width", 125, "--stdin")
 local pg_format = formatter("pg_format", "--keyword-case", 1, "--type-case", 1)
 
 local shellcheck =
@@ -192,21 +189,45 @@ local eslint_d =
     }
 )
 
-compose.setup(
+local hadolint =
+    linter(
     {
-        {filetypes("c", "cpp"), server(clangd), auto_format},
-        {filetypes("css", "html", "json", "yaml"), server(efm), prettierd, auto_format},
-        {filetypes("dockerfile"), server(docker_ls), auto_format},
-        {filetypes("go"), server(gopls), action(gopls_organise_imports), auto_format},
-        {filetypes("lua"), server(efm), luafmt, auto_format},
-        {filetypes("sql", "pgsql"), server(efm), pg_format, auto_format},
-        {filetypes("python"), server(pyright), action(pyright_organise_imports)},
-        {filetypes("python"), server(efm), black, auto_format},
-        {filetypes("sh"), server(efm), shfmt, shellcheck, auto_format},
-        {filetypes("sh"), server(bash_ls)},
-        {filetypes("svelte"), server(efm), prettierd, auto_format},
-        {filetypes("typescript", "typescriptreact", "javascript"), server(efm), prettierd, eslint_d, auto_format},
-        {filetypes("typescript", "typescriptreact", "javascript"), server(ts_server)},
-        {filetypes("vue"), server(efm), prettierd, auto_format}
+        lintSource = "hadolint",
+        lintCommand = "hadolint --no-color -",
+        lintStdin = true,
+        lintIgnoreExitCode = true,
+        lintFormats = {
+            "%f:%l %m"
+        }
     }
 )
+
+local pylint =
+    linter(
+    {
+        lintSource = "pylint",
+        lintCommand = "pylint --from-stdin --output-format msvs ${ROOT}",
+        lintStdin = true,
+        lintIgnoreExitCode = true,
+        lintFormats = {
+            "%f(%l,%c): %tarning %m",
+            "%f(%l,%c): %rror %m"
+        }
+    }
+)
+
+compose.add(filetypes("c", "cpp"), server(clangd), auto_format)
+compose.add(filetypes("css", "html", "json", "yaml"), server(efm), prettierd, auto_format)
+compose.add(filetypes("dockerfile"), server(docker_ls), auto_format)
+compose.add(filetypes("dockerfile"), server(efm), hadolint)
+compose.add(filetypes("go"), server(gopls), action(gopls_organise_imports), auto_format)
+compose.add(filetypes("lua"), server(efm), luafmt, auto_format)
+compose.add(filetypes("sql", "pgsql"), server(efm), pg_format, auto_format)
+compose.add(filetypes("python"), server(efm), black, pylint, auto_format)
+compose.add(filetypes("python"), server(pyright))
+compose.add(filetypes("sh"), server(efm), shfmt, shellcheck, auto_format)
+compose.add(filetypes("sh"), server(bash_ls))
+compose.add(filetypes("svelte"), server(efm), prettierd, auto_format)
+compose.add(filetypes("typescript", "typescriptreact", "javascript"), server(efm), prettierd, eslint_d, auto_format)
+compose.add(filetypes("typescript", "typescriptreact", "javascript"), server(ts_server))
+compose.add(filetypes("vue"), server(efm), prettierd, auto_format)
