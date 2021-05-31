@@ -16,218 +16,196 @@
 --     goimports            go get -u golang.org/x/tools/cmd/goimports
 --     clang-format         <package manager> install clang
 --     black                pip install --user black
---     luafmt               npm install -g lua-fmt
+--     stylua               https://github.com/JohnnyMorganz/StyLua/releases
 --     pg_format            https://github.com/darold/pgFormatter
 
 -- linters:
 --     shellcheck <package manager> install shellcheck
 --     eslint_d   npm install -g eslint_d
 
-local lsp = require "lspconfig"
-local configs = require "lspconfig/configs"
-local util = require "lspconfig/util"
-
-local compose = require "nvim-lsp-compose"
-local filetypes = compose.filetypes
-local server = compose.server
-local action = compose.action
-local linter = compose.linter
-local formatter = compose.formatter
-local auto_format = compose.auto_format
+local lsp = require("lspconfig")
+local configs = require("lspconfig/configs")
+local util = require("lspconfig/util")
+local c = require("nvim-lsp-compose")
 
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {})
 vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {})
-vim.lsp.handlers["textDocument/publishDiagnostics"] =
-    vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {virtual_text = false, signs = true, update_in_insert = false})
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+	virtual_text = false,
+	signs = true,
+	update_in_insert = false,
+})
 
-local function bash_ls()
-    return {
-        cmd = {"bash-language-server", "start"},
-        root_dir = util.path.dirname
-    }
-end
+local bash_ls = c.server({
+	cmd = { "bash-language-server", "start" },
+	root_dir = util.path.dirname,
+})
 
-local function gopls()
-    return {
-        cmd = {"gopls"},
-        root_dir = util.root_pattern("go.mod", ".git"),
-        settings = {
-            gopls = {
-                usePlaceholders = true,
-                completeUnimported = true,
-                deepCompletion = true,
-                staticcheck = true,
-                analyses = {unreachable = true, unusedparams = true}
-            }
-        }
-    }
-end
+local gopls = c.server({
+	cmd = { "gopls" },
+	root_dir = util.root_pattern("go.mod", ".git"),
+	settings = {
+		gopls = {
+			usePlaceholders = true,
+			completeUnimported = true,
+			deepCompletion = true,
+			staticcheck = true,
+			analyses = { unreachable = true, unusedparams = true },
+		},
+	},
+})
 
-local function gopls_organise_imports(client, buff_num)
-    local context = {source = {organizeImports = true}}
-    vim.validate {context = {context, "t", true}}
+local clangd = c.server({
+	cmd = {
+		"clangd",
+		"--background-index",
+		"--pch-storage=memory",
+		"--clang-tidy",
+	},
+	root_dir = util.root_pattern("compile_commands.json", "compile_flags.txt", ".git"),
+	capabilities = { textDocument = { completion = { editsNearCursor = true } } },
+})
 
-    local params = vim.lsp.util.make_range_params()
-    params.context = context
+local docker_ls = c.server({
+	cmd = { "docker-langserver", "--stdio" },
+	root_dir = util.root_pattern("Dockerfile"),
+})
 
-    local resp = client.request_sync("textDocument/codeAction", params, 500, buff_num)
-    if not resp then
-        return
-    end
+local pyright = c.server({
+	cmd = { "pyright-langserver", "--stdio" },
+	root_dir = util.root_pattern("requirements.txt", "pyproject.toml", "Pipfile", ".git"),
+	settings = {
+		python = {
+			analysis = {
+				autoSearchPaths = true,
+				useLibraryCodeForTypes = true,
+			},
+		},
+	},
+})
 
-    for _, v in next, resp, nil do
-        if v[1].edit then
-            vim.lsp.util.apply_workspace_edit(v[1].edit)
-        end
-    end
-end
+local ts_server = c.server({
+	cmd = { "typescript-language-server", "--stdio" },
+	root_dir = util.root_pattern("package.json", "tsconfig.json", ".git"),
+})
 
-local function efm()
-    return {
-        cmd = {"efm-langserver"},
-        init_options = {v = 1},
-        settings = {rootMarkers = {".git"}, languages = {}},
-        root_dir = function(filename)
-            return util.root_pattern(".git")(filename) or util.path.dirname(filename)
-        end
-    }
-end
+local efm = c.server({
+	cmd = { "efm-langserver" },
+	init_options = { v = 1 },
+	settings = { rootMarkers = { ".git" }, languages = {} },
+	root_dir = function(filename)
+		return util.root_pattern(".git")(filename) or util.path.dirname(filename)
+	end,
+})
 
-local function clangd()
-    return {
-        cmd = {
-            "clangd",
-            "--background-index",
-            "--pch-storage=memory",
-            "--clang-tidy"
-        },
-        root_dir = util.root_pattern("compile_commands.json", "compile_flags.txt", ".git"),
-        capabilities = {textDocument = {completion = {editsNearCursor = true}}}
-    }
-end
+local pyright_organise_imports = c.action(function(client, buff_num)
+	local params = {
+		command = "pyright.organizeimports",
+		arguments = { vim.uri_from_bufnr(buff_num) },
+	}
+	client.request_sync("workspace/executeCommand", params, 2000)
+end)
 
-local function docker_ls()
-    return {
-        cmd = {"docker-langserver", "--stdio"},
-        root_dir = util.root_pattern("Dockerfile")
-    }
-end
+local ts_server_organise_imports = c.action(function(client, buff_num)
+	local params = {
+		command = "_typescript.organizeImports",
+		arguments = { vim.api.nvim_buf_get_name(0) },
+	}
+	client.request("workspace/executeCommand", params, 1000, buff_num)
+end)
 
-local function pyright()
-    return {
-        cmd = {"pyright-langserver", "--stdio"},
-        root_dir = util.root_pattern("requirements.txt", "pyproject.toml", "Pipfile", ".git"),
-        settings = {
-            python = {
-                analysis = {
-                    autoSearchPaths = true,
-                    useLibraryCodeForTypes = true
-                }
-            }
-        }
-    }
-end
+local gopls_organise_imports = c.action(function(client, buff_num)
+	local context = { source = { organizeImports = true } }
+	vim.validate({ context = { context, "t", true } })
 
-local function pyright_organise_imports(client, buff_num)
-    local params = {
-        command = "pyright.organizeimports",
-        arguments = {vim.uri_from_bufnr(buff_num)}
-    }
-    client.request_sync("workspace/executeCommand", params, 2000)
-end
+	local params = vim.lsp.util.make_range_params()
+	params.context = context
 
-local function ts_server()
-    return {
-        cmd = {"typescript-language-server", "--stdio"},
-        root_dir = util.root_pattern("package.json", "tsconfig.json", ".git")
-    }
-end
+	local resp = client.request_sync("textDocument/codeAction", params, 500, buff_num)
+	if not resp then
+		return
+	end
 
-local function ts_server_organise_imports(client, buff_num)
-    local params = {
-        command = "_typescript.organizeImports",
-        arguments = {vim.api.nvim_buf_get_name(0)}
-    }
-    client.request("workspace/executeCommand", params, 1000, buff_num)
-end
+	for _, v in next, resp, nil do
+		if v[1].edit then
+			vim.lsp.util.apply_workspace_edit(v[1].edit)
+		end
+	end
+end)
 
-local prettier = formatter("prettier", "--stdin-filepath", "${INPUT}")
-local prettierd = formatter("prettierd", "${INPUT}")
-local gofmt = formatter("gofmt")
-local goimports = formatter("goimports")
-local clang_format = formatter("clang-format", "--assume-filename", "${INPUT}", "-")
-local black = formatter("black", "--quiet", "-")
-local shfmt = formatter("shfmt", "-i", 4, "-bn", "-")
-local luafmt = formatter("luafmt", "--line-width", 125, "--stdin")
-local pg_format = formatter("pg_format", "--keyword-case", 1, "--type-case", 1)
+local prettier = c.formatter("prettier", "--stdin-filepath", "${INPUT}")
+local prettierd = c.formatter("prettierd", "${INPUT}")
+local gofmt = c.formatter("gofmt")
+local goimports = c.formatter("goimports")
+local clang_format = c.formatter("clang-format", "--assume-filename", "${INPUT}", "-")
+local black = c.formatter("black", "--quiet", "-")
+local shfmt = c.formatter("shfmt", "-i", 4, "-bn", "-")
+local stylua = c.formatter("stylua", "-")
+local pg_format = c.formatter("pg_format", "--keyword-case", 1, "--type-case", 1)
 
-local shellcheck =
-    linter(
-    {
-        lintSource = "shellcheck",
-        lintCommand = "shellcheck --format gcc -",
-        lintStdin = true,
-        lintFormats = {
-            "%f:%l:%c: %trror: %m",
-            "%f:%l:%c: %tarning: %m",
-            "%f:%l:%c: %tote: %m"
-        }
-    }
-)
+local shellcheck = c.linter({
+	lintSource = "shellcheck",
+	lintCommand = "shellcheck --format gcc -",
+	lintStdin = true,
+	lintFormats = {
+		"%f:%l:%c: %trror: %m",
+		"%f:%l:%c: %tarning: %m",
+		"%f:%l:%c: %tote: %m",
+	},
+})
 
-local eslint_d =
-    linter(
-    {
-        lintSource = "eslint",
-        lintCommand = "eslint_d --format visualstudio --stdin --stdin-filename ${INPUT}",
-        lintStdin = true,
-        lintIgnoreExitCode = true,
-        lintFormats = {
-            "%f(%l,%c): %tarning %m",
-            "%f(%l,%c): %rror %m"
-        }
-    }
-)
+local eslint_d = c.linter({
+	lintSource = "eslint",
+	lintCommand = "eslint_d --format visualstudio --stdin --stdin-filename ${INPUT}",
+	lintStdin = true,
+	lintIgnoreExitCode = true,
+	lintFormats = {
+		"%f(%l,%c): %tarning %m",
+		"%f(%l,%c): %rror %m",
+	},
+})
 
-local hadolint =
-    linter(
-    {
-        lintSource = "hadolint",
-        lintCommand = "hadolint --no-color -",
-        lintStdin = true,
-        lintIgnoreExitCode = true,
-        lintFormats = {
-            "%f:%l %m"
-        }
-    }
-)
+local hadolint = c.linter({
+	lintSource = "hadolint",
+	lintCommand = "hadolint --no-color -",
+	lintStdin = true,
+	lintIgnoreExitCode = true,
+	lintFormats = {
+		"%f:%l %m",
+	},
+})
 
-local pylint =
-    linter(
-    {
-        lintSource = "pylint",
-        lintCommand = "pylint --from-stdin --output-format msvs ${ROOT}",
-        lintStdin = true,
-        lintIgnoreExitCode = true,
-        lintFormats = {
-            "%f(%l,%c): %tarning %m",
-            "%f(%l,%c): %rror %m"
-        }
-    }
-)
+local pylint = c.linter({
+	lintSource = "pylint",
+	lintCommand = "pylint --score no --output-format text --msg-template {path}:{line}:{column}:{C}:{msg} --from-stdin ${ROOT}",
+	lintStdin = true,
+	lintIgnoreExitCode = true,
+	lintOffsetColumns = 1,
+	lintFormats = {
+		"%f:%l:%c:%t:%m",
+	},
+	lintCategoryMap = {
+		I = "H",
+		R = "I",
+		C = "I",
+		W = "W",
+		E = "E",
+		F = "E",
+	},
+})
 
-compose.add(filetypes("c", "cpp"), server(clangd), auto_format)
-compose.add(filetypes("css", "html", "json", "yaml"), server(efm), prettierd, auto_format)
-compose.add(filetypes("dockerfile"), server(docker_ls), auto_format)
-compose.add(filetypes("dockerfile"), server(efm), hadolint)
-compose.add(filetypes("go"), server(gopls), action(gopls_organise_imports), auto_format)
-compose.add(filetypes("lua"), server(efm), luafmt, auto_format)
-compose.add(filetypes("sql", "pgsql"), server(efm), pg_format, auto_format)
-compose.add(filetypes("python"), server(efm), black, pylint, auto_format)
-compose.add(filetypes("python"), server(pyright))
-compose.add(filetypes("sh"), server(efm), shfmt, shellcheck, auto_format)
-compose.add(filetypes("sh"), server(bash_ls))
-compose.add(filetypes("svelte"), server(efm), prettierd, auto_format)
-compose.add(filetypes("typescript", "typescriptreact", "javascript"), server(efm), prettierd, eslint_d, auto_format)
-compose.add(filetypes("typescript", "typescriptreact", "javascript"), server(ts_server))
-compose.add(filetypes("vue"), server(efm), prettierd, auto_format)
+c.add(c.filetypes("c", "cpp"), clangd, c.auto_format)
+c.add(c.filetypes("css", "html", "json", "yaml"), efm, prettierd, c.auto_format)
+c.add(c.filetypes("dockerfile"), docker_ls, c.auto_format)
+c.add(c.filetypes("dockerfile"), efm, hadolint)
+c.add(c.filetypes("go"), gopls, gopls_organise_imports, c.auto_format)
+c.add(c.filetypes("lua"), efm, stylua, c.auto_format)
+c.add(c.filetypes("sql", "pgsql"), efm, pg_format, c.auto_format)
+c.add(c.filetypes("python"), efm, black, pylint, c.auto_format)
+c.add(c.filetypes("python"), pyright)
+c.add(c.filetypes("sh"), efm, shfmt, shellcheck, c.auto_format)
+c.add(c.filetypes("sh"), bash_ls)
+c.add(c.filetypes("svelte"), efm, prettierd, c.auto_format)
+c.add(c.filetypes("typescript", "typescriptreact", "javascript"), efm, prettierd, eslint_d, c.auto_format)
+c.add(c.filetypes("typescript", "typescriptreact", "javascript"), ts_server)
+c.add(c.filetypes("vue"), efm, prettierd, c.auto_format)
