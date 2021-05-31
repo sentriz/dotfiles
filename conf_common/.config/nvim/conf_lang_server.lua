@@ -1,13 +1,13 @@
 -- requires https://github.com/sentriz/nvim-lsp-compose
 
 -- lang servers:
---     bash       npm install -ctx bash-language-server
+--     bash       npm install -g bash-language-server
 --     c          <package manager> install clang
---     dockerfile npm install -ctx dockerfile-language-server-nodejs
+--     dockerfile npm install -g dockerfile-language-server-nodejs
 --     go         go get -u golang.org/x/tools/gopls@latest
---     python     npm install -ctx pyright
---     js, ts     npm install -ctx typescript typescript-language-server
---     svelte     npm install -ctx svelte svelte-language-server
+--     python     npm install -g pyright
+--     js, ts     npm install -g typescript typescript-language-server
+--     svelte     npm install -g svelte svelte-language-server
 
 -- formatters:
 --     prettierd            npm install -g https://github.com/fsouza/prettierd
@@ -22,6 +22,8 @@
 -- linters:
 --     shellcheck <package manager> install shellcheck
 --     eslint_d   npm install -g eslint_d
+--     pylint     pip install --user pylint
+--     hadolint   https://github.com/hadolint/hadolint
 
 local lsp = require("lspconfig")
 local configs = require("lspconfig/configs")
