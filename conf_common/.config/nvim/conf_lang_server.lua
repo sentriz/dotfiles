@@ -20,10 +20,11 @@
 --     pg_format            https://github.com/darold/pgFormatter
 
 -- linters:
---     shellcheck <package manager> install shellcheck
---     eslint_d   npm install -g eslint_d
---     pylint     pip install --user pylint
---     hadolint   https://github.com/hadolint/hadolint
+--     shellcheck   <package manager> install shellcheck
+--     eslint_d     npm install -g eslint_d
+--     pylint       pip install --user pylint
+--     hadolint     https://github.com/hadolint/hadolint
+--     markdownlint npm install -g markdownlint-cli
 
 local lsp = require("lspconfig")
 local configs = require("lspconfig/configs")
@@ -177,6 +178,18 @@ local hadolint = c.linter({
 	},
 })
 
+local markdownlint = c.linter({
+	lintSource = "markdownlint",
+	lintCommand = "markdownlint --stdin",
+	lintStdin = true,
+	lintIgnoreExitCode = true,
+	lintFormats = {
+		"%f:%l %m",
+		"%f:%l:%c %m",
+		"%f: %l: %m",
+	},
+})
+
 local pylint = c.linter({
 	lintSource = "pylint",
 	lintCommand = "pylint --score no --output-format text --msg-template {path}:{line}:{column}:{C}:{msg} --from-stdin ${ROOT}",
@@ -211,3 +224,4 @@ c.add(c.filetypes("svelte"), efm, prettierd, c.auto_format)
 c.add(c.filetypes("typescript", "typescriptreact", "javascript"), efm, prettierd, eslint_d, c.auto_format)
 c.add(c.filetypes("typescript", "typescriptreact", "javascript"), ts_server)
 c.add(c.filetypes("vue"), efm, prettierd, c.auto_format)
+c.add(c.filetypes("markdown"), efm, markdownlint)
