@@ -17,6 +17,7 @@ set -gx ANDROID_SDK_ROOT '/opt/android-sdk'
 set -gx ANDROID_HOME '/opt/android-sdk'
 set -gx JAVA_HOME '/usr/lib/jvm/java-8-openjdk/'
 set -gx JAVA_OPTS '-XX:+IgnoreUnrecognizedVMOptions'
+set -gx PYLINTHOME "$XDG_DATA_HOME/pylint"
 
 # dotfiles settings
 set -gx DOTS_SCRAP_DIR "$HOME/scrap"
