@@ -16,9 +16,6 @@ signal=2
 [wifi]
 color=#e6e600
 
-[vpn]
-color=#f24b74
-
 [battery]
 color=#e184c2
 interval=30
