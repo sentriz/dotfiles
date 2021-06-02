@@ -11,7 +11,7 @@ local indent = { enable = true }
 local incremental_selection = {
 	enable = true,
 	keymaps = {
-		init_selection = "gv",
+		init_selection = "=",
 		node_incremental = "=",
 		node_decremental = "-",
 		scope_incremental = "+",
