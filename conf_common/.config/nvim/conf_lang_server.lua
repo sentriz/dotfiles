@@ -18,6 +18,7 @@
 --     black                pip install --user black
 --     stylua               https://github.com/JohnnyMorganz/StyLua/releases
 --     pg_format            https://github.com/darold/pgFormatter
+--     pandoc               <package manager> install pandoc
 
 -- linters:
 --     shellcheck   <package manager> install shellcheck
@@ -145,6 +146,17 @@ local black = c.formatter("black", "--quiet", "-")
 local shfmt = c.formatter("shfmt", "-i", 4, "-bn", "-")
 local stylua = c.formatter("stylua", "-")
 local pg_format = c.formatter("pg_format", "--keyword-case", 1, "--type-case", 1)
+local pandoc_markdown = c.formatter(
+	"pandoc",
+	"--from",
+	"markdown",
+	"--to",
+	"gfm",
+	"--standalone",
+	"--preserve-tabs",
+	"--tab-stop",
+	2
+)
 
 local shellcheck = c.linter({
 	lintSource = "shellcheck",
@@ -224,4 +236,4 @@ c.add(c.filetypes("svelte"), efm, prettierd, c.auto_format)
 c.add(c.filetypes("typescript", "typescriptreact", "javascript"), efm, prettierd, eslint_d, c.auto_format)
 c.add(c.filetypes("typescript", "typescriptreact", "javascript"), ts_server)
 c.add(c.filetypes("vue"), efm, prettierd, c.auto_format)
-c.add(c.filetypes("markdown"), efm, markdownlint)
+c.add(c.filetypes("markdown"), efm, markdownlint, pandoc_markdown, c.auto_format)
