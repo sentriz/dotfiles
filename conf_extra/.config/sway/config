@@ -425,15 +425,11 @@ exec swayidle -w \
     timeout 290  "$lock_warning" \
     timeout 300  "$lock" \
     before-sleep "$lock"
-exec clipman restore
+
 exec wl-paste \
     --type text \
     --watch \
-    clipman store \
-        --max-items 500 \
-        --no-persist \
-        --no-single \
-        --unix
+    cliphist store
 
 exec sleep 5 && wlsunset -l 53.3 -L -6.2
 exec sleep 5 && wlr-sunclock \

@@ -14,4 +14,6 @@ wofi \
     --yoffset 16 \
     --style "$(dirname "$(realpath "$0")")/css" \
     --term "$TERMINAL" \
+    --sort-order 'default' \
+    --cache-file /dev/null \
     "$@"

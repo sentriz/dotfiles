@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 
-if ! type -p clipman >/dev/null; then
-    echo "please install clipman" >&2
-    echo "https://github.com/yory8/clipman/" >&2
+if ! type -p cliphist >/dev/null; then
+    echo "please install cliphist" >&2
+    echo "https://github.com/sentriz/cliphist" >&2
     exit 1
 fi
 
-clipman pick \
-    -t CUSTOM \
-    -T "dmenu_custom --prompt clipboard"
+cliphist list \
+    | dmenu_custom --prompt clipboard \
+    | cliphist decode \
+    | wl-copy
