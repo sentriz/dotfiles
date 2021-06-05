@@ -40,6 +40,27 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagn
 	update_in_insert = false,
 })
 
+local tailwind_intellisense = c.server({
+	cmd = { "node", vim.env.DOTS_PROJECTS_DIR .. "/tailwind-lsp/extension/dist/server/tailwindServer.js", "--stdio" },
+	root_dir = util.root_pattern("tailwind.config.js", "package.json", ".git"),
+	settings = {
+		tailwindCSS = {
+			validate = true,
+			lint = {
+				cssConflict = "warning",
+				invalidApply = "error",
+				invalidScreen = "error",
+				invalidVariant = "error",
+				invalidConfigPath = "error",
+				invalidTailwindDirective = "error",
+			},
+		},
+	},
+	init_options = {
+		userLanguages = {},
+	},
+})
+
 local bash_ls = c.server({
 	cmd = { "bash-language-server", "start" },
 	root_dir = util.path.dirname,
@@ -236,4 +257,5 @@ c.add(c.filetypes("svelte"), efm, prettierd, c.auto_format)
 c.add(c.filetypes("typescript", "typescriptreact", "javascript"), efm, prettierd, eslint_d, c.auto_format)
 c.add(c.filetypes("typescript", "typescriptreact", "javascript"), ts_server)
 c.add(c.filetypes("vue"), efm, prettierd, c.auto_format)
+c.add(c.filetypes("vue", "html"), tailwind_intellisense)
 c.add(c.filetypes("markdown"), efm, markdownlint, pandoc_markdown, c.auto_format)
