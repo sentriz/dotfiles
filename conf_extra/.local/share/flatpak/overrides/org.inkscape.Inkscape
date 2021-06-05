@@ -1,2 +1,2 @@
 [Context]
-filesystems=~/downloads;~/documents/inkscape;!host
+filesystems=~/projects;~/documents/inkscape;~/downloads;!host
