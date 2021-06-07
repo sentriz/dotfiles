@@ -2,23 +2,24 @@
 
 -- lang servers:
 --     bash       npm install -g bash-language-server
---     c          <package manager> install clang
+--     c          yay -S clang
 --     dockerfile npm install -g dockerfile-language-server-nodejs
 --     go         go get -u golang.org/x/tools/gopls@latest
 --     python     npm install -g pyright
 --     js, ts     npm install -g typescript typescript-language-server
 --     svelte     npm install -g svelte svelte-language-server
+--     tailwind   yay -S vscode-tailwindcss-language-server-bin
 
 -- formatters:
 --     prettierd            npm install -g https://github.com/fsouza/prettierd
 --     prettier go template npm install -g prettier prettier-plugin-go-template
 --     prettier svelte      npm install -g prettier prettier-plugin-svelte svelte
 --     goimports            go get -u golang.org/x/tools/cmd/goimports
---     clang-format         <package manager> install clang
+--     clang-format         yay -S clang
 --     black                pip install --user black
 --     stylua               https://github.com/JohnnyMorganz/StyLua/releases
 --     pg_format            https://github.com/darold/pgFormatter
---     pandoc               <package manager> install pandoc
+--     pandoc               yay -S pandoc-bin
 
 -- linters:
 --     shellcheck   <package manager> install shellcheck
@@ -41,7 +42,7 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagn
 })
 
 local tailwind_intellisense = c.server({
-	cmd = { "node", vim.env.DOTS_PROJECTS_DIR .. "/tailwind-lsp/extension/dist/server/tailwindServer.js", "--stdio" },
+	cmd = { "tailwindcss-language-server", "--stdio" },
 	root_dir = util.root_pattern("tailwind.config.js", "package.json", ".git"),
 	settings = {
 		tailwindCSS = {
