@@ -426,10 +426,7 @@ exec swayidle -w \
     timeout 300  "$lock" \
     before-sleep "$lock"
 
-exec wl-paste \
-    --type text \
-    --watch \
-    cliphist store
+exec wl-paste --watch cliphist store
 
 exec sleep 5 && wlsunset -l 53.3 -L -6.2
 exec sleep 5 && wlr-sunclock \
