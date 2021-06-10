@@ -12,7 +12,7 @@ wofi \
     --insensitive \
     --location 2 \
     --yoffset 16 \
-    --style "$(dirname "$(realpath "$0")")/css" \
+    --style "${BASH_SOURCE%/*}/css" \
     --term "$TERMINAL" \
     --sort-order 'default' \
     "$@"
