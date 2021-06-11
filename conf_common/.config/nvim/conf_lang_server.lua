@@ -148,13 +148,13 @@ local gopls_organise_imports = c.action(function(client, buff_num)
 	local params = vim.lsp.util.make_range_params()
 	params.context = context
 
-	local resp = client.request_sync("textDocument/codeAction", params, 500, buff_num)
+	local resp = client.request_sync("textDocument/codeAction", params, 1000, buff_num)
 	if not resp then
 		return
 	end
 
 	for _, v in next, resp, nil do
-		if v[1].edit then
+		if v and v[1].edit then
 			vim.lsp.util.apply_workspace_edit(v[1].edit)
 		end
 	end
