@@ -23,6 +23,16 @@ abbr g   'git'
 abbr gti 'git'
 abbr ps  'ps -axh -o pid,%cpu,cmd'
 
+# cd   -> pushd
+# cd - -> popd
+abbr cd "ce"
+function ce --wraps pushd
+    if test (count $argv) -eq 0; cd;   return $status; end
+    if test $argv[1] = "-";      popd; return $status; end
+    pushd $argv
+    return $status
+end
+
 # keep updated with `printf "set -g %s\n" (set -U | grep fish_color)`
 set -g fish_color_autosuggestion '555'  'brblack'
 set -g fish_color_command 'normal'
