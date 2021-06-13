@@ -22,10 +22,10 @@
 --     pandoc               yay -S pandoc-bin
 
 -- linters:
---     shellcheck   <package manager> install shellcheck
+--     shellcheck   yay -S shellcheck-bin
 --     eslint_d     npm install -g eslint_d
 --     pylint       pip install --user pylint
---     hadolint     https://github.com/hadolint/hadolint
+--     hadolint     yay -S hadolint-bin
 --     markdownlint npm install -g markdownlint-cli
 
 local lsp = require("lspconfig")
