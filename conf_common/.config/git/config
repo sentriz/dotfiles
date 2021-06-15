@@ -94,3 +94,5 @@
 [branch]
   autosetupmerge = always
   autosetuprebase = always
+[absorb]
+	maxStack = 25
