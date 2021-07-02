@@ -142,20 +142,17 @@ local ts_server_organise_imports = c.action(function(client, buff_num)
 end)
 
 local gopls_organise_imports = c.action(function(client, buff_num)
-	local context = { source = { organizeImports = true } }
-	vim.validate({ context = { context, "t", true } })
-
 	local params = vim.lsp.util.make_range_params()
-	params.context = context
-
-	local resp = client.request_sync("textDocument/codeAction", params, 1000, buff_num)
-	if not resp then
+	params.context = { only = { "source.organizeImports" } }
+	local result = client.request_sync("textDocument/codeAction", params, 1000, buff_num)
+	if not result or not result.result then
 		return
 	end
-
-	for _, v in next, resp, nil do
-		if v and v[1].edit then
-			vim.lsp.util.apply_workspace_edit(v[1].edit)
+	for _, res in pairs(result.result) do
+		if res.edit then
+			vim.lsp.util.apply_workspace_edit(res.edit)
+		else
+			vim.lsp.buf.execute_command(res.command)
 		end
 	end
 end)
