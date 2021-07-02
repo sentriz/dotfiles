@@ -146,18 +146,11 @@ mode $mode_resize_tile {
     bindsym Escape mode "default"
 }
 
-set $mode_colour "colour mode: backlight [u|i], gamma [o|p], brightness [k|l], contrast [n|m]"
+set $mode_colour "colour mode: backlight [u|i]"
 mode $mode_colour {
     # xbacklight provided by acpilight (works well on x11 and wayland)
     bindsym u exec xbacklight -dec 5
     bindsym i exec xbacklight -inc 5
-    # https://github.com/sentriz/wl-gammactld (very janky)
-    bindsym o exec "echo 'gamma -0.05'      > /tmp/wl-gammactld"
-    bindsym p exec "echo 'gamma +0.05'      > /tmp/wl-gammactld"
-    bindsym k exec "echo 'brightness -0.05' > /tmp/wl-gammactld"
-    bindsym l exec "echo 'brightness +0.05' > /tmp/wl-gammactld"
-    bindsym n exec "echo 'contrast -0.05'   > /tmp/wl-gammactld"
-    bindsym m exec "echo 'contrast +0.05'   > /tmp/wl-gammactld"
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
