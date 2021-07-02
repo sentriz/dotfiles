@@ -31,6 +31,10 @@ set -gx SDL_VIDEODRIVER 'wayland'
 set -gx WLR_NO_HARDWARE_CURSORS 1
 set -gx _JAVA_AWT_WM_NONREPARENTING 1
 
+set -gx --path VST_PATH \
+    '/usr/lib/vst/' \
+    "$HOME/.wine/drive_c/Program Files/Steinberg/VSTPlugins"
+
 # gtk2/gtk3 theme
 # also, gsettings commands parse these vars
 set -gx GTK_THEME 'Arc-Dark'
