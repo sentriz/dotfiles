@@ -12,6 +12,7 @@ alias wget  'wget --continue --content-disposition'
 alias cp    'cp --archive --interactive --verbose'
 alias mkdir 'mkdir --parents --verbose'
 alias qmv   'qmv --format destination-only'
+alias wget  'wget --hsts-file /dev/null'
 
 # exit
 alias :wq 'exit'

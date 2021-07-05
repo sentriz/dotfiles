@@ -31,9 +31,17 @@ set -gx SDL_VIDEODRIVER 'wayland'
 set -gx WLR_NO_HARDWARE_CURSORS 1
 set -gx _JAVA_AWT_WM_NONREPARENTING 1
 
+set -gx ANDROID_SDK_ROOT '/opt/android-sdk'
+set -gx ANDROID_HOME '/opt/android-sdk'
+set -gx JAVA_HOME '/usr/lib/jvm/java-8-openjdk/'
+set -gx JAVA_OPTS '-XX:+IgnoreUnrecognizedVMOptions'
+set -gx PYLINTHOME "$XDG_DATA_HOME/pylint"
+set -gx WINEPREFIX "$XDG_DATA_HOME/wine"
+set -gx PYTHONHISTFILE "$XDG_CACHE_HOME/python_history"
+
 set -gx --path VST_PATH \
     '/usr/lib/vst/' \
-    "$HOME/.wine/drive_c/Program Files/Steinberg/VSTPlugins"
+    "$WINEPREFIX/drive_c/Program Files/Steinberg/VSTPlugins"
 
 # gtk2/gtk3 theme
 # also, gsettings commands parse these vars

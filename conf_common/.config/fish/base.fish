@@ -11,13 +11,11 @@ set -gx NPM_CONFIG_USERCONFIG "$XDG_CONFIG_HOME/npm/config"
 set -gx NPM_CONFIG_CACHE "$XDG_CACHE_HOME/npm"
 set -gx NPM_CONFIG_TMP "$XDG_RUNTIME_DIR/npm"
 set -gx NPM_CONFIG_PREFIX "$HOME/.local"
+set -gx DOCKER_CONFIG "$XDG_CONFIG_HOME/docker"
 set -gx COMPOSE_DOCKER_CLI_BUILD '1'
 set -gx DOCKER_BUILDKIT '1'
-set -gx ANDROID_SDK_ROOT '/opt/android-sdk'
-set -gx ANDROID_HOME '/opt/android-sdk'
-set -gx JAVA_HOME '/usr/lib/jvm/java-8-openjdk/'
-set -gx JAVA_OPTS '-XX:+IgnoreUnrecognizedVMOptions'
-set -gx PYLINTHOME "$XDG_DATA_HOME/pylint"
+set -gx LESSKEY '-'
+set -gx LESSHISTFILE '-'
 
 # dotfiles settings
 set -gx DOTS_SCRAP_DIR "$HOME/scrap"
