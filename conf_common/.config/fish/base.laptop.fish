@@ -41,7 +41,19 @@ set -gx PYTHONHISTFILE "$XDG_CACHE_HOME/python_history"
 
 set -gx --path VST_PATH \
     '/usr/lib/vst/' \
-    "$WINEPREFIX/drive_c/Program Files/Steinberg/VSTPlugins"
+    '/usr/local/lib/vst/' \
+    "$HOME/.local/lib/vst" \
+    "$WINEPREFIX/drive_c/Program Files (x86)/Steinberg/VstPlugins" \
+    "$WINEPREFIX/drive_c/Program Files/Common Files/Steinberg/VST2" \
+    "$WINEPREFIX/drive_c/Program Files/Common Files/VST2" \
+    "$WINEPREFIX/drive_c/Program Files/Steinberg/VSTPlugins" \
+    "$WINEPREFIX/drive_c/Program Files/VSTPlugins"
+set -gx --path VST3_PATH \
+    '/usr/lib/vst3/' \
+    '/usr/local/lib/vst3/' \
+    "$HOME/.local/lib/vst3" \
+    "$WINEPREFIX/drive_c/Program Files (x86)/Common Files/VST3" \
+    "$WINEPREFIX/drive_c/Program Files/Common Files/VST3"
 
 # gtk2/gtk3 theme
 # also, gsettings commands parse these vars
