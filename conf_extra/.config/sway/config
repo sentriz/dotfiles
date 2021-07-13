@@ -361,6 +361,7 @@ for_window [app_id="^wev$"]                                           floating e
 for_window [app_id="^imv$"]                                           floating enable
 for_window [title="is sharing your screen.$"]                         floating enable
 for_window [app_id="^com.github.tchx84.Flatseal$"]                    floating enable
+for_window [class="^QjackCtl$"]                                       floating enable
 
 ## floating sticky
 for_window [class="^jellyfin$"]                         floating enable, resize set 1334 568, sticky enable
