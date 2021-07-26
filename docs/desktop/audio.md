@@ -1,6 +1,7 @@
 ### about
 
-ensure these packages are installed early on the system because a lot of packages depend on pulse and will install actual pulseaudio instead
+ensure these packages are installed early on the system because a lot of
+packages depend on pulse and will install actual pulseaudio instead
 
 ### packages
 
