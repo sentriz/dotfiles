@@ -4,7 +4,7 @@
 # - playerctl
 
 function pctl() {
-    playerctl --ignore-player chromium,chrome,qutebrowser,firefox "$@" 2>/dev/null
+    playerctl "$@" 2>/dev/null
 }
 
 case "$BLOCK_BUTTON" in
