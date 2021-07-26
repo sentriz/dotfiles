@@ -53,7 +53,9 @@ set -gx --path VST3_PATH \
     '/usr/local/lib/vst3/' \
     "$HOME/.local/lib/vst3" \
     "$WINEPREFIX/drive_c/Program Files (x86)/Common Files/VST3" \
-    "$WINEPREFIX/drive_c/Program Files/Common Files/VST3"
+    "$WINEPREFIX/drive_c/Program Files/Common Files/VST3" \
+    "$WINEPREFIX/drive_c/Program Files (x86)/Common Files/vst3" \
+    "$WINEPREFIX/drive_c/Program Files/Common Files/vst3"
 
 # gtk2/gtk3 theme
 # also, gsettings commands parse these vars
