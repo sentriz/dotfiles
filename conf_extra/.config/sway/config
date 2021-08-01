@@ -55,10 +55,6 @@ input * {
     repeat_rate 75
 }
 
-input "2:7:SynPS/2_Synaptics_TouchPad" {
-    events disabled
-}
-
 input "6127:24647:Lenovo_ThinkPad_Compact_USB_Keyboard_with_TrackPoint" {
     pointer_accel 0.9
 }
