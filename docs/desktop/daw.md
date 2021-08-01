@@ -12,13 +12,7 @@ pipewire
 - winetricks
 - pipewire
 - pipewire-jack-dropin
-
-### files
-
-`/etc/systemd/system.conf`
-
-    [Manager]
-    DefaultLimitMEMLOCK=100000000
+- realtime-privileges
 
 ### commands
 
@@ -27,9 +21,11 @@ pipewire
     $ winecfg  # -> libraries -> set gdiplus native
     $          #              -> set d2d1 disabled
 
-    $ # confirm memlock limit
-    $ ulimit --lock-size 
-    97656
+    $ # allow unlimited mem lock size
+    $ usermod -a -G video "$USER"
+    $ # relog, and confirm
+    $ ulimit --lock-size
+    unlimited
 
     $ # install vst
     $ wine path/to/exe
