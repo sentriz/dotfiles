@@ -116,6 +116,14 @@ local ts_server = c.server({
 	root_dir = util.root_pattern("package.json", "tsconfig.json", ".git"),
 })
 
+local rust_analyser = c.server({
+	cmd = { "rust-analyzer" },
+	root_dir = util.root_pattern("Cargo.toml"),
+	settings = {
+		["rust-analyzer"] = {},
+	},
+})
+
 local efm = c.server({
 	cmd = { "efm-langserver" },
 	init_options = { v = 1 },
@@ -252,6 +260,7 @@ c.add(c.filetypes("python"), efm, black, pylint, c.auto_format)
 c.add(c.filetypes("python"), pyright)
 c.add(c.filetypes("sh"), efm, shfmt, shellcheck, c.auto_format)
 c.add(c.filetypes("sh"), bash_ls)
+c.add(c.filetypes("rust"), rust_analyser, c.auto_format)
 c.add(c.filetypes("svelte"), efm, prettierd, c.auto_format)
 c.add(c.filetypes("typescript", "typescriptreact", "javascript"), efm, prettierd, eslint_d, c.auto_format)
 c.add(c.filetypes("typescript", "typescriptreact", "javascript"), ts_server)
