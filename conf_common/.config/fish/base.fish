@@ -16,6 +16,7 @@ set -gx COMPOSE_DOCKER_CLI_BUILD '1'
 set -gx DOCKER_BUILDKIT '1'
 set -gx LESSKEY '-'
 set -gx LESSHISTFILE '-'
+set -gx CARGO_HOME "$XDG_DATA_HOME/cargo"
 
 # dotfiles settings
 set -gx DOTS_SCRAP_DIR "$HOME/scrap"
@@ -30,8 +31,7 @@ set -gx fish_user_paths \
     $GOPATH/bin \
     $HOME/.local/bin \
     $FNM_DIR/current/bin \
-    $HOME/.volta/bin \
-    $HOME/.yarn/bin \
+    $XDG_DATA_HOME/cargo/bin \
     /usr/local/go/bin \
     /bin \
     /opt/Etcher \
