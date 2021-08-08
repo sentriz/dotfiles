@@ -44,6 +44,7 @@ set -gx --path VST_PATH \
     '/usr/local/lib/vst/' \
     "$HOME/.local/lib/vst" \
     "$WINEPREFIX/drive_c/Program Files (x86)/Steinberg/VstPlugins" \
+    "$WINEPREFIX/drive_c/Program Files (x86)/VstPlugins" \
     "$WINEPREFIX/drive_c/Program Files/Common Files/Steinberg/VST2" \
     "$WINEPREFIX/drive_c/Program Files/Common Files/VST2" \
     "$WINEPREFIX/drive_c/Program Files/Steinberg/VSTPlugins" \
