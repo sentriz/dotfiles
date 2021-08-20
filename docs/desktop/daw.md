@@ -17,7 +17,7 @@ pipewire
 ### commands
 
     $ # setup wine and vst deps
-    $ winetricks win7 winxp dotnet40 mdx vcrun6sp6 gdiplus
+    $ winetricks win7 winxp dotnet40 mdx vcrun6sp6 gdiplus corefonts
     $ winecfg  # -> libraries -> set gdiplus native
     $          #              -> set d2d1 disabled
 
