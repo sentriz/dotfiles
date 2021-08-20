@@ -1,2 +1,2 @@
 [Context]
-filesystems=!xdg-desktop;!~/Games:ro;!xdg-documents;!/media;!xdg-download;!xdg-pictures;!~/.Bottles:ro;!~/wineprefixes:ro;!xdg-videos;!xdg-music
+filesystems=~/downloads
