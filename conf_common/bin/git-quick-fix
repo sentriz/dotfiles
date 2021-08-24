@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+set -e
+
+remote_name="origin"
+remote_master="master"
+
+read -r -p "name: " message
+message_slug="$(sed --expression 's/ /-/g' --expression 's/.*/fix\/\L&/g' <<<"$message")"
+
+git stash push --patch
+git stash
+
+git fetch "$remote_name" "$remote_master"
+git checkout -b "$message_slug" "$remote_name/$remote_master"
+git stash pop 'stash@{1}'
+git add --update
+git commit --message "$message"
+gh pr create --base "$remote_master" --fill
+
+git checkout -
+git stash pop
