@@ -1,2 +1,2 @@
 [Context]
-filesystems=/tmp/insomnia
+filesystems=xdg-download;/tmp/insomnia
