@@ -17,6 +17,7 @@ set -gx DOCKER_BUILDKIT '1'
 set -gx LESSKEY '-'
 set -gx LESSHISTFILE '-'
 set -gx CARGO_HOME "$XDG_DATA_HOME/cargo"
+set -gx RUSTUP_HOME "$XDG_DATA_HOME/rustup"
 
 # dotfiles settings
 set -gx DOTS_SCRAP_DIR "$HOME/scrap"
