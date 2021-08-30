@@ -210,7 +210,7 @@ local eslint_d = c.linter({
 
 local hadolint = c.linter({
 	lintSource = "hadolint",
-	lintCommand = "hadolint --no-color -",
+	lintCommand = "hadolint --no-color --ignore DL3018 --ignore DL3008 -",
 	lintStdin = true,
 	lintIgnoreExitCode = true,
 	lintFormats = {
