@@ -1,7 +1,3 @@
-if string match -q -r '^\/dev\/tty' (tty)
-    set -gx TERM xterm-256color
-end
-
 # import user-dirs as env vars
 sed -nE 's/^([^=#]+)=(.*)/set -gx \1 \2/gp' <"$XDG_CONFIG_HOME/user-dirs.dirs" | source
 
