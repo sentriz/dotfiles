@@ -1,17 +1,15 @@
 #!/usr/bin/env bash
 
-if ! type -p beep >/dev/null; then
-    echo "please install beep" >&2
-    exit 1
-fi
-
 if test $# -ne 1; then
-    echo "please provide a duration" >&2
+    echo "please provide a diff in seconds" >&2
     exit 1
 fi
 
-(   
-    sleep "$1" || exit 1
-    notify-send.sh -t 600 "timer" "$1 has passed"
-    beep -f 3520 -l 100 -r 4
-) &
+timer_file="$XDG_CACHE_HOME/timer_left"
+
+future="$(date "+%s")"
+if [[ -e "$timer_file" ]]; then
+    future="$(cat "$timer_file")"
+fi
+
+echo "$(("$future" + "$1"))" >"$timer_file"

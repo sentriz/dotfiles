@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+timer_file="$XDG_CACHE_HOME/timer_left"
+if [[ ! -e "$timer_file" ]]; then
+    exit
+fi
+
+future="$(cat "$timer_file")"
+left="$(("$future" - $(date "+%s")))"
+
+if [[ "$left" -le 0 ]]; then
+    notify-send.sh -t 600 "timer" "the time has passed"
+    rm "$timer_file"
+    exit
+fi
+
+date --utc --date="@$left" "+timer %Mm %Ss"
+
+exit 0

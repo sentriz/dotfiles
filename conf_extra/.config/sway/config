@@ -131,6 +131,7 @@ bindsym $super+$alt+i     mode $mode_i3
 bindsym $super+$alt+s     mode $mode_scrot
 bindsym $super+$alt+g     mode $mode_gaps
 bindsym $super+$alt+c     mode $mode_colour
+bindsym $super+$alt+t     mode $mode_timer
 
 set $mode_resize_tile "resize mode: h|j|k|l"
 mode $mode_resize_tile {
@@ -219,6 +220,14 @@ set $mode_gaps "gaps: [o]uter, [i]nner"
 mode $mode_gaps {
     bindsym o      mode $mode_gaps_outer
     bindsym i      mode $mode_gaps_inner
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+set $mode_timer "timer: -1m (-), +1m (+)"
+mode $mode_timer {
+    bindsym minus exec timer -60 && $up_block_4
+    bindsym equal exec timer +60 && $up_block_4
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }

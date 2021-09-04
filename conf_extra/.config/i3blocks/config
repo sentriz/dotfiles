@@ -31,3 +31,7 @@ instance=revolut
 interval=1200
 
 [time]
+
+[timer]
+interval=3
+signal=4
