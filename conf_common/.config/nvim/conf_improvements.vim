@@ -18,7 +18,6 @@ set nowritebackup
 set number
 set path+=**
 set scrolloff=5
-set shell=bash
 set undodir=~/.cache/vimundo
 set undofile
 set virtualedit=block

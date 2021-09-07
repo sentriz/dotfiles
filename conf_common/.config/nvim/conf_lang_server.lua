@@ -100,13 +100,15 @@ local docker_ls = c.server({
 
 local pyright = c.server({
 	cmd = { "pyright-langserver", "--stdio" },
-	root_dir = util.root_pattern("requirements.txt", "pyproject.toml", "Pipfile", ".git"),
+	root_dir = util.root_pattern("pyproject.toml", "requirements.txt", "Pipfile", ".git"),
 	settings = {
 		python = {
 			analysis = {
 				autoSearchPaths = true,
 				useLibraryCodeForTypes = true,
+				diagnosticMode = "workspace",
 			},
+			venvPath = os.getenv("PYTHON_VENVS_DIR"),
 		},
 	},
 })
@@ -230,9 +232,12 @@ local markdownlint = c.linter({
 	},
 })
 
+-- when using this, make sure pylint is using the venv's pylint. eg for me
+-- $ source $PYTHON_VENVS_DIR/<venv>/bin/activate.fish
+-- $ pip install -r requirements-dev.txt .
 local pylint = c.linter({
 	lintSource = "pylint",
-	lintCommand = "pylint --score no --output-format text --msg-template {path}:{line}:{column}:{C}:{msg} --from-stdin ${ROOT}",
+	lintCommand = "pylint --score no --output-format text --msg-template {path}:{line}:{column}:{C}:{msg} --from-stdin ${INPUT}",
 	lintStdin = true,
 	lintIgnoreExitCode = true,
 	lintOffsetColumns = 1,

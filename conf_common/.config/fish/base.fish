@@ -18,6 +18,7 @@ set -gx LESSKEY '-'
 set -gx LESSHISTFILE '-'
 set -gx CARGO_HOME "$XDG_DATA_HOME/cargo"
 set -gx RUSTUP_HOME "$XDG_DATA_HOME/rustup"
+set -gx PYTHON_VENVS_DIR "$XDG_CACHE_HOME/venvs"
 
 # dotfiles settings
 set -gx DOTS_SCRAP_DIR "$HOME/scrap"
