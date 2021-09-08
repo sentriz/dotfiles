@@ -32,6 +32,7 @@ set noshowmode
 set laststatus=2
 set signcolumn=number
 set termguicolors
+set mouse+=a
 
 " statusline
 highlight statusReadOnly gui=underline guifg=#f99e9e

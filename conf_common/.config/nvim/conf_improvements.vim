@@ -1,29 +1,24 @@
 " basics
+set tabstop=4
+set virtualedit=block
+set number
+set nowrap
 set autoread
-set autowriteall
-set backupdir=$TEMP,.
 set clipboard^=unnamed,unnamedplus
 set diffopt+=vertical
-set directory=$TEMP,.
 set gdefault
 set ignorecase
 set inccommand=nosplit
 set incsearch
-set laststatus=2
-set mouse+=a
-set nobackup
-set noswapfile
-set nowrap
-set nowritebackup
-set number
-set path+=**
+set grepprg=rg\ --vimgrep\ --hidden
+set updatetime=300
 set scrolloff=5
+set autowriteall
+set noswapfile
 set undodir=~/.cache/vimundo
 set undofile
-set virtualedit=block
-set grepprg=rg\ --vimgrep\ --hidden
-set tabstop=4
-set updatetime=300
+set nowritebackup
+set nobackup
 
 " oopsies
 command! Q quit
