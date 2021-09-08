@@ -32,7 +32,7 @@ local lsp = require("lspconfig")
 local configs = require("lspconfig/configs")
 local util = require("lspconfig/util")
 local c = require("nvim-lsp-compose")
-local compe = require("compe")
+local cmp = require("cmp")
 
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {})
 vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {})
@@ -273,23 +273,26 @@ c.add(c.filetypes("vue"), efm, prettierd, c.auto_format)
 c.add(c.filetypes("vue", "html"), tailwind_intellisense)
 c.add(c.filetypes("markdown"), efm, markdownlint, pandoc_markdown, c.auto_format)
 
-compe.setup({
-	enabled = true,
-	autocomplete = true,
-	debug = false,
-	min_length = 1,
-	preselect = "disable",
-	throttle_time = 80,
-	source_timeout = 200,
-	incomplete_delay = 400,
-	max_abbr_width = 100,
-	max_kind_width = 100,
-	max_menu_width = 100,
-	documentation = true,
-	source = {
-		path = true,
-		buffer = true,
-		nvim_lsp = true,
-		vsnip = true,
+cmp.setup({
+	sources = {
+		{ name = "nvim_lsp" },
+		{ name = "path" },
+		{ name = "buffer" },
+	},
+	snippet = {
+		expand = function(args)
+			vim.fn["vsnip#anonymous"](args.body)
+		end,
+	},
+	mapping = {
+		["<c-x><c-o>"] = cmp.mapping.complete(),
+		["<c-space>"] = cmp.mapping.complete(),
+		["<C-p>"] = cmp.mapping.select_prev_item(),
+		["<C-n>"] = cmp.mapping.select_next_item(),
+		["<cr>"] = cmp.mapping.confirm({
+			behavior = cmp.ConfirmBehavior.Replace,
+			select = true,
+		}),
+		["<c-e>"] = cmp.mapping.close(),
 	},
 })
