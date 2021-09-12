@@ -9,6 +9,7 @@
 --     js, ts     npm install -g typescript typescript-language-server
 --     svelte     npm install -g svelte svelte-language-server
 --     tailwind   yay -S vscode-tailwindcss-language-server-bin
+--     vue        npm install -g @volar/server
 
 -- formatters:
 --     prettierd            npm install -g https://github.com/fsouza/prettierd
@@ -124,6 +125,54 @@ local rust_analyser = c.server({
 	settings = {
 		["rust-analyzer"] = {},
 	},
+})
+
+local volar = c.server({
+	cmd = { "volar-server", "--stdio" },
+	init_options = {
+		typescript = {
+			serverPath = "",
+		},
+		languageFeatures = {
+			semanticTokens = false,
+			references = true,
+			definition = true,
+			typeDefinition = true,
+			callHierarchy = true,
+			hover = true,
+			rename = true,
+			renameFileRefactoring = true,
+			signatureHelp = true,
+			codeAction = true,
+			completion = {
+				defaultTagNameCase = "both",
+				defaultAttrNameCase = "kebabCase",
+			},
+			schemaRequestService = true,
+			documentHighlight = true,
+			documentLink = true,
+			codeLens = true,
+			diagnostics = true,
+		},
+		documentFeatures = {
+			documentColor = false,
+			selectionRange = true,
+			foldingRange = true,
+			linkedEditingRange = true,
+			documentSymbol = true,
+			documentFormatting = false,
+		},
+	},
+	on_new_config = function(config, root_dir)
+		config.init_options.typescript.serverPath = util.path.join(
+			util.find_node_modules_ancestor(root_dir),
+			"node_modules",
+			"typescript",
+			"lib",
+			"tsserverlibrary.js"
+		)
+	end,
+	root_dir = util.root_pattern("package.json"),
 })
 
 local efm = c.server({
@@ -270,6 +319,7 @@ c.add(c.filetypes("svelte"), efm, prettierd, c.auto_format)
 c.add(c.filetypes("typescript", "typescriptreact", "javascript"), efm, prettierd, eslint_d, c.auto_format)
 c.add(c.filetypes("typescript", "typescriptreact", "javascript"), ts_server)
 c.add(c.filetypes("vue"), efm, prettierd, c.auto_format)
+c.add(c.filetypes("vue"), volar)
 c.add(c.filetypes("vue", "html"), tailwind_intellisense)
 c.add(c.filetypes("markdown"), efm, markdownlint, pandoc_markdown, c.auto_format)
 
