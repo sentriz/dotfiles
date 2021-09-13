@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+if test $# -ne 1; then
+    echo 'please provide a venv name' >&2
+    exit 1
+fi
+
+if test -z "$PYTHON_VENVS_DIR"; then
+    echo "\$PYTHON_VENVS_DIR not set" >&2
+    exit 1
+fi
+
+dir="$PYTHON_VENVS_DIR/$1"
+
+python3 -m venv "$dir"
+echo "$dir/bin/activate.fish"
