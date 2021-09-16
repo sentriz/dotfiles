@@ -12,7 +12,7 @@
 --     vue        npm install -g @volar/server
 
 -- formatters:
---     prettierd            npm install -g https://github.com/fsouza/prettierd
+--     prettierd            npm install -g @fsouza/prettierd
 --     prettier go template npm install -g prettier prettier-plugin-go-template
 --     prettier svelte      npm install -g prettier prettier-plugin-svelte svelte
 --     goimports            go get -u golang.org/x/tools/cmd/goimports
