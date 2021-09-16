@@ -28,16 +28,3 @@ augroup AutoFormat
     autocmd!
     autocmd BufWritePre * lua require("nvim-lsp-compose").write()
 augroup END
-
-sign define LspDiagnosticsSignError       text=ee texthl=LspDiagnosticsSignError
-sign define LspDiagnosticsSignWarning     text=ww texthl=LspDiagnosticsSignWarning
-sign define LspDiagnosticsSignInformation text=ii texthl=LspDiagnosticsSignInformation
-sign define LspDiagnosticsSignHint        text=hh texthl=LspDiagnosticsSignHint
-
-highlight link LspDiagnosticsFloatingError LspDiagnosticsFloatingError
-highlight link NormalFloat Pmenu
-
-highlight def link LspReference  CursorLine
-highlight def link LspReferenceText CursorLine
-highlight def link LspReferenceWrite CursorLine
-highlight def link LspReferenceRead CursorLine

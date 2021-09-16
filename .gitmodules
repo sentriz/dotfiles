@@ -37,9 +37,6 @@
 [submodule "conf_common/.local/share/nvim/site/pack/text/opt/tpope/vim-surround"]
 	path = conf_common/.local/share/nvim/site/pack/plugins/start/vim-surround
 	url = https://github.com/tpope/vim-surround
-[submodule "conf_common/.local/share/nvim/site/pack/look/opt/Lokaltog/vim-monotone"]
-	path = conf_common/.local/share/nvim/site/pack/plugins/start/vim-monotone
-	url = https://github.com/Lokaltog/vim-monotone
 [submodule "conf_common/.local/share/nvim/site/pack/text/opt/sentriz/vim-print-debug"]
 	path = conf_common/.local/share/nvim/site/pack/plugins/start/vim-print-debug
 	url = https://github.com/sentriz/vim-print-debug

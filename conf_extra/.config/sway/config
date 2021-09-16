@@ -31,8 +31,8 @@ set $up_block_2 pkill -RTMIN+2 i3blocks
 set $up_block_3 pkill -RTMIN+3 i3blocks
 set $up_block_4 pkill -RTMIN+4 i3blocks
 
-set $colour_grey       #303030
-set $colour_grey_alpha #30303060
+set $colour_grey       #353535
+set $colour_grey_alpha #35353560
 set $colour_blue       #0088CC
 set $colour_red        #BC5858
 set $colour_inactive   #8D8D8D

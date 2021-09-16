@@ -1,5 +1,7 @@
 set -gx fish_colour_host 'brgreen'
 
+theme dark
+
 function p --argument project
     cd "$DOTS_PROJECTS_DIR/$project"
 end
