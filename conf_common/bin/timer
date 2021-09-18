@@ -1,15 +1,17 @@
 #!/usr/bin/env bash
 
-if test $# -ne 1; then
-    echo "please provide a diff in seconds" >&2
-    exit 1
-fi
+future_file="$XDG_CACHE_HOME/timer_left"
+future="$(cat "$future_file" 2>/dev/null || date "+%s")"
+test $# -eq 1 \
+    && echo "$(("$future" + "$1"))" >"$future_file" \
+    && exit
 
-timer_file="$XDG_CACHE_HOME/timer_left"
+test ! -e "$future_file" && exit
 
-future="$(date "+%s")"
-if [[ -e "$timer_file" ]]; then
-    future="$(cat "$timer_file")"
-fi
+left="$(("$future" - $(date "+%s")))"
+test "$left" -le 0 \
+    && notify-send.sh -t 600 "timer" "the time has passed" \
+    && rm "$future_file" 2>/dev/null \
+    && exit
 
-echo "$(("$future" + "$1"))" >"$timer_file"
+echo "$left"
