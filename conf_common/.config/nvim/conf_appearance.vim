@@ -28,10 +28,10 @@ highlight StatusLine    ctermfg=15  ctermbg=0
 highlight StatusLineNC  ctermfg=15  ctermbg=NONE
 highlight CursorLine    ctermfg=0   ctermbg=11
 
-highlight link diffAdded   DiffAdd
-highlight link diffRemoved DiffDelete
 highlight DiffAdd    ctermfg=2
 highlight DiffDelete ctermfg=1
+highlight link diffAdded   DiffAdd
+highlight link diffRemoved DiffDelete
 
 highlight TSKeyword          cterm=bold
 highlight TSKeywordOperator  cterm=bold
@@ -44,27 +44,30 @@ highlight TSFunction         cterm=bold
 highlight TSOperator         cterm=bold
 highlight TSInclude          cterm=bold
 highlight TSConditional      cterm=bold
-
 highlight TSString           ctermfg=15
 highlight TSComment          ctermfg=8  cterm=italic
 
 highlight Pmenu    ctermfg=15 ctermbg=0
 highlight PmenuSel ctermfg=0  ctermbg=15
 
-sign define LspDiagnosticsSignError       text=ee texthl=LspDiagnosticsSignError
-sign define LspDiagnosticsSignWarning     text=ww texthl=LspDiagnosticsSignWarning
-sign define LspDiagnosticsSignInformation text=ii texthl=LspDiagnosticsSignInformation
-sign define LspDiagnosticsSignHint        text=hh texthl=LspDiagnosticsSignHint
+highlight LspReferenceText  ctermfg=11
+highlight LspReferenceRead  ctermfg=11
+highlight LspReferenceWrite ctermfg=11
 
-highlight LspDiagnosticsSignError           ctermfg=1
-highlight LspDiagnosticsSignWarning         ctermfg=3
-highlight LspDiagnosticsSignInformation     ctermfg=15
-highlight LspDiagnosticsSignHint            ctermfg=2
+highlight DiagnosticFloatingError ctermfg=15 cterm=bold
+highlight DiagnosticFloatingWarn  ctermfg=15 cterm=bold
+highlight DiagnosticFloatingInfo  ctermfg=15 cterm=bold
+highlight DiagnosticFloatingHint  ctermfg=15 cterm=bold
 
-highlight LspDiagnosticsFloatingError       ctermfg=15 cterm=bold
-highlight LspDiagnosticsFloatingWarning     ctermfg=15 cterm=bold
-highlight LspDiagnosticsFloatingInformation ctermfg=15 cterm=bold
-highlight LspDiagnosticsFloatingHint        ctermfg=15 cterm=bold
+highlight DiagnosticSignError ctermfg=1  cterm=bold
+highlight DiagnosticSignWarn  ctermfg=3  cterm=bold
+highlight DiagnosticSignInfo  ctermfg=15 cterm=bold
+highlight DiagnosticSignHint  ctermfg=2  cterm=bold
+
+sign define DiagnosticSignError text=ee  texthl=DiagnosticSignError
+sign define DiagnosticSignWarn  text=ww  texthl=DiagnosticSignWarn
+sign define DiagnosticSignInfo  text=ii  texthl=DiagnosticSignInfo
+sign define DiagnosticSignHint  text=hh  texthl=DiagnosticSignHint
 
 " statusline
 highlight statusReadOnly  ctermfg=9 ctermbg=0
