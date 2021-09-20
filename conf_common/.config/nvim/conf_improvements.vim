@@ -19,6 +19,7 @@ set undodir=~/.cache/vimundo
 set undofile
 set nowritebackup
 set nobackup
+set spelllang=en_gb
 
 " oopsies
 command! Q quit

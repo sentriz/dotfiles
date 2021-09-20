@@ -28,6 +28,9 @@ highlight StatusLine    ctermfg=15  ctermbg=0
 highlight StatusLineNC  ctermfg=15  ctermbg=NONE
 highlight CursorLine    ctermfg=0   ctermbg=11
 
+highlight SpellLocal ctermfg=9 cterm=underline
+highlight SpellBad   ctermfg=9 cterm=underline
+
 highlight DiffAdd    ctermfg=2
 highlight DiffDelete ctermfg=1
 highlight link diffAdded   DiffAdd
