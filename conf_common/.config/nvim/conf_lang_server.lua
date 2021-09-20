@@ -35,6 +35,9 @@ local util = require("lspconfig/util")
 local c = require("nvim-lsp-compose")
 local cmp = require("cmp")
 
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {})
 vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {})
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
@@ -81,6 +84,7 @@ local gopls = c.server({
 			analyses = { unreachable = true, unusedparams = true },
 		},
 	},
+	capabilities = capabilities,
 })
 
 local clangd = c.server({
@@ -117,6 +121,7 @@ local pyright = c.server({
 local ts_server = c.server({
 	cmd = { "typescript-language-server", "--stdio" },
 	root_dir = util.root_pattern("package.json", "tsconfig.json", ".git"),
+	capabilities = capabilities,
 })
 
 local rust_analyser = c.server({
@@ -125,6 +130,7 @@ local rust_analyser = c.server({
 	settings = {
 		["rust-analyzer"] = {},
 	},
+	capabilities = capabilities,
 })
 
 local volar = c.server({
