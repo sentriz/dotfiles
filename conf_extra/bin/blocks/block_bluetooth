@@ -3,13 +3,20 @@
 # requires:
 # - bluez
 
-function get-device() {
-    bluetoothctl info \
-        | grep -Po "Alias: \K.*" \
-        | tr "[:upper:]" "[:lower:]"
+function find-device() {
+    grep -Po "Alias: \K.*" | tr "[:upper:]" "[:lower:]"
 }
 
-device="$(get-device)"
+function find-battery-percentage() {
+    grep -Po "Battery Percentage:.*\(\K(\d+)(?=\))"
+}
+
+info="$(bluetoothctl info)"
+device="$(find-device <<<"$info")"
+battery_percentage="$(find-battery-percentage <<<"$info")"
+
 test -z "$device" && exit
 
-echo "bluetooth $device"
+test "$battery_percentage" -ge 0 2>/dev/null \
+    && echo "bluetooth $device, $battery_percentage%" \
+    || echo "bluetooth $device"
