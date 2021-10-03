@@ -49,9 +49,6 @@
 [submodule "conf_common/.config/fish/plugins/fisherman/done"]
 	path = conf_common/.config/fish/plugins/fisherman/done
 	url = https://github.com/fisherman/done
-[submodule "conf_common/.config/fish/plugins/fishpkg/fish-humanize-duration"]
-	path = conf_common/.config/fish/plugins/fishpkg/fish-humanize-duration
-	url = https://github.com/fishpkg/fish-humanize-duration
 [submodule "conf_common/.config/fish/plugins/fisherman/getopts"]
 	path = conf_common/.config/fish/plugins/fisherman/getopts
 	url = https://github.com/fisherman/getopts
@@ -100,3 +97,6 @@
 [submodule "conf_common/.local/share/nvim/site/pack/plugins/start/vim-vsnip"]
 	path = conf_common/.local/share/nvim/site/pack/plugins/start/vim-vsnip
 	url = https://github.com/hrsh7th/vim-vsnip
+[submodule "conf_common/.config/fish/plugins/jorgebucaran/humantime.fish"]
+	path = conf_common/.config/fish/plugins/jorgebucaran/humantime.fish
+	url = https://github.com/jorgebucaran/humantime.fish
