@@ -36,7 +36,10 @@ a hopefully simple networking setup with systemd-networkd, systemd-resolved, and
 
     $ iwctl station list
     $ iwctl station <station> connect <ssid>
-    $ systemctl enable --now systemd-networkd.service systemd-resolved.service
+    $ systemctl enable --now \
+        systemd-networkd.service \
+        systemd-resolved.service \
+        iwd.service
     $ ln -s /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
 
 ### test
