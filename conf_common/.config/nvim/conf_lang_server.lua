@@ -1,10 +1,11 @@
 -- requires https://github.com/sentriz/nvim-lsp-compose
 
 -- lang servers:
+--     efm        go install github.com/mattn/efm-langserver@latest
 --     bash       npm install -g bash-language-server
 --     c          yay -S clang
 --     dockerfile npm install -g dockerfile-language-server-nodejs
---     go         go get -u golang.org/x/tools/gopls@latest
+--     go         go install golang.org/x/tools/gopls@latest
 --     python     npm install -g pyright
 --     js, ts     npm install -g typescript typescript-language-server
 --     svelte     npm install -g svelte svelte-language-server
@@ -15,12 +16,14 @@
 --     prettierd            npm install -g @fsouza/prettierd
 --     prettier go template npm install -g prettier prettier-plugin-go-template
 --     prettier svelte      npm install -g prettier prettier-plugin-svelte svelte
---     goimports            go get -u golang.org/x/tools/cmd/goimports
+--     goimports            go install golang.org/x/tools/cmd/goimports@latest
 --     clang-format         yay -S clang
 --     black                pip install --user black
 --     stylua               https://github.com/JohnnyMorganz/StyLua/releases
 --     pg_format            https://github.com/darold/pgFormatter
 --     pandoc               yay -S pandoc-bin
+--     shfmt                go install mvdan.cc/sh/v3/cmd/shfmt@latest
+
 
 -- linters:
 --     shellcheck   yay -S shellcheck-bin
