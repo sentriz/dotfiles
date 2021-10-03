@@ -5,8 +5,15 @@ packages depend on pulse and will install actual pulseaudio instead
 
 ### packages
 
-- pipewire-full-alsa-git
-- pipewire-full-git
-- pipewire-full-jack-git
-- pipewire-full-pulse-git
+- bluez
+- bluez-tools
+- bluez-utils-compat
+- pipewire
+- pipewire-alsa
+- pipewire-jack
+- pipewire-pulse
 - pipewire-jack-dropin
+
+### commands
+
+    $ systemctl enable --now bluetooth
