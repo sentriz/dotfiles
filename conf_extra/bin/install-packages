@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+# shellcheck disable=SC2046
+
+set -e
+
+function list() {
+    grep -Po "^$1:\K.*" "$XDG_CONFIG_HOME/packages"
+}
+
+yay --version
+yay -S --needed $(list arch)
+
+python3 -m ensurepip
+python3 -m pip --version
+python3 -m pip install --user $(list python)
+
+cargo version
+cargo install $(list cargo)
+
+go version
+for package in $(list go); do
+    go install "$package"
+done
+
+npm version
+npm install -g $(list npm)
+
+flatpak --version
+flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+flatpak remote-add --user --if-not-exists flathub-beta https://flathub.org/beta-repo/flathub-beta.flatpakrepo
+flatpak install --user --noninteractive --assumeyes flathub $(list flatpak)
+flatpak install --user --noninteractive --assumeyes flathub-beta $(list flatpak-beta)
