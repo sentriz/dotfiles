@@ -52,9 +52,6 @@
 [submodule "conf_common/.config/fish/plugins/fisherman/getopts"]
 	path = conf_common/.config/fish/plugins/fisherman/getopts
 	url = https://github.com/fisherman/getopts
-[submodule "conf_common/.config/fish/plugins/brgmnn/fish-docker-compose"]
-	path = conf_common/.config/fish/plugins/brgmnn/fish-docker-compose
-	url = https://github.com/brgmnn/fish-docker-compose
 [submodule "conf_common/.local/share/nvim/site/pack/meta/opt/mkotha/conflict3"]
 	path = conf_common/.local/share/nvim/site/pack/plugins/start/conflict3
 	url = https://github.com/mkotha/conflict3
