@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+if test $# -ne 1; then
+    echo "please provide a length" >&2
+    exit 1
+fi
+
+openssl rand -hex "$1"
