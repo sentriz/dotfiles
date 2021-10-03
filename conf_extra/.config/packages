@@ -57,8 +57,10 @@ arch:arc-gtk-theme
 arch:foot
 arch:foot-terminfo
 arch:glib2
+arch:grim
 arch:kanshi
 arch:mako
+arch:slurp
 arch:sway
 arch:swayidle
 arch:swaylock
@@ -75,6 +77,7 @@ go:go.senan.xyz/cliphist@latest
 # av 
 arch:libpipewire02
 arch:mpv
+arch:mpv-mpris
 arch:pipewire
 arch:pipewire-alsa
 arch:pipewire-jack
@@ -86,6 +89,8 @@ arch:bluez-utils-compat
 arch:i3blocks
 arch:playerctl-git
 arch:ponymix
+python:boi-balance
+python:revolut
 
 # lsp
 arch:clang
