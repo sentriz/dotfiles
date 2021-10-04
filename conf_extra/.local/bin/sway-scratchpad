@@ -2,6 +2,8 @@
 
 app_id="$(date "+scratchpad-%s")"
 
+swaymsg "assign [app_id=$app_id] temp"
+
 footclient --app-id "$app_id" >/dev/null 2>&1 &
 disown
 
@@ -10,4 +12,4 @@ swaymsg "[app_id=$app_id]" "split vertical, layout tabbed"
 
 sleep 0.2
 container_id="$(swaymsg -t get_tree | jq --arg app_id "$app_id" -r '.. | select(.type? == "con" and .nodes[0].app_id == $app_id) | .id')"
-swaymsg "[con_id=$container_id]" "floating enable, move scratchpad"
+swaymsg "[con_id=$container_id]" "floating enable, move workspace current, move scratchpad"
