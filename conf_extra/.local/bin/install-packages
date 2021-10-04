@@ -12,7 +12,7 @@ yay -S --needed $(list arch)
 
 python3 -m ensurepip
 python3 -m pip --version
-python3 -m pip install --user $(list python)
+python3 -m pip install --user --disable-pip-version-check --no-input $(list python)
 
 cargo version
 cargo install $(list cargo)
