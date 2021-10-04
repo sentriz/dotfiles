@@ -32,6 +32,7 @@ set -gx DOTS_PROJECTS_DIR "$HOME/projects"
 set -gx fish_user_paths \
     $GOPATH/bin \
     $HOME/.local/bin \
+    $HOME/.local/bin/*/ \
     $FNM_DIR/current/bin \
     $XDG_DATA_HOME/cargo/bin \
     /usr/local/go/bin \
