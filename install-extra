@@ -1,3 +1,16 @@
 #!/usr/bin/env bash
 
+# don't symlink full directories that will be added to
+# we only want to symlink some files inside them
+mkdir ~/.gnupg
+mkdir ~/.local/share/flatpak
+mkdir ~/.local/share/applications
+
+chown -R "$USER:$USER" ~/.gnupg
+chmod -R go-rwx ~/.gnupg
+
 stow -v --ignore='running' --target ~ -R conf_extra
+
+echo ""
+echo "next, launch a fish shell for updated \$PATH vars and run"
+echo "$ install-packages"

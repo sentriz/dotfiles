@@ -3,6 +3,16 @@
 
 set -e
 
+export GIT_CONFIG_GLOBAL=/dev/null
+
+if ! type -p yay >/dev/null; then
+    sudo pacman -S --needed git base-devel
+    git clone "https://aur.archlinux.org/yay-bin.git" /tmp/yay
+    cd /tmp/yay || exit
+    makepkg -si
+    cd -
+fi
+
 function list() {
     grep -Po "^$1:\K.*" "$XDG_CONFIG_HOME/packages"
 }
