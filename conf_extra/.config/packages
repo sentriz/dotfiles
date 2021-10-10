@@ -29,6 +29,7 @@ arch:virt-viewer
 
 # gui
 arch:nautilus
+arch:pavucontrol
 arch:qjackctl
 arch:syncthing
 flatpak-beta:com.google.Chrome
