@@ -65,6 +65,7 @@ arch:slurp
 arch:sway
 arch:swayidle
 arch:swaylock
+arch:wf-recorder
 arch:wl-clipboard
 arch:wlr-sunclock
 arch:wlsunset
