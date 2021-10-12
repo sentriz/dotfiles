@@ -24,7 +24,6 @@
 --     pandoc               yay -S pandoc-bin
 --     shfmt                go install mvdan.cc/sh/v3/cmd/shfmt@latest
 
-
 -- linters:
 --     shellcheck   yay -S shellcheck-bin
 --     eslint_d     npm install -g eslint_d
@@ -83,8 +82,6 @@ local gopls = c.server({
 			usePlaceholders = true,
 			completeUnimported = true,
 			deepCompletion = true,
-			staticcheck = true,
-			analyses = { unreachable = true, unusedparams = true },
 		},
 	},
 	capabilities = capabilities,
@@ -263,8 +260,11 @@ local eslint_d = c.linter({
 	lintStdin = true,
 	lintIgnoreExitCode = true,
 	lintFormats = {
-		"%f(%l,%c): %tarning %m",
-		"%f(%l,%c): %rror %m",
+		"%-P%f",
+		" %#%l:%c %# %trror  %m",
+		" %#%l:%c %# %tarning  %m",
+		"%-Q",
+		"%-G%.%#",
 	},
 })
 
@@ -287,6 +287,16 @@ local markdownlint = c.linter({
 		"%f:%l %m",
 		"%f:%l:%c %m",
 		"%f: %l: %m",
+	},
+})
+
+local golangci_lint = c.linter({
+	lintSource = "golangci-lint",
+	lintCommand = "golangci-lint run --out-format=line-number --fast",
+	lintFormats = {
+		"%E%f:%l:%c: %m",
+		"%E%f:%l: %m",
+		"%C%.%#",
 	},
 })
 
@@ -317,6 +327,7 @@ c.add(c.filetypes("css", "html", "json", "yaml"), efm, prettierd, c.auto_format)
 c.add(c.filetypes("dockerfile"), docker_ls, c.auto_format)
 c.add(c.filetypes("dockerfile"), efm, hadolint)
 c.add(c.filetypes("go"), gopls, gopls_organise_imports, c.auto_format, c.snippet)
+c.add(c.filetypes("go"), efm, golangci_lint)
 c.add(c.filetypes("lua"), efm, stylua, c.auto_format)
 c.add(c.filetypes("sql", "pgsql"), efm, pg_format, c.auto_format)
 c.add(c.filetypes("python"), efm, black, pylint, c.auto_format)
