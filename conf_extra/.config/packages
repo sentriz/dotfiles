@@ -22,6 +22,7 @@ arch:stow
 arch:sudo
 arch:unzip
 arch:wget
+cargo:git-absorb
 
 # gui virt
 arch:libvirt
