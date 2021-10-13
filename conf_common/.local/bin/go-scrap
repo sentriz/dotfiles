@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+if test ! -d "$DOTS_SCRAP_DIR"; then
+    echo "DOTS_SCRAP_DIR not found" >&2
+    exit 1
+fi
+
 dir="$(mktemp -d "$DOTS_SCRAP_DIR/go.XXXX")"
 cd "$dir" || exit 1
 
