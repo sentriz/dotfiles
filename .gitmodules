@@ -97,3 +97,6 @@
 [submodule "conf_common/.config/fish/plugins/jorgebucaran/humantime.fish"]
 	path = conf_common/.config/fish/plugins/jorgebucaran/humantime.fish
 	url = https://github.com/jorgebucaran/humantime.fish
+[submodule "conf_common/.local/share/nvim/site/pack/plugins/start/diaglist.nvim"]
+	path = conf_common/.local/share/nvim/site/pack/plugins/start/diaglist.nvim
+	url = https://github.com/onsails/diaglist.nvim
