@@ -32,24 +32,16 @@ set -gx ANDROID_HOME '/opt/android-sdk'
 set -gx JAVA_HOME '/usr/lib/jvm/java-8-openjdk/'
 set -gx JAVA_OPTS '-XX:+IgnoreUnrecognizedVMOptions'
 set -gx PYLINTHOME "$XDG_DATA_HOME/pylint"
-set -gx WINEPREFIX "$XDG_DATA_HOME/wine"
 set -gx PYTHONHISTFILE "$XDG_CACHE_HOME/python_history"
 
-set -gx --path VST_PATH \
-    '/usr/lib/vst/' \
-    '/usr/local/lib/vst/' \
-    "$HOME/.local/lib/vst" \
-    "$WINEPREFIX/drive_c/Program Files (x86)/Steinberg/VstPlugins" \
-    "$WINEPREFIX/drive_c/Program Files (x86)/VstPlugins" \
-    "$WINEPREFIX/drive_c/Program Files/Common Files/Steinberg/VST2" \
-    "$WINEPREFIX/drive_c/Program Files/Common Files/VST2" \
-    "$WINEPREFIX/drive_c/Program Files/Steinberg/VSTPlugins" \
-    "$WINEPREFIX/drive_c/Program Files/VSTPlugins"
-set -gx --path VST3_PATH \
-    '/usr/lib/vst3/' \
-    '/usr/local/lib/vst3/' \
-    "$HOME/.local/lib/vst3" \
-    "$HOME/.vst3"
+# wine is currently only used for yabridge, so define this stuff globally
+set -gx WINEARCH win64
+set -gx WINEDLLOVERRIDES "gdiplus=n;d2d1=;msvcrt=b,n"
+set -gx WINELOADER (which wine) # use bwrap wrapper
+set -gx WINEPREFIX "$XDG_DATA_HOME/yabridge-wine"
+
+set -gx YABRIDGE_TEMP_DIR "$XDG_RUNTIME_DIR/yabridge"
+set -gx YABRIDGE_DEBUG_LEVEL ""
 
 # gtk2/gtk3 theme
 # also, gsettings commands parse these vars

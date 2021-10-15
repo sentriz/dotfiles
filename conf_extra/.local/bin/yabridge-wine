@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+mkdir -p "$WINEPREFIX" 2>/dev/null
+mkdir -p "$XDG_CACHE_HOME/wine" 2>/dev/null
+mkdir -p "$XDG_CACHE_HOME/winetricks" 2>/dev/null
+
+exec bwrap \
+    --unshare-net \
+    --dev-bind / / \
+    --tmpfs "/mnt" \
+    --tmpfs "$HOME" \
+    --bind "$WINEPREFIX" "$WINEPREFIX" \
+    --bind-try "$XDG_DOCUMENTS_DIR/wine" "$XDG_DOCUMENTS_DIR" \
+    --bind "$XDG_CACHE_HOME/wine" "$XDG_CACHE_HOME/wine" \
+    --bind "$XDG_CACHE_HOME/winetricks" "$XDG_CACHE_HOME/winetricks" \
+    --bind-try "$HOME/daw" "$HOME/daw" \
+    --bind-try "$HOME/.vst" "$HOME/.vst" \
+    --bind-try "$HOME/.vst3" "$HOME/.vst3" \
+    --bind-try "$HOME/daw" "$HOME/daw" \
+    --tmpfs "$XDG_RUNTIME_DIR" \
+    --bind-try "$YABRIDGE_TEMP_DIR" "$YABRIDGE_TEMP_DIR" \
+    --new-session \
+    --die-with-parent \
+    "$(basename "$0")" "$@"
