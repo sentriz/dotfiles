@@ -27,11 +27,7 @@ if test "$device" = "disconnect"; then
     exit
 fi
 
-notify "bluetooth" "powering on"
-bluetoothctl power on >/dev/null 2>&1
-
-if out=$(bluetoothctl connect "$device_mac" 2>&1); then
-    notify "connected to $device_name" "$device_mac"
-else
-    notify "error connecting to $device_name" "$(lower <<<"$out")"
-fi
+notify "bluetooth $device_name" "$(bluetoothctl power on)"
+notify "bluetooth $device_name" "$(bluetoothctl connect "$device_mac")"
+notify "bluetooth $device_name" "$(bluetoothctl connect "$device_mac")"
+notify "bluetooth $device_name" "$(bluetoothctl connect "$device_mac")"
