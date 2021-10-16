@@ -282,7 +282,9 @@ assign [app_id="^firefox$"]                       $work_2
 assign [class="^Nightly$"]                        $work_2
 assign [class="Chromium"]                         $work_2
 assign [app_id="^Chromium-browser$"]              $work_2
+assign [app_id="^chromium-browser$"]              $work_2
 assign [app_id="^Google-chrome$"]                 $work_2
+assign [app_id="^google-chrome$"]                 $work_2
 assign [class="Google-chrome"]                    $work_2
 assign [app_id="^org.qutebrowser.qutebrowser$"]   $work_2
 assign [class="^Insomnia$" instance="^insomnia$"] $work_4
@@ -311,6 +313,7 @@ for_window [app_id="^firefox$"]                         inhibit_idle fullscreen
 for_window [class="^Nightly$"]                          inhibit_idle fullscreen
 for_window [class="Chromium"]                           inhibit_idle fullscreen
 for_window [app_id="^Chromium-browser$"]                inhibit_idle fullscreen
+for_window [app_id="^chromium-browser$"]                inhibit_idle fullscreen
 for_window [app_id="^Google-chrome$"]                   inhibit_idle fullscreen
 for_window [class="Google-chrome"]                      inhibit_idle fullscreen
 for_window [app_id="^org.qutebrowser.qutebrowser$"]     inhibit_idle fullscreen
