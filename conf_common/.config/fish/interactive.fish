@@ -7,42 +7,48 @@ for file in (find "$plugins" -path "*conf.d/*" -name "*.fish")
 end
 
 # safety/better
-alias rm    'rm -I --verbose --preserve-root'
-alias wget  'wget --continue --content-disposition'
-alias cp    'cp --archive --interactive --verbose'
+alias rm 'rm -I --verbose --preserve-root'
+alias wget 'wget --continue --content-disposition'
+alias cp 'cp --archive --interactive --verbose'
 alias mkdir 'mkdir --parents --verbose'
-alias qmv   'qmv --format destination-only'
-alias wget  'wget --hsts-file /dev/null'
+alias qmv 'qmv --format destination-only'
+alias wget 'wget --hsts-file /dev/null'
 
 # exit
-alias :wq 'exit'
-alias :qw 'exit'
-alias :q  'exit'
+alias :wq exit
+alias :qw exit
+alias :q exit
 
 # abbreviations
-abbr g   'git'
-abbr gti 'git'
-abbr ps  'ps -axh -o pid,%cpu,cmd'
+abbr g git
+abbr gti git
+abbr ps 'ps -axh -o pid,%cpu,cmd'
 
 # cd   -> pushd
 # cd - -> popd
-abbr cd "ce"
+abbr cd ce
 function ce --wraps pushd
-    if test (count $argv) -eq 0; cd;   return $status; end
-    if test $argv[1] = "-";      popd; return $status; end
+    if test (count $argv) -eq 0
+        cd
+        return $status
+    end
+    if test $argv[1] = -
+        popd
+        return $status
+    end
     pushd $argv
     return $status
 end
 
 # keep updated with `printf "set -g %s\n" (set -U | grep fish_color)`
-set -g fish_color_autosuggestion '555'  'brblack'
-set -g fish_color_command 'normal'
-set -g fish_color_comment 'red'
-set -g fish_color_cwd 'green'
-set -g fish_color_cwd_root 'red'
-set -g fish_color_end 'brmagenta'
-set -g fish_color_error 'brred'
-set -g fish_color_escape 'bryellow'  '--bold'
+set -g fish_color_autosuggestion 555 brblack
+set -g fish_color_command normal
+set -g fish_color_comment red
+set -g fish_color_cwd green
+set -g fish_color_cwd_root red
+set -g fish_color_end brmagenta
+set -g fish_color_error brred
+set -g fish_color_escape bryellow --bold
 set -g fish_color_history_current --bold
 set -g fish_color_match --background=brblue
 set -g fish_color_normal normal
@@ -50,8 +56,8 @@ set -g fish_color_operator bryellow
 set -g fish_color_param cyan
 set -g fish_color_quote yellow
 set -g fish_color_redirection brblue
-set -g fish_color_search_match 'bryellow'  '--background=brblack'
-set -g fish_color_selection 'white'  '--bold'  '--background=brblack'
+set -g fish_color_search_match bryellow '--background=brblack'
+set -g fish_color_selection white --bold '--background=brblack'
 set -g fish_color_status red
 set -g fish_color_user brgreen
 set -g fish_color_valid_path --underline
@@ -62,24 +68,24 @@ function __list
         | sed "s/"(date +%Y-%m-%d)"/\x1b[32m     today\x1b[m/; s/"(date +'%Y-%m-%d' -d yesterday)"/\x1b[33m yesterday\x1b[m/"
 end
 
-alias l  "__list $argv"
+alias l "__list $argv"
 alias ll "__list -A $argv"
 
 function __super_vim
-    test (count $argv) -eq 1; and test \( ! -e (dirname -- $argv[1]) \); and test (read --prompt-str 'create dir? ') = 'y'
-        and mkdir -p (dirname -- $argv[1]) >/dev/null
+    test (count $argv) -eq 1; and test \( ! -e (dirname -- $argv[1]) \); and test (read --prompt-str 'create dir? ') = y
+    and mkdir -p (dirname -- $argv[1]) >/dev/null
     test (count $argv) -eq 1; and test \( -e $argv[1] \) -a \( ! -w $argv[1] \)
-        and sudo -E nvim $argv
-        or command nvim $argv
+    and sudo -E nvim $argv
+    or command nvim $argv
 end
 
-alias vi   __super_vim
-alias vim  __super_vim
+alias vi __super_vim
+alias vim __super_vim
 alias nvim __super_vim
 
 function __package_sudo
     test (count $argv) -eq 0; and return
-    if contains -- "$argv[1]" 'npm' 'yarn' 'python' 'python2' 'python3' 'pip3' 'pip' 'go'
+    if contains -- "$argv[1]" npm yarn python python2 python3 pip3 pip go
         echo "don't do `sudo $argv[1]`"
         return 1
     end

@@ -1,4 +1,4 @@
-set -xg fish_colour_host 'blue'
+set -xg fish_colour_host blue
 
 source (type -P set-env-tmux-parent)
 

@@ -1,4 +1,4 @@
-set -gx fish_colour_host 'brgreen'
+set -gx fish_colour_host brgreen
 
 theme dark
 
