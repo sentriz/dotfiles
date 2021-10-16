@@ -62,6 +62,8 @@ arch:glib2
 arch:grim
 arch:kanshi
 arch:mako
+arch:qt5-wayland
+arch:qt6-wayland
 arch:slurp
 arch:sway
 arch:swayidle
