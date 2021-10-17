@@ -102,6 +102,7 @@ arch:clang
 arch:hadolint-bin
 arch:pandoc-bin
 arch:pgformatter
+arch:rust-analyzer
 arch:shellcheck-bin
 arch:vscode-tailwindcss-language-server-bin
 cargo:stylua
