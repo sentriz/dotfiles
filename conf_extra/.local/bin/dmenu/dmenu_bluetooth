@@ -29,5 +29,6 @@ fi
 
 notify "bluetooth $device_name" "$(bluetoothctl power on)"
 notify "bluetooth $device_name" "$(bluetoothctl connect "$device_mac")"
-notify "bluetooth $device_name" "$(bluetoothctl connect "$device_mac")"
-notify "bluetooth $device_name" "$(bluetoothctl connect "$device_mac")"
+sleep 1 && notify "bluetooth $device_name" "$(bluetoothctl connect "$device_mac")"
+sleep 2 && notify "bluetooth $device_name" "$(bluetoothctl connect "$device_mac")"
+sleep 3 && notify "bluetooth $device_name" "$(bluetoothctl connect "$device_mac")"
