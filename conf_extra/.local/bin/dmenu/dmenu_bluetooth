@@ -28,12 +28,12 @@ device_mac="$(cut -d ' ' -f 2 <<<"$device")"
 device_name="$(cut -d ' ' -f 3- <<<"$device")"
 
 if test "$device" = "disconnect"; then
-    bluetoothctl disconnect >/dev/null 2>&1
+    bluetoothctl -- disconnect >/dev/null 2>&1
     exit
 fi
 
-notify "bluetooth $device_name" "$(bluetoothctl power on)"
-notify "bluetooth $device_name" "$(bluetoothctl connect "$device_mac")"
-sleep 1 && notify "bluetooth $device_name" "$(bluetoothctl connect "$device_mac")"
-sleep 2 && notify "bluetooth $device_name" "$(bluetoothctl connect "$device_mac")"
-sleep 3 && notify "bluetooth $device_name" "$(bluetoothctl connect "$device_mac")"
+notify "bluetooth $device_name" "$(bluetoothctl -- power on)"
+sleep 0 && notify "bluetooth $device_name" "$(bluetoothctl -- connect "$device_mac")"
+sleep 1 && notify "bluetooth $device_name" "$(bluetoothctl -- connect "$device_mac")"
+sleep 2 && notify "bluetooth $device_name" "$(bluetoothctl -- connect "$device_mac")"
+sleep 3 && notify "bluetooth $device_name" "$(bluetoothctl -- connect "$device_mac")"
