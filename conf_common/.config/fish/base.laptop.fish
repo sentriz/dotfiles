@@ -39,6 +39,7 @@ set -gx WINEARCH win64
 set -gx WINEDLLOVERRIDES "gdiplus=n;d2d1=;msvcrt=b,n"
 set -gx WINELOADER (which wine) # use bwrap wrapper
 set -gx WINEPREFIX "$XDG_DATA_HOME/yabridge-wine"
+set -gx WINEFSYNC 1
 
 set -gx YABRIDGE_TEMP_DIR "$XDG_RUNTIME_DIR/yabridge"
 set -gx YABRIDGE_DEBUG_LEVEL ""
