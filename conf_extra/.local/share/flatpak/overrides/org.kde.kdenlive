@@ -1,5 +1,2 @@
 [Context]
-filesystems=xdg-pictures;!host;
-
-[Environment]
-QT_QPA_PLATFORM=
+filesystems=xdg-download;xdg-pictures;!host
