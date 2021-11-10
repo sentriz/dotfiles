@@ -1,6 +1,6 @@
 #!/usr/bin/env fish
 
-if not type -q grim  /dev/null 2>&1
+if not type -q grim /dev/null 2>&1
     echo 'grim required' >&2
     echo 'https://github.com/emersion/grim' >&2
     exit 1
@@ -12,8 +12,14 @@ if not type -q slurp >/dev/null 2>&1
     exit 1
 end
 
+if not type -q pactl >/dev/null 2>&1
+    echo 'pactl required' >&2
+    echo 'please install libpulse' >&2
+    exit 1
+end
+
 set -l command "$argv[1]"
-if test "$command" = "stop"
+if test "$command" = stop
     killall --signal SIGINT wf-recorder
     exit
 end
@@ -22,5 +28,9 @@ set -l filename "$DOTS_RECORDINGS_DIR/"(date '+%Y%m%d_%H%M%S.mp4')
 set -l area (slurp)
 test -z "$area"; and exit
 
-wf-recorder -f "$filename" -g "$area" >/dev/null 2>&1
+set -l audio_device (pactl list short sources | grep -Po "\K[^\s]+\.monitor(?=.*IDLE)")
+test -n "$audio_device"
+and set -l audio_cmd "-a$audio_device"
+
+wf-recorder "$audio_cmd" -f "$filename" -g "$area" >/dev/null 2>&1
 echo "$filename"
