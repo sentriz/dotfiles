@@ -36,7 +36,7 @@ set -gx PYTHONHISTFILE "$XDG_CACHE_HOME/python_history"
 
 # wine is currently only used for yabridge, so define this stuff globally
 set -gx WINEARCH win64
-set -gx WINEDLLOVERRIDES "gdiplus=n;d2d1=;msvcrt=b,n"
+set -gx WINEDLLOVERRIDES "gdiplus=n;d2d1=;msvcrt=b,n;libglesv2.dll=d"
 set -gx WINELOADER (which wine) # use bwrap wrapper
 set -gx WINEPREFIX "$XDG_DATA_HOME/yabridge-wine"
 set -gx WINEFSYNC 1
