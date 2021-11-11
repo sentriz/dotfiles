@@ -4,8 +4,11 @@ mkdir -p "$WINEPREFIX" 2>/dev/null
 mkdir -p "$XDG_CACHE_HOME/wine" 2>/dev/null
 mkdir -p "$XDG_CACHE_HOME/winetricks" 2>/dev/null
 
+share_net=("--unshare-net")
+[[ -n "$WINE_SHARE_NET" ]] && share_net=()
+
 exec bwrap \
-    --unshare-net \
+    "${share_net[@]}" \
     --dev-bind / / \
     --tmpfs "/mnt" \
     --tmpfs "$HOME" \
