@@ -81,8 +81,6 @@
 [rerere]
 	enabled = true
 	autoupdate = true
-[url "git@github.com:"]
-	insteadOf = https://github.com/
 [format]
 	pretty = format:%h  %C(dim)%an%Creset %C(yellow)%d%Creset %s
 [color]
