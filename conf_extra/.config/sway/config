@@ -16,26 +16,48 @@ set $alt   Mod1
 
 floating_modifier $super
 
+set $default_gap 16
+set $default_font Source Code Pro 10
+
+set $colour_grey       #353535
+set $colour_grey_alpha #35353560
+set $colour_blue       #0088CC
+set $colour_blue_alpha #0088CC60
+set $colour_red        #BC5858
+set $colour_red_alpha  #BC585860
+set $colour_inactive   #8D8D8D
+
 ## var helpers
 set $lock_warning notify-send.sh 'locking screen in 10 seconds'
 set $lock swaylock \
-    --daemonize \
-    --no-unlock-indicator \
-    --image ~/pictures/wallpapers/fagan.png
-
-set $default_gap 16
-set $default_font Source Code Pro 10
+    --image ~/pictures/wallpapers/fagan.png \
+    --font "$default_font" \
+    --inside-color "#00000000" \
+    --inside-caps-lock-color "#00000000" \
+    --inside-clear-color "#00000000" \
+    --inside-ver-color "$colour_grey_alpha" \
+    --inside-wrong-color "$colour_red_alpha" \
+    --ring-color "$colour_grey_alpha" \
+    --ring-caps-lock-color "#00000000" \
+    --ring-clear-color "#00000000" \
+    --ring-ver-color "#00000000" \
+    --ring-wrong-color "#00000000" \
+    --text-color "#FFFFFF" \
+    --text-caps-lock-color "#FFFFFF" \
+    --text-clear-color "#FFFFFF" \
+    --text-ver-color "#FFFFFF" \
+    --text-wrong-color "#FFFFFF" \
+    --separator-color "#00000000" \
+    --key-hl-color "$colour_blue_alpha" \
+    --layout-text-color "#FFFFFF" \
+    --line-uses-inside \
+    --line-uses-ring \
+    --daemonize
 
 set $up_block_1 pkill -RTMIN+1 i3blocks
 set $up_block_2 pkill -RTMIN+2 i3blocks
 set $up_block_3 pkill -RTMIN+3 i3blocks
 set $up_block_4 pkill -RTMIN+4 i3blocks
-
-set $colour_grey       #353535
-set $colour_grey_alpha #35353560
-set $colour_blue       #0088CC
-set $colour_red        #BC5858
-set $colour_inactive   #8D8D8D
 
 ## basic appearance
 smart_borders on
@@ -443,3 +465,5 @@ exec sleep 5 && wlr-sunclock \
    --colour-land "#6D28D9"
 
 exec foot --server
+
+exec $lock
