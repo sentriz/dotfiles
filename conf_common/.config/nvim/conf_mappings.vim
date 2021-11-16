@@ -16,6 +16,10 @@ nnoremap <expr>   <leader>y  ':tabnew ' . expand('$DOTS_PROJECTS_DIR') . '/hippl
 nnoremap <silent> <leader>d  :call print_debug#print_debug()<cr>
 nnoremap <silent> <leader>h  :call SyntaxAttr#SyntaxAttr()<cr>
 
+nnoremap <silent> <leader>qq Vip:SqlsExecuteQuery<cr>
+vnoremap <silent> <leader>qq Vip:SqlsExecuteQuery<cr>
+nnoremap <silent> <leader>qs :SqlsShowSchemas<cr>
+
 " better
 nnoremap Y y$
 vnoremap yP yP

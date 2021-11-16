@@ -100,3 +100,6 @@
 [submodule "conf_common/.local/share/nvim/site/pack/plugins/start/diaglist.nvim"]
 	path = conf_common/.local/share/nvim/site/pack/plugins/start/diaglist.nvim
 	url = https://github.com/onsails/diaglist.nvim
+[submodule "conf_common/.local/share/nvim/site/pack/plugins/start/sqls.nvim"]
+	path = conf_common/.local/share/nvim/site/pack/plugins/start/sqls.nvim
+	url = https://github.com/nanotee/sqls.nvim

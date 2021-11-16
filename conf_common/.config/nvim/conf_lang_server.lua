@@ -36,9 +36,7 @@ local configs = require("lspconfig/configs")
 local util = require("lspconfig/util")
 local c = require("nvim-lsp-compose")
 local cmp = require("cmp")
-
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
+local sqls = require("sqls")
 
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {})
 vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {})
@@ -84,7 +82,6 @@ local gopls = c.server({
 			deepCompletion = true,
 		},
 	},
-	capabilities = capabilities,
 })
 
 local clangd = c.server({
@@ -95,7 +92,6 @@ local clangd = c.server({
 		"--clang-tidy",
 	},
 	root_dir = util.root_pattern("compile_commands.json", "compile_flags.txt", ".git"),
-	capabilities = { textDocument = { completion = { editsNearCursor = true } } },
 })
 
 local docker_ls = c.server({
@@ -121,7 +117,6 @@ local pyright = c.server({
 local ts_server = c.server({
 	cmd = { "typescript-language-server", "--stdio" },
 	root_dir = util.root_pattern("package.json", "tsconfig.json", ".git"),
-	capabilities = capabilities,
 })
 
 local rust_analyser = c.server({
@@ -130,7 +125,6 @@ local rust_analyser = c.server({
 	settings = {
 		["rust-analyzer"] = {},
 	},
-	capabilities = capabilities,
 })
 
 local volar = c.server({
@@ -179,6 +173,19 @@ local volar = c.server({
 		)
 	end,
 	root_dir = util.root_pattern("package.json"),
+})
+
+local sqls = c.server({
+	cmd = { "sqls", "-config", ".sqls.yml" },
+	root_dir = function(filename)
+		return util.root_pattern(".sqls.yml")(filename)
+	end,
+	single_file_support = true,
+	on_attach = function(client)
+		client.resolved_capabilities.execute_command = true
+		client.commands = sqls.commands
+		sqls.setup({})
+	end,
 })
 
 local efm = c.server({
@@ -330,7 +337,8 @@ c.add(c.filetypes("dockerfile"), efm, hadolint)
 c.add(c.filetypes("go"), gopls, gopls_organise_imports, c.auto_format, c.snippet)
 c.add(c.filetypes("go"), efm, golangci_lint)
 c.add(c.filetypes("lua"), efm, stylua, c.auto_format)
-c.add(c.filetypes("sql", "pgsql"), efm, pg_format, c.auto_format)
+c.add(c.filetypes("sql", "pgsql", "mysql"), efm, pg_format, c.auto_format)
+c.add(c.filetypes("sql", "pgsql", "mysql"), sqls)
 c.add(c.filetypes("python"), efm, black, pylint, c.auto_format)
 c.add(c.filetypes("python"), pyright)
 c.add(c.filetypes("sh"), efm, shfmt, shellcheck, c.auto_format)
