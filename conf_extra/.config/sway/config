@@ -203,12 +203,13 @@ mode $mode_move_floating {
     bindsym Escape mode "default"
 }
 
-set $mode_scrot "screenshot mode: [c]lipboard, [i]mgur, [h]ome, [r/s]ecording"
+set $mode_scrot "screenshot mode: [c]lipboard, [i]mgur, [h]ome, [r/a/s]ecording"
 mode $mode_scrot {
     bindsym c exec wl-copy -t image/png < `screenshot`, mode "default"
     bindsym i exec upload-imgur `screenshot` | wl-copy, mode "default"
     bindsym h exec upload-home `screenshot` | wl-copy,  mode "default"
     bindsym r exec recording,                           mode "default"
+    bindsym a exec recording --audio,                   mode "default"
     bindsym s exec recording stop,                      mode "default"
     bindsym Return mode "default"
     bindsym Escape mode "default"

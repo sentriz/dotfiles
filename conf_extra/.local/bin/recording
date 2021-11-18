@@ -30,6 +30,7 @@ test -z "$area"; and exit
 
 set -l audio_device (pactl list short sources | grep -Po "\K[^\s]+\.monitor(?=.*IDLE)")
 test -n "$audio_device"
+and contains -- --audio $argv
 and set -l audio_cmd "-a$audio_device"
 
 wf-recorder "$audio_cmd" -f "$filename" -g "$area" >/dev/null 2>&1
