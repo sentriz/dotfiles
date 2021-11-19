@@ -308,6 +308,16 @@ local golangci_lint = c.linter({
 	},
 })
 
+local selene = c.linter({
+	lintSource = "selene",
+	lintCommand = "selene --quiet -",
+	lintStdin = true,
+	lintFormats = {
+		"-:%l:%c: %tarning[%.%+]: %m",
+		"-:%l:%c: %trror[%.%+]: %m",
+	},
+})
+
 -- when using this, make sure pylint is using the venv's pylint. eg for me
 -- $ source $PYTHON_VENVS_DIR/<venv>/bin/activate.fish
 -- $ pip install -r requirements-dev.txt .
@@ -336,7 +346,7 @@ c.add(c.filetypes("dockerfile"), docker_ls, c.auto_format)
 c.add(c.filetypes("dockerfile"), efm, hadolint)
 c.add(c.filetypes("go"), gopls, gopls_organise_imports, c.auto_format, c.snippet)
 c.add(c.filetypes("go"), efm, golangci_lint)
-c.add(c.filetypes("lua"), efm, stylua, c.auto_format)
+c.add(c.filetypes("lua"), efm, stylua, selene, c.auto_format)
 c.add(c.filetypes("sql", "pgsql", "mysql"), efm, pg_format, c.auto_format)
 c.add(c.filetypes("sql", "pgsql", "mysql"), sqls)
 c.add(c.filetypes("python"), efm, black, pylint, c.auto_format)
