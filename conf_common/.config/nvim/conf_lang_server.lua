@@ -1,42 +1,11 @@
--- requires https://github.com/sentriz/nvim-lsp-compose
+--# selene: allow(undefined_variable, unscoped_variables)
+--# requires https://github.com/sentriz/nvim-lsp-compose
+--# for list of lsp, linter, and formatter tools, see $XDG_CONFIG_HOME/packages
 
--- lang servers:
---     efm        go install github.com/mattn/efm-langserver@latest
---     bash       npm install -g bash-language-server
---     c          yay -S clang
---     dockerfile npm install -g dockerfile-language-server-nodejs
---     go         go install golang.org/x/tools/gopls@latest
---     python     npm install -g pyright
---     js, ts     npm install -g typescript typescript-language-server
---     svelte     npm install -g svelte svelte-language-server
---     tailwind   yay -S vscode-tailwindcss-language-server-bin
---     vue        npm install -g @volar/server
-
--- formatters:
---     prettierd            npm install -g @fsouza/prettierd
---     prettier go template npm install -g prettier prettier-plugin-go-template
---     prettier svelte      npm install -g prettier prettier-plugin-svelte svelte
---     goimports            go install golang.org/x/tools/cmd/goimports@latest
---     clang-format         yay -S clang
---     black                pip install --user black
---     stylua               https://github.com/JohnnyMorganz/StyLua/releases
---     pg_format            https://github.com/darold/pgFormatter
---     pandoc               yay -S pandoc-bin
---     shfmt                go install mvdan.cc/sh/v3/cmd/shfmt@latest
-
--- linters:
---     shellcheck   yay -S shellcheck-bin
---     eslint_d     npm install -g eslint_d
---     pylint       pip install --user pylint
---     hadolint     yay -S hadolint-bin
---     markdownlint npm install -g markdownlint-cli
-
-local lsp = require("lspconfig")
-local configs = require("lspconfig/configs")
 local util = require("lspconfig/util")
 local c = require("nvim-lsp-compose")
 local cmp = require("cmp")
-local sqls = require("sqls")
+local sqlsp = require("sqls")
 
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {})
 vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {})
@@ -184,7 +153,7 @@ local sqls = c.server({
 	on_attach = function(client)
 		client.resolved_capabilities.execute_command = true
 		client.commands = sqls.commands
-		sqls.setup({})
+		sqlsp.setup({})
 	end,
 })
 
@@ -196,22 +165,6 @@ local efm = c.server({
 		return util.root_pattern(".git")(filename) or util.path.dirname(filename)
 	end,
 })
-
-local pyright_organise_imports = c.action(function(client, buff_num)
-	local params = {
-		command = "pyright.organizeimports",
-		arguments = { vim.uri_from_bufnr(buff_num) },
-	}
-	client.request_sync("workspace/executeCommand", params, 2000)
-end)
-
-local ts_server_organise_imports = c.action(function(client, buff_num)
-	local params = {
-		command = "_typescript.organizeImports",
-		arguments = { vim.api.nvim_buf_get_name(0) },
-	}
-	client.request("workspace/executeCommand", params, 1000, buff_num)
-end)
 
 local gopls_organise_imports = c.action(function(client, buff_num)
 	local params = vim.lsp.util.make_range_params()
@@ -229,11 +182,7 @@ local gopls_organise_imports = c.action(function(client, buff_num)
 	end
 end)
 
-local prettier = c.formatter("prettier", "--stdin-filepath", "${INPUT}")
 local prettierd = c.formatter("prettierd", "${INPUT}")
-local gofmt = c.formatter("gofmt")
-local goimports = c.formatter("goimports")
-local clang_format = c.formatter("clang-format", "--assume-filename", "${INPUT}", "-")
 local black = c.formatter("black", "--quiet", "-")
 local shfmt = c.formatter("shfmt", "-i", 4, "-bn", "-")
 local fish_indent = c.formatter("fish_indent")
