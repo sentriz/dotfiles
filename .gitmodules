@@ -103,3 +103,6 @@
 [submodule "conf_common/.local/share/nvim/site/pack/plugins/start/sqls.nvim"]
 	path = conf_common/.local/share/nvim/site/pack/plugins/start/sqls.nvim
 	url = https://github.com/nanotee/sqls.nvim
+[submodule "conf_common/.config/fish/plugins/mattgreen/park.fish"]
+	path = conf_common/.config/fish/plugins/mattgreen/park.fish
+	url = https://github.com/mattgreen/park.fish
