@@ -238,7 +238,7 @@ local black = c.formatter("black", "--quiet", "-")
 local shfmt = c.formatter("shfmt", "-i", 4, "-bn", "-")
 local fish_indent = c.formatter("fish_indent")
 local stylua = c.formatter("stylua", "-")
-local pg_format = c.formatter("pg_format", "--keyword-case", 1, "--type-case", 1)
+local pg_format = c.formatter("pg-format", "--keyword-case", 1, "--type-case", 1)
 local pandoc_markdown = c.formatter(
 	"pandoc",
 	"--from",

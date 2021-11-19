@@ -36,6 +36,12 @@ set -gx fish_user_paths \
     $HOME/.local/bin/*/ \
     $FNM_DIR/current/bin \
     $XDG_DATA_HOME/cargo/bin \
+    $HOME/bin \
+    $HOME/bin/*/ \
+    $ANDROID_HOME/tools/ \
+    $ANDROID_HOME/tools/bin \
+    $ANDROID_HOME/platform-tools \
+    $ANDROID_HOME/emulator \
     /usr/local/go/bin \
     /bin \
     /opt/Etcher \
@@ -46,11 +52,5 @@ set -gx fish_user_paths \
     /usr/local/bin \
     /usr/local/sbin \
     /usr/sbin \
-    $HOME/bin \
-    $HOME/bin/*/ \
     /usr/share/git/git-jump/ \
-    $ANDROID_HOME/tools/ \
-    $ANDROID_HOME/tools/bin \
-    $ANDROID_HOME/platform-tools \
-    $ANDROID_HOME/emulator \
     /opt/flutter/bin/
