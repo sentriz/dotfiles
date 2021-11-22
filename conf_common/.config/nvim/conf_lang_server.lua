@@ -152,7 +152,7 @@ local sqls = c.server({
 	single_file_support = true,
 	on_attach = function(client)
 		client.resolved_capabilities.execute_command = true
-		client.commands = sqls.commands
+		client.commands = sqlsp.commands
 		sqlsp.setup({})
 	end,
 })
