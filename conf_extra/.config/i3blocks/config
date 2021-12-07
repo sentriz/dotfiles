@@ -4,9 +4,11 @@ interval=5
 [playing]
 signal=3
 
+[sharing]
+color=#b08fd9
+
 [volume]
 color=#7cb342
-instance=Master
 signal=1
 
 [bluetooth]

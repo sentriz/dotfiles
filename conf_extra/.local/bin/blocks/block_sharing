@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+# requires:
+# - pipewire and friends
+# - jq
+
+pw-dump | jq -e 'map(.info.props) | any(.["node.name"] == "xdg-desktop-portal-wlr" and .["stream.is-live"])' >/dev/null \
+    && echo "sharing"
+
+exit 0
