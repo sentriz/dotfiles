@@ -1,5 +1,2 @@
 [Context]
-filesystems=!host;
-
-[Environment]
-QT_QPA_PLATFORM=
+filesystems=home;!host
