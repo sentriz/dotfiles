@@ -2,7 +2,7 @@
 
 function filter-parse() {
     q_conn="State: routable"
-    q_mac="HW Address: ([a-f0-9\:]+)"
+    q_mac="Hardware Address: ([a-f0-9\:]+)"
     q_ssid="WiFi access point: (.*) \([a-f0-9\:]+\)"
     q_addr="Address: ([0-9\.]+)"
     sed -rnz "s/.*${q_conn}.*${q_mac}.*${q_ssid}.*${q_addr}.*/\L\1\t\2\t\3/gp"
