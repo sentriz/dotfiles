@@ -21,8 +21,11 @@ done
 echo -e "\n> up projects"
 list-paths | while read -r path; do
     (
+        [[ "$path" =~ _src$ ]] && exit
+        [[ "$path" =~ src$ ]] && exit
+
         cd "$path" || exit
-        test -e "docker-compose.yml" || exit
+        [[ -e "docker-compose.yml" ]] || exit
 
         echo "  > uping $path"
         docker-compose pull
