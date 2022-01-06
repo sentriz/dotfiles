@@ -70,9 +70,6 @@
 [submodule "conf_common/.local/share/nvim/site/pack/plugins/start/vim-oscyank"]
 	path = conf_common/.local/share/nvim/site/pack/plugins/start/vim-oscyank
 	url = https://github.com/ojroques/vim-oscyank
-[submodule "conf_common/.local/share/nvim/site/pack/plugins/start/nvim-lsp-compose"]
-	path = conf_common/.local/share/nvim/site/pack/plugins/start/nvim-lsp-compose
-	url = https://github.com/sentriz/nvim-lsp-compose
 [submodule "conf_common/.local/share/nvim/site/pack/plugins/start/nvim-cmp"]
 	path = conf_common/.local/share/nvim/site/pack/plugins/start/nvim-cmp
 	url = https://github.com/hrsh7th/nvim-cmp
@@ -88,9 +85,6 @@
 [submodule "conf_common/.local/share/nvim/site/pack/plugins/start/vim-vsnip"]
 	path = conf_common/.local/share/nvim/site/pack/plugins/start/vim-vsnip
 	url = https://github.com/hrsh7th/vim-vsnip
-[submodule "conf_common/.local/share/nvim/site/pack/plugins/start/diaglist.nvim"]
-	path = conf_common/.local/share/nvim/site/pack/plugins/start/diaglist.nvim
-	url = https://github.com/onsails/diaglist.nvim
 [submodule "conf_common/.local/share/nvim/site/pack/plugins/start/sqls.nvim"]
 	path = conf_common/.local/share/nvim/site/pack/plugins/start/sqls.nvim
 	url = https://github.com/nanotee/sqls.nvim
@@ -112,3 +106,9 @@
 [submodule "conf_common/.local/share/nvim/site/pack/plugins/start/nvim-lspconfig"]
 	path = conf_common/.local/share/nvim/site/pack/plugins/start/nvim-lspconfig
 	url = https://github.com/neovim/nvim-lspconfig
+[submodule "conf_common/.local/share/nvim/site/pack/plugins/start/null-ls.nvim"]
+	path = conf_common/.local/share/nvim/site/pack/plugins/start/null-ls.nvim
+	url = https://github.com/jose-elias-alvarez/null-ls.nvim
+[submodule "conf_common/.local/share/nvim/site/pack/plugins/start/plenary.nvim"]
+	path = conf_common/.local/share/nvim/site/pack/plugins/start/plenary.nvim
+	url = https://github.com/nvim-lua/plenary.nvim

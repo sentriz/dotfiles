@@ -63,24 +63,16 @@ highlight DiagnosticFloatingError           ctermfg=15 cterm=bold
 highlight DiagnosticFloatingHint            ctermfg=15 cterm=bold
 highlight DiagnosticFloatingInfo            ctermfg=15 cterm=bold
 highlight DiagnosticFloatingWarn            ctermfg=15 cterm=bold
-highlight LspDiagnosticsFloatingError       ctermfg=15 cterm=bold
-highlight LspDiagnosticsFloatingHint        ctermfg=15 cterm=bold
-highlight LspDiagnosticsFloatingInformation ctermfg=15 cterm=bold
-highlight LspDiagnosticsFloatingWarning     ctermfg=15 cterm=bold
 
 highlight DiagnosticSignError ctermfg=1  cterm=bold
 highlight DiagnosticSignHint  ctermfg=2  cterm=bold
 highlight DiagnosticSignInfo  ctermfg=15 cterm=bold
 highlight DiagnosticSignWarn  ctermfg=3  cterm=bold
 
-sign define LspDiagnosticsSignError       text=ee  texthl=DiagnosticSignError
-sign define LspDiagnosticsSignHint        text=hh  texthl=DiagnosticSignHint
-sign define LspDiagnosticsSignInformation text=ii  texthl=DiagnosticSignInfo
-sign define LspDiagnosticsSignWarning     text=ww  texthl=DiagnosticSignWarn
-sign define DiagnosticSignError           text=ee  texthl=DiagnosticSignError
-sign define DiagnosticSignHint            text=hh  texthl=DiagnosticSignHint
-sign define DiagnosticSignInfo            text=ii  texthl=DiagnosticSignInfo
-sign define DiagnosticSignWarn            text=ww  texthl=DiagnosticSignWarn
+sign define DiagnosticSignError text=ee  texthl=DiagnosticSignError
+sign define DiagnosticSignHint  text=hh  texthl=DiagnosticSignHint
+sign define DiagnosticSignInfo  text=ii  texthl=DiagnosticSignInfo
+sign define DiagnosticSignWarn  text=ww  texthl=DiagnosticSignWarn
 
 highlight statusReadOnly  ctermfg=9 ctermbg=0
 highlight statusModifided ctermfg=9 ctermbg=0

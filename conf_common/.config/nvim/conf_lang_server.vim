@@ -19,12 +19,12 @@ nnoremap <silent> g0          <cmd>lua vim.lsp.buf.document_symbol()<cr>
 nnoremap <silent> gW          <cmd>lua vim.lsp.buf.workspace_symbol()<cr>
 nnoremap <silent> ga          <cmd>lua vim.lsp.buf.code_action()<cr>
 vnoremap <silent> ga          :<c-u>lua vim.lsp.buf.range_code_action()<cr>
-nnoremap <silent> J           <cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<cr>
-nnoremap <silent> H           <cmd>lua vim.lsp.diagnostic.goto_prev()<cr>
-nnoremap <silent> L           <cmd>lua vim.lsp.diagnostic.goto_next()<cr>
 inoremap <silent> <c-s>       <cmd>lua vim.lsp.buf.signature_help()<cr>
+nnoremap <silent> J           <cmd>lua vim.diagnostic.open_float()<cr>
+nnoremap <silent> H           <cmd>lua vim.diagnostic.goto_prev()<cr>
+nnoremap <silent> L           <cmd>lua vim.diagnostic.goto_next()<cr>
 
 augroup AutoFormat
     autocmd!
-    autocmd BufWritePre * lua require("nvim-lsp-compose").write()
+    autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()
 augroup END
