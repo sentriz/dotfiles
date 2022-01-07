@@ -1,2 +1,6 @@
 [Context]
 filesystems=xdg-documents/audio;!host
+persistent=.audacity-data
+
+[Environment]
+GTK_THEME=
