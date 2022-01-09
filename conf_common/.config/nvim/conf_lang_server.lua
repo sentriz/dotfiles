@@ -13,6 +13,7 @@ cmp.setup({
 		{ name = "nvim_lsp" },
 		{ name = "path" },
 		{ name = "buffer" },
+		{ name = "tmux" },
 	},
 	snippet = {
 		expand = function(args)
