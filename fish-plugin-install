@@ -8,7 +8,7 @@ if test $# -ne 1; then
 fi
 
 repo="$1"
-name="$(grep -Po '[^\/]+\/[^\/]+$' <<<"$repo")"
+name="$(grep -Po '[^\/]+$' <<<"$repo")"
 path="conf_common/.config/fish/plugins/$name"
 
 git submodule add -f "$repo" "$path"

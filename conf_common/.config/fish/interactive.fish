@@ -1,7 +1,7 @@
 # load plugins
 set plugins "$__fish_config_dir/plugins/"
-set -a fish_function_path (find "$plugins" -maxdepth 3 -name "functions")
-set -a fish_complete_path (find "$plugins" -maxdepth 3 -name "completions")
+set -a fish_function_path (find "$plugins" -maxdepth 2 -name "functions")
+set -a fish_complete_path (find "$plugins" -maxdepth 2 -name "completions")
 for file in (find "$plugins" -path "*conf.d/*" -name "*.fish")
     source "$file"
 end
