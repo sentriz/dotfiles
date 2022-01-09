@@ -89,6 +89,7 @@ lspconfig.tsserver.setup(no_format_please)
 lspconfig.volar.setup(no_format_please)
 
 nullls.setup({
+	log = { enable = false },
 	sources = {
 		nullls.builtins.formatting.black,
 		nullls.builtins.formatting.fish_indent,
