@@ -88,7 +88,11 @@ arch:pipewire
 arch:pipewire-alsa
 arch:pipewire-jack
 arch:pipewire-jack-dropin
+arch:pipewire-media-session
 arch:pipewire-pulse
+arch:pipewire-v4l2
+arch:pipewire-zeroconf
+
 
 # blocks
 arch:bluez-utils-compat
@@ -105,7 +109,7 @@ arch:pandoc-bin
 arch:pgformatter
 arch:rust-analyzer
 arch:shellcheck-bin
-arch:vscode-tailwindcss-language-server-bin
+arch:tailwindcss-language-server-git
 cargo:stylua
 cargo:selene
 go:github.com/lighttiger2505/sqls@latest
@@ -118,6 +122,7 @@ npm:@volar/server
 npm:bash-language-server
 npm:dockerfile-language-server-nodejs
 npm:eslint_d
+npm:markdownlint
 npm:markdownlint-cli
 npm:prettier
 npm:prettier-plugin-go-template
