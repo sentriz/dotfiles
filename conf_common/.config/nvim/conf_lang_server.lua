@@ -39,6 +39,11 @@ cmp.setup({
 -- $ which pylint
 -- $ which pyright
 
+local function no_format_please(client)
+	client.resolved_capabilities.document_formatting = false
+	client.resolved_capabilities.document_range_formatting = false
+end
+
 lspconfig.pyright.setup({
 	settings = {
 		python = {
@@ -60,33 +65,26 @@ lspconfig.gopls.setup({
 			deepCompletion = true,
 		},
 	},
+	on_attach = no_format_please,
 })
 
 lspconfig.sqls.setup({
 	cmd = { "sqls", "-config", ".sqls.yml" },
 	on_attach = function(client)
 		client.resolved_capabilities.execute_command = true
-		client.resolved_capabilities.document_formatting = false
-		client.resolved_capabilities.document_range_formatting = false
 		client.commands = sqlsp.commands
 		sqlsp.setup({})
+		no_format_please(client)
 	end,
 })
 
-local no_format_please = {
-	on_attach = function(client)
-		client.resolved_capabilities.document_formatting = false
-		client.resolved_capabilities.document_range_formatting = false
-	end,
-}
-
-lspconfig.bashls.setup(no_format_please)
 lspconfig.clangd.setup({})
 lspconfig.dockerls.setup({})
 lspconfig.rust_analyzer.setup({})
 lspconfig.tailwindcss.setup({})
-lspconfig.tsserver.setup(no_format_please)
-lspconfig.volar.setup(no_format_please)
+lspconfig.bashls.setup({ on_attach = no_format_please })
+lspconfig.tsserver.setup({ on_attach = no_format_please })
+lspconfig.volar.setup({ on_attach = no_format_please })
 
 nullls.setup({
 	log = { enable = false },
@@ -98,6 +96,7 @@ nullls.setup({
 		nullls.builtins.formatting.prettierd,
 		nullls.builtins.formatting.shfmt.with({ extra_args = { "-i", 4, "-bn" } }),
 		nullls.builtins.formatting.stylua,
+		nullls.builtins.formatting.goimports,
 
 		nullls.builtins.diagnostics.eslint_d,
 		nullls.builtins.diagnostics.golangci_lint,
