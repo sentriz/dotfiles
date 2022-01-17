@@ -26,5 +26,5 @@ nnoremap <silent> L           <cmd>lua vim.diagnostic.goto_next()<cr>
 
 augroup AutoFormat
     autocmd!
-    autocmd BufWritePre * silent! lua vim.lsp.buf.formatting_sync(nil, 500)
+    autocmd BufWritePre * silent! lua vim.lsp.buf.formatting_sync(nil, 1000)
 augroup END
