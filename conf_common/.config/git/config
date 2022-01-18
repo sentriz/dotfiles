@@ -40,6 +40,7 @@
 [advice]
 	statusHints = false
 	addEmptyPathspec = false
+	skippedCherryPicks = false
 [core]
 	editor = nvim
 	pager = less -r
