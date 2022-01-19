@@ -8,11 +8,17 @@ packages depend on pulse and will install actual pulseaudio instead
 - bluez
 - bluez-tools
 - bluez-utils-compat
+- gst-plugin-pipewire
+- lib32-pipewire
+- lib32-pipewire-jack
+- libpipewire02
 - pipewire
 - pipewire-alsa
 - pipewire-jack
+- pipewire-media-session
 - pipewire-pulse
-- pipewire-jack-dropin
+- pipewire-v4l2
+- pipewire-zeroconf
 
 ### commands
 

@@ -8,11 +8,12 @@ wine is wrapped in a sandbox with `bwrap`
 ### packages
 
 - renoise
-- yabridge-bin
+- yabridge
+- yabridgectl
 - wine-tkg-staging-fsync-git (compile with \_fsync_futex_waitv)
 - winetricks
 - pipewire
-- pipewire-jack-dropin
+- pipewire-jack
 - realtime-privileges
 - bubblewrap
 - linux 5.16+ (for futex_waitv)
