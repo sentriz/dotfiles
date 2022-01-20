@@ -7,18 +7,43 @@ wine is wrapped in a sandbox with `bwrap`
 
 ### packages
 
+#### base bluetooth
+
+- bluez
+- bluez-tools
+- bluez-utils-compat
+
+#### essential pipewire
+
+- pipewire
+- pipewire-alsa
+- pipewire-jack
+- pipewire-pulse
+- pipewire-v4l2
+- pipewire-zeroconf
+- wireplumber
+
+#### compatibility
+
+- gst-plugin-pipewire
+- lib32-pipewire
+- lib32-pipewire-jack
+- libpipewire02
+
+#### daw and vst
+
 - renoise
-- yabridge
-- yabridgectl
 - wine-tkg-staging-fsync-git (compile with \_fsync_futex_waitv)
 - winetricks
-- pipewire
-- pipewire-jack
+- yabridge
+- yabridgectl
 - realtime-privileges
 - bubblewrap
 - linux 5.16+ (for futex_waitv)
 
 ### commands
+
+    $ systemctl enable --now bluetooth
 
     $ # setup wine and vst deps
     $ # extra options WINEARCH, DDLOVERRIDES, etc are in fish config
@@ -47,5 +72,4 @@ wine is wrapped in a sandbox with `bwrap`
 
 ### see also
 
-- [audio](./audio.md) (for the rest of pipewire stuff)
 - `yabridge-wine` script, `$VST_PATH`, `$VST3_PATH`
