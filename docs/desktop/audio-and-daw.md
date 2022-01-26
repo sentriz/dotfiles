@@ -47,6 +47,7 @@ wine is wrapped in a sandbox with `bwrap`
 
     $ # setup wine and vst deps
     $ # extra options WINEARCH, DDLOVERRIDES, etc are in fish config
+    $ winetricks --self-update
     $ winetricks -q mfc42 gdiplus
 
     $ # allow unlimited mem lock size
