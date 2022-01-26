@@ -42,10 +42,6 @@ nnoremap z=     z=                              " fix spell bind
 nnoremap <silent> s* :let @/='\<'.expand('<cword>').'\>'<cr>cgn
 xnoremap <silent> s* "sy:let @/=@s<cr>cgn
 
-" bubbling
-vnoremap K xkP`[V`]
-vnoremap J xp`[V`]
-
 " movement
 nnoremap <silent> <c-k> :TmuxNavigateUp<cr>
 nnoremap <silent> <c-j> :TmuxNavigateDown<cr>
