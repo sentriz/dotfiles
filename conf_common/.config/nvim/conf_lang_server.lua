@@ -2,6 +2,7 @@
 --# for list of lsp, linter, and formatter tools, see $XDG_CONFIG_HOME/packages
 
 local lspconfig = require("lspconfig")
+local util = require("lspconfig.util")
 local cmp = require("cmp")
 local sqlsp = require("sqls")
 local nullls = require("null-ls")
@@ -78,13 +79,32 @@ lspconfig.sqls.setup({
 	end,
 })
 
+lspconfig.bashls.setup({
+	on_attach = no_format_please,
+})
+
+lspconfig.volar.setup({
+	on_attach = no_format_please,
+	root_dir = util.root_pattern("vite.config.js", "shims-vue.d.ts"),
+})
+
+lspconfig.tailwindcss.setup({
+	root_dir = util.root_pattern("tailwind.config.js"),
+})
+
+lspconfig.denols.setup({
+	on_attach = no_format_please,
+	root_dir = util.root_pattern("deno.json"),
+})
+
+lspconfig.tsserver.setup({
+	on_attach = no_format_please,
+	root_dir = util.root_pattern("tsconfig.json", "jsconfig.json"),
+})
+
 lspconfig.clangd.setup({})
 lspconfig.dockerls.setup({})
 lspconfig.rust_analyzer.setup({})
-lspconfig.tailwindcss.setup({})
-lspconfig.bashls.setup({ on_attach = no_format_please })
-lspconfig.tsserver.setup({ on_attach = no_format_please })
-lspconfig.volar.setup({ on_attach = no_format_please })
 
 nullls.setup({
 	log = { enable = false },
