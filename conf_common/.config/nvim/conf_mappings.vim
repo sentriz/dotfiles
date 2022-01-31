@@ -63,6 +63,8 @@ nnoremap ]o :bnext<cr>
 nnoremap [t :tabprevious<cr>
 nnoremap ]t :tabnext<cr>
 
+nnoremap ]] :cclose<cr>
+
 " copy above / below
 inoremap <expr> <c-y> matchstr(getline(line('.')-1), '\%' . virtcol('.') . 'v\%(\k\+\\|.\)')
 inoremap <expr> <c-e> matchstr(getline(line('.')+1), '\%' . virtcol('.') . 'v\%(\k\+\\|.\)')
