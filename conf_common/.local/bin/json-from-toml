@@ -1,0 +1,7 @@
+#!/usr/bin/env python3
+
+import json
+import sys
+import toml
+
+print(json.dumps(toml.load(sys.stdin)))
