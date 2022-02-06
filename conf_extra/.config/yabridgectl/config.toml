@@ -1,0 +1,17 @@
+method = 'copy'
+plugin_dirs = [
+    '/home/senan/.local/share/yabridge-wine/drive_c/Program Files/Common Files/VST3',
+    '/home/senan/.local/share/yabridge-wine/drive_c/Program Files/Common Files/vst3',
+    '/home/senan/.local/share/yabridge-wine/drive_c/Program Files/Steinberg/VSTPlugins',
+    '/home/senan/.local/share/yabridge-wine/drive_c/Program Files/VST',
+    '/home/senan/.local/share/yabridge-wine/drive_c/Program Files/VSTPlugins/SoundToys',
+    '/home/senan/.local/share/yabridge-wine/drive_c/Program Files/Vstplugins',
+    '/home/senan/.local/share/yabridge-wine/drive_c/Program Files (x86)/Common Files/vst3',
+    '/home/senan/.local/share/yabridge-wine/drive_c/Program Files (x86)/VST',
+]
+no_verify = false
+blacklist = []
+
+[last_known_config]
+wine_version = 'wine-7.1'
+yabridge_host_hash = -8582222648145641155
