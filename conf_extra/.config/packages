@@ -16,6 +16,7 @@ arch:fzf
 arch:git
 arch:jq
 arch:neovim
+arch:renameutils
 arch:ripgrep
 arch:sed
 arch:stow
