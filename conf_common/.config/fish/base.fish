@@ -21,6 +21,8 @@ set -gx CARGO_NET_GIT_FETCH_WITH_CLI true
 set -gx RUSTUP_HOME "$XDG_DATA_HOME/rustup"
 set -gx PYTHON_VENVS_DIR "$XDG_CACHE_HOME/venvs"
 
+set -gx NO_COLOR 1
+
 # dotfiles settings
 set -gx DOTS_SCRAP_DIR "$HOME/scrap"
 set -gx DOTS_SCREENSHOTS_DIR "$HOME/pictures/screenshots"
