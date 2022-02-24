@@ -1,3 +1,4 @@
+local context = require("treesitter-context")
 local configs = require("nvim-treesitter.configs")
 
 local highlight = {
@@ -69,4 +70,17 @@ configs.setup({
 	indent = indent,
 	incremental_selection = incremental_selection,
 	textobjects = textobjects,
+})
+
+context.setup({
+	enable = true,
+	throttle = false,
+	max_lines = 0,
+	patterns = {
+		default = {
+			"class",
+			"function",
+			"method",
+		},
+	},
 })

@@ -106,3 +106,6 @@
 [submodule "conf_common/.config/fish/plugins/franciscolourenco/done"]
 	path = conf_common/.config/fish/plugins/done
 	url = https://github.com/franciscolourenco/done
+[submodule "conf_common/.local/share/nvim/site/pack/plugins/start/nvim-treesitter-context"]
+	path = conf_common/.local/share/nvim/site/pack/plugins/start/nvim-treesitter-context
+	url = https://github.com/romgrk/nvim-treesitter-context
