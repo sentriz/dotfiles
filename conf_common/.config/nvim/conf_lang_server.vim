@@ -4,7 +4,7 @@ autocmd CursorHoldI <buffer> silent! lua vim.lsp.buf.document_highlight()
 autocmd CursorMoved <buffer> silent! lua vim.lsp.buf.clear_references()
 
 " completion
-set completeopt=menuone,noselect
+set completeopt=menu,menuone,noselect
 set shortmess=filnxtToOFAc
 
 " mappings

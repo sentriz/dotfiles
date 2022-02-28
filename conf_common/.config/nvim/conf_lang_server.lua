@@ -10,12 +10,13 @@ local nullls = require("null-ls")
 vim.diagnostic.config({ virtual_text = false })
 
 cmp.setup({
-	sources = {
+	sources = cmp.config.sources({
 		{ name = "nvim_lsp" },
-		{ name = "path" },
+	}, {
 		{ name = "buffer" },
+		{ name = "path" },
 		{ name = "tmux" },
-	},
+	}),
 	snippet = {
 		expand = function(args)
 			vim.fn["vsnip#anonymous"](args.body)
@@ -26,12 +27,27 @@ cmp.setup({
 		["<c-space>"] = cmp.mapping.complete(),
 		["<C-p>"] = cmp.mapping.select_prev_item(),
 		["<C-n>"] = cmp.mapping.select_next_item(),
-		["<cr>"] = cmp.mapping.confirm({
-			behavior = cmp.ConfirmBehavior.Replace,
-			select = true,
-		}),
+		["<cr>"] = cmp.mapping.confirm({}),
 		["<c-e>"] = cmp.mapping.close(),
 	},
+	experimental = {
+		ghost_text = { hl_group = "LineNr" },
+	},
+})
+
+cmp.setup.cmdline("/", {
+	sources = cmp.config.sources({
+		{ name = "buffer" },
+	}),
+})
+
+cmp.setup.cmdline(":", {
+	sources = cmp.config.sources({
+		{ name = "path" },
+		{ name = "tmux" },
+	}, {
+		{ name = "cmdline" },
+	}),
 })
 
 -- when using pylint or pyright, make sure we're in the right venv. eg
