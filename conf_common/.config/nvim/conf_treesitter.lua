@@ -74,7 +74,7 @@ configs.setup({
 
 context.setup({
 	enable = true,
-	throttle = false,
+	throttle = true,
 	max_lines = 0,
 	patterns = {
 		default = {
