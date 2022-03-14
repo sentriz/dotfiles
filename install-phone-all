@@ -1,29 +1,23 @@
 #!/usr/bin/env bash
 
 # intended to be run from termux
-# curl -sSL "https://raw.githubusercontent.com/sentriz/dotfiles/master/install_phone_all" | sh -s - path/to/key
+# $ termux-setup-storage
+# $ curl -sSL "https://raw.githubusercontent.com/sentriz/dotfiles/master/install-phone-all" | bash -s - storage/path/to/key
 
 set -e
 
-if test "$#" -ne 1; then
-    echo "please provide a private key" >&2
-    exit 1
-fi
-
-conf_dots_dir="$HOME/projects/dotfiles"
-conf_priv_key="$1"
-
-mkdir -p "$HOME/projects/dotfiles/" >/dev/null 2>&1
-
 function once() {
     flag="$HOME/.cache/dot_once_$1"
-    test ! -f "$flag" && "$1" && touch "$1"
+    test -f "$flag" && return
+    "$1" "${@:2}" \
+        && touch "$flag" \
+        || exit 1
 }
 
 function setup-pacs() {
     apt update
     apt upgrade
-    apt install \
+    apt install --yes -o DPkg::Options::="--force-confnew" \
         fish \
         git \
         gnupg \
@@ -35,21 +29,28 @@ function setup-pacs() {
 }
 
 function setup-priv-key() {
-    gpg --import "$conf_priv_key"
-    rm "$conf_priv_key"
+    if [[ ! -f "$1" ]]; then
+        echo "please provide a private key" >&2
+        return 1
+    fi
+    priv_key="$1"
+    GPG_TTY="$(tty)" gpg --import "$priv_key"
+    rm "$priv_key"
 }
 
 function setup-dots() {
-    git clone --recurse-submodules "https://github.com/sentriz/dotfiles.git" "$conf_dots_dir"
-    cd "$conf_dots_dir"
+    dots_dir="$HOME/projects/dotfiles"
+    mkdir -p "$dots_dir" >/dev/null 2>&1
+    git clone --recurse-submodules "https://github.com/sentriz/dotfiles.git" "$dots_dir"
+    cd "$dots_dir"
     ./install-common
     ./install-phone
     cd
 }
 
 once setup-pacs
-once setup-priv-key
-once setup-shell
+once setup-priv-key "$1"
 once setup-dots
 
+chsh fish
 exec fish
