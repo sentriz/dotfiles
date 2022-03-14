@@ -57,12 +57,6 @@ wine is wrapped in a sandbox with `bwrap`
     $ ulimit --lock-size
     unlimited
 
-    $ # tell yabridge where to find windows vsts
-    $ yabridgectl add "$XDG_DATA_HOME/yabridge-wine/drive_c/Program Files/VST/"
-    $ yabridgectl add "$XDG_DATA_HOME/yabridge-wine/drive_c/Program Files (x86)/VST/"
-    $ yabridgectl add "$XDG_DATA_HOME/yabridge-wine/drive_c/Program Files/Common Files/VST3/"
-    $ yabridgectl add "$XDG_DATA_HOME/yabridge-wine/drive_c/Program Files (x86)/Common Files/VST3/"
-
     $ # make sure the daw can find converted
     $ ln -s "$XDG_DATA_HOME/yabridge-wine/drive_c/Program Files/VST ~/.vst/yabridge-64
     $ ln -s "$XDG_DATA_HOME/yabridge-wine/drive_c/Program Files (x86)/VST ~/.vst/yabridge-32
