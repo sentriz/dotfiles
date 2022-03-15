@@ -1,7 +1,5 @@
 set -xg fish_colour_host blue
 
-source (type -P set-env-tmux-parent)
-
 function p --argument project
     cd "$DOTS_PROJECTS_DIR/$project"
 end
@@ -26,3 +24,5 @@ complete -x --command cc --arguments ( \
         ! -regex '^\./(\.|_).*' \
         -printf '%P '
 )
+
+source (type -P set-env-tmux-parent)

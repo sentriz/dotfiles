@@ -1,10 +1,6 @@
-# import user-dirs as env vars
-sed -nE 's/^([^=#]+)=(.*)/set -gx \1 \2/gp' <"$XDG_CONFIG_HOME/user-dirs.dirs" | source
+set -gx fish_colour_host brgreen
 
-# ssh sock, make sure it's the same as `gpgconf --list-dirs agent-ssh-socket`
-# if set in this file, the varible is availible for login shells, interactive shells, and the
-# systemd user env via import-environment in sway config
-set -gx SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/gnupg/S.gpg-agent.ssh"
+theme dark
 
 set -gx LIBSEAT_BACKEND logind
 set -gx XDG_CURRENT_DESKTOP sway
@@ -14,6 +10,8 @@ set -gx --path XDG_DATA_DIRS \
     /usr/share \
     /var/lib/flatpak/exports/share \
     "$XDG_DATA_HOME/flatpak/exports/share"
+
+set -gx TERMINAL footclient
 
 # set -gx GDK_BACKEND 'wayland'
 set -gx CLUTTER_BACKEND wayland
@@ -51,4 +49,27 @@ set -gx GTK_FONT_NAME 'DejaVu Sans 10'
 set -gx GTK_DARK 1
 set -gx GTK2_RC_FILES /usr/share/themes/Arc-Dark/gtk-2.0/gtkrc
 
-set -gx TERMINAL footclient
+abbr docker-compose "docker compose"
+
+function p --argument project
+    cd "$DOTS_PROJECTS_DIR/$project"
+end
+
+complete -x --command p --arguments ( \
+    find "$DOTS_PROJECTS_DIR" \
+        -maxdepth 1 -mindepth 1 \
+        -type d \
+        -printf '%P ' \
+)
+
+source (type -P set-env-gpg)
+source (type -P set-env-tmux-parent)
+
+if status is-login
+    switch (tty)
+        case /dev/tty1
+            exec sway -d >"$XDG_CACHE_HOME/sway_log" 2>&1
+        case /dev/tty2
+            exec htop
+    end
+end
