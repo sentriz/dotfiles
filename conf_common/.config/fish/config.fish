@@ -16,31 +16,6 @@ if test -e "$XDG_CONFIG_HOME/user-dirs.dirs"
     sed -nE 's/^([^=#]+)=(.*)/set -gx \1 \2/gp' <"$XDG_CONFIG_HOME/user-dirs.dirs" | source
 end
 
-set -gx fish_user_paths \
-    $GOPATH/bin \
-    $HOME/.local/bin \
-    $HOME/.local/bin/*/ \
-    $FNM_DIR/current/bin \
-    $XDG_DATA_HOME/cargo/bin \
-    $HOME/bin \
-    $HOME/bin/*/ \
-    $ANDROID_HOME/tools/ \
-    $ANDROID_HOME/tools/bin \
-    $ANDROID_HOME/platform-tools \
-    $ANDROID_HOME/emulator \
-    /usr/local/go/bin \
-    /bin \
-    /opt/Etcher \
-    /opt/balenaEtcher \
-    /sbin \
-    /usr/bin \
-    /usr/bin/vendor_perl \
-    /usr/local/bin \
-    /usr/local/sbin \
-    /usr/sbin \
-    /usr/share/git/git-jump/ \
-    /opt/flutter/bin/
-
 set -gx DOTS_SCRAP_DIR "$HOME/scrap"
 set -gx DOTS_SCREENSHOTS_DIR "$HOME/pictures/screenshots"
 set -gx DOTS_RECORDINGS_DIR "$HOME/pictures/recordings"
@@ -67,6 +42,31 @@ set -gx CARGO_HOME "$XDG_DATA_HOME/cargo"
 set -gx CARGO_NET_GIT_FETCH_WITH_CLI true
 set -gx RUSTUP_HOME "$XDG_DATA_HOME/rustup"
 set -gx PYTHON_VENVS_DIR "$XDG_CACHE_HOME/venvs"
+
+set -gx fish_user_paths \
+    $GOPATH/bin \
+    $HOME/.local/bin \
+    $HOME/.local/bin/*/ \
+    $FNM_DIR/current/bin \
+    $XDG_DATA_HOME/cargo/bin \
+    $HOME/bin \
+    $HOME/bin/*/ \
+    $ANDROID_HOME/tools/ \
+    $ANDROID_HOME/tools/bin \
+    $ANDROID_HOME/platform-tools \
+    $ANDROID_HOME/emulator \
+    /usr/local/go/bin \
+    /bin \
+    /opt/Etcher \
+    /opt/balenaEtcher \
+    /sbin \
+    /usr/bin \
+    /usr/bin/vendor_perl \
+    /usr/local/bin \
+    /usr/local/sbin \
+    /usr/sbin \
+    /usr/share/git/git-jump/ \
+    /opt/flutter/bin/
 
 source "$__fish_config_dir/config.$HOSTNAME.fish" 2>/dev/null
 
