@@ -27,8 +27,9 @@ set -gx _JAVA_AWT_WM_NONREPARENTING 1
 
 set -gx ANDROID_SDK_ROOT /opt/android-sdk
 set -gx ANDROID_HOME /opt/android-sdk
-set -gx JAVA_HOME /usr/lib/jvm/java-8-openjdk/
+set -gx JAVA_HOME /usr/lib/jvm/default-runtime
 set -gx JAVA_OPTS '-XX:+IgnoreUnrecognizedVMOptions'
+set -gx JDTLS_HOME /usr/share/java/jdtls
 set -gx PYLINTHOME "$XDG_DATA_HOME/pylint"
 set -gx PYTHONHISTFILE "$XDG_CACHE_HOME/python_history"
 

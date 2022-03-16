@@ -118,6 +118,10 @@ lspconfig.tsserver.setup({
 	root_dir = util.root_pattern("tsconfig.json", "jsconfig.json"),
 })
 
+lspconfig.jdtls.setup({
+	on_attach = no_format_please,
+})
+
 lspconfig.clangd.setup({})
 lspconfig.dockerls.setup({})
 lspconfig.rust_analyzer.setup({})
