@@ -13,5 +13,5 @@ no_verify = false
 blacklist = []
 
 [last_known_config]
-wine_version = 'wine-7.3'
+wine_version = 'wine-7.4'
 yabridge_host_hash = 7757795007377161116

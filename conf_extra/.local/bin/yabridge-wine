@@ -1,5 +1,13 @@
 #!/usr/bin/env bash
 
+wine="$(which wine)"
+
+export WINEARCH=win64
+export WINEDLLOVERRIDES="gdiplus=n;d2d1=d;msvcrt=b,n;libglesv2.dll=d"
+export WINELOADER="$wine"
+export WINEPREFIX="$XDG_DATA_HOME/yabridge-wine"
+export WINEFSYNC=1
+
 mkdir -p "$WINEPREFIX" 2>/dev/null
 mkdir -p "$XDG_CACHE_HOME/wine" 2>/dev/null
 mkdir -p "$XDG_CACHE_HOME/winetricks" 2>/dev/null
