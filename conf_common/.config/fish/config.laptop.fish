@@ -1,7 +1,5 @@
 set -gx fish_colour_host brgreen
 
-theme dark
-
 set -gx LIBSEAT_BACKEND logind
 set -gx XDG_CURRENT_DESKTOP sway
 set -gx XDG_SESSION_TYPE wayland
@@ -40,8 +38,8 @@ set -gx GTK_FONT_NAME 'DejaVu Sans 10'
 set -gx GTK_DARK 1
 set -gx GTK2_RC_FILES /usr/share/themes/Arc-Dark/gtk-2.0/gtkrc
 
-export YABRIDGE_TEMP_DIR="$XDG_RUNTIME_DIR/yabridge"
-export YABRIDGE_DEBUG_LEVEL=""
+set -gx YABRIDGE_TEMP_DIR "$XDG_RUNTIME_DIR/yabridge"
+set -gx YABRIDGE_DEBUG_LEVEL ''
 
 abbr docker-compose "docker compose"
 
@@ -66,4 +64,8 @@ if status is-login
         case /dev/tty2
             exec htop
     end
+end
+
+if status is-interactive
+    theme dark
 end
