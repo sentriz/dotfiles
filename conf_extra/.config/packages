@@ -88,11 +88,10 @@ arch:mpv-mpris
 arch:pipewire
 arch:pipewire-alsa
 arch:pipewire-jack
-arch:pipewire-jack-dropin
-arch:pipewire-media-session
 arch:pipewire-pulse
 arch:pipewire-v4l2
 arch:pipewire-zeroconf
+arch:wireplumber
 
 
 # blocks
