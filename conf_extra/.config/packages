@@ -23,6 +23,7 @@ arch:stow
 arch:sudo
 arch:unzip
 arch:wget
+cargo:difftastic
 cargo:git-absorb
 
 # gui virt
