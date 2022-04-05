@@ -103,3 +103,6 @@
 [submodule "conf_common/.local/share/nvim/site/pack/plugins/start/nvim-treesitter-context"]
 	path = conf_common/.local/share/nvim/site/pack/plugins/start/nvim-treesitter-context
 	url = https://github.com/romgrk/nvim-treesitter-context
+[submodule "conf_common/.local/share/nvim/site/pack/plugins/start/nvim-dap"]
+	path = conf_common/.local/share/nvim/site/pack/plugins/start/nvim-dap
+	url = https://github.com/mfussenegger/nvim-dap

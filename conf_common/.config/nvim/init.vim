@@ -11,6 +11,10 @@ let g:qf_auto_open_loclist = 1
 exec 'source'  . expand("$XDG_CONFIG_HOME/nvim/conf_autocmd.vim")
 exec 'source'  . expand("$XDG_CONFIG_HOME/nvim/conf_improvements.vim")
 exec 'source'  . expand("$XDG_CONFIG_HOME/nvim/conf_mappings.vim")
+exec 'luafile' . expand("$XDG_CONFIG_HOME/nvim/conf_treesitter.lua")
+
 exec 'source'  . expand("$XDG_CONFIG_HOME/nvim/conf_lang_server.vim")
 exec 'luafile' . expand("$XDG_CONFIG_HOME/nvim/conf_lang_server.lua")
-exec 'luafile' . expand("$XDG_CONFIG_HOME/nvim/conf_treesitter.lua")
+
+exec 'source'  . expand("$XDG_CONFIG_HOME/nvim/conf_dap.vim")
+exec 'luafile' . expand("$XDG_CONFIG_HOME/nvim/conf_dap.lua")

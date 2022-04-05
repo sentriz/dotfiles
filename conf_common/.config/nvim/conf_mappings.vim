@@ -34,9 +34,6 @@ nnoremap q: <nop>
 set nofoldenable
 set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
-nnoremap        z za                            " toggle node
-nnoremap <expr> Z &foldlevel == 0 ? "zR" : "zM" " toggle buffer
-nnoremap z=     z=                              " fix spell bind
 
 " load current word or selection to cgn
 nnoremap <silent> s* :let @/='\<'.expand('<cword>').'\>'<cr>cgn
