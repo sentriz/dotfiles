@@ -65,7 +65,7 @@ local textobjects = {
 }
 
 configs.setup({
-	ensure_installed = "maintained",
+	ensure_installed = "all",
 	highlight = highlight,
 	indent = indent,
 	incremental_selection = incremental_selection,

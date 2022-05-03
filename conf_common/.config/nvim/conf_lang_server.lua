@@ -56,19 +56,29 @@ cmp.setup.cmdline(":", {
 -- $ which pylint
 -- $ which pyright
 
-local function no_format_please(client)
-	client.resolved_capabilities.document_formatting = false
-	client.resolved_capabilities.document_range_formatting = false
+local format_augroup = vim.api.nvim_create_augroup("LSPFormatting", {})
+local function format_please(client, buffer)
+	if not client.supports_method("textDocument/formatting") then
+		return
+	end
+
+	vim.api.nvim_clear_autocmds({
+		group = format_augroup,
+		buffer = buffer,
+	})
+	vim.api.nvim_create_autocmd("BufWritePre", {
+		group = format_augroup,
+		buffer = buffer,
+		callback = function()
+			vim.lsp.buf.format({ timeout_ms = 5000 })
+		end,
+	})
 end
 
 lspconfig.pyright.setup({
 	settings = {
 		python = {
-			analysis = {
-				autoSearchPaths = true,
-				useLibraryCodeForTypes = true,
-				diagnosticMode = "workspace",
-			},
+			analysis = { autoSearchPaths = true, useLibraryCodeForTypes = true, diagnosticMode = "workspace" },
 			venvPath = os.getenv("PYTHON_VENVS_DIR"),
 		},
 	},
@@ -82,52 +92,29 @@ lspconfig.gopls.setup({
 			deepCompletion = true,
 		},
 	},
-	on_attach = no_format_please,
 })
 
 lspconfig.sqls.setup({
 	cmd = { "sqls", "-config", ".sqls.yml" },
-	on_attach = function(client)
-		client.resolved_capabilities.execute_command = true
-		client.commands = sqlsp.commands
-		sqlsp.setup({})
-		no_format_please(client)
+	on_attach = function(client, buff_num)
+		sqlsp.on_attach(client, buff_num)
 	end,
 })
 
-lspconfig.bashls.setup({
-	on_attach = no_format_please,
-})
+lspconfig.bashls.setup({})
+lspconfig.volar.setup({ root_dir = util.root_pattern("vite.config.js", "shims-vue.d.ts") })
+lspconfig.tailwindcss.setup({ root_dir = util.root_pattern("tailwind.config.js") })
+lspconfig.denols.setup({ root_dir = util.root_pattern("deno.json") })
+lspconfig.tsserver.setup({ root_dir = util.root_pattern("tsconfig.json", "jsconfig.json") })
+lspconfig.jdtls.setup({})
 
-lspconfig.volar.setup({
-	on_attach = no_format_please,
-	root_dir = util.root_pattern("vite.config.js", "shims-vue.d.ts"),
-})
-
-lspconfig.tailwindcss.setup({
-	root_dir = util.root_pattern("tailwind.config.js"),
-})
-
-lspconfig.denols.setup({
-	on_attach = no_format_please,
-	root_dir = util.root_pattern("deno.json"),
-})
-
-lspconfig.tsserver.setup({
-	on_attach = no_format_please,
-	root_dir = util.root_pattern("tsconfig.json", "jsconfig.json"),
-})
-
-lspconfig.jdtls.setup({
-	on_attach = no_format_please,
-})
-
-lspconfig.clangd.setup({})
-lspconfig.dockerls.setup({})
-lspconfig.rust_analyzer.setup({})
+lspconfig.clangd.setup({ on_attach = format_please })
+lspconfig.dockerls.setup({ on_attach = format_please })
+lspconfig.rust_analyzer.setup({ on_attach = format_please })
 
 nullls.setup({
 	log = { enable = false },
+	on_attach = format_please,
 	sources = {
 		nullls.builtins.formatting.black,
 		nullls.builtins.formatting.fish_indent,

@@ -23,8 +23,3 @@ inoremap <silent> <c-s> <cmd>lua vim.lsp.buf.signature_help()<cr>
 nnoremap <silent> J     <cmd>lua vim.diagnostic.open_float()<cr>
 nnoremap <silent> H     <cmd>lua vim.diagnostic.goto_prev()<cr>
 nnoremap <silent> L     <cmd>lua vim.diagnostic.goto_next()<cr>
-
-augroup AutoFormat
-    autocmd!
-    autocmd BufWritePre * silent! lua vim.lsp.buf.formatting_sync(nil, 5000)
-augroup END
