@@ -1,4 +1,3 @@
-method = 'copy'
 plugin_dirs = [
     '/home/senan/.local/share/yabridge-wine/drive_c/Program Files/Common Files/VST3',
     '/home/senan/.local/share/yabridge-wine/drive_c/Program Files/Common Files/vst3',
@@ -9,9 +8,10 @@ plugin_dirs = [
     '/home/senan/.local/share/yabridge-wine/drive_c/Program Files (x86)/Common Files/vst3',
     '/home/senan/.local/share/yabridge-wine/drive_c/Program Files (x86)/VST',
 ]
+vst2_location = 'centralized'
 no_verify = false
 blacklist = []
 
 [last_known_config]
-wine_version = 'wine-7.7'
-yabridge_host_hash = -2632122937381520262
+wine_version = 'wine-7.10'
+yabridge_host_hash = -2758888287786536091
