@@ -4,9 +4,6 @@
 [submodule "conf_extra/bin/notify-send"]
 	path = conf_extra/.local/bin/notify-send
 	url = git@github.com:vlevit/notify-send.sh.git
-[submodule "conf_common/.local/share/nvim/site/pack/look/opt/atimholt/spiffy_foldtext"]
-	path = conf_common/.local/share/nvim/site/pack/plugins/start/spiffy_foldtext
-	url = https://github.com/atimholt/spiffy_foldtext
 [submodule "conf_common/.local/share/nvim/site/pack/look/opt/tpope/vim-vinegar"]
 	path = conf_common/.local/share/nvim/site/pack/plugins/start/vim-vinegar
 	url = https://github.com/tpope/vim-vinegar
