@@ -43,3 +43,6 @@ augroup AutoEditGPGFile
     autocmd BufWritePre,FileWritePre   *.gpg '[,']!gpg --default-recipient-self --armor --encrypt 2>/dev/null
     autocmd BufWritePost,FileWritePost *.gpg undo
 augroup END
+
+
+autocmd TextYankPost * silent! lua vim.highlight.on_yank()

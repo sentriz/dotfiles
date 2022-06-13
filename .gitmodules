@@ -13,9 +13,6 @@
 [submodule "conf_common/.local/share/nvim/site/pack/meta/opt/christoomey/vim-tmux-navigator"]
 	path = conf_common/.local/share/nvim/site/pack/plugins/start/vim-tmux-navigator
 	url = https://github.com/christoomey/vim-tmux-navigator
-[submodule "conf_common/.local/share/nvim/site/pack/meta/opt/machakann/vim-highlightedyank"]
-	path = conf_common/.local/share/nvim/site/pack/plugins/start/vim-highlightedyank
-	url = https://github.com/machakann/vim-highlightedyank
 [submodule "conf_common/.local/share/nvim/site/pack/meta/opt/romainl/vim-qf"]
 	path = conf_common/.local/share/nvim/site/pack/plugins/start/vim-qf
 	url = https://github.com/romainl/vim-qf
