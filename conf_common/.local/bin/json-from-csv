@@ -4,4 +4,8 @@ import csv
 import json
 import sys
 
-print(json.dumps(list(csv.DictReader(sys.stdin))))
+DELIMITER = ","
+if len(sys.argv) > 1:
+    DELIMITER = sys.argv[1]
+
+print(json.dumps(list(csv.DictReader(sys.stdin, delimiter=DELIMITER))))
