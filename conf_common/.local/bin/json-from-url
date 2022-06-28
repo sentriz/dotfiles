@@ -21,29 +21,33 @@ type out struct {
 	Query    url.Values `json:"query,omitempty"`
 }
 
-func main() {
-	var urlstr string
+func urls() []string {
 	if len(os.Args) > 1 {
-		urlstr = os.Args[1]
-	} else {
-		urlb, _ := io.ReadAll(os.Stdin)
-		urlstr = strings.TrimSpace(string(urlb))
+		return os.Args[1:]
 	}
 
-	url, err := url.Parse(urlstr)
-	if err != nil {
-		os.Exit(1)
+	stdin, _ := io.ReadAll(os.Stdin)
+	stdinStr := strings.TrimSpace(string(stdin))
+	return strings.Split(stdinStr, "\n")
+}
+
+func main() {
+	for _, urlStr := range urls() {
+		url, err := url.Parse(urlStr)
+		if err != nil {
+			os.Exit(1)
+		}
+
+		var out out
+		out.Query = url.Query()
+		out.Scheme = url.Scheme
+		out.Username = url.User.Username()
+		out.Password, _ = url.User.Password()
+		out.Opaque = url.Opaque
+		out.Host = url.Host
+		out.Path = url.Path
+		out.Fragment = url.Fragment
+
+		_ = json.NewEncoder(os.Stdout).Encode(out)
 	}
-
-	var out out
-	out.Query = url.Query()
-	out.Scheme = url.Scheme
-	out.Username = url.User.Username()
-	out.Password, _ = url.User.Password()
-	out.Opaque = url.Opaque
-	out.Host = url.Host
-	out.Path = url.Path
-	out.Fragment = url.Fragment
-
-	_ = json.NewEncoder(os.Stdout).Encode(out)
 }
