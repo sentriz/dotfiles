@@ -1,50 +1,48 @@
 local dap = require("dap")
 
-local default_port = 9901
+local go = function(name, request, mode, conf)
+	local base = {
+		name = name,
+		type = "go",
+		request = request,
+		mode = mode,
 
-dap.adapters.go = function(cb, _config)
-	return cb({
-		type = "server",
-		port = vim.fn.input("port: ", default_port),
 		host = "localhost",
-	})
+		port = function()
+			return vim.fn.input("port: ", "9901")
+		end,
+	}
+	for k, v in pairs(conf) do
+		base[k] = v
+	end
+	return base
+end
+
+dap.adapters.go = function(cb, config)
+	return cb({ type = "server", port = config.port, host = config.host })
 end
 
 dap.configurations.go = {
-	{
-		-- dlv debug --headless --listen=:9901 --accept-multiclient --api-version=2 main.go
-		name = "delve remote attach",
-		type = "go",
-		request = "attach",
-
-		mode = "remote",
+	-- dlv debug --headless --listen=:9901 --accept-multiclient --api-version=2 main.go
+	go("delve remote attach", "attach", "remote", {
 		substitutePath = { { from = "${workspaceFolder}", to = "/go/src/app" } },
-	},
+	}),
 
-	{
-		-- dlv dap --listen :9901
-		name = "delve local launch",
-		type = "go",
-		request = "launch",
-
+	-- dlv dap --listen :9901
+	go("delve local debug", "launch", "debug", {
 		program = "${file}",
-	},
-	{
-		-- dlv dap --listen :9901
-		name = "delve local test",
-		type = "go",
-		request = "launch",
+		args = function()
+			return vim.split(vim.fn.input("args: "), " ")
+		end,
+	}),
 
-		mode = "test",
+	-- dlv dap --listen :9901
+	go("delve local test", "launch", "test", {
 		program = "${file}",
-	},
-	{
-		-- dlv dap --listen :9901
-		name = "delve local test package",
-		type = "go",
-		request = "launch",
+	}),
 
-		mode = "test",
+	-- dlv dap --listen :9901
+	go("delve local test package", "launch", "test", {
 		program = "./${relativeFileDirname}",
-	},
+	}),
 }
