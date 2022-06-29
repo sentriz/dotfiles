@@ -57,14 +57,10 @@ wine is wrapped in a sandbox with `bwrap`
     $ ulimit --lock-size
     unlimited
 
-    $ # make sure the daw can find converted
-    $ ln -s "$XDG_DATA_HOME/yabridge-wine/drive_c/Program Files/VST ~/.vst/yabridge-64
-    $ ln -s "$XDG_DATA_HOME/yabridge-wine/drive_c/Program Files (x86)/VST ~/.vst/yabridge-32
-
     $ # install a new vst
     $ wine path/to/exe # install to path mentioned above
     $ yabridgectl sync
 
 ### see also
 
-- `yabridge-wine` script, `$VST_PATH`, `$VST3_PATH`
+- `yabridge-wine` script
