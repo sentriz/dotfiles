@@ -60,7 +60,7 @@ source (type -P set-env-tmux-parent)
 if status is-login
     switch (tty)
         case /dev/tty1
-            exec sway -d >"$XDG_CACHE_HOME/sway_log" 2>&1
+            exec sway -d
         case /dev/tty2
             exec htop
     end
