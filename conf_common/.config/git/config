@@ -33,28 +33,17 @@
 	                            git reset --hard "HEAD~$1" && \
 	                            git checkout "$2" && \
 	                            false
-[diff]
-	compactionHeuristic = true
-	algorithm = histogram
-	external = difft
-	tool = difftastic
-[difftool]
-	prompt = false
-[difftool "difftastic"]
-	cmd = difft "$LOCAL" "$REMOTE"
-[difftool "meld"]
-	cmd = meld "$LOCAL" "$REMOTE"
-
 [diff "zip"]
 	textconv = unzip -c -a
-[pager]
-	difftool = true
+[diff]
+	compactionHeuristic = true
 [advice]
 	statusHints = false
 	addEmptyPathspec = false
 	skippedCherryPicks = false
 [core]
 	editor = nvim
+	pager = less -r
 [pull]
 	rebase = true
 [commit]
@@ -67,6 +56,13 @@
 [merge]
 	tool = meld
 	conflictstyle = diff3
+[diff]
+	tool = meld
+	algorithm = histogram
+[difftool]
+	prompt = false
+[difftool "meld"]
+	cmd = meld "$LOCAL" "$REMOTE"
 [sendemail]
 	annotate = yes
 	smtpencryption = tls
