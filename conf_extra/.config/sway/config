@@ -140,10 +140,14 @@ bindsym $super+Down  move down
 bindsym $super+Up    move up
 bindsym $super+Right move right
 bindsym $super+b     move position center
-bindsym $super+w     move workspace to output up
-bindsym $super+a     move workspace to output left
-bindsym $super+s     move workspace to output down
-bindsym $super+d     move workspace to output right
+
+bindsym $super+w move workspace to output up
+bindsym $super+a move workspace to output left
+bindsym $super+s move workspace to output down
+bindsym $super+d move workspace to output right
+
+bindsym $super+e workspace back_and_forth, move workspace to output up,    workspace back_and_forth, move workspace to output down
+bindsym $super+r workspace back_and_forth, move workspace to output right, workspace back_and_forth, move workspace to output left
 
 ## bindings: modes
 bindsym $super+$alt+r     mode $mode_resize_tile
