@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
 for path in "$@"; do
-    cp "$path" "$path."
+    cp --archive --recursive "$path" "$path."
 done
