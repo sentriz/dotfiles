@@ -1,6 +1,3 @@
-let g:do_filetype_lua = 1
-let g:did_load_filetypes = 0
-
 filetype plugin indent off
 
 let g:netrw_list_hide = '.*\.pyc$,^__pycache__$'
