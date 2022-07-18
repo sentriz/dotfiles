@@ -1,6 +1,4 @@
-if type -q hostname
-    set -gx HOSTNAME (hostname)
-end
+set -gx HOSTNAME (uname -n)
 
 if set -q TERMUX_VERSION
     set -gx HOSTNAME android
