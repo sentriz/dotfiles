@@ -399,6 +399,7 @@ for_window [title="is sharing your screen.$"]                         floating e
 for_window [app_id="^com.github.tchx84.Flatseal$"]                    floating enable
 for_window [class="^QjackCtl$"]                                       floating enable
 for_window [class="com.github.wwmm.easyeffects"]                      floating enable
+for_window [app_id="^pinentry-qt$"]                                   floating enable
 
 ## floating sticky
 for_window [class="^jellyfin$"]                         floating enable, resize set 1334 568, sticky enable
