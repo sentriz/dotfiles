@@ -27,6 +27,7 @@ arch:unzip
 arch:wget
 cargo:git-absorb
 go:go.senan.xyz/case-replace@latest
+go:go.senan.xyz/vi-paths@latest
 
 # gui virt
 arch:libvirt
