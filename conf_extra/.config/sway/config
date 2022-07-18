@@ -472,5 +472,3 @@ exec sleep 5 && wlr-sunclock \
    --colour-land "#6D28D9"
 
 exec foot --server
-
-exec $lock
