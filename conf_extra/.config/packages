@@ -73,6 +73,7 @@ arch:qt5-wayland
 arch:qt6-wayland
 arch:slurp
 arch:sway
+arch:swaybg
 arch:swayidle
 arch:swaylock
 arch:wf-recorder

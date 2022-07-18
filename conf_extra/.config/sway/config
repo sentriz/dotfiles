@@ -30,7 +30,7 @@ set $colour_inactive   #8D8D8D
 ## var helpers
 set $lock_warning notify-send.sh 'locking screen in 10 seconds'
 set $lock swaylock \
-    --image ~/pictures/wallpapers/fagan.png \
+    --image $XDG_PICTURES_DIR/wallpapers/fagan.png \
     --font "$default_font" \
     --inside-color "#00000000" \
     --inside-caps-lock-color "#00000000" \
@@ -87,7 +87,7 @@ input "2:10:TPPS/2_IBM_TrackPoint" {
 
 ## output
 output * {
-    bg $HOME/pictures/wallpapers/flow.jpg fill
+    bg $XDG_PICTURES_DIR/wallpapers/flow.jpg fill
 }
 
 ## right bar
