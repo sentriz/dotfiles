@@ -14,7 +14,7 @@ arch:git
 arch:github-cli
 arch:htop
 arch:jq
-arch:neovim
+arch:neovim-git
 arch:renameutils
 arch:ripgrep
 arch:sed
