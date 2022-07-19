@@ -17,26 +17,47 @@ function list() {
     grep -Po "^$1:\K.*" "$XDG_CONFIG_HOME/packages"
 }
 
-yay --version
-yay -S --needed $(list arch)
+wanted=("${@:1}")
+function want() {
+    [[ "${#wanted[@]}" == 0 ]] && return
+    for w in "${wanted[@]}"; do
+        [[ "$w" == "$1" ]] && return
+    done
+    return 1
+}
 
-python3 -m ensurepip
-python3 -m pip --version
-python3 -m pip install --user --disable-pip-version-check --no-input $(list python)
+if want arch; then
+    yay --version
+    yay -S --needed $(list arch)
+fi
 
-cargo version
-cargo install $(list cargo)
+if want python; then
+    python3 -m ensurepip
+    python3 -m pip --version
+    python3 -m pip install --user --disable-pip-version-check --no-input $(list python)
+fi
 
-go version
-for package in $(list go); do
-    go install "$package"
-done
+if want cargo; then
+    cargo version
+    cargo install $(list cargo)
+fi
 
-npm version
-npm install -g $(list npm)
+if want go; then
+    go version
+    for package in $(list go); do
+        go install "$package"
+    done
+fi
 
-flatpak --version
-flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-flatpak remote-add --user --if-not-exists flathub-beta https://flathub.org/beta-repo/flathub-beta.flatpakrepo
-flatpak install --user --noninteractive --assumeyes flathub $(list flatpak)
-flatpak install --user --noninteractive --assumeyes flathub-beta $(list flatpak-beta)
+if want npm; then
+    npm version
+    npm install -g $(list npm)
+fi
+
+if want flatpak; then
+    flatpak --version
+    flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+    flatpak remote-add --user --if-not-exists flathub-beta https://flathub.org/beta-repo/flathub-beta.flatpakrepo
+    flatpak install --user --noninteractive --assumeyes flathub $(list flatpak)
+    flatpak install --user --noninteractive --assumeyes flathub-beta $(list flatpak-beta)
+fi
