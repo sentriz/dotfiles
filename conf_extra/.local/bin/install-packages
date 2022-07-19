@@ -10,6 +10,18 @@ if ! type -p yay >/dev/null; then
     git clone "https://aur.archlinux.org/yay-bin.git" /tmp/yay
     cd /tmp/yay || exit
     makepkg -si
+
+    sudo pacman-key --recv-key FBA220DFC880C036 --keyserver keyserver.ubuntu.com
+    sudo pacman-key --lsign-key FBA220DFC880C036
+    sudo pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'
+    sudo tee -a /etc/pacman.conf <<-EOF
+        [multilib]
+        Include = /etc/pacman.d/mirrorlist
+        [chaotic-aur]
+        Include = /etc/pacman.d/chaotic-mirrorlist
+EOF
+    sudo pacman -Syu
+
     cd -
 fi
 
@@ -28,7 +40,7 @@ function want() {
 
 if want arch; then
     yay --version
-    yay -S --needed $(list arch)
+    yay -S --needed --noconfirm $(list arch)
 fi
 
 if want python; then
