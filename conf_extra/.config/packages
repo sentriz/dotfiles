@@ -26,6 +26,7 @@ arch:wget
 cargo:git-absorb
 go:go.senan.xyz/case-replace@latest
 go:go.senan.xyz/vi-paths@latest
+go:github.com/nkanaev/numb@latest
 
 python:xmltodict
 python:toml
