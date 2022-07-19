@@ -2,6 +2,7 @@ arch:flatpak
 arch:go
 arch:nodejs
 arch:npm
+npm:yarn
 arch:python3
 arch:rust
 
