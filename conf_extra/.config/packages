@@ -117,6 +117,7 @@ arch:yabridgectl
 arch:wine-tkg-staging-fsync-git
 arch:winetricks
 arch:bitwig-studio
+arch:tal-plugins
 
 # blocks
 arch:bluez-utils-compat
