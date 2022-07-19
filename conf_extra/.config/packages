@@ -8,13 +8,10 @@ arch:rust
 arch:docker
 arch:docker-compose
 
-arch:bluez
-arch:bluez-tools
-arch:iwd
-
 arch:fish
 arch:fzf
 arch:git
+arch:github-cli
 arch:htop
 arch:jq
 arch:neovim
@@ -100,6 +97,9 @@ arch:pipewire-zeroconf
 arch:wireplumber
 arch:carla
 arch:qpwgraph
+arch:bluez
+arch:bluez-tools
+arch:iwd
 
 # blocks
 arch:bluez-utils-compat
