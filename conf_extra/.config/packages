@@ -23,6 +23,7 @@ arch:stow
 arch:sudo
 arch:unzip
 arch:wget
+go:github.com/natesales/q@latest
 cargo:git-absorb
 go:go.senan.xyz/case-replace@latest
 go:go.senan.xyz/vi-paths@latest
