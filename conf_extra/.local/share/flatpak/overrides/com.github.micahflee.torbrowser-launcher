@@ -1,2 +1,3 @@
 [Environment]
 QT_QPA_PLATFORM=
+LANG=
