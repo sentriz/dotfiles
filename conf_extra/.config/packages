@@ -1,3 +1,4 @@
+# runtime
 arch:flatpak
 arch:go
 arch:nodejs
@@ -23,12 +24,14 @@ arch:stow
 arch:sudo
 arch:unzip
 arch:wget
+arch:sshfs
 go:github.com/natesales/q@latest
 cargo:git-absorb
 go:go.senan.xyz/case-replace@latest
 go:go.senan.xyz/vi-paths@latest
 go:github.com/nkanaev/numb@latest
 
+# bin / script
 python:xmltodict
 python:toml
 go:github.com/traefik/yaegi/cmd/yaegi@latest
