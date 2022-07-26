@@ -100,3 +100,6 @@
 [submodule "conf_common/.local/share/nvim/site/pack/plugins/start/nvim-dap"]
 	path = conf_common/.local/share/nvim/site/pack/plugins/start/nvim-dap
 	url = https://github.com/mfussenegger/nvim-dap
+[submodule "conf_common/.local/share/nvim/site/pack/plugins/start/goto-preview"]
+	path = conf_common/.local/share/nvim/site/pack/plugins/start/goto-preview
+	url = https://github.com/rmagatti/goto-preview

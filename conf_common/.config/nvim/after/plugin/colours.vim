@@ -29,6 +29,9 @@ highlight StatusLine    ctermfg=15  ctermbg=0
 highlight StatusLineNC  ctermfg=15  ctermbg=NONE
 highlight CursorLine    ctermfg=0   ctermbg=11
 highlight MatchParen    cterm=underline
+highlight MatchParen    cterm=underline
+
+highlight link NormalFloat Normal
 
 highlight SpellLocal ctermfg=9 cterm=underline
 highlight SpellBad   ctermfg=9 cterm=underline
