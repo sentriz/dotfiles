@@ -29,6 +29,7 @@ go:github.com/natesales/q@latest
 cargo:git-absorb
 go:go.senan.xyz/case-replace@latest
 go:go.senan.xyz/vi-paths@latest
+go:go.senan.xyz/vi-pipe@latest
 go:github.com/nkanaev/numb@latest
 go:github.com/tomnomnom/gron@latest
 
