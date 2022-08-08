@@ -68,12 +68,3 @@ inoremap <expr> <c-e> matchstr(getline(line('.')+1), '\%' . virtcol('.') . 'v\%(
 
 " alternative escaping
 inoremap jj <esc>
-
-function! CloseIfFloating() abort
-    let l:cfg = nvim_win_get_config(0)
-    if (!empty(l:cfg.relative) || l:cfg.external)
-        exec ":quit"
-    endif
-endfunction
-
-nnoremap <c-[> <cmd>call CloseIfFloating()<cr>

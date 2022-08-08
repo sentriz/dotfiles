@@ -6,7 +6,6 @@ local util = require("lspconfig.util")
 local cmp = require("cmp")
 local sqlsp = require("sqls")
 local nullls = require("null-ls")
-local gotop = require("goto-preview")
 
 vim.diagnostic.config({ virtual_text = false })
 
@@ -50,8 +49,6 @@ cmp.setup.cmdline(":", {
 		{ name = "cmdline" },
 	}),
 })
-
-gotop.setup({})
 
 -- when using pylint or pyright, make sure we're in the right venv. eg
 -- $ source $PYTHON_VENVS_DIR/<venv>/bin/activate.fish
