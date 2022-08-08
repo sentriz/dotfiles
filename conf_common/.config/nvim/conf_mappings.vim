@@ -28,7 +28,19 @@ vnoremap u :OSCYank<cr>
 
 " disable command hist
 nnoremap Q <nop>
-nnoremap q: <nop>
+
+" easy split / quit
+nnoremap <enter>   :vsplit<cr><c-w>w
+nnoremap <s-enter> :split<cr><c-w>w
+nnoremap s :write
+nnoremap <c-[> <cmd>call CloseIfSaved()<cr>
+nnoremap q     <cmd>call CloseIfSaved()<cr>
+
+function! CloseIfSaved() abort
+    if !&modified
+        exec ":quit"
+    endif
+endfunction
 
 " easy folding
 set nofoldenable

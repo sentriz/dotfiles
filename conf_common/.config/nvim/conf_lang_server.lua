@@ -25,8 +25,8 @@ cmp.setup({
 	mapping = {
 		["<c-x><c-o>"] = cmp.mapping.complete(),
 		["<c-space>"] = cmp.mapping.complete(),
-		["<C-p>"] = cmp.mapping.select_prev_item(),
-		["<C-n>"] = cmp.mapping.select_next_item(),
+		["<c-p>"] = cmp.mapping.select_prev_item(),
+		["<c-n>"] = cmp.mapping.select_next_item(),
 		["<cr>"] = cmp.mapping.confirm({ select = true }),
 		["<c-e>"] = cmp.mapping.close(),
 	},
