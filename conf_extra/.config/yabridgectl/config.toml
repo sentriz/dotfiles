@@ -7,6 +7,7 @@ plugin_dirs = [
     '/home/senan/.local/share/yabridge-wine/drive_c/Program Files/VSTPlugins/SoundToys',
     '/home/senan/.local/share/yabridge-wine/drive_c/Program Files/Vstplugins',
     '/home/senan/.local/share/yabridge-wine/drive_c/Program Files (x86)/Common Files/vst3',
+    '/home/senan/.local/share/yabridge-wine/drive_c/Program Files (x86)/Steinberg/VSTPlugins',
     '/home/senan/.local/share/yabridge-wine/drive_c/Program Files (x86)/Steinberg/VSTPlugins/Dada Life',
     '/home/senan/.local/share/yabridge-wine/drive_c/Program Files (x86)/VST',
 ]
