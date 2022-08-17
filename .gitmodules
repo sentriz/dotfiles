@@ -97,3 +97,6 @@
 [submodule "conf_common/.local/share/nvim/site/pack/plugins/start/nvim-dap"]
 	path = conf_common/.local/share/nvim/site/pack/plugins/start/nvim-dap
 	url = https://github.com/mfussenegger/nvim-dap
+[submodule "conf_common/.local/share/nvim/site/pack/plugins/start/QFEnter"]
+	path = conf_common/.local/share/nvim/site/pack/plugins/start/QFEnter
+	url = https://github.com/yssl/QFEnter
