@@ -104,7 +104,7 @@ lspconfig.sqls.setup({
 lspconfig.bashls.setup({})
 lspconfig.volar.setup({ root_dir = util.root_pattern("vite.config.js", "shims-vue.d.ts") })
 lspconfig.tailwindcss.setup({ root_dir = util.root_pattern("tailwind.config.js") })
-lspconfig.denols.setup({ root_dir = util.root_pattern("deno.json") })
+lspconfig.denols.setup({ root_dir = util.root_pattern("deno.json"), single_file_support = false })
 lspconfig.tsserver.setup({ root_dir = util.root_pattern("tsconfig.json", "jsconfig.json") })
 lspconfig.jdtls.setup({})
 
