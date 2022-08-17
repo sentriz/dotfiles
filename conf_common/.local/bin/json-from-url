@@ -22,8 +22,8 @@ type out struct {
 }
 
 func urls() []string {
-	if len(os.Args) > 1 {
-		return os.Args[1:]
+	if len(os.Args) > 2 {
+		return os.Args[2:]
 	}
 
 	stdin, _ := io.ReadAll(os.Stdin)
