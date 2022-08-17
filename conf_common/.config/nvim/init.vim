@@ -5,9 +5,6 @@ let g:netrw_list_hide = '.*\.pyc$,^__pycache__$'
 let g:tmux_navigator_no_mappings = 1
 let g:tmux_navigator_save_on_switch = 1
 
-let g:qf_auto_open_quickfix = 1
-let g:qf_auto_open_loclist = 1
-
 set tabstop=4
 set virtualedit=block
 set number
