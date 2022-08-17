@@ -129,11 +129,11 @@ vnoremap u :OSCYank<cr>
 nnoremap Q <nop>
 
 " easy split / quit
-nnoremap <enter>   :vsplit<cr><c-w>w
-nnoremap <s-enter> :split<cr><c-w>w
-nnoremap s         :write<enter>
-nnoremap <c-[>     <cmd>call CloseIfSaved()<cr>
-nnoremap q         <cmd>call CloseIfSaved()<cr>
+nnoremap <enter>       :vsplit<cr><c-w>w
+nnoremap <s-enter>     :split<cr><c-w>w
+nnoremap s             :write<enter>
+nnoremap <silent> <c-[> <cmd>call CloseIfSaved()<cr>
+nnoremap <silent> q     <cmd>call CloseIfSaved()<cr>
 
 function! CloseIfSaved() abort
     if !&modified
@@ -179,6 +179,12 @@ inoremap <expr> <c-e> matchstr(getline(line('.')+1), '\%' . virtcol('.') . 'v\%(
 
 " alternative escaping
 inoremap jj <esc>
+
+" very magic mode
+nnoremap / /\v
+vnoremap / /\v
+nnoremap ? ?\v
+vnoremap ? ?\v
 
 " dap
 nnoremap <bs><bs>     <cmd>lua require'dap'.toggle_breakpoint()<cr>

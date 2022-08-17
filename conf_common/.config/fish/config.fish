@@ -23,7 +23,6 @@ set -gx DOTS_COPT_DIR /opt/containers
 set -gx DOTS_PROJECTS_DIR "$HOME/projects"
 
 set -gx EDITOR nvim
-set -gx RIPGREP_CONFIG_PATH "$XDG_CONFIG_HOME/ripgreprc"
 set -gx FZF_DEFAULT_OPTS "--info hidden --color bw"
 set -gx GOPATH "$XDG_DATA_HOME/go"
 set -gx GOPROXY 'https://proxy.golang.org,direct'
@@ -93,6 +92,13 @@ alias :q exit
 abbr g git
 abbr gti git
 abbr ps 'ps -axh -o pid,%cpu,cmd'
+
+# extended regexp everywhere
+abbr grep "grep -Ei"
+abbr egrep "egrep -Ei"
+abbr fgrep "fgrep -Ei"
+abbr sed "sed -E"
+abbr rg "rg --pcre2 --smart-case"
 
 # cd   -> pushd
 # cd - -> popd
