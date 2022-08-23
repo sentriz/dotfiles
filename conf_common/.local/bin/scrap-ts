@@ -16,7 +16,7 @@ cat >"$file" <<EOL
 EOL
 
 npm init --yes >/dev/null
-touch tsconfig.json
+touch deno.json
 git init
 git add -A
 git commit -m "init"
