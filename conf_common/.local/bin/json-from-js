@@ -1,0 +1,9 @@
+#!/usr/bin/env -S deno run --no-check
+
+import { readAllSync } from "https://deno.land/std@v0.152.0/streams/conversion.ts ";
+
+const inBytes = readAllSync(Deno.stdin);
+const inString = new TextDecoder().decode(inBytes);
+const inObject = Function(`"use strict"; return (${inString})`)();
+
+console.log(JSON.stringify(inObject));
