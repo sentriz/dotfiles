@@ -38,19 +38,19 @@ highlight DiffDelete ctermfg=1
 highlight link diffAdded   DiffAdd
 highlight link diffRemoved DiffDelete
 
-highlight TSKeyword          cterm=bold
-highlight TSKeywordOperator  cterm=bold
-highlight TSKeywordFunction  cterm=bold
-highlight TSKeywordReturn    cterm=bold
-highlight TSType             cterm=bold
-highlight TSTypeBuiltin      cterm=bold
-highlight TSRepeat           cterm=bold
-highlight TSFunction         cterm=bold
-highlight TSOperator         cterm=bold
-highlight TSInclude          cterm=bold
-highlight TSConditional      cterm=bold
-highlight TSString           ctermfg=15
-highlight TSComment          ctermfg=8  cterm=italic
+highlight @keyword          cterm=bold
+highlight @keyword.operator cterm=bold
+highlight @keyword.function cterm=bold
+highlight @keyword.return   cterm=bold
+highlight @type             cterm=bold
+highlight @type.builtin     cterm=bold
+highlight @repeat           cterm=bold
+highlight @function         cterm=bold
+highlight @operator         cterm=bold
+highlight @include          cterm=bold
+highlight @conditional      cterm=bold
+highlight @string           ctermfg=15
+highlight @comment          ctermfg=8  cterm=italic
 
 highlight Pmenu    ctermfg=15 ctermbg=0
 highlight PmenuSel ctermfg=0  ctermbg=15
