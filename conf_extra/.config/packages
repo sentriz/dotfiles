@@ -38,6 +38,7 @@ go:github.com/tomnomnom/gron@latest
 # bin / script
 python:xmltodict
 python:toml
+python:pyyaml
 go:github.com/traefik/yaegi/cmd/yaegi@latest
 
 # gui virt
