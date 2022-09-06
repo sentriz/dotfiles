@@ -62,6 +62,12 @@ augroup AutoNetrwOnStart
     autocmd VimEnter * if !(argc() + have_stdin) | Explore! | endif
 augroup END
 
+augroup AutoOSC7Dir
+    autocmd!
+    autocmd BufNewFile,BufReadPost,BufFilePost *
+        \ call writefile([printf("\e\]7\;file://%s%s\e\\", hostname(), expand('%:p:h'))], '/dev/fd/2', 'b')
+augroup END
+
 " by Wouter Hanegraaff
 augroup AutoEditGPGFile
     autocmd!
