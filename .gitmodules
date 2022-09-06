@@ -34,9 +34,6 @@
 [submodule "conf_common/.local/share/nvim/site/pack/meta/opt/nvim-treesitter/nvim-treesitter"]
 	path = conf_common/.local/share/nvim/site/pack/plugins/start/nvim-treesitter
 	url = https://github.com/nvim-treesitter/nvim-treesitter
-[submodule "conf_common/.local/share/nvim/site/pack/meta/opt/nvim-treesitter/nvim-treesitter-textobjects"]
-	path = conf_common/.local/share/nvim/site/pack/plugins/start/nvim-treesitter-textobjects
-	url = https://github.com/nvim-treesitter/nvim-treesitter-textobjects
 [submodule "conf_common/.local/share/nvim/site/pack/plugins/start/vim-sleuth"]
 	path = conf_common/.local/share/nvim/site/pack/plugins/start/vim-sleuth
 	url = https://github.com/tpope/vim-sleuth
@@ -100,3 +97,9 @@
 [submodule "conf_common/.local/share/nvim/site/pack/plugins/start/QFEnter"]
 	path = conf_common/.local/share/nvim/site/pack/plugins/start/QFEnter
 	url = https://github.com/yssl/QFEnter
+[submodule "conf_common/.local/share/nvim/site/pack/plugins/start/nvim-treehopper"]
+	path = conf_common/.local/share/nvim/site/pack/plugins/start/nvim-treehopper
+	url = https://github.com/mfussenegger/nvim-treehopper
+[submodule "conf_common/.local/share/nvim/site/pack/plugins/start/hop.nvim"]
+	path = conf_common/.local/share/nvim/site/pack/plugins/start/hop.nvim
+	url = https://github.com/phaazon/hop.nvim

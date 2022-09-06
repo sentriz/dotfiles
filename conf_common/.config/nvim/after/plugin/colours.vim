@@ -26,7 +26,7 @@ highlight Visual        ctermfg=0   ctermbg=15
 highlight Search        ctermfg=0   ctermbg=11
 highlight IncSearch     ctermfg=0   ctermbg=11
 highlight StatusLine    ctermfg=15  ctermbg=0
-highlight StatusLineNC  ctermfg=15  ctermbg=NONE
+highlight StatusLineNC  ctermfg=15  ctermbg=none
 highlight CursorLine    ctermfg=0   ctermbg=11
 highlight MatchParen    cterm=underline
 
@@ -76,6 +76,9 @@ sign define DiagnosticSignWarn  text=ww  texthl=DiagnosticSignWarn
 
 highlight statusReadOnly  ctermfg=9 ctermbg=0
 highlight statusModifided ctermfg=9 ctermbg=0
+
+highlight TSNodeUnmatched ctermfg=0
+highlight TSNodeKey       ctermfg=11 cterm=bold
 
 set statusline=
 set statusline+=%#statusReadOnly#%{&readonly?'\ \ read\ only\ ':''}%* " read only flag
