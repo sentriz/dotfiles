@@ -3,15 +3,26 @@
 # requires:
 # - playerctl
 
-function pctl() {
-    playerctl "$@" 2>/dev/null
+index_file="$XDG_CACHE_HOME/block_playing_index"
+index="$(cat "$index_file" 2>/dev/null || echo "0")"
+readarray -t players < <(playerctl --list-all)
+
+function update-index() {
+    index="$(((index + $1) % ${#players[@]}))"
+    echo "$index" >"$index_file"
 }
 
 case "$BLOCK_BUTTON" in
-1) pctl play-pause ;; # left click
-3) pctl stop ;;       # right click
+1) playerctl --player "${players[$index]}" play-pause ;; # left click
+3) playerctl --player "${players[$index]}" stop ;;       # right click
+4) update-index 1 ;;                                     # scroll up
+5) update-index -1 ;;                                    # scroll down
 esac
 
-pctl metadata -f "{{lc(status)}} ‘{{trunc(title, 40)}}’"
+# sometimes players can be slow to show the new status
+sleep 0.25
+
+playerctl --player "${players[$index]}" metadata -f "{{lc(status)}} ‘{{trunc(title, 40)}}’" 2>/dev/null \
+    || echo stopped
 
 exit 0
