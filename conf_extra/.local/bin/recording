@@ -33,5 +33,5 @@ test -n "$audio_device"
 and contains -- --audio $argv
 and set -l audio_cmd "-a$audio_device"
 
-wf-recorder "$audio_cmd" -f "$filename" -g "$area" >/dev/null 2>&1
+wf-recorder "$audio_cmd" -f "$filename" -g "$area" --force-yuv >/dev/null 2>&1
 echo "$filename"
