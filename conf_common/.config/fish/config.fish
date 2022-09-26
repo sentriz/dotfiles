@@ -41,9 +41,9 @@ set -gx RUSTUP_HOME "$XDG_DATA_HOME/rustup"
 set -gx PYTHON_VENVS_DIR "$XDG_CACHE_HOME/venvs"
 
 set -gx fish_user_paths \
-    $GOPATH/bin \
     $HOME/.local/bin \
     $HOME/.local/bin/*/ \
+    $GOPATH/bin \
     $FNM_DIR/current/bin \
     $XDG_DATA_HOME/cargo/bin \
     $HOME/bin \
