@@ -9,13 +9,9 @@ function lower() {
     tr '[:upper:]' '[:lower:]'
 }
 
-function decolour() {
-    sed 's/\x1B\[[0-9;]*[JKmsu]//g'
-}
-
 replace_file="$(mktemp)"
 function notify() {
-    notify-send.sh --replace-file "$replace_file" "$1" "$(decolour <<<"${@:2}" | lower)"
+    notify-send.sh --replace-file "$replace_file" "$1" "$(strip-escape <<<"${@:2}" | lower)"
 }
 
 devices="$(bluetoothctl devices | lower)"
