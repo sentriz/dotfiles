@@ -1,18 +1,26 @@
 #!/usr/bin/env bash
 
-if ! type -p wofi >/dev/null; then
-    echo "please install wofi" >&2
-    echo "https://hg.sr.ht/~scoopta/wofi" >&2
+if ! type -p fzf >/dev/null; then
+    echo "please install fzf" >&2
     exit 1
 fi
 
-pkill --exact wofi
-wofi \
-    --dmenu \
-    --insensitive \
-    --location 2 \
-    --yoffset 16 \
-    --style "${BASH_SOURCE%/*}/css" \
-    --term "$TERMINAL" \
-    --sort-order 'default' \
-    "$@"
+prompt="$1"
+if test -z "$prompt"; then
+    echo "please provide a prompt" >&2
+    exit 1
+fi
+
+dir="$(mktemp --directory --tmpdir="$XDG_CACHE_HOME")"
+trap 'rm -r "$dir"' EXIT
+
+in="$dir/in"
+out="$dir/out"
+
+mkfifo "$in" "$out"
+
+"$TERMINAL" --app-id launcher sh -c "theme light; fzf --prompt '$1 ' <$in >$out" 2>/dev/null &
+cat <"$out" &
+cat >"$in"
+
+wait

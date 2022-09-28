@@ -7,6 +7,6 @@ if ! type -p cliphist >/dev/null; then
 fi
 
 cliphist list \
-    | dmenu_custom --prompt clipboard \
+    | dmenu_custom clipboard \
     | cliphist decode \
     | wl-copy

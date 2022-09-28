@@ -17,7 +17,7 @@ function notify() {
 devices="$(bluetoothctl devices | lower)"
 test -z "$devices" && exit 1
 
-device="$(printf "%s\n" "$devices" "disconnect" | dmenu_custom -p 'bluetooth')"
+device="$(printf "%s\n" "$devices" "disconnect" | dmenu_custom bluetooth)"
 test -z "$device" && exit 1
 
 device_mac="$(cut -d ' ' -f 2 <<<"$device")"

@@ -7,7 +7,8 @@ set -gx --path XDG_DATA_DIRS \
     /usr/local/share \
     /usr/share \
     /var/lib/flatpak/exports/share \
-    "$XDG_DATA_HOME/flatpak/exports/share"
+    "$XDG_DATA_HOME/flatpak/exports/share" \
+    "$XDG_DATA_HOME"
 
 set -gx TERMINAL footclient
 

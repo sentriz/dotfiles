@@ -1,3 +1,10 @@
 #!/usr/bin/env bash
 
-dmenu_custom --prompt package --show drun --allow-images --cache-file /dev/null
+function applications() {
+    IFS=: read -r -d '' -a paths < <(printf '%s:\0' "$XDG_DATA_DIRS")
+    for path in "${paths[@]}"; do
+        find "$path/applications" -name '*.desktop' 2>/dev/null
+    done
+}
+
+gio launch "$(applications | dmenu_custom application)"

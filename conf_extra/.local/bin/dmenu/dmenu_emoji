@@ -6,7 +6,7 @@
 # $ curl "https://raw.githubusercontent.com/Mange/rofi-emoji/master/all_emojis.txt" \
 #       | awk '{print $1 "\t" $2 "\t" $4}'
 
-( dmenu_custom -p 'emoji' | awk '{print $1}' | wl-copy --trim-newline ) <<EOF
+(dmenu_custom emoji | awk '{print $1}' | wl-copy --trim-newline) <<EOF
 ​	Misc	Zero Width Space
 …	Misc	Ellipsis
 😀	Smileys & Emotion	grinning face

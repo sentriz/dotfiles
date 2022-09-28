@@ -22,7 +22,7 @@ function move-to-sink() {
         | xargs -I {} ponymix --sink-input --device {} move "$1"
 }
 
-sink_row="$(get-sinks | dmenu_custom -p 'sink')"
+sink_row="$(get-sinks | dmenu_custom sink)"
 test -z "$sink_row" && exit 1
 
 sink_id="$(awk -F '\t' '{print $1}' <<<"$sink_row")"
