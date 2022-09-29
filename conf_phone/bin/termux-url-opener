@@ -4,6 +4,6 @@ if [ "$#" -ne 1 ]; then
 fi
 
 case "$1" in
-    *youtube.com/*|*youtu.be/*) /data/data/com.termux/files/home/.local/bin/catt add "$1" ;;
+    *youtube.com/*|*youtu.be/*) /data/data/com.termux/files/home/.local/bin/catt cast "$1" ;;
     *)                          /data/data/com.termux/files/home/.local/bin/catt cast "$1" ;;
 esac
