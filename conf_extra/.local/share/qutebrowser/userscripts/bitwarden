@@ -61,7 +61,7 @@ def get_bw_item(domain):
 
 
 def dmenu(items):
-    command = shlex.split('dmenu_custom -p "bitwarden"')
+    command = shlex.split('dmenu -p "bitwarden"')
     input = "\n".join(items).encode(encoding)
     process = subprocess.run(command, input=input, stdout=subprocess.PIPE)
     return process.stdout.decode(encoding).strip()

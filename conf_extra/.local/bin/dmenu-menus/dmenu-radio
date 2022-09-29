@@ -17,7 +17,7 @@ function get-stations() {
 pid_file="$XDG_CACHE_HOME/mpv_radio_pid"
 
 stations="$(get-stations)"
-selection="$(printf "%s\n" "$stations" "stop" | dmenu_custom station)"
+selection="$(printf "%s\n" "$stations" "stop" | dmenu station)"
 test -z "$selection" && exit 1
 
 test -f "$pid_file" && pkill -F "$pid_file"

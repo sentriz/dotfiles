@@ -35,7 +35,7 @@
 #         }
 #     }
 
-(column -s $'\t' -t | dmenu_custom emoji | awk -F ' ' '{print $1}' | wl-copy --trim-newline) <<EOF
+(column -s $'\t' -t | dmenu emoji | awk -F ' ' '{print $1}' | wl-copy --trim-newline) <<EOF
 ​	zero width space
 …	ellipsis
 😀	emotion face grin grinning smileys smiling

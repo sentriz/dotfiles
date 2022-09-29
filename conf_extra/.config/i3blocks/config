@@ -1,4 +1,4 @@
-command=~/.local/bin/blocks/block_$BLOCK_NAME
+command=~/.local/bin/blocks/block-$BLOCK_NAME
 interval=5
 
 [playing]

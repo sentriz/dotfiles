@@ -24,7 +24,7 @@ function switch-toggle() {
 switches="$(switch-list)"
 test -z "$switches" && exit 1
 
-selection="$(dmenu_custom switch <<<"$switches")"
+selection="$(dmenu switch <<<"$switches")"
 test -z "$selection" && exit 1
 
 switch-toggle "$(awk '{print $1}' <<<"$selection")"
