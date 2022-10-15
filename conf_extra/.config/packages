@@ -98,6 +98,7 @@ arch:xdg-desktop-portal-wlr
 arch:xdg-user-dirs
 arch:xorg-xwayland
 go:go.senan.xyz/cliphist@latest
+go:go.senan.xyz/sway-rename-workspaces@latest
 
 # hw
 arch:bluez
