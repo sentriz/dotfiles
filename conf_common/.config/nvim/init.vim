@@ -64,7 +64,7 @@ augroup END
 
 augroup AutoOSC7Dir
     autocmd!
-    autocmd BufNewFile,BufReadPost,BufFilePost *
+    autocmd BufEnter *
         \ call writefile([printf("\e\]7\;file://%s%s\e\\", hostname(), expand('%:p:h'))], '/dev/fd/2', 'b')
 augroup END
 
