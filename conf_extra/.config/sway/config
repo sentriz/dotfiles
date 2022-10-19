@@ -452,7 +452,7 @@ exec swayidle -w \
 
 exec wl-paste --watch cliphist store
 
-exec sleep 5 && wlsunset -l 53.3 -L -6.2
+exec sleep 5 && wlsunset -l 53.3 -L -6.2 -t 2700
 exec sleep 5 && wlr-sunclock \
    --margins "0,$default_gap,0,$default_gap" \
    --width 800 \
