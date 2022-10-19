@@ -1,6 +1,0 @@
-#!/usr/bin/env fish
-
-read -z buff
-
-string join ',' (seq (echo "$buff" | head -n 2 | json-from-csv | jq '.[] | keys | length'))
-echo -n "$buff"
