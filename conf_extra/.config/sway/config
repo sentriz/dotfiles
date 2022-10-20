@@ -416,9 +416,8 @@ bindsym $super+F2     exec dmenu-clipboard
 bindsym $super+F3     exec dmenu-radio     && $up_block_3
 bindsym $super+F4     exec dmenu-pulse     && $up_block_1
 bindsym $super+F5     exec dmenu-bluetooth && $up_block_2
-bindsym $super+F6     exec dmenu-hass
-bindsym $super+F7     exec dmenu-emoji
-bindsym $super+F8     exec dmenu-virt
+bindsym $super+F6     exec dmenu-emoji
+bindsym $super+F7     exec dmenu-virt
 
 ## dmenu term
 for_window [app_id="^launcher$"] floating enable, sticky enable, resize set 100 ppt 50 ppt, move position 0 0
