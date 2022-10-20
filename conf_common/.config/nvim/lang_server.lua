@@ -12,6 +12,7 @@ vim.diagnostic.config({ virtual_text = false })
 cmp.setup({
 	sources = cmp.config.sources({
 		{ name = "nvim_lsp" },
+		{ name = "vsnip" },
 	}, {
 		{ name = "buffer" },
 		{ name = "path" },
@@ -56,6 +57,9 @@ cmp.setup.cmdline(":", {
 -- $ which pylint
 -- $ which pyright
 
+local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+
 local format_augroup = vim.api.nvim_create_augroup("LSPFormatting", {})
 local function format_please(client, buffer)
 	if not client.supports_method("textDocument/formatting") then
@@ -76,6 +80,7 @@ local function format_please(client, buffer)
 end
 
 lspconfig.pyright.setup({
+	capabilities = capabilities,
 	settings = {
 		python = {
 			analysis = { autoSearchPaths = true, useLibraryCodeForTypes = true, diagnosticMode = "workspace" },
@@ -83,34 +88,59 @@ lspconfig.pyright.setup({
 		},
 	},
 })
-
 lspconfig.gopls.setup({
+	capabilities = capabilities,
 	settings = {
 		gopls = {
+			experimentalPostfixCompletions = true,
 			usePlaceholders = true,
 			completeUnimported = true,
 			deepCompletion = true,
 		},
 	},
 })
-
 lspconfig.sqls.setup({
+	capabilities = capabilities,
 	cmd = { "sqls", "-config", ".sqls.yml" },
 	on_attach = function(client, buff_num)
 		sqlsp.on_attach(client, buff_num)
 	end,
 })
-
-lspconfig.bashls.setup({})
-lspconfig.volar.setup({ root_dir = util.root_pattern("vite.config.js", "shims-vue.d.ts") })
-lspconfig.tailwindcss.setup({ root_dir = util.root_pattern("tailwind.config.js") })
-lspconfig.denols.setup({ root_dir = util.root_pattern("deno.json"), single_file_support = false })
-lspconfig.tsserver.setup({ root_dir = util.root_pattern("tsconfig.json", "jsconfig.json") })
-lspconfig.jdtls.setup({})
-
-lspconfig.clangd.setup({ on_attach = format_please })
-lspconfig.dockerls.setup({ on_attach = format_please })
-lspconfig.rust_analyzer.setup({ on_attach = format_please })
+lspconfig.bashls.setup({
+	capabilities = capabilities,
+})
+lspconfig.volar.setup({
+	capabilities = capabilities,
+	root_dir = util.root_pattern("vite.config.js", "shims-vue.d.ts"),
+})
+lspconfig.tailwindcss.setup({
+	capabilities = capabilities,
+	root_dir = util.root_pattern("tailwind.config.js"),
+})
+lspconfig.denols.setup({
+	capabilities = capabilities,
+	root_dir = util.root_pattern("deno.json"),
+	single_file_support = false,
+})
+lspconfig.tsserver.setup({
+	capabilities = capabilities,
+	root_dir = util.root_pattern("tsconfig.json", "jsconfig.json"),
+})
+lspconfig.jdtls.setup({
+	capabilities = capabilities,
+})
+lspconfig.clangd.setup({
+	capabilities = capabilities,
+	on_attach = format_please,
+})
+lspconfig.dockerls.setup({
+	capabilities = capabilities,
+	on_attach = format_please,
+})
+lspconfig.rust_analyzer.setup({
+	capabilities = capabilities,
+	on_attach = format_please,
+})
 
 nullls.setup({
 	log = { enable = false },

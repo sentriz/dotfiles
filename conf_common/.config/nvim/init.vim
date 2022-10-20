@@ -205,7 +205,6 @@ nnoremap <bs>]        <cmd>lua require'dap'.down()<cr>
 nnoremap <bs>#        <cmd>lua require'dap'.repl.open()<cr>
 nnoremap <bs>1        <cmd>lua require'dap'.run_last()<cr>
 
-
 " lsp highlight symbol under cursor
 autocmd CursorHold  <buffer> silent! lua vim.lsp.buf.document_highlight()
 autocmd CursorHoldI <buffer> silent! lua vim.lsp.buf.document_highlight()
@@ -231,3 +230,9 @@ nnoremap <silent> L     <cmd>lua vim.diagnostic.goto_next()<cr>
 
 omap     m :<c-u>lua require('tsht').nodes()<cr>
 xnoremap m :lua require('tsht').nodes()<cr>
+
+" vsnip
+imap <expr> <tab>   vsnip#jumpable(1)  ? '<plug>(vsnip-jump-next)' : '<tab>'
+smap <expr> <tab>   vsnip#jumpable(1)  ? '<plug>(vsnip-jump-next)' : '<tab>'
+imap <expr> <s-tab> vsnip#jumpable(-1) ? '<plug>(vsnip-jump-prev)' : '<s-tab>'
+smap <expr> <s-tab> vsnip#jumpable(-1) ? '<plug>(vsnip-jump-prev)' : '<s-tab>'
