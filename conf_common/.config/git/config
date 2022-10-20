@@ -9,6 +9,7 @@
 [push]
 	default = current
 	followTags = true
+	autoSetupRemote = true
 [alias]
 	c = commit
 	s = status
