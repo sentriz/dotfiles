@@ -132,8 +132,9 @@ arch:tal-plugins
 # blocks
 arch:bluez-utils-compat
 arch:i3blocks
-arch:playerctl-git
 arch:ponymix
+go:go.senan.xyz/mpris-ctrl@latest
+go:go.senan.xyz/rsl@latest
 python:boi-balance
 python:revolut
 

@@ -1,49 +1,12 @@
 #!/usr/bin/env bash
 
 # requires:
-# - playerctl
-
-index_file="$XDG_CACHE_HOME/block_playing_index"
-index="$(cat "$index_file" 2>/dev/null || echo "0")"
-
-readarray -t raw_players < <(playerctl --list-all)
-players=()
-
-# ignore stopped players
-for player in "${raw_players[@]}"; do
-    [[ $(playerctl --player "$player" status | tr "[:upper:]" "[:lower:]") = "stopped" ]] \
-        && continue
-    players+=("$player")
-done
-
-if [[ ${#players[@]} -eq 0 ]]; then
-    exit 0
-fi
-
-function positive-mod() {
-    echo $(((($1 % $2) + $2) % $2))
-}
-
-function update-index() {
-    index="$(positive-mod "$((index + $1))" "${#players[@]}")"
-    echo "$index" >"$index_file"
-}
+# - https://github.com/sentriz/mpris-ctrl
 
 case "$BLOCK_BUTTON" in
-1) playerctl --player "${players[$index]}" play-pause ;; # left click
-3) playerctl --player "${players[$index]}" stop ;;       # right click
-4) update-index 1 ;;                                     # scroll up
-5) update-index -1 ;;                                    # scroll down
+1) mpris-ctrl play-pause ;;  # left click
+3) mpris-ctrl stop ;;        # right click
+4) mpris-ctrl prev-player ;; # scroll up
+5) mpris-ctrl next-player ;; # scroll down
+*) mpris-ctrl ;;
 esac
-
-parts=("{{lc(status)}}")
-[[ ${#players[@]} -gt 1 ]] && parts+=("$((index + 1))/${#players[@]}")
-parts+=("‘{{trunc(title, 40)}}’")
-format=$(
-    IFS=" "
-    echo "${parts[*]}"
-)
-
-playerctl --player "${players[$index]}" metadata -f "$format" 2>/dev/null
-
-exit 0
