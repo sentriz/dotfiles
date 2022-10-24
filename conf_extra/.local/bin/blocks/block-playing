@@ -5,10 +5,27 @@
 
 index_file="$XDG_CACHE_HOME/block_playing_index"
 index="$(cat "$index_file" 2>/dev/null || echo "0")"
-readarray -t players < <(playerctl --list-all)
+
+readarray -t raw_players < <(playerctl --list-all)
+players=()
+
+# ignore stopped players
+for player in "${raw_players[@]}"; do
+    [[ $(playerctl --player "$player" status | tr "[:upper:]" "[:lower:]") = "stopped" ]] \
+        && continue
+    players+=("$player")
+done
+
+if [[ ${#players[@]} -eq 0 ]]; then
+    exit 0
+fi
+
+function positive-mod() {
+    echo $(((($1 % $2) + $2) % $2))
+}
 
 function update-index() {
-    index="$(((index + $1) % ${#players[@]}))"
+    index="$(positive-mod "$((index + $1))" "${#players[@]}")"
     echo "$index" >"$index_file"
 }
 
@@ -19,10 +36,14 @@ case "$BLOCK_BUTTON" in
 5) update-index -1 ;;                                    # scroll down
 esac
 
-# sometimes players can be slow to show the new status
-sleep 0.25
+parts=("{{lc(status)}}")
+[[ ${#players[@]} -gt 1 ]] && parts+=("$((index + 1))/${#players[@]}")
+parts+=("‘{{trunc(title, 40)}}’")
+format=$(
+    IFS=" "
+    echo "${parts[*]}"
+)
 
-playerctl --player "${players[$index]}" metadata -f "{{lc(status)}} ‘{{trunc(title, 40)}}’" 2>/dev/null \
-    || echo stopped
+playerctl --player "${players[$index]}" metadata -f "$format" 2>/dev/null
 
 exit 0
