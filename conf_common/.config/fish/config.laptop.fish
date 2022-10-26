@@ -55,6 +55,10 @@ complete -x --command p --arguments ( \
         -printf '%P ' \
 )
 
+function mark_prompt_start --on-event fish_prompt
+    echo -en "\e]133;A\e\\"
+end
+
 source (type -P set-env-gpg)
 source (type -P set-env-tmux-parent)
 
