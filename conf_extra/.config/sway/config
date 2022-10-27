@@ -409,6 +409,10 @@ bindsym XF86AudioStop         exec playerctl stop
 bindsym XF86AudioNext         exec playerctl next
 bindsym XF86AudioPrev         exec playerctl previous
 
+# push to talk with print screen button
+bindsym --no-repeat           print exec ponymix --input unmute && $up_block_1
+bindsym --no-repeat --release print exec ponymix --input mute   && $up_block_1
+
 ## bindings: programs
 bindsym $super+Return exec $TERMINAL
 bindsym $super+F1     exec dmenu-package
