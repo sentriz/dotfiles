@@ -140,7 +140,7 @@ set -g fish_color_valid_path --underline
 
 # fancy listing with relative time
 function __list
-    command ls -vFqrloth --group-directories-first --color=yes --time-style=long-iso $argv \
+    command ls -vFqrloth --group-directories-first --color=yes --time-style=long-iso --hyperlink $argv \
         | sed "s/"(date +%Y-%m-%d)"/\x1b[32m     today\x1b[m/; s/"(date +'%Y-%m-%d' -d yesterday)"/\x1b[33m yesterday\x1b[m/"
 end
 
