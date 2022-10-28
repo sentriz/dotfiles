@@ -154,7 +154,7 @@ go:golang.org/x/tools/gopls@latest
 go:mvdan.cc/sh/v3/cmd/shfmt@latest
 npm:@fsouza/prettierd
 npm:@tailwindcss/language-server
-npm:@volar/server
+npm:@volar/vue-language-server
 npm:bash-language-server
 npm:dockerfile-language-server-nodejs
 npm:eslint_d
