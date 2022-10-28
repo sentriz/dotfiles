@@ -27,7 +27,6 @@ set -gx FZF_DEFAULT_OPTS "--info hidden --color bw"
 set -gx GOPATH "$XDG_DATA_HOME/go"
 set -gx GOPROXY 'https://proxy.golang.org,direct'
 set -gx NPM_CONFIG_USERCONFIG "$XDG_CONFIG_HOME/npm/config"
-set -gx NPM_CONFIG_CACHE "$XDG_CACHE_HOME/npm"
 set -gx NPM_CONFIG_TMP "$XDG_RUNTIME_DIR/npm"
 set -gx NPM_CONFIG_PREFIX "$HOME/.local"
 set -gx DOCKER_CONFIG "$XDG_CONFIG_HOME/docker"
