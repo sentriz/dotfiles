@@ -59,6 +59,8 @@ highlight LspReferenceText  ctermfg=11
 highlight LspReferenceRead  ctermfg=11
 highlight LspReferenceWrite ctermfg=11
 
+highlight link LspInlayHint @comment
+
 highlight DiagnosticFloatingError           ctermfg=15 cterm=bold
 highlight DiagnosticFloatingHint            ctermfg=15 cterm=bold
 highlight DiagnosticFloatingInfo            ctermfg=15 cterm=bold

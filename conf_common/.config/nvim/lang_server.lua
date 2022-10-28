@@ -4,8 +4,10 @@
 local lspconfig = require("lspconfig")
 local util = require("lspconfig.util")
 local cmp = require("cmp")
+local cmplsp = require("cmp_nvim_lsp")
 local sqlsp = require("sqls")
 local nullls = require("null-ls")
+local inlayhints = require("lsp-inlayhints")
 
 vim.diagnostic.config({ virtual_text = false })
 
@@ -51,13 +53,33 @@ cmp.setup.cmdline(":", {
 	}),
 })
 
+inlayhints.setup({
+	inlay_hints = {
+		parameter_hints = {
+			prefix = "",
+			separator = " ",
+			remove_colon_start = true,
+		},
+		type_hints = {
+			-- type and other hints
+			show = true,
+			prefix = "",
+			separator = " ",
+			remove_colon_start = true,
+			remove_colon_end = truese,
+		},
+		labels_separator = " ",
+	},
+})
+
 -- when using pylint or pyright, make sure we're in the right venv. eg
 -- $ source $PYTHON_VENVS_DIR/<venv>/bin/activate.fish
 -- $ pip install -r requirements-dev.txt .
 -- $ which pylint
 -- $ which pyright
 
-local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = cmplsp.update_capabilities(capabilities)
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 local format_augroup = vim.api.nvim_create_augroup("LSPFormatting", {})
@@ -79,6 +101,10 @@ local function format_please(client, buffer)
 	})
 end
 
+local function add_inlay_hints(client, buffer)
+	inlayhints.on_attach(client, buffer)
+end
+
 lspconfig.pyright.setup({
 	capabilities = capabilities,
 	settings = {
@@ -90,12 +116,21 @@ lspconfig.pyright.setup({
 })
 lspconfig.gopls.setup({
 	capabilities = capabilities,
+	on_attach = add_inlay_hints,
 	settings = {
 		gopls = {
 			experimentalPostfixCompletions = true,
 			usePlaceholders = true,
 			completeUnimported = true,
 			deepCompletion = true,
+			hints = {
+				assignVariableTypes = true,
+				compositeLiteralFields = true,
+				constantValues = true,
+				functionTypeParameters = true,
+				parameterNames = true,
+				rangeVariableTypes = true,
+			},
 		},
 	},
 })
@@ -131,7 +166,10 @@ lspconfig.jdtls.setup({
 })
 lspconfig.clangd.setup({
 	capabilities = capabilities,
-	on_attach = format_please,
+	on_attach = function(client, buffer)
+		format_please(client, buffer)
+		add_inlay_hints(client, buffer)
+	end,
 })
 lspconfig.dockerls.setup({
 	capabilities = capabilities,
