@@ -175,3 +175,11 @@ function __package_sudo
 end
 
 alias sudo __package_sudo
+
+function git
+    if isatty stdout; and contains -- $argv[1] diff status log d s l
+        command git -c color.status=always -c color.ui=always $argv | add-osc-8-hyperlink
+        return
+    end
+    command git $argv
+end
