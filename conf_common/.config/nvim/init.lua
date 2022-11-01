@@ -267,6 +267,7 @@ inlayhints.setup({
 			remove_colon_end = truese,
 		},
 		labels_separator = " ",
+		only_current_line = true,
 	},
 })
 
