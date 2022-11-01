@@ -1,2 +1,2 @@
 [Context]
-filesystems=~/mounts/sam_music
+filesystems=/run/media/senan/873F-4625;~/mounts/sam_music
