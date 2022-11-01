@@ -14,6 +14,9 @@ if test -e "$XDG_CONFIG_HOME/user-dirs.dirs"
     sed -nE 's/^([^=#]+)=(.*)/set -gx \1 \2/gp' <"$XDG_CONFIG_HOME/user-dirs.dirs" | source
 end
 
+# import locale
+locale | sed -nE 's/^([^=#]+)=(.*)/set -gx \1 \2/gp' | source
+
 set -gx DOTS_SCRAP_DIR "$HOME/scrap"
 set -gx DOTS_SCREENSHOTS_DIR "$HOME/pictures/screenshots"
 set -gx DOTS_RECORDINGS_DIR "$HOME/pictures/recordings"
