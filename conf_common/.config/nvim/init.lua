@@ -4,7 +4,10 @@
 vim.cmd([[
 filetype plugin indent off
 
+let mapleader = "\<Space>"
+
 " plugin netrw
+
 let g:netrw_list_hide = '.*\.pyc$,^__pycache__$'
 
 " plugin tmux tmux navigator
@@ -118,7 +121,6 @@ command! VS vsplit
 command! Vs vsplit
 
 " leader
-let mapleader = "\<Space>"
 nnoremap          <leader>bb mzggO#!/usr/bin/env bash<esc>o<esc>`z
 nnoremap          <leader>bp mzggO#!/usr/bin/env python3<esc>o<esc>`z
 nnoremap          <leader>r  :write<cr>:!clear && %:p<cr>
