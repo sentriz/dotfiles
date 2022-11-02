@@ -183,3 +183,11 @@ function git
     end
     command git $argv
 end
+
+function rg
+    if isatty stdout
+        command rg --color=always --line-number $argv | add-osc-8-hyperlink
+        return
+    end
+    command rg $argv
+end
