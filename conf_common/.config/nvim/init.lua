@@ -273,8 +273,7 @@ inlayhints.setup({
 -- $ which pylint
 -- $ which pyright
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = cmplsp.update_capabilities(capabilities)
+local capabilities = cmplsp.default_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 local format_augroup = vim.api.nvim_create_augroup("LSPFormatting", {})
