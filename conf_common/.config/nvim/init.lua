@@ -181,12 +181,6 @@ inoremap <expr> <c-e> matchstr(getline(line('.')+1), '\%' . virtcol('.') . 'v\%(
 
 " alternative escaping
 inoremap jj <esc>
-
-" very magic mode
-nnoremap / /\v
-vnoremap / /\v
-nnoremap ? ?\v
-vnoremap ? ?\v
 ]])
 
 local lspconfig = require("lspconfig")
@@ -229,17 +223,19 @@ cmp.setup({
 	},
 })
 
-cmp.setup.cmdline("/", {
+cmp.setup.cmdline({ "/", "?" }, {
+	mapping = cmp.mapping.preset.cmdline(),
 	sources = cmp.config.sources({
+		{ name = "tmux" },
 		{ name = "buffer" },
 	}),
 })
 
 cmp.setup.cmdline(":", {
+	mapping = cmp.mapping.preset.cmdline(),
 	sources = cmp.config.sources({
 		{ name = "path" },
 		{ name = "tmux" },
-	}, {
 		{ name = "cmdline" },
 	}),
 })
