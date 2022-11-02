@@ -140,6 +140,13 @@ set -g fish_color_status red
 set -g fish_color_user brgreen
 set -g fish_color_valid_path --underline
 
+function to_prompt
+    while read line
+        commandline -a -- $line\n
+    end
+    commandline -C 999999
+end
+
 # fancy listing with relative time
 function __list
     command ls -vFqrloth --group-directories-first --color=yes --time-style=long-iso --hyperlink $argv \
