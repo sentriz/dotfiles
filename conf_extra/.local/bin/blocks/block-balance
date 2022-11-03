@@ -31,11 +31,6 @@ function get-balance() {
 # hide balance with a right click
 test "$BLOCK_BUTTON" -eq 3 2>/dev/null && exit
 
-# wait until system is up for 5 mins before checking balance
-# (this way i'm not prompted to enter my gpg passphrase right after logging in)
-uptime="$(awk '{print int($1/60)}' /proc/uptime)"
-test "$uptime" -le '5' && exit
-
 balance="$(get-balance)"
 test -z "$balance" && exit
 
