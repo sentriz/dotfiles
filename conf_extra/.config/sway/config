@@ -469,3 +469,5 @@ exec sleep 5 && wlr-sunclock \
 exec foot --server
 
 exec sway-rename-workspaces
+
+exec last-dot-friends-notify
