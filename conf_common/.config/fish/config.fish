@@ -198,3 +198,11 @@ function rg
     end
     command rg $argv
 end
+
+function go
+    if isatty stdout; and contains -- $argv[1] test
+        command go $argv | add-osc-8-hyperlink
+        return
+    end
+    command go $argv
+end
