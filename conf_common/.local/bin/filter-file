@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+if ! type -p sponge >/dev/null; then
+    echo "please install moreutils" >&2
+    exit 1
+fi
+
+if test $# -lt 2; then
+    echo "usage: $0 <file> <cmd> [args]..." >&2
+    exit 1
+fi
+
+file="$1"
+shift
+"$@" <"$file" | sponge "$file"

@@ -17,15 +17,16 @@ arch:git
 arch:github-cli
 arch:htop
 arch:jq
+arch:moreutils
 arch:neovim-git
 arch:renameutils
 arch:ripgrep
 arch:sed
+arch:sshfs
 arch:stow
 arch:sudo
 arch:unzip
 arch:wget
-arch:sshfs
 go:github.com/natesales/q@latest
 cargo:git-absorb
 go:go.senan.xyz/case-replace@latest
