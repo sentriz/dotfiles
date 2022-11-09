@@ -26,7 +26,7 @@ EOF
 fi
 
 function list() {
-    grep -Po "^$1:\K.*" "$XDG_CONFIG_HOME/packages"
+    grep -Po "^$1\s+\K.*" "$XDG_CONFIG_HOME/packages"
 }
 
 wanted=("${@:1}")

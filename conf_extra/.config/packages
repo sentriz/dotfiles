@@ -1,175 +1,175 @@
 # runtime
-arch:flatpak
-arch:go
-arch:nodejs
-arch:npm
-npm:yarn
-arch:deno
-arch:python3
-arch:rust
+arch flatpak
+arch go
+arch nodejs
+arch npm
+npm yarn
+arch deno
+arch python3
+arch rust
 
-arch:docker
-arch:docker-compose
+arch docker
+arch docker-compose
 
-arch:fish
-arch:fzf
-arch:git
-arch:github-cli
-arch:htop
-arch:jq
-arch:moreutils
-arch:neovim-git
-arch:renameutils
-arch:ripgrep
-arch:sed
-arch:sshfs
-arch:stow
-arch:sudo
-arch:unzip
-arch:wget
-go:github.com/natesales/q@latest
-cargo:git-absorb
-go:go.senan.xyz/case-replace@latest
-go:go.senan.xyz/rsl@latest
-go:go.senan.xyz/sync-procs@latest
-go:go.senan.xyz/vi-paths@latest
-go:go.senan.xyz/vi-pipe@latest
-go:go.senan.xyz/add-osc-8-hyperlink@latest
-go:github.com/nkanaev/numb@master
-go:github.com/tomnomnom/gron@latest
+arch fish
+arch fzf
+arch git
+arch github-cli
+arch htop
+arch jq
+arch moreutils
+arch neovim-git
+arch renameutils
+arch ripgrep
+arch sed
+arch sshfs
+arch stow
+arch sudo
+arch unzip
+arch wget
+go github.com/natesales/q@latest
+cargo git-absorb
+go go.senan.xyz/case-replace@latest
+go go.senan.xyz/rsl@latest
+go go.senan.xyz/sync-procs@latest
+go go.senan.xyz/vi-paths@latest
+go go.senan.xyz/vi-pipe@latest
+go go.senan.xyz/add-osc-8-hyperlink@latest
+go github.com/nkanaev/numb@master
+go github.com/tomnomnom/gron@latest
 
 # bin / script
-python:xmltodict
-python:toml
-python:pyyaml
-go:github.com/traefik/yaegi/cmd/yaegi@latest
+python xmltodict
+python toml
+python pyyaml
+go github.com/traefik/yaegi/cmd/yaegi@latest
 
 # gui virt
-arch:libvirt
-arch:virt-viewer
+arch libvirt
+arch virt-viewer
 
 # gui
-arch:nautilus
-arch:pavucontrol
-arch:qjackctl
-arch:syncthing
-flatpak-beta:com.google.Chrome
-flatpak:com.calibre_ebook.calibre
-flatpak:com.github.Eloston.UngoogledChromium
-flatpak:com.github.tchx84.Flatseal
-flatpak:com.github.xournalpp.xournalpp
-flatpak:com.obsproject.Studio
-flatpak:com.visualstudio.code
-flatpak:io.dbeaver.DBeaverCommunity
-flatpak:org.audacityteam.Audacity
-flatpak:org.equeim.Tremotesf
-flatpak:org.gimp.GIMP
-flatpak:org.gnome.dfeet
-flatpak:org.gnome.meld
-flatpak:org.inkscape.Inkscape
-flatpak:org.kde.kdenlive
-flatpak:org.libreoffice.LibreOffice
-flatpak:org.mozilla.firefox
-flatpak:io.gitlab.librewolf-community
-flatpak:org.wireshark.Wireshark
-flatpak:rest.insomnia.Insomnia
+arch nautilus
+arch pavucontrol
+arch qjackctl
+arch syncthing
+flatpak-beta com.google.Chrome
+flatpak com.calibre_ebook.calibre
+flatpak com.github.Eloston.UngoogledChromium
+flatpak com.github.tchx84.Flatseal
+flatpak com.github.xournalpp.xournalpp
+flatpak com.obsproject.Studio
+flatpak com.visualstudio.code
+flatpak io.dbeaver.DBeaverCommunity
+flatpak org.audacityteam.Audacity
+flatpak org.equeim.Tremotesf
+flatpak org.gimp.GIMP
+flatpak org.gnome.dfeet
+flatpak org.gnome.meld
+flatpak org.inkscape.Inkscape
+flatpak org.kde.kdenlive
+flatpak org.libreoffice.LibreOffice
+flatpak org.mozilla.firefox
+flatpak io.gitlab.librewolf-community
+flatpak org.wireshark.Wireshark
+flatpak rest.insomnia.Insomnia
 
 # wm
-arch:acpilight
-arch:arc-gtk-theme
-arch:foot
-arch:foot-terminfo
-arch:glib2
-arch:grim
-arch:kanshi
-arch:mako
-arch:polkit-gnome
-arch:qt5-wayland
-arch:qt6-wayland
-arch:slurp
-arch:sway
-arch:swaybg
-arch:swayidle
-arch:swaylock
-arch:wf-recorder
-arch:wl-clipboard
-arch:wlr-sunclock
-arch:wlsunset
-arch:xdg-desktop-portal-gtk
-arch:xdg-desktop-portal-wlr
-arch:xdg-user-dirs
-arch:xorg-xwayland
-go:go.senan.xyz/cliphist@latest
-go:go.senan.xyz/sway-rename-workspaces@latest
+arch acpilight
+arch arc-gtk-theme
+arch foot
+arch foot-terminfo
+arch glib2
+arch grim
+arch kanshi
+arch mako
+arch polkit-gnome
+arch qt5-wayland
+arch qt6-wayland
+arch slurp
+arch sway
+arch swaybg
+arch swayidle
+arch swaylock
+arch wf-recorder
+arch wl-clipboard
+arch wlr-sunclock
+arch wlsunset
+arch xdg-desktop-portal-gtk
+arch xdg-desktop-portal-wlr
+arch xdg-user-dirs
+arch xorg-xwayland
+go go.senan.xyz/cliphist@latest
+go go.senan.xyz/sway-rename-workspaces@latest
 
 # hw
-arch:bluez
-arch:bluez-tools
-arch:iwd
+arch bluez
+arch bluez-tools
+arch iwd
 
 # av
-arch:libpipewire02
-arch:mpv
-arch:mpv-mpris
-arch:pipewire
-arch:pipewire-alsa
-arch:pipewire-jack
-arch:pipewire-pulse
-arch:pipewire-v4l2
-arch:pipewire-zeroconf
-arch:wireplumber
+arch libpipewire02
+arch mpv
+arch mpv-mpris
+arch pipewire
+arch pipewire-alsa
+arch pipewire-jack
+arch pipewire-pulse
+arch pipewire-v4l2
+arch pipewire-zeroconf
+arch wireplumber
 
 # daw
-arch:carla
-arch:qpwgraph
-arch:realtime-privileges
-arch:bubblewrap
-arch:yabridge
-arch:yabridgectl
-arch:wine-tkg-staging-fsync-git
-arch:winetricks
-arch:bitwig-studio
-arch:tal-plugins
+arch carla
+arch qpwgraph
+arch realtime-privileges
+arch bubblewrap
+arch yabridge
+arch yabridgectl
+arch wine-tkg-staging-fsync-git
+arch winetricks
+arch bitwig-studio
+arch tal-plugins
 
 # blocks
-arch:bluez-utils-compat
-arch:i3blocks
-arch:ponymix
-go:go.senan.xyz/mpris-ctrl@latest
-go:go.senan.xyz/rsl@latest
-python:boi-balance
-python:revolut
+arch bluez-utils-compat
+arch i3blocks
+arch ponymix
+go go.senan.xyz/mpris-ctrl@latest
+go go.senan.xyz/rsl@latest
+python boi-balance
+python revolut
 
 # lsp
-arch:clang
-arch:hadolint-bin
-arch:pandoc-bin
-arch:pgformatter
-arch:rust-analyzer
-arch:shellcheck-bin
-cargo:selene
-cargo:stylua
-go:github.com/golangci/golangci-lint/cmd/golangci-lint@master
-go:github.com/lighttiger2505/sqls@latest
-go:golang.org/x/tools/cmd/goimports@latest
-go:golang.org/x/tools/gopls@latest
-go:mvdan.cc/sh/v3/cmd/shfmt@latest
-go:github.com/go-delve/delve/cmd/dlv@latest
-npm:@fsouza/prettierd
-npm:@tailwindcss/language-server
-npm:@volar/vue-language-server
-npm:bash-language-server
-npm:dockerfile-language-server-nodejs
-npm:eslint_d
-npm:markdownlint
-npm:markdownlint-cli
-npm:prettier
-npm:prettier-plugin-go-template
-npm:prettier-plugin-svelte svelte
-npm:pyright
-npm:svelte
-npm:svelte-language-server
-npm:typescript
-npm:typescript-language-server
-python:black
-python:pylint
+arch clang
+arch hadolint-bin
+arch pandoc-bin
+arch pgformatter
+arch rust-analyzer
+arch shellcheck-bin
+cargo selene
+cargo stylua
+go github.com/golangci/golangci-lint/cmd/golangci-lint@master
+go github.com/lighttiger2505/sqls@latest
+go golang.org/x/tools/cmd/goimports@latest
+go golang.org/x/tools/gopls@latest
+go mvdan.cc/sh/v3/cmd/shfmt@latest
+go github.com/go-delve/delve/cmd/dlv@latest
+npm @fsouza/prettierd
+npm @tailwindcss/language-server
+npm @volar/vue-language-server
+npm bash-language-server
+npm dockerfile-language-server-nodejs
+npm eslint_d
+npm markdownlint
+npm markdownlint-cli
+npm prettier
+npm prettier-plugin-go-template
+npm prettier-plugin-svelte svelte
+npm pyright
+npm svelte
+npm svelte-language-server
+npm typescript
+npm typescript-language-server
+python black
+python pylint
