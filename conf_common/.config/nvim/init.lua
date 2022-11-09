@@ -527,6 +527,9 @@ dap.configurations.go = {
 	-- dlv dap --listen :9901
 	dap_go("delve local test package", "launch", "test", {
 		program = "./${relativeFileDirname}",
+		args = function()
+			return vim.split(vim.fn.input("args: "), " ")
+		end,
 	}),
 }
 
