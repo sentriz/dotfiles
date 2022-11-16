@@ -88,3 +88,6 @@ set statusline+=\ %{pathshorten(@%)}\
 set statusline+=%#statusModifided#%{&modified?'\ modified\ ':''}%*    " modified flag
 set statusline+=%=                                                    " /
 set statusline+=\ column\ %c                                          " column number
+
+autocmd FileType git  syntax on
+autocmd FileType diff syntax on

@@ -69,7 +69,6 @@ autocmd FileType vim                 setlocal comments=sO:\"\ -,mO:\"\ \ ,eO:\"\
 autocmd FileType sql                 setlocal comments=s1:/*,mb:*,ex:*/,:--,://
 autocmd FileType sh                  setlocal commentstring=#%s
 autocmd FileType dockerfile          setlocal commentstring=#%s
-autocmd FileType git                 syntax on
 
 augroup AutoCursorLastPosition
     autocmd!
