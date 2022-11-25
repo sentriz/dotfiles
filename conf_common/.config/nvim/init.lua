@@ -431,7 +431,6 @@ nullls.setup({
 		nullls.builtins.diagnostics.markdownlint,
 		nullls.builtins.diagnostics.pylint,
 		nullls.builtins.diagnostics.selene,
-		nullls.builtins.diagnostics.shellcheck,
 	},
 })
 
