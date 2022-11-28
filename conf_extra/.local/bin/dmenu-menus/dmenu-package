@@ -7,4 +7,13 @@ function applications() {
     done
 }
 
-gio launch "$(applications | dmenu application)"
+application="$(applications | dmenu application)"
+test -z "$application" && exit 1
+
+grep -q "^Type=Application" "$application" || exit 1
+grep -q "^Terminal=true" "$application" && exit 1
+
+command="$(grep -Po "^Exec=\K.*" "$application")"
+test -z "$command" && exit 1
+
+swaymsg exec -- "$command"

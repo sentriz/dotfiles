@@ -79,7 +79,6 @@ arch acpilight
 arch arc-gtk-theme
 arch foot
 arch foot-terminfo
-arch glib2
 arch grim
 arch kanshi
 arch mako
