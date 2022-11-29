@@ -1,19 +1,14 @@
-#!/usr/bin/env bash
+#!/usr/bin/env fish
 
-function applications() {
-    IFS=: read -r -d '' -a paths < <(printf '%s:\0' "$XDG_DATA_DIRS")
-    for path in "${paths[@]}"; do
-        find "$path/applications" -name '*.desktop' 2>/dev/null
-    done
-}
+set -l files (find $XDG_DATA_DIRS/applications -name "*.desktop" 2>/dev/null)
+set -l application (grep -l "^Type=Application" $files | sort -r | dmenu application)
+test -z "$application" && exit
 
-application="$(applications | dmenu application)"
-test -z "$application" && exit 1
-
-grep -q "^Type=Application" "$application" || exit 1
-grep -q "^Terminal=true" "$application" && exit 1
-
-command="$(grep -Po "^Exec=\K.*" "$application")"
+set -l command (grep -Po "^Exec=\K.*" "$application")
 test -z "$command" && exit 1
+
+# we don't care about passing arguments
+# https://specifications.freedesktop.org/desktop-entry-spec/latest/ar01s07.html
+set -l command (echo "$command" | sed -E -s 's/\%(f|F|u|U|d|D|n|N|i|c|k|v|m)//g;s/@@\w?//g')
 
 swaymsg exec -- "$command"
