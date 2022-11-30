@@ -4,7 +4,7 @@ set -l files (find $XDG_DATA_DIRS/applications -name "*.desktop" 2>/dev/null)
 set -l application (grep -l "^Type=Application" $files | sort -r | dmenu application)
 test -z "$application" && exit
 
-set -l command (grep -Po "^Exec=\K.*" "$application")
+set -l command (grep -Po "^Exec=\K.*" "$application" | head -n 1)
 test -z "$command" && exit 1
 
 # we don't care about passing arguments
