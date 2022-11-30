@@ -283,44 +283,6 @@ bindsym $super+Shift+7 move container to workspace number 7
 bindsym $super+Shift+8 move container to workspace number 8
 bindsym $super+Shift+9 move container to workspace number 9
 
-assign [class="Sqliteman"]                        number 1
-assign [class="Meld"]                             number 1
-assign [app_id="org.gnome.meld"]                  number 1
-assign [class="DB Browser for SQLite"]            number 1
-assign [app_id="^sqlitebrowser$"]                 number 1
-assign [class="^minecraft-launcher$"]             number 1
-assign [class="^Minecraft"]                       number 1
-assign [app_id="^transmission-remote-gtk$"]       number 1
-assign [app_id="^tremotesf$"]                     number 1
-assign [app_id="^sublime-music$"]                 number 5
-assign [class="Firefox"]                          number 2
-assign [app_id="^firefox$"]                       number 2
-assign [class="^Nightly$"]                        number 2
-assign [class="Chromium"]                         number 2
-assign [app_id="^Chromium-browser$"]              number 2
-assign [app_id="^chromium-browser$"]              number 2
-assign [app_id="^Google-chrome$"]                 number 2
-assign [app_id="^google-chrome$"]                 number 2
-assign [class="Google-chrome"]                    number 2
-assign [app_id="^org.qutebrowser.qutebrowser$"]   number 2
-assign [class="^Insomnia$" instance="^insomnia$"] number 4
-assign [class="URxvt" instance="ncmpcpp"]         number 4
-assign [class="URxvt" instance="ncmpcpp"]         number 4
-assign [class="Spotify"]                          number 4
-assign [class="Deadbeef"]                         number 4
-assign [class="Surf" instance="^plex_surf$"]      number 4
-assign [app_id="^DBeaver$"]                       number 4
-assign [class="VirtualBox"]                       number 5
-assign [app_id="^virt-viewer$"]                   number 5
-assign [class="Franz"]                            number 6
-assign [class="Mnemosyne"]                        number 7
-assign [class="Anki"]                             number 7
-assign [class="Gimp*"]                            number 8
-assign [app_id="^gimp-"]                          number 8
-assign [class="Inkscape"]                         number 8
-assign [app_id="org.inkscape.Inkscape"]           number 8
-assign [class="libreoffice-*"]                    number 9
-
 ## don't lock for video
 for_window [class="Firefox"]                            inhibit_idle fullscreen
 for_window [app_id="^firefox$"]                         inhibit_idle fullscreen
