@@ -69,6 +69,14 @@ gaps inner $default_gap
 font $default_font
 popup_during_fullscreen smart
 
+for_window [floating] border full
+
+# window colours        border           background       text         indicator        child
+client.focused          #ffffff          #ffffff          $colour_grey #ffffff          #ffffff
+client.focused_inactive #ffffff          #ffffff          $colour_grey #ffffff          #ffffff
+client.unfocused        $colour_inactive $colour_inactive #ffffff      $colour_inactive $colour_inactive
+client.urgent           $colour_red      $colour_red      #ffffff      $colour_red      $colour_red
+
 ## input
 input * {
     xkb_layout ie
@@ -107,12 +115,6 @@ bar {
     colors inactive_workspace $colour_grey_alpha $colour_grey_alpha #ffffff
     colors urgent_workspace   $colour_red        $colour_red        #ffffff
 }
-
-## window colours       border           background       text         indicator        child
-client.focused          #ffffff          #ffffff          $colour_grey #ffffff          #ffffff
-client.focused_inactive #ffffff          #ffffff          $colour_grey #ffffff          #ffffff
-client.unfocused        $colour_inactive $colour_inactive #ffffff      $colour_inactive $colour_inactive
-client.urgent           $colour_red      $colour_red      #ffffff      $colour_red      $colour_red
 
 ## bindings: window/float
 bindsym $super+q     kill
@@ -281,8 +283,6 @@ bindsym $super+Shift+7 move container to workspace number 7
 bindsym $super+Shift+8 move container to workspace number 8
 bindsym $super+Shift+9 move container to workspace number 9
 
-bindcode 66 [app_id="^scratchpad-.*"] scratchpad show
-
 assign [class="Sqliteman"]                        number 1
 assign [class="Meld"]                             number 1
 assign [app_id="org.gnome.meld"]                  number 1
@@ -320,8 +320,6 @@ assign [app_id="^gimp-"]                          number 8
 assign [class="Inkscape"]                         number 8
 assign [app_id="org.inkscape.Inkscape"]           number 8
 assign [class="libreoffice-*"]                    number 9
-
-for_window [floating] border full
 
 ## don't lock for video
 for_window [class="Firefox"]                            inhibit_idle fullscreen
@@ -412,6 +410,9 @@ bindsym XF86AudioPrev         exec playerctl previous
 # push to talk with print screen button
 bindsym --no-repeat           print exec ponymix --input unmute && $up_block_1
 bindsym --no-repeat --release print exec ponymix --input mute   && $up_block_1
+
+# toggle and scratchpads
+bindcode 66 [app_id="^scratchpad-.*"] scratchpad show
 
 ## bindings: programs
 bindsym $super+Return exec $TERMINAL
