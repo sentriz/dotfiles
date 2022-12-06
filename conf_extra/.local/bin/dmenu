@@ -23,7 +23,7 @@ mkfifo "$in" "$out"
 
 command=("fzf" "--prompt" "'$prompt '")
 if test -n "$column"; then
-    command+=("--delimiter" "$'\t'" "--with-nth" "$column")
+    command+=("--delimiter" "$'\t'" "--with-nth" "$column" "--tabstop" "1")
 fi
 
 "$TERMINAL" --app-id launcher sh -c "theme light; ${command[*]} <$in >$out" 2>/dev/null &
