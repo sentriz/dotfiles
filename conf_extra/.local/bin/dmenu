@@ -6,6 +6,8 @@ if ! type -p fzf >/dev/null; then
 fi
 
 prompt="$1"
+column="$2"
+
 if test -z "$prompt"; then
     echo "please provide a prompt" >&2
     exit 1
@@ -19,7 +21,12 @@ out="$dir/out"
 
 mkfifo "$in" "$out"
 
-"$TERMINAL" --app-id launcher sh -c "theme light; fzf --prompt '$1 ' <$in >$out" 2>/dev/null &
+command=("fzf" "--prompt" "'$prompt '")
+if test -n "$column"; then
+    command+=("--delimiter" "$'\t'" "--with-nth" "$column")
+fi
+
+"$TERMINAL" --app-id launcher sh -c "theme light; ${command[*]} <$in >$out" 2>/dev/null &
 cat <"$out" &
 cat >"$in"
 
