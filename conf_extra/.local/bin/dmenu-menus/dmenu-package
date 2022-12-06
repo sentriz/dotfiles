@@ -1,14 +1,15 @@
 #!/usr/bin/env fish
 
-set -l files (find $XDG_DATA_DIRS/applications -name "*.desktop" 2>/dev/null)
-set -l application (grep -l "^Type=Application" $files | sort -r | dmenu application)
-test -z "$application" && exit
+if not type -p xdg-desktop-list >/dev/null
+    echo "please install xdg-desktop-list" >&2
+    echo "https://github.com/sentriz/xdg-desktop-list" >&2
+    exit 1
+end
 
-set -l command (grep -Po "^Exec=\K.*" "$application" | head -n 1)
-test -z "$command" && exit 1
-
-# we don't care about passing arguments
-# https://specifications.freedesktop.org/desktop-entry-spec/latest/ar01s07.html
-set -l command (echo "$command" | sed -E -s 's/\%(f|F|u|U|d|D|n|N|i|c|k|v|m)//g;s/@@\w?//g')
+xdg-desktop-list \
+    | dmenu application 1,2 \
+    | read -d \t category name command
+test -z $command
+and exit
 
 swaymsg exec -- "$command"
