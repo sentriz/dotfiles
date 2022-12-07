@@ -29,7 +29,9 @@ set -gx EDITOR nvim
 set -gx FZF_DEFAULT_OPTS "--info hidden --color bw"
 set -gx GOPATH "$XDG_DATA_HOME/go"
 set -gx GOPROXY 'https://proxy.golang.org,direct'
-set -gx NPM_CONFIG_USERCONFIG "$XDG_CONFIG_HOME/npm/config"
+set -gx NPM_CONFIG_PREFIX "$XDG_DATA_HOME/npm"
+set -gx NPM_CONFIG_CACHE "$XDG_CACHE_HOME/npm"
+set -gx NPM_CONFIG_INIT_MODULE "$XDG_CONFIG_HOME/npm/config/npm-init.js"
 set -gx DOCKER_CONFIG "$XDG_CONFIG_HOME/docker"
 set -gx COMPOSE_DOCKER_CLI_BUILD 1
 set -gx DOCKER_BUILDKIT 1
