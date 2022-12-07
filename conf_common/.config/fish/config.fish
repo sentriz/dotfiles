@@ -47,6 +47,7 @@ set -gx fish_user_paths \
     $HOME/.local/bin/*/ \
     $GOPATH/bin \
     $FNM_DIR/current/bin \
+    $NPM_CONFIG_PREFIX/bin \
     $XDG_DATA_HOME/cargo/bin \
     $HOME/bin \
     $HOME/bin/*/ \
