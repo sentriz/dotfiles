@@ -348,7 +348,7 @@ lspconfig.bashls.setup({
 
 lspconfig.volar.setup({
 	capabilities = capabilities,
-	root_dir = util.root_pattern("vite.config.js", "shims-vue.d.ts"),
+	root_dir = util.root_pattern("vite.config.js", "vite.config.ts", "shims-vue.d.ts"),
 })
 
 lspconfig.tailwindcss.setup({
