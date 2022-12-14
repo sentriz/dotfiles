@@ -49,6 +49,7 @@
 	rebase = true
 [commit]
 	gpgsign = true
+	verbose = true
 [protocol "keybase"]
 	allow = always
 [status]
