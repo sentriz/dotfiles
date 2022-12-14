@@ -1,7 +1,5 @@
 #!/usr/bin/env fish
 
-# senan kelly, 2020
-
 if not type -q jq >/dev/null 2>&1
     echo "please install jq" >&2
     exit 1
@@ -44,6 +42,5 @@ end
 echo "$url_public/$image_id"
 
 if ! isatty stdout
-    notify-send.sh 'screenshot' 'uploaded to home' >/dev/null 2>&1
+    notify-send.sh screenshot 'uploaded to home' >/dev/null 2>&1
 end
-
