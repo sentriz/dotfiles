@@ -82,6 +82,7 @@ arch foot-terminfo
 arch grim
 arch kanshi
 arch mako
+arch pam-gnupg
 arch polkit-gnome
 arch qt5-wayland
 arch qt6-wayland
