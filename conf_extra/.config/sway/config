@@ -356,6 +356,7 @@ for_window [class="^Google-chrome$" title="^Jellyfin$"] floating enable, resize 
 for_window [class="^work-meet$"]                        floating enable, resize set 1334 568, sticky enable
 for_window [class="^mpv$"]                              floating enable, resize set 1334 568, sticky enable
 for_window [app_id="^mpv$"]                             floating enable, resize set 1334 568, sticky enable
+for_window [app_id="^dragon-drop$"]                     floating enable, sticky enable
 
 ## bindings: xf86
 bindsym XF86AudioLowerVolume  exec ponymix --sink decrease 2 && $up_block_1
