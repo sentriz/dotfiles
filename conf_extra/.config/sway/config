@@ -158,7 +158,6 @@ bindsym $super+$alt+q     mode $mode_system
 bindsym $super+$alt+i     mode $mode_i3
 bindsym $super+$alt+s     mode $mode_scrot
 bindsym $super+$alt+g     mode $mode_gaps
-bindsym $super+$alt+c     mode $mode_colour
 bindsym $super+$alt+t     mode $mode_timer
 
 set $mode_resize_tile "resize mode: h|j|k|l"
@@ -167,15 +166,6 @@ mode $mode_resize_tile {
     bindsym j resize grow height 10 px or 10 ppt
     bindsym k resize shrink height 10 px or 10 ppt
     bindsym l resize grow width 10 px or 10 ppt
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
-
-set $mode_colour "colour mode: backlight [u|i]"
-mode $mode_colour {
-    # xbacklight provided by acpilight (works well on x11 and wayland)
-    bindsym u exec xbacklight -dec 5
-    bindsym i exec xbacklight -inc 5
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
