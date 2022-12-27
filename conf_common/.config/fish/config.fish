@@ -13,7 +13,8 @@ test -e "$XDG_CONFIG_HOME/user-dirs.dirs"
 and sed -nE 's/^([^=#]+)=(.*)/set -gx \1 \2/gp' <"$XDG_CONFIG_HOME/user-dirs.dirs" | source
 
 # import locale
-locale \
+type -q locale
+and locale \
     | sed -nE 's/^([^=#]+)=(.*)/set -gx \1 \2/gp' \
     | source
 
