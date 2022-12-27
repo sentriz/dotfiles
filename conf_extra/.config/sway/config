@@ -367,6 +367,16 @@ bindsym --no-repeat --release print exec ponymix --input mute   && $up_block_1
 # toggle and scratchpads
 bindcode 66 [app_id="^scratchpad-.*"] scratchpad show
 
+## bindings: gestures
+bindgesture swipe:3:right workspace next
+bindgesture swipe:3:left workspace prev
+bindgesture swipe:3:down workspace back_and_forth
+
+bindgesture swipe:3:up [app_id="^scratchpad-.*"] scratchpad show
+
+bindgesture pinch:inward floating enable
+bindgesture pinch:outward floating disable
+
 ## bindings: programs
 bindsym $super+Return exec $TERMINAL
 bindsym $super+F1     exec dmenu-package
