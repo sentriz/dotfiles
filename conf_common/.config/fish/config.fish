@@ -1,21 +1,42 @@
 set -gx HOSTNAME (uname -n)
 
-if set -q TERMUX_VERSION
-    set -gx HOSTNAME android
-    set -gx XDG_RUNTIME_DIR "$HOME"
-end
+set -q TERMUX_VERSION
+and set -gx HOSTNAME android
+and set -gx XDG_RUNTIME_DIR "$HOME"
 
 set -gx XDG_CACHE_HOME "$HOME/.cache"
 set -gx XDG_CONFIG_HOME "$HOME/.config"
 set -gx XDG_DATA_HOME "$HOME/.local/share"
 
 # import user-dirs as env vars
-if test -e "$XDG_CONFIG_HOME/user-dirs.dirs"
-    sed -nE 's/^([^=#]+)=(.*)/set -gx \1 \2/gp' <"$XDG_CONFIG_HOME/user-dirs.dirs" | source
-end
+test -e "$XDG_CONFIG_HOME/user-dirs.dirs"
+and sed -nE 's/^([^=#]+)=(.*)/set -gx \1 \2/gp' <"$XDG_CONFIG_HOME/user-dirs.dirs" | source
 
 # import locale
-locale | sed -nE 's/^([^=#]+)=(.*)/set -gx \1 \2/gp' | source
+locale \
+    | sed -nE 's/^([^=#]+)=(.*)/set -gx \1 \2/gp' \
+    | source
+
+function __tmux_env
+    string match -q -r 'tmux\-\d+' "$TMUX"
+    and tmux show-env
+    string match -q -r 'tmate\-\d+' "$TMUX"
+    and tmate show-env
+end
+
+# import tmux env
+status is-interactive
+and __tmux_env \
+    | sed -nE 's/^(SSH_[^=]+)=(.*)/set -gx \1 "\2"/p' \
+    | source
+
+# import / start gpg env
+status is-interactive
+and not set -q SSH_CONNECTION
+and gpgconf --launch gpg-agent
+and set -gx SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
+and set -gx GPG_TTY (tty)
+and gpg-connect-agent updatestartuptty /bye >/dev/null
 
 set -gx DOTS_SCRAP_DIR "$HOME/scrap"
 set -gx DOTS_SCREENSHOTS_DIR "$HOME/pictures/screenshots"
