@@ -11,9 +11,9 @@ test ! -e "$future_file" && exit
 left="$(("$future" - $(date "+%s")))"
 test "$left" -le 0 \
     && notify-send.sh -t 600 "timer" "the time has passed" \
-    && ffplay -f lavfi -i "sine=frequency=1108.73:duration=1" -autoexit -nodisp \
-    && ffplay -f lavfi -i "sine=frequency=1244.51:duration=1" -autoexit -nodisp \
-    && ffplay -f lavfi -i "sine=frequency=1479.98:duration=1" -autoexit -nodisp \
+    && ffplay -f lavfi -i "sine=frequency=1108.73:duration=1" -autoexit -nodisp >/dev/null 2>&1 \
+    && ffplay -f lavfi -i "sine=frequency=1244.51:duration=1" -autoexit -nodisp >/dev/null 2>&1 \
+    && ffplay -f lavfi -i "sine=frequency=1479.98:duration=1" -autoexit -nodisp >/dev/null 2>&1 \
     && rm "$future_file" 2>/dev/null \
     && exit
 
