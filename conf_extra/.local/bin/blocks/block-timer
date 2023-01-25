@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 left="$(timer)"
-test -e "$left" && exit
+test -z "$left" && exit
 
 date --utc --date="@$left" "+timer %Mm %Ss"
 
