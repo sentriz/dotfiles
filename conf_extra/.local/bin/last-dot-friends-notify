@@ -9,5 +9,5 @@ set -l icon '
 '
 
 last-dot-friends -interval 60 -api-key (secret lastfm_api_key) -api-secret (secret lastfm_api_secret) (secret lastfm_friends) | while read -d \t username artist track
-    notify-send --icon (echo "$icon" | psub) "$username" "$artist — $track"
+    notify-send.sh --icon (echo "$icon" | psub) "$username" "$artist — $track"
 end
