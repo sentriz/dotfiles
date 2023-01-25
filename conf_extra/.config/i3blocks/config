@@ -1,5 +1,7 @@
+full_text=
 command=~/.local/bin/blocks/block-$BLOCK_NAME
 interval=5
+separator=false
 
 [playing]
 signal=3
@@ -18,16 +20,6 @@ color=#e6e600
 [battery]
 color=#e184c2
 interval=30
-
-# [balance]
-# color=#ffb300
-# instance=boi
-# interval=7200
-
-[balance]
-color=#ffbb33
-instance=revolut
-interval=1200
 
 [time]
 
