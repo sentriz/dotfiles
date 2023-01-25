@@ -1,0 +1,12 @@
+#!/usr/bin/wpexec
+
+-- # selene: allow(undefined_variable, unscoped_variables)
+-- # vim: ft=lua
+
+Core.require_api("default-nodes", "mixer", function(default_nodes, mixer)
+	mixer.scale = "cubic"
+	local sink = mixer:call("get-volume", default_nodes:call("get-default-node", "Audio/Sink"))
+	local source = mixer:call("get-volume", default_nodes:call("get-default-node", "Audio/Source"))
+	print(string.format("%.0f\t%s\t%.0f\t%s", sink.volume * 100, sink.mute, source.volume * 100, source.mute))
+	Core.quit()
+end)

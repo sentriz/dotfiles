@@ -348,20 +348,22 @@ for_window [app_id="^mpv$"]                             floating enable, resize 
 for_window [app_id="^dragon-drop$"]                     floating enable, sticky enable
 
 ## bindings: xf86
-bindsym XF86AudioLowerVolume  exec ponymix --sink decrease 2 && $up_block_1
-bindsym XF86AudioRaiseVolume  exec ponymix --sink increase 2 && $up_block_1
-bindsym XF86AudioMute         exec ponymix --sink toggle     && $up_block_1
-bindsym XF86AudioMicMute      exec ponymix --input toggle    && $up_block_1
+bindsym XF86AudioLowerVolume  exec wp-update sink   volume=-0.02 && $up_block_1
+bindsym XF86AudioRaiseVolume  exec wp-update sink   volume=+0.02 && $up_block_1
+bindsym XF86AudioMute         exec wp-update sink   mute=toggle  && $up_block_1
+bindsym XF86AudioMicMute      exec wp-update source mute=toggle  && $up_block_1
+
 bindsym XF86MonBrightnessDown exec xbacklight -dec 5
 bindsym XF86MonBrightnessUp   exec xbacklight -inc 5
+
 bindsym XF86AudioPlay         exec playerctl play-pause
 bindsym XF86AudioStop         exec playerctl stop
 bindsym XF86AudioNext         exec playerctl next
 bindsym XF86AudioPrev         exec playerctl previous
 
 # push to talk with print screen button
-bindsym --no-repeat           print exec ponymix --input unmute && $up_block_1
-bindsym --no-repeat --release print exec ponymix --input mute   && $up_block_1
+bindsym --no-repeat           print exec wp-update source mute=no  && $up_block_1
+bindsym --no-repeat --release print exec wp-update source mute=yes && $up_block_1
 
 # toggle and scratchpads
 bindcode 66 [app_id="^scratchpad-.*"] scratchpad show

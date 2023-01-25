@@ -1,30 +1,6 @@
 #!/usr/bin/env bash
 
-if ! type -p ponymix >/dev/null; then
-    echo "please install ponymix" >&2
-    exit 1
-fi
+sink="$(wp-list sink | dmenu sink)"
+test -z "$sink" && exit 1
 
-function get-sinks() {
-    ponymix list --short --sink \
-        | awk -F '\t' '{print $2 "\t" tolower($4)}'
-}
-
-# $1 sink id
-function set-default-sink() {
-    ponymix set-default --sink --device "$1"
-}
-
-# $1 sink id
-function move-to-sink() {
-    ponymix list --short --sink-input \
-        | awk -F '\t' '{print $2}' \
-        | xargs -I {} ponymix --sink-input --device {} move "$1"
-}
-
-sink_row="$(get-sinks | dmenu sink)"
-test -z "$sink_row" && exit 1
-
-sink_id="$(awk -F '\t' '{print $1}' <<<"$sink_row")"
-set-default-sink "$sink_id"
-move-to-sink "$sink_id"
+wp-update sink "default=$sink"

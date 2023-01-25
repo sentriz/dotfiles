@@ -1,17 +1,20 @@
 #!/usr/bin/env bash
 
 case "$BLOCK_BUTTON" in
-1) ponymix --sink toggle ;;     # left click
-3) ponymix --input toggle ;;    # right click
-4) ponymix --sink increase 5 ;; # scroll up
-5) ponymix --sink decrease 5 ;; # scroll down
+1) wp-update sink mute=toggle ;;   # left click
+3) wp-update source mute=toggle ;; # right click
+4) wp-update sink volume=+0.05 ;;  # scroll up
+5) wp-update sink volume=-0.05 ;;  # scroll down
 esac >/dev/null 2>&1
 
+IFS=$'\t' read -r sink_vol sink_muted _ source_muted < <(timeout 1 wp-status 2>/dev/null)
+test -z "$sink_vol" && exit
+
 out=""
-ponymix --sink is-muted \
+test "$sink_muted" = true \
     && out+="muted" \
-    || out+="$(ponymix --sink get-volume || echo "-1")%"
-ponymix --input is-muted \
+    || out+="$sink_vol%"
+test "$source_muted" = true \
     && out+=" mic muted"
 
 echo "volume $out"
