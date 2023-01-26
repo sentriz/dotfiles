@@ -3,10 +3,25 @@
 # requires:
 # - https://github.com/sentriz/mpris-ctrl
 
+index_file="$XDG_CACHE_HOME/block_playing_index"
+
+function index() {
+    cat "$index_file" 2>/dev/null || echo 0
+}
+
+function mpris() {
+    mpris-ctrl -player-index "$(index)" "$@"
+}
+
+function scroll() {
+    tee "$index_file" <<<$(($(index) + $1)) >/dev/null
+    mpris
+}
+
 case "$BLOCK_BUTTON" in
-1) mpris-ctrl play-pause ;;  # left click
-3) mpris-ctrl stop ;;        # right click
-4) mpris-ctrl prev-player ;; # scroll up
-5) mpris-ctrl next-player ;; # scroll down
-*) mpris-ctrl ;;
+1) mpris play-pause ;; # left click
+3) mpris stop ;;       # right click
+4) scroll +1 ;;        # scroll up
+5) scroll -1 ;;        # scroll down
+*) mpris ;;
 esac

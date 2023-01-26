@@ -356,10 +356,10 @@ bindsym XF86AudioMicMute      exec wp-update source mute=toggle  && $up_block_1
 bindsym XF86MonBrightnessDown exec xbacklight -dec 5
 bindsym XF86MonBrightnessUp   exec xbacklight -inc 5
 
-bindsym XF86AudioPlay         exec playerctl play-pause
-bindsym XF86AudioStop         exec playerctl stop
-bindsym XF86AudioNext         exec playerctl next
-bindsym XF86AudioPrev         exec playerctl previous
+bindsym XF86AudioPlay         exec mpris-ctrl play-pause
+bindsym XF86AudioStop         exec mpris-ctrl stop
+bindsym XF86AudioNext         exec mpris-ctrl next
+bindsym XF86AudioPrev         exec mpris-ctrl previous
 
 # push to talk with print screen button
 bindsym --no-repeat           print exec wp-update source mute=no  && $up_block_1
