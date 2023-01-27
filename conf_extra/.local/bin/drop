@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+dragon-drop --thumb-size 64 --on-top --and-exit "$@"
