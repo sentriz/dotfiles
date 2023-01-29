@@ -156,6 +156,7 @@ bindsym $super+$alt+space mode $mode_move_floating focus floating
 bindsym $super+$alt+q     mode $mode_system
 bindsym $super+$alt+i     mode $mode_i3
 bindsym $super+$alt+s     mode $mode_scrot
+bindsym $super+$alt+r     mode $mode_recording
 bindsym $super+$alt+t     mode $mode_timer
 
 set $mode_system "system mode: [l]ock, [s]uspend, [r]eboot, shut[d]own"
@@ -186,14 +187,22 @@ mode $mode_move_floating {
     bindsym Escape mode "default"
 }
 
-set $mode_scrot "screenshot mode: [c]lipboard, [i]mgur, [h]ome, [r/a/s]ecording"
+set $mode_scrot "screenshot mode: [c]lipboard, [i]mgur, [h]ome"
 mode $mode_scrot {
     bindsym c exec wl-copy -t image/png < `screenshot`, mode "default"
     bindsym i exec upload-imgur `screenshot` | wl-copy, mode "default"
     bindsym h exec upload-home `screenshot` | wl-copy,  mode "default"
-    bindsym r exec recording,                           mode "default"
-    bindsym a exec recording --audio,                   mode "default"
-    bindsym s exec recording stop,                      mode "default"
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+set $mode_recording "recording mode: [r]egion, [m]onitor, [s]top (shift for audio)"
+mode $mode_recording {
+    bindsym r       exec recording,                   mode "default"
+    bindsym m       exec recording --monitor,         mode "default"
+    bindsym shift+r exec recording --audio,           mode "default"
+    bindsym shift+m exec recording --audio --monitor, mode "default"
+    bindsym s       exec recording stop,              mode "default"
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }

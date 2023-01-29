@@ -25,7 +25,11 @@ if test "$command" = stop
 end
 
 set -l filename "$DOTS_RECORDINGS_DIR/"(date '+%Y%m%d_%H%M%S.mp4')
-set -l area (slurp)
+
+contains -- --monitor $argv
+and set -l slurp_cmd -o
+
+set -l area (slurp $slurp_cmd)
 test -z "$area"; and exit
 
 set -l audio_device (pactl list short sources | grep -Po "\K[^\s]+\.monitor(?=.*IDLE)")
@@ -33,5 +37,5 @@ test -n "$audio_device"
 and contains -- --audio $argv
 and set -l audio_cmd "-a$audio_device"
 
-wf-recorder "$audio_cmd" -f "$filename" -g "$area" --force-yuv >/dev/null 2>&1
+wf-recorder $audio_cmd -f "$filename" -g "$area" --force-yuv >/dev/null 2>&1
 echo "$filename"
