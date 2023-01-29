@@ -152,23 +152,11 @@ bindsym $super+e workspace back_and_forth, move workspace to output up,    works
 bindsym $super+r workspace back_and_forth, move workspace to output right, workspace back_and_forth, move workspace to output left
 
 ## bindings: modes
-bindsym $super+$alt+r     mode $mode_resize_tile
 bindsym $super+$alt+space mode $mode_move_floating focus floating
 bindsym $super+$alt+q     mode $mode_system
 bindsym $super+$alt+i     mode $mode_i3
 bindsym $super+$alt+s     mode $mode_scrot
-bindsym $super+$alt+g     mode $mode_gaps
 bindsym $super+$alt+t     mode $mode_timer
-
-set $mode_resize_tile "resize mode: h|j|k|l"
-mode $mode_resize_tile {
-    bindsym h resize shrink width 10 px or 10 ppt
-    bindsym j resize grow height 10 px or 10 ppt
-    bindsym k resize shrink height 10 px or 10 ppt
-    bindsym l resize grow width 10 px or 10 ppt
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
 
 set $mode_system "system mode: [l]ock, [s]uspend, [r]eboot, shut[d]own"
 mode $mode_system {
@@ -188,7 +176,7 @@ mode $mode_i3 {
     bindsym Escape mode "default"
 }
 
-set $mode_move_floating "floating move mode: h|j|k|l"
+set $mode_move_floating "floating move mode: [h|j|k|l]"
 mode $mode_move_floating {
     bindsym h move left
     bindsym j move down
@@ -210,39 +198,7 @@ mode $mode_scrot {
     bindsym Escape mode "default"
 }
 
-set $mode_gaps_inner "gaps inner: -|+|0 (local), shift -|+|0 (global)"
-mode $mode_gaps_inner {
-    bindsym minus gaps inner current plus 5
-    bindsym equal gaps inner current minus 5
-    bindsym 0     gaps inner current set 0
-    bindsym Shift+minus gaps inner all plus 5
-    bindsym Shift+equal gaps inner all minus 5
-    bindsym Shift+0     gaps inner all set 0
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
-
-set $mode_gaps_outer "gaps outer: -|+|0 (local), shift -|+|0 (global)"
-mode $mode_gaps_outer {
-    bindsym minus gaps outer current plus 5
-    bindsym equal gaps outer current minus 5
-    bindsym 0     gaps outer current set 0
-    bindsym Shift+minus gaps outer all plus 5
-    bindsym Shift+equal gaps outer all minus 5
-    bindsym Shift+0     gaps outer all set 0
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
-
-set $mode_gaps "gaps: [o]uter, [i]nner"
-mode $mode_gaps {
-    bindsym o      mode $mode_gaps_outer
-    bindsym i      mode $mode_gaps_inner
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
-
-set $mode_timer "timer: -1m (-), +1m (+)"
+set $mode_timer "timer: [-]1m, [+]1m"
 mode $mode_timer {
     bindsym minus exec timer -60 && $up_block_4
     bindsym equal exec timer +60 && $up_block_4
