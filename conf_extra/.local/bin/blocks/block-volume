@@ -7,7 +7,7 @@ case "$BLOCK_BUTTON" in
 5) wp-update sink volume=-0.05 ;;  # scroll down
 esac >/dev/null 2>&1
 
-IFS=$'\t' read -r sink_vol sink_muted _ source_muted < <(timeout 1 wp-status 2>/dev/null)
+IFS=$'\t' read -r _ sink_vol sink_muted _ _ source_muted < <(timeout 1 wp-status 2>/dev/null)
 test -z "$sink_vol" && exit
 
 out=""

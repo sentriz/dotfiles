@@ -3,10 +3,27 @@
 -- # selene: allow(undefined_variable, unscoped_variables)
 -- # vim: ft=lua
 
+local get = function(default_nodes, mixer, media_class)
+	local id = default_nodes:call("get-default-node", media_class)
+	local data = mixer:call("get-volume", id)
+	local name = default_nodes:call("get-default-configured-node-name", media_class)
+	return name, data.volume * 100, data.mute
+end
+
 Core.require_api("default-nodes", "mixer", function(default_nodes, mixer)
 	mixer.scale = "cubic"
-	local sink = mixer:call("get-volume", default_nodes:call("get-default-node", "Audio/Sink"))
-	local source = mixer:call("get-volume", default_nodes:call("get-default-node", "Audio/Source"))
-	print(string.format("%.0f\t%s\t%.0f\t%s", sink.volume * 100, sink.mute, source.volume * 100, source.mute))
+	sink_name, sink_volume, sink_mute = get(default_nodes, mixer, "Audio/Sink")
+	source_name, source_volume, source_mute = get(default_nodes, mixer, "Audio/Source")
+	print(
+		string.format(
+			"%s\t%.0f\t%s\t%s\t%.0f\t%s",
+			sink_name,
+			sink_volume,
+			sink_mute,
+			source_name,
+			source_volume,
+			source_mute
+		)
+	)
 	Core.quit()
 end)
