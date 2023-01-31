@@ -1,10 +1,5 @@
 #!/usr/bin/env bash
 
-if ! type -p mpv >/dev/null; then
-    echo "please install mpv" >&2
-    exit 1
-fi
-
 function get-stations() {
     find \
         "$DOTS_RADIO_DIR" \

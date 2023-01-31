@@ -1,11 +1,5 @@
 #!/usr/bin/env fish
 
-if not type -p xdg-desktop-list >/dev/null
-    echo "please install xdg-desktop-list" >&2
-    echo "https://github.com/sentriz/xdg-desktop-list" >&2
-    exit 1
-end
-
 xdg-desktop-list \
     | dmenu application 1,2 \
     | read -d \t category name command

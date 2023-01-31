@@ -1,15 +1,5 @@
 #!/usr/bin/env bash
 
-if ! type -p virsh >/dev/null; then
-    echo "please install libvirt" >&2
-    exit 1
-fi
-
-if ! type -p virt-viewer >/dev/null; then
-    echo "please install virt-viewer" >&2
-    exit 1
-fi
-
 connect_uri="$(secret virt_connect_uri)"
 
 function virsh() { command virsh --connect "$connect_uri" "$@"; }

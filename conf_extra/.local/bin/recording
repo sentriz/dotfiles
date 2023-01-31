@@ -1,23 +1,5 @@
 #!/usr/bin/env fish
 
-if not type -q grim /dev/null 2>&1
-    echo 'grim required' >&2
-    echo 'https://github.com/emersion/grim' >&2
-    exit 1
-end
-
-if not type -q slurp >/dev/null 2>&1
-    echo 'slurp required' >&2
-    echo 'https://github.com/emersion/slurp' >&2
-    exit 1
-end
-
-if not type -q pactl >/dev/null 2>&1
-    echo 'pactl required' >&2
-    echo 'please install libpulse' >&2
-    exit 1
-end
-
 set -l command "$argv[1]"
 if test "$command" = stop
     killall --signal SIGINT wf-recorder

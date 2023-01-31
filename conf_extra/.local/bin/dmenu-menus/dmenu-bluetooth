@@ -1,10 +1,5 @@
 #!/usr/bin/env bash
 
-if ! type -p bluetoothctl >/dev/null; then
-    echo "please install bluez-utils" >&2
-    exit 1
-fi
-
 function lower() {
     tr '[:upper:]' '[:lower:]'
 }

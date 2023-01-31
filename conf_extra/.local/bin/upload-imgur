@@ -1,10 +1,5 @@
 #!/usr/bin/env fish
 
-if not type -q jq >/dev/null 2>&1
-    echo "please install jq" >&2
-    exit 1
-end
-
 if test (count $argv) -ne 1
     echo "usage: upload-imgur <path to image>" >&2
     exit 1

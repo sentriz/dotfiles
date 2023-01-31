@@ -1,17 +1,5 @@
 #!/usr/bin/env fish
 
-if not type -q grim  /dev/null 2>&1
-    echo 'grim required' >&2
-    echo 'https://github.com/emersion/grim' >&2
-    exit 1
-end
-
-if not type -q slurp >/dev/null 2>&1
-    echo 'slurp required' >&2
-    echo 'https://github.com/emersion/slurp' >&2
-    exit 1
-end
-
 set -l filename "$DOTS_SCREENSHOTS_DIR/"(date '+%Y%m%d_%H%M%S.png')
 set -l area (slurp)
 test -z "$area"; and exit

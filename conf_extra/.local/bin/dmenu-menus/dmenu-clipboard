@@ -1,11 +1,5 @@
 #!/usr/bin/env bash
 
-if ! type -p cliphist >/dev/null; then
-    echo "please install cliphist" >&2
-    echo "https://github.com/sentriz/cliphist" >&2
-    exit 1
-fi
-
 cliphist list \
     | dmenu clipboard \
     | cliphist decode \
