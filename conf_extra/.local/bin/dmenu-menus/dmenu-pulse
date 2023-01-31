@@ -1,6 +1,8 @@
-#!/usr/bin/env bash
+#!/usr/bin/env fish
 
-sink="$(wp-list sink | dmenu sink)"
+wp-list sink \
+    | dmenu sink 2 \
+    | read -d \t sink description
 test -z "$sink" && exit 1
 
 wp-update sink "default=$sink"

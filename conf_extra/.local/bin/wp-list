@@ -12,7 +12,7 @@ local om = ObjectManager({
 
 om:connect("objects-changed", function()
 	for n in om:iterate() do
-		print(n.properties["node.name"])
+		print(string.format("%s\t%s", n.properties["node.name"], n.properties["node.description"]))
 	end
 	Core.quit()
 end)
