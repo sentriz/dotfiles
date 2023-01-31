@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
 cliphist list \
-    | dmenu clipboard \
+    | dmenu clipboard 2 \
     | cliphist decode \
     | wl-copy

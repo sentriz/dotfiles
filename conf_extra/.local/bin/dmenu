@@ -3,11 +3,6 @@
 prompt="$1"
 column="$2"
 
-if test -z "$prompt"; then
-    echo "please provide a prompt" >&2
-    exit 1
-fi
-
 dir="$(mktemp --directory --tmpdir="$XDG_CACHE_HOME")"
 trap 'rm -r "$dir"' EXIT
 
