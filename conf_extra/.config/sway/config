@@ -286,8 +286,6 @@ for_window [class="feh"]                                              floating e
 for_window [class="^XEyes$"]                                          floating enable
 for_window [title="^bobby$"]                                          floating enable
 for_window [app_id="^xdg-desktop-portal-gtk$"]                        floating enable
-for_window [app_id="^firefox$" title="Picture-in-Picture"]            floating enable
-for_window [app_id="^librewolf$" title="Picture-in-Picture"]          floating enable
 for_window [app_id="^firefox$" title="^Firefox — Sharing Indicator$"] floating enable
 for_window [app_id="^thunar$" title="File Operation Progress"]        floating enable
 for_window [class="^Pinentry-gtk-2$"]                                 floating enable
@@ -311,6 +309,10 @@ for_window [class="^work-meet$"]                        floating enable, resize 
 for_window [class="^mpv$"]                              floating enable, resize set 1334 568, sticky enable
 for_window [app_id="^mpv$"]                             floating enable, resize set 1334 568, sticky enable
 for_window [app_id="^dragon-drop$"]                     floating enable, sticky enable
+
+## pip
+for_window [app_id="^firefox$" title="Picture-in-Picture"]   fullscreen enable, move container to workspace number 10
+for_window [app_id="^librewolf$" title="Picture-in-Picture"] fullscreen enable, move container to workspace number 10
 
 ## bindings: xf86
 bindsym XF86AudioLowerVolume  exec wp-update sink   volume=-0.02 && $up_block_1
