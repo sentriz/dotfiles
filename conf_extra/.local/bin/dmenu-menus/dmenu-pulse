@@ -1,7 +1,7 @@
 #!/usr/bin/env fish
 
 wp-list sink \
-    | tr '[:upper:]' '[:lower:]' \
+    | sed -E "s/(.*)\t(.*)/\1\t\L\2/" \
     | dmenu sink 2 \
     | read -d \t sink description
 test -z "$sink" && exit 1
