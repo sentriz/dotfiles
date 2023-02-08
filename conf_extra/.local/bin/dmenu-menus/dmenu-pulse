@@ -1,6 +1,7 @@
 #!/usr/bin/env fish
 
 wp-list sink \
+    | tr '[:upper:]' '[:lower:]' \
     | dmenu sink 2 \
     | read -d \t sink description
 test -z "$sink" && exit 1
