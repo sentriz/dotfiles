@@ -339,11 +339,7 @@ bindcode 66 [app_id="^scratchpad-.*"] scratchpad show
 bindgesture swipe:3:right workspace next
 bindgesture swipe:3:left workspace prev
 bindgesture swipe:3:down workspace back_and_forth
-
 bindgesture swipe:3:up [app_id="^scratchpad-.*"] scratchpad show
-
-bindgesture pinch:inward floating enable
-bindgesture pinch:outward floating disable
 
 ## bindings: programs
 bindsym $super+Return exec $TERMINAL
