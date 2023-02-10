@@ -94,7 +94,6 @@ arch swayidle
 arch swaylock
 arch wf-recorder
 arch wl-clipboard
-arch wlr-sunclock
 arch wlsunset
 arch xdg-desktop-portal-gtk
 arch xdg-desktop-portal-wlr

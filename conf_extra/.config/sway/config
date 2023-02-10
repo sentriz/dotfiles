@@ -374,28 +374,13 @@ exec_always 'pkill mako; exec mako \
     --anchor bottom-right \
     --ignore-timeout 1 \
     --default-timeout 4000'
-
-exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec swayidle -w \
     timeout 290  "$lock_warning" \
     timeout 300  "$lock" \
     before-sleep "$lock"
-
+exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec wl-paste --watch cliphist store
-
-exec sleep 5 && wlsunset -l 53.3 -L -6.2 -t 2700
-exec sleep 5 && wlr-sunclock \
-   --margins "0,$default_gap,0,$default_gap" \
-   --width 800 \
-   --layer bottom \
-   --anchors br \
-   --border-width 2 \
-   --monitor-index 1 \
-   --colour-ocean "#C4B5FD" \
-   --colour-land "#6D28D9"
-
-exec foot --server
-
 exec sway-rename-workspaces
-
+exec foot --server
+exec wlsunset -l 53.3 -L -6.2 -t 2700
 exec last-dot-friends-notify
