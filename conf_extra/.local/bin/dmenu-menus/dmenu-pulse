@@ -3,7 +3,7 @@
 wp-list sink \
     | sed -E "s/(.*)\t(.*)/\1\t\L\2/" \
     | dmenu sink 2 \
-    | read -d \t sink description
+    | read -d \t sink description id
 test -z "$sink" && exit 1
 
 wp-update sink "default=$sink"
