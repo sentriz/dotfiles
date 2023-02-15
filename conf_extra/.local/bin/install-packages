@@ -46,7 +46,7 @@ fi
 if want python; then
     python3 -m ensurepip
     python3 -m pip --version
-    python3 -m pip install --user --disable-pip-version-check --no-input $(list python)
+    python3 -m pip install --user --update --disable-pip-version-check --no-input $(list python)
 fi
 
 if want cargo; then
