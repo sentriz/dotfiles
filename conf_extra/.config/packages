@@ -38,6 +38,10 @@ go go.senan.xyz/add-osc-8-hyperlink@latest
 go github.com/nkanaev/numb@master
 go github.com/tomnomnom/gron@latest
 
+# git send email
+perl-authen-sasl
+perl-io-socket-ssl
+
 # bin / script
 python xmltodict
 python toml
