@@ -151,7 +151,7 @@ nnoremap <silent> <c-[> <cmd>call CloseIfSaved()<cr>
 nnoremap <silent> q     <cmd>call CloseIfSaved()<cr>
 
 function! CloseIfSaved() abort
-    if !&modified
+    if !&modified || len(win_findbuf(bufnr())) > 1
         exec ":quit"
     endif
 endfunction
