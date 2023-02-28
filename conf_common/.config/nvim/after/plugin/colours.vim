@@ -25,8 +25,8 @@ highlight LineNr        ctermfg=8
 highlight Visual        ctermfg=0   ctermbg=15
 highlight Search        ctermfg=0   ctermbg=11
 highlight IncSearch     ctermfg=0   ctermbg=11
-highlight StatusLine    ctermfg=15  ctermbg=0
-highlight StatusLineNC  ctermfg=15  ctermbg=none
+highlight StatusLine    ctermfg=0   ctermbg=7
+highlight StatusLineNC  ctermfg=15  ctermbg=0
 highlight CursorLine    ctermfg=0   ctermbg=11
 highlight MatchParen    cterm=underline
 
