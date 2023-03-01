@@ -22,12 +22,12 @@ endfor
 set t_Co=16
 
 highlight LineNr        ctermfg=8
-highlight Visual        ctermfg=0   ctermbg=15
-highlight Search        ctermfg=0   ctermbg=11
-highlight IncSearch     ctermfg=0   ctermbg=11
-highlight StatusLine    ctermfg=0   ctermbg=7
-highlight StatusLineNC  ctermfg=15  ctermbg=0
-highlight CursorLine    ctermfg=0   ctermbg=11
+highlight Visual        ctermfg=0 ctermbg=15
+highlight Search        ctermfg=0 ctermbg=11
+highlight IncSearch     ctermfg=0 ctermbg=11
+highlight StatusLine    ctermfg=0 ctermbg=15 cterm=bold
+highlight StatusLineNC  ctermfg=7 ctermbg=15
+highlight CursorLine    ctermfg=0 ctermbg=11
 highlight MatchParen    cterm=underline
 
 highlight SpellLocal ctermfg=9 cterm=underline
@@ -35,6 +35,7 @@ highlight SpellBad   ctermfg=9 cterm=underline
 
 highlight DiffAdd    ctermfg=2
 highlight DiffDelete ctermfg=1
+
 highlight link diffAdded   DiffAdd
 highlight link diffRemoved DiffDelete
 
@@ -50,7 +51,7 @@ highlight @operator         cterm=bold
 highlight @include          cterm=bold
 highlight @conditional      cterm=bold
 highlight @string           ctermfg=15
-highlight @comment          ctermfg=8  cterm=italic
+highlight @comment          ctermfg=8 cterm=italic
 
 highlight Pmenu    ctermfg=15 ctermbg=0
 highlight PmenuSel ctermfg=0  ctermbg=15
@@ -61,10 +62,10 @@ highlight LspReferenceWrite ctermfg=11
 
 highlight link LspInlayHint @comment
 
-highlight DiagnosticFloatingError           ctermfg=15 cterm=bold
-highlight DiagnosticFloatingHint            ctermfg=15 cterm=bold
-highlight DiagnosticFloatingInfo            ctermfg=15 cterm=bold
-highlight DiagnosticFloatingWarn            ctermfg=15 cterm=bold
+highlight DiagnosticFloatingError ctermfg=15 cterm=bold
+highlight DiagnosticFloatingHint  ctermfg=15 cterm=bold
+highlight DiagnosticFloatingInfo  ctermfg=15 cterm=bold
+highlight DiagnosticFloatingWarn  ctermfg=15 cterm=bold
 
 highlight DiagnosticSignError ctermfg=1  cterm=bold
 highlight DiagnosticSignHint  ctermfg=2  cterm=bold
@@ -76,18 +77,18 @@ sign define DiagnosticSignHint  text=hh  texthl=DiagnosticSignHint
 sign define DiagnosticSignInfo  text=ii  texthl=DiagnosticSignInfo
 sign define DiagnosticSignWarn  text=ww  texthl=DiagnosticSignWarn
 
-highlight statusReadOnly  ctermfg=9 ctermbg=0
-highlight statusModifided ctermfg=9 ctermbg=0
-
 highlight TSNodeUnmatched ctermfg=0
 highlight TSNodeKey       ctermfg=11 cterm=bold
 
+highlight statusReadOnly  cterm=bold ctermfg=1 ctermbg=15
+highlight statusModifided cterm=bold ctermfg=1 ctermbg=15
+
 set statusline=
-set statusline+=%#statusReadOnly#%{&readonly?'\ \ read\ only\ ':''}%* " read only flag
-set statusline+=\ %{pathshorten(@%)}\  
-set statusline+=%#statusModifided#%{&modified?'\ modified\ ':''}%*    " modified flag
-set statusline+=%=                                                    " /
-set statusline+=\ column\ %c                                          " column number
+set statusline+=%#statusReadOnly#%{&readonly?'read\ only\ ':''}%*
+set statusline+=%{pathshorten(@%)}
+set statusline+=%#statusModifided#%{&modified?'\ \ modified':''}%*
+set statusline+=%=
+set statusline+=\ column\ %c
 
 autocmd FileType git  syntax on
 autocmd FileType diff syntax on
