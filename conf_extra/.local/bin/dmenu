@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+lock_file="$XDG_CACHE_HOME/dmenu-lock"
+exec 9>"$lock_file"
+flock 9 || exit 1
+
 prompt="$1"
 column="$2"
 
