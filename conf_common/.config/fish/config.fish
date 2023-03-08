@@ -117,6 +117,7 @@ alias :q exit
 abbr g git
 abbr gti git
 abbr ps 'ps -axh -o pid,%cpu,cmd'
+abbr curl 'curl -s'
 
 # extended regexp everywhere
 abbr grep "grep -Ei"
