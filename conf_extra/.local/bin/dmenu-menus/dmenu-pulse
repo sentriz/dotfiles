@@ -1,9 +1,9 @@
 #!/usr/bin/env fish
 
 wp-list sink \
-    | sed -E "s/(.*)\t(.*)/\1\t\L\2/" \
+    | sed -E "s/(.*)\t(.*)\t.*/\1\t\L\2/" \
     | dmenu sink 2 \
-    | read -d \t sink description id
+    | read -d \t sink description
 test -z "$sink" && exit 1
 
 wp-update sink "default=$sink"
