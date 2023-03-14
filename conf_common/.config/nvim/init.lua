@@ -190,7 +190,6 @@ local cmp = require("cmp")
 local cmplsp = require("cmp_nvim_lsp")
 local sqlsp = require("sqls")
 local nullls = require("null-ls")
-local inlayhints = require("lsp-inlayhints")
 local dap = require("dap")
 local tscontext = require("treesitter-context")
 local tsconfigs = require("nvim-treesitter.configs")
@@ -248,26 +247,6 @@ imap <expr> <s-tab> vsnip#jumpable(-1) ? '<plug>(vsnip-jump-prev)' : '<s-tab>'
 smap <expr> <s-tab> vsnip#jumpable(-1) ? '<plug>(vsnip-jump-prev)' : '<s-tab>'
 ]])
 
-inlayhints.setup({
-	inlay_hints = {
-		parameter_hints = {
-			prefix = "",
-			separator = " ",
-			remove_colon_start = true,
-		},
-		type_hints = {
-			-- type and other hints
-			show = true,
-			prefix = "",
-			separator = " ",
-			remove_colon_start = true,
-			remove_colon_end = truese,
-		},
-		labels_separator = " ",
-		only_current_line = true,
-	},
-})
-
 -- when using pylint or pyright, make sure we're in the right venv. eg
 -- $ source $PYTHON_VENVS_DIR/<venv>/bin/activate.fish
 -- $ pip install -r requirements-dev.txt .
@@ -296,10 +275,6 @@ local function format_please(client, buffer)
 	})
 end
 
-local function add_inlay_hints(client, buffer)
-	inlayhints.on_attach(client, buffer)
-end
-
 lspconfig.pyright.setup({
 	capabilities = capabilities,
 	settings = {
@@ -312,7 +287,6 @@ lspconfig.pyright.setup({
 
 lspconfig.gopls.setup({
 	capabilities = capabilities,
-	on_attach = add_inlay_hints,
 	settings = {
 		gopls = {
 			experimentalPostfixCompletions = true,
@@ -385,7 +359,6 @@ lspconfig.clangd.setup({
 	capabilities = capabilities,
 	on_attach = function(client, buffer)
 		format_please(client, buffer)
-		add_inlay_hints(client, buffer)
 	end,
 })
 

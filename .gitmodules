@@ -106,6 +106,3 @@
 [submodule "conf_common/.local/share/nvim/site/pack/plugins/start/cmp-vsnip"]
 	path = conf_common/.local/share/nvim/site/pack/plugins/start/cmp-vsnip
 	url = https://github.com/hrsh7th/cmp-vsnip
-[submodule "conf_common/.local/share/nvim/site/pack/plugins/start/lsp-inlayhints.nvim"]
-	path = conf_common/.local/share/nvim/site/pack/plugins/start/lsp-inlayhints.nvim
-	url = https://github.com/lvimuser/lsp-inlayhints.nvim
