@@ -1,0 +1,8 @@
+#!/usr/bin/env fish
+
+if test \( (count $argv) -ne 2 \) -o \( ! -f $argv[1] \) -o \( ! -f $argv[2] \)
+    echo 'needs 2 real files' >&2
+    exit 1
+end
+
+git diff --no-ext-diff --no-index $argv[3..-1] -- $argv[1] $argv[2]
