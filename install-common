@@ -1,3 +1,12 @@
 #!/usr/bin/env bash
 
+set -e
+
+mkdir -p ~/.gnupg
+mkdir -p ~/.gnupg/private-keys-v1.d
+
 stow -v --ignore='running' --target ~ -R conf_common
+
+chown -R "$(whoami)" ~/.gnupg/
+find ~/.gnupg -type f -exec chmod 600 {} \;
+find ~/.gnupg -type d -exec chmod 700 {} \;
