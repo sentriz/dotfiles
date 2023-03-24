@@ -23,7 +23,13 @@ function __scrap_go
         '' \
         'package main' \
         '' \
-        'func main() {}'
+        'func main() {}' \
+        '' \
+        'func cerr(err error) {' \
+        '   if err != nil {' \
+        '       panic(err)' \
+        '   }' \
+        '}'
 
     go mod init scrap
     git init
