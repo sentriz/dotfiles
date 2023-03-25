@@ -2,6 +2,8 @@
 
 set -e
 
+mkdir -p ~/.config/fish
+
 mkdir -p ~/.gnupg
 mkdir -p ~/.gnupg/private-keys-v1.d
 
