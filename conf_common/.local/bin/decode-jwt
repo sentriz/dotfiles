@@ -1,11 +1,20 @@
-#!/usr/bin/env bash
+#!/usr/bin/env fish
 
-if test $# -ne 1; then
+if test (count $argv) -ne 1
     echo "please provide token, or '-' for stdin" >&2
     exit 1
-fi
+end
 
-token="$1"
-test "$token" == "-" && token="$(cat)"
+set -l token "$argv[1]"
 
-cut -d '.' -f1,2 <<<"$token" | sed 's/\./\n/g' | base64 --decode | jq
+test $token = -
+and set -l token (cat)
+
+echo "$token" | read -d '.' header payload _
+test -z "$header" -o -z "$payload"
+and exit 1
+
+echo "$header" | base64 --decode --ignore-garbage 2>/dev/null
+echo
+echo "$payload" | base64 --decode --ignore-garbage 2>/dev/null
+echo
