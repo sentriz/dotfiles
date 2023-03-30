@@ -230,3 +230,9 @@ function go
     end
     command go $argv
 end
+
+function git
+    contains -- --force $argv
+    and return 1
+    command git $argv
+end
