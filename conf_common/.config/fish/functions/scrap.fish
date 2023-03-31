@@ -82,7 +82,7 @@ function __scrap_find
     rg -g '**/*.go' -g '**/*.py' -g '**/*.ts' --line-number --no-heading --smart-case --color=never . "$DOTS_SCRAP_DIR" \
         | sed -r 's/([^:]+)\:([0-9]+):/\1\t\2\t/g' \
         | fzf \
-        | read -d \t path num _
+        | read -d \t path num rest
     test -z "$path"; and return
 
     $EDITOR "$path" "+$num"
