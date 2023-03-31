@@ -10,7 +10,7 @@ set -l token "$argv[1]"
 test $token = -
 and set -l token (cat)
 
-echo "$token" | read -d '.' header payload _
+echo "$token" | read -d '.' header payload signature
 test -z "$header" -o -z "$payload"
 and exit 1
 
