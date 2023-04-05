@@ -269,6 +269,9 @@ local function format_please(client, buffer)
 		group = format_augroup,
 		buffer = buffer,
 		callback = function()
+			if vim.g.noformat ~= nil then
+				return
+			end
 			vim.lsp.buf.format({ timeout_ms = 5000 })
 		end,
 	})
