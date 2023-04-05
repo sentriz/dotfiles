@@ -188,7 +188,6 @@ local lspconfig = require("lspconfig")
 local util = require("lspconfig.util")
 local cmp = require("cmp")
 local cmplsp = require("cmp_nvim_lsp")
-local sqlsp = require("sqls")
 local nullls = require("null-ls")
 local dap = require("dap")
 local tscontext = require("treesitter-context")
@@ -304,19 +303,6 @@ lspconfig.gopls.setup({
 		},
 	},
 })
-
-lspconfig.sqls.setup({
-	capabilities = capabilities,
-	cmd = { "sqls", "-config", ".sqls.yml" },
-	on_attach = function(client, buff_num)
-		sqlsp.on_attach(client, buff_num)
-	end,
-})
-vim.cmd([[
-nnoremap <silent> <leader>qq Vip:SqlsExecuteQuery<cr>
-vnoremap <silent> <leader>qq Vip:SqlsExecuteQuery<cr>
-nnoremap <silent> <leader>qs :SqlsShowSchemas<cr>
-]])
 
 lspconfig.bashls.setup({
 	capabilities = capabilities,
