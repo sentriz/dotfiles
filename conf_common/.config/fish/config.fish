@@ -181,14 +181,11 @@ alias l "__list $argv"
 alias ll "__list -A $argv"
 
 function __super_vim
-    test (count $argv) -eq 1
-    and test \( ! -e (dirname -- $argv[1]) \)
-    and test (read --prompt-str 'create dir? ') = y
-    and mkdir -p (dirname -- $argv[1]) >/dev/null
-    test (count $argv) -eq 1
-    and test \( -e $argv[1] \) -a \( ! -w $argv[1] \)
-    and sudo -E nvim $argv
-    or command nvim $argv
+    if test (count $argv) -eq 1 -a \( -e $argv[1] \) -a \( ! -w $argv[1] \)
+        sudo -E nvim $argv
+        return
+    end
+    command nvim $argv
 end
 
 alias vi __super_vim
