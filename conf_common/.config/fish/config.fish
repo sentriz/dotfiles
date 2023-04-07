@@ -184,7 +184,7 @@ alias l "__list $argv"
 alias ll "__list -A $argv"
 
 function __super_vim
-    if test (count $argv) -eq 1 -a \( -e $argv[1] \) -a \( ! -w $argv[1] \)
+    if test (count $argv) -eq 1 -a \( -e "$argv[1]" \) -a \( ! -w "$argv[1]" \)
         sudo -E nvim $argv
         return
     end
