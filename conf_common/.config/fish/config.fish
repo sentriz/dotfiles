@@ -232,7 +232,7 @@ function go
 end
 
 function git
-    contains -- --force $argv
-    and return 1
+    contains -- --force $argv; and return 1
+    contains -- -f $argv; and return 1
     command git $argv
 end
