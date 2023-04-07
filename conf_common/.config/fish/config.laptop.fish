@@ -10,7 +10,7 @@ set -gx --path XDG_DATA_DIRS \
     "$XDG_DATA_HOME/flatpak/exports/share" \
     "$XDG_DATA_HOME"
 
-set -gx TERMINAL footclient
+set -gx TERMINAL foot
 
 # set -gx GDK_BACKEND 'wayland'
 set -gx CLUTTER_BACKEND wayland

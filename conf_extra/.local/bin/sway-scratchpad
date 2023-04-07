@@ -4,7 +4,7 @@ app_id="$(date "+scratchpad-%s")"
 
 swaymsg "assign [app_id=$app_id] temp"
 
-footclient --app-id "$app_id" >/dev/null 2>&1 &
+"$TERMINAL" --app-id "$app_id" >/dev/null 2>&1 &
 disown
 
 sleep 0.2

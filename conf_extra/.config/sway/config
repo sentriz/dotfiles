@@ -381,6 +381,5 @@ exec swayidle -w \
 exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec wl-paste --watch cliphist store
 exec sway-rename-workspaces
-exec foot --server
 exec wlsunset -l 53.3 -L -6.2 -t 2700
 exec last-dot-friends-notify
