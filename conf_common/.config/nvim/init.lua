@@ -122,10 +122,7 @@ command! VS vsplit
 command! Vs vsplit
 
 " leader
-nnoremap          <leader>bb mzggO#!/usr/bin/env bash<esc>o<esc>`z
-nnoremap          <leader>bp mzggO#!/usr/bin/env python3<esc>o<esc>`z
-nnoremap          <leader>r  :write<cr>:!clear && %:p<cr>
-nnoremap          <leader>x  :write<cr>:!chmod +x %:p<cr><cr>
+nnoremap          <leader>b  mzggO#!/usr/bin/env bash<esc>o<esc>`z
 nnoremap          <leader>n  :set hlsearch!<cr>
 nnoremap          <leader>l  :set list!<cr>
 nnoremap          <leader>p  :set spell!<cr>
