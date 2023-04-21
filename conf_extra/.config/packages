@@ -177,3 +177,4 @@ npm typescript
 npm typescript-language-server
 python black
 python pylint
+python tomli
