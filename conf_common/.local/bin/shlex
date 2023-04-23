@@ -396,7 +396,12 @@ func Split(s string) ([]string, error) {
 }
 
 func main() {
-	items, _ := Split(strings.Join(os.Args[2:], " "))
+	in := strings.Join(os.Args[2:], " ")
+	if in == "" {
+		stdin, _ := io.ReadAll(os.Stdin)
+		in = string(stdin)
+	}
+	items, _ := Split(in)
 	for _, i := range items {
 		fmt.Println(i)
 	}
