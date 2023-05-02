@@ -1,0 +1,32 @@
+#!/usr/bin/env fish
+
+if test (count $argv) -ne 1
+    echo "usage: upload-x0 <path to image>" >&2
+    exit 1
+end
+
+set -l image_path $argv[1]
+set -l upload_url 'https://x0.at'
+
+if ! test -e "$image_path"
+    echo "couldn't find image $image_path" >&2
+    exit 1
+end
+
+set -l response (
+    curl \
+        --silent \
+        --fail \
+        --form "file=@$image_path" \
+        "$upload_url"
+)
+if test -z "$response"
+    echo "failed to upload" >&2
+    exit 1
+end
+
+echo "$response"
+
+if ! isatty stdout
+    notify-send.sh screenshot 'uploaded to x0' >/dev/null 2>&1
+end
