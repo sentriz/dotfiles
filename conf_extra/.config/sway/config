@@ -312,7 +312,7 @@ for_window [app_id="^dragon-drop$"]                     floating enable, sticky 
 
 ## pip
 for_window [app_id="^firefox$" title="Picture-in-Picture"]   fullscreen enable, move container to workspace number 10
-for_window [app_id="^librewolf$" title="Picture-in-Picture"] fullscreen enable, move container to workspace number 10
+for_window [app_id="^LibreWolf$" title="Picture-in-Picture"] fullscreen enable, move container to workspace number 10
 
 ## bindings: xf86
 bindsym XF86AudioLowerVolume  exec wp-update sink   volume=-0.02 && $up_block_1
