@@ -373,7 +373,8 @@ exec_always 'pkill mako; exec mako \
     --text-color "#FFFFFF" \
     --anchor bottom-right \
     --ignore-timeout 1 \
-    --default-timeout 4000'
+    --default-timeout 4000 \
+    --on-button-middle "exec makoctl menu -n \$id dmenu action"'
 exec swayidle -w \
     timeout 290  "$lock_warning" \
     timeout 300  "$lock" \
