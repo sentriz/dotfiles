@@ -62,7 +62,7 @@ end
 if status is-login
     switch (tty)
         case /dev/tty1
-            exec sway -d
+            exec sway
         case /dev/tty2
             exec htop
     end
