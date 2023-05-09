@@ -14,6 +14,7 @@
 	c = commit
 	s = status
 	l = log --reverse -n 20
+
 	addf       = !git add -- $(git ls-files --modified --others --exclude-standard | fzf -m --preview 'cat {}')
 	checkoutf  = !git checkout $@ $(git branch --format '%(refname:short)' --sort committerdate | fzf +s --tac --preview 'git log master..{}')
 	checkoutff = !git checkout $@ -- $(git ls-files --modified --exclude-standard | fzf -m)
@@ -23,17 +24,23 @@
 	revertf    = !git revert $(git log --pretty=oneline --abbrev-commit | fzf +s | awk '{print $1}')
 	showf      = !git show $(git log --pretty=oneline --abbrev-commit | fzf +s | awk '{print $1}')
 	resetf     = !git reset $@ $(git log --pretty=oneline --abbrev-commit | fzf +s | awk '{print $1}')
-	rebase-squash            = !GIT_SEQUENCE_EDITOR=true git rebase --interactive --autosquash
-	commit-empty             = !git commit --allow-empty -m "​"
+	resetf     = !git reset $@ $(git log --pretty=oneline --abbrev-commit | fzf +s | awk '{print $1}')
+
 	branch-set-upstream      = !git branch --set-upstream-to=origin/$(git symbolic-ref --short HEAD)
 	branch-clean-remote-show = !git remote prune origin --dry-run
 	branch-clean-remote      = !git remote prune origin
 	branch-clean-local-show  = !git branch --format '%(refname:short)' --merged | grep -Ev '(master|dev)'
 	branch-clean-local       = !git branch --format '%(refname:short)' --merged | grep -Ev '(master|dev)' | xargs git branch -d
-	checkout-take            = !git branch -f "$2" $(git rev-parse HEAD) && \
-	                            git reset --hard "HEAD~$1" && \
-	                            git checkout "$2" && \
-	                            false
+
+	checkout-take = !git branch -f "$2" $(git rev-parse HEAD) && \
+	                 git reset --hard "HEAD~$1" && \
+	                 git checkout "$2" && \
+	                 false
+
+	rebase-squash = !GIT_SEQUENCE_EDITOR=true git rebase --interactive --autosquash
+	commit-empty = !git commit --allow-empty -m "​"
+	master = !basename $(git symbolic-ref refs/remotes/origin/HEAD)
+
 [diff "zip"]
 	textconv = unzip -c -a
 [diff]
