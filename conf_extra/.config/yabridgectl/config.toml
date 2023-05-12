@@ -16,5 +16,5 @@ no_verify = false
 blacklist = []
 
 [last_known_config]
-wine_version = 'wine-8.5.r3.gaaa21bda ( TkG Staging Esync Fsync )'
-yabridge_host_hash = -4794911134699943908
+wine_version = 'wine-8.6.1.r3.g4eb322dc ( TkG Staging Esync Fsync )'
+yabridge_host_hash = 7880926829820439083
