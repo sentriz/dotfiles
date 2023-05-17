@@ -76,7 +76,6 @@ flatpak org.libreoffice.LibreOffice
 flatpak org.mozilla.firefox
 flatpak io.gitlab.librewolf-community
 flatpak org.wireshark.Wireshark
-flatpak rest.insomnia.Insomnia
 
 # wm
 arch acpilight
