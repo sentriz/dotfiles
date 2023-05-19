@@ -1,6 +1,3 @@
 #!/usr/bin/env fish
 
-wp-list source | grep "rnnoise_source\s" | read -d \t name desc id
-test -z $id; and exit
-
-exec wlavu -l -w 1 -a bottom -t $id
+exec wlavu -l -w 1 -a bottom
