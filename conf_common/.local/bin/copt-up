@@ -28,7 +28,7 @@ list-paths | while read -r path; do
         [[ -e "docker-compose.yml" ]] || exit
 
         echo "  > uping $path"
-        docker-compose pull
-        docker-compose up -d --build --remove-orphans
+        docker compose pull
+        docker compose up -d --build --remove-orphans
     )
 done
