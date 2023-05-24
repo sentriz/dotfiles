@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+find "$DOTS_COPT_DIR" -maxdepth 2 -name 'docker-compose.yml' -printf '%h\n' \
+    | grep -Ei --invert-match --file "$DOTS_COPT_DIR/.ignore" \
+    | while read -r path; do (
+        cd "$path" || exit
+        "$@"
+    ); done

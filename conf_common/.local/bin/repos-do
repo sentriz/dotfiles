@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+find "$PWD" -maxdepth 2 -type d -name '.git' -printf '%h\n' \
+    | while read -r path; do (
+        cd "$path" || exit
+        "$@"
+    ); done
