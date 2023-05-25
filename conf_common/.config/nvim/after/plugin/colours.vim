@@ -60,10 +60,11 @@ highlight LspReferenceText  ctermfg=11
 highlight LspReferenceRead  ctermfg=11
 highlight LspReferenceWrite ctermfg=11
 
-highlight DiagnosticFloatingError ctermfg=15 cterm=bold
-highlight DiagnosticFloatingHint  ctermfg=15 cterm=bold
-highlight DiagnosticFloatingInfo  ctermfg=15 cterm=bold
-highlight DiagnosticFloatingWarn  ctermfg=15 cterm=bold
+highlight DiagnosticFloatingError  ctermfg=15 cterm=bold
+highlight DiagnosticFloatingHint   ctermfg=15 cterm=bold
+highlight DiagnosticFloatingInfo   ctermfg=15 cterm=bold
+highlight DiagnosticFloatingWarn   ctermfg=15 cterm=bold
+highlight DiagnosticUnderlineError cterm=underline
 
 highlight DiagnosticSignError ctermfg=1  cterm=bold
 highlight DiagnosticSignHint  ctermfg=2  cterm=bold
