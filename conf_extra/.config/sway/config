@@ -310,9 +310,11 @@ for_window [class="^mpv$"]                              floating enable, resize 
 for_window [app_id="^mpv$"]                             floating enable, resize set 1334 568, sticky enable
 for_window [app_id="^dragon-drop$"]                     floating enable, sticky enable
 
-## pip
-for_window [app_id="^firefox$" title="Picture-in-Picture"]   fullscreen enable, move container to workspace number 10
+for_window [app_id="^firefox$" title="Picture-in-Picture"] fullscreen enable, move container to workspace number 10
+for_window [app_id="^firefox$" title="Firefox — Sharing Indicator"] kill
+
 for_window [app_id="^LibreWolf$" title="Picture-in-Picture"] fullscreen enable, move container to workspace number 10
+for_window [app_id="^LibreWolf$" title="LibreWolf — Sharing Indicator"] kill
 
 ## bindings: xf86
 bindsym XF86AudioLowerVolume  exec wp-update sink   volume=-0.02 && $up_block_1
