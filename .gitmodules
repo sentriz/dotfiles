@@ -28,9 +28,6 @@
 [submodule "conf_common/.config/fish/plugins/jethrokuan/z"]
 	path = conf_common/.config/fish/plugins/z
 	url = https://github.com/jethrokuan/z
-[submodule "conf_common/.local/share/nvim/site/pack/meta/opt/mkotha/conflict3"]
-	path = conf_common/.local/share/nvim/site/pack/plugins/start/conflict3
-	url = https://github.com/mkotha/conflict3
 [submodule "conf_common/.local/share/nvim/site/pack/meta/opt/nvim-treesitter/nvim-treesitter"]
 	path = conf_common/.local/share/nvim/site/pack/plugins/start/nvim-treesitter
 	url = https://github.com/nvim-treesitter/nvim-treesitter
@@ -43,9 +40,6 @@
 [submodule "conf_common/.local/share/nvim/site/pack/plugins/start/vim-exchange"]
 	path = conf_common/.local/share/nvim/site/pack/plugins/start/vim-exchange
 	url = https://github.com/tommcdo/vim-exchange
-[submodule "conf_common/.local/share/nvim/site/pack/plugins/start/SyntaxAttr.vim"]
-	path = conf_common/.local/share/nvim/site/pack/plugins/start/SyntaxAttr.vim
-	url = https://github.com/inkarkat/SyntaxAttr.vim
 [submodule "conf_common/.local/share/nvim/site/pack/plugins/start/vim-oscyank"]
 	path = conf_common/.local/share/nvim/site/pack/plugins/start/vim-oscyank
 	url = https://github.com/ojroques/vim-oscyank
@@ -97,9 +91,6 @@
 [submodule "conf_common/.local/share/nvim/site/pack/plugins/start/nvim-treehopper"]
 	path = conf_common/.local/share/nvim/site/pack/plugins/start/nvim-treehopper
 	url = https://github.com/mfussenegger/nvim-treehopper
-[submodule "conf_common/.local/share/nvim/site/pack/plugins/start/hop.nvim"]
-	path = conf_common/.local/share/nvim/site/pack/plugins/start/hop.nvim
-	url = https://github.com/phaazon/hop.nvim
 [submodule "conf_common/.local/share/nvim/site/pack/plugins/start/cmp-vsnip"]
 	path = conf_common/.local/share/nvim/site/pack/plugins/start/cmp-vsnip
 	url = https://github.com/hrsh7th/cmp-vsnip

@@ -23,9 +23,6 @@ nnoremap <silent> <c-g> :TmuxNavigatePrevious<cr>
 " plugin print debug
 nnoremap <silent> <leader>d :call print_debug#print_debug()<cr>
 
-" plugin syntaxattr
-nnoremap <silent> <leader>h :call SyntaxAttr#SyntaxAttr()<cr>
-
 augroup AutoNetrwOnStart
     autocmd!
     let have_stdin = 0
