@@ -103,3 +103,6 @@
 [submodule "conf_common/.local/share/nvim/site/pack/plugins/start/cmp-vsnip"]
 	path = conf_common/.local/share/nvim/site/pack/plugins/start/cmp-vsnip
 	url = https://github.com/hrsh7th/cmp-vsnip
+[submodule "conf_common/.local/share/nvim/site/pack/plugins/start/mini.nvim.git"]
+	path = conf_common/.local/share/nvim/site/pack/plugins/start/mini.nvim.git
+	url = https://github.com/echasnovski/mini.nvim.git
