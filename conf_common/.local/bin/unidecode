@@ -1,0 +1,8 @@
+#!/usr/bin/env python3
+
+import sys
+import unicodedata
+from unidecode import unidecode
+
+for line in sys.stdin:
+    print(unidecode(unicodedata.normalize("NFC", line)), end="")
