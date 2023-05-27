@@ -13,9 +13,6 @@
 [submodule "conf_common/.local/share/nvim/site/pack/text/opt/tpope/vim-commentary"]
 	path = conf_common/.local/share/nvim/site/pack/plugins/start/vim-commentary
 	url = https://github.com/tpope/vim-commentary
-[submodule "conf_common/.local/share/nvim/site/pack/text/opt/tpope/vim-repeat"]
-	path = conf_common/.local/share/nvim/site/pack/plugins/start/vim-repeat
-	url = https://github.com/tpope/vim-repeat
 [submodule "conf_common/.local/share/nvim/site/pack/text/opt/tpope/vim-surround"]
 	path = conf_common/.local/share/nvim/site/pack/plugins/start/vim-surround
 	url = https://github.com/tpope/vim-surround
