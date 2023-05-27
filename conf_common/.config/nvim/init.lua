@@ -1,18 +1,8 @@
 --# selene: allow(undefined_variable, unscoped_variables)
 --# for list of lsp, linter, and formatter tools, see $XDG_CONFIG_HOME/packages
 
-require("mini.surround").setup()
-require("mini.comment").setup()
-require("mini.ai").setup()
-
 vim.cmd([[
-filetype plugin indent off
-
 let mapleader = "\<Space>"
-
-" plugin netrw
-
-let g:netrw_list_hide = '.*\.pyc$,^__pycache__$'
 
 " plugin tmux tmux navigator
 let g:tmux_navigator_no_mappings = 1
@@ -170,16 +160,12 @@ inoremap <expr> <c-e> matchstr(getline(line('.')+1), '\%' . virtcol('.') . 'v\%(
 inoremap jj <esc>
 ]])
 
-local lspconfig = require("lspconfig")
-local util = require("lspconfig.util")
+require("mini.surround").setup()
+require("mini.comment").setup()
+require("mini.ai").setup()
+
 local cmp = require("cmp")
 local cmplsp = require("cmp_nvim_lsp")
-local nullls = require("null-ls")
-local dap = require("dap")
-local tscontext = require("treesitter-context")
-local tsconfigs = require("nvim-treesitter.configs")
-
-vim.diagnostic.config({ virtual_text = false })
 
 cmp.setup({
 	sources = cmp.config.sources({
@@ -262,6 +248,9 @@ local function format_please(client, buffer)
 		end,
 	})
 end
+
+local lspconfig = require("lspconfig")
+local util = require("lspconfig.util")
 
 lspconfig.pyright.setup({
 	capabilities = capabilities,
@@ -347,6 +336,8 @@ lspconfig.rust_analyzer.setup({
 	on_attach = format_please,
 })
 
+vim.diagnostic.config({ virtual_text = false })
+
 vim.cmd([[
 autocmd CursorHold  <buffer> silent! lua vim.lsp.buf.document_highlight()
 autocmd CursorHoldI <buffer> silent! lua vim.lsp.buf.document_highlight()
@@ -370,6 +361,8 @@ nnoremap <silent> H     <cmd>lua vim.diagnostic.goto_prev()<cr>
 nnoremap <silent> L     <cmd>lua vim.diagnostic.goto_next()<cr>
 ]])
 
+local nullls = require("null-ls")
+
 nullls.setup({
 	log = { enable = false },
 	on_attach = format_please,
@@ -391,6 +384,9 @@ nullls.setup({
 		nullls.builtins.diagnostics.selene,
 	},
 })
+
+local tscontext = require("treesitter-context")
+local tsconfigs = require("nvim-treesitter.configs")
 
 local ts_highlight = {
 	enable = true,
@@ -438,6 +434,8 @@ vim.cmd([[
 omap     m :<c-u>lua require('tsht').nodes()<cr>
 xnoremap m :lua require('tsht').nodes()<cr>
 ]])
+
+local dap = require("dap")
 
 local dap_go = function(name, request, mode, conf)
 	local base = {
