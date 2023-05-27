@@ -1,6 +1,9 @@
 --# selene: allow(undefined_variable, unscoped_variables)
 --# for list of lsp, linter, and formatter tools, see $XDG_CONFIG_HOME/packages
 
+require("mini.surround").setup()
+require("mini.comment").setup()
+
 vim.cmd([[
 filetype plugin indent off
 
@@ -56,18 +59,6 @@ autocmd FileType markdown            setlocal spell
 autocmd FileType gitcommit           setlocal spell
 autocmd FileType yaml                setlocal cursorcolumn
 autocmd FileType yaml.docker-compose setlocal cursorcolumn
-
-autocmd FileType yaml                setlocal comments=:#                              commentstring=#\ %s
-autocmd FileType yaml.docker-compose setlocal comments=:#                              commentstring=#\ %s
-autocmd FileType python              setlocal comments=b:#,fb:-                        commentstring=#\ %s
-autocmd FileType go                  setlocal comments=s1:/*,mb:*,ex:*/,://            commentstring=//\ %s
-autocmd FileType lua                 setlocal comments=:--                             commentstring=--%s
-autocmd FileType vim                 setlocal comments=sO:\"\ -,mO:\"\ \ ,eO:\"\",:\"  commentstring=\"%s
-autocmd FileType sql                 setlocal comments=s1:/*,mb:*,ex:*/,:--,://
-autocmd FileType dockerfile          setlocal commentstring=#%s
-autocmd FileType sshconfig           setlocal comments=:#                              commentstring=#\ %s
-autocmd FileType sh                  setlocal comments=:#                              commentstring=#\ %s
-autocmd FileType fish                setlocal comments=:#                              commentstring=#\ %s
 
 augroup AutoCursorLastPosition
     autocmd!
@@ -177,8 +168,6 @@ inoremap <expr> <c-e> matchstr(getline(line('.')+1), '\%' . virtcol('.') . 'v\%(
 " alternative escaping
 inoremap jj <esc>
 ]])
-
-require("mini.surround").setup()
 
 local lspconfig = require("lspconfig")
 local util = require("lspconfig.util")
