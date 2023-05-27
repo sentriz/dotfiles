@@ -178,6 +178,8 @@ inoremap <expr> <c-e> matchstr(getline(line('.')+1), '\%' . virtcol('.') . 'v\%(
 inoremap jj <esc>
 ]])
 
+require("mini.surround").setup()
+
 local lspconfig = require("lspconfig")
 local util = require("lspconfig.util")
 local cmp = require("cmp")
