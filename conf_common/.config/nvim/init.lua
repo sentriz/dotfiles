@@ -3,6 +3,7 @@
 
 require("mini.surround").setup()
 require("mini.comment").setup()
+require("mini.ai").setup()
 
 vim.cmd([[
 filetype plugin indent off
