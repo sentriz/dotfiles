@@ -78,6 +78,7 @@ flatpak io.gitlab.librewolf-community
 flatpak org.wireshark.Wireshark
 
 # wm
+arch libnotify
 arch acpilight
 arch arc-gtk-theme
 arch dragon-drop-git

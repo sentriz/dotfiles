@@ -36,5 +36,5 @@ end
 echo "$link"
 
 if ! isatty stdout
-    notify-send.sh screenshot 'uploaded to imgur' >/dev/null 2>&1
+    notify-send screenshot 'uploaded to imgur' >/dev/null 2>&1
 end

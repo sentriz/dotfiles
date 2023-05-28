@@ -28,5 +28,5 @@ end
 echo "$response"
 
 if ! isatty stdout
-    notify-send.sh screenshot 'uploaded to x0' >/dev/null 2>&1
+    notify-send screenshot 'uploaded to x0' >/dev/null 2>&1
 end

@@ -19,7 +19,7 @@ test ! "$batt_level" -le "$noti_charge_threshold" && exit
 find "$noti_flag_file" -mmin +"$noti_time_limit" -delete
 test -f "$noti_flag_file" && exit
 
-notify-send.sh "battery warning" "charge is below ${noti_charge_threshold}%"
+notify-send "battery warning" "charge is below ${noti_charge_threshold}%"
 touch "$noti_flag_file"
 
 exit 0

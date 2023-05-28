@@ -37,5 +37,5 @@ end
 echo "$url_public/$image_id"
 
 if ! isatty stdout
-    notify-send.sh screenshot 'uploaded to home' >/dev/null 2>&1
+    notify-send screenshot 'uploaded to home' >/dev/null 2>&1
 end

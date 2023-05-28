@@ -28,7 +28,7 @@ set $colour_red_alpha  #BC585860
 set $colour_inactive   #8D8D8D
 
 ## var helpers
-set $lock_warning notify-send.sh 'locking screen in 10 seconds'
+set $lock_warning notify-send 'locking screen in 10 seconds'
 set $lock swaylock \
     --image $XDG_PICTURES_DIR/wallpapers/fagan.png \
     --font "$default_font" \

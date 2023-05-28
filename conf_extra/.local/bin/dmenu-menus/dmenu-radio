@@ -29,4 +29,4 @@ mpv \
     --no-resume-playback \
     "$DOTS_RADIO_DIR/$station" &
 echo "$!" >"$pid_file"
-notify-send.sh 'started radio station' "$station_friendly"
+notify-send 'started radio station' "$station_friendly"

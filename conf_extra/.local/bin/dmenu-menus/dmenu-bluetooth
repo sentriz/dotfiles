@@ -1,12 +1,7 @@
 #!/usr/bin/env bash
 
-function lower() {
-    tr '[:upper:]' '[:lower:]'
-}
-
-replace_file="$(mktemp)"
 function notify() {
-    notify-send.sh --replace-file "$replace_file" "$1" "$(strip-escape <<<"${@:2}" | lower)"
+    notify-send --hint "string:x-dunst-stack-tag:$0" "$1" "$(strip-escape <<<"${@:2}" | lower)"
 }
 
 devices="$(bluetoothctl devices | lower)"

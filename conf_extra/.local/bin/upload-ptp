@@ -38,5 +38,5 @@ end
 echo "https://ptpimg.me/$code.$ext"
 
 if ! isatty stdout
-    notify-send.sh screenshot 'uploaded to ptpimg' >/dev/null 2>&1
+    notify-send screenshot 'uploaded to ptpimg' >/dev/null 2>&1
 end
