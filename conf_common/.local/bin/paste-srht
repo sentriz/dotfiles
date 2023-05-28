@@ -1,0 +1,14 @@
+#!/usr/bin/env fish
+
+set -l base 'https://paste.sr.ht'
+set -l token (secret srht_pat)
+test -z "$token"; and exit 1
+
+set -l tmpl '{ "files": [ { "contents": . } ], "visibility": "unlisted" }'
+set -l result (jq -sR "$tmpl" | curl -sf -X POST -H "Authorization: token $token" --json @- "$base/api/pastes")
+test -z "$result"; and exit 1
+
+set -l user (echo $result | jq -r .user.canonical_name)
+set -l sha (echo $result | jq -r .sha)
+
+printf "%s/%s/%s\n" $base $user $sha
