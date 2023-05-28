@@ -157,9 +157,26 @@ inoremap <expr> <c-e> matchstr(getline(line('.')+1), '\%' . virtcol('.') . 'v\%(
 inoremap jj <esc>
 ]])
 
+-- mini
 require("mini.surround").setup()
 require("mini.comment").setup()
 require("mini.ai").setup()
+
+-- fidget
+local fidget = require("fidget")
+fidget.setup({
+	text = {
+		spinner = "dots",
+	},
+	fmt = {
+		task = function(task_name, message, percent)
+			message = string.lower(message)
+			percent = percent and string.format(" %s%%", percent) or ""
+			task_name = string.lower(task_name)
+			return string.format("%s%s %s", message, percent, task_name)
+		end,
+	},
+})
 
 local cmp = require("cmp")
 local cmplsp = require("cmp_nvim_lsp")

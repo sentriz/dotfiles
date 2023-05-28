@@ -85,3 +85,6 @@
 [submodule "conf_common/.local/share/nvim/site/pack/plugins/start/mini.nvim.git"]
 	path = conf_common/.local/share/nvim/site/pack/plugins/start/mini.nvim.git
 	url = https://github.com/echasnovski/mini.nvim.git
+[submodule "conf_common/.local/share/nvim/site/pack/plugins/start/fidget.nvim"]
+	path = conf_common/.local/share/nvim/site/pack/plugins/start/fidget.nvim
+	url = https://github.com/j-hui/fidget.nvim

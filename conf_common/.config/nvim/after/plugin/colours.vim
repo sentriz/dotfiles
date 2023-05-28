@@ -91,3 +91,6 @@ set statusline+=\ column\ %c
 
 autocmd FileType git  syntax on
 autocmd FileType diff syntax on
+
+highlight link FidgetTitle LineNr
+highlight link FidgetTask  LineNr
