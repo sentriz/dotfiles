@@ -113,18 +113,15 @@ nnoremap <expr>   <leader>y  ':tabnew ' . expand('$DOTS_PROJECTS_DIR') . '/hippl
 " better
 nnoremap Y y$
 vnoremap yP yP
-
 vnoremap u :OSCYank<cr>
 
-" disable command hist
-nnoremap Q <nop>
-
 " easy split / quit
-nnoremap <enter>       :vsplit<cr><c-w>w
-nnoremap <s-enter>     :split<cr><c-w>w
-nnoremap s             :write<enter>
-nnoremap <silent> <c-[> <cmd>call CloseIfSaved()<cr>
-nnoremap <silent> q     <cmd>call CloseIfSaved()<cr>
+nnoremap <enter>         :vsplit<cr><c-w>w
+nnoremap <s-enter>       :split<cr><c-w>w
+nnoremap s               :write<enter>
+nnoremap <silent> <c-[>  <cmd>call CloseIfSaved()<cr>
+nnoremap <silent> q      <cmd>call CloseIfSaved()<cr>
+nnoremap Q               q
 
 function! CloseIfSaved() abort
     if !&modified || len(win_findbuf(bufnr())) > 1
