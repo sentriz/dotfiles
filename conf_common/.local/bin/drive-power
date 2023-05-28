@@ -13,7 +13,7 @@ function get-info() {
 function get-status() {
     info="$(smartctl -i -n standby "$1")"
     test $? -eq 2 && echo "standby" && return
-    grep -Po "^Power mode.*:\s*\K.*" <<<"$info" | tr '[:upper:]' '[:lower:]'
+    grep -Po "^Power mode.*:\s*\K.*" <<<"$info" | lower
 }
 
 for drive in "$@"; do

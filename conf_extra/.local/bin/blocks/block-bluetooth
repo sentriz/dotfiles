@@ -4,7 +4,7 @@
 # - bluez
 
 function find-device() {
-    grep -Po "Alias: \K.*" | tr "[:upper:]" "[:lower:]"
+    grep -Po "Alias: \K.*" | lower
 }
 
 function find-battery-percentage() {
