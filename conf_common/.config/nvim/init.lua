@@ -176,6 +176,9 @@ fidget.setup({
 			return string.format("%s%s %s", message, percent, task_name)
 		end,
 	},
+	sources = {
+		["null-ls"] = { ignore = true },
+	},
 })
 
 local cmp = require("cmp")
