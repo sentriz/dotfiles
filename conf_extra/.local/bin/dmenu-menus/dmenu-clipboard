@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-cliphist list \
-    | dmenu clipboard 2 \
-    | cliphist decode \
-    | wl-copy
+id="$(cliphist list | dmenu clipboard 2)"
+test -z "$id" && exit
+
+cliphist decode <<<"$id" | wl-copy
