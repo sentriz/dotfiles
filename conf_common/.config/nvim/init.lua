@@ -172,7 +172,7 @@ fidget.setup({
 		task = function(task_name, message, percent)
 			message = string.lower(message)
 			percent = percent and string.format(" %s%%", percent) or ""
-			task_name = string.lower(task_name)
+			task_name = string.lower(task_name or "")
 			return string.format("%s%s %s", message, percent, task_name)
 		end,
 	},
