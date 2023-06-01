@@ -1,0 +1,17 @@
+#!/usr/bin/env fish
+
+function __lookup
+    set -l ip (string trim "$argv[1]")
+    curl -s "https://json.geoiplookup.io/$ip" | jq -r '"\(.ip)\t\(.asn)\t\(.district)\t\(.city)\t\(.region)\t\(.country_name)"'
+end
+
+if test (count $argv) -gt 0
+    for line in $argv
+        __lookup $line
+    end
+    exit
+end
+
+while read line
+    __lookup "$line"
+end
