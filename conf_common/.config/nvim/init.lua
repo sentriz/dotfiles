@@ -373,6 +373,8 @@ nnoremap <silent> ga    <cmd>lua vim.lsp.buf.code_action()<cr>
 vnoremap <silent> ga    :<c-u>lua vim.lsp.buf.range_code_action()<cr>
 nnoremap <silent> gt    <cmd>lua vim.diagnostic.setqflist()<cr>
 inoremap <silent> <c-s> <cmd>lua vim.lsp.buf.signature_help()<cr>
+inoremap <silent> <c-h> <cmd>lua vim.lsp.buf.inlay_hint(0)<cr>
+nnoremap <silent> <c-h> <cmd>lua vim.lsp.buf.inlay_hint(0)<cr>
 nnoremap <silent> J     <cmd>lua vim.diagnostic.open_float()<cr>
 nnoremap <silent> H     <cmd>lua vim.diagnostic.goto_prev()<cr>
 nnoremap <silent> L     <cmd>lua vim.diagnostic.goto_next()<cr>

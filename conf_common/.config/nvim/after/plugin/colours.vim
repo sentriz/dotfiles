@@ -59,6 +59,7 @@ highlight PmenuSel ctermfg=0  ctermbg=15
 highlight LspReferenceText  ctermfg=11
 highlight LspReferenceRead  ctermfg=11
 highlight LspReferenceWrite ctermfg=11
+highlight LspInlayHint      ctermfg=0
 
 highlight DiagnosticFloatingError  ctermfg=15 cterm=bold
 highlight DiagnosticFloatingHint   ctermfg=15 cterm=bold
