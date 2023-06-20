@@ -1,4 +1,5 @@
 plugin_dirs = [
+    '/home/senan/.local/share/yabridge-wine/drive_c/Program Files/Common Files/CLAP',
     '/home/senan/.local/share/yabridge-wine/drive_c/Program Files/Common Files/VST2',
     '/home/senan/.local/share/yabridge-wine/drive_c/Program Files/Common Files/VST3',
     '/home/senan/.local/share/yabridge-wine/drive_c/Program Files/Common Files/vst3',
