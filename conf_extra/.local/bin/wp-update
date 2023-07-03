@@ -31,7 +31,10 @@ local run = function(default_nodes, mixer, args)
 		local id = default_nodes:call("get-default-node", media_class_from_args(args))
 		if string.find(args.volume, "+") or string.find(args.volume, "-") then
 			local data = mixer:call("get-volume", id)
-			mixer:call("set-volume", id, { volume = data.volume + tonumber(args.volume) })
+			local volume = data.volume + tonumber(args.volume)
+			volume = math.max(0, volume)
+			volume = math.min(1, volume)
+			mixer:call("set-volume", id, { volume = volume })
 		else
 			mixer:call("set-volume", id, { volume = tonumber(args.volume) })
 		end
