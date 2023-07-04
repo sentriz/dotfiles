@@ -21,6 +21,12 @@ local parse_bool = function(str)
 	return vs[str]
 end
 
+local clamp = function(n, min, max)
+	n = math.max(min, n)
+	n = math.min(max, n)
+	return n
+end
+
 local run = function(default_nodes, mixer, args)
 	if args.default then
 		default_nodes:call("set-default-configured-node-name", media_class_from_args(args), args.default)
@@ -31,10 +37,7 @@ local run = function(default_nodes, mixer, args)
 		local id = default_nodes:call("get-default-node", media_class_from_args(args))
 		if string.find(args.volume, "+") or string.find(args.volume, "-") then
 			local data = mixer:call("get-volume", id)
-			local volume = data.volume + tonumber(args.volume)
-			volume = math.max(0, volume)
-			volume = math.min(1, volume)
-			mixer:call("set-volume", id, { volume = volume })
+			mixer:call("set-volume", id, { volume = clamp(data.volume + tonumber(args.volume), 0.0, 1.0) })
 		else
 			mixer:call("set-volume", id, { volume = tonumber(args.volume) })
 		end
