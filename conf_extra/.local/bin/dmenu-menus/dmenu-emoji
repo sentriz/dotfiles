@@ -86,6 +86,7 @@
 🙄	emotion eyeroll eyes face neutral rolling skeptical smileys with
 😬	emotion face grimace grimacing neutral skeptical smileys
 🤥	emotion face lie lying neutral pinocchio skeptical smileys
+🫨	earthquake emotion face neutral shaking shock skeptical smileys vibrate
 😌	emotion face relieved sleepy smileys
 😔	dejected emotion face pensive sleepy smileys
 😪	emotion face good night sleep sleepy smileys
@@ -149,8 +150,8 @@
 👹	costume creature emotion face fairy fantasy monster ogre smileys tale
 👺	costume creature emotion face fairy fantasy goblin monster smileys tale
 👻	costume creature emotion face fairy fantasy ghost monster smileys tale
-👽	alien costume creature emotion extraterrestrial face fantasy smileys ufo
-👾	alien costume creature emotion extraterrestrial face monster smileys ufo
+👽	alien costume creature emotion et extraterrestrial face fantasy smileys ufo
+👾	alien costume creature emotion et extraterrestrial face monster smileys ufo
 🤖	costume emotion face monster robot smileys
 😺	cat emotion face grinning mouth open smile smileys
 😸	cat emotion eye eyes face grin grinning smile smileys smiling with
@@ -164,30 +165,33 @@
 🙈	emotion evil face forbidden monkey no see smileys
 🙉	emotion evil face forbidden hear monkey no smileys
 🙊	emotion evil face forbidden monkey no smileys speak
-💋	emotion kiss lips mark smileys
 💌	emotion heart letter love mail smileys
 💘	arrow cupid emotion heart smileys with
 💝	emotion heart ribbon smileys valentine with
 💖	emotion excited heart smileys sparkle sparkling
 💗	emotion excited growing heart nervous pulse smileys
 💓	beating emotion heart heartbeat pulsating smileys
-💞	emotion hearts revolving smileys
-💕	emotion hearts love smileys two
+💞	emotion heart hearts revolving smileys
+💕	emotion heart hearts love smileys two
 💟	decoration emotion heart smileys
 ❣️	emotion exclamation heart smileys
 ❣	emotion exclamation heart mark punctuation smileys
 💔	break broken emotion heart smileys
 ❤️	emotion heart red smileys
 ❤	emotion heart red smileys
+🩷	cute emotion heart like love pink smileys
 🧡	emotion heart orange smileys
 💛	emotion heart smileys yellow
 💚	emotion green heart smileys
 💙	blue emotion heart smileys
+🩵	blue cyan emotion heart light smileys teal
 💜	emotion heart purple smileys
 🤎	brown emotion heart smileys
 🖤	black emotion evil heart smileys wicked
+🩶	emotion gray grey heart silver slate smileys
 🤍	emotion heart smileys white
-💯	emotion full hundred points score smileys
+💋	emotion kiss lips mark smileys
+💯	emotion full hundred one percent points score smileys
 💢	anger angry comic emotion mad smileys symbol
 💥	boom collision comic emotion smileys
 💫	comic dizzy emotion smileys star
@@ -195,8 +199,7 @@
 💨	away comic dash dashing emotion running smileys
 🕳️	emotion hole smileys
 🕳	emotion hole smileys
-💣	bomb comic emotion smileys
-💬	balloon bubble comic dialog emotion smileys speech
+💬	balloon bubble comic dialog dialogue emotion smileys speech
 🗨️	bubble emotion left smileys speech
 🗨	balloon bubble dialog dialogue emotion left smileys speech
 🗯️	anger bubble emotion right smileys
@@ -258,6 +261,18 @@
 🫴🏽	beckon body catch come fingers hand medium offer open palm people skin tone up
 🫴🏾	beckon body catch come dark fingers hand medium offer open palm people skin tone up
 🫴🏿	beckon body catch come dark fingers hand offer open palm people skin tone up
+🫷	body fingers five hand high leftward leftwards open people push pushing refuse stop wait
+🫷🏻	body fingers five hand high leftward leftwards light open people push pushing refuse skin stop tone wait
+🫷🏼	body fingers five hand high leftward leftwards light medium open people push pushing refuse skin stop tone wait
+🫷🏽	body fingers five hand high leftward leftwards medium open people push pushing refuse skin stop tone wait
+🫷🏾	body dark fingers five hand high leftward leftwards medium open people push pushing refuse skin stop tone wait
+🫷🏿	body dark fingers five hand high leftward leftwards open people push pushing refuse skin stop tone wait
+🫸	body fingers five hand high open people push pushing refuse rightward rightwards stop wait
+🫸🏻	body fingers five hand high light open people push pushing refuse rightward rightwards skin stop tone wait
+🫸🏼	body fingers five hand high light medium open people push pushing refuse rightward rightwards skin stop tone wait
+🫸🏽	body fingers five hand high medium open people push pushing refuse rightward rightwards skin stop tone wait
+🫸🏾	body dark fingers five hand high medium open people push pushing refuse rightward rightwards skin stop tone wait
+🫸🏿	body dark fingers five hand high open people push pushing refuse rightward rightwards skin stop tone wait
 👌	body fingers hand ok partial people perfect
 👌🏻	body fingers hand light ok partial people perfect skin tone
 👌🏼	body fingers hand light medium ok partial people perfect skin tone
@@ -453,12 +468,12 @@
 🤳🏽	body camera hand medium people phone prop selfie skin tone
 🤳🏾	body camera dark hand medium people phone prop selfie skin tone
 🤳🏿	body camera dark hand people phone prop selfie skin tone
-💪	biceps body comic flex flexed muscle parts people
-💪🏻	biceps body comic flex flexed light muscle parts people skin tone
-💪🏼	biceps body comic flex flexed light medium muscle parts people skin tone
-💪🏽	biceps body comic flex flexed medium muscle parts people skin tone
-💪🏾	biceps body comic dark flex flexed medium muscle parts people skin tone
-💪🏿	biceps body comic dark flex flexed muscle parts people skin tone
+💪	bicep biceps body comic flex flexed muscle parts people
+💪🏻	bicep biceps body comic flex flexed light muscle parts people skin tone
+💪🏼	bicep biceps body comic flex flexed light medium muscle parts people skin tone
+💪🏽	bicep biceps body comic flex flexed medium muscle parts people skin tone
+💪🏾	bicep biceps body comic dark flex flexed medium muscle parts people skin tone
+💪🏿	bicep biceps body comic dark flex flexed muscle parts people skin tone
 🦾	accessibility arm body mechanical parts people prosthetic
 🦿	accessibility body leg mechanical parts people prosthetic
 🦵	body kick leg limb parts people
@@ -671,12 +686,12 @@
 🫅🏽	body crown medium monarch noble people person regal role royalty skin tone with
 🫅🏾	body crown dark medium monarch noble people person regal role royalty skin tone with
 🫅🏿	body crown dark monarch noble people person regal role royalty skin tone with
-🤴	body people person prince role
-🤴🏻	body light people person prince role skin tone
-🤴🏼	body light medium people person prince role skin tone
-🤴🏽	body medium people person prince role skin tone
-🤴🏾	body dark medium people person prince role skin tone
-🤴🏿	body dark people person prince role skin tone
+🤴	body fairy fantasy people person prince role tale
+🤴🏻	body fairy fantasy light people person prince role skin tale tone
+🤴🏼	body fairy fantasy light medium people person prince role skin tale tone
+🤴🏽	body fairy fantasy medium people person prince role skin tale tone
+🤴🏾	body dark fairy fantasy medium people person prince role skin tale tone
+🤴🏿	body dark fairy fantasy people person prince role skin tale tone
 👸	body fairy fantasy people person princess role tale
 👸🏻	body fairy fantasy light people person princess role skin tale tone
 👸🏼	body fairy fantasy light medium people person princess role skin tale tone
@@ -806,12 +821,12 @@
 💆🏽	activity body face getting massage medium people person salon skin tone
 💆🏾	activity body dark face getting massage medium people person salon skin tone
 💆🏿	activity body dark face getting massage people person salon skin tone
-💇	activity barber beauty body getting haircut parlor parlour people person
-💇🏻	activity barber beauty body getting haircut light parlor parlour people person skin tone
-💇🏼	activity barber beauty body getting haircut light medium parlor parlour people person skin tone
-💇🏽	activity barber beauty body getting haircut medium parlor parlour people person skin tone
-💇🏾	activity barber beauty body dark getting haircut medium parlor parlour people person skin tone
-💇🏿	activity barber beauty body dark getting haircut parlor parlour people person skin tone
+💇	activity barber beauty body getting haircut parlor parlour people person salon
+💇🏻	activity barber beauty body getting haircut light parlor parlour people person salon skin tone
+💇🏼	activity barber beauty body getting haircut light medium parlor parlour people person salon skin tone
+💇🏽	activity barber beauty body getting haircut medium parlor parlour people person salon skin tone
+💇🏾	activity barber beauty body dark getting haircut medium parlor parlour people person salon skin tone
+💇🏿	activity barber beauty body dark getting haircut parlor parlour people person salon skin tone
 🚶	activity body hike people person walk walking
 🚶🏻	activity body hike light people person skin tone walk walking
 🚶🏼	activity body hike light medium people person skin tone walk walking
@@ -1041,6 +1056,8 @@
 🐅	animal animals mammal nature tiger
 🐆	animal animals leopard mammal nature
 🐴	animal animals face horse mammal nature
+🫎	animal animals antlers elk mammal moose nature
+🫏	animal animals ass burro donkey mammal mule nature stubborn
 🐎	animal animals equestrian horse mammal nature racehorse racing
 🦄	animal animals face mammal nature unicorn
 🦓	animal animals mammal nature stripe zebra
@@ -1062,7 +1079,7 @@
 🦙	a alpaca animal animals guanaco llama mammal nature vicu wool
 🦒	animal animals giraffe mammal nature spots
 🐘	animal animals elephant mammal nature
-🦣	animal animals extinction large mammal mammoth nature tusk woolly
+🦣	animal animals extinct extinction large mammal mammoth nature tusk woolly
 🦏	animal animals mammal nature rhino rhinoceros
 🦛	animal animals hippo hippopotamus mammal nature
 🐭	animal animals face mammal mouse nature pet
@@ -1082,7 +1099,7 @@
 🦥	animal animals lazy mammal nature sloth slow
 🦦	animal animals fishing mammal nature otter playful
 🦨	animal animals mammal nature skunk stink
-🦘	animal animals australia joey jump kangaroo mammal marsupial nature
+🦘	animal animals joey jump kangaroo mammal marsupial nature
 🦡	animal animals badger honey mammal nature pester
 🐾	animal animals feet mammal nature paw print prints
 🦃	animal animals bird nature poultry turkey
@@ -1104,6 +1121,8 @@
 🦩	animal animals bird flamboyant flamingo nature tropical
 🦚	animal animals bird nature ostentatious peacock peahen proud
 🦜	animal animals bird nature parrot pirate talk
+🪽	angelic animal animals aviation bird flying mythology nature wing
+🪿	animal animals bird fowl goose honk nature silly
 🐸	amphibian animal animals face frog nature
 🐊	animal animals crocodile nature reptile
 🐢	animal animals nature reptile terrapin tortoise turtle
@@ -1124,6 +1143,7 @@
 🐙	animal animals marine nature octopus
 🐚	animal animals marine nature shell spiral
 🪸	animal animals coral marine nature ocean reef
+🪼	animal animals burn invertebrate jelly jellyfish marine nature ouch stinger
 🐌	animal animals bug mollusc nature snail
 🦋	animal animals bug butterfly insect moth nature pretty
 🐛	animal animals bug caterpillar insect nature worm
@@ -1145,7 +1165,7 @@
 💐	animals bouquet flower nature plant
 🌸	animals blossom cherry flower nature plant
 💮	animals flower nature plant white
-🪷	animals buddhism flower hinduism india lotus nature plant purity vietnam
+🪷	animals buddhism flower hinduism lotus nature plant purity
 🏵️	animals flower nature plant rosette
 🏵	animals flower nature plant rosette
 🌹	animals flower nature plant rose
@@ -1154,6 +1174,7 @@
 🌻	animals flower nature plant sun sunflower
 🌼	animals blossom flower nature plant
 🌷	animals flower nature plant tulip
+🪻	animals bluebonnet flower hyacinth lavender lupine nature plant snapdragon
 🌱	animals nature other plant seedling young
 🪴	animals boring grow house nature nurturing other plant pot potted useless
 🌲	animals evergreen nature other plant tree
@@ -1170,6 +1191,7 @@
 🍃	animals blow flutter fluttering in leaf nature other plant wind
 🪹	animals empty nature nest nesting other plant
 🪺	animals eggs nature nest nesting other plant with
+🍄	animals mushroom nature other plant toadstool
 🍇	drink food fruit grape grapes
 🍈	drink food fruit melon
 🍉	drink food fruit watermelon
@@ -1202,17 +1224,18 @@
 🥦	broccoli cabbage drink food vegetable wild
 🧄	drink flavoring flavouring food garlic vegetable
 🧅	drink flavoring flavouring food onion vegetable
-🍄	drink food mushroom toadstool vegetable
 🥜	drink food nut nuts peanut peanuts vegetable
 🫘	bean beans drink food kidney legume vegetable
 🌰	chestnut drink food nut plant vegetable
+🫚	beer drink food ginger root spice vegetable
+🫛	beans drink edamame food legume pea pod vegetable
 🍞	bread drink food loaf prepared
 🥐	bread breakfast crescent croissant drink food french prepared roll
 🥖	baguette bread drink food french prepared stick
 🫓	arepa drink flatbread food lavash naan pita prepared
 🥨	drink food prepared pretzel twisted
 🥯	bagel bakery breakfast drink food prepared schmear
-🥞	breakfast cr drink food hotcake pancake pancakes pe prepared
+🥞	breakfast cr crepe drink food hotcake pancake pancakes pe prepared
 🧇	breakfast butter drink food indecisive iron prepared unclear vague waffle with
 🧀	cheese drink food prepared wedge
 🍖	bone drink food meat on prepared
@@ -1222,7 +1245,7 @@
 🍔	beefburger burger drink food hamburger prepared
 🍟	chips drink food french fries prepared
 🍕	cheese drink food pizza prepared slice
-🌭	dog drink food frankfurter hot hotdog prepared sausage
+🌭	dog drink food frank frankfurter hot hotdog prepared sausage
 🥪	bread drink food prepared sandwich
 🌮	drink food mexican prepared taco
 🌯	burrito drink food mexican prepared wrap
@@ -1282,17 +1305,17 @@
 🫖	drink food pot tea teapot
 🍵	beverage cup drink food handle tea teacup without
 🍶	bar beverage bottle cup drink food sak sake
-🍾	bar bottle cork drink food popping with
+🍾	bar bottle bubbly cork drink food popping with
 🍷	bar beverage drink food glass wine
 🍸	bar cocktail drink food glass
 🍹	bar drink food tropical
 🍺	bar beer drink food mug
-🍻	bar beer clink clinking drink food mug mugs
-🥂	celebrate clink clinking drink food glass glasses
-🥃	drink food glass liquor shot tumbler whisky
+🍻	bar beer cheers clink clinking drink food mug mugs
+🥂	celebrate cheers clink clinking drink food glass glasses
+🥃	drink food glass liquor shot tumbler whiskey whisky
 🫗	drink empty food glass liquid pouring spill
 🥤	cup drink food juice soda straw with
-🧋	bubble drink food milk pearl tea
+🧋	boba bubble drink food milk pearl tea
 🧃	beverage box carton drink food juice popper straw sweet
 🧉	drink food mat mate
 🧊	cold cube drink food ice iceberg
@@ -1370,12 +1393,12 @@
 ⛲	fountain other place places travel
 ⛺	camping other place places tent travel
 🌁	fog foggy other place places travel
-🌃	night other place places star stars travel with
+🌃	night other place places star starry stars travel with
 🏙️	cityscape other place places travel
-🏙	city cityscape other place places travel
+🏙	city cityscape other place places skyline travel
 🌄	morning mountain mountains other over place places sun sunrise travel
 🌅	morning other place places sun sunrise travel
-🌆	at city cityscape dusk evening landscape other place places sunset travel
+🌆	at city cityscape dusk evening landscape other place places skyline sunset travel
 🌇	dusk other place places sun sunset travel
 🌉	at bridge night other place places travel
 ♨️	hot other place places springs travel
@@ -1391,7 +1414,7 @@
 🚄	ground high places railway shinkansen speed train transport travel
 🚅	bullet ground places railway shinkansen speed train transport travel
 🚆	ground places railway train transport travel
-🚇	ground metro places subway transport travel
+🚇	ground metro places subway transport travel tube underground
 🚈	ground light places rail railway transport travel
 🚉	ground places railway station train transport travel
 🚊	bus car ground light oncoming places rail streetcar tram tramcar transport travel trolley trolleybus
@@ -1454,11 +1477,11 @@
 🛥	boat motor motorboat places transport travel water
 🚢	boat passenger places ship transport travel water
 ✈️	air airplane places transport travel
-✈	aeroplane air airplane places transport travel
+✈	aeroplane air airplane flight places transport travel
 🛩️	air airplane places small transport travel
-🛩	aeroplane air airplane places small transport travel
-🛫	aeroplane air airplane check departure departures in off places take transport travel
-🛬	aeroplane air airplane arrival arrivals arriving landing places transport travel
+🛩	aeroplane air airplane places plane small transport travel
+🛫	aeroplane air airplane check departure departures flight in off places plane take transport travel
+🛬	aeroplane air airplane arrival arrivals arriving flight landing places plan transport travel
 🪂	air glide hang parachute parasail parascend places skydive transport travel
 💺	air chair places seat transport travel
 🚁	air helicopter places transport travel vehicle
@@ -1468,7 +1491,7 @@
 🛰️	air places satellite transport travel
 🛰	air places satellite space transport travel
 🚀	air places rocket space transport travel
-🛸	air flying places saucer transport travel ufo
+🛸	air flying places saucer spaceship transport travel ufo
 🛎️	bell bellhop hotel places travel
 🛎	bell bellhop hotel places porter travel
 🧳	hotel luggage packing places travel
@@ -1618,7 +1641,7 @@
 🏓	activities ball bat game paddle ping pong sport table tennis
 🏸	activities badminton birdie game racquet shuttlecock sport
 🥊	activities boxing glove sport
-🥋	activities arts judo karate martial sport taekwondo uniform
+🥋	activities arts judo karate martial mma sport taekwondo uniform
 🥅	activities cage goal net sport
 ⛳	activities flag golf hole in sport
 ⛸️	activities ice skate sport
@@ -1629,14 +1652,13 @@
 🎿	activities ski skiing skis snow sport
 🛷	activities sled sledge sleigh sport
 🥌	activities curling game rock sport stone
-🎯	activities bullseye dart direct game hit target
+🎯	activities bull bullseye dart direct eye game hit s target
 🪀	activities fluctuate game toy yo
 🪁	activities fly game kite soar
-🎱	activities ball billiard eight game pool
+🔫	activities game gun handgun pistol revolver tool toy water weapon
+🎱	activities ball billiard eight game magic pool
 🔮	activities ball crystal fairy fantasy fortune game tale tool
 🪄	activities game magic wand witch wizard
-🧿	activities amulet bead charm evil eye game nazar talisman
-🪬	activities amulet fatima game hamsa hand mary miriam protection
 🎮	activities controller game video
 🕹️	activities game joystick
 🕹	activities game joystick video
@@ -1689,6 +1711,7 @@
 🩳	bathing boardies boardshorts clothing objects pants shorts suit swim underwear
 👙	bikini clothing objects piece suit swim two
 👚	blouse clothes clothing objects s top woman
+🪭	clothing cooling dance fan flutter folding hand hot objects shy
 👛	accessories clothing coin objects purse
 👜	accessories bag clothing handbag objects purse tote
 👝	accessories bag clothing clutch objects pouch
@@ -1700,10 +1723,11 @@
 👟	athletic clothing objects runners running shoe sneaker trainer
 🥾	backpacking boot camping clothing hiking objects
 🥿	ballet clothing flat objects on pump shoe slip slipper
-👠	clothing heel heeled high objects shoe woman
+👠	clothing heel heeled high objects shoe stiletto woman
 👡	clothing objects s sandal shoe woman
 🩰	ballet clothing dance objects shoes
 👢	boot clothing objects s shoe woman
+🪮	afro clothing comb hair objects pick
 👑	clothing crown king objects queen
 👒	clothing hat objects s woman
 🎩	clothing hat objects top tophat
@@ -1746,6 +1770,8 @@
 🪕	banjo instrument music musical objects stringed
 🥁	drum drumsticks instrument music musical objects percussions
 🪘	beat conga drum instrument long musical objects rhythm
+🪇	instrument maracas music musical objects percussion rattle shake
+🪈	fife flute instrument music musical objects pipe recorder woodwind
 📱	cell mobile objects phone telephone
 📲	arrow cell mobile objects phone receive with
 ☎️	objects phone telephone
@@ -1782,7 +1808,7 @@
 📷	camera light objects video
 📸	camera flash light objects video with
 📹	camera light objects video
-📼	light objects tape vhs video videocassette
+📼	light objects tape vhs video videocassette videotape
 🔍	glass left light magnifying objects search tilted tool video
 🔎	glass light magnifying objects right search tilted tool video
 🕯️	candle light objects video
@@ -1809,7 +1835,7 @@
 📑	book bookmark mark marker objects paper tabs
 🔖	book bookmark mark objects paper
 🏷️	book label objects paper
-🏷	book label objects paper
+🏷	book label objects paper tag
 💰	bag dollar money moneybag objects
 🪙	coin gold metal money objects silver treasure
 💴	banknote bill currency money note objects yen
@@ -1878,7 +1904,7 @@
 🗄️	cabinet file objects office
 🗄	cabinet file filing objects office
 🗑️	objects office wastebasket
-🗑	objects office wastebasket
+🗑	basket bin objects office paper rubbish trash waste wastebasket
 🔒	closed lock locked objects padlock
 🔓	lock objects open padlock unlock unlocked
 🔏	ink lock locked nib objects pen privacy with
@@ -1898,8 +1924,8 @@
 🗡	dagger knife objects tool weapon
 ⚔️	crossed objects swords tool
 ⚔	crossed objects swords tool weapon
-🔫	gun handgun objects pistol revolver tool toy water weapon
-🪃	australia boomerang objects rebound repercussion tool
+💣	bomb comic objects tool
+🪃	boomerang objects rebound repercussion tool
 🏹	and archer arrow bow objects sagittarius tool zodiac
 🛡️	objects shield tool
 🛡	objects shield tool weapon
@@ -1931,7 +1957,7 @@
 📡	antenna dish objects satellite science
 💉	ill injection medical medicine needle objects shot sick syringe
 🩸	bleed blood donation drop injury medical medicine menstruation objects of
-💊	doctor medical medicine objects pill sick
+💊	capsule doctor medical medicine objects pill sick
 🩹	adhesive bandage bandaid dressing injury medical objects plaster sticking
 🩼	aid cane crutch disability hurt medical mobility objects stick
 🩺	doctor heart medical medicine objects stethoscope
@@ -1965,10 +1991,12 @@
 🛒	basket cart household objects shopping trolley
 🚬	cigarette object objects other smoking
 ⚰️	coffin object objects other
-⚰	coffin death object objects other
+⚰	casket coffin death object objects other
 🪦	cemetery grave graveyard headstone object objects other tombstone
 ⚱️	funeral object objects other urn
 ⚱	ashes death funeral object objects other urn
+🧿	amulet bead charm evil eye nazar object objects other talisman
+🪬	amulet fatima hamsa hand mary miriam object objects other protection
 🗿	face moai moyai object objects other statue
 🪧	demonstration object objects other picket placard protest sign
 🪪	card credentials driving id identification licence license object objects other security
@@ -2057,6 +2085,7 @@
 ☮	peace religion symbol symbols
 🕎	candelabrum candlestick menorah religion symbols
 🔯	dotted fortune pointed religion six star symbols
+🪯	khanda religion sikh symbols
 ♈	aries ram symbols zodiac
 ♉	bull ox symbols taurus zodiac
 ♊	gemini symbols twins zodiac
@@ -2101,6 +2130,7 @@
 🔅	av brightness button dim low symbol symbols
 🔆	av bright brightness button symbol symbols
 📶	antenna av bar bars cell mobile phone symbol symbols
+🛜	av computer fi internet network symbol symbols wi wifi wireless
 📳	av cell mobile mode phone symbol symbols telephone vibrate vibration
 📴	av cell mobile off phone symbol symbols telephone
 ♀️	female gender sign symbols
@@ -2211,7 +2241,7 @@
 🅾	alphanum blood button o symbols type
 🆗	alphanum button ok symbols
 🅿️	alphanum button p symbols
-🅿	alphanum button p parking symbols
+🅿	alphanum button car carpark p park parking symbols
 🆘	alphanum button help sos symbols
 🆙	alphanum button mark symbols up
 🆚	alphanum button symbols versus vs
