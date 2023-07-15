@@ -379,30 +379,18 @@ func (t *Tokenizer) Next() (*Token, error) {
 	return t.scanStream()
 }
 
-// Split partitions a string into a slice of strings.
-func Split(s string) ([]string, error) {
-	l := NewLexer(strings.NewReader(s))
-	subStrings := make([]string, 0)
+func main() {
+	var r io.Reader = os.Stdin
+	if in := strings.Join(os.Args[2:], " "); in != "" {
+		r = strings.NewReader(in)
+	}
+
+	l := NewLexer(r)
 	for {
 		word, err := l.Next()
 		if err != nil {
-			if err == io.EOF {
-				return subStrings, nil
-			}
-			return subStrings, err
+			break
 		}
-		subStrings = append(subStrings, word)
-	}
-}
-
-func main() {
-	in := strings.Join(os.Args[2:], " ")
-	if in == "" {
-		stdin, _ := io.ReadAll(os.Stdin)
-		in = string(stdin)
-	}
-	items, _ := Split(in)
-	for _, i := range items {
-		fmt.Println(i)
+		fmt.Println(word)
 	}
 }
