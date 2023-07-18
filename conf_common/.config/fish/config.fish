@@ -195,18 +195,6 @@ alias vi __super_vim
 alias vim __super_vim
 alias nvim __super_vim
 
-function __package_sudo
-    test (count $argv) -eq 0
-    and return
-    if contains -- "$argv[1]" npm yarn python python2 python3 pip3 pip go
-        echo "don't do `sudo $argv[1]`"
-        return 1
-    end
-    command sudo $argv
-end
-
-alias sudo __package_sudo
-
 function git
     if isatty stdout; and contains -- $argv[1] diff status log d s l
         command git -c color.status=always -c color.ui=always $argv | add-osc-8-hyperlink
@@ -229,10 +217,4 @@ function go
         return
     end
     command go $argv
-end
-
-function git
-    contains -- --force $argv; and return 1
-    contains -- -f $argv; and return 1
-    command git $argv
 end
