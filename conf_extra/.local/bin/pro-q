@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+# create a chain from source -> virt sink -> pro-q 3 -> hw sink
+# requires yabridge, carla, pipewire
+
+exec 9>"$XDG_CACHE_HOME/pro-q"
+flock -n 9 || exit 1
+
+DEFER=
+defer() {
+    DEFER="${*@Q}; ${DEFER}"
+    # shellcheck disable=SC2064
+    trap "{ $DEFER }" EXIT
+}
+
+vst_path="$HOME/.vst3/yabridge/FabFilter/FabFilter Pro-Q 3.vst3"
+vst_type="vst3" # internal ladspa dssi lv2 vst vst2 vst3 clap jsfx sf2 sfz
+vst_node_name="Pro-Q 3"
+
+sink_hw="$(pactl get-default-sink)"
+sink_virt="vfx"
+
+carla-single native "$vst_type" "$vst_path" &
+defer kill $!
+
+while ! pw-cli info "$vst_node_name" | grep -qE "id: [0-9]+"; do
+    sleep 0.5
+done
+
+pactl load-module module-null-sink sink_name="$sink_virt"
+defer pactl unload-module module-null-sink
+
+pactl set-default-sink "$sink_virt"
+defer pactl set-default-sink "$sink_hw"
+
+pw-link "$sink_virt" "$vst_node_name"
+defer pw-link -d "$sink_virt" "$vst_node_name"
+
+pw-link "$vst_node_name" "$sink_hw"
+defer pw-link -d "$vst_node_name" "$sink_hw"
+
+wait
