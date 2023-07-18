@@ -3,7 +3,7 @@
 wine="$(which wine)"
 
 export WINEARCH=win64
-export WINEDLLOVERRIDES="gdiplus=n;d2d1=d;msvcrt=b,n;libglesv2.dll=d"
+export WINEDLLOVERRIDES="gdiplus=n;d2d1=b;msvcrt=b,n;libglesv2.dll=d" # [n]ative [b]uiltin [d]isabled
 export WINELOADER="$wine"
 export WINEPREFIX="$XDG_DATA_HOME/yabridge-wine"
 export WINEFSYNC=1
