@@ -1,0 +1,35 @@
+#!/usr/bin/env fish
+
+set lat "53.350140"
+set lon "-6.266155"
+set url "https://api.met.no/weatherapi/locationforecast/2.0/classic?lat=$lat;lon=$lon"
+set point_per_mm 10
+
+function parse
+    jq -r \
+        --argjson start (date -d (date -u +"%Y-%m-%dT%H:00:00Z") +%s) \
+        --argjson inc 3600 \
+        '
+        .weatherdata.product.time
+        | .[]
+        | select((."@from" | fromdate) >= $start and (."@to" | fromdate) == ((."@from" | fromdate) + $inc))
+        | select(.location.precipitation?)
+        | "\(."@from")\t\(.location.precipitation."@value")"
+        '
+end
+
+function format
+    while read -d \t date mm
+        printf "%s\t%s\t%smm\t%s░\n" \
+            (date -d $date "+%A" | lower) \
+            (date -d $date "+%H:%M") \
+            $mm \
+            (string repeat -n (printf "%.0f" (math "$mm * $point_per_mm")) ▒)
+    end
+end
+
+function table
+    column -t -s \t --table-noheadings -C name=day -C name=time,right -C name=mm,right -C name=bar,trunc
+end
+
+curl -s "$url" | rsl xml json | parse | format | table
