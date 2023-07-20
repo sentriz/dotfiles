@@ -196,11 +196,13 @@ mode $mode_scrot {
     bindsym Escape mode "default"
 }
 
-set $mode_recording "recording mode: [r]egion, [m]onitor, [s]top (shift for audio)"
+set $mode_recording "recording mode: [r]egion, [w]indow, [m]onitor, [s]top (shift for audio)"
 mode $mode_recording {
     bindsym r       exec recording,                   mode "default"
+    bindsym w       exec recording --window,          mode "default"
     bindsym m       exec recording --monitor,         mode "default"
     bindsym shift+r exec recording --audio,           mode "default"
+    bindsym shift+w exec recording --audio --window,  mode "default"
     bindsym shift+m exec recording --audio --monitor, mode "default"
     bindsym s       exec recording stop,              mode "default"
     bindsym Return mode "default"

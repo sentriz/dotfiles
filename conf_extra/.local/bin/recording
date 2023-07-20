@@ -8,16 +8,24 @@ end
 
 set -l filename "$DOTS_RECORDINGS_DIR/"(date '+%Y%m%d_%H%M%S.mp4')
 
-contains -- --monitor $argv
-and set -l slurp_cmd -o
+set -l border 2
 
-set -l area (slurp $slurp_cmd)
+set area
+if contains -- --monitor $argv
+    set area (slurp -o)
+else if contains -- --window $argv
+    set area (swaymsg -t get_tree | jq --argjson b $border -r '.. | select(.pid? and .visible?) | .rect | "\(.x + $b),\(.y + $b) \(.width - $b*2)x\(.height - $b*2)"' | slurp)
+else
+    set area (slurp)
+end
 test -z "$area"; and exit
 
-set -l audio_device (pactl list short sources | grep -Po "\K[^\s]+\.monitor(?=.*IDLE)")
-test -n "$audio_device"
-and contains -- --audio $argv
-and set -l audio_cmd "-a$audio_device"
+set audio_cmd
+if contains -- --audio $argv
+    set -l audio_device (pactl list short sources | grep -Po "\K[^\s]+\.monitor(?=.*IDLE)")
+    test -z "$audio_device"; and return
+    set audio_cmd "-a$audio_device"
+end
 
 wf-recorder $audio_cmd -f "$filename" -g "$area" --force-yuv >/dev/null 2>&1
 echo "$filename"
