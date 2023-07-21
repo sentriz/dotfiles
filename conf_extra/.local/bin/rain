@@ -1,7 +1,10 @@
 #!/usr/bin/env fish
 
-set lat "53.350140"
-set lon "-6.266155"
+set lat $argv[1]
+set lon $argv[2]
+test -z $lat; and set lat "53.350140"
+test -z $lon; and set lon "-6.266155"
+
 set url "https://api.met.no/weatherapi/locationforecast/2.0/classic?lat=$lat;lon=$lon"
 set point_per_mm 10
 
