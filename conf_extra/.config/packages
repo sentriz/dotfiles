@@ -94,7 +94,6 @@ arch qt6-wayland
 arch slurp
 arch sway
 arch swaybg
-arch swayidle
 arch swaylock
 arch wf-recorder
 arch wl-clipboard
