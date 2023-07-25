@@ -1,7 +1,17 @@
 #!/usr/bin/env fish
 
 set -l filename "$DOTS_SCREENSHOTS_DIR/"(date '+%Y%m%d_%H%M%S.png')
-set -l area (slurp)
+
+set -l border 2
+
+set area
+if contains -- --monitor $argv
+    set area (slurp -o)
+else if contains -- --window $argv
+    set area (swaymsg -t get_tree | jq --argjson b $border -r '.. | select(.pid? and .visible?) | .rect | "\(.x + $b),\(.y + $b) \(.width - $b*2)x\(.height - $b*2)"' | slurp)
+else
+    set area (slurp)
+end
 test -z "$area"; and exit
 
 grim -g "$area" "$filename" >/dev/null
