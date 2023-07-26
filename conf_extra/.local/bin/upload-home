@@ -1,41 +1,16 @@
 #!/usr/bin/env fish
 
-if test (count $argv) -ne 1
-    echo "usage: upload-home <path to image>" >&2
-    exit 1
-end
-
 set -l image_path $argv[1]
+test -f "$image_path"; or exit 1
+
 set -l url_upload (secret image_url_upload)
 set -l url_public (secret image_url_public)
 set -l api_key (secret image_api_key)
 
-if ! test -e "$image_path"
-    echo "couldn't find image $image_path" >&2
-    exit 1
-end
-
-set -l response (
-    curl \
-        --silent \
-        --fail \
-        --header (printf "X-API-Key: %s" $api_key) \
-        --form "i=@$image_path" \
-        "$url_upload"
-)
-if test -z "$response"
-    echo "failed to upload" >&2
-    exit 1
-end
+set -l response (curl --silent --fail --header (printf "X-API-Key: %s" $api_key) --form "i=@$image_path" "$url_upload")
+test -z "$response"; and exit 1
 
 set -l image_id (echo "$response" | jq -r '.result.id')
-if test -z "$image_id"
-    echo "server returned unexpected response $response" >&2
-    exit 1
-end
+test -z "$image_id"; and exit 1
 
 echo "$url_public/$image_id"
-
-if ! isatty stdout
-    notify-send screenshot 'uploaded to home' >/dev/null 2>&1
-end

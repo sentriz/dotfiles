@@ -1,18 +1,38 @@
 #!/usr/bin/env fish
 
-set -l filename "$DOTS_SCREENSHOTS_DIR/"(date '+%Y%m%d_%H%M%S.png')
+echo $argv | read src dest
+test -z $src; and exit 1
+test -z $dest; and exit 1
 
-set -l border 2
+set filename $DOTS_SCREENSHOTS_DIR/(date '+%Y%m%d_%H%M%S.png')
 
-set area
-if contains -- --monitor $argv
-    set area (slurp -o)
-else if contains -- --window $argv
-    set area (swaymsg -t get_tree | jq --argjson b $border -r '.. | select(.pid? and .visible?) | .rect | "\(.x + $b),\(.y + $b) \(.width - $b*2)x\(.height - $b*2)"' | slurp)
-else
-    set area (slurp)
+switch $src
+    case clipboard
+        wl-paste -l | grep -q "^image/png"
+        and wl-paste >$filename
+    case "*"
+        grim -g (area $src) $filename
 end
-test -z "$area"; and exit
+test -f $filename; or exit 1
 
-grim -g "$area" "$filename" >/dev/null
-echo "$filename"
+function alert_copy
+    read link
+    test -z $link; and return 1
+    wl-copy $link
+    notify-send screenshot "uploaded to $argv[1]"
+end
+
+switch $dest
+    case home
+        upload-home $filename | alert_copy home
+    case imgur
+        upload-imgur $filename | alert_copy imgur
+    case ptp
+        upload-ptp $filename | alert_copy ptp
+    case x0
+        upload-x0 $filename | alert_copy x0
+    case clipboard
+        wl-copy <$filename
+    case drop
+        drop $filename
+end

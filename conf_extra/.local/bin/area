@@ -1,0 +1,14 @@
+#!/usr/bin/env fish
+
+set border 2
+
+switch $argv[1]
+    case region
+        slurp
+    case monitor
+        slurp -o
+    case window
+        swaymsg -t get_tree | jq --argjson b $border -r '.. | select(.pid? and .visible?) | .rect | "\(.x + $b),\(.y + $b) \(.width - $b*2)x\(.height - $b*2)"' | slurp
+    case '*'
+        exit 1
+end

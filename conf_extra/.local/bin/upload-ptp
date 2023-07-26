@@ -1,42 +1,16 @@
 #!/usr/bin/env fish
 
-if test (count $argv) -ne 1
-    echo "usage: upload-ptp <path to image>" >&2
-    exit 1
-end
-
 set -l image_path $argv[1]
+test -f "$image_path"; or exit 1
+
 set -l api_key (secret ptpimg_api_key)
 set -l upload_url 'https://ptpimg.me/upload.php'
 
-if ! test -e "$image_path"
-    echo "couldn't find image $image_path" >&2
-    exit 1
-end
-
-set -l response (
-    curl \
-        --silent \
-        --fail \
-        --header "Authorization: Client-ID $client_id" \
-        --form "api_key=$api_key" \
-        --form "file-upload[0]=@$image_path" \
-        "$upload_url"
-)
-if test -z "$response"
-    echo "failed to upload" >&2
-    exit 1
-end
+set -l response (curl --silent --fail --header "Authorization: Client-ID $client_id" --form "api_key=$api_key" --form "file-upload[0]=@$image_path" "$upload_url")
+test -z "$response"; and exit 1
 
 set -l code (echo "$response" | jq -r '.[0].code')
 set -l ext (echo "$response" | jq -r '.[0].ext')
-if test \( -z "$link" \) -a \( -z "$ext" \)
-    echo "server returned unexpected response $response" >&2
-    exit 1
-end
+test \( -z "$code" \) -o \( -z "$ext" \); and exit 1
 
 echo "https://ptpimg.me/$code.$ext"
-
-if ! isatty stdout
-    notify-send screenshot 'uploaded to ptpimg' >/dev/null 2>&1
-end

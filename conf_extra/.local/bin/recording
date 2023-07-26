@@ -1,31 +1,26 @@
 #!/usr/bin/env fish
 
-set -l command "$argv[1]"
-if test "$command" = stop
-    killall --signal SIGINT wf-recorder
-    exit
+echo $argv | read cmd src audio
+test -z $cmd; and exit 1
+
+switch $cmd
+    case start
+        set -l filename "$DOTS_RECORDINGS_DIR/"(date '+%Y%m%d_%H%M%S.mp4')
+
+        set -l area (area $src)
+        test -z "$area"; and exit
+
+        set -l audio_dev (pactl list short sources | grep -Po "\K[^\s]+\.monitor(?=.*IDLE)")
+
+        test -n $audio -a -n $audio_dev
+        and set audio_cmd "-a$audio_dev"
+
+        wf-recorder $audio_cmd -f "$filename" -g "$area" --force-yuv >/dev/null 2>&1
+        test ! -f "$filename"; and exit 1
+
+        echo "$filename"
+        notify-send recording done
+
+    case stop
+        killall --signal SIGINT wf-recorder
 end
-
-set -l filename "$DOTS_RECORDINGS_DIR/"(date '+%Y%m%d_%H%M%S.mp4')
-
-set -l border 2
-
-set area
-if contains -- --monitor $argv
-    set area (slurp -o)
-else if contains -- --window $argv
-    set area (swaymsg -t get_tree | jq --argjson b $border -r '.. | select(.pid? and .visible?) | .rect | "\(.x + $b),\(.y + $b) \(.width - $b*2)x\(.height - $b*2)"' | slurp)
-else
-    set area (slurp)
-end
-test -z "$area"; and exit
-
-set audio_cmd
-if contains -- --audio $argv
-    set -l audio_device (pactl list short sources | grep -Po "\K[^\s]+\.monitor(?=.*IDLE)")
-    test -z "$audio_device"; and return
-    set audio_cmd "-a$audio_device"
-end
-
-wf-recorder $audio_cmd -f "$filename" -g "$area" --force-yuv >/dev/null 2>&1
-echo "$filename"

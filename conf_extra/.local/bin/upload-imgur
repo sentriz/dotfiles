@@ -1,40 +1,15 @@
 #!/usr/bin/env fish
 
-if test (count $argv) -ne 1
-    echo "usage: upload-imgur <path to image>" >&2
-    exit 1
-end
-
 set -l image_path $argv[1]
+test -f "$image_path"; or exit 1
+
 set -l client_id (secret imgur_apikey)
 set -l upload_url 'https://api.imgur.com/3/upload'
 
-if ! test -e "$image_path"
-    echo "couldn't find image $image_path" >&2
-    exit 1
-end
-
-set -l response (
-    curl \
-        --silent \
-        --fail \
-        --header "Authorization: Client-ID $client_id" \
-        --form "image=@$image_path" \
-        "$upload_url"
-)
-if test -z "$response"
-    echo "failed to upload" >&2
-    exit 1
-end
+set -l response (curl --silent --fail --header "Authorization: Client-ID $client_id" --form "image=@$image_path" "$upload_url")
+test -z "$response"; and exit 1
 
 set -l link (echo "$response" | jq -r '.data.link')
-if test -z "$link"
-    echo "server returned unexpected response $response" >&2
-    exit 1
-end
+test -z "$link"; and exit 1
 
 echo "$link"
-
-if ! isatty stdout
-    notify-send screenshot 'uploaded to imgur' >/dev/null 2>&1
-end
