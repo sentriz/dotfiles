@@ -1,16 +1,16 @@
 #!/usr/bin/env fish
 
-set -l image_path $argv[1]
+set image_path $argv[1]
 test -f "$image_path"; or exit 1
 
-set -l api_key (secret ptpimg_api_key)
-set -l upload_url 'https://ptpimg.me/upload.php'
+set api_key (secret ptpimg_api_key)
+set upload_url 'https://ptpimg.me/upload.php'
 
-set -l response (curl --silent --fail --header "Authorization: Client-ID $client_id" --form "api_key=$api_key" --form "file-upload[0]=@$image_path" "$upload_url")
+set response (curl --silent --fail --header "Authorization: Client-ID $client_id" --form "api_key=$api_key" --form "file-upload[0]=@$image_path" "$upload_url")
 test -z "$response"; and exit 1
 
-set -l code (echo "$response" | jq -r '.[0].code')
-set -l ext (echo "$response" | jq -r '.[0].ext')
+set code (echo "$response" | jq -r '.[0].code')
+set ext (echo "$response" | jq -r '.[0].ext')
 test \( -z "$code" \) -o \( -z "$ext" \); and exit 1
 
 echo "https://ptpimg.me/$code.$ext"

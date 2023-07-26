@@ -1,7 +1,7 @@
 #!/usr/bin/env fish
 
-set -l paste_url (secret paste_url)
+set paste_url (secret paste_url)
 test -z "$paste_url"; and exit 1
 
-set -l key (curl -sf --data-binary @- "$paste_url/documents" | jq -r '.key')
+set key (curl -sf --data-binary @- "$paste_url/documents" | jq -r '.key')
 printf "%s/raw/%s\n" $paste_url $key

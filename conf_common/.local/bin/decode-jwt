@@ -5,7 +5,7 @@ if test (count $argv) -ne 1
     exit 1
 end
 
-set -l token "$argv[1]"
+set token "$argv[1]"
 
 test $token = -
 and set -l token (cat)

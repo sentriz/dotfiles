@@ -1,16 +1,16 @@
 #!/usr/bin/env fish
 
-set -l image_path $argv[1]
+set image_path $argv[1]
 test -f "$image_path"; or exit 1
 
-set -l url_upload (secret image_url_upload)
-set -l url_public (secret image_url_public)
-set -l api_key (secret image_api_key)
+set url_upload (secret image_url_upload)
+set url_public (secret image_url_public)
+set api_key (secret image_api_key)
 
-set -l response (curl --silent --fail --header (printf "X-API-Key: %s" $api_key) --form "i=@$image_path" "$url_upload")
+set response (curl --silent --fail --header (printf "X-API-Key: %s" $api_key) --form "i=@$image_path" "$url_upload")
 test -z "$response"; and exit 1
 
-set -l image_id (echo "$response" | jq -r '.result.id')
+set image_id (echo "$response" | jq -r '.result.id')
 test -z "$image_id"; and exit 1
 
 echo "$url_public/$image_id"

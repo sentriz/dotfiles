@@ -1,15 +1,15 @@
 #!/usr/bin/env fish
 
-set -l image_path $argv[1]
+set image_path $argv[1]
 test -f "$image_path"; or exit 1
 
-set -l client_id (secret imgur_apikey)
-set -l upload_url 'https://api.imgur.com/3/upload'
+set client_id (secret imgur_apikey)
+set upload_url 'https://api.imgur.com/3/upload'
 
-set -l response (curl --silent --fail --header "Authorization: Client-ID $client_id" --form "image=@$image_path" "$upload_url")
+set response (curl --silent --fail --header "Authorization: Client-ID $client_id" --form "image=@$image_path" "$upload_url")
 test -z "$response"; and exit 1
 
-set -l link (echo "$response" | jq -r '.data.link')
+set link (echo "$response" | jq -r '.data.link')
 test -z "$link"; and exit 1
 
 echo "$link"
