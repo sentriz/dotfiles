@@ -154,30 +154,23 @@ bindsym $super+r workspace back_and_forth, move workspace to output right, works
 ## bindings: modes
 bindsym $super+$alt+space mode $mode_move_floating focus floating
 bindsym $super+$alt+q     mode $mode_system
-bindsym $super+$alt+i     mode $mode_i3
 bindsym $super+$alt+s     mode $mode_scrot
 bindsym $super+$alt+r     mode $mode_recording
 bindsym $super+$alt+t     mode $mode_timer
 
-set $mode_system "system mode: [l]ock, [s]uspend, [r]eboot, shut[d]own"
+set $mode_system "system: [l]ock [s]uspend [r]eboot shut[d]own e[x]it r[e]load"
 mode $mode_system {
-    bindsym l exec $lock;               mode default
-    bindsym d exec systemctl poweroff;  mode default
-    bindsym r exec systemctl reboot;    mode default
-    bindsym s exec systemctl suspend;   mode default
+    bindsym l exec $lock,               mode default
+    bindsym d exec systemctl poweroff,  mode default
+    bindsym r exec systemctl reboot,    mode default
+    bindsym s exec systemctl suspend,   mode default
+    bindsym x exit
+    bindsym e reload
     bindsym Return mode default
     bindsym Escape mode default
 }
 
-set $mode_i3 "i3 mode: e[x]it, reload [c]onfig"
-mode $mode_i3 {
-    bindsym x exit
-    bindsym c reload
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
-
-set $mode_move_floating "floating move mode: [h|j|k|l]"
+set $mode_move_floating "floating move: [h|j|k|l]"
 mode $mode_move_floating {
     bindsym h move left
     bindsym j move down
@@ -196,7 +189,7 @@ mode $mode_scrot {
     bindsym Escape mode "default"
 }
 
-set $mode_recording "recording mode: [r]egion, [w]indow, [m]onitor, [s]top (shift for audio)"
+set $mode_recording "recording: [r]egion [w]indow [m]onitor [s]top (shift for audio)"
 mode $mode_recording {
     bindsym r       exec recording,                   mode "default"
     bindsym w       exec recording --window,          mode "default"
