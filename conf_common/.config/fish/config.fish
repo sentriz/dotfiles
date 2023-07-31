@@ -128,21 +128,8 @@ abbr fgrep "fgrep -Ei"
 abbr sed "sed -E"
 abbr rg "rg --pcre2 --smart-case"
 
-# cd   -> pushd
-# cd - -> popd
-abbr cd ce
-function ce --wraps pushd
-    if test (count $argv) -eq 0
-        cd
-        return $status
-    end
-    if test $argv[1] = -
-        popd
-        return $status
-    end
-    pushd $argv
-    return $status
-end
+# remember to use this fella
+abbr cd pushd
 
 # keep updated with `printf "set -g %s\n" (set -U | grep fish_color)`
 set -g fish_color_autosuggestion 555 brblack
