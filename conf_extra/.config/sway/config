@@ -390,3 +390,4 @@ exec wl-paste --watch cliphist store
 exec sway-rename-workspaces
 exec wlsunset -l 53.3 -L -6.2 -t 2700
 exec last-dot-friends-notify
+exec downloads-to-clipboard

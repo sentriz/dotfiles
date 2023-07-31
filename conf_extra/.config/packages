@@ -27,6 +27,7 @@ arch stow
 arch sudo
 arch unzip
 arch wget
+arch inotify-tools
 go github.com/natesales/q@latest
 cargo git-absorb
 go go.senan.xyz/case-replace@latest
