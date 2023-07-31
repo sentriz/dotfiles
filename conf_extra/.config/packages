@@ -19,7 +19,6 @@ arch htop
 arch jq
 arch moreutils
 arch neovim-git
-arch renameutils
 arch ripgrep
 arch sed
 arch sshfs
