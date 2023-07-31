@@ -1,3 +1,3 @@
 [Context]
-filesystems=xdg-documents/audio_test;xdg-documents/audio;xdg-download;!host
+filesystems=xdg-documents/audio_test;xdg-documents/audio;xdg-download;~/mounts/sam_media;!host
 persistent=.audacity-data
