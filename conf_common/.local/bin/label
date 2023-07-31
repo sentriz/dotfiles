@@ -1,0 +1,5 @@
+#!/bin/sh
+
+echo "┌─ $1"
+shift
+"$@" | sed 's/^/│ /'
