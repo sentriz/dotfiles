@@ -159,7 +159,7 @@ go mvdan.cc/sh/v3/cmd/shfmt@latest
 go github.com/go-delve/delve/cmd/dlv@latest
 npm @fsouza/prettierd
 npm @tailwindcss/language-server
-npm @volar/vue-language-server
+npm @vue/language-server
 npm bash-language-server
 npm dockerfile-language-server-nodejs
 npm eslint_d
