@@ -1,0 +1,38 @@
+#!/usr/bin/env go-script
+// vi: ft=go
+
+package main
+
+import (
+	"fmt"
+	"io"
+	"os"
+	"strings"
+
+	"github.com/araddon/dateparse"
+)
+
+func main() {
+	for _, dateStr := range dates() {
+		date, err := dateparse.ParseStrict(dateStr)
+		cerr(err)
+
+		fmt.Println(date.UnixNano())
+	}
+}
+
+func dates() []string {
+	if len(os.Args) > 1 {
+		return os.Args[1:]
+	}
+
+	stdin, _ := io.ReadAll(os.Stdin)
+	stdinStr := strings.TrimSpace(string(stdin))
+	return strings.Split(stdinStr, "\n")
+}
+
+func cerr(err error) {
+	if err != nil {
+		panic(err)
+	}
+}
