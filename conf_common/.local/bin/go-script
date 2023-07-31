@@ -1,0 +1,30 @@
+#!/usr/bin/env sh
+
+set -e
+
+mkdir -p "$XDG_CACHE_HOME/go-scripts"
+
+src="$(readlink -f "$1")"
+sum=$(sha1sum "$src" | awk '{print $1}')
+bin="$XDG_CACHE_HOME/go-scripts/$sum"
+
+shift
+
+test -f "$bin" \
+    && exec "$bin" "$@"
+
+{
+    dir="$(mktemp -d)"
+    cd "$dir" || exit 1
+
+    cp "$src" "$dir/m.go"
+    sed -i '/^#/d' "$dir/m.go"
+
+    go mod init tmp
+    go get ./...
+    go build -o "$bin"
+
+    rm -r "$dir"
+} 1>&2
+
+exec "$bin" "$@"

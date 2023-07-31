@@ -1,4 +1,7 @@
-#!/usr/bin/env yaegi
+#!/usr/bin/env go-script
+// vi: ft=go
+
+package main
 
 import (
 	"encoding/json"
@@ -11,9 +14,7 @@ import (
 func main() {
 	for _, urlStr := range urls() {
 		url, err := url.Parse(urlStr)
-		if err != nil {
-			os.Exit(1)
-		}
+		cerr(err)
 
 		var out out
 		out.Query = url.Query()
@@ -25,13 +26,14 @@ func main() {
 		out.Path = url.Path
 		out.Fragment = url.Fragment
 
-		_ = json.NewEncoder(os.Stdout).Encode(out)
+		err = json.NewEncoder(os.Stdout).Encode(out)
+		cerr(err)
 	}
 }
 
 func urls() []string {
-	if len(os.Args) > 2 {
-		return os.Args[2:]
+	if len(os.Args) > 1 {
+		return os.Args[1:]
 	}
 
 	stdin, _ := io.ReadAll(os.Stdin)
@@ -48,4 +50,10 @@ type out struct {
 	Opaque   string     `json:"opaque,omitempty"`
 	Fragment string     `json:"fragment,omitempty"`
 	Query    url.Values `json:"query,omitempty"`
+}
+
+func cerr(err error) {
+	if err != nil {
+		panic(err)
+	}
 }
