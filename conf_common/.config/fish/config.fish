@@ -97,9 +97,9 @@ source "$__fish_config_dir/config.$HOSTNAME.fish" 2>/dev/null
 
 # load plugins
 set plugins "$__fish_config_dir/plugins/"
-set -a fish_function_path (find "$plugins" -maxdepth 2 -name "functions")
-set -a fish_complete_path (find "$plugins" -maxdepth 2 -name "completions")
-for file in (find "$plugins" -path "*conf.d/*" -name "*.fish")
+set -a fish_function_path (find "$plugins" -mindepth 2 -maxdepth 2 -name "functions")
+set -a fish_complete_path (find "$plugins" -mindepth 2 -maxdepth 2 -name "completions")
+for file in (find "$plugins" -mindepth 3 -maxdepth 3 -path "*conf.d/*" -name "*.fish")
     source "$file"
 end
 
