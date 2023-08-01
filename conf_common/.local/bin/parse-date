@@ -8,16 +8,17 @@ import (
 	"io"
 	"os"
 	"strings"
+	"time"
 
 	"github.com/araddon/dateparse"
 )
 
 func main() {
 	for _, dateStr := range dates() {
-		date, err := dateparse.ParseStrict(dateStr)
+		p, err := dateparse.ParseStrict(dateStr)
 		cerr(err)
 
-		fmt.Println(date.UnixNano())
+		fmt.Printf("%d\t%s\n", p.UnixNano(), p.Format(time.RFC3339))
 	}
 }
 
