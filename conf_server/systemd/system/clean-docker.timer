@@ -1,8 +1,0 @@
-[Unit]
-Description=Run clean-docker.service daily
-
-[Timer]
-OnCalendar=*-*-* 5:50:00
-
-[Install]
-WantedBy=basic.target
