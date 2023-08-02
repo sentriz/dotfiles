@@ -15,10 +15,11 @@ import (
 
 func main() {
 	for _, dateStr := range dates() {
+		dateStr = strings.TrimSpace(dateStr)
 		p, err := dateparse.ParseStrict(dateStr)
 		cerr(err)
 
-		fmt.Printf("%d\t%s\n", p.UnixNano(), p.Format(time.RFC3339))
+		fmt.Printf("%d\t%d\t%d\t%s\n", p.UnixNano(), p.UnixMilli(), p.Unix(), p.Format(time.RFC3339))
 	}
 }
 
