@@ -120,6 +120,8 @@ abbr g git
 abbr gti git
 abbr ps 'ps -axh -o pid,%cpu,cmd'
 abbr curl 'curl -s'
+abbr less 'less -RKS#1'
+abbr cd pushd
 
 # extended regexp everywhere
 abbr grep "grep -Ei"
@@ -127,9 +129,6 @@ abbr egrep "egrep -Ei"
 abbr fgrep "fgrep -Ei"
 abbr sed "sed -E"
 abbr rg "rg --pcre2 --smart-case"
-
-# remember to use this fella
-abbr cd pushd
 
 # keep updated with `printf "set -g %s\n" (set -U | grep fish_color)`
 set -g fish_color_autosuggestion 555 brblack
