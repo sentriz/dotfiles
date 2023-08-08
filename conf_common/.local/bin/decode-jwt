@@ -1,14 +1,8 @@
 #!/usr/bin/env fish
 
-if test (count $argv) -ne 1
-    echo "please provide token, or '-' for stdin" >&2
-    exit 1
-end
-
 set token "$argv[1]"
-
-test $token = -
-and set -l token (cat)
+test -z "$token"; and set token (cat)
+set token (string replace \n '' "$token")
 
 echo "$token" | read -d '.' header payload signature
 test -z "$header" -o -z "$payload"
