@@ -53,7 +53,7 @@ set -gx GOPATH "$XDG_DATA_HOME/go"
 set -gx GOPROXY direct
 set -gx GOSUMDB off
 set -gx GOTELEMETRY off
-set -gx GOTOOLCHAIN local
+set -gx GOTOOLCHAIN local+path
 set -gx NPM_CONFIG_PREFIX "$XDG_DATA_HOME/npm"
 set -gx NPM_CONFIG_CACHE "$XDG_CACHE_HOME/npm"
 set -gx NPM_CONFIG_INIT_MODULE "$XDG_CONFIG_HOME/npm/config/npm-init.js"
