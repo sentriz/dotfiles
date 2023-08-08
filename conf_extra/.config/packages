@@ -122,6 +122,7 @@ arch pipewire-pulse
 arch pipewire-v4l2
 arch pipewire-zeroconf
 arch wireplumber
+arch ffmpeg
 
 # daw
 arch carla
