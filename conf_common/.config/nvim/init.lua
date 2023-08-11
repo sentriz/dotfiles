@@ -382,7 +382,7 @@ nnoremap <silent> L     <cmd>lua vim.diagnostic.goto_next()<cr>
 local nullls = require("null-ls")
 
 nullls.setup({
-	log = { enable = false },
+	log_level = "off",
 	on_attach = format_please,
 	sources = {
 		nullls.builtins.formatting.black,
