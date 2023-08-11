@@ -1,0 +1,5 @@
+#!/usr/bin/env fish
+
+test (count $argv) -eq 0; and return
+
+awk -F \t (printf "{print %s}" (string join '"\t"' (printf "\$%s\n" $argv)))
