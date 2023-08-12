@@ -1,0 +1,12 @@
+#!/usr/bin/env sh
+
+set -e
+
+url="http://www.fromtexttospeech.com"
+
+while read -r line; do
+    text="$(echo "$line" | jq -rR "@uri")"
+    link="$(curl -s -X POST "$url" --data-raw "input_text=$text&language=British+English&voice=IVONA+Brian22+%28UK+English%29&speed=0&action=process_text" | htmlq -a src audio source)"
+    test -z "$link" && continue
+    mpv "$url/$link"
+done
