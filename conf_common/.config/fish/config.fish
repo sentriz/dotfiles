@@ -25,20 +25,6 @@ function __tmux_env
     and tmate show-env
 end
 
-# import tmux env
-status is-interactive
-and __tmux_env \
-    | sed -nE 's/^(SSH_[^=]+)=(.*)/set -gx \1 "\2"/p' \
-    | source
-
-# import / start gpg env
-status is-interactive
-and not set -q SSH_CONNECTION
-and gpgconf --launch gpg-agent
-and set -gx SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
-and set -gx GPG_TTY (tty)
-and gpg-connect-agent updatestartuptty /bye >/dev/null
-
 set -gx DOTS_SCRAP_DIR "$HOME/scrap"
 set -gx DOTS_SCREENSHOTS_DIR "$HOME/pictures/screenshots"
 set -gx DOTS_RECORDINGS_DIR "$HOME/pictures/recordings"
@@ -94,6 +80,22 @@ set -gx fish_user_paths \
     /opt/flutter/bin/
 
 source "$__fish_config_dir/config.$HOSTNAME.fish" 2>/dev/null
+
+# only interactive from here onwards
+status is-interactive || exit
+
+# import tmux env
+__tmux_env \
+    | sed -nE 's/^(SSH_[^=]+)=(.*)/set -gx \1 "\2"/p' \
+    | source
+
+# import / start gpg env
+if not set -q SSH_CONNECTION
+    gpgconf --launch gpg-agent
+    set -gx SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
+    set -gx GPG_TTY (tty)
+    gpg-connect-agent updatestartuptty /bye >/dev/null
+end
 
 # load plugins
 set plugins "$__fish_config_dir/plugins/"
@@ -153,12 +155,6 @@ set -g fish_color_status red
 set -g fish_color_user brgreen
 set -g fish_color_valid_path --underline
 
-function to_prompt
-    while read line
-        commandline -a -- $line\n
-    end
-    commandline -C 999999
-end
 
 # fancy listing with relative time
 function __list
@@ -203,4 +199,11 @@ function go
         return
     end
     command go $argv
+end
+
+function to_prompt
+    while read line
+        commandline -a -- $line\n
+    end
+    commandline -C 999999
 end
