@@ -155,6 +155,8 @@ set -g fish_color_status red
 set -g fish_color_user brgreen
 set -g fish_color_valid_path --underline
 
+# custom bindings
+bind --mode insert --user \ce 'commandline -a " "(commandline -t); commandline -C 100000'
 
 # fancy listing with relative time
 function __list
