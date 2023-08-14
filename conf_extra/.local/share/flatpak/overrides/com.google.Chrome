@@ -1,2 +1,2 @@
 [Context]
-filesystems=/run/udev/data;xdg-config/chrome-flags.conf;~/pictures;~/scrap
+filesystems=/run/udev/data;xdg-config/chromium-flags.conf;xdg-config/chrome-flags.conf;xdg-config/chrome-dev-flags.conf;xdg-config/chrome-beta-flags.conf;~/pictures;~/scrap

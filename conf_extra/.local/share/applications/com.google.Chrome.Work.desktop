@@ -13,11 +13,3 @@ MimeType=application/pdf;application/rdf+xml;application/rss+xml;application/xht
 Actions=new-window;new-private-window;
 X-Flatpak-Tags=proprietary;
 X-Flatpak=com.google.Chrome
-
-[Desktop Action new-window]
-Name=New Window
-Exec=/usr/bin/flatpak run --arch=x86_64 --command=/app/bin/chrome com.google.Chrome
-
-[Desktop Action new-private-window]
-Name=New Incognito Window
-Exec=/usr/bin/flatpak run --arch=x86_64 --command=/app/bin/chrome com.google.Chrome --incognito
