@@ -3,7 +3,7 @@ Version=1.0
 Name=Google Chrome (Work)
 GenericName=Web Browser
 Comment=Access the Internet
-Exec=/usr/bin/flatpak run --arch=x86_64 --command=/app/bin/chrome --file-forwarding com.google.Chrome --profile-directory="Work" @@u %U @@
+Exec=/usr/bin/flatpak run --arch=x86_64 --command=/app/bin/chrome --file-forwarding com.google.ChromeDev --profile-directory="Work" @@u %U @@
 StartupNotify=true
 Terminal=false
 Icon=com.google.Chrome
@@ -12,4 +12,4 @@ Categories=Network;WebBrowser;
 MimeType=application/pdf;application/rdf+xml;application/rss+xml;application/xhtml+xml;application/xhtml_xml;application/xml;image/gif;image/jpeg;image/png;image/webp;text/html;text/xml;x-scheme-handler/ftp;x-scheme-handler/http;x-scheme-handler/https;
 Actions=new-window;new-private-window;
 X-Flatpak-Tags=proprietary;
-X-Flatpak=com.google.Chrome
+X-Flatpak=com.google.ChromeDev
