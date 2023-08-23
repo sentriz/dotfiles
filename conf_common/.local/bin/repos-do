@@ -3,5 +3,5 @@
 find "$PWD" -mindepth 2 -maxdepth 2 -type d -name '.git' -printf '%h\n' \
     | while read -r path; do (
         cd "$path" || exit
-        "$@"
+        label "$path" "$@"
     ); done
