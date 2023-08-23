@@ -69,6 +69,11 @@ gaps inner $default_gap
 font $default_font
 popup_during_fullscreen smart
 
+# default horizonal tabbled but only if multiple windows
+hide_edge_borders --i3 none
+workspace_layout tabbed
+
+# always borders for floating windows
 for_window [floating] border full
 
 # window colours        border           background       text         indicator        child
