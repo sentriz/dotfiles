@@ -58,6 +58,7 @@ arch nautilus
 arch pavucontrol
 arch qjackctl
 arch syncthing
+flatpak org.gtk.Gtk3theme.Arc-Dark
 flatpak com.google.Chrome
 flatpak com.calibre_ebook.calibre
 flatpak com.github.Eloston.UngoogledChromium
