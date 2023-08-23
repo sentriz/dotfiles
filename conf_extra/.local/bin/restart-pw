@@ -1,0 +1,10 @@
+#!/usr/bin/env fish
+
+sudo systemctl restart bluetooth
+
+systemctl --user daemon-reload
+systemctl --user restart (systemctl --user list-units --type=service | grep -Po "[^\s]*(xdg|pipewire|portal|wire|blue)[^\s]*\.service")
+
+sleep 2
+
+systemctl --user restart xdg-desktop-portal-wlr
