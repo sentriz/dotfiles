@@ -35,7 +35,7 @@ set gdefault
 set ignorecase
 set inccommand=nosplit
 set incsearch
-set grepprg=rg\ --vimgrep\ --hidden
+set grepprg=rg\ --vimgrep\ --pcre2\ --smart-case
 set updatetime=300
 set scrolloff=5
 set autowriteall
