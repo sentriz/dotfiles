@@ -1,5 +1,6 @@
 [Context]
-filesystems=!home
+filesystems=!home;xdg-download;xdg-data/DbeaverData
+persistent=.eclipse;.swt
 
 [Environment]
 _JAVA_AWT_WM_NONREPARENTING=1
