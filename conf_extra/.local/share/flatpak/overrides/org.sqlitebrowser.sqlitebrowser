@@ -1,0 +1,2 @@
+[Context]
+filesystems=/tmp;~/projects;xdg-download;!home
