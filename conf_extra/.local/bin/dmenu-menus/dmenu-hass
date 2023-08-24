@@ -27,4 +27,4 @@ test -z "$switches" && exit 1
 selection="$(dmenu switch <<<"$switches")"
 test -z "$selection" && exit 1
 
-switch-toggle "$(awk '{print $1}' <<<"$selection")"
+switch-toggle "$(col ' ' 1 <<<"$selection")"

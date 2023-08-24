@@ -17,7 +17,7 @@ function get-balance-revolut() {
         --language en \
         --token "$(secret revolut_token)" \
         --account "EUR CURRENT" \
-        | awk '{print $1}'
+        | col ' ' 1
 }
 
 function get-balance() {

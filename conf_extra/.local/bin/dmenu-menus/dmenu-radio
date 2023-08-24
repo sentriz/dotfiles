@@ -18,7 +18,7 @@ test -z "$selection" && exit 1
 test -f "$pid_file" && pkill -F "$pid_file"
 test "$selection" = "stop" && exit
 
-station="$(awk '{print $2}' <<<"$selection")"
+station="$(col ' ' 2 <<<"$selection")"
 station_friendly="${station//_/\ }"
 mpv \
     --no-ytdl \
