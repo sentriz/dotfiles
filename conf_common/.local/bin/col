@@ -1,6 +1,76 @@
-#!/usr/bin/env fish
+//usr/bin/env go-script "$0" "$@"; exit
+// vi: ft=go
 
-test (count $argv) -eq 0
-and exit
+package main
 
-awk -F \t (printf "{print %s}" (string join '"\t"' (printf "\$%s\n" $argv)))
+import (
+	"bufio"
+	"fmt"
+	"os"
+	"strconv"
+	"strings"
+)
+
+// $ printf "%s\t%s\n" one two | col 2
+// two
+// $ printf "%s\t%s\n" one two | col 1 2
+// one	two
+// $ printf "%s;%s\n" one two | col ';' 2
+// two
+// $ printf "%s;%s\n" one two | col ';' 1 2
+// one;two
+// $ printf "%s\t%s\t%s\n" 1 2 3 11 22 33 111 222 333 | col 2
+// 2
+// 22
+// 222
+
+func main() {
+	if len(os.Args) < 2 {
+		return
+	}
+
+	var delim = "\t"
+	var indexStrs = os.Args[1:]
+	if _, err := strconv.Atoi(indexStrs[0]); err != nil {
+		delim = indexStrs[0]
+		indexStrs = indexStrs[1:]
+	}
+
+	var indexes []int
+	var maxIndex int
+	for _, is := range indexStrs {
+		if i, _ := strconv.Atoi(is); i > 0 {
+			indexes = append(indexes, i-1)
+			maxIndex = max(maxIndex, i-1)
+		}
+	}
+	if len(indexes) == 0 {
+		return
+	}
+
+	for sc := bufio.NewScanner(os.Stdin); sc.Scan(); {
+		columns := smartSplit(sc.Text(), delim)
+		if len(columns) <= maxIndex {
+			continue
+		}
+		var selected []string
+		for _, i := range indexes {
+			selected = append(selected, columns[i])
+		}
+		fmt.Println(strings.Join(selected, delim))
+	}
+}
+
+func smartSplit(text, d string) []string {
+	switch d {
+	case "\t", ";":
+		return strings.Split(text, d)
+	}
+	drune := []rune(d)
+	if len(drune) == 0 {
+		return nil
+	}
+	return strings.FieldsFunc(text, func(r rune) bool {
+		return r == drune[0]
+	})
+}
