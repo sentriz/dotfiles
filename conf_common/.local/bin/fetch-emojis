@@ -1,0 +1,62 @@
+//usr/bin/env go-script "$0" "$@"; exit
+// vi: ft=go
+
+package main
+
+import (
+	"bufio"
+	"fmt"
+	"net/http"
+	"os"
+	"regexp"
+	"sort"
+	"strings"
+
+	"github.com/bbalet/stopwords"
+	"github.com/gertd/go-pluralize"
+	"golang.org/x/exp/maps"
+)
+
+var url = `https://raw.githubusercontent.com/Mange/rofi-emoji/master/all_emojis.txt`
+var wordsExpr = regexp.MustCompile(`[a-z]+`)
+
+func main() {
+	resp, err := http.Get(url)
+	if err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
+	defer resp.Body.Close()
+
+	pluralize := pluralize.NewClient()
+	for sc := bufio.NewScanner(resp.Body); sc.Scan(); {
+		emoji, desc, ok := strings.Cut(sc.Text(), "\t")
+		if !ok {
+			continue
+		}
+		if len([]rune(emoji)) > 6 {
+			continue
+		}
+
+		desc = strings.ToLower(desc)
+		desc = stopwords.CleanString(desc, "en", false)
+		words := wordsExpr.FindAllString(desc, -1)
+		if len(words) == 0 {
+			continue
+		}
+
+		unique := map[string]struct{}{}
+		for _, w := range words {
+			w = pluralize.Singular(w)
+			if len(w) < 3 {
+				continue
+			}
+			unique[w] = struct{}{}
+		}
+
+		words = maps.Keys(unique)
+		sort.Strings(words)
+
+		fmt.Printf("%s\t%s\n", emoji, strings.Join(words, " "))
+	}
+}
