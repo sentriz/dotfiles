@@ -131,7 +131,7 @@ abbr grep "grep -Ei"
 abbr egrep "egrep -Ei"
 abbr fgrep "fgrep -Ei"
 abbr sed "sed -E"
-abbr rg "rg -PS."
+abbr rg "rg -PS"
 
 # keep updated with `printf "set -g %s\n" (set -U | grep fish_color)`
 set -g fish_color_autosuggestion 555 brblack
