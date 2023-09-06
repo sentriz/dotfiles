@@ -117,6 +117,15 @@ alias :wq exit
 alias :qw exit
 alias :q exit
 
+# cd is custom pushd
+functions --copy pushd pushd_builtin
+function pushd
+    test (count $argv) = 0
+    and pushd_builtin ~
+    or pushd_builtin $argv
+end
+abbr cd pushd
+
 # abbreviations
 abbr g git
 abbr gti git
@@ -124,7 +133,6 @@ abbr ps 'ps -axh -o pid,%cpu,cmd'
 abbr curl 'curl -s'
 abbr less 'less -RKS#1'
 abbr jq jq -r
-abbr cd pushd
 
 # extended regexp everywhere
 abbr grep "grep -Ei"
