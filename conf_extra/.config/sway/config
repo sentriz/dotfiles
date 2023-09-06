@@ -10,7 +10,7 @@
 ##  caps lock           -> scratchpad term     ##
 #################################################
 
-## var modifier
+# var modifier
 set $super Mod4
 set $alt   Mod1
 
@@ -27,7 +27,7 @@ set $colour_red        #BC5858
 set $colour_red_alpha  #BC585860
 set $colour_inactive   #8D8D8D
 
-## var helpers
+# var helpers
 set $lock_warning notify-send 'locking screen in 10 seconds'
 set $lock swaylock \
     --image $XDG_PICTURES_DIR/wallpapers/fagan.png \
@@ -59,7 +59,7 @@ set $up_block_2 pkill -RTMIN+2 i3blocks
 set $up_block_3 pkill -RTMIN+3 i3blocks
 set $up_block_4 pkill -RTMIN+4 i3blocks
 
-## basic appearance
+# basic appearance
 smart_borders on
 smart_gaps off
 titlebar_border_thickness 0
@@ -82,7 +82,7 @@ client.focused_inactive #ffffff          #ffffff          $colour_grey #ffffff  
 client.unfocused        $colour_inactive $colour_inactive #ffffff      $colour_inactive $colour_inactive
 client.urgent           $colour_red      $colour_red      #ffffff      $colour_red      $colour_red
 
-## input
+# input
 input * {
     xkb_layout ie
     xkb_options caps:none
@@ -98,12 +98,12 @@ input "2:10:TPPS/2_IBM_TrackPoint" {
     pointer_accel 0.9
 }
 
-## output
+# output
 output * {
     bg $XDG_PICTURES_DIR/wallpapers/flow.jpg fill
 }
 
-## right bar
+# right bar
 bar {
     font $default_font
     height 24
@@ -121,27 +121,27 @@ bar {
     colors urgent_workspace   $colour_red        $colour_red        #ffffff
 }
 
-## bindings: window/float
+# bindings: window/float
 bindsym $super+q     kill
 bindsym $super+f     fullscreen toggle
 bindsym $super+space floating toggle
 bindsym $super+y     sticky toggle
 
-## bindings: focus
+# bindings: focus
 bindsym $super+v focus parent
 bindsym $super+h focus left
 bindsym $super+j focus down
 bindsym $super+k focus up
 bindsym $super+l focus right
 
-## bindings: layout
+# bindings: layout
 bindsym $super+z layout stacking
 bindsym $super+x layout tabbed
 bindsym $super+c layout toggle split
 bindsym $super+n split h
 bindsym $super+m split v
 
-## bindings: position
+# bindings: position
 bindsym $super+Left  move left
 bindsym $super+Down  move down
 bindsym $super+Up    move up
@@ -156,7 +156,7 @@ bindsym $super+d move workspace to output right
 bindsym $super+e workspace back_and_forth, move workspace to output up,    workspace back_and_forth, move workspace to output down
 bindsym $super+r workspace back_and_forth, move workspace to output right, workspace back_and_forth, move workspace to output left
 
-## bindings: modes
+# bindings: modes
 bindsym $super+$alt+space mode $mode_move_floating focus floating
 bindsym $super+$alt+q     mode $mode_system
 bindsym $super+$alt+s     mode $mode_scrot
@@ -250,7 +250,7 @@ bindsym $super+Shift+7 move container to workspace number 7
 bindsym $super+Shift+8 move container to workspace number 8
 bindsym $super+Shift+9 move container to workspace number 9
 
-## don't lock for video
+# don't lock for video
 for_window [class="Firefox"]                            inhibit_idle fullscreen
 for_window [app_id="^firefox$"]                         inhibit_idle fullscreen
 for_window [class="^Nightly$"]                          inhibit_idle fullscreen
@@ -268,7 +268,7 @@ for_window [app_id="^mpv$"]                             inhibit_idle visible
 for_window [class="^jellyfin$"]                         inhibit_idle visible
 for_window [class="^Google-chrome$" title="^Jellyfin$"] inhibit_idle visible
 
-## floating windows
+# floating windows
 for_window [window_type="menu"]                                       floating enable
 for_window [window_role="app"]                                        floating enable
 for_window [window_role="pop-up"]                                     floating enable
@@ -316,7 +316,7 @@ for_window [class="com.github.wwmm.easyeffects"]                      floating e
 for_window [app_id="^pinentry-qt$"]                                   floating enable
 for_window [app_id="^valent$"]                                        floating enable
 
-## floating sticky
+# floating sticky
 for_window [class="^jellyfin$"]                         floating enable, resize set 1334 568, sticky enable
 for_window [class="^Google-chrome$" title="^Jellyfin$"] floating enable, resize set 1334 568, sticky enable
 for_window [class="^work-meet$"]                        floating enable, resize set 1334 568, sticky enable
@@ -330,7 +330,7 @@ for_window [app_id="^firefox$" title="Firefox — Sharing Indicator"] kill
 for_window [app_id="^LibreWolf$" title="Picture-in-Picture"] fullscreen enable, move container to workspace number 10
 for_window [app_id="^LibreWolf$" title="LibreWolf — Sharing Indicator"] kill
 
-## bindings: xf86
+# bindings: xf86
 bindsym XF86AudioLowerVolume  exec wp-update sink   volume=-0.02 && $up_block_1
 bindsym XF86AudioRaiseVolume  exec wp-update sink   volume=+0.02 && $up_block_1
 bindsym XF86AudioMute         exec wp-update sink   mute=toggle  && $up_block_1
@@ -351,13 +351,13 @@ bindsym --no-repeat --release print exec wp-update source mute=yes && $up_block_
 # toggle and scratchpads
 bindcode 66 [app_id="^scratchpad-.*"] scratchpad show
 
-## bindings: gestures
+# bindings: gestures
 bindgesture swipe:3:right workspace next
 bindgesture swipe:3:left workspace prev
 bindgesture swipe:3:down workspace back_and_forth
 bindgesture swipe:3:up [app_id="^scratchpad-.*"] scratchpad show
 
-## bindings: programs
+# bindings: programs
 bindsym $super+Return exec $TERMINAL
 bindsym $super+F1     exec dmenu-package
 bindsym $super+F2     exec dmenu-clipboard
@@ -367,10 +367,10 @@ bindsym $super+F5     exec dmenu-bluetooth && $up_block_2
 bindsym $super+F6     exec dmenu-emoji
 bindsym $super+F7     exec dmenu-virt
 
-## dmenu term
+# dmenu term
 for_window [app_id="^launcher$"] floating enable, sticky enable, resize set 100 ppt 20 ppt, move position 0 0
 
-## autostarts
+# autostarts
 set $imp_vars "DISPLAY WAYLAND_DISPLAY SWAYSOCK SSH_AUTH_SOCK XDG_CURRENT_DESKTOP XDG_SESSION_TYPE"
 exec_always systemctl --user import-environment "$imp_vars"
 exec_always hash dbus-update-activation-environment 2>/dev/null && \
