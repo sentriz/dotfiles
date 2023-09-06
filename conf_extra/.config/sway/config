@@ -367,6 +367,11 @@ bindsym $super+F5     exec dmenu-bluetooth && $up_block_2
 bindsym $super+F6     exec dmenu-emoji
 bindsym $super+F7     exec dmenu-virt
 
+# bindings: notifications
+bindsym $super+i exec makoctl invoke
+bindsym $super+o exec makoctl restore
+bindsym $super+p exec makoctl dismiss --all
+
 # dmenu term
 for_window [app_id="^launcher$"] floating enable, sticky enable, resize set 100 ppt 20 ppt, move position 0 0
 
