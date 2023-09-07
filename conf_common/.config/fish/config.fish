@@ -34,7 +34,7 @@ set -gx DOTS_COPT_DIR /opt/containers
 set -gx DOTS_PROJECTS_DIR "$HOME/projects"
 
 set -gx EDITOR nvim
-set -gx FZF_DEFAULT_OPTS "--info hidden --color bw"
+set -gx FZF_DEFAULT_OPTS "--info hidden --color pointer:-1,gutter:-1,prompt:-1,bg:-1,bg+:0,fg:-1,fg+:7,hl:-1,hl+:7,marker:-1"
 set -gx GOPATH "$XDG_DATA_HOME/go"
 set -gx GOPROXY direct
 set -gx GOSUMDB off
