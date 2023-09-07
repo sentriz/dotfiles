@@ -16,13 +16,13 @@
 	l = log --reverse -n 20
 
 	addf       = !git add -- $(git ls-files --modified --others --exclude-standard | fzf -m --preview 'cat {}')
-	checkoutf  = !git checkout $@ $(git branch --format '%(refname:short)' --sort committerdate | fzf +s --tac --preview 'git log master..{}')
+	checkoutf  = !git checkout $@ $(git branch --format '%(refname:short)' --sort committerdate | fzf +s --tac --preview 'git -c color.ui=always log master..{}')
 	checkoutff = !git checkout $@ -- $(git ls-files --modified --exclude-standard | fzf -m)
 	difff      = !git diff -- $(git ls-files --modified --exclude-standard | fzf -m)
 	fixupf     = !git commit --fixup=$(git log --pretty=oneline --abbrev-commit | fzf +s | col ' ' 1)
-	rebasef    = !git rebase $(git branch --format '%(refname:short)' --sort committerdate | fzf +s --tac --preview 'git log master..{}')
+	rebasef    = !git rebase $(git branch --format '%(refname:short)' --sort committerdate | fzf +s --tac --preview 'git -c color.ui=always log master..{}')
 	revertf    = !git revert $(git log --pretty=oneline --abbrev-commit | fzf +s | col ' ' 1)
-	showf      = !git show $(git log --pretty=oneline --abbrev-commit | fzf +s | col ' ' 1)
+	showf      = !git show $(git log --pretty=oneline --abbrev-commit | fzf +s --preview 'git -c color.ui=always show (echo {} | col \" \" 1)' | col ' ' 1)
 	resetf     = !git reset $@ $(git log --pretty=oneline --abbrev-commit | fzf +s | col ' ' 1)
 	resetf     = !git reset $@ $(git log --pretty=oneline --abbrev-commit | fzf +s | col ' ' 1)
 
