@@ -86,3 +86,6 @@
 	path = conf_common/.local/share/nvim/site/pack/plugins/start/fidget.nvim
 	url = https://github.com/j-hui/fidget.nvim
 	branch = legacy
+[submodule "conf_common/.config/fish/plugins/fish-async-prompt"]
+	path = conf_common/.config/fish/plugins/fish-async-prompt
+	url = https://github.com/acomagu/fish-async-prompt

@@ -97,6 +97,9 @@ if not set -q SSH_CONNECTION
     gpg-connect-agent updatestartuptty /bye >/dev/null
 end
 
+# plugin settings
+set -gx async_prompt_functions fish_right_prompt
+
 # load plugins
 set plugins "$__fish_config_dir/plugins/"
 set -a fish_function_path (find "$plugins" -mindepth 2 -maxdepth 2 -name "functions")
