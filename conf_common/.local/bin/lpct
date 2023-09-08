@@ -1,0 +1,25 @@
+//usr/bin/env go-script "$0" "$@"; exit
+// vi: ft=go
+
+package main
+
+import (
+	"fmt"
+	"os"
+	"strings"
+)
+
+func main() {
+	if len(os.Args) != 2 {
+		os.Exit(1)
+	}
+	l := []rune(strings.ToLower(os.Args[1]))
+	if len(l) != 1 {
+		os.Exit(1)
+	}
+	if l[0] < 'a' || l[0] > 'z' {
+		os.Exit(1)
+	}
+
+	fmt.Println((l[0] - 'a') * 100 / ('z' - 'a'))
+}
