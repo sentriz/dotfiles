@@ -11,6 +11,10 @@ arch rust
 arch docker
 arch docker-compose
 
+# net
+arch:iwd
+arch:systemd-resolvconf
+
 arch fish
 arch fzf
 arch git
