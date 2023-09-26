@@ -1,4 +1,4 @@
-//usr/bin/env go-script "$0" "$@"; exit
+//usr/bin/env go-script "$0" "$@"; exit $?
 // vi: ft=go
 
 package main
