@@ -113,7 +113,6 @@ nnoremap <expr>   <leader>y  ':tabnew ' . expand('$DOTS_PROJECTS_DIR') . '/hippl
 " better
 nnoremap Y y$
 vnoremap yP yP
-vnoremap u :OSCYank<cr>
 
 " easy split / quit
 nnoremap <enter>         :vsplit<cr><c-w>w
