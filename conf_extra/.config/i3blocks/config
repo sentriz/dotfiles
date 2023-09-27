@@ -7,18 +7,18 @@ separator=false
 signal=3
 
 [sharing]
-color=#b08fd9
+color=#b48fd4
 
 [volume]
-color=#7cb342
+color=#82b442
 signal=1
 
 [bluetooth]
-color=#039be5
+color=#0496e7
 signal=2
 
 [wifi]
-color=#e6e600
+color=#f0f000
 
 [battery]
 color=#e184c2
