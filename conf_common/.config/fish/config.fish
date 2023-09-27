@@ -26,8 +26,8 @@ function __tmux_env
 end
 
 set -gx DOTS_SCRAP_DIR "$HOME/scrap"
-set -gx DOTS_SCREENSHOTS_DIR "$HOME/pictures/screenshots"
-set -gx DOTS_RECORDINGS_DIR "$HOME/pictures/recordings"
+set -gx DOTS_SCREENSHOTS_DIR "$XDG_PICTURES_DIR/screenshots"
+set -gx DOTS_RECORDINGS_DIR "$XDG_PICTURES_DIR/recordings"
 set -gx DOTS_RADIO_DIR "$HOME/radio"
 set -gx DOTS_SECRETS_DIR "$HOME/mounts/secrets"
 set -gx DOTS_COPT_DIR /opt/containers

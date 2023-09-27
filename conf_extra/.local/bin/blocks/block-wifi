@@ -12,6 +12,8 @@ IFS=$'\t' read -r mac ssid addr < <(networkctl status wlan0 | filter-parse)
 test -z "$ssid" && exit
 test -z "$addr" && exit
 
-test "$BLOCK_BUTTON" -eq 1 2>/dev/null && notify-send -- "$addr" "$mac"
+case "$BLOCK_BUTTON" in
+1) notify-send -- "$addr" "$mac" ;;
+esac
 
 echo "wifi $ssid"
