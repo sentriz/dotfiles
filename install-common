@@ -2,12 +2,7 @@
 
 set -e
 
-mkdir -p ~/.config/fish
-
-mkdir -p ~/.gnupg
-mkdir -p ~/.gnupg/private-keys-v1.d
-
-stow -v --ignore='running' --target ~ -R conf_common
+stow -v --no-folding --target ~ -R conf_common
 
 chown -R "$(whoami)" ~/.gnupg/
 find ~/.gnupg -type f -exec chmod 600 {} \;
