@@ -98,6 +98,10 @@ if not set -q SSH_CONNECTION
     gpg-connect-agent updatestartuptty /bye >/dev/null
 end
 
+# direnv
+type -q locale
+and direnv hook fish | source
+
 # plugin settings
 set -gx async_prompt_functions fish_right_prompt
 
