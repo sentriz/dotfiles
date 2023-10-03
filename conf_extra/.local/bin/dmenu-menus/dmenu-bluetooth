@@ -20,6 +20,6 @@ fi
 
 notify "bluetooth $device_name" "$(bluetoothctl -- power on)"
 for ((i = 0; i < 3; i++)); do
-    notify "bluetooth $device_name" "$(bluetoothctl -- connect "$device_mac")"
+    notify "bluetooth $device_name" "$(bluetoothctl -- connect "$device_mac" | grep -v "^\[")"
     sleep 1
 done
