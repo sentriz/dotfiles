@@ -99,7 +99,7 @@ if not set -q SSH_CONNECTION
 end
 
 # direnv
-type -q locale
+type -q direnv
 and direnv hook fish | source
 
 # plugin settings
