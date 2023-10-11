@@ -101,14 +101,15 @@ command! VS vsplit
 command! Vs vsplit
 
 " leader
-nnoremap          <leader>b  mzggO#!/usr/bin/env bash<esc>o<esc>`z
-nnoremap          <leader>n  :set hlsearch!<cr>
-nnoremap          <leader>l  :set list!<cr>
-nnoremap          <leader>p  :set spell!<cr>
-nnoremap          <leader>s  :%s/\<<c-r><c-w>\>/<c-r><c-w>/c<c-f>$F/
-nnoremap          <leader>/  :echo expand('%:p')<cr>
-nnoremap <expr>   <leader>t  ':tabnew ' . expand('$DOTS_PROJECTS_DIR') . '/'
-nnoremap <expr>   <leader>y  ':tabnew ' . expand('$DOTS_PROJECTS_DIR') . '/hippl_'
+nnoremap        <leader>b        mzggO#!/usr/bin/env bash<esc>o<esc>`z
+nnoremap        <leader><leader> za
+nnoremap        <leader>n        :set hlsearch!<cr>
+nnoremap        <leader>l        :set list!<cr>
+nnoremap        <leader>p        :set spell!<cr>
+nnoremap        <leader>s        :%s/\<<c-r><c-w>\>/<c-r><c-w>/c<c-f>$F/
+nnoremap        <leader>/        :echo expand('%:p')<cr>
+nnoremap <expr> <leader>t        ':tabnew ' . expand('$DOTS_PROJECTS_DIR') . '/'
+nnoremap <expr> <leader>y        ':tabnew ' . expand('$DOTS_PROJECTS_DIR') . '/hippl_'
 
 " better
 nnoremap Y y$
@@ -429,9 +430,13 @@ tsconfigs.setup({
 })
 
 vim.cmd([[
-set nofoldenable
 set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
+set foldlevel=99
+set foldtext=FoldText()
+function! FoldText()
+  return getline(v:foldstart) . " ..."
+endfunction
 ]])
 
 tscontext.setup({

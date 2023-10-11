@@ -2,7 +2,7 @@ set background=dark
 set notermguicolors
 
 set listchars=tab:>\ ,trail:.
-set fillchars=vert:\ ,eob:\ 
+set fillchars=vert:\ ,eob:\ ,fold:\ 
 set sidescroll=1
 set noshowmode
 set laststatus=2
@@ -29,6 +29,7 @@ highlight StatusLine    ctermfg=0 ctermbg=15 cterm=bold
 highlight StatusLineNC  ctermfg=7 ctermbg=15
 highlight CursorLine    ctermfg=0 ctermbg=11
 highlight MatchParen    cterm=underline
+highlight Folded        ctermfg=8 cterm=italic
 
 highlight SpellLocal ctermfg=9 cterm=underline
 highlight SpellBad   ctermfg=9 cterm=underline
