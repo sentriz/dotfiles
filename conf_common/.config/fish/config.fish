@@ -195,30 +195,6 @@ alias vi __super_vim
 alias vim __super_vim
 alias nvim __super_vim
 
-function git
-    if isatty stdout; and contains -- $argv[1] diff status log d s l
-        command git -c color.status=always -c color.ui=always $argv | add-osc-8-hyperlink
-        return
-    end
-    command git $argv
-end
-
-function rg
-    if isatty stdout
-        command rg --color=always --line-number $argv | add-osc-8-hyperlink
-        return
-    end
-    command rg $argv
-end
-
-function go
-    if isatty stdout; and contains -- $argv[1] test
-        command go $argv | add-osc-8-hyperlink
-        return
-    end
-    command go $argv
-end
-
 function to_prompt
     while read line
         commandline -a -- $line\n
