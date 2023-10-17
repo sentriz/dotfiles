@@ -4,7 +4,7 @@
 
 # keep up to date with $ fetch-emojis >>$0
 
-(dmenu emoji | col 1 | wl-copy --trim-newline) <<EOF
+(table | dmenu emoji | col ' ' 1 | wl-copy --trim-newline) <<EOF
 ​	zero width space
 …	ellipsis
 😀	emotion face grin grinning smiley smiling
@@ -27,7 +27,6 @@
 😘	affection blowing emotion face kiss smiley
 😗	affection emotion face kiss kissing smiley
 ☺️	affection emotion face smiley smiling
-☺	affection emotion face outlined relaxed smile smiley smiling
 😚	affection closed emotion eye face kiss kissing smiley
 😙	affection emotion eye face kiss kissing smile smiley smiling
 🥲	affection emotion face grateful proud relieved smiley smiling tear touched
@@ -58,7 +57,6 @@
 😬	emotion face grimace grimacing neutral skeptical smiley
 😮‍💨	emotion exhale exhaling face gasp groan neutral relief skeptical smiley whisper whistle
 🤥	emotion face lie lying neutral pinocchio skeptical smiley
-🫨	earthquake emotion face neutral shaking shock skeptical smiley vibrate
 😌	emotion face relieved sleepy smiley
 😔	dejected emotion face pensive sleepy smiley
 😪	emotion face good night sleep sleepy smiley
@@ -87,7 +85,6 @@
 😟	concerned emotion face smiley worried
 🙁	concerned emotion face frown frowning slightly smiley
 ☹️	concerned emotion face frowning smiley
-☹	concerned emotion face frown frowning smiley
 😮	concerned emotion face mouth open smiley sympathy
 😯	concerned emotion face hushed smiley stunned surprised
 😲	astonished concerned emotion face shocked smiley totally
@@ -117,7 +114,6 @@
 👿	angry demon devil emotion face fantasy horn imp negative smiley
 💀	death emotion face fairy monster negative skull smiley tale
 ☠️	crossbone emotion face negative skull smiley
-☠	crossbone death emotion face monster negative skull smiley
 💩	costume dung emotion face monster pile poo poop smiley
 🤡	clown costume emotion face smiley
 👹	costume creature emotion face fairy fantasy monster ogre smiley tale
@@ -148,24 +144,19 @@
 💕	emotion heart love smiley
 💟	decoration emotion heart smiley
 ❣️	emotion exclamation heart smiley
-❣	emotion exclamation heart mark punctuation smiley
 💔	break broken emotion heart smiley
 ❤️‍🔥	emotion heart smiley
 ❤‍🔥	burn emotion heart love lust sacred smiley
 ❤️‍🩹	emotion heart mending smiley
 ❤‍🩹	emotion healthier heart improving mending recovering recuperating smiley
 ❤️	emotion heart red smiley
-❤	emotion heart red smiley
-🩷	cute emotion heart like love pink smiley
 🧡	emotion heart orange smiley
 💛	emotion heart smiley yellow
 💚	emotion green heart smiley
 💙	blue emotion heart smiley
-🩵	blue cyan emotion heart light smiley teal
 💜	emotion heart purple smiley
 🤎	brown emotion heart smiley
 🖤	black emotion evil heart smiley wicked
-🩶	emotion gray grey heart silver slate smiley
 🤍	emotion heart smiley white
 💋	emotion kiss lip mark smiley
 💯	emotion percent point score smiley
@@ -175,16 +166,13 @@
 💦	comic droplet emotion smiley splashing sweat
 💨	away comic dash dashing emotion running smiley
 🕳️	emotion hole smiley
-🕳	emotion hole smiley
 💬	balloon bubble comic dialog dialogue emotion smiley speech
 👁️‍🗨️	bubble emotion eye smiley speech
 👁‍🗨️	bubble emotion eye smiley speech
 👁️‍🗨	bubble emotion eye smiley speech
 👁‍🗨	balloon bubble emotion eye smiley speech witness
 🗨️	bubble emotion left smiley speech
-🗨	balloon bubble dialog dialogue emotion left smiley speech
 🗯️	anger bubble emotion right smiley
-🗯	anger angry balloon bubble emotion mad right smiley
 💭	balloon bubble comic emotion smiley thought
 💤	comic emotion good night sleep smiley zzz
 👋	body finger hand open person wave waving
@@ -200,7 +188,6 @@
 🤚🏾	backhand body dark finger hand medium open person raised skin tone
 🤚🏿	backhand body dark finger hand open person raised skin tone
 🖐️	body finger hand open person splayed
-🖐	body finger hand open person splayed
 🖐🏻	body finger hand light open person skin splayed tone
 🖐🏼	body finger hand light medium open person skin splayed tone
 🖐🏽	body finger hand medium open person skin splayed tone
@@ -242,13 +229,11 @@
 🫴🏽	beckon body catch come finger hand medium offer open palm person skin tone
 🫴🏾	beckon body catch come dark finger hand medium offer open palm person skin tone
 🫴🏿	beckon body catch come dark finger hand offer open palm person skin tone
-🫷	body finger hand high leftward open person push pushing refuse stop wait
 🫷🏻	body finger hand high leftward light open person push pushing refuse skin stop tone wait
 🫷🏼	body finger hand high leftward light medium open person push pushing refuse skin stop tone wait
 🫷🏽	body finger hand high leftward medium open person push pushing refuse skin stop tone wait
 🫷🏾	body dark finger hand high leftward medium open person push pushing refuse skin stop tone wait
 🫷🏿	body dark finger hand high leftward open person push pushing refuse skin stop tone wait
-🫸	body finger hand high open person push pushing refuse rightward stop wait
 🫸🏻	body finger hand high light open person push pushing refuse rightward skin stop tone wait
 🫸🏼	body finger hand high light medium open person push pushing refuse rightward skin stop tone wait
 🫸🏽	body finger hand high medium open person push pushing refuse rightward skin stop tone wait
@@ -273,7 +258,6 @@
 🤏🏾	body dark finger hand medium partial person pinching skin small tone
 🤏🏿	body dark finger hand partial person pinching skin small tone
 ✌️	body finger hand partial person victory
-✌	body finger hand partial person victory
 ✌🏻	body finger hand light partial person skin tone victory
 ✌🏼	body finger hand light medium partial person skin tone victory
 ✌🏽	body finger hand medium partial person skin tone victory
@@ -340,7 +324,6 @@
 👇🏾	backhand body dark finger hand index medium person point pointing single skin tone
 👇🏿	backhand body dark finger hand index person point pointing single skin tone
 ☝️	body finger hand index person pointing single
-☝	body finger hand index person point pointing single
 ☝🏻	body finger hand index light person point pointing single skin tone
 ☝🏼	body finger hand index light medium person point pointing single skin tone
 ☝🏽	body finger hand index medium person point pointing single skin tone
@@ -451,7 +434,6 @@
 🙏🏾	ask body dark folded hand high medium person pray skin thank tone
 🙏🏿	ask body dark folded hand high person pray skin thank tone
 ✍️	body hand person prop writing
-✍	body hand person prop write writing
 ✍🏻	body hand light person prop skin tone write writing
 ✍🏼	body hand light medium person prop skin tone write writing
 ✍🏽	body hand medium person prop skin tone write writing
@@ -514,7 +496,6 @@
 🦴	body bone part person skeleton
 👀	body eye face part person
 👁️	body eye part person
-👁	body eye part person
 👅	body part person tongue
 👄	body lip mouth part person
 🫦	anxious biting body fear flirting lip nervous part person uncomfortable worried
@@ -1383,7 +1364,6 @@
 👮🏿‍♀️	body dark officer person police role skin tone woman
 👮🏿‍♀	body cop dark officer person police role skin tone woman
 🕵️	body detective person role
-🕵	body detective investigator person role sleuth spy
 🕵🏻	body detective investigator light person role skin sleuth spy tone
 🕵🏼	body detective investigator light medium person role skin sleuth spy tone
 🕵🏽	body detective investigator medium person role skin sleuth spy tone
@@ -2137,7 +2117,6 @@
 🕺🏾	activity body dance dancing dark man medium person skin tone
 🕺🏿	activity body dance dancing dark man person skin tone
 🕴️	activity body levitating person suit
-🕴	activity body business levitating person suit
 🕴🏻	activity body business levitating light person skin suit tone
 🕴🏼	activity body business levitating light medium person skin suit tone
 🕴🏽	activity body business levitating medium person skin suit tone
@@ -2216,7 +2195,6 @@
 🏇🏾	body dark horse jockey medium person racehorse racing skin sport tone
 🏇🏿	body dark horse jockey person racehorse racing skin sport tone
 ⛷️	body person skier sport
-⛷	body person ski skier snow sport
 🏂	body person ski snow snowboard snowboarder sport
 🏂🏻	body light person ski skin snow snowboard snowboarder sport tone
 🏂🏼	body light medium person ski skin snow snowboard snowboarder sport tone
@@ -2224,7 +2202,6 @@
 🏂🏾	body dark medium person ski skin snow snowboard snowboarder sport tone
 🏂🏿	body dark person ski skin snow snowboard snowboarder sport tone
 🏌️	body golfing person sport
-🏌	ball body golf golfer golfing person sport
 🏌🏻	ball body golf golfer golfing light person skin sport tone
 🏌🏼	ball body golf golfer golfing light medium person skin sport tone
 🏌🏽	ball body golf golfer golfing medium person skin sport tone
@@ -2349,7 +2326,6 @@
 🏊🏿‍♀️	body dark person skin sport swimming tone woman
 🏊🏿‍♀	body dark person skin sport swim swimmer swimming tone woman
 ⛹️	ball body bouncing person sport
-⛹	ball body bouncing person sport
 ⛹🏻	ball body bouncing light person skin sport tone
 ⛹🏼	ball body bouncing light medium person skin sport tone
 ⛹🏽	ball body bouncing medium person skin sport tone
@@ -2384,7 +2360,6 @@
 ⛹🏿‍♀️	ball body bouncing dark person skin sport tone woman
 ⛹🏿‍♀	ball body bouncing dark person skin sport tone woman
 🏋️	body lifting person sport weight
-🏋	body lifter lifting person sport weight weightlifter
 🏋🏻	body lifter lifting light person skin sport tone weight weightlifter
 🏋🏼	body lifter lifting light medium person skin sport tone weight weightlifter
 🏋🏽	body lifter lifting medium person skin sport tone weight weightlifter
@@ -2646,23 +2621,108 @@
 🛌🏾	bed body dark good hotel medium night person resting skin sleep sleeping tone
 🛌🏿	bed body dark good hotel night person resting skin sleep sleeping tone
 🧑‍🤝‍🧑	body couple family hand hold holding person
+🧑🏻‍🤝‍🧑🏻	body couple family hand hold holding light person skin tone
+🧑🏻‍🤝‍🧑🏼	body couple family hand hold holding light medium person skin tone
+🧑🏻‍🤝‍🧑🏽	body couple family hand hold holding light medium person skin tone
+🧑🏻‍🤝‍🧑🏾	body couple dark family hand hold holding light medium person skin tone
+🧑🏻‍🤝‍🧑🏿	body couple dark family hand hold holding light person skin tone
+🧑🏼‍🤝‍🧑🏻	body couple family hand hold holding light medium person skin tone
+🧑🏼‍🤝‍🧑🏼	body couple family hand hold holding light medium person skin tone
+🧑🏼‍🤝‍🧑🏽	body couple family hand hold holding light medium person skin tone
+🧑🏼‍🤝‍🧑🏾	body couple dark family hand hold holding light medium person skin tone
+🧑🏼‍🤝‍🧑🏿	body couple dark family hand hold holding light medium person skin tone
+🧑🏽‍🤝‍🧑🏻	body couple family hand hold holding light medium person skin tone
+🧑🏽‍🤝‍🧑🏼	body couple family hand hold holding light medium person skin tone
+🧑🏽‍🤝‍🧑🏽	body couple family hand hold holding medium person skin tone
+🧑🏽‍🤝‍🧑🏾	body couple dark family hand hold holding medium person skin tone
+🧑🏽‍🤝‍🧑🏿	body couple dark family hand hold holding medium person skin tone
+🧑🏾‍🤝‍🧑🏻	body couple dark family hand hold holding light medium person skin tone
+🧑🏾‍🤝‍🧑🏼	body couple dark family hand hold holding light medium person skin tone
+🧑🏾‍🤝‍🧑🏽	body couple dark family hand hold holding medium person skin tone
+🧑🏾‍🤝‍🧑🏾	body couple dark family hand hold holding medium person skin tone
+🧑🏾‍🤝‍🧑🏿	body couple dark family hand hold holding medium person skin tone
+🧑🏿‍🤝‍🧑🏻	body couple dark family hand hold holding light person skin tone
+🧑🏿‍🤝‍🧑🏼	body couple dark family hand hold holding light medium person skin tone
+🧑🏿‍🤝‍🧑🏽	body couple dark family hand hold holding medium person skin tone
+🧑🏿‍🤝‍🧑🏾	body couple dark family hand hold holding medium person skin tone
+🧑🏿‍🤝‍🧑🏿	body couple dark family hand hold holding person skin tone
 👭	body couple family hand holding person woman
 👭🏻	body couple family hand holding light person skin tone woman
+👩🏻‍🤝‍👩🏼	body couple family hand holding light medium person skin tone woman
+👩🏻‍🤝‍👩🏽	body couple family hand holding light medium person skin tone woman
+👩🏻‍🤝‍👩🏾	body couple dark family hand holding light medium person skin tone woman
+👩🏻‍🤝‍👩🏿	body couple dark family hand holding light person skin tone woman
+👩🏼‍🤝‍👩🏻	body couple family hand holding light medium person skin tone woman
 👭🏼	body couple family hand holding light medium person skin tone woman
+👩🏼‍🤝‍👩🏽	body couple family hand holding light medium person skin tone woman
+👩🏼‍🤝‍👩🏾	body couple dark family hand holding light medium person skin tone woman
+👩🏼‍🤝‍👩🏿	body couple dark family hand holding light medium person skin tone woman
+👩🏽‍🤝‍👩🏻	body couple family hand holding light medium person skin tone woman
+👩🏽‍🤝‍👩🏼	body couple family hand holding light medium person skin tone woman
 👭🏽	body couple family hand holding medium person skin tone woman
+👩🏽‍🤝‍👩🏾	body couple dark family hand holding medium person skin tone woman
+👩🏽‍🤝‍👩🏿	body couple dark family hand holding medium person skin tone woman
+👩🏾‍🤝‍👩🏻	body couple dark family hand holding light medium person skin tone woman
+👩🏾‍🤝‍👩🏼	body couple dark family hand holding light medium person skin tone woman
+👩🏾‍🤝‍👩🏽	body couple dark family hand holding medium person skin tone woman
 👭🏾	body couple dark family hand holding medium person skin tone woman
+👩🏾‍🤝‍👩🏿	body couple dark family hand holding medium person skin tone woman
+👩🏿‍🤝‍👩🏻	body couple dark family hand holding light person skin tone woman
+👩🏿‍🤝‍👩🏼	body couple dark family hand holding light medium person skin tone woman
+👩🏿‍🤝‍👩🏽	body couple dark family hand holding medium person skin tone woman
+👩🏿‍🤝‍👩🏾	body couple dark family hand holding medium person skin tone woman
 👭🏿	body couple dark family hand holding person skin tone woman
 👫	body couple family hand hold holding man person woman
 👫🏻	body couple family hand hold holding light man person skin tone woman
+👩🏻‍🤝‍👨🏼	body couple family hand hold holding light man medium person skin tone woman
+👩🏻‍🤝‍👨🏽	body couple family hand hold holding light man medium person skin tone woman
+👩🏻‍🤝‍👨🏾	body couple dark family hand hold holding light man medium person skin tone woman
+👩🏻‍🤝‍👨🏿	body couple dark family hand hold holding light man person skin tone woman
+👩🏼‍🤝‍👨🏻	body couple family hand hold holding light man medium person skin tone woman
 👫🏼	body couple family hand hold holding light man medium person skin tone woman
+👩🏼‍🤝‍👨🏽	body couple family hand hold holding light man medium person skin tone woman
+👩🏼‍🤝‍👨🏾	body couple dark family hand hold holding light man medium person skin tone woman
+👩🏼‍🤝‍👨🏿	body couple dark family hand hold holding light man medium person skin tone woman
+👩🏽‍🤝‍👨🏻	body couple family hand hold holding light man medium person skin tone woman
+👩🏽‍🤝‍👨🏼	body couple family hand hold holding light man medium person skin tone woman
 👫🏽	body couple family hand hold holding man medium person skin tone woman
+👩🏽‍🤝‍👨🏾	body couple dark family hand hold holding man medium person skin tone woman
+👩🏽‍🤝‍👨🏿	body couple dark family hand hold holding man medium person skin tone woman
+👩🏾‍🤝‍👨🏻	body couple dark family hand hold holding light man medium person skin tone woman
+👩🏾‍🤝‍👨🏼	body couple dark family hand hold holding light man medium person skin tone woman
+👩🏾‍🤝‍👨🏽	body couple dark family hand hold holding man medium person skin tone woman
 👫🏾	body couple dark family hand hold holding man medium person skin tone woman
+👩🏾‍🤝‍👨🏿	body couple dark family hand hold holding man medium person skin tone woman
+👩🏿‍🤝‍👨🏻	body couple dark family hand hold holding light man person skin tone woman
+👩🏿‍🤝‍👨🏼	body couple dark family hand hold holding light man medium person skin tone woman
+👩🏿‍🤝‍👨🏽	body couple dark family hand hold holding man medium person skin tone woman
+👩🏿‍🤝‍👨🏾	body couple dark family hand hold holding man medium person skin tone woman
 👫🏿	body couple dark family hand hold holding man person skin tone woman
 👬	body couple family gemini hand holding man person twin zodiac
 👬🏻	body couple family gemini hand holding light man person skin tone twin zodiac
+👨🏻‍🤝‍👨🏼	body couple family gemini hand holding light man medium person skin tone twin zodiac
+👨🏻‍🤝‍👨🏽	body couple family gemini hand holding light man medium person skin tone twin zodiac
+👨🏻‍🤝‍👨🏾	body couple dark family gemini hand holding light man medium person skin tone twin zodiac
+👨🏻‍🤝‍👨🏿	body couple dark family gemini hand holding light man person skin tone twin zodiac
+👨🏼‍🤝‍👨🏻	body couple family gemini hand holding light man medium person skin tone twin zodiac
 👬🏼	body couple family gemini hand holding light man medium person skin tone twin zodiac
+👨🏼‍🤝‍👨🏽	body couple family gemini hand holding light man medium person skin tone twin zodiac
+👨🏼‍🤝‍👨🏾	body couple dark family gemini hand holding light man medium person skin tone twin zodiac
+👨🏼‍🤝‍👨🏿	body couple dark family gemini hand holding light man medium person skin tone twin zodiac
+👨🏽‍🤝‍👨🏻	body couple family gemini hand holding light man medium person skin tone twin zodiac
+👨🏽‍🤝‍👨🏼	body couple family gemini hand holding light man medium person skin tone twin zodiac
 👬🏽	body couple family gemini hand holding man medium person skin tone twin zodiac
+👨🏽‍🤝‍👨🏾	body couple dark family gemini hand holding man medium person skin tone twin zodiac
+👨🏽‍🤝‍👨🏿	body couple dark family gemini hand holding man medium person skin tone twin zodiac
+👨🏾‍🤝‍👨🏻	body couple dark family gemini hand holding light man medium person skin tone twin zodiac
+👨🏾‍🤝‍👨🏼	body couple dark family gemini hand holding light man medium person skin tone twin zodiac
+👨🏾‍🤝‍👨🏽	body couple dark family gemini hand holding man medium person skin tone twin zodiac
 👬🏾	body couple dark family gemini hand holding man medium person skin tone twin zodiac
+👨🏾‍🤝‍👨🏿	body couple dark family gemini hand holding man medium person skin tone twin zodiac
+👨🏿‍🤝‍👨🏻	body couple dark family gemini hand holding light man person skin tone twin zodiac
+👨🏿‍🤝‍👨🏼	body couple dark family gemini hand holding light man medium person skin tone twin zodiac
+👨🏿‍🤝‍👨🏽	body couple dark family gemini hand holding man medium person skin tone twin zodiac
+👨🏿‍🤝‍👨🏾	body couple dark family gemini hand holding man medium person skin tone twin zodiac
 👬🏿	body couple dark family gemini hand holding man person skin tone twin zodiac
 💏	body couple family kiss person
 💏🏻	body couple family kiss light person skin tone
@@ -2670,25 +2730,420 @@
 💏🏽	body couple family kiss medium person skin tone
 💏🏾	body couple dark family kiss medium person skin tone
 💏🏿	body couple dark family kiss person skin tone
+🧑🏻‍❤️‍💋‍🧑🏼	body family kiss light medium person skin tone
+🧑🏻‍❤‍💋‍🧑🏼	body couple family kiss light medium person skin tone
+🧑🏻‍❤️‍💋‍🧑🏽	body family kiss light medium person skin tone
+🧑🏻‍❤‍💋‍🧑🏽	body couple family kiss light medium person skin tone
+🧑🏻‍❤️‍💋‍🧑🏾	body dark family kiss light medium person skin tone
+🧑🏻‍❤‍💋‍🧑🏾	body couple dark family kiss light medium person skin tone
+🧑🏻‍❤️‍💋‍🧑🏿	body dark family kiss light person skin tone
+🧑🏻‍❤‍💋‍🧑🏿	body couple dark family kiss light person skin tone
+🧑🏼‍❤️‍💋‍🧑🏻	body family kiss light medium person skin tone
+🧑🏼‍❤‍💋‍🧑🏻	body couple family kiss light medium person skin tone
+🧑🏼‍❤️‍💋‍🧑🏽	body family kiss light medium person skin tone
+🧑🏼‍❤‍💋‍🧑🏽	body couple family kiss light medium person skin tone
+🧑🏼‍❤️‍💋‍🧑🏾	body dark family kiss light medium person skin tone
+🧑🏼‍❤‍💋‍🧑🏾	body couple dark family kiss light medium person skin tone
+🧑🏼‍❤️‍💋‍🧑🏿	body dark family kiss light medium person skin tone
+🧑🏼‍❤‍💋‍🧑🏿	body couple dark family kiss light medium person skin tone
+🧑🏽‍❤️‍💋‍🧑🏻	body family kiss light medium person skin tone
+🧑🏽‍❤‍💋‍🧑🏻	body couple family kiss light medium person skin tone
+🧑🏽‍❤️‍💋‍🧑🏼	body family kiss light medium person skin tone
+🧑🏽‍❤‍💋‍🧑🏼	body couple family kiss light medium person skin tone
+🧑🏽‍❤️‍💋‍🧑🏾	body dark family kiss medium person skin tone
+🧑🏽‍❤‍💋‍🧑🏾	body couple dark family kiss medium person skin tone
+🧑🏽‍❤️‍💋‍🧑🏿	body dark family kiss medium person skin tone
+🧑🏽‍❤‍💋‍🧑🏿	body couple dark family kiss medium person skin tone
+🧑🏾‍❤️‍💋‍🧑🏻	body dark family kiss light medium person skin tone
+🧑🏾‍❤‍💋‍🧑🏻	body couple dark family kiss light medium person skin tone
+🧑🏾‍❤️‍💋‍🧑🏼	body dark family kiss light medium person skin tone
+🧑🏾‍❤‍💋‍🧑🏼	body couple dark family kiss light medium person skin tone
+🧑🏾‍❤️‍💋‍🧑🏽	body dark family kiss medium person skin tone
+🧑🏾‍❤‍💋‍🧑🏽	body couple dark family kiss medium person skin tone
+🧑🏾‍❤️‍💋‍🧑🏿	body dark family kiss medium person skin tone
+🧑🏾‍❤‍💋‍🧑🏿	body couple dark family kiss medium person skin tone
+🧑🏿‍❤️‍💋‍🧑🏻	body dark family kiss light person skin tone
+🧑🏿‍❤‍💋‍🧑🏻	body couple dark family kiss light person skin tone
+🧑🏿‍❤️‍💋‍🧑🏼	body dark family kiss light medium person skin tone
+🧑🏿‍❤‍💋‍🧑🏼	body couple dark family kiss light medium person skin tone
+🧑🏿‍❤️‍💋‍🧑🏽	body dark family kiss medium person skin tone
+🧑🏿‍❤‍💋‍🧑🏽	body couple dark family kiss medium person skin tone
+🧑🏿‍❤️‍💋‍🧑🏾	body dark family kiss medium person skin tone
+🧑🏿‍❤‍💋‍🧑🏾	body couple dark family kiss medium person skin tone
+👩‍❤️‍💋‍👨	body family kiss man person woman
+👩‍❤‍💋‍👨	body couple family kiss man person woman
+👩🏻‍❤️‍💋‍👨🏻	body family kiss light man person skin tone woman
+👩🏻‍❤‍💋‍👨🏻	body couple family kiss light man person skin tone woman
+👩🏻‍❤️‍💋‍👨🏼	body family kiss light man medium person skin tone woman
+👩🏻‍❤‍💋‍👨🏼	body couple family kiss light man medium person skin tone woman
+👩🏻‍❤️‍💋‍👨🏽	body family kiss light man medium person skin tone woman
+👩🏻‍❤‍💋‍👨🏽	body couple family kiss light man medium person skin tone woman
+👩🏻‍❤️‍💋‍👨🏾	body dark family kiss light man medium person skin tone woman
+👩🏻‍❤‍💋‍👨🏾	body couple dark family kiss light man medium person skin tone woman
+👩🏻‍❤️‍💋‍👨🏿	body dark family kiss light man person skin tone woman
+👩🏻‍❤‍💋‍👨🏿	body couple dark family kiss light man person skin tone woman
+👩🏼‍❤️‍💋‍👨🏻	body family kiss light man medium person skin tone woman
+👩🏼‍❤‍💋‍👨🏻	body couple family kiss light man medium person skin tone woman
+👩🏼‍❤️‍💋‍👨🏼	body family kiss light man medium person skin tone woman
+👩🏼‍❤‍💋‍👨🏼	body couple family kiss light man medium person skin tone woman
+👩🏼‍❤️‍💋‍👨🏽	body family kiss light man medium person skin tone woman
+👩🏼‍❤‍💋‍👨🏽	body couple family kiss light man medium person skin tone woman
+👩🏼‍❤️‍💋‍👨🏾	body dark family kiss light man medium person skin tone woman
+👩🏼‍❤‍💋‍👨🏾	body couple dark family kiss light man medium person skin tone woman
+👩🏼‍❤️‍💋‍👨🏿	body dark family kiss light man medium person skin tone woman
+👩🏼‍❤‍💋‍👨🏿	body couple dark family kiss light man medium person skin tone woman
+👩🏽‍❤️‍💋‍👨🏻	body family kiss light man medium person skin tone woman
+👩🏽‍❤‍💋‍👨🏻	body couple family kiss light man medium person skin tone woman
+👩🏽‍❤️‍💋‍👨🏼	body family kiss light man medium person skin tone woman
+👩🏽‍❤‍💋‍👨🏼	body couple family kiss light man medium person skin tone woman
+👩🏽‍❤️‍💋‍👨🏽	body family kiss man medium person skin tone woman
+👩🏽‍❤‍💋‍👨🏽	body couple family kiss man medium person skin tone woman
+👩🏽‍❤️‍💋‍👨🏾	body dark family kiss man medium person skin tone woman
+👩🏽‍❤‍💋‍👨🏾	body couple dark family kiss man medium person skin tone woman
+👩🏽‍❤️‍💋‍👨🏿	body dark family kiss man medium person skin tone woman
+👩🏽‍❤‍💋‍👨🏿	body couple dark family kiss man medium person skin tone woman
+👩🏾‍❤️‍💋‍👨🏻	body dark family kiss light man medium person skin tone woman
+👩🏾‍❤‍💋‍👨🏻	body couple dark family kiss light man medium person skin tone woman
+👩🏾‍❤️‍💋‍👨🏼	body dark family kiss light man medium person skin tone woman
+👩🏾‍❤‍💋‍👨🏼	body couple dark family kiss light man medium person skin tone woman
+👩🏾‍❤️‍💋‍👨🏽	body dark family kiss man medium person skin tone woman
+👩🏾‍❤‍💋‍👨🏽	body couple dark family kiss man medium person skin tone woman
+👩🏾‍❤️‍💋‍👨🏾	body dark family kiss man medium person skin tone woman
+👩🏾‍❤‍💋‍👨🏾	body couple dark family kiss man medium person skin tone woman
+👩🏾‍❤️‍💋‍👨🏿	body dark family kiss man medium person skin tone woman
+👩🏾‍❤‍💋‍👨🏿	body couple dark family kiss man medium person skin tone woman
+👩🏿‍❤️‍💋‍👨🏻	body dark family kiss light man person skin tone woman
+👩🏿‍❤‍💋‍👨🏻	body couple dark family kiss light man person skin tone woman
+👩🏿‍❤️‍💋‍👨🏼	body dark family kiss light man medium person skin tone woman
+👩🏿‍❤‍💋‍👨🏼	body couple dark family kiss light man medium person skin tone woman
+👩🏿‍❤️‍💋‍👨🏽	body dark family kiss man medium person skin tone woman
+👩🏿‍❤‍💋‍👨🏽	body couple dark family kiss man medium person skin tone woman
+👩🏿‍❤️‍💋‍👨🏾	body dark family kiss man medium person skin tone woman
+👩🏿‍❤‍💋‍👨🏾	body couple dark family kiss man medium person skin tone woman
+👩🏿‍❤️‍💋‍👨🏿	body dark family kiss man person skin tone woman
+👩🏿‍❤‍💋‍👨🏿	body couple dark family kiss man person skin tone woman
+👨‍❤️‍💋‍👨	body family kiss man person
+👨‍❤‍💋‍👨	body couple family kiss man person
+👨🏻‍❤️‍💋‍👨🏻	body family kiss light man person skin tone
+👨🏻‍❤‍💋‍👨🏻	body couple family kiss light man person skin tone
+👨🏻‍❤️‍💋‍👨🏼	body family kiss light man medium person skin tone
+👨🏻‍❤‍💋‍👨🏼	body couple family kiss light man medium person skin tone
+👨🏻‍❤️‍💋‍👨🏽	body family kiss light man medium person skin tone
+👨🏻‍❤‍💋‍👨🏽	body couple family kiss light man medium person skin tone
+👨🏻‍❤️‍💋‍👨🏾	body dark family kiss light man medium person skin tone
+👨🏻‍❤‍💋‍👨🏾	body couple dark family kiss light man medium person skin tone
+👨🏻‍❤️‍💋‍👨🏿	body dark family kiss light man person skin tone
+👨🏻‍❤‍💋‍👨🏿	body couple dark family kiss light man person skin tone
+👨🏼‍❤️‍💋‍👨🏻	body family kiss light man medium person skin tone
+👨🏼‍❤‍💋‍👨🏻	body couple family kiss light man medium person skin tone
+👨🏼‍❤️‍💋‍👨🏼	body family kiss light man medium person skin tone
+👨🏼‍❤‍💋‍👨🏼	body couple family kiss light man medium person skin tone
+👨🏼‍❤️‍💋‍👨🏽	body family kiss light man medium person skin tone
+👨🏼‍❤‍💋‍👨🏽	body couple family kiss light man medium person skin tone
+👨🏼‍❤️‍💋‍👨🏾	body dark family kiss light man medium person skin tone
+👨🏼‍❤‍💋‍👨🏾	body couple dark family kiss light man medium person skin tone
+👨🏼‍❤️‍💋‍👨🏿	body dark family kiss light man medium person skin tone
+👨🏼‍❤‍💋‍👨🏿	body couple dark family kiss light man medium person skin tone
+👨🏽‍❤️‍💋‍👨🏻	body family kiss light man medium person skin tone
+👨🏽‍❤‍💋‍👨🏻	body couple family kiss light man medium person skin tone
+👨🏽‍❤️‍💋‍👨🏼	body family kiss light man medium person skin tone
+👨🏽‍❤‍💋‍👨🏼	body couple family kiss light man medium person skin tone
+👨🏽‍❤️‍💋‍👨🏽	body family kiss man medium person skin tone
+👨🏽‍❤‍💋‍👨🏽	body couple family kiss man medium person skin tone
+👨🏽‍❤️‍💋‍👨🏾	body dark family kiss man medium person skin tone
+👨🏽‍❤‍💋‍👨🏾	body couple dark family kiss man medium person skin tone
+👨🏽‍❤️‍💋‍👨🏿	body dark family kiss man medium person skin tone
+👨🏽‍❤‍💋‍👨🏿	body couple dark family kiss man medium person skin tone
+👨🏾‍❤️‍💋‍👨🏻	body dark family kiss light man medium person skin tone
+👨🏾‍❤‍💋‍👨🏻	body couple dark family kiss light man medium person skin tone
+👨🏾‍❤️‍💋‍👨🏼	body dark family kiss light man medium person skin tone
+👨🏾‍❤‍💋‍👨🏼	body couple dark family kiss light man medium person skin tone
+👨🏾‍❤️‍💋‍👨🏽	body dark family kiss man medium person skin tone
+👨🏾‍❤‍💋‍👨🏽	body couple dark family kiss man medium person skin tone
+👨🏾‍❤️‍💋‍👨🏾	body dark family kiss man medium person skin tone
+👨🏾‍❤‍💋‍👨🏾	body couple dark family kiss man medium person skin tone
+👨🏾‍❤️‍💋‍👨🏿	body dark family kiss man medium person skin tone
+👨🏾‍❤‍💋‍👨🏿	body couple dark family kiss man medium person skin tone
+👨🏿‍❤️‍💋‍👨🏻	body dark family kiss light man person skin tone
+👨🏿‍❤‍💋‍👨🏻	body couple dark family kiss light man person skin tone
+👨🏿‍❤️‍💋‍👨🏼	body dark family kiss light man medium person skin tone
+👨🏿‍❤‍💋‍👨🏼	body couple dark family kiss light man medium person skin tone
+👨🏿‍❤️‍💋‍👨🏽	body dark family kiss man medium person skin tone
+👨🏿‍❤‍💋‍👨🏽	body couple dark family kiss man medium person skin tone
+👨🏿‍❤️‍💋‍👨🏾	body dark family kiss man medium person skin tone
+👨🏿‍❤‍💋‍👨🏾	body couple dark family kiss man medium person skin tone
+👨🏿‍❤️‍💋‍👨🏿	body dark family kiss man person skin tone
+👨🏿‍❤‍💋‍👨🏿	body couple dark family kiss man person skin tone
+👩‍❤️‍💋‍👩	body family kiss person woman
+👩‍❤‍💋‍👩	body couple family kiss person woman
+👩🏻‍❤️‍💋‍👩🏻	body family kiss light person skin tone woman
+👩🏻‍❤‍💋‍👩🏻	body couple family kiss light person skin tone woman
+👩🏻‍❤️‍💋‍👩🏼	body family kiss light medium person skin tone woman
+👩🏻‍❤‍💋‍👩🏼	body couple family kiss light medium person skin tone woman
+👩🏻‍❤️‍💋‍👩🏽	body family kiss light medium person skin tone woman
+👩🏻‍❤‍💋‍👩🏽	body couple family kiss light medium person skin tone woman
+👩🏻‍❤️‍💋‍👩🏾	body dark family kiss light medium person skin tone woman
+👩🏻‍❤‍💋‍👩🏾	body couple dark family kiss light medium person skin tone woman
+👩🏻‍❤️‍💋‍👩🏿	body dark family kiss light person skin tone woman
+👩🏻‍❤‍💋‍👩🏿	body couple dark family kiss light person skin tone woman
+👩🏼‍❤️‍💋‍👩🏻	body family kiss light medium person skin tone woman
+👩🏼‍❤‍💋‍👩🏻	body couple family kiss light medium person skin tone woman
+👩🏼‍❤️‍💋‍👩🏼	body family kiss light medium person skin tone woman
+👩🏼‍❤‍💋‍👩🏼	body couple family kiss light medium person skin tone woman
+👩🏼‍❤️‍💋‍👩🏽	body family kiss light medium person skin tone woman
+👩🏼‍❤‍💋‍👩🏽	body couple family kiss light medium person skin tone woman
+👩🏼‍❤️‍💋‍👩🏾	body dark family kiss light medium person skin tone woman
+👩🏼‍❤‍💋‍👩🏾	body couple dark family kiss light medium person skin tone woman
+👩🏼‍❤️‍💋‍👩🏿	body dark family kiss light medium person skin tone woman
+👩🏼‍❤‍💋‍👩🏿	body couple dark family kiss light medium person skin tone woman
+👩🏽‍❤️‍💋‍👩🏻	body family kiss light medium person skin tone woman
+👩🏽‍❤‍💋‍👩🏻	body couple family kiss light medium person skin tone woman
+👩🏽‍❤️‍💋‍👩🏼	body family kiss light medium person skin tone woman
+👩🏽‍❤‍💋‍👩🏼	body couple family kiss light medium person skin tone woman
+👩🏽‍❤️‍💋‍👩🏽	body family kiss medium person skin tone woman
+👩🏽‍❤‍💋‍👩🏽	body couple family kiss medium person skin tone woman
+👩🏽‍❤️‍💋‍👩🏾	body dark family kiss medium person skin tone woman
+👩🏽‍❤‍💋‍👩🏾	body couple dark family kiss medium person skin tone woman
+👩🏽‍❤️‍💋‍👩🏿	body dark family kiss medium person skin tone woman
+👩🏽‍❤‍💋‍👩🏿	body couple dark family kiss medium person skin tone woman
+👩🏾‍❤️‍💋‍👩🏻	body dark family kiss light medium person skin tone woman
+👩🏾‍❤‍💋‍👩🏻	body couple dark family kiss light medium person skin tone woman
+👩🏾‍❤️‍💋‍👩🏼	body dark family kiss light medium person skin tone woman
+👩🏾‍❤‍💋‍👩🏼	body couple dark family kiss light medium person skin tone woman
+👩🏾‍❤️‍💋‍👩🏽	body dark family kiss medium person skin tone woman
+👩🏾‍❤‍💋‍👩🏽	body couple dark family kiss medium person skin tone woman
+👩🏾‍❤️‍💋‍👩🏾	body dark family kiss medium person skin tone woman
+👩🏾‍❤‍💋‍👩🏾	body couple dark family kiss medium person skin tone woman
+👩🏾‍❤️‍💋‍👩🏿	body dark family kiss medium person skin tone woman
+👩🏾‍❤‍💋‍👩🏿	body couple dark family kiss medium person skin tone woman
+👩🏿‍❤️‍💋‍👩🏻	body dark family kiss light person skin tone woman
+👩🏿‍❤‍💋‍👩🏻	body couple dark family kiss light person skin tone woman
+👩🏿‍❤️‍💋‍👩🏼	body dark family kiss light medium person skin tone woman
+👩🏿‍❤‍💋‍👩🏼	body couple dark family kiss light medium person skin tone woman
+👩🏿‍❤️‍💋‍👩🏽	body dark family kiss medium person skin tone woman
+👩🏿‍❤‍💋‍👩🏽	body couple dark family kiss medium person skin tone woman
+👩🏿‍❤️‍💋‍👩🏾	body dark family kiss medium person skin tone woman
+👩🏿‍❤‍💋‍👩🏾	body couple dark family kiss medium person skin tone woman
+👩🏿‍❤️‍💋‍👩🏿	body dark family kiss person skin tone woman
+👩🏿‍❤‍💋‍👩🏿	body couple dark family kiss person skin tone woman
 💑	body couple family heart love person
 💑🏻	body couple family heart light love person skin tone
 💑🏼	body couple family heart light love medium person skin tone
 💑🏽	body couple family heart love medium person skin tone
 💑🏾	body couple dark family heart love medium person skin tone
 💑🏿	body couple dark family heart love person skin tone
+🧑🏻‍❤️‍🧑🏼	body couple family heart light medium person skin tone
+🧑🏻‍❤‍🧑🏼	body couple family heart light love medium person skin tone
+🧑🏻‍❤️‍🧑🏽	body couple family heart light medium person skin tone
+🧑🏻‍❤‍🧑🏽	body couple family heart light love medium person skin tone
+🧑🏻‍❤️‍🧑🏾	body couple dark family heart light medium person skin tone
+🧑🏻‍❤‍🧑🏾	body couple dark family heart light love medium person skin tone
+🧑🏻‍❤️‍🧑🏿	body couple dark family heart light person skin tone
+🧑🏻‍❤‍🧑🏿	body couple dark family heart light love person skin tone
+🧑🏼‍❤️‍🧑🏻	body couple family heart light medium person skin tone
+🧑🏼‍❤‍🧑🏻	body couple family heart light love medium person skin tone
+🧑🏼‍❤️‍🧑🏽	body couple family heart light medium person skin tone
+🧑🏼‍❤‍🧑🏽	body couple family heart light love medium person skin tone
+🧑🏼‍❤️‍🧑🏾	body couple dark family heart light medium person skin tone
+🧑🏼‍❤‍🧑🏾	body couple dark family heart light love medium person skin tone
+🧑🏼‍❤️‍🧑🏿	body couple dark family heart light medium person skin tone
+🧑🏼‍❤‍🧑🏿	body couple dark family heart light love medium person skin tone
+🧑🏽‍❤️‍🧑🏻	body couple family heart light medium person skin tone
+🧑🏽‍❤‍🧑🏻	body couple family heart light love medium person skin tone
+🧑🏽‍❤️‍🧑🏼	body couple family heart light medium person skin tone
+🧑🏽‍❤‍🧑🏼	body couple family heart light love medium person skin tone
+🧑🏽‍❤️‍🧑🏾	body couple dark family heart medium person skin tone
+🧑🏽‍❤‍🧑🏾	body couple dark family heart love medium person skin tone
+🧑🏽‍❤️‍🧑🏿	body couple dark family heart medium person skin tone
+🧑🏽‍❤‍🧑🏿	body couple dark family heart love medium person skin tone
+🧑🏾‍❤️‍🧑🏻	body couple dark family heart light medium person skin tone
+🧑🏾‍❤‍🧑🏻	body couple dark family heart light love medium person skin tone
+🧑🏾‍❤️‍🧑🏼	body couple dark family heart light medium person skin tone
+🧑🏾‍❤‍🧑🏼	body couple dark family heart light love medium person skin tone
+🧑🏾‍❤️‍🧑🏽	body couple dark family heart medium person skin tone
+🧑🏾‍❤‍🧑🏽	body couple dark family heart love medium person skin tone
+🧑🏾‍❤️‍🧑🏿	body couple dark family heart medium person skin tone
+🧑🏾‍❤‍🧑🏿	body couple dark family heart love medium person skin tone
+🧑🏿‍❤️‍🧑🏻	body couple dark family heart light person skin tone
+🧑🏿‍❤‍🧑🏻	body couple dark family heart light love person skin tone
+🧑🏿‍❤️‍🧑🏼	body couple dark family heart light medium person skin tone
+🧑🏿‍❤‍🧑🏼	body couple dark family heart light love medium person skin tone
+🧑🏿‍❤️‍🧑🏽	body couple dark family heart medium person skin tone
+🧑🏿‍❤‍🧑🏽	body couple dark family heart love medium person skin tone
+🧑🏿‍❤️‍🧑🏾	body couple dark family heart medium person skin tone
+🧑🏿‍❤‍🧑🏾	body couple dark family heart love medium person skin tone
 👩‍❤️‍👨	body couple family heart man person woman
 👩‍❤‍👨	body couple family heart love man person woman
+👩🏻‍❤️‍👨🏻	body couple family heart light man person skin tone woman
+👩🏻‍❤‍👨🏻	body couple family heart light love man person skin tone woman
+👩🏻‍❤️‍👨🏼	body couple family heart light man medium person skin tone woman
+👩🏻‍❤‍👨🏼	body couple family heart light love man medium person skin tone woman
+👩🏻‍❤️‍👨🏽	body couple family heart light man medium person skin tone woman
+👩🏻‍❤‍👨🏽	body couple family heart light love man medium person skin tone woman
+👩🏻‍❤️‍👨🏾	body couple dark family heart light man medium person skin tone woman
+👩🏻‍❤‍👨🏾	body couple dark family heart light love man medium person skin tone woman
+👩🏻‍❤️‍👨🏿	body couple dark family heart light man person skin tone woman
+👩🏻‍❤‍👨🏿	body couple dark family heart light love man person skin tone woman
+👩🏼‍❤️‍👨🏻	body couple family heart light man medium person skin tone woman
+👩🏼‍❤‍👨🏻	body couple family heart light love man medium person skin tone woman
+👩🏼‍❤️‍👨🏼	body couple family heart light man medium person skin tone woman
+👩🏼‍❤‍👨🏼	body couple family heart light love man medium person skin tone woman
+👩🏼‍❤️‍👨🏽	body couple family heart light man medium person skin tone woman
+👩🏼‍❤‍👨🏽	body couple family heart light love man medium person skin tone woman
+👩🏼‍❤️‍👨🏾	body couple dark family heart light man medium person skin tone woman
+👩🏼‍❤‍👨🏾	body couple dark family heart light love man medium person skin tone woman
+👩🏼‍❤️‍👨🏿	body couple dark family heart light man medium person skin tone woman
+👩🏼‍❤‍👨🏿	body couple dark family heart light love man medium person skin tone woman
+👩🏽‍❤️‍👨🏻	body couple family heart light man medium person skin tone woman
+👩🏽‍❤‍👨🏻	body couple family heart light love man medium person skin tone woman
+👩🏽‍❤️‍👨🏼	body couple family heart light man medium person skin tone woman
+👩🏽‍❤‍👨🏼	body couple family heart light love man medium person skin tone woman
+👩🏽‍❤️‍👨🏽	body couple family heart man medium person skin tone woman
+👩🏽‍❤‍👨🏽	body couple family heart love man medium person skin tone woman
+👩🏽‍❤️‍👨🏾	body couple dark family heart man medium person skin tone woman
+👩🏽‍❤‍👨🏾	body couple dark family heart love man medium person skin tone woman
+👩🏽‍❤️‍👨🏿	body couple dark family heart man medium person skin tone woman
+👩🏽‍❤‍👨🏿	body couple dark family heart love man medium person skin tone woman
+👩🏾‍❤️‍👨🏻	body couple dark family heart light man medium person skin tone woman
+👩🏾‍❤‍👨🏻	body couple dark family heart light love man medium person skin tone woman
+👩🏾‍❤️‍👨🏼	body couple dark family heart light man medium person skin tone woman
+👩🏾‍❤‍👨🏼	body couple dark family heart light love man medium person skin tone woman
+👩🏾‍❤️‍👨🏽	body couple dark family heart man medium person skin tone woman
+👩🏾‍❤‍👨🏽	body couple dark family heart love man medium person skin tone woman
+👩🏾‍❤️‍👨🏾	body couple dark family heart man medium person skin tone woman
+👩🏾‍❤‍👨🏾	body couple dark family heart love man medium person skin tone woman
+👩🏾‍❤️‍👨🏿	body couple dark family heart man medium person skin tone woman
+👩🏾‍❤‍👨🏿	body couple dark family heart love man medium person skin tone woman
+👩🏿‍❤️‍👨🏻	body couple dark family heart light man person skin tone woman
+👩🏿‍❤‍👨🏻	body couple dark family heart light love man person skin tone woman
+👩🏿‍❤️‍👨🏼	body couple dark family heart light man medium person skin tone woman
+👩🏿‍❤‍👨🏼	body couple dark family heart light love man medium person skin tone woman
+👩🏿‍❤️‍👨🏽	body couple dark family heart man medium person skin tone woman
+👩🏿‍❤‍👨🏽	body couple dark family heart love man medium person skin tone woman
+👩🏿‍❤️‍👨🏾	body couple dark family heart man medium person skin tone woman
+👩🏿‍❤‍👨🏾	body couple dark family heart love man medium person skin tone woman
+👩🏿‍❤️‍👨🏿	body couple dark family heart man person skin tone woman
+👩🏿‍❤‍👨🏿	body couple dark family heart love man person skin tone woman
 👨‍❤️‍👨	body couple family heart man person
 👨‍❤‍👨	body couple family heart love man person
+👨🏻‍❤️‍👨🏻	body couple family heart light man person skin tone
+👨🏻‍❤‍👨🏻	body couple family heart light love man person skin tone
+👨🏻‍❤️‍👨🏼	body couple family heart light man medium person skin tone
+👨🏻‍❤‍👨🏼	body couple family heart light love man medium person skin tone
+👨🏻‍❤️‍👨🏽	body couple family heart light man medium person skin tone
+👨🏻‍❤‍👨🏽	body couple family heart light love man medium person skin tone
+👨🏻‍❤️‍👨🏾	body couple dark family heart light man medium person skin tone
+👨🏻‍❤‍👨🏾	body couple dark family heart light love man medium person skin tone
+👨🏻‍❤️‍👨🏿	body couple dark family heart light man person skin tone
+👨🏻‍❤‍👨🏿	body couple dark family heart light love man person skin tone
+👨🏼‍❤️‍👨🏻	body couple family heart light man medium person skin tone
+👨🏼‍❤‍👨🏻	body couple family heart light love man medium person skin tone
+👨🏼‍❤️‍👨🏼	body couple family heart light man medium person skin tone
+👨🏼‍❤‍👨🏼	body couple family heart light love man medium person skin tone
+👨🏼‍❤️‍👨🏽	body couple family heart light man medium person skin tone
+👨🏼‍❤‍👨🏽	body couple family heart light love man medium person skin tone
+👨🏼‍❤️‍👨🏾	body couple dark family heart light man medium person skin tone
+👨🏼‍❤‍👨🏾	body couple dark family heart light love man medium person skin tone
+👨🏼‍❤️‍👨🏿	body couple dark family heart light man medium person skin tone
+👨🏼‍❤‍👨🏿	body couple dark family heart light love man medium person skin tone
+👨🏽‍❤️‍👨🏻	body couple family heart light man medium person skin tone
+👨🏽‍❤‍👨🏻	body couple family heart light love man medium person skin tone
+👨🏽‍❤️‍👨🏼	body couple family heart light man medium person skin tone
+👨🏽‍❤‍👨🏼	body couple family heart light love man medium person skin tone
+👨🏽‍❤️‍👨🏽	body couple family heart man medium person skin tone
+👨🏽‍❤‍👨🏽	body couple family heart love man medium person skin tone
+👨🏽‍❤️‍👨🏾	body couple dark family heart man medium person skin tone
+👨🏽‍❤‍👨🏾	body couple dark family heart love man medium person skin tone
+👨🏽‍❤️‍👨🏿	body couple dark family heart man medium person skin tone
+👨🏽‍❤‍👨🏿	body couple dark family heart love man medium person skin tone
+👨🏾‍❤️‍👨🏻	body couple dark family heart light man medium person skin tone
+👨🏾‍❤‍👨🏻	body couple dark family heart light love man medium person skin tone
+👨🏾‍❤️‍👨🏼	body couple dark family heart light man medium person skin tone
+👨🏾‍❤‍👨🏼	body couple dark family heart light love man medium person skin tone
+👨🏾‍❤️‍👨🏽	body couple dark family heart man medium person skin tone
+👨🏾‍❤‍👨🏽	body couple dark family heart love man medium person skin tone
+👨🏾‍❤️‍👨🏾	body couple dark family heart man medium person skin tone
+👨🏾‍❤‍👨🏾	body couple dark family heart love man medium person skin tone
+👨🏾‍❤️‍👨🏿	body couple dark family heart man medium person skin tone
+👨🏾‍❤‍👨🏿	body couple dark family heart love man medium person skin tone
+👨🏿‍❤️‍👨🏻	body couple dark family heart light man person skin tone
+👨🏿‍❤‍👨🏻	body couple dark family heart light love man person skin tone
+👨🏿‍❤️‍👨🏼	body couple dark family heart light man medium person skin tone
+👨🏿‍❤‍👨🏼	body couple dark family heart light love man medium person skin tone
+👨🏿‍❤️‍👨🏽	body couple dark family heart man medium person skin tone
+👨🏿‍❤‍👨🏽	body couple dark family heart love man medium person skin tone
+👨🏿‍❤️‍👨🏾	body couple dark family heart man medium person skin tone
+👨🏿‍❤‍👨🏾	body couple dark family heart love man medium person skin tone
+👨🏿‍❤️‍👨🏿	body couple dark family heart man person skin tone
+👨🏿‍❤‍👨🏿	body couple dark family heart love man person skin tone
 👩‍❤️‍👩	body couple family heart person woman
 👩‍❤‍👩	body couple family heart love person woman
+👩🏻‍❤️‍👩🏻	body couple family heart light person skin tone woman
+👩🏻‍❤‍👩🏻	body couple family heart light love person skin tone woman
+👩🏻‍❤️‍👩🏼	body couple family heart light medium person skin tone woman
+👩🏻‍❤‍👩🏼	body couple family heart light love medium person skin tone woman
+👩🏻‍❤️‍👩🏽	body couple family heart light medium person skin tone woman
+👩🏻‍❤‍👩🏽	body couple family heart light love medium person skin tone woman
+👩🏻‍❤️‍👩🏾	body couple dark family heart light medium person skin tone woman
+👩🏻‍❤‍👩🏾	body couple dark family heart light love medium person skin tone woman
+👩🏻‍❤️‍👩🏿	body couple dark family heart light person skin tone woman
+👩🏻‍❤‍👩🏿	body couple dark family heart light love person skin tone woman
+👩🏼‍❤️‍👩🏻	body couple family heart light medium person skin tone woman
+👩🏼‍❤‍👩🏻	body couple family heart light love medium person skin tone woman
+👩🏼‍❤️‍👩🏼	body couple family heart light medium person skin tone woman
+👩🏼‍❤‍👩🏼	body couple family heart light love medium person skin tone woman
+👩🏼‍❤️‍👩🏽	body couple family heart light medium person skin tone woman
+👩🏼‍❤‍👩🏽	body couple family heart light love medium person skin tone woman
+👩🏼‍❤️‍👩🏾	body couple dark family heart light medium person skin tone woman
+👩🏼‍❤‍👩🏾	body couple dark family heart light love medium person skin tone woman
+👩🏼‍❤️‍👩🏿	body couple dark family heart light medium person skin tone woman
+👩🏼‍❤‍👩🏿	body couple dark family heart light love medium person skin tone woman
+👩🏽‍❤️‍👩🏻	body couple family heart light medium person skin tone woman
+👩🏽‍❤‍👩🏻	body couple family heart light love medium person skin tone woman
+👩🏽‍❤️‍👩🏼	body couple family heart light medium person skin tone woman
+👩🏽‍❤‍👩🏼	body couple family heart light love medium person skin tone woman
+👩🏽‍❤️‍👩🏽	body couple family heart medium person skin tone woman
+👩🏽‍❤‍👩🏽	body couple family heart love medium person skin tone woman
+👩🏽‍❤️‍👩🏾	body couple dark family heart medium person skin tone woman
+👩🏽‍❤‍👩🏾	body couple dark family heart love medium person skin tone woman
+👩🏽‍❤️‍👩🏿	body couple dark family heart medium person skin tone woman
+👩🏽‍❤‍👩🏿	body couple dark family heart love medium person skin tone woman
+👩🏾‍❤️‍👩🏻	body couple dark family heart light medium person skin tone woman
+👩🏾‍❤‍👩🏻	body couple dark family heart light love medium person skin tone woman
+👩🏾‍❤️‍👩🏼	body couple dark family heart light medium person skin tone woman
+👩🏾‍❤‍👩🏼	body couple dark family heart light love medium person skin tone woman
+👩🏾‍❤️‍👩🏽	body couple dark family heart medium person skin tone woman
+👩🏾‍❤‍👩🏽	body couple dark family heart love medium person skin tone woman
+👩🏾‍❤️‍👩🏾	body couple dark family heart medium person skin tone woman
+👩🏾‍❤‍👩🏾	body couple dark family heart love medium person skin tone woman
+👩🏾‍❤️‍👩🏿	body couple dark family heart medium person skin tone woman
+👩🏾‍❤‍👩🏿	body couple dark family heart love medium person skin tone woman
+👩🏿‍❤️‍👩🏻	body couple dark family heart light person skin tone woman
+👩🏿‍❤‍👩🏻	body couple dark family heart light love person skin tone woman
+👩🏿‍❤️‍👩🏼	body couple dark family heart light medium person skin tone woman
+👩🏿‍❤‍👩🏼	body couple dark family heart light love medium person skin tone woman
+👩🏿‍❤️‍👩🏽	body couple dark family heart medium person skin tone woman
+👩🏿‍❤‍👩🏽	body couple dark family heart love medium person skin tone woman
+👩🏿‍❤️‍👩🏾	body couple dark family heart medium person skin tone woman
+👩🏿‍❤‍👩🏾	body couple dark family heart love medium person skin tone woman
+👩🏿‍❤️‍👩🏿	body couple dark family heart person skin tone woman
+👩🏿‍❤‍👩🏿	body couple dark family heart love person skin tone woman
 👪	body family person
 👨‍👩‍👦	body boy family man person woman
 👨‍👩‍👧	body family girl man person woman
+👨‍👩‍👧‍👦	body boy family girl man person woman
+👨‍👩‍👦‍👦	body boy family man person woman
+👨‍👩‍👧‍👧	body family girl man person woman
 👨‍👨‍👦	body boy family man person
 👨‍👨‍👧	body family girl man person
+👨‍👨‍👧‍👦	body boy family girl man person
+👨‍👨‍👦‍👦	body boy family man person
+👨‍👨‍👧‍👧	body family girl man person
 👩‍👩‍👦	body boy family person woman
 👩‍👩‍👧	body family girl person woman
+👩‍👩‍👧‍👦	body boy family girl person woman
+👩‍👩‍👦‍👦	body boy family person woman
+👩‍👩‍👧‍👧	body family girl person woman
 👨‍👦	body boy family man person
 👨‍👦‍👦	body boy family man person
 👨‍👧	body family girl man person
@@ -2700,16 +3155,10 @@
 👩‍👧‍👦	body boy family girl person woman
 👩‍👧‍👧	body family girl person woman
 🗣️	body head person speaking symbol
-🗣	body face head person silhouette speak speaking symbol
 👤	body bust person silhouette symbol
 👥	body bust person silhouette symbol
 🫂	body goodbye hello hug hugging person symbol thank
 👣	body clothing footprint person print symbol
-🏻	component light skin tone type
-🏼	component light medium skin tone type
-🏽	component medium skin tone type
-🏾	component dark medium skin tone type
-🏿	component dark skin tone type
 🦰	component ginger hair red redhead style
 🦱	afro component curly hair ringlet style
 🦳	component gray grey hair old style white
@@ -2734,8 +3183,6 @@
 🐅	animal mammal nature tiger
 🐆	animal leopard mammal nature
 🐴	animal face horse mammal nature
-🫎	animal antler elk mammal moose nature
-🫏	animal ass burro donkey mammal mule nature stubborn
 🐎	animal equestrian horse mammal nature racehorse racing
 🦄	animal face mammal nature unicorn
 🦓	animal mammal nature stripe zebra
@@ -2767,7 +3214,6 @@
 🐰	animal bunny face mammal nature pet rabbit
 🐇	animal bunny mammal nature pet rabbit
 🐿️	animal chipmunk mammal nature
-🐿	animal chipmunk mammal nature squirrel
 🦫	animal beaver dam mammal nature
 🦔	animal hedgehog mammal nature spiny
 🦇	animal bat mammal nature vampire
@@ -2791,7 +3237,6 @@
 🐦	animal bird nature
 🐧	animal bird nature penguin
 🕊️	animal bird dove nature
-🕊	animal bird dove fly nature peace
 🦅	animal bird eagle nature prey
 🦆	animal bird duck nature
 🦢	animal bird cygnet duckling nature swan ugly
@@ -2801,9 +3246,7 @@
 🦩	animal bird flamboyant flamingo nature tropical
 🦚	animal bird nature ostentatious peacock peahen proud
 🦜	animal bird nature parrot pirate talk
-🪽	angelic animal aviation bird flying mythology nature wing
 🐦‍⬛	animal bird black crow nature raven rook
-🪿	animal bird fowl goose honk nature silly
 🐸	amphibian animal face frog nature
 🐊	animal crocodile nature reptile
 🐢	animal nature reptile terrapin tortoise turtle
@@ -2824,7 +3267,6 @@
 🐙	animal marine nature octopus
 🐚	animal marine nature shell spiral
 🪸	animal coral marine nature ocean reef
-🪼	animal burn invertebrate jelly jellyfish marine nature ouch stinger
 🐌	animal bug mollusc nature snail
 🦋	animal bug butterfly insect moth nature pretty
 🐛	animal bug caterpillar insect nature worm
@@ -2835,9 +3277,7 @@
 🦗	animal bug cricket grasshopper nature
 🪳	animal bug cockroach insect nature pest roach
 🕷️	animal bug nature spider
-🕷	animal arachnid bug insect nature spider
 🕸️	animal bug nature spider web
-🕸	animal bug nature spider web
 🦂	animal bug nature scorpio scorpion zodiac
 🦟	animal bug dengue disease fever insect malaria mosquito mozzie nature pest virus
 🪰	animal bug disease fly maggot nature pest rotting
@@ -2848,14 +3288,12 @@
 💮	animal flower nature plant white
 🪷	animal buddhism flower hinduism lotus nature plant purity
 🏵️	animal flower nature plant rosette
-🏵	animal flower nature plant rosette
 🌹	animal flower nature plant rose
 🥀	animal flower nature plant wilted
 🌺	animal flower hibiscus nature plant
 🌻	animal flower nature plant sun sunflower
 🌼	animal blossom flower nature plant
 🌷	animal flower nature plant tulip
-🪻	animal bluebonnet flower hyacinth lavender lupine nature plant snapdragon
 🌱	animal nature other plant seedling young
 🪴	animal boring grow house nature nurturing other plant pot potted useless
 🌲	animal evergreen nature other plant tree
@@ -2865,7 +3303,6 @@
 🌾	animal ear grain nature other plant rice sheaf
 🌿	animal herb leaf nature other plant
 ☘️	animal nature other plant shamrock
-☘	animal nature other plant shamrock
 🍀	animal clover four leaf nature other plant
 🍁	animal falling leaf maple nature other plant
 🍂	animal fallen falling leaf nature other plant
@@ -2898,7 +3335,6 @@
 🥕	carrot drink food vegetable
 🌽	cob corn drink ear food maize maze sweetcorn vegetable
 🌶️	drink food hot pepper vegetable
-🌶	chilli drink food hot pepper vegetable
 🫑	bell capsicum drink food pepper sweet vegetable
 🥒	cucumber drink food pickle vegetable
 🥬	bok cabbage choi choy drink food green kale leafy lettuce pak vegetable
@@ -2908,8 +3344,6 @@
 🥜	drink food nut peanut vegetable
 🫘	bean drink food kidney legume vegetable
 🌰	chestnut drink food nut plant vegetable
-🫚	beer drink food ginger root spice vegetable
-🫛	bean drink edamame food legume pea pod vegetable
 🍞	bread drink food loaf prepared
 🥐	bread breakfast crescent croissant drink food french prepared roll
 🥖	baguette bread drink food french prepared stick
@@ -3002,7 +3436,6 @@
 🧊	cold cube drink food ice iceberg
 🥢	chopstick dishware drink food hashi pair
 🍽️	dishware drink food fork knife plate
-🍽	cooking dishware drink food fork knife plate
 🍴	cooking cutlery dishware drink food fork knife
 🥄	dishware drink food spoon tableware
 🔪	cooking dishware drink food hocho kitchen knife tool weapon
@@ -3013,39 +3446,26 @@
 🌏	asia australia earth globe map place showing travel world
 🌐	earth globe map meridian place travel world
 🗺️	map place travel world
-🗺	map place travel world
 🗾	japan map place travel
 🧭	compass magnetic map navigation orienteering place travel
 🏔️	capped geographic mountain place snow travel
-🏔	capped cold geographic mountain place snow travel
 ⛰️	geographic mountain place travel
-⛰	geographic mountain place travel
 🌋	eruption geographic mountain place travel volcano
 🗻	fuji geographic mount mountain place travel
 🏕️	camping geographic place travel
-🏕	camping geographic place travel
 🏖️	beach geographic place travel umbrella
-🏖	beach geographic place travel umbrella
 🏜️	desert geographic place travel
-🏜	desert geographic place travel
 🏝️	desert geographic island place travel
-🏝	desert geographic island place travel
 🏞️	geographic national park place travel
-🏞	geographic national park place travel
 🏟️	building place stadium travel
-🏟	arena building place stadium travel
 🏛️	building classical place travel
-🏛	building classical column place travel
 🏗️	building construction place travel
-🏗	building construction place travel
 🧱	brick building clay mortar place travel wall
 🪨	boulder building heavy place rock solid stone travel
 🪵	building log lumber place timber travel wood
 🛖	building house hut place roundhouse travel yurt
 🏘️	building house place travel
-🏘	building house place travel
 🏚️	building derelict house place travel
-🏚	building derelict house place travel
 🏠	building home house place travel
 🏡	building garden home house place travel
 🏢	building office place travel
@@ -3069,21 +3489,18 @@
 🛕	hindu place religious temple travel
 🕍	jew jewish place religion religious shul synagogue temple travel
 ⛩️	place religious shinto shrine travel
-⛩	place religion religious shinto shrine travel
 🕋	islam kaaba muslim place religion religious travel
 ⛲	fountain other place travel
 ⛺	camping other place tent travel
 🌁	fog foggy other place travel
 🌃	night other place star starry travel
 🏙️	cityscape other place travel
-🏙	city cityscape other place skyline travel
 🌄	morning mountain other place sun sunrise travel
 🌅	morning other place sun sunrise travel
 🌆	city cityscape dusk evening landscape other place skyline sunset travel
 🌇	dusk other place sun sunset travel
 🌉	bridge night other place travel
 ♨️	hot other place spring travel
-♨	hot hotspring other place spring steaming travel
 🎠	carousel horse merry other place round travel
 🛝	amusement other park place play playground slide travel
 🎡	amusement ferri other park place theme travel wheel
@@ -3120,9 +3537,7 @@
 🚛	articulated ground lorry place semi transport travel truck
 🚜	ground place tractor transport travel vehicle
 🏎️	car ground place racing transport travel
-🏎	car ground place racing transport travel
 🏍️	ground motorcycle place transport travel
-🏍	ground motorcycle place racing transport travel
 🛵	ground motor place scooter transport travel
 🦽	accessibility ground manual place transport travel wheelchair
 🦼	accessibility ground mobility motorized place powered scooter transport travel wheelchair
@@ -3133,11 +3548,8 @@
 🛼	ground place roller rollerskate skate transport travel
 🚏	bus busstop ground place stop transport travel
 🛣️	ground motorway place transport travel
-🛣	freeway ground highway motorway place road transport travel
 🛤️	ground place railway track transport travel
-🛤	ground place railway track train transport travel
 🛢️	drum ground oil place transport travel
-🛢	drum ground oil place transport travel
 ⛽	diesel fuel fuelpump gas ground petrol place pump station transport travel
 🛞	circle ground place tire transport travel turn tyre wheel
 🚨	beacon car ground light place police revolving transport travel
@@ -3151,16 +3563,11 @@
 🛶	boat canoe place transport travel water
 🚤	boat place speedboat transport travel water
 🛳️	passenger place ship transport travel water
-🛳	passenger place ship transport travel water
 ⛴️	ferry place transport travel water
-⛴	boat ferry passenger place transport travel water
 🛥️	boat motor place transport travel water
-🛥	boat motor motorboat place transport travel water
 🚢	boat passenger place ship transport travel water
 ✈️	air airplane place transport travel
-✈	aeroplane air airplane flight place transport travel
 🛩️	air airplane place small transport travel
-🛩	aeroplane air airplane place plane small transport travel
 🛫	aeroplane air airplane check departure flight off place plane take transport travel
 🛬	aeroplane air airplane arrival arriving flight landing place plan transport travel
 🪂	air glide hang parachute parasail parascend place skydive transport travel
@@ -3170,22 +3577,17 @@
 🚠	air cable cableway gondola mountain place transport travel
 🚡	aerial air cable car gondola place tramway transport travel
 🛰️	air place satellite transport travel
-🛰	air place satellite space transport travel
 🚀	air place rocket space transport travel
 🛸	air flying place saucer spaceship transport travel ufo
 🛎️	bell bellhop hotel place travel
-🛎	bell bellhop hotel place porter travel
 🧳	hotel luggage packing place travel
 ⌛	hourglass place sand time timer travel
 ⏳	hourglass place sand time timer travel
 ⌚	clock place time travel watch
 ⏰	alarm clock place time travel
 ⏱️	place stopwatch time travel
-⏱	clock place stopwatch time travel
 ⏲️	clock place time timer travel
-⏲	clock place time timer travel
 🕰️	clock mantelpiece place time travel
-🕰	clock mantelpiece place time travel
 🕛	clock place time travel
 🕧	clock half past place thirty time travel twelve
 🕐	clock place time travel
@@ -3223,9 +3625,7 @@
 🌛	face moon place quarter sky travel weather
 🌜	face moon place quarter sky travel weather
 🌡️	place sky thermometer travel weather
-🌡	place sky thermometer travel weather
 ☀️	place sky sun travel weather
-☀	bright place ray sky sun sunny travel weather
 🌝	bright face full moon place sky travel weather
 🌞	bright face place sky sun travel weather
 🪐	place planet ringed saturn saturnine sky travel weather
@@ -3234,44 +3634,28 @@
 🌠	falling place shooting sky star travel weather
 🌌	milky place sky space travel way weather
 ☁️	cloud place sky travel weather
-☁	cloud place sky travel weather
 ⛅	cloud place sky sun travel weather
 ⛈️	cloud lightning place rain sky travel weather
-⛈	cloud lightning place rain sky thunder travel weather
 🌤️	cloud place sky small sun travel weather
-🌤	cloud place sky small sun travel weather
 🌥️	cloud large place sky sun travel weather
-🌥	cloud large place sky sun travel weather
 🌦️	cloud place rain sky sun travel weather
-🌦	cloud place rain sky sun travel weather
 🌧️	cloud place rain sky travel weather
-🌧	cloud place rain sky travel weather
 🌨️	cloud place sky snow travel weather
-🌨	cloud cold place sky snow travel weather
 🌩️	cloud lightning place sky travel weather
-🌩	cloud lightning place sky travel weather
 🌪️	place sky tornado travel weather
-🌪	cloud place sky tornado travel weather whirlwind
 🌫️	fog place sky travel weather
-🌫	cloud fog place sky travel weather
 🌬️	face place sky travel weather wind
-🌬	blow cloud face place sky travel weather wind
 🌀	cyclone dizzy hurricane place sky travel twister typhoon weather
 🌈	place rain rainbow sky travel weather
 🌂	closed clothing place rain sky travel umbrella weather
 ☂️	place sky travel umbrella weather
-☂	clothing place rain sky travel umbrella weather
 ☔	clothing drop place rain sky travel umbrella weather
 ⛱️	ground place sky travel umbrella weather
-⛱	beach ground place rain sand sky sun travel umbrella weather
 ⚡	danger electric high lightning place sky travel voltage weather zap
 ❄️	place sky snowflake travel weather
-❄	cold place sky snow snowflake travel weather
 ☃️	place sky snowman travel weather
-☃	cold place sky snow snowman travel weather
 ⛄	cold place sky snow snowman travel weather
 ☄️	comet place sky travel weather
-☄	comet place sky space travel weather
 🔥	flame place sky tool travel weather
 💧	cold comic drop droplet place sky sweat travel weather
 🌊	ocean place sky travel water wave weather
@@ -3294,12 +3678,9 @@
 🎀	activity celebration event ribbon
 🎁	activity box celebration event gift present wrapped
 🎗️	activity event reminder ribbon
-🎗	activity celebration event reminder ribbon
 🎟️	activity admission event ticket
-🎟	activity admission entry event ticket
 🎫	activity admission event ticket
 🎖️	activity award medal military
-🎖	activity award celebration medal military
 🏆	activity award celebration medal prize trophy
 🏅	activity award celebration medal sport
 🥇	activity award gold medal place
@@ -3326,7 +3707,6 @@
 🥅	activity cage goal net sport
 ⛳	activity flag golf hole sport
 ⛸️	activity ice skate sport
-⛸	activity ice skate skating sport
 🎣	activity fish fishing pole rod sport
 🤿	activity diving mask scuba snorkeling snorkelling sport
 🎽	activity athletics running sash shirt sport
@@ -3342,7 +3722,6 @@
 🪄	activity game magic wand witch wizard
 🎮	activity controller game video
 🕹️	activity game joystick
-🕹	activity game joystick video
 🎰	activity game machine pokie slot
 🎲	activity die game
 🧩	activity clue game interlocking jigsaw piece puzzle
@@ -3351,21 +3730,15 @@
 🪩	activity ball dance disco game glitter mirror party
 🪆	activity babushka doll game matryoshka nesting russia russian
 ♠️	activity game spade suit
-♠	activity card game spade suit
 ♥️	activity game heart suit
-♥	activity card game heart suit
 ♦️	activity diamond game suit
-♦	activity card diamond game suit
 ♣️	activity club game suit
-♣	activity card club game suit
 ♟️	activity chess game pawn
-♟	activity chess dupe expendable game pawn
 🃏	activity card game joker wildcard
 🀄	activity dragon game mahjong red
 🎴	activity card flower game japanese playing
 🎭	activity art craft mask performing theater theatre
 🖼️	activity art craft framed picture
-🖼	activity art craft frame framed museum painting picture
 🎨	activity art artist craft museum painting palette
 🧵	activity art craft needle sewing spool string thread
 🪡	activity art craft embroidery needle sewing stitch suture tailoring thread
@@ -3373,7 +3746,6 @@
 🪢	activity art craft knot rope tangled tie twine twist
 👓	clothing eye eyeglass eyewear glass object
 🕶️	clothing object sunglass
-🕶	clothing dark eye eyewear glass object sunglass sunny
 🥽	clothing eye goggle object protection swimming welding
 🥼	clothing coat doctor experiment lab object scientist
 🦺	clothing emergency high jacket life object safety vest
@@ -3392,12 +3764,10 @@
 🩳	bathing boardshort boardy clothing object pant short suit swim underwear
 👙	bikini clothing object piece suit swim two
 👚	blouse clothe clothing object woman
-🪭	clothing cooling dance fan flutter folding hand hot object shy
 👛	accessory clothing coin object purse
 👜	accessory bag clothing handbag object purse tote
 👝	accessory bag clothing clutch object pouch
 🛍️	bag clothing object shopping
-🛍	bag clothing hotel object shopping
 🎒	backpack bag clothing object rucksack satchel school
 🩴	beach clothing flip flipflop flop object sandal thong zori
 👞	clothing man object shoe
@@ -3408,7 +3778,6 @@
 👡	clothing object sandal shoe woman
 🩰	ballet clothing dance object shoe
 👢	boot clothing object shoe woman
-🪮	afro clothing comb hair object pick
 👑	clothing crown king object queen
 👒	clothing hat object woman
 🎩	clothing hat object tophat
@@ -3416,7 +3785,6 @@
 🧢	baseball billed cap clothing object
 🪖	army clothing helmet military object soldier warrior
 ⛑️	clothing helmet object rescue worker
-⛑	aid clothing cross face hat helmet object rescue worker
 📿	bead clothing necklace object prayer religion
 💄	clothing cosmetic lipstick make makeup object
 💍	clothing diamond object ring
@@ -3434,11 +3802,8 @@
 🎵	music musical note object
 🎶	music musical note object
 🎙️	microphone music object studio
-🎙	mic microphone music object studio
 🎚️	level music object slider
-🎚	level music object slider
 🎛️	control knob music object
-🎛	control knob music object
 🎤	karaoke mic microphone music object
 🎧	earbud headphone music object
 📻	music object radio video wireless
@@ -3451,12 +3816,9 @@
 🪕	banjo instrument music musical object stringed
 🥁	drum drumstick instrument music musical object percussion
 🪘	beat conga drum instrument long musical object rhythm
-🪇	instrument maraca music musical object percussion rattle shake
-🪈	fife flute instrument music musical object pipe recorder woodwind
 📱	cell mobile object phone telephone
 📲	arrow cell mobile object phone receive
 ☎️	object phone telephone
-☎	landline object phone telephone
 📞	object phone receiver telephone
 📟	object pager phone
 📠	fax machine object phone
@@ -3465,15 +3827,10 @@
 🔌	computer electric electricity object plug
 💻	computer laptop object personal
 🖥️	computer desktop object
-🖥	computer desktop object
 🖨️	computer object printer
-🖨	computer object printer
 ⌨️	computer keyboard object
-⌨	computer keyboard object
 🖱️	computer mouse object
-🖱	computer mouse object
 🖲️	computer object trackball
-🖲	computer object trackball
 💽	computer disk minidisk object optical
 💾	computer disk diskette floppy object
 💿	computer disk object optical
@@ -3481,9 +3838,7 @@
 🧮	abacus calculation computer object
 🎥	camera cinema light movie object video
 🎞️	film frame light object video
-🎞	cinema film frame light movie object video
 📽️	film light object projector video
-📽	cinema film light movie object projector video
 🎬	board clapper clapperboard film light movie object video
 📺	light object television video
 📷	camera light object video
@@ -3493,7 +3848,6 @@
 🔍	glass left light magnifying object search tilted tool video
 🔎	glass light magnifying object right search tilted tool video
 🕯️	candle light object video
-🕯	candle light object video
 💡	bulb comic electric globe idea light object video
 🔦	electric flashlight light object tool torch video
 🏮	bar lantern light object paper red video
@@ -3512,11 +3866,9 @@
 📄	book document facing object page paper
 📰	book news newspaper object paper
 🗞️	book newspaper object paper rolled
-🗞	book news newspaper object paper rolled
 📑	book bookmark mark marker object paper tab
 🔖	book bookmark mark object paper
 🏷️	book label object paper
-🏷	book label object paper tag
 💰	bag dollar money moneybag object
 🪙	coin gold metal money object silver treasure
 💴	banknote currency money note object yen
@@ -3528,7 +3880,6 @@
 🧾	accounting bookkeeping evidence money object proof receipt
 💹	chart graph growth increasing money object yen
 ✉️	envelope mail object
-✉	email envelope letter mail object
 📧	email letter mail object
 📨	email envelope incoming letter mail object receive
 📩	arrow email envelope mail object outgoing
@@ -3541,31 +3892,21 @@
 📭	box flag letterbox lowered mail mailbox object open post postbox
 📮	box mail mailbox object post postbox
 🗳️	ballot box mail object
-🗳	ballot box mail object
 ✏️	object pencil writing
-✏	object pencil writing
 ✒️	black nib object writing
-✒	black nib object pen writing
 🖋️	fountain object pen writing
-🖋	fountain object pen writing
 🖊️	object pen writing
-🖊	ballpoint object pen writing
 🖌️	object paintbrush writing
-🖌	object paintbrush painting writing
 🖍️	crayon object writing
-🖍	crayon object writing
 📝	memo object pencil writing
 💼	briefcase object office
 📁	file folder object office
 📂	file folder object office open
 🗂️	card divider index object office
-🗂	card divider index object office
 📅	calendar date object office
 📆	calendar object off office tear
 🗒️	notepad object office spiral
-🗒	note notepad object office pad spiral
 🗓️	calendar object office spiral
-🗓	calendar object office pad spiral
 📇	card index object office rolodex
 📈	chart graph growth increasing object office trend upward
 📉	chart decreasing graph object office trend
@@ -3575,61 +3916,44 @@
 📍	drawing object office pin pushpin round
 📎	object office paperclip
 🖇️	linked object office paperclip
-🖇	link linked object office paperclip
 📏	edge object office ruler straight
 📐	object office ruler set square triangle triangular
 ✂️	object office scissors
-✂	cutting object office scissors tool
 🗃️	box card file object office
-🗃	box card file object office
 🗄️	cabinet file object office
-🗄	cabinet file filing object office
 🗑️	object office wastebasket
-🗑	basket bin object office paper rubbish trash waste wastebasket
 🔒	closed lock locked object padlock
 🔓	lock object open padlock unlock unlocked
 🔏	ink lock locked nib object pen privacy
 🔐	closed key lock locked object secure
 🔑	key lock object password
 🗝️	key lock object old
-🗝	clue key lock object old
 🔨	hammer object tool
 🪓	axe chop hatchet object split tool wood
 ⛏️	object pick tool
-⛏	mining object pick tool
 ⚒️	hammer object pick tool
-⚒	hammer object pick tool
 🛠️	hammer object tool wrench
-🛠	hammer object spanner tool wrench
 🗡️	dagger object tool
-🗡	dagger knife object tool weapon
 ⚔️	crossed object sword tool
-⚔	crossed object sword tool weapon
 💣	bomb comic object tool
 🪃	boomerang object rebound repercussion tool
 🏹	archer arrow bow object sagittarius tool zodiac
 🛡️	object shield tool
-🛡	object shield tool weapon
 🪚	carpenter carpentry lumber object saw tool
 🔧	object spanner tool wrench
 🪛	object screw screwdriver tool
 🔩	bolt nut object tool
 ⚙️	gear object tool
-⚙	cog cogwheel gear object tool
 🗜️	clamp object tool
-🗜	clamp compress object tool vice
 ⚖️	balance object scale tool
-⚖	balance justice libra object scale tool zodiac
 🦯	accessibility blind cane guide long mobility object tool white
 🔗	link object tool
 ⛓️	chain object tool
-⛓	chain object tool
 🪝	catch crook curve ensnare fishing hook object point selling tool
 🧰	chest mechanic object tool toolbox
 🧲	attraction horseshoe magnet magnetic object tool
 🪜	climb ladder object rung step tool
 ⚗️	alembic object science
-⚗	alembic chemistry object science tool
 🧪	chemist chemistry experiment lab object science test tube
 🧫	bacterium biologist biology culture dish lab object petri science
 🧬	biologist dna evolution gene genetic life object science
@@ -3648,9 +3972,7 @@
 🪞	glass household looking mirror object reflection reflector speculum
 🪟	air frame fresh household object opening transparent view window
 🛏️	bed household object
-🛏	bed hotel household object sleep
 🛋️	couch household lamp object
-🛋	couch hotel household lamp object sofa
 🪑	chair household object seat sit
 🚽	facility household lavatory loo object toilet
 🪠	cup force household object plumber plunger suction toilet
@@ -3672,10 +3994,8 @@
 🛒	basket cart household object shopping trolley
 🚬	cigarette object other smoking
 ⚰️	coffin object other
-⚰	casket coffin death object other
 🪦	cemetery grave graveyard headstone object other tombstone
 ⚱️	funeral object other urn
-⚱	ash death funeral object other urn
 🧿	amulet bead charm evil eye nazar object other talisman
 🪬	amulet fatima hamsa hand mary miriam object other protection
 🗿	face moai moyai object other statue
@@ -3695,7 +4015,6 @@
 🛄	baggage claim sign symbol transport
 🛅	baggage left locker luggage sign symbol transport
 ⚠️	symbol warning
-⚠	symbol warning
 🚸	child crossing pedestrian symbol traffic warning
 ⛔	denied entry forbidden prohibited symbol traffic warning
 🚫	denied entry forbidden prohibited symbol warning
@@ -3707,37 +4026,21 @@
 📵	cell forbidden mobile phone symbol warning
 🔞	age eighteen prohibited restriction symbol underage warning
 ☢️	radioactive symbol warning
-☢	radioactive sign symbol warning
 ☣️	biohazard symbol warning
-☣	biohazard sign symbol warning
 ⬆️	arrow symbol
-⬆	arrow cardinal direction north symbol
 ↗️	arrow right symbol
-↗	arrow direction intercardinal northeast right symbol
 ➡️	arrow right symbol
-➡	arrow cardinal direction east right symbol
 ↘️	arrow down right symbol
-↘	arrow direction down intercardinal right southeast symbol
 ⬇️	arrow symbol
-⬇	arrow cardinal direction south symbol
 ↙️	arrow down left symbol
-↙	arrow direction down intercardinal left southwest symbol
 ⬅️	arrow left symbol
-⬅	arrow cardinal direction left symbol west
 ↖️	arrow left symbol
-↖	arrow direction intercardinal left northwest symbol
 ↕️	arrow down symbol
-↕	arrow down symbol
 ↔️	arrow left right symbol
-↔	arrow left right symbol
 ↩️	arrow curving left right symbol
-↩	arrow curving left right symbol
 ↪️	arrow curving left right symbol
-↪	arrow curving left right symbol
 ⤴️	arrow curving right symbol
-⤴	arrow curving right symbol
 ⤵️	arrow curving right symbol
-⤵	arrow curving right symbol
 🔃	arrow clockwise reload symbol vertical
 🔄	anticlockwise arrow button counterclockwise symbol withershin
 🔙	arrow symbol
@@ -3747,26 +4050,16 @@
 🔝	arrow symbol
 🛐	place religion symbol worship
 ⚛️	atom religion symbol
-⚛	atheist atom religion symbol
 🕉️	religion symbol
-🕉	hindu religion symbol
 ✡️	david religion star symbol
-✡	david jew jewish judaism religion star symbol
 ☸️	dharma religion symbol wheel
-☸	buddhist dharma religion symbol wheel
 ☯️	religion symbol yang yin
-☯	religion symbol tao taoist yang yin
 ✝️	cross latin religion symbol
-✝	christian cross latin religion symbol
 ☦️	cross orthodox religion symbol
-☦	christian cross orthodox religion symbol
 ☪️	crescent religion star symbol
-☪	crescent islam muslim religion star symbol
 ☮️	peace religion symbol
-☮	peace religion symbol
 🕎	candelabrum candlestick menorah religion symbol
 🔯	dotted fortune pointed religion six star symbol
-🪯	khanda religion sikh symbol
 ♈	ary ram symbol zodiac
 ♉	bull symbol taurus zodiac
 ♊	gemini symbol twin zodiac
@@ -3784,119 +4077,77 @@
 🔁	arrow button clockwise repeat symbol
 🔂	arrow button clockwise repeat single symbol
 ▶️	button play symbol
-▶	arrow button play right symbol triangle
 ⏩	arrow button double fast forward symbol
 ⏭️	button symbol track
-⏭	arrow button scene symbol track triangle
 ⏯️	button pause play symbol
-⏯	arrow button pause play right symbol triangle
 ◀️	button reverse symbol
-◀	arrow button left reverse symbol triangle
 ⏪	arrow button double fast reverse rewind symbol
 ⏮️	button symbol track
-⏮	arrow button previous scene symbol track triangle
 🔼	arrow button red symbol upward
 ⏫	arrow button double fast symbol
 🔽	arrow button downward red symbol
 ⏬	arrow button double fast symbol
 ⏸️	button pause symbol
-⏸	bar button double pause symbol vertical
 ⏹️	button stop symbol
-⏹	button square stop symbol
 ⏺️	button record symbol
-⏺	button circle record symbol
 ⏏️	button eject symbol
-⏏	button eject symbol
 🎦	camera cinema film movie symbol
 🔅	brightness button dim low symbol
 🔆	bright brightness button symbol
 📶	antenna bar cell mobile phone symbol
-🛜	computer internet network symbol wifi wireless
 📳	cell mobile mode phone symbol telephone vibrate vibration
 📴	cell mobile phone symbol telephone
 ♀️	female gender sign symbol
-♀	female gender sign symbol woman
 ♂️	gender male sign symbol
-♂	gender male man sign symbol
 ⚧️	gender symbol transgender
-⚧	gender symbol tran transgender
 ✖️	math multiply symbol
-✖	cancel heavy math multiplication multiply sign symbol
 ➕	add addition math plus sign symbol
 ➖	heavy math minus sign subtraction symbol
 ➗	divide division math sign symbol
 🟰	equal equality heavy math sign symbol
 ♾️	infinity math symbol
-♾	eternal forever infinity math symbol unbound unbounded universal
 ‼️	double exclamation mark punctuation symbol
-‼	bangbang double exclamation mark punctuation symbol
 ⁉️	exclamation mark punctuation question symbol
-⁉	exclamation interrobang mark punctuation question symbol
 ❓	mark punctuation question red symbol
 ❔	mark outlined punctuation question symbol white
 ❕	exclamation mark outlined punctuation symbol white
 ❗	exclamation mark punctuation red symbol
 〰️	dash punctuation symbol wavy
-〰	dash punctuation symbol wavy
 💱	bank currency exchange money symbol
 💲	currency dollar heavy money sign symbol
 ⚕️	medical other symbol
-⚕	aesculapius medical medicine other staff symbol
 ♻️	other recycling symbol
-♻	other recycle recycling symbol
 ⚜️	fleur other symbol
-⚜	fleur other symbol
 🔱	anchor emblem other ship symbol tool trident
 📛	badge other symbol
 🔰	beginner chevron japanese leaf other symbol
 ⭕	circle hollow large other red symbol
 ✅	button check mark other symbol tick
 ☑️	box check other symbol
-☑	ballot box check other symbol tick
 ✔️	check mark other symbol
-✔	check heavy mark other symbol tick
 ❌	cancel cross mark multiplication multiply other symbol
 ❎	button cross mark other square symbol
 ➰	curl curly loop other symbol
 ➿	curl curly double loop other symbol
 〽️	alternation mark other symbol
-〽	alternation mark other symbol
 ✳️	asterisk eight other spoked symbol
-✳	asterisk eight other spoked symbol
 ✴️	eight other pointed star symbol
-✴	eight other pointed star symbol
 ❇️	other sparkle symbol
-❇	other sparkle symbol
 ©️	copyright other symbol
-©	copyright other symbol
 ®️	other registered symbol
-®	other registered symbol trademark
 ™️	mark other symbol trade
-™	mark other symbol trade trademark
 #️⃣	keycap symbol
-#⃣	keycap symbol
 *️⃣	keycap symbol
-*⃣	keycap symbol
 0️⃣	keycap symbol
-0⃣	keycap symbol
 1️⃣	keycap symbol
-1⃣	keycap symbol
 2️⃣	keycap symbol
-2⃣	keycap symbol
 3️⃣	keycap symbol
-3⃣	keycap symbol
 4️⃣	keycap symbol
-4⃣	keycap symbol
 5️⃣	keycap symbol
-5⃣	keycap symbol
 6️⃣	keycap symbol
-6⃣	keycap symbol
 7️⃣	keycap symbol
-7⃣	keycap symbol
 8️⃣	keycap symbol
-8⃣	keycap symbol
 9️⃣	keycap symbol
-9⃣	keycap symbol
 🔟	keycap symbol
 🔠	abcd alphanum input latin letter symbol uppercase
 🔡	abcd alphanum input latin letter lowercase symbol
@@ -3904,33 +4155,25 @@
 🔣	alphanum input symbol
 🔤	abc alphabet alphanum input latin letter symbol
 🅰️	alphanum blood button symbol type
-🅰	alphanum blood button symbol type
 🆎	alphanum blood button symbol type
 🅱️	alphanum blood button symbol type
-🅱	alphanum blood button symbol type
 🆑	alphanum button symbol
 🆒	alphanum button cool symbol
 🆓	alphanum button free symbol
 ℹ️	alphanum information symbol
-ℹ	alphanum information symbol
 🆔	alphanum button identity symbol
 Ⓜ️	alphanum circled symbol
-Ⓜ	alphanum circle circled symbol
 🆕	alphanum button new symbol
 🆖	alphanum button symbol
 🅾️	alphanum blood button symbol type
-🅾	alphanum blood button symbol type
 🆗	alphanum button symbol
 🅿️	alphanum button symbol
-🅿	alphanum button car carpark park parking symbol
 🆘	alphanum button help symbol
 🆙	alphanum button mark symbol
 🆚	alphanum button symbol versus
 🈁	alphanum button japanese katakana symbol
 🈂️	alphanum button charge japanese service symbol
-🈂	alphanum button charge japanese katakana service symbol
 🈷️	alphanum button japanese monthly symbol
-🈷	alphanum button ideograph japanese monthly symbol
 🈶	alphanum button charge free ideograph japanese symbol
 🈯	alphanum button ideograph japanese reserved symbol
 🉐	alphanum bargain button ideograph japanese symbol
@@ -3942,9 +4185,7 @@
 🈴	alphanum button grade ideograph japanese passing symbol
 🈳	alphanum button ideograph japanese symbol vacancy
 ㊗️	alphanum button congratulation japanese symbol
-㊗	alphanum button congratulation ideograph japanese symbol
 ㊙️	alphanum button japanese secret symbol
-㊙	alphanum button ideograph japanese secret symbol
 🈺	alphanum business button ideograph japanese open symbol
 🈵	alphanum button ideograph japanese symbol vacancy
 🔴	circle geometric red symbol
@@ -3966,15 +4207,11 @@
 ⬛	black geometric large square symbol
 ⬜	geometric large square symbol white
 ◼️	black geometric medium square symbol
-◼	black geometric medium square symbol
 ◻️	geometric medium square symbol white
-◻	geometric medium square symbol white
 ◾	black geometric medium small square symbol
 ◽	geometric medium small square symbol white
 ▪️	black geometric small square symbol
-▪	black geometric small square symbol
 ▫️	geometric small square symbol white
-▫	geometric small square symbol white
 🔶	diamond geometric large orange symbol
 🔷	blue diamond geometric large symbol
 🔸	diamond geometric orange small symbol
@@ -3990,7 +4227,6 @@
 🎌	celebration cross crossed flag japanese
 🏴	black flag waving
 🏳️	flag white
-🏳	flag surrender waving white
 🏳️‍🌈	flag rainbow
 🏳‍🌈	flag pride rainbow
 🏳️‍⚧️	flag transgender
@@ -4257,4 +4493,7 @@
 🇿🇦	africa country flag south
 🇿🇲	country flag zambia
 🇿🇼	country flag zimbabwe
+🏴󠁧󠁢󠁥󠁮󠁧󠁿	england flag subdivision
+🏴󠁧󠁢󠁳󠁣󠁴󠁿	flag scotland subdivision
+🏴󠁧󠁢󠁷󠁬󠁳󠁿	flag subdivision wale
 EOF
