@@ -140,7 +140,7 @@ abbr gti git
 abbr ps 'ps -axh -o pid,%cpu,cmd'
 abbr curl 'curl -s'
 abbr less 'less -RKS#1'
-abbr jq jq -r
+abbr jq jq -r '\''
 
 # extended regexp everywhere
 abbr grep "grep -Ei"
