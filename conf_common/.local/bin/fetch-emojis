@@ -14,6 +14,7 @@ import (
 
 	"github.com/bbalet/stopwords"
 	"github.com/gertd/go-pluralize"
+	"github.com/rivo/uniseg"
 	"golang.org/x/exp/maps"
 )
 
@@ -34,7 +35,7 @@ func main() {
 		if !ok {
 			continue
 		}
-		if len([]rune(emoji)) > 6 {
+		if uniseg.StringWidth(emoji) != 2 {
 			continue
 		}
 
