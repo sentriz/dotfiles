@@ -1,0 +1,4 @@
+[Context]
+filesystems=xdg-download;!home
+[Context]
+sockets=ssh-auth
