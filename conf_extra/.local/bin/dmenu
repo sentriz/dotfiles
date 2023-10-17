@@ -9,6 +9,8 @@ kill "$(cat "$pid_file")" 2>/dev/null
 exec 9>"$lock_file"
 flock 9 || exit 1
 
+trap 'kill $(jobs -p) 2>/dev/null' EXIT
+
 prompt="$1"
 column="$2"
 
