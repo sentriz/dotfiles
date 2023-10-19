@@ -1,6 +1,8 @@
 --# selene: allow(undefined_variable, unscoped_variables)
 --# for list of lsp, linter, and formatter tools, see $XDG_CONFIG_HOME/packages
 
+vim.loader.enable()
+
 vim.cmd([[
 let mapleader = "\<Space>"
 
