@@ -23,6 +23,7 @@ import (
 // 2
 // 22
 // 222
+// $ echo 1 2 3 4 5 | col ' ' -1
 
 func main() {
 	if len(os.Args) < 2 {
@@ -36,26 +37,28 @@ func main() {
 		indexStrs = indexStrs[1:]
 	}
 
-	var indexes []int
-	var maxIndex int
+	var indexes []int // 1-indexed
 	for _, is := range indexStrs {
-		if i, _ := strconv.Atoi(is); i > 0 {
-			indexes = append(indexes, i-1)
-			maxIndex = max(maxIndex, i-1)
+		if i, _ := strconv.Atoi(is); i != 0 {
+			indexes = append(indexes, i)
 		}
 	}
 	if len(indexes) == 0 {
 		return
 	}
 
+Row:
 	for sc := bufio.NewScanner(os.Stdin); sc.Scan(); {
 		columns := smartSplit(sc.Text(), delim)
-		if len(columns) <= maxIndex {
-			continue
-		}
 		var selected []string
 		for _, i := range indexes {
-			selected = append(selected, columns[i])
+			if i < 0 {
+				i = len(columns) + 1 + i
+			}
+			if i <= 0 || i > len(columns) {
+				continue Row
+			}
+			selected = append(selected, columns[i-1])
 		}
 		fmt.Println(strings.Join(selected, delim))
 	}
