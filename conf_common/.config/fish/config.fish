@@ -80,6 +80,14 @@ set -gx fish_user_paths \
     /usr/share/git/git-jump/ \
     /opt/flutter/bin/
 
+# import / start gpg env
+if not set -q SSH_CONNECTION
+    gpgconf --launch gpg-agent
+    set -gx SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
+    set -gx GPG_TTY (tty)
+    gpg-connect-agent updatestartuptty /bye >/dev/null
+end
+
 source "$__fish_config_dir/config.$HOSTNAME.fish" 2>/dev/null
 
 # only interactive from here onwards
@@ -89,14 +97,6 @@ status is-interactive || exit
 __tmux_env \
     | sed -nE 's/^(SSH_[^=]+)=(.*)/set -gx \1 "\2"/p' \
     | source
-
-# import / start gpg env
-if not set -q SSH_CONNECTION
-    gpgconf --launch gpg-agent
-    set -gx SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
-    set -gx GPG_TTY (tty)
-    gpg-connect-agent updatestartuptty /bye >/dev/null
-end
 
 # direnv
 type -q direnv
