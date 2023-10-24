@@ -1,7 +1,7 @@
 #!/usr/bin/env fish
 
 echo $argv | read cmd src audio
-test -z $cmd; and exit 1
+test -z "$cmd"; and exit 1
 
 switch $cmd
     case start
@@ -12,7 +12,7 @@ switch $cmd
 
         set -l audio_dev (pactl list short sources | grep -Po "\K[^\s]+\.monitor(?=.*IDLE)")
 
-        test -n $audio -a -n $audio_dev
+        test -n "$audio" -a -n "$audio_dev"
         and set audio_cmd "-a$audio_dev"
 
         wf-recorder $audio_cmd -f "$filename" -g "$area" --force-yuv >/dev/null 2>&1
