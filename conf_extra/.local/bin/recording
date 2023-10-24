@@ -15,7 +15,7 @@ switch $cmd
         test -n "$audio" -a -n "$audio_dev"
         and set audio_cmd "-a$audio_dev"
 
-        wf-recorder $audio_cmd -f "$filename" -g "$area" --force-yuv >/dev/null 2>&1
+        wf-recorder $audio_cmd -f "$filename" -g "$area" -x yuv420p >/dev/null 2>&1
         test ! -f "$filename"; and exit 1
 
         echo "$filename"
