@@ -24,6 +24,7 @@ import (
 // 22
 // 222
 // $ echo 1 2 3 4 5 | col ' ' -1
+// 5
 
 func main() {
 	if len(os.Args) < 2 {
