@@ -65,16 +65,18 @@ Row:
 	}
 }
 
-func smartSplit(text, d string) []string {
-	switch d {
+func smartSplit(text, delim string) []string {
+	switch delim {
 	case "\t", ";":
-		return strings.Split(text, d)
+		return strings.Split(text, delim)
 	}
-	drune := []rune(d)
-	if len(drune) == 0 {
+
+	switch runes := []rune(delim); len(runes) {
+	case 0:
 		return nil
+	case 1:
+		return strings.FieldsFunc(text, func(r rune) bool { return r == runes[0] })
+	default:
+		return strings.Split(text, string(runes))
 	}
-	return strings.FieldsFunc(text, func(r rune) bool {
-		return r == drune[0]
-	})
 }
