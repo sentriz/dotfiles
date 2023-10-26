@@ -13,10 +13,12 @@ import (
 
 // $ col [ in delim [ out delim ] ] [ col ... ]
 
-// $ printf "%s\t%s\n" one two | col 2
-// two
+// $ printf "%s\t%s\n" one two | col
+// one	two
 // $ printf "%s\t%s\n" one two | col 1 2
 // one	two
+// $ printf "%s\t%s\n" one two | col 2
+// two
 // $ printf "%s;%s\n" one two | col ';' 2
 // two
 // $ printf "%s;%s\n" one two | col ';' 1 2
@@ -54,13 +56,15 @@ func main() {
 			indexes = append(indexes, i)
 		}
 	}
-	if len(indexes) == 0 {
-		return
-	}
 
 Row:
 	for sc := bufio.NewScanner(os.Stdin); sc.Scan(); {
 		columns := smartSplit(sc.Text(), inDelim)
+		if len(indexes) == 0 {
+			fmt.Println(strings.Join(columns, outDelim))
+			continue
+		}
+
 		var selected []string
 		for _, i := range indexes {
 			if i < 0 {
