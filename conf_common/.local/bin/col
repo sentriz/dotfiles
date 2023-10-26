@@ -11,6 +11,8 @@ import (
 	"strings"
 )
 
+// $ col [ in delim [ out delim ] ] [ col ... ]
+
 // $ printf "%s\t%s\n" one two | col 2
 // two
 // $ printf "%s\t%s\n" one two | col 1 2
@@ -25,21 +27,29 @@ import (
 // 222
 // $ echo 1 2 3 4 5 | col ' ' -1
 // 5
+// $ echo 1:2:3 | col : . 1 2 3
+// 1.2.3
 
 func main() {
 	if len(os.Args) < 2 {
 		return
 	}
 
-	var delim = "\t"
-	var indexStrs = os.Args[1:]
-	if _, err := strconv.Atoi(indexStrs[0]); err != nil {
-		delim = indexStrs[0]
-		indexStrs = indexStrs[1:]
+	var inDelim = "\t"
+	var outDelim = "\t"
+
+	var args = os.Args[1:]
+	if _, err := strconv.Atoi(args[0]); err != nil {
+		inDelim, outDelim, args = args[0], args[0], args[1:]
+	}
+	if len(args) > 0 {
+		if _, err := strconv.Atoi(args[0]); err != nil {
+			outDelim, args = args[0], args[1:]
+		}
 	}
 
 	var indexes []int // 1-indexed
-	for _, is := range indexStrs {
+	for _, is := range args {
 		if i, _ := strconv.Atoi(is); i != 0 {
 			indexes = append(indexes, i)
 		}
@@ -50,7 +60,7 @@ func main() {
 
 Row:
 	for sc := bufio.NewScanner(os.Stdin); sc.Scan(); {
-		columns := smartSplit(sc.Text(), delim)
+		columns := smartSplit(sc.Text(), inDelim)
 		var selected []string
 		for _, i := range indexes {
 			if i < 0 {
@@ -61,7 +71,7 @@ Row:
 			}
 			selected = append(selected, columns[i-1])
 		}
-		fmt.Println(strings.Join(selected, delim))
+		fmt.Println(strings.Join(selected, outDelim))
 	}
 }
 
