@@ -33,20 +33,15 @@ import (
 // 1.2.3
 
 func main() {
-	if len(os.Args) < 2 {
-		return
-	}
-
 	var inDelim = "\t"
 	var outDelim = "\t"
 
 	var args = os.Args[1:]
-	if _, err := strconv.Atoi(args[0]); err != nil {
-		inDelim, outDelim, args = args[0], args[0], args[1:]
-	}
-	if len(args) > 0 {
-		if _, err := strconv.Atoi(args[0]); err != nil {
-			outDelim, args = args[0], args[1:]
+	for _, p := range []*string{&inDelim, &outDelim} {
+		if len(args) > 0 {
+			if _, err := strconv.Atoi(args[0]); err != nil {
+				*p, args = args[0], args[1:]
+			}
 		}
 	}
 
