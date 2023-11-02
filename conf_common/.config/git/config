@@ -48,6 +48,7 @@
 	textconv = unzip -c -a
 [diff]
 	compactionHeuristic = true
+	noPrefix = true
 [advice]
 	statusHints = false
 	addEmptyPathspec = false
