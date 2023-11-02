@@ -120,6 +120,9 @@ vnoremap yP yP
 " don't move when * search
 nnoremap * *``
 
+" visual replace without yank https://superuser.com/a/321726
+vnoremap p "_dP
+
 " easy split / quit
 nnoremap <enter>         :vsplit<cr><c-w>w
 nnoremap <s-enter>       :split<cr><c-w>w
