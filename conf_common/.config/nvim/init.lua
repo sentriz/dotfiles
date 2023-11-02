@@ -117,6 +117,9 @@ nnoremap <expr> <leader>y        ':tabnew ' . expand('$DOTS_PROJECTS_DIR') . '/h
 nnoremap Y y$
 vnoremap yP yP
 
+" don't move when * search
+nnoremap * *``
+
 " easy split / quit
 nnoremap <enter>         :vsplit<cr><c-w>w
 nnoremap <s-enter>       :split<cr><c-w>w
