@@ -35,6 +35,9 @@ func main() {
 		if !ok {
 			continue
 		}
+		if strings.Contains(desc, "skin tone") {
+			continue
+		}
 		if uniseg.StringWidth(emoji) != 2 {
 			continue
 		}
