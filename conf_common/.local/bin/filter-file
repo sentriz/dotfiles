@@ -1,10 +1,79 @@
-#!/usr/bin/env bash
+//usr/bin/env go-script "$0" "$@"; exit $?
+// vi: ft=go
 
-if test $# -lt 2; then
-    echo "usage: $0 <file> <cmd> [args]..." >&2
-    exit 1
-fi
+package main
 
-file="$1"
-shift
-"$@" <"$file" | sponge "$file"
+import (
+	"bytes"
+	"errors"
+	"fmt"
+	"io"
+	"log"
+	"os"
+	"os/exec"
+	"slices"
+	"sync"
+)
+
+func main() {
+	log.SetFlags(0)
+
+	div := slices.Index(os.Args, "--")
+	if div < 0 {
+		log.Fatalf("need: $ cmd ... -- file ...")
+	}
+	cmd, paths := os.Args[1:div], os.Args[div+1:]
+	if len(cmd) == 0 || len(paths) == 0 {
+		log.Fatalf("need: $ cmd ... -- file ...")
+	}
+	for _, path := range paths {
+		if stat, err := os.Stat(path); err != nil || stat.IsDir() {
+			log.Fatalf("check %q: must be file", path)
+		}
+	}
+
+	var wg sync.WaitGroup
+
+	var pathErrs = make([]error, len(paths))
+	for i := range paths {
+		wg.Add(1)
+		go func(i int) {
+			defer wg.Done()
+			if err := filter(paths[i], cmd); err != nil {
+				pathErrs[i] = fmt.Errorf("file %q: %w", paths[i], err)
+			}
+		}(i)
+	}
+
+	wg.Wait()
+
+	if err := errors.Join(pathErrs...); err != nil {
+		log.Fatal(err)
+	}
+}
+
+func filter(path string, cmd []string) error {
+	f, err := os.OpenFile(path, os.O_RDWR, 0)
+	if err != nil {
+		return fmt.Errorf("open file: %w", err)
+	}
+	defer f.Close()
+
+	var buff bytes.Buffer
+	command := exec.Command(cmd[0], cmd[1:]...)
+	command.Stdin = f
+	command.Stdout = &buff
+
+	if err := command.Run(); err != nil {
+		return fmt.Errorf("run command: %w", err)
+	}
+
+	_ = f.Truncate(0)
+	_, _ = f.Seek(0, 0)
+
+	if _, err := io.Copy(f, &buff); err != nil {
+		return fmt.Errorf("copy buff to file: %w", err)
+	}
+
+	return nil
+}
