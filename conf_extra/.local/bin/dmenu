@@ -4,7 +4,7 @@
 pid_file="$XDG_CACHE_HOME/dmenu-pid"
 lock_file="$XDG_CACHE_HOME/dmenu-lock"
 
-kill "$(cat "$pid_file")" 2>/dev/null
+kill "$(cat "$pid_file")" 2>/dev/null &
 
 exec 9>"$lock_file"
 flock 9 || exit 1
