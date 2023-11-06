@@ -1,3 +1,3 @@
 [screencast]
-output_name=DP-4
-chooser_type=none
+chooser_type=simple
+chooser_cmd=swaymsg -t get_outputs | jq -r 'sort_by(.rect.y)[0].name' # top most display
