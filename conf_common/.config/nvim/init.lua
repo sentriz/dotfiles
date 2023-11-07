@@ -146,14 +146,14 @@ nnoremap <down>  :resize +2<cr>
 nnoremap <left>  :vertical resize +2<cr>
 nnoremap <right> :vertical resize -2<cr>
 
-nnoremap [o :cprevious<cr>     " qf list
-nnoremap ]o :cnext<cr>
-nnoremap {O :cpfile<cr>        " qf list files (shift)
-nnoremap }O :cnfile<cr>
-nnoremap [p :bprevious<cr>     " buffer
-nnoremap ]p :bnext<cr>
-nnoremap {P :tabprevious<cr>   " tab (shift)
-nnoremap }P :tabnext<cr>
+nnoremap [p :cprevious<cr>     " qf list
+nnoremap ]p :cnext<cr>
+nnoremap {P :cpfile<cr>        " qf list files (shift)
+nnoremap }P :cnfile<cr>
+nnoremap [o :bprevious<cr>     " buffer
+nnoremap ]o :bnext<cr>
+nnoremap {O :tabprevious<cr>   " tab (shift)
+nnoremap }O :tabnext<cr>
 nnoremap [q :colder<cr>        " list of qf lists
 nnoremap ]q :cnewer<cr>
 
