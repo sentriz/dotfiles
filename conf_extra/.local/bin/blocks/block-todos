@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-todos="$(grep -Po "^- \[ \] \K.*" "$DOTS_TODO_PATH" 2>/dev/null)"
+todos="$(grep -Po "^(-|\*) \[ \] \K.*" "$DOTS_TODO_PATH" 2>/dev/null)"
 test -z "$todos" && exit
 
 printf "todos %d\n" "$(wc -l <<<"$todos")"
