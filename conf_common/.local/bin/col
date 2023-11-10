@@ -80,6 +80,8 @@ func smartSplit(text, delim string) []string {
 		return strings.Split(text, delim)
 	}
 
+	// TODO: grapheme-cluster aware []rune delim split
+
 	switch runes := []rune(delim); len(runes) {
 	case 0:
 		return nil

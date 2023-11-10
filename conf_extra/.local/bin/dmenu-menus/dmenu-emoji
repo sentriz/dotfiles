@@ -6,8 +6,6 @@
 
 (table | dmenu emoji | col ' ' 1 | wl-copy --trim-newline) <<EOF
 ​	zero width space
-¯\_(ツ)_/¯	 dunno
-( ͡° ͜ʖ ͡°)	lenny fella
 …	ellipsis
 😀	emotion face grin grinning smiley smiling
 😃	big emotion eye face grinning mouth open smile smiley smiling
