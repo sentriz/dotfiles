@@ -31,6 +31,7 @@
 	branch-clean-remote      = !git remote prune origin
 	branch-clean-local-show  = !git branch --format '%(refname:short)' --merged | grep -Ev '(master|dev)'
 	branch-clean-local       = !git branch --format '%(refname:short)' --merged | grep -Ev '(master|dev)' | xargs git branch -d
+	branch-from-origin       = !git fetch origin "$(git master)" && git checkout origin/"$(git master)" -b
 
 	checkout-take = !git branch -f "$2" $(git rev-parse HEAD) && \
 	                 git reset --hard "HEAD~$1" && \
