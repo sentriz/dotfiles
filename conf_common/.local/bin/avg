@@ -1,0 +1,31 @@
+//usr/bin/env go-script "$0" "$@"; exit $?
+// vi: ft=go
+
+package main
+
+import (
+	"bufio"
+	"fmt"
+	"log"
+	"os"
+	"strconv"
+	"strings"
+)
+
+func main() {
+	var sum float64
+	var size uint
+	for sc := bufio.NewScanner(os.Stdin); sc.Scan(); {
+		line := strings.TrimSpace(sc.Text())
+		if line == "" {
+			continue
+		}
+		n, err := strconv.ParseFloat(line, 64)
+		if err != nil {
+			log.Fatalf("error parsing float: %v", err)
+		}
+		sum += n
+		size++
+	}
+	fmt.Println(sum / float64(size))
+}
