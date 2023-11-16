@@ -1,0 +1,36 @@
+//usr/bin/env go-script "$0" "$@"; exit $?
+// vi: ft=go
+
+package main
+
+import (
+	"bufio"
+	"fmt"
+	"os"
+	"strconv"
+)
+
+func main() {
+	switch ar := os.Args[1:]; len(ar) {
+	case 5:
+		n, omin, omax, nmin, nmax := flt(ar[0]), flt(ar[1]), flt(ar[2]), flt(ar[3]), flt(ar[4])
+		fmt.Println(scale(n, omin, omax, nmin, nmax))
+	case 4:
+		omin, omax, nmin, nmax := flt(ar[0]), flt(ar[1]), flt(ar[2]), flt(ar[3])
+		for sc := bufio.NewScanner(os.Stdin); sc.Scan(); {
+			n := flt(sc.Text())
+			fmt.Println(scale(n, omin, omax, nmin, nmax))
+		}
+	default:
+		os.Exit(1)
+	}
+}
+
+func scale(n, omin, omax, nmin, nmax float64) float64 {
+	return ((nmax-nmin)*(n-omin))/(omax-omin) + nmin
+}
+
+func flt(s string) float64 {
+	r, _ := strconv.ParseFloat(s, 64)
+	return r
+}
