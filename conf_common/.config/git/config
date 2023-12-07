@@ -22,7 +22,7 @@
 	fixupf     = !git commit --fixup=$(git log --pretty=oneline --abbrev-commit | fzf +s | col ' ' 1)
 	rebasef    = !git rebase $(git branch --format '%(refname:short)' --sort committerdate | fzf +s --tac --preview 'git -c color.ui=always log master..{}')
 	revertf    = !git revert $(git log --pretty=oneline --abbrev-commit | fzf -m +s --preview 'git -c color.ui=always show (echo {} | col \" \" 1)' | col ' ' 1)
-	showf      = !git show $(git log --pretty=oneline --abbrev-commit | fzf +s --preview 'git -c color.ui=always show (echo {} | col \" \" 1)' | col ' ' 1)
+	showf      = !git show $(git log --pretty=oneline --abbrev-commit | fzf +s --preview 'git -c color.ui=always show --pretty=fuller (echo {} | col \" \" 1)' | col ' ' 1)
 	resetf     = !git reset $@ $(git log --pretty=oneline --abbrev-commit | fzf +s | col ' ' 1)
 
 	branch-set-upstream      = !git branch --set-upstream-to=origin/$(git symbolic-ref --short HEAD)
