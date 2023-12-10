@@ -147,6 +147,9 @@ abbr grep "grep -Ei"
 abbr egrep "egrep -Ei"
 abbr fgrep "fgrep -Ei"
 abbr sed "sed -E"
+
+# rg
+alias rg 'rg --hyperlink-format=default'
 abbr rg "rg -PS"
 
 # keep updated with `printf "set -g %s\n" (set -U | grep fish_color)`
