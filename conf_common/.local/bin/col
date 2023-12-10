@@ -22,7 +22,7 @@ import (
 // $ printf "%s;%s\n" one two | col ';' 2
 // two
 // $ printf "%s;%s\n" one two | col ';' 1 2
-// one;two
+// one	two
 // $ printf "%s\t%s\t%s\n" 1 2 3 11 22 33 111 222 333 | col 2
 // 2
 // 22
@@ -74,20 +74,21 @@ Row:
 	}
 }
 
+// TODO: grapheme-cluster aware []rune delim split
 func smartSplit(text, delim string) []string {
 	switch delim {
 	case "\t", ";":
 		return strings.Split(text, delim)
 	}
-
-	// TODO: grapheme-cluster aware []rune delim split
-
-	switch runes := []rune(delim); len(runes) {
-	case 0:
-		return nil
-	case 1:
-		return strings.FieldsFunc(text, func(r rune) bool { return r == runes[0] })
-	default:
-		return strings.Split(text, string(runes))
+	if runes := []rune(delim); len(runes) == 1 {
+		return trim(strings.FieldsFunc(text, func(r rune) bool { return r == runes[0] }))
 	}
+	return trim(strings.Split(text, delim))
+}
+
+func trim(in []string) []string {
+	for i := range in {
+		in[i] = strings.TrimSpace(in[i])
+	}
+	return in
 }
