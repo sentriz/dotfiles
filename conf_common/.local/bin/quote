@@ -1,0 +1,24 @@
+//usr/bin/env go-script "$0" "$@"; exit $?
+// vi: ft=go
+
+package main
+
+import (
+	"bufio"
+	"fmt"
+	"io"
+	"os"
+	"strconv"
+	"strings"
+)
+
+func main() {
+	var r io.Reader = os.Stdin
+	if in := strings.Join(os.Args[1:], " "); in != "" {
+		r = strings.NewReader(in)
+	}
+
+	for sc := bufio.NewScanner(r); sc.Scan(); {
+		fmt.Println(strconv.Quote(sc.Text()))
+	}
+}
