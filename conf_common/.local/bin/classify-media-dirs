@@ -1,0 +1,91 @@
+//usr/bin/env go-script "$0" "$@"; exit $?
+// vi: ft=go
+
+package main
+
+import (
+	"fmt"
+	"io/fs"
+	"os"
+	"path/filepath"
+	"strings"
+)
+
+type attrs uint8
+
+func (c attrs) String() string {
+	return fmt.Sprintf("%08b", c)
+}
+
+const (
+	/* 0EUOSAID */ hasDir attrs = 1 << iota
+	/*  |||||'- */ hasImage
+	/*  ||||'-- */ hasAudio
+	/*  |||'--- */ hasSig
+	/*  ||'---- */ hasOrigin
+	/*  |'----- */ hasUnknown
+	/*  '------ */ nonEmpty
+)
+
+func main() {
+	if len(os.Args) != 2 {
+		os.Exit(1)
+	}
+
+	found := map[string]attrs{}
+	_ = filepath.WalkDir(os.Args[1], func(path string, d fs.DirEntry, _ error) error {
+		path = filepath.Clean(path)
+		if _, ok := found[path]; !ok && d.IsDir() {
+			found[path] = 0
+		}
+
+		parent, name := filepath.Split(path)
+		parent = filepath.Clean(parent)
+
+		found[parent] |= nonEmpty
+
+		if d.IsDir() {
+			found[parent] |= hasDir
+			return nil
+		}
+
+		if _, ok := covers[strings.ToLower(name)]; ok {
+			found[parent] |= hasImage
+			return nil
+		}
+
+		switch filepath.Ext(strings.ToLower(name)) {
+		case ".mp3", ".flac", ".m4a":
+			found[parent] |= hasAudio
+			return nil
+		}
+
+		switch strings.ToLower(name) {
+		case "origin.yaml":
+			found[parent] |= hasOrigin
+		case "folder.sig":
+			found[parent] |= hasSig
+		default:
+			found[parent] |= hasUnknown
+		}
+
+		return nil
+	})
+
+	for path, att := range found {
+		fmt.Printf("%s\t%s\n", path, att)
+	}
+}
+
+var covers = map[string]struct{}{}
+
+func init() {
+	for _, name := range []string{"cover", "folder", "front", "albumart", "album", "artist"} {
+		for _, ext := range []string{"jpg", "jpeg", "png", "bmp", "gif"} {
+			covers[fmt.Sprintf("%s.%s", name, ext)] = struct{}{}
+			for i := 0; i < 5; i++ {
+				covers[fmt.Sprintf("%s.%d.%s", name, i, ext)] = struct{}{} // support beets extras
+			}
+		}
+	}
+}
