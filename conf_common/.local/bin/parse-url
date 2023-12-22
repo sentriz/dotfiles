@@ -4,7 +4,10 @@
 package main
 
 import (
+	"bufio"
+	"bytes"
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/url"
 	"os"
@@ -12,7 +15,17 @@ import (
 )
 
 func main() {
-	for _, urlStr := range urls() {
+	var r io.Reader = os.Stdin
+	if len(os.Args) > 1 {
+		var buff bytes.Buffer
+		for _, arg := range os.Args[1:] {
+			fmt.Fprintln(&buff, arg)
+		}
+		r = &buff
+	}
+
+	for sc := bufio.NewScanner(r); sc.Scan(); {
+		urlStr := strings.TrimSpace(sc.Text())
 		url, err := url.Parse(urlStr)
 		cerr(err)
 
@@ -29,16 +42,6 @@ func main() {
 		err = json.NewEncoder(os.Stdout).Encode(out)
 		cerr(err)
 	}
-}
-
-func urls() []string {
-	if len(os.Args) > 1 {
-		return os.Args[1:]
-	}
-
-	stdin, _ := io.ReadAll(os.Stdin)
-	stdinStr := strings.TrimSpace(string(stdin))
-	return strings.Split(stdinStr, "\n")
 }
 
 type out struct {
