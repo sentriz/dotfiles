@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+type="$(wl-paste -l | head -n1)"
+[[ -z "$type" ]] && exit 0
+[[ "$type" == text/plain* ]] && exit 0
+
+echo "clipboard $type"

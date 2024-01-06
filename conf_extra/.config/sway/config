@@ -58,6 +58,7 @@ set $up_block_1 pkill -RTMIN+1 i3blocks
 set $up_block_2 pkill -RTMIN+2 i3blocks
 set $up_block_3 pkill -RTMIN+3 i3blocks
 set $up_block_4 pkill -RTMIN+4 i3blocks
+set $up_block_5 pkill -RTMIN+5 i3blocks
 
 # basic appearance
 smart_borders on
@@ -398,6 +399,7 @@ exec_always 'pkill mako; exec mako \
     --on-button-middle "exec makoctl menu -n \$id dmenu action"'
 exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec wl-paste --watch cliphist store
+exec wl-paste --watch $up_block_5
 exec sway-rename-workspaces
 exec wlsunset -l 53.3 -L -6.2 -t 2700
 exec last-dot-friends-notify

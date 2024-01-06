@@ -9,6 +9,10 @@ signal=3
 [sharing]
 color=#b48fd4
 
+[clip]
+color=#f0f000
+signal=5
+
 [volume]
 color=#82b442
 signal=1
