@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
-type="$(wl-paste -l | head -n1)"
+type="$(wl-paste -l | grep -iv -e "text" -e "string" -e "save_targets" | head -n 1)"
 [[ -z "$type" ]] && exit 0
-[[ "$type" == text/plain* ]] && exit 0
 
 echo "clipboard $type"
