@@ -19,7 +19,7 @@ if test "$device" = "disconnect"; then
 fi
 
 notify "bluetooth $device_name" "$(bluetoothctl -- power on)"
-for ((i = 0; i < 3; i++)); do
+for ((i = 0; i < 8; i++)); do
     notify "bluetooth $device_name" "$(bluetoothctl -- connect "$device_mac" | grep -v "^\[")"
     sleep 1
 done
