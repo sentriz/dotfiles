@@ -104,7 +104,7 @@ arch swaybg
 arch swaylock
 arch wf-recorder
 arch wl-clipboard
-arch wlsunset
+arch gammastep
 arch xdg-desktop-portal-gtk
 arch xdg-desktop-portal-wlr
 arch xdg-user-dirs

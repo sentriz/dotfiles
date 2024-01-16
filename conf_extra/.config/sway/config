@@ -401,6 +401,6 @@ exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec wl-paste --watch cliphist store
 exec wl-paste --watch $up_block_5
 exec sway-rename-workspaces
-exec wlsunset -l 53.3 -L -6.2 -t 2700
+exec gammastep -l -6.2:53.3 -t 6500K:3000K
 exec last-dot-friends-notify
 exec downloads-to-clipboard
