@@ -87,7 +87,7 @@ highlight statusModifided cterm=bold ctermfg=1 ctermbg=15
 
 set statusline=
 set statusline+=%#statusReadOnly#%{&readonly?'read\ only\ ':''}%*
-set statusline+=%{pathshorten(@%)}
+set statusline+=%{@%}
 set statusline+=%#statusModifided#%{&modified?'\ \ modified':''}%*
 set statusline+=%=
 set statusline+=\ column\ %c
