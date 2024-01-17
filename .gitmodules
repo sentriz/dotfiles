@@ -1,5 +1,5 @@
-[submodule "conf_extra/bin/wl-gammactld"]
-	path = conf_extra/.local/bin/wl-gammactld
+[submodule "conf_destop/bin/wl-gammactld"]
+	path = conf_desktop/.local/bin/wl-gammactld
 	url = git@github.com:sentriz/wl-gammactld.git
 [submodule "conf_common/.local/share/nvim/site/pack/look/opt/tpope/vim-vinegar"]
 	path = conf_common/.local/share/nvim/site/pack/plugins/start/vim-vinegar
