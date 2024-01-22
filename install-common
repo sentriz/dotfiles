@@ -2,7 +2,7 @@
 
 set -e
 
-stow -v --no-folding --target ~ -R conf_common
+stow -v --no-folding --ignore ".*\/tests\/.*" --target ~ -R conf_common
 
 chown -R "$(whoami)" ~/.gnupg/
 find ~/.gnupg -type f -exec chmod 600 {} \;

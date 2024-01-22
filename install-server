@@ -1,3 +1,2 @@
 #!/usr/bin/env bash
-
-stow -v --ignore='running' --target /etc -R conf_server
+stow -v --no-folding --ignore ".*\/tests\/.*" --target /etc -R conf_server
