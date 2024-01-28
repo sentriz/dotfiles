@@ -1,14 +1,14 @@
 #!/usr/bin/env fish
 
 while true
-    sleep 2
-
     set name (inotifywait --quiet --recursive --event close_write --format "%f" $XDG_DOWNLOAD_DIR)
     set name $XDG_DOWNLOAD_DIR/$name
+
+    sleep 2.5 # hopefully wait for copy complete
 
     set size (stat --format="%s" $name)
     test -z $size; and continue
     test $size -ge 2000000; and continue # 2 Mb
 
-    wl-copy <$name
+    wl-copy <"$name"
 end
