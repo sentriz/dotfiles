@@ -127,6 +127,7 @@ vnoremap p "_dP
 nnoremap <enter>         :vsplit<cr><c-w>w
 nnoremap <s-enter>       :split<cr><c-w>w
 nnoremap s               :write<enter>
+nnoremap <silent> <c-[>  <cmd>call CloseIfSaved()<cr>
 nnoremap <silent> q      <cmd>call CloseIfSaved()<cr>
 nnoremap Q               q
 
@@ -421,20 +422,21 @@ local ts_highlight = {
 	additional_vim_regex_highlighting = false,
 }
 local ts_indent = { enable = true }
+local ts_incremental_selection = {
+	enable = true,
+	keymaps = {
+		init_selection = "=",
+		node_incremental = "=",
+		node_decremental = "-",
+		scope_incremental = "+",
+	},
+}
 
 tsconfigs.setup({
 	ensure_installed = "all",
 	highlight = ts_highlight,
 	indent = ts_indent,
-})
-
-local tshjkl = require("tshjkl")
-
-tshjkl.setup({
-	select_current_node = true,
-	keymaps = {
-		toggle = "=",
-	},
+	incremental_selection = ts_incremental_selection,
 })
 
 vim.cmd([[
