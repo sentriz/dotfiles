@@ -1,13 +1,10 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC2064
 
-pid_file="$XDG_CACHE_HOME/dmenu-pid"
 lock_file="$XDG_CACHE_HOME/dmenu-lock"
 
-kill "$(cat "$pid_file")" 2>/dev/null &
-
 exec 9>"$lock_file"
-flock 9 || exit 1
+flock -n 9 || exit 1
 
 trap 'kill $(jobs -p) 2>/dev/null' EXIT
 
@@ -28,7 +25,6 @@ if test -n "$column"; then
 fi
 
 "$TERMINAL" --app-id launcher sh -c "theme light; ${command[*]} <$in >$out" 2>/dev/null &
-echo $! >"$pid_file"
 
 cat <"$out" &
 cat >"$in"
