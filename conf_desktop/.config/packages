@@ -175,7 +175,7 @@ npm markdownlint
 npm markdownlint-cli
 npm prettier
 npm prettier-plugin-go-template
-npm prettier-plugin-svelte svelte
+npm prettier-plugin-svelte
 npm pyright
 npm svelte
 npm svelte-language-server
