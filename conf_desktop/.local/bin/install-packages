@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# shellcheck disable=SC2046
 
 set -e
 
@@ -40,36 +39,42 @@ function want() {
 
 if want arch; then
     yay --version
-    yay -S --needed --noconfirm $(list arch)
+    readarray -t pkgs < <(list arch)
+    yay -S --needed --noconfirm "${pkgs[@]}"
 fi
 
 if want python; then
     python3 -m ensurepip
     python3 -m pip --version
-    python3 -m pip install --user --update --disable-pip-version-check --no-input $(list python)
+    readarray -t pkgs < <(list python)
+    python3 -m pip install --user --update --disable-pip-version-check --no-input "${pkgs[@]}"
 fi
 
 if want cargo; then
     cargo version
-    cargo install $(list cargo)
+    readarray -t pkgs < <(list cargo)
+    cargo install "${pkgs[@]}"
 fi
 
 if want go; then
     go version
-    for package in $(list go); do
-        go install "$package"
+    list go | while IFS='' read -r pkg; do
+        go install "$pkg"
     done
 fi
 
 if want npm; then
     npm version
-    npm install -g $(list npm)
+    readarray -t pkgs < <(list npm)
+    npm install -g "${pkgs[@]}"
 fi
 
 if want flatpak; then
     flatpak --version
     flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
     flatpak remote-add --user --if-not-exists flathub-beta https://flathub.org/beta-repo/flathub-beta.flatpakrepo
-    flatpak install --user --noninteractive --assumeyes flathub $(list flatpak)
-    flatpak install --user --noninteractive --assumeyes flathub-beta $(list flatpak-beta)
+    readarray -t pkgs < <(list flatpak)
+    flatpak install --user --noninteractive --assumeyes flathub "${pkgs[@]}"
+    readarray -t pkgs < <(list flatpak-beta)
+    flatpak install --user --noninteractive --assumeyes flathub-beta "${pkgs[@]}"
 fi
