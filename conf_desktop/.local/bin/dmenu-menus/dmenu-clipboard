@@ -1,6 +1,20 @@
 #!/usr/bin/env bash
 
-id="$(cliphist list | dmenu clipboard 2)"
-test -z "$id" && exit
+case "$1" in
+preview)
+    row="$2"
+    if grep -vqP '^\d+\t\[\[ binary data .* \]\]' <<<"$row"; then
+        cliphist decode <<<"$row"
+    else
+        cliphist decode <<<"$row" | chafa -f sixel -s "${FZF_PREVIEW_COLUMNS}x${FZF_PREVIEW_LINES}"
+    fi
+    ;;
 
-cliphist decode <<<"$id" | wl-copy
+*)
+    id="$(cliphist list | dmenu clipboard 2 "$(realpath "$0") preview {}")"
+    test -z "$id" && exit
+
+    cliphist decode <<<"$id" | wl-copy
+    ;;
+
+esac

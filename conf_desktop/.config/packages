@@ -110,6 +110,7 @@ arch xdg-desktop-portal-wlr
 arch xdg-user-dirs
 arch xorg-xwayland
 go go.senan.xyz/cliphist@latest
+arch chafa
 go go.senan.xyz/sway-rename-workspaces@latest
 go go.senan.xyz/xdg-desktop-list@latest
 
