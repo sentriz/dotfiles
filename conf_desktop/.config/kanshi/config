@@ -5,5 +5,5 @@ profile mobile {
 profile desk {
 	output "Lenovo Group Limited T2224pD V901F56N" mode 1920x1080 position 0,0
 	output "Lenovo Group Limited T2224pD V901F4TE" mode 1920x1080 position 0,1080
-	output "eDP-1"                                 mode 1920x1080 position 1920,1080
+	output "eDP-1"                                 mode 1920x1080 position 1920,750
 }
