@@ -99,8 +99,6 @@
 	pretty = format:%h  %C(dim)%an%Creset %C(yellow)%d%Creset %s
 [color]
 	ui = auto
-[icdiff]
-	options = --highlight --line-numbers
 [init]
 	defaultBranch = master
 [branch]
