@@ -332,10 +332,14 @@ for_window [app_id="^LibreWolf$" title="Picture-in-Picture"] fullscreen enable, 
 for_window [app_id="^LibreWolf$" title="LibreWolf — Sharing Indicator"] kill
 
 # bindings: xf86
-bindsym XF86AudioLowerVolume  exec wp-update sink   volume=-0.02 && $up_block_1
-bindsym XF86AudioRaiseVolume  exec wp-update sink   volume=+0.02 && $up_block_1
-bindsym XF86AudioMute         exec wp-update sink   mute=toggle  && $up_block_1
-bindsym XF86AudioMicMute      exec wp-update source mute=toggle  && $up_block_1
+bindsym XF86AudioLowerVolume  exec wpctl set-volume @DEFAULT_SINK@   2%-    && $up_block_1
+bindsym XF86AudioRaiseVolume  exec wpctl set-volume @DEFAULT_SINK@   2%+    && $up_block_1
+bindsym XF86AudioMute         exec wpctl set-mute   @DEFAULT_SINK@   toggle && $up_block_1
+bindsym XF86AudioMicMute      exec wpctl set-mute   @DEFAULT_SOURCE@ toggle && $up_block_1
+
+# push to talk with print screen button
+bindsym --no-repeat           print exec wpctl set-mute @DEFAULT_SOURCE@ 0 && $up_block_1
+bindsym --no-repeat --release print exec wpctl set-mute @DEFAULT_SOURCE@ 1 && $up_block_1
 
 bindsym XF86MonBrightnessDown exec xbacklight -dec 5
 bindsym XF86MonBrightnessUp   exec xbacklight -inc 5
@@ -344,10 +348,6 @@ bindsym XF86AudioPlay         exec mpris-ctrl play-pause
 bindsym XF86AudioStop         exec mpris-ctrl stop
 bindsym XF86AudioNext         exec mpris-ctrl next
 bindsym XF86AudioPrev         exec mpris-ctrl previous
-
-# push to talk with print screen button
-bindsym --no-repeat           print exec wp-update source mute=no  && $up_block_1
-bindsym --no-repeat --release print exec wp-update source mute=yes && $up_block_1
 
 # toggle and scratchpads
 bindcode 66 [app_id="^scratchpad-.*"] scratchpad show

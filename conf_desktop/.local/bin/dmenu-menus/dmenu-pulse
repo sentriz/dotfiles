@@ -1,9 +1,12 @@
 #!/usr/bin/env fish
 
-wp-list sink \
-    | sed -E "s/(.*)\t(.*)\t.*/\1\t\L\2/" \
-    | dmenu sink 2 \
-    | read -d \t sink description
-test -z "$sink" && exit 1
+set row (wpctl status \
+    | sed -E 's/[└─│├]/ /g; s/\[vol.*//; s/\*(.*)/ \1 */; s/([0-9 ]{4})\./ \1/; s/:\s*$//; s/.*/\L\0/' \
+    | untree \
+    | grep -Ei "^audio (sinks|sources)" \
+    | dmenu sink)
 
-wp-update sink "default=$sink"
+set id (echo "$row" | grep -Eo "[0-9]+")
+test -z "$id" && exit
+
+wpctl set-default "$id"

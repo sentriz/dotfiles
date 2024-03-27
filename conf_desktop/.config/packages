@@ -42,6 +42,7 @@ go go.senan.xyz/sync-procs@latest
 go go.senan.xyz/vi-paths@latest
 go go.senan.xyz/vi-pipe@latest
 go go.senan.xyz/add-osc-8-hyperlink@latest
+go go.senan.xyz/untree@latest
 go github.com/nkanaev/numb@master
 go github.com/tomnomnom/gron@latest
 

@@ -1,20 +1,24 @@
 #!/usr/bin/env bash
 
 case "$BLOCK_BUTTON" in
-1) wp-update sink mute=toggle ;;   # left click
-3) wp-update source mute=toggle ;; # right click
-4) wp-update sink volume=+0.05 ;;  # scroll up
-5) wp-update sink volume=-0.05 ;;  # scroll down
+1) wpctl set-mute @DEFAULT_SINK@ toggle ;;          # left click
+3) wpctl set-mute @DEFAULT_SOURCE@ toggle ;;        # right click
+4) wpctl set-volume --limit 1 @DEFAULT_SINK@ 5%+ ;; # scroll up
+5) wpctl set-volume --limit 1 @DEFAULT_SINK@ 5%- ;; # scroll down
 esac >/dev/null 2>&1
 
-IFS=$'\t' read -r _ sink_vol sink_muted _ _ source_muted < <(timeout 1 wp-status 2>/dev/null)
-test -z "$sink_vol" && exit
+function parse() {
+    sed -E "s/\.//g; s/\[MUTED\]/1/g; s/Volume: 0?//; s/\s+/\t/"
+}
+
+IFS=$'\t' read -r sink_vol sink_muted < <(wpctl get-volume "@DEFAULT_SINK@" | parse)
+IFS=$'\t' read -r _ source_muted < <(wpctl get-volume "@DEFAULT_SOURCE@" | parse)
 
 out=""
-test "$sink_muted" = true \
+test -n "$sink_muted" \
     && out+="muted" \
     || out+="$sink_vol%"
-test "$source_muted" = true \
+test -n "$source_muted" \
     && out+=" mic muted"
 
 echo "volume $out"
