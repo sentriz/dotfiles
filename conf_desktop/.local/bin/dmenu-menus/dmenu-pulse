@@ -3,7 +3,8 @@
 set row (wpctl status \
     | sed -E 's/[└─│├]/ /g; s/\[vol.*//; s/\*(.*)/ \1 */; s/([0-9 ]{4})\./ \1/; s/:\s*$//; s/.*/\L\0/' \
     | untree \
-    | grep -Ei "^audio (sinks|sources)" \
+    | col ' ' ' ' \
+    | grep -Ei "^audio (sinks|sources) " \
     | dmenu sink)
 
 set id (echo "$row" | grep -Eo "[0-9]+")
