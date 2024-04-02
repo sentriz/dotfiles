@@ -63,8 +63,6 @@ set $up_block_5 pkill -RTMIN+5 i3blocks
 # basic appearance
 smart_borders on
 smart_gaps off
-titlebar_border_thickness 0
-titlebar_padding 2
 default_border pixel 2
 gaps inner $default_gap
 font $default_font
@@ -76,6 +74,11 @@ workspace_layout tabbed
 
 # always borders for floating windows
 for_window [floating] border full
+
+# title
+titlebar_border_thickness 0
+titlebar_padding 2
+for_window [all] title_format "> %title"
 
 # window colours        border           background       text         indicator        child
 client.focused          #ffffff          #ffffff          $colour_grey #ffffff          #ffffff
