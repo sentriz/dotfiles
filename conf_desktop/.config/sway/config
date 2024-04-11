@@ -385,9 +385,6 @@ exec_always systemctl --user import-environment "$imp_vars"
 exec_always hash dbus-update-activation-environment 2>/dev/null && \
     dbus-update-activation-environment --systemd "$imp_vars"
 
-exec_always gsettings set org.gnome.desktop.interface gtk-theme "$GTK_THEME"
-exec_always gsettings set org.gnome.desktop.interface font-name "$GTK_FONT_NAME"
-
 exec_always 'pkill kanshi; exec kanshi'
 exec_always 'pkill mako; exec mako \
     --background-color "$colour_grey" \
@@ -404,6 +401,6 @@ exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec wl-paste --watch cliphist store
 exec wl-paste --watch $up_block_5
 exec sway-rename-workspaces
-exec gammastep -l -6.2:53.3 -t 6500K:3000K
+exec gammastep
 exec last-dot-friends-notify
 exec downloads-to-clipboard

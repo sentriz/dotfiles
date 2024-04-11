@@ -1,6 +1,3 @@
 [Context]
 filesystems=!/etc/firefox/policies
 persistent=/etc/firefox/policies
-
-[Environment]
-GTK_THEME=Arc

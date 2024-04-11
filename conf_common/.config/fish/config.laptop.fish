@@ -32,13 +32,6 @@ set -gx JDTLS_HOME /usr/share/java/jdtls
 set -gx PYLINTHOME "$XDG_DATA_HOME/pylint"
 set -gx PYTHONHISTFILE "$XDG_CACHE_HOME/python_history"
 
-# gtk2/gtk3 theme
-# also, gsettings commands parse these vars
-set -gx GTK_THEME Arc-Dark
-set -gx GTK_FONT_NAME 'DejaVu Sans 10'
-set -gx GTK_DARK 1
-set -gx GTK2_RC_FILES /usr/share/themes/Arc-Dark/gtk-2.0/gtkrc
-
 set -gx YABRIDGE_TEMP_DIR "$XDG_RUNTIME_DIR/yabridge"
 set -gx YABRIDGE_DEBUG_LEVEL ''
 
