@@ -1,14 +1,15 @@
-#!/usr/bin/env fish
+#!/usr/bin/env bash
 
 # requires: https://github.com/sentriz/last-dot-friends
 
-set icon '
+icon_path="$XDG_CACHE_HOME/last-dot-friends-icon.svg"
+cat <<EOF >"$icon_path"
     <svg xml:space="preserve" width="30" height="30" xmlns="http://www.w3.org/2000/svg">
         <path d="M825.4 10H174.6C84.1 10 10 84.1 10 174.6v650.8C10 915.9 84.1 990 174.6 990h650.8c90.5 0 164.6-74.1 164.6-164.6V174.6C990 84.1 915.9 10 825.4 10Zm-101 728.2c-169.9 0-228.9-76.6-260.3-171.9l-31.4-98.2c-23.6-71.7-51.1-127.7-137.5-127.7-59.9 0-120.8 43.2-120.8 164 0 94.3 48.1 153.2 115.9 153.2 76.6 0 127.7-57 127.7-57l31.4 85.5s-53.1 52.1-164 52.1c-137.5 0-214.1-80.5-214.1-229.9 0-155.2 76.6-246.6 221-246.6 130.6 0 196.5 47.1 237.7 174.9l32.4 98.2c23.6 71.7 64.8 123.8 164 123.8 66.8 0 102.2-14.7 102.2-51.1 0-28.5-16.7-49.1-66.8-60.9L695 531c-81.5-19.6-113.9-61.9-113.9-128.7 0-107.1 86.4-140.5 174.8-140.5 100.2 0 161.1 36.3 169 124.7l-98.2 11.8c-3.9-42.2-29.5-59.9-76.6-59.9-43.2 0-69.7 19.6-69.7 53 0 29.5 12.8 47.2 56 57l62.9 13.7C883.8 481.8 929 523 929 602.6c-.2 98.3-82.7 135.6-204.6 135.6Z" style="fill:#b72024;fill-opacity:1" transform="translate(-.306 -.306) scale(.03061)"/>
     </svg>
-'
+EOF
 
-last-dot-friends -interval 60 -api-key (secret lastfm_api_key) -api-secret (secret lastfm_api_secret) (secret lastfm_friends) | while read -d \t username artist track
-    notify-send --icon (echo "$icon" | psub) --hint "string:x-dunst-stack-tag:"(status current-filename) "$username" "$artist — $track"
+last-dot-friends -interval 60 -api-key "$(secret lastfm_api_key)" -api-secret "$(secret lastfm_api_secret)" "$(secret lastfm_friends)" | while IFS=$'\t' read -r username artist track; do
+    notify-send --icon "$icon_path" --hint "string:x-dunst-stack-tag:$0" "$username" "$artist — $track"
     sleep 1.5
-end
+done
