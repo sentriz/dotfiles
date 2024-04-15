@@ -402,4 +402,3 @@ exec wl-paste --watch cliphist store
 exec sway-rename-workspaces
 exec gammastep
 exec last-dot-friends-notify
-exec downloads-to-clipboard
