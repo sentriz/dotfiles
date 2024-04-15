@@ -4,7 +4,3 @@ stow -v --no-folding --ignore ".*\/tests\/.*" --target ~ -R conf_desktop
 
 chown -R "$USER:$USER" ~/.gnupg
 chmod -R go-rwx ~/.gnupg
-
-echo ""
-echo "next, launch a fish shell for updated \$PATH vars and run"
-echo "$ install-packages"
