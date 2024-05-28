@@ -90,8 +90,8 @@ client.urgent           $colour_red      $colour_red      #ffffff      $colour_r
 input * {
     xkb_layout ie
     xkb_options caps:none
-    repeat_delay 160
-    repeat_rate 75
+    repeat_delay 150
+    repeat_rate 100
 }
 
 input "6127:24647:Lenovo_ThinkPad_Compact_USB_Keyboard_with_TrackPoint" {
