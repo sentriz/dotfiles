@@ -31,6 +31,7 @@ highlight CursorLine    ctermfg=0 ctermbg=11
 highlight MatchParen    cterm=underline
 highlight Folded        ctermfg=8 cterm=italic
 highlight TabLineSel    ctermbg=8
+highlight NormalFloat   ctermbg=0
 
 highlight SpellLocal ctermfg=9 cterm=underline
 highlight SpellBad   ctermfg=9 cterm=underline
