@@ -78,6 +78,15 @@ function __scrap_typescript
     $EDITOR "$file"
 end
 
+function __scrap_
+    set -l dir (__scrap_setup_scrap_dir txt)
+    set -l file clip
+
+    fish_clipboard_paste >"$file"
+    $EDITOR "$file"
+    fish_clipboard_copy <"$file"
+end
+
 function __scrap_find
     rg -g '**/*.go' -g '**/*.py' -g '**/*.ts' --line-number --no-heading --smart-case --color=never . "$DOTS_SCRAP_DIR" \
         | sed -r 's/([^:]+)\:([0-9]+):/\1\t\2\t/g' \
