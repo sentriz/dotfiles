@@ -3,5 +3,4 @@
 swaymsg -t get_tree \
     | jq -r '.. |  select(.pid?) | {name, app_id, title: .window_properties.title, class: .window_properties.class, instance: .window_properties.instance}' \
     | jq -s \
-    | rsl json tsv \
-    | table
+    | rsl json tsv
