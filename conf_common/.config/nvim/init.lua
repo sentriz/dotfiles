@@ -123,6 +123,15 @@ nnoremap * *``
 " visual replace without yank https://superuser.com/a/321726
 vnoremap p "_dP
 
+" grep
+nnoremap ~ :call GrepAndQuickfix()<cr>
+set grepprg=rg\ --vimgrep\ --hidden\ --glob\ '!**/.git/**'
+
+function! GrepAndQuickfix()
+  silent execute 'grep ' . shellescape(expand('<cword>'))
+  copen
+endfunction
+
 " easy split / quit
 nnoremap <enter>         :vsplit<cr><c-w>w
 nnoremap <s-enter>       :split<cr><c-w>w
