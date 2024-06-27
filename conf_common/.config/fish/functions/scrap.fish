@@ -32,9 +32,6 @@ function __scrap_go
         '}'
 
     go mod init scrap
-    git init
-    git add -A
-    git commit -m init
 
     $EDITOR "$file"
 end
@@ -54,10 +51,6 @@ function __scrap_python
         'if __name__ == "__main__":' \
         '    main()'
 
-    git init
-    git add -A
-    git commit -m init
-
     $EDITOR "$file"
 end
 
@@ -71,9 +64,6 @@ function __scrap_typescript
 
     npm init --yes >/dev/null
     touch deno.json
-    git init
-    git add -A
-    git commit -m init
 
     $EDITOR "$file"
 end
