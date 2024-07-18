@@ -1,0 +1,31 @@
+//usr/bin/env go-script "$0" "$@"; exit $?
+// vi: ft=go
+
+package main
+
+import (
+	"fmt"
+	"os"
+	"sort"
+	"strconv"
+)
+
+func main() {
+	if len(os.Args) != 3 {
+		fmt.Fprintf(os.Stderr, "usage: %s <start> <end>\n", os.Args[0])
+		os.Exit(1)
+	}
+
+	start, _ := strconv.Atoi(os.Args[1])
+	end, _ := strconv.Atoi(os.Args[2])
+
+	var ans string
+	fmt.Println(sort.Search(end, func(i int) bool {
+		if i < start {
+			return false
+		}
+		fmt.Printf("<= %d? y/n ", i)
+		fmt.Scanf("%s", &ans)
+		return ans != "" && ans[0] == 'y'
+	}))
+}
