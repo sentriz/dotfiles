@@ -10,10 +10,8 @@ switch $cmd
         set -l area (area $src)
         test -z "$area"; and exit
 
-        set -l audio_dev (pactl list short sources | grep -Po "\K[^\s]+\.monitor(?=.*IDLE)")
-
-        test -n "$audio" -a -n "$audio_dev"
-        and set audio_cmd "-a$audio_dev"
+        test -n "$audio"
+        and set audio_cmd -- -a
 
         wf-recorder $audio_cmd -f "$filename" -g "$area" -x yuv420p >/dev/null 2>&1
         test ! -f "$filename"; and exit 1
