@@ -24,8 +24,15 @@ func main() {
 		if i < start {
 			return false
 		}
-		fmt.Printf("<= %d? y/n ", i)
+		fmt.Printf("<= %d? [ylg]/[nhb] ", i)
 		fmt.Scanf("%s", &ans)
-		return ans != "" && ans[0] == 'y'
+		if ans == "" {
+			return false
+		}
+		switch ans[0] {
+		case 'y', 'l', 'g', : // yes, lower, good
+			return true
+		}
+		return false
 	}))
 }
