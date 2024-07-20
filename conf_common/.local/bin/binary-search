@@ -30,7 +30,7 @@ func main() {
 			return false
 		}
 		switch ans[0] {
-		case 'y', 'l', 'g', : // yes, lower, good
+		case 'y', 'l', 'g': // yes, lower, good
 			return true
 		}
 		return false
