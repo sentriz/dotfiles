@@ -96,7 +96,7 @@
 	enabled = true
 	autoupdate = true
 [format]
-	pretty = format:%h  %C(dim)%an%Creset %C(yellow)%d%Creset %s
+	pretty = format:%as %C(dim)%<|(18,trunc)%an%Creset %h%C(yellow)%d%Creset %s
 [color]
 	ui = auto
 [init]
