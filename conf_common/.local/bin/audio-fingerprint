@@ -1,0 +1,69 @@
+//usr/bin/env go-script "$0" "$@"; exit $?
+// vi: ft=go
+
+package main
+
+import (
+	"bytes"
+	"context"
+	"crypto/md5"
+	"encoding/hex"
+	"flag"
+	"fmt"
+	"os"
+	"os/exec"
+	"runtime"
+
+	"golang.org/x/sync/errgroup"
+)
+
+const limitBytes int64 = 393216
+
+func main() {
+	flag.Parse()
+
+	wg, ctx := errgroup.WithContext(context.Background())
+	wg.SetLimit(runtime.NumCPU())
+
+	paths := flag.Args()
+	hashes := make([][]byte, len(paths))
+	for i, p := range paths {
+		i, p := i, p
+		wg.Go(func() error {
+			hash, err := getHash(ctx, p, limitBytes)
+			if err != nil {
+				return err
+			}
+			hashes[i] = hash
+			return nil
+		})
+	}
+
+	if err := wg.Wait(); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
+
+	for i, p := range paths {
+		fmt.Printf("%s\t%s\n", p, hex.EncodeToString(hashes[i]))
+	}
+}
+
+func getHash(ctx context.Context, p string, limitBytes int64) (hash []byte, err error) {
+	cmd := exec.CommandContext(ctx, "ffmpeg", "-hide_banner", "-i", p, "-c:a", "pcm_s16le", "-ac", "2", "-f", "s16le", "-fs", fmt.Sprint(limitBytes), "-")
+
+	h := md5.New()
+	cmd.Stdout = h
+
+	var stderr bytes.Buffer
+	cmd.Stderr = &stderr
+
+	if err := cmd.Run(); err != nil {
+		if stderr.Len() > 0 {
+			return nil, fmt.Errorf("%w: stderr: %q", err, stderr.String())
+		}
+		return nil, err
+	}
+
+	return h.Sum(nil), nil
+}
