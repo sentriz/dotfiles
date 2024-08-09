@@ -71,12 +71,25 @@ func getHash(p string, limitBytes int64) (hash []byte, err error) {
 	}
 	hash = h.Sum(nil)
 
-	if err := cmd.Process.Kill(); err != nil {
-		return nil, fmt.Errorf("kill: %w", err)
+	if err := stdout.Close(); err != nil {
+		return nil, fmt.Errorf("close stdout: %w", err)
 	}
-	if err := cmd.Wait(); err != nil && !errors.Is(err, &exec.ExitError{}) {
-		return nil, err
+
+	err = cmd.Wait()
+	if err := ignoreCode(err, 1, 224); err != nil { // ignore ffmpeg broken pipe
+		return nil, fmt.Errorf("wait: %w", err)
 	}
 
 	return hash, nil
+}
+
+func ignoreCode(err error, codes ...int) error {
+	if exitErr := (&exec.ExitError{}); errors.As(err, &exitErr) {
+		for _, code := range codes {
+			if exitErr.ExitCode() == code {
+				return nil
+			}
+		}
+	}
+	return err
 }
