@@ -11,7 +11,6 @@ import (
 	"flag"
 	"fmt"
 	"io"
-	"log"
 	"os"
 	"os/exec"
 	"sync"
@@ -37,7 +36,7 @@ func main() {
 
 	wg.Wait()
 	if err := errors.Join(errs...); err != nil {
-		fmt.Fprint(os.Stderr, err)
+		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
 
@@ -49,11 +48,6 @@ func main() {
 func getHash(p string, limitBytes int64) (hash []byte, err error) {
 	cmd := exec.Command("ffmpeg", "-hide_banner", "-i", p, "-c:a", "pcm_s16le", "-ac", "2", "-f", "s16le", "-")
 
-	stdout, err := cmd.StdoutPipe()
-	if err != nil {
-		return nil, fmt.Errorf("create pipe: %w", err)
-	}
-
 	var stderr bytes.Buffer
 	defer func() {
 		if err != nil && stderr.Len() > 0 {
@@ -61,6 +55,11 @@ func getHash(p string, limitBytes int64) (hash []byte, err error) {
 		}
 	}()
 	cmd.Stderr = &stderr
+
+	stdout, err := cmd.StdoutPipe()
+	if err != nil {
+		return nil, fmt.Errorf("create pipe: %w", err)
+	}
 
 	if err := cmd.Start(); err != nil {
 		return nil, fmt.Errorf("start: %w", err)
@@ -70,17 +69,14 @@ func getHash(p string, limitBytes int64) (hash []byte, err error) {
 	if _, err := io.Copy(h, io.LimitReader(stdout, limitBytes)); err != nil {
 		return nil, fmt.Errorf("copy: %w", err)
 	}
-	if err := stdout.Close(); err != nil {
-		log.Fatal(err)
+	hash = h.Sum(nil)
+
+	if err := cmd.Process.Kill(); err != nil {
+		return nil, fmt.Errorf("kill: %w", err)
+	}
+	if err := cmd.Wait(); err != nil && !errors.Is(err, &exec.ExitError{}) {
+		return nil, err
 	}
 
-	if err := cmd.Wait(); err != nil {
-		if exerr := (&exec.ExitError{}); errors.As(err, &exerr) && exerr.ExitCode() == 224 {
-			// ignore broken pipe
-		} else {
-			return nil, fmt.Errorf("wait: %w", err)
-		}
-	}
-
-	return h.Sum(nil), nil
+	return hash, nil
 }
