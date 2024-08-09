@@ -5,6 +5,7 @@ package main
 
 import (
 	"bytes"
+	"context"
 	"crypto/md5"
 	"encoding/hex"
 	"errors"
@@ -13,7 +14,9 @@ import (
 	"io"
 	"os"
 	"os/exec"
-	"sync"
+	"runtime"
+
+	"golang.org/x/sync/errgroup"
 )
 
 const limitBytes int64 = 393216
@@ -21,21 +24,24 @@ const limitBytes int64 = 393216
 func main() {
 	flag.Parse()
 
+	wg, ctx := errgroup.WithContext(context.Background())
+	wg.SetLimit(runtime.NumCPU())
+
 	paths := flag.Args()
 	hashes := make([][]byte, len(paths))
-	errs := make([]error, len(paths))
-
-	var wg sync.WaitGroup
 	for i, p := range paths {
-		wg.Add(1)
-		go func() {
-			defer wg.Done()
-			hashes[i], errs[i] = getHash(p, limitBytes)
-		}()
+		i, p := i, p
+		wg.Go(func() error {
+			hash, err := getHash(ctx, p, limitBytes)
+			if err != nil {
+				return err
+			}
+			hashes[i] = hash
+			return nil
+		})
 	}
 
-	wg.Wait()
-	if err := errors.Join(errs...); err != nil {
+	if err := wg.Wait(); err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
@@ -45,8 +51,8 @@ func main() {
 	}
 }
 
-func getHash(p string, limitBytes int64) (hash []byte, err error) {
-	cmd := exec.Command("ffmpeg", "-hide_banner", "-i", p, "-c:a", "pcm_s16le", "-ac", "2", "-f", "s16le", "-")
+func getHash(ctx context.Context, p string, limitBytes int64) (hash []byte, err error) {
+	cmd := exec.CommandContext(ctx, "ffmpeg", "-hide_banner", "-i", p, "-c:a", "pcm_s16le", "-ac", "2", "-f", "s16le", "-")
 
 	var stderr bytes.Buffer
 	defer func() {
