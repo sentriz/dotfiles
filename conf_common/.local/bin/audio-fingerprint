@@ -1,0 +1,86 @@
+//usr/bin/env go-script "$0" "$@"; exit $?
+// vi: ft=go
+
+package main
+
+import (
+	"bytes"
+	"crypto/md5"
+	"encoding/hex"
+	"errors"
+	"flag"
+	"fmt"
+	"io"
+	"log"
+	"os"
+	"os/exec"
+	"sync"
+)
+
+const limitBytes int64 = 393216
+
+func main() {
+	flag.Parse()
+
+	paths := flag.Args()
+	hashes := make([][]byte, len(paths))
+	errs := make([]error, len(paths))
+
+	var wg sync.WaitGroup
+	for i, p := range paths {
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			hashes[i], errs[i] = getHash(p, limitBytes)
+		}()
+	}
+
+	wg.Wait()
+	if err := errors.Join(errs...); err != nil {
+		fmt.Fprint(os.Stderr, err)
+		os.Exit(1)
+	}
+
+	for i, p := range paths {
+		fmt.Printf("%s\t%s\n", p, hex.EncodeToString(hashes[i]))
+	}
+}
+
+func getHash(p string, limitBytes int64) (hash []byte, err error) {
+	cmd := exec.Command("ffmpeg", "-hide_banner", "-i", p, "-c:a", "pcm_s16le", "-ac", "2", "-f", "s16le", "-")
+
+	stdout, err := cmd.StdoutPipe()
+	if err != nil {
+		return nil, fmt.Errorf("create pipe: %w", err)
+	}
+
+	var stderr bytes.Buffer
+	defer func() {
+		if err != nil && stderr.Len() > 0 {
+			err = fmt.Errorf("%w: stderr: %q", err, stderr.String())
+		}
+	}()
+	cmd.Stderr = &stderr
+
+	if err := cmd.Start(); err != nil {
+		return nil, fmt.Errorf("start: %w", err)
+	}
+
+	h := md5.New()
+	if _, err := io.Copy(h, io.LimitReader(stdout, limitBytes)); err != nil {
+		return nil, fmt.Errorf("copy: %w", err)
+	}
+	if err := stdout.Close(); err != nil {
+		log.Fatal(err)
+	}
+
+	if err := cmd.Wait(); err != nil {
+		if exerr := (&exec.ExitError{}); errors.As(err, &exerr) && exerr.ExitCode() == 224 {
+			// ignore broken pipe
+		} else {
+			return nil, fmt.Errorf("wait: %w", err)
+		}
+	}
+
+	return h.Sum(nil), nil
+}
