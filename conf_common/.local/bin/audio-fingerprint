@@ -20,6 +20,7 @@ import (
 const limitBytes int64 = 393216
 
 func main() {
+	total := flag.Bool("total", false, "hash all arguments instead of hashing individually")
 	flag.Parse()
 
 	wg, ctx := errgroup.WithContext(context.Background())
@@ -42,6 +43,15 @@ func main() {
 	if err := wg.Wait(); err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
+	}
+
+	if *total {
+		t := md5.New()
+		for _, h := range hashes {
+			t.Write(h)
+		}
+		fmt.Print(hex.EncodeToString(t.Sum(nil)))
+		return
 	}
 
 	for i, p := range paths {
