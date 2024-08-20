@@ -13,6 +13,7 @@ import (
 	"os"
 	"os/exec"
 	"runtime"
+	"slices"
 
 	"golang.org/x/sync/errgroup"
 )
@@ -46,11 +47,15 @@ func main() {
 	}
 
 	if *total {
+		hashes := slices.Clone(hashes)
+		slices.SortFunc(hashes, bytes.Compare)
+
 		t := md5.New()
 		for _, h := range hashes {
 			t.Write(h)
 		}
-		fmt.Print(hex.EncodeToString(t.Sum(nil)))
+
+		fmt.Println(hex.EncodeToString(t.Sum(nil)))
 		return
 	}
 
