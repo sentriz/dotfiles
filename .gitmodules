@@ -40,9 +40,6 @@
 [submodule "conf_common/.local/share/nvim/site/pack/plugins/start/cmp-path"]
 	path = conf_common/.local/share/nvim/site/pack/plugins/start/cmp-path
 	url = https://github.com/hrsh7th/cmp-path
-[submodule "conf_common/.local/share/nvim/site/pack/plugins/start/vim-vsnip"]
-	path = conf_common/.local/share/nvim/site/pack/plugins/start/vim-vsnip
-	url = https://github.com/hrsh7th/vim-vsnip
 [submodule "conf_common/.config/fish/plugins/mattgreen/park.fish"]
 	path = conf_common/.config/fish/plugins/park.fish
 	url = https://github.com/mattgreen/park.fish
@@ -73,9 +70,6 @@
 [submodule "conf_common/.local/share/nvim/site/pack/plugins/start/QFEnter"]
 	path = conf_common/.local/share/nvim/site/pack/plugins/start/QFEnter
 	url = https://github.com/yssl/QFEnter
-[submodule "conf_common/.local/share/nvim/site/pack/plugins/start/cmp-vsnip"]
-	path = conf_common/.local/share/nvim/site/pack/plugins/start/cmp-vsnip
-	url = https://github.com/hrsh7th/cmp-vsnip
 [submodule "conf_common/.local/share/nvim/site/pack/plugins/start/mini.nvim.git"]
 	path = conf_common/.local/share/nvim/site/pack/plugins/start/mini.nvim.git
 	url = https://github.com/echasnovski/mini.nvim.git

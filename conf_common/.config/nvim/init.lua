@@ -206,15 +206,14 @@ local cmplsp = require("cmp_nvim_lsp")
 cmp.setup({
 	sources = cmp.config.sources({
 		{ name = "nvim_lsp" },
-		{ name = "vsnip" },
 	}, {
 		{ name = "buffer" },
 		{ name = "path" },
 		{ name = "tmux" },
 	}),
 	snippet = {
-		expand = function(args)
-			vim.fn["vsnip#anonymous"](args.body)
+		expand = function(arg)
+			vim.snippet.expand(arg.body)
 		end,
 	},
 	mapping = {
@@ -246,13 +245,6 @@ cmp.setup.cmdline(":", {
 		{ name = "cmdline" },
 	}),
 })
-
-vim.cmd([[
-imap <expr> <tab>   vsnip#jumpable(1)  ? '<plug>(vsnip-jump-next)' : '<tab>'
-smap <expr> <tab>   vsnip#jumpable(1)  ? '<plug>(vsnip-jump-next)' : '<tab>'
-imap <expr> <s-tab> vsnip#jumpable(-1) ? '<plug>(vsnip-jump-prev)' : '<s-tab>'
-smap <expr> <s-tab> vsnip#jumpable(-1) ? '<plug>(vsnip-jump-prev)' : '<s-tab>'
-]])
 
 -- when using pylint or pyright, make sure we're in the right venv. eg
 -- $ source $PYTHON_VENVS_DIR/<venv>/bin/activate.fish
