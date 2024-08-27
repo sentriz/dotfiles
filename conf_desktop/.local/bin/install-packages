@@ -75,7 +75,7 @@ if want flatpak; then
     flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
     flatpak remote-add --user --if-not-exists flathub-beta https://flathub.org/beta-repo/flathub-beta.flatpakrepo
     readarray -t pkgs < <(list flatpak)
-    flatpak install --user --noninteractive --assumeyes flathub "${pkgs[@]}"
+    [[ ${#pkgs[@]} -gt 0 ]] && flatpak install --user --noninteractive --assumeyes flathub "${pkgs[@]}"
     readarray -t pkgs < <(list flatpak-beta)
-    flatpak install --user --noninteractive --assumeyes flathub-beta "${pkgs[@]}"
+    [[ ${#pkgs[@]} -gt 0 ]] && flatpak install --user --noninteractive --assumeyes flathub-beta "${pkgs[@]}"
 fi
