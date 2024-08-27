@@ -23,6 +23,7 @@ arch git
 arch github-cli
 arch htop
 arch jq
+arch less
 arch moreutils
 arch neovim-git
 arch ripgrep
