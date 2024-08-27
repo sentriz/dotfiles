@@ -39,6 +39,7 @@ go go.senan.xyz/case-replace@latest
 go go.senan.xyz/table@master
 go go.senan.xyz/rsl@latest
 go go.senan.xyz/sync-procs@latest
+go go.senan.xyz/rsl@latest
 go go.senan.xyz/vi-paths@latest
 go go.senan.xyz/vi-pipe@latest
 go go.senan.xyz/add-osc-8-hyperlink@latest
@@ -148,9 +149,6 @@ arch tal-plugins
 arch bluez-utils-compat
 arch i3blocks
 go go.senan.xyz/mpris-ctrl@latest
-go go.senan.xyz/rsl@latest
-python boi-balance
-python revolut
 
 # lsp
 arch clang
