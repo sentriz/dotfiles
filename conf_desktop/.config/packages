@@ -5,7 +5,8 @@ arch nodejs
 arch npm
 npm yarn
 arch deno
-arch python3
+arch python
+arch python-pipx
 arch rust
 
 arch docker

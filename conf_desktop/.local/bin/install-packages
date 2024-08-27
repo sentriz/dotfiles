@@ -46,10 +46,9 @@ if want arch; then
 fi
 
 if want python; then
-    python3 -m ensurepip
-    python3 -m pip --version
+    python -m pipx --version
     readarray -t pkgs < <(list python)
-    python3 -m pip install --user --update --disable-pip-version-check --no-input "${pkgs[@]}"
+    python -m pipx install "${pkgs[@]}"
 fi
 
 if want cargo; then
