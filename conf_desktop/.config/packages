@@ -8,7 +8,6 @@ arch deno
 arch python
 arch python-pipx
 arch rust
-
 arch docker
 arch docker-compose
 
@@ -16,6 +15,7 @@ arch docker-compose
 arch:iwd
 arch:systemd-resolvconf
 
+arch man-db
 arch fish
 arch fzf
 arch direnv
@@ -26,6 +26,8 @@ arch jq
 arch less
 arch moreutils
 arch neovim-git
+arch rsync
+arch openbsd-netcat
 arch ripgrep
 arch sed
 arch sshfs
@@ -100,6 +102,7 @@ arch slurp
 arch sway
 arch swaybg
 arch swaylock
+arch wdisplays
 arch wf-recorder
 arch wl-clipboard
 arch gammastep
@@ -116,6 +119,7 @@ go go.senan.xyz/last-dot-friends@master
 # hw
 arch bluez
 arch bluez-tools
+arch bluez-utils
 arch iwd
 
 # av
