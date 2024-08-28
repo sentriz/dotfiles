@@ -344,8 +344,8 @@ bindsym XF86AudioMicMute      exec wpctl set-mute   @DEFAULT_SOURCE@ toggle && $
 bindsym --no-repeat           print exec wpctl set-mute @DEFAULT_SOURCE@ 0 && $up_block_1
 bindsym --no-repeat --release print exec wpctl set-mute @DEFAULT_SOURCE@ 1 && $up_block_1
 
-bindsym XF86MonBrightnessDown exec xbacklight -dec 5
-bindsym XF86MonBrightnessUp   exec xbacklight -inc 5
+bindsym XF86MonBrightnessDown exec brightnessctl set +5
+bindsym XF86MonBrightnessUp   exec brightnessctl set 5-
 
 bindsym XF86AudioPlay         exec mpris-ctrl play-pause
 bindsym XF86AudioStop         exec mpris-ctrl stop

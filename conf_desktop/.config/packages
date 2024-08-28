@@ -87,7 +87,7 @@ flatpak org.wireshark.Wireshark
 
 # wm
 arch libnotify
-arch acpilight
+arch brightnessctl
 arch dragon-drop-git
 arch foot
 arch foot-terminfo
