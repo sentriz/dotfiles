@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+set -e
+
+f="$XDG_CACHE_HOME/bitwarden/session"
+if [[ "$(stat -c "%a" "$f")" != "600" ]]; then
+    echo "missing or wrong permissions" >&2
+    exit 1
+fi
+
+BW_SESSION="$(cat "$f")" "$@"

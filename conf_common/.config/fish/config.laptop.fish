@@ -3,6 +3,9 @@ set -gx fish_colour_host brgreen
 set -gx LIBSEAT_BACKEND logind
 set -gx XDG_CURRENT_DESKTOP sway
 set -gx XDG_SESSION_TYPE wayland
+
+set -gx SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/bw-ssh-agent"
+
 set -gx --path XDG_DATA_DIRS \
     /usr/local/share \
     /usr/share \
@@ -53,6 +56,9 @@ function mark_prompt_start --on-event fish_prompt
 end
 
 if status is-login
+    pkill -f bw-ssh-agent
+    bw-do bw-ssh-agent &
+
     switch (tty)
         case /dev/tty1
             exec sway >/tmp/sway_log 2>&1

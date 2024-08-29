@@ -1,0 +1,130 @@
+//usr/bin/env go-script "$0" "$@"; exit $?
+// vi: ft=go
+
+package main
+
+import (
+	"bytes"
+	"crypto/x509"
+	"encoding/json"
+	"encoding/pem"
+	"errors"
+	"fmt"
+	"io"
+	"log"
+	"net"
+	"os"
+	"os/exec"
+	"path/filepath"
+
+	"golang.org/x/crypto/ssh/agent"
+)
+
+const (
+	socketName = "bw-ssh-agent"
+
+	bwExpectedFolderName = "ssh"
+	bwPath               = "bw"
+)
+
+func main() {
+	runtimeDir := os.Getenv("XDG_RUNTIME_DIR")
+	if _, err := os.Stat(runtimeDir); err != nil {
+		log.Fatal(err)
+	}
+
+	socketPath := filepath.Join(runtimeDir, socketName)
+	if err := os.Remove(socketPath); err != nil && !errors.Is(err, os.ErrNotExist) {
+		log.Fatalf("rm old socket path: %v", err)
+	}
+	listener, err := net.Listen("unix", socketPath)
+	if err != nil {
+		log.Fatal("create listener: %w", err)
+	}
+
+	keys, err := getKeys()
+	if err != nil {
+		log.Fatalf("get keys: %v", err)
+	}
+
+	var keyErrors []error
+	ag := agent.NewKeyring()
+	for _, k := range keys {
+		if err := ag.Add(k); err != nil {
+			keyErrors = append(keyErrors, err)
+		}
+	}
+	if err := errors.Join(keyErrors...); err != nil {
+		log.Fatal("add keys: %w", err)
+	}
+
+	for {
+		conn, err := listener.Accept()
+		if err != nil {
+			log.Println(err)
+			continue
+		}
+
+		go func() {
+			if err := agent.ServeAgent(ag, conn); err != nil && !errors.Is(err, io.EOF) {
+				log.Println(err)
+			}
+		}()
+	}
+}
+
+func bw(dest any, args ...string) error {
+	cmd := exec.Command(bwPath, args...)
+	out, err := cmd.Output()
+	if exitErr := (&exec.ExitError{}); errors.As(err, &exitErr) {
+		return fmt.Errorf("bw exited with code %d and %q", exitErr.ExitCode(), string(exitErr.Stderr))
+	}
+	if err != nil {
+		return fmt.Errorf("run bw: %w", err)
+	}
+	if len(bytes.TrimSpace(out)) == 0 {
+		return nil
+	}
+	if err := json.Unmarshal(out, dest); err != nil {
+		return fmt.Errorf("unmarshal: %w", err)
+	}
+	return nil
+}
+
+func getKeys() ([]agent.AddedKey, error) {
+	var folders []struct {
+		Object string `json:"object"`
+		ID     string `json:"id"`
+		Name   string `json:"name"`
+	}
+	if err := bw(&folders, "list", "folders", "--search", bwExpectedFolderName); err != nil {
+		return nil, fmt.Errorf("search folders: %w", err)
+	}
+	if len(folders) == 0 {
+		return nil, fmt.Errorf("no folders")
+	}
+
+	var items []struct {
+		ID    string `json:"id"`
+		Name  string `json:"name"`
+		Notes string `json:"notes"`
+	}
+	if err := bw(&items, "list", "items", "--folderid", folders[0].ID); err != nil {
+		return nil, fmt.Errorf("list folder: %w", err)
+	}
+
+	var keys []agent.AddedKey
+	for _, item := range items {
+		block, _ := pem.Decode([]byte(item.Notes))
+		key, err := x509.ParsePKCS1PrivateKey(block.Bytes)
+		if err != nil {
+			return nil, fmt.Errorf("parse key: %w", err)
+		}
+
+		keys = append(keys, agent.AddedKey{
+			PrivateKey: key,
+			Comment:    item.Name,
+		})
+	}
+	return keys, nil
+}

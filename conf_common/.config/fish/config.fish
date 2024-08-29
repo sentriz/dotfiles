@@ -29,7 +29,6 @@ set -gx DOTS_SCRAP_DIR "$HOME/scrap"
 set -gx DOTS_SCREENSHOTS_DIR "$XDG_PICTURES_DIR/screenshots"
 set -gx DOTS_RECORDINGS_DIR "$XDG_PICTURES_DIR/recordings"
 set -gx DOTS_RADIO_DIR "$HOME/radio"
-set -gx DOTS_SECRETS_DIR "$HOME/mounts/secrets"
 set -gx DOTS_COPT_DIR /opt/containers
 set -gx DOTS_PROJECTS_DIR "$HOME/projects"
 set -gx DOTS_TODO_PATH "$XDG_DOCUMENTS_DIR/notes/general.md"
@@ -79,14 +78,6 @@ set -gx fish_user_paths \
     /usr/sbin \
     /usr/share/git/git-jump/ \
     /opt/flutter/bin/
-
-# import / start gpg env
-if not set -q SSH_CONNECTION
-    gpgconf --launch gpg-agent
-    set -gx SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
-    set -gx GPG_TTY (tty)
-    gpg-connect-agent updatestartuptty /bye >/dev/null
-end
 
 source "$__fish_config_dir/config.$HOSTNAME.fish" 2>/dev/null
 

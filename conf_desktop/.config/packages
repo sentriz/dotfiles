@@ -57,6 +57,9 @@ perl-io-socket-ssl
 # bin / script
 go github.com/traefik/yaegi/cmd/yaegi@latest
 
+# sec
+bitwarden-cli
+
 # gui virt
 arch libvirt
 arch virt-viewer
@@ -94,7 +97,6 @@ arch foot-terminfo
 arch grim
 arch kanshi
 arch mako
-arch pam-gnupg
 arch polkit-gnome
 arch qt5-wayland
 arch qt6-wayland
