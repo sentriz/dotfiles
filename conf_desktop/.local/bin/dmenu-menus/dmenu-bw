@@ -1,0 +1,10 @@
+#!/usr/bin/env fish
+
+bw-do bw list items \
+    | jq -r '.[] | select(.login?.password?) | "\(.name)\t\(.login.username)\t\(.login.password)"' \
+    | dmenu password 1,2 \
+    | read -d \t name username password
+test -z "$password"
+and exit
+
+echo "$password" | wl-copy
