@@ -3,7 +3,7 @@
 [user]
 	email = senan@senan.xyz
 	name = sentriz
-	signingkey = 609FCE8BB45971C8293040AC9A8DAE1CA907B862
+	signingkey = key::ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCj12zCbsW3VZUxjNVWBBpZWHeMQiZjWs5p0NFZ9cDjEgY279+ulJTYxIoC2vfQd/H9TeAmSLeQEiQQq0WatEwMQR7JxnHivmaq24j7tSQbPo/JLac712e6CT7+twcxsOFVDc1jkvcF2jKjA51i6WNTEe5fEBCnPXsbCm2QcJEdZ7ZfhPJ8no4icCrOviiK1fpjLf1uRazoX6lSv0GXEJkUytpqqsrm90OI6FRq4bRg6tlN7IQNIIK2wfC9JyOcXJgGkAhKvpD3gWHRHqH3SVvi68nNNPJtr/7TblIZgoOtfAkThCWMChUV7HdP4CEZwSZgmOxzMJfMLTEuXeqYncGDhaGxoyhJEbxK9IdKsNiF6nGaYmEk+CHpxMskeXYe8F0jv8UQG96q0gvVbOXo7x/ke3wjH7iLwZlGQtLPTMJLY0VeK+eN3rID+LGM9eZglb5o+pkAPFkWbPLLucNRwx/RCH9WwJqlotD6hSlvhJqnhZulvU13nFXNA7J2mWb4Brvbc90+ISb7dTA/X/0HcnWfvRcF1Oj61e5HgKLaF7SyljbJkjd7pycEcWimhdjpJgeFTI5zTPg+DoFV8lJkvetPribOxZjBYClubMGper4fpq7aB5A3dyv5F5oFqV9Jma9Z1E3FY19KCMTVqnGgv2durkc0Q58tvmypJaqE9dxLXw==
 [github]
 	user = sentriz
 [push]
@@ -89,7 +89,7 @@
 	autosquash = true
 	autoStash = true
 [gpg]
-	program = gpg2
+	format = ssh
 [tag]
 	forceSignAnnotated = true
 [rerere]
