@@ -42,13 +42,13 @@ func main() {
 		log.Fatal("create listener: %w", err)
 	}
 
+	ag := agent.NewKeyring()
+
 	keys, err := getKeys()
 	if err != nil {
 		log.Fatalf("get keys: %v", err)
 	}
-
 	var keyErrors []error
-	ag := agent.NewKeyring()
 	for _, k := range keys {
 		if err := ag.Add(k); err != nil {
 			keyErrors = append(keyErrors, err)
