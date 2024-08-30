@@ -97,6 +97,7 @@ input * {
 input type:touchpad {
     pointer_accel 0.25
     dwt disabled
+    tap enabled
 }
 
 # output
