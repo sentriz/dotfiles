@@ -112,6 +112,7 @@ arch xdg-desktop-portal-gtk
 arch xdg-desktop-portal-wlr
 arch xdg-user-dirs
 arch xorg-xwayland
+arch noto-fonts-emoji
 go go.senan.xyz/cliphist@latest
 arch chafa
 go go.senan.xyz/sway-rename-workspaces@latest
