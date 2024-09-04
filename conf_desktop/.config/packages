@@ -47,6 +47,7 @@ go go.senan.xyz/vi-paths@latest
 go go.senan.xyz/vi-pipe@latest
 go go.senan.xyz/add-osc-8-hyperlink@latest
 go go.senan.xyz/untree@latest
+go go.senan.xyz/serve@latest
 go github.com/sentriz/numb@master
 go github.com/tomnomnom/gron@latest
 
