@@ -23,7 +23,8 @@ function __scrap_go
         '' \
         'package main' \
         '' \
-        'func main() {}' \
+        'func main() {' \
+        '}' \
         '' \
         'func cerr(err error) {' \
         '   if err != nil {' \
@@ -33,7 +34,7 @@ function __scrap_go
 
     go mod init scrap
 
-    $EDITOR "$file"
+    $EDITOR "$file" +5
 end
 
 function __scrap_python
@@ -51,7 +52,7 @@ function __scrap_python
         'if __name__ == "__main__":' \
         '    main()'
 
-    $EDITOR "$file"
+    $EDITOR "$file" +4
 end
 
 function __scrap_typescript
