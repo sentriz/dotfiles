@@ -370,6 +370,7 @@ bindsym $super+F5           exec dmenu-bluetooth && $up_block_2
 bindsym $super+F6           exec dmenu-emoji
 bindsym $super+F7           exec dmenu-virt
 bindsym $super+F8           exec dmenu-bw
+bindsym $super+F9           exec dmenu-iwd
 
 # bindings: notifications
 bindsym $super+i exec makoctl invoke
