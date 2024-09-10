@@ -106,3 +106,5 @@
   autosetuprebase = always
 [absorb]
 	maxStack = 25
+[url "git@github.com:"]
+	insteadOf = https://github.com/
