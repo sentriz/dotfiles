@@ -9,6 +9,7 @@ arch python
 arch python-pipx
 arch rust
 arch docker
+arch docker-buildx
 arch docker-compose
 
 # net
