@@ -223,6 +223,8 @@ cmp.setup({
 		["<c-n>"] = cmp.mapping.select_next_item(),
 		["<cr>"] = cmp.mapping.confirm({ select = true }),
 		["<c-e>"] = cmp.mapping.close(),
+		["<tab>"] = vim.snippet.jump(1),
+		["<s-tab>"] = vim.snippet.jump(-1),
 	},
 	experimental = {
 		ghost_text = { hl_group = "LineNr" },
