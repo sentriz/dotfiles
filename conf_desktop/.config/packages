@@ -176,7 +176,6 @@ npm @tailwindcss/language-server
 npm @vue/language-server
 npm bash-language-server
 npm dockerfile-language-server-nodejs
-npm eslint_d
 npm markdownlint
 npm markdownlint-cli
 npm prettier

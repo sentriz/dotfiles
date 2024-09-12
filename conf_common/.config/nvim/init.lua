@@ -407,7 +407,6 @@ nullls.setup({
 		nullls.builtins.formatting.stylua,
 		nullls.builtins.formatting.goimports,
 
-		nullls.builtins.diagnostics.eslint_d,
 		nullls.builtins.diagnostics.hadolint.with({ extra_args = { "--ignore", "DL3018", "--ignore", "DL3008" } }),
 		nullls.builtins.diagnostics.markdownlint,
 		nullls.builtins.diagnostics.pylint,
