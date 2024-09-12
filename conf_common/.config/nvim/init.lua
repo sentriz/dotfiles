@@ -332,7 +332,7 @@ lspconfig.denols.setup({
 	single_file_support = false,
 })
 
-lspconfig.tsserver.setup({
+lspconfig.ts_ls.setup({
 	capabilities = capabilities,
 	root_dir = util.root_pattern("tsconfig.json", "jsconfig.json"),
 	handlers = {
