@@ -1,0 +1,13 @@
+[Desktop Entry]
+Name=Signal Beta
+Exec=/usr/bin/flatpak run --branch=beta --arch=x86_64 --command=signal-desktop --file-forwarding org.signal.Signal --enable-features=WaylandWindowDecorations  --ozone-platform-hint=auto @@u %U @@
+Terminal=false
+Type=Application
+Icon=org.signal.Signal
+StartupWMClass=Signal Beta
+Comment=Private messaging from your desktop
+MimeType=x-scheme-handler/sgnl;x-scheme-handler/signalcaptcha;
+Categories=Network;InstantMessaging;Chat;
+X-Desktop-File-Install-Version=0.27
+X-Flatpak-RenamedFrom=signal.desktop;
+X-Flatpak=org.signal.Signal
