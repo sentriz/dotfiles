@@ -165,12 +165,13 @@ bindsym $super+$alt+s     mode $mode_scrot
 bindsym $super+$alt+r     mode $mode_recording
 bindsym $super+$alt+t     mode $mode_timer
 
-set $mode_system "system: [l]ock [s]uspend [r]eboot shut[d]own e[x]it r[e]load"
+set $mode_system "system: [l]ock [s]uspend [h]ibernate [r]eboot shut[d]own e[x]it r[e]load"
 mode $mode_system {
     bindsym l exec $lock,               mode default
     bindsym d exec systemctl poweroff,  mode default
     bindsym r exec systemctl reboot,    mode default
     bindsym s exec systemctl suspend,   mode default
+    bindsym h exec systemctl hibernate, mode default
     bindsym x exit
     bindsym e reload
     bindsym Return mode default
