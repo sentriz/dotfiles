@@ -1,8 +1,33 @@
-#!/usr/bin/env -S python -u
+//usr/bin/env go-script "$0" "$@"; exit $?
+// vi: ft=go
 
-import sys
-import unicodedata
-from unidecode import unidecode
+package main
 
-for line in sys.stdin:
-    print(unidecode(unicodedata.normalize("NFC", line)), end="")
+import (
+	"bufio"
+	"bytes"
+	"fmt"
+	"io"
+	"os"
+
+	"github.com/rainycape/unidecode"
+	"golang.org/x/text/unicode/norm"
+)
+
+func main() {
+	var r io.Reader = os.Stdin
+	if len(os.Args) > 1 {
+		var buff bytes.Buffer
+		for _, arg := range os.Args[1:] {
+			fmt.Fprintln(&buff, arg)
+		}
+		r = &buff
+	}
+
+	for sc := bufio.NewScanner(r); sc.Scan(); {
+		text := sc.Text()
+		text = norm.NFC.String(text)
+		text = unidecode.Unidecode(text)
+		fmt.Println(text)
+	}
+}
