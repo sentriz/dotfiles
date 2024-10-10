@@ -1,12 +1,11 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC2064
 
+pgrep -f "bash ${BASH_SOURCE[0]}" | grep -v $$ | xargs kill 2>/dev/null &
+
 lock_file="$XDG_CACHE_HOME/dmenu-lock"
-
 exec 9>"$lock_file"
-flock -n 9 || exit 1
-
-trap 'kill $(jobs -p) 2>/dev/null' EXIT
+flock 9 || exit 1
 
 prompt="$1"
 column="$2"
@@ -29,6 +28,7 @@ if test -n "$preview"; then
 fi
 
 "$TERMINAL" --app-id launcher sh -c "theme light; ${command[*]} <$in >$out" 2>/dev/null &
+trap "kill $!" EXIT SIGTERM SIGINT
 
 cat <"$out" &
 cat >"$in"
