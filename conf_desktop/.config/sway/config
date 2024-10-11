@@ -363,15 +363,15 @@ bindgesture swipe:3:up [app_id="^scratchpad-.*"] scratchpad show
 # bindings: programs
 bindsym $super+Return       exec $TERMINAL
 bindsym $super+Shift+Return exec sway-scratchpad
-bindsym $super+F1           exec dmenu-package
-bindsym $super+F2           exec dmenu-clipboard
-bindsym $super+F3           exec dmenu-radio     && $up_block_3
-bindsym $super+F4           exec dmenu-pulse     && $up_block_1
-bindsym $super+F5           exec dmenu-bluetooth && $up_block_2
-bindsym $super+F6           exec dmenu-emoji
-bindsym $super+F7           exec dmenu-virt
-bindsym $super+F8           exec dmenu-bw
-bindsym $super+F9           exec dmenu-iwd
+bindsym $super+F1           exec dmenu-wrap dmenu-package
+bindsym $super+F2           exec dmenu-wrap dmenu-clipboard
+bindsym $super+F3           exec dmenu-wrap dmenu-radio     && $up_block_3
+bindsym $super+F4           exec dmenu-wrap dmenu-pulse     && $up_block_1
+bindsym $super+F5           exec dmenu-wrap dmenu-bluetooth && $up_block_2
+bindsym $super+F6           exec dmenu-wrap dmenu-emoji
+bindsym $super+F7           exec dmenu-wrap dmenu-virt
+bindsym $super+F8           exec dmenu-wrap dmenu-bw
+bindsym $super+F9           exec dmenu-wrap dmenu-iwd
 
 # bindings: notifications
 bindsym $super+i exec makoctl invoke

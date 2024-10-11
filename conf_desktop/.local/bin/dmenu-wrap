@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+lock_file="$XDG_CACHE_HOME/dmenu-lock"
+pid_file="$XDG_CACHE_HOME/dmenu-pid"
+
+ppid="$$"
+{
+    pid="$(cat ~/.cache/dmenu-pid)"
+    pgid=$(ps -o pgid= "$pid" | grep -o "[0-9]*" | grep -v "$ppid")
+    kill -s INT -- -"$pgid"
+} &
+
+exec 9>"$lock_file"
+flock 9 || exit 1
+
+echo "$ppid" >"$pid_file"
+
+"$@"
