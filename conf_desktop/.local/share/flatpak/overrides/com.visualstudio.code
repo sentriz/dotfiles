@@ -1,6 +1,6 @@
 [Context]
-filesystems=~/projects;xdg-cache/venvs;!host;
-persistent=.ssh;
+filesystems=xdg-cache/venvs;~/projects
+persistent=.ssh
 
 [Environment]
 PATH=/app/bin:/usr/bin:/usr/lib/sdk/dotnet6/bin
