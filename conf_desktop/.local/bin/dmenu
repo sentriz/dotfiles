@@ -1,12 +1,18 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC2064
 
+DEFER=
+defer() {
+    DEFER="${*@Q}; ${DEFER}"
+    trap "{ $DEFER }" EXIT
+}
+
 prompt="$1"
 column="$2"
 preview="$3"
 
 dir="$(mktemp --directory --tmpdir="$XDG_CACHE_HOME")"
-trap 'rm -r "$dir"' EXIT
+defer rm "$dir"
 
 in="$dir/in"
 out="$dir/out"
@@ -21,7 +27,8 @@ if test -n "$preview"; then
     command+=("--preview" "'$preview'")
 fi
 
-"$TERMINAL" --app-id launcher sh -c "theme light; ${command[*]} <$in >$out" 2>/dev/null &
+"$TERMINAL" --app-id launcher sh -c "theme light; ${command[*]} <$in >$out 2>/dev/null" &
+defer kill $!
 
 cat <"$out" &
 cat >"$in"
