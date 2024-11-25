@@ -258,7 +258,7 @@ local capabilities = cmplsp.default_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 local format_augroup = vim.api.nvim_create_augroup("LSPFormatting", {})
-local function format_please(client, buffer)
+local function on_attach(client, buffer)
 	if not client.supports_method("textDocument/formatting") then
 		return
 	end
@@ -274,7 +274,17 @@ local function format_please(client, buffer)
 			if vim.g.noformat ~= nil then
 				return
 			end
-			vim.lsp.buf.format({ timeout_ms = 5000 })
+			vim.lsp.buf.format({
+				async = false,
+				timeout_ms = 5000,
+				filter = function(c)
+					-- using goimports instead
+					if c.name == "gopls" then
+						return false
+					end
+					return true
+				end,
+			})
 		end,
 	})
 end
@@ -284,6 +294,7 @@ local util = require("lspconfig.util")
 
 lspconfig.pyright.setup({
 	capabilities = capabilities,
+	on_attach = on_attach,
 	settings = {
 		python = {
 			analysis = { autoSearchPaths = true, useLibraryCodeForTypes = true, diagnosticMode = "workspace" },
@@ -294,6 +305,7 @@ lspconfig.pyright.setup({
 
 lspconfig.gopls.setup({
 	capabilities = capabilities,
+	on_attach = on_attach,
 	settings = {
 		gopls = {
 			experimentalPostfixCompletions = true,
@@ -314,26 +326,31 @@ lspconfig.gopls.setup({
 
 lspconfig.bashls.setup({
 	capabilities = capabilities,
+	on_attach = on_attach,
 })
 
 lspconfig.volar.setup({
 	capabilities = capabilities,
+	on_attach = on_attach,
 	root_dir = util.root_pattern("vite.config.js", "vite.config.ts", "shims-vue.d.ts"),
 })
 
 lspconfig.tailwindcss.setup({
 	capabilities = capabilities,
+	on_attach = on_attach,
 	root_dir = util.root_pattern("tailwind.config.js"),
 })
 
 lspconfig.denols.setup({
 	capabilities = capabilities,
+	on_attach = on_attach,
 	root_dir = util.root_pattern("deno.json"),
 	single_file_support = false,
 })
 
 lspconfig.ts_ls.setup({
 	capabilities = capabilities,
+	on_attach = on_attach,
 	root_dir = util.root_pattern("tsconfig.json", "jsconfig.json"),
 	handlers = {
 		-- pick the first response to a go to definition response. that way we go straight to the
@@ -351,19 +368,17 @@ lspconfig.jdtls.setup({
 
 lspconfig.clangd.setup({
 	capabilities = capabilities,
-	on_attach = function(client, buffer)
-		format_please(client, buffer)
-	end,
+	on_attach = on_attach,
 })
 
 lspconfig.dockerls.setup({
 	capabilities = capabilities,
-	on_attach = format_please,
+	on_attach = on_attach,
 })
 
 lspconfig.rust_analyzer.setup({
 	capabilities = capabilities,
-	on_attach = format_please,
+	on_attach = on_attach,
 })
 
 vim.diagnostic.config({ virtual_text = false })
@@ -396,7 +411,7 @@ local nullls = require("null-ls")
 
 nullls.setup({
 	log_level = "off",
-	on_attach = format_please,
+	on_attach = on_attach,
 	sources = {
 		nullls.builtins.formatting.black,
 		nullls.builtins.formatting.fish_indent,
