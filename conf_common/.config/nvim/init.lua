@@ -450,6 +450,7 @@ local ts_incremental_selection = {
 
 tsconfigs.setup({
 	ensure_installed = "all",
+	ignore_install = { "hoon" },
 	highlight = ts_highlight,
 	indent = ts_indent,
 	incremental_selection = ts_incremental_selection,
