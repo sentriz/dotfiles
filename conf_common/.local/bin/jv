@@ -1,0 +1,93 @@
+//usr/bin/env go-script "$0" "$@"; exit $?
+// vi: ft=go
+
+package main
+
+import (
+	"bufio"
+	"bytes"
+	"encoding/json"
+	"fmt"
+	"os"
+	"strings"
+
+	"go.senan.xyz/clr"
+)
+
+func main() {
+	clrr := clr.Colorize
+
+	sc := bufio.NewScanner(os.Stdin)
+	for sc.Scan() {
+		fmt.Println()
+
+		d := sc.Text()
+
+		start := strings.IndexByte(d, '{')
+		if start < 0 {
+			fmt.Printf("%s: %s\n", clrr("raw", clr.Bold), clrr(d, clr.Bold|clr.Italic|clr.Yellow.Brighten(1)))
+			continue
+		}
+
+		d = d[start:]
+
+		var m omap
+		if err := json.Unmarshal([]byte(d), &m); err != nil {
+			fmt.Printf("%s: %s\n", clrr("raw", clr.Bold), d)
+			continue
+		}
+
+		for _, kv := range m {
+			var color clr.Color
+			switch kv.key {
+			case "time":
+				color |= clr.Underline
+			case "msg":
+				color |= clr.Italic | clr.Yellow.Brighten(1)
+			}
+			if c, ok := logColours[kv.value]; ok {
+				color |= c
+			}
+			fmt.Printf("%s: %s\n", clrr(kv.key, clr.Bold), clrr(kv.value, color))
+		}
+	}
+}
+
+var logColours = map[string]clr.Color{
+	`"DEBUG"`: clr.Black.Brighten(1),
+	`"INFO"`:  clr.Blue,
+	`"WARN"`:  clr.Red.Brighten(1),
+	`"ERROR"`: clr.Red,
+}
+
+type omap []omapKey
+type omapKey struct {
+	key   string
+	value string
+}
+
+func (o *omap) UnmarshalJSON(data []byte) error {
+	dec := json.NewDecoder(bytes.NewReader(data))
+	t, err := dec.Token()
+	if err != nil {
+		return err
+	}
+	if t != json.Delim('{') {
+		return fmt.Errorf("expected {, got %v", t)
+	}
+	for dec.More() {
+		key, err := dec.Token()
+		if err != nil {
+			return err
+		}
+		var value json.RawMessage
+		if err := dec.Decode(&value); err != nil {
+			return err
+		}
+		*o = append(*o, omapKey{key.(string), string(value)})
+	}
+	if _, err := dec.Token(); err != nil { // closing delim
+		return err
+	}
+	return nil
+}
