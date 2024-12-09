@@ -34,7 +34,7 @@ func main() {
 
 	var wg sync.WaitGroup
 
-	var pathErrs = make([]error, len(paths))
+	pathErrs := make([]error, len(paths))
 	for i := range paths {
 		wg.Add(1)
 		go func(i int) {
@@ -68,8 +68,12 @@ func filter(path string, cmd []string) error {
 		return fmt.Errorf("run command: %w", err)
 	}
 
-	_ = f.Truncate(0)
-	_, _ = f.Seek(0, 0)
+	if err := f.Truncate(0); err != nil {
+		return fmt.Errorf("truncate file: %w", err)
+	}
+	if _, err := f.Seek(0, 0); err != nil {
+		return fmt.Errorf("seek to start: %w", err)
+	}
 
 	if _, err := io.Copy(f, &buff); err != nil {
 		return fmt.Errorf("copy buff to file: %w", err)
