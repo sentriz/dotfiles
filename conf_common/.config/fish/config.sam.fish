@@ -28,6 +28,3 @@ complete -x --command cc --arguments ( \
 function mark_prompt_start --on-event fish_prompt
     echo -en "\e]133;A\e\\"
 end
-
-alias wrtag 'docker exec wrtag-main-1 wrtag'
-alias wrtagsync 'docker exec wrtag-main-1 wrtagsync'
