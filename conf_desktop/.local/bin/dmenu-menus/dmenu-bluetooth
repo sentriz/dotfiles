@@ -6,7 +6,7 @@ function notify() {
 
 sudo systemctl start bluetooth
 while ! pidof bluetoothd; do
-    sleep 0.1
+    sleep 0.2
 done
 
 devices="$(bluetoothctl devices | lower)"
