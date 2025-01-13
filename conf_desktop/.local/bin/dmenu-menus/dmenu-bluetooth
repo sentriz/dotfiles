@@ -4,11 +4,6 @@ function notify() {
     notify-send --hint "string:x-dunst-stack-tag:$0" "$1" "$(strip-escape <<<"${@:2}" | lower)"
 }
 
-sudo systemctl start bluetooth
-while ! pidof bluetoothd; do
-    sleep 0.1
-done
-
 devices="$(bluetoothctl devices | lower)"
 test -z "$devices" && exit 1
 
@@ -19,7 +14,7 @@ device_mac="$(cut -d ' ' -f 2 <<<"$device")"
 device_name="$(cut -d ' ' -f 3- <<<"$device")"
 
 if test "$device" = "disconnect"; then
-    sudo systemctl stop bluetooth
+    bluetoothctl -- disconnect >/dev/null 2>&1
     exit
 fi
 
