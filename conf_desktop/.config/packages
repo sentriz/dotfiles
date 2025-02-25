@@ -54,8 +54,9 @@ go github.com/sentriz/once@master
 go github.com/tomnomnom/gron@latest
 
 # git send email
-perl-authen-sasl
-perl-io-socket-ssl
+arch perl-authen-sasl
+arch perl-io-socket-ssl
+arch perl-mime-tools
 
 # bin / script
 go github.com/traefik/yaegi/cmd/yaegi@latest
