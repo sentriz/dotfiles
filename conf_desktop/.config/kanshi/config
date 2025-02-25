@@ -3,9 +3,9 @@ profile framework {
 }
 
 profile framework-docked {
-	output "Lenovo Group Limited T2224pD V901F56N" mode 1920x1080 position 0,0
-	output "Lenovo Group Limited T2224pD V901F4TE" mode 1920x1080 position 0,1080
-	output "BOE 0x0BCA Unknown"                    mode 2256x1504 position 1920,945 scale 1.50
+	output "Lenovo Group Limited T2224pD V901F56N" mode 1920x1080 position 1504,0
+	output "Lenovo Group Limited T2224pD V901F4TE" mode 1920x1080 position 1504,1080
+	output "BOE 0x0BCA Unknown"                    mode 2256x1504 position 0,550 scale 1.50
 }
 
 profile x270 {
