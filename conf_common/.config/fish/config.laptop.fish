@@ -26,6 +26,7 @@ set -gx QT_WAYLAND_DISABLE_WINDOWDECORATION 1
 set -gx SDL_VIDEODRIVER wayland
 set -gx WLR_NO_HARDWARE_CURSORS 1
 set -gx _JAVA_AWT_WM_NONREPARENTING 1
+set -gx ELECTRON_OZONE_PLATFORM_HINT auto
 
 set -gx ANDROID_SDK_ROOT /opt/android-sdk
 set -gx ANDROID_HOME /opt/android-sdk
