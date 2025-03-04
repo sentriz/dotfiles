@@ -86,12 +86,14 @@
 [credential "smtp://senan%40senan.xyz@smtp.fastmail.com:587"]
 	helper = !secret-git-helper password fastmail_apppassword
 [rebase]
-	autosquash = true
+	autoSquash = true
 	autoStash = true
+	updateRefs = true
 [gpg]
 	format = ssh
 [tag]
 	forceSignAnnotated = true
+	sort = version:refname
 [rerere]
 	enabled = true
 	autoupdate = true
@@ -102,8 +104,8 @@
 [init]
 	defaultBranch = master
 [branch]
-  autosetupmerge = always
-  autosetuprebase = always
+	autosetupmerge = always
+	autosetuprebase = always
 [absorb]
 	maxStack = 25
 [url "git@github.com:"]
