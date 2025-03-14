@@ -37,7 +37,6 @@ set gdefault
 set ignorecase
 set inccommand=nosplit
 set incsearch
-set grepprg=rg\ --vimgrep\ --pcre2\ --smart-case
 set updatetime=300
 set scrolloff=5
 set autowriteall
@@ -122,15 +121,6 @@ nnoremap * *``
 
 " visual replace without yank https://superuser.com/a/321726
 vnoremap p "_dP
-
-" grep
-nnoremap ~ :call GrepAndQuickfix()<cr>
-set grepprg=rg\ --vimgrep\ --hidden\ --glob\ '!**/.git/**'
-
-function! GrepAndQuickfix()
-  silent execute 'grep ' . shellescape(expand('<cword>'))
-  copen
-endfunction
 
 " easy split / quit
 nnoremap <enter>         :vsplit<cr><c-w>w
