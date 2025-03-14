@@ -387,7 +387,7 @@ nnoremap <silent> gn    <cmd>lua vim.lsp.buf.rename()<cr>
 nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<cr>
 nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<cr>
 nnoremap <silent> ga    <cmd>lua vim.lsp.buf.code_action()<cr>
-vnoremap <silent> ga    :<c-u>lua vim.lsp.buf.range_code_action()<cr>
+vnoremap <silent> ga    :<c-u>lua vim.lsp.buf.code_action({range=nil})<cr>
 nnoremap <silent> gt    <cmd>lua vim.diagnostic.setqflist()<cr>
 inoremap <silent> <c-s> <cmd>lua vim.lsp.buf.signature_help()<cr>
 nnoremap <silent> gh    <cmd>lua vim.lsp.inlay_hint(0)<cr>
