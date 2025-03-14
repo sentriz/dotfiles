@@ -31,7 +31,6 @@ set -gx DOTS_RECORDINGS_DIR "$XDG_PICTURES_DIR/recordings"
 set -gx DOTS_RADIO_DIR "$HOME/radio"
 set -gx DOTS_COPT_DIR /opt/containers
 set -gx DOTS_PROJECTS_DIR "$HOME/projects"
-set -gx DOTS_TODO_PATH "$XDG_DOCUMENTS_DIR/notes/general.md"
 
 set -gx EDITOR nvim
 set -gx FZF_DEFAULT_OPTS "--info hidden --color pointer:-1,gutter:-1,prompt:-1,bg:-1,bg+:0,fg:-1,fg+:7,hl:-1,hl+:7,marker:-1"

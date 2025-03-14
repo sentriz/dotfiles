@@ -1,3 +1,0 @@
-#!/usr/bin/env sh
-
-exec "$EDITOR" "$DOTS_TODO_PATH"
