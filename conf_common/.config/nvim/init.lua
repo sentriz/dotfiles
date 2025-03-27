@@ -21,9 +21,10 @@ nnoremap <silent> <leader>d :call print_debug#print_debug()<cr>
 
 augroup AutoNetrwOnStart
     autocmd!
+    let had_q = index(v:argv, '-q') >= 0
     let have_stdin = 0
     autocmd StdinReadPost * let have_stdin = 1
-    autocmd VimEnter * if !(argc() + have_stdin) | Explore! | endif
+    autocmd VimEnter * if !(argc() + have_stdin + had_q) | Explore! | endif
 augroup END
 
 set tabstop=4
