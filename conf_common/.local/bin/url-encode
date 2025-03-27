@@ -1,0 +1,29 @@
+//usr/bin/env go-script "$0" "$@"; exit $?
+// vi: ft=go
+
+package main
+
+import (
+	"bufio"
+	"bytes"
+	"fmt"
+	"io"
+	"net/url"
+	"os"
+)
+
+func main() {
+	var r io.Reader = os.Stdin
+	if len(os.Args) > 1 {
+		var buff bytes.Buffer
+		for _, arg := range os.Args[1:] {
+			fmt.Fprintln(&buff, arg)
+		}
+		r = &buff
+	}
+
+	for sc := bufio.NewScanner(r); sc.Scan(); {
+		out := url.QueryEscape(sc.Text())
+		fmt.Println(out)
+	}
+}
