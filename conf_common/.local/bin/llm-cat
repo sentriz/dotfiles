@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+for f in "$@"; do
+    echo "--" "$f" "--"
+    cat "$f"
+    echo ""
+done
