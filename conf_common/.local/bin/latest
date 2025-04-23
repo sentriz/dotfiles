@@ -1,6 +1,6 @@
 #!/usr/bin/env fish
 
-if test \( (count $argv) -ne 1 \) -o \( ! -d "$argv[1]" \)
+if test \( (count $argv) -ne 1 \) -o ! \( -d "$argv[1]" \)
     echo 'please provide a single directory' >&2
     exit 1
 end
