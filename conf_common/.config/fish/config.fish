@@ -108,7 +108,6 @@ alias rm 'rm -I --verbose --preserve-root'
 alias wget 'wget --continue --content-disposition'
 alias cp 'cp --archive --interactive --verbose'
 alias mkdir 'mkdir --parents --verbose'
-alias wget 'wget --hsts-file /dev/null'
 
 # exit
 alias :wq exit
@@ -131,6 +130,7 @@ abbr ps 'ps -axh -o pid,%cpu,cmd'
 abbr curl 'curl -s'
 abbr less 'less -RKS#1'
 abbr jq jq -r '\'.\''
+abbr wget 'curl -fLO'
 
 # extended regexp everywhere
 abbr grep "grep -Ei"
