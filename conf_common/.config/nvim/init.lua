@@ -416,6 +416,7 @@ nullls.setup({
 		nullls.builtins.diagnostics.hadolint.with({ extra_args = { "--ignore", "DL3018", "--ignore", "DL3008" } }),
 		nullls.builtins.diagnostics.markdownlint,
 		nullls.builtins.diagnostics.pylint,
+		nullls.builtins.diagnostics.golangci_lint,
 		nullls.builtins.diagnostics.selene,
 	},
 })
