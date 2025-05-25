@@ -53,8 +53,7 @@ complete -x --command p --arguments ( \
 )
 
 if status is-login
-    pkill -f bw-ssh-agent
-    bw-do bw-ssh-agent &
+    bw-ssh-agent-start &
 
     switch (tty)
         case /dev/tty1
