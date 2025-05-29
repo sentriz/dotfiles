@@ -172,25 +172,6 @@ require("mini.surround").setup()
 require("mini.comment").setup()
 require("mini.ai").setup()
 
--- fidget
-local fidget = require("fidget")
-fidget.setup({
-	text = {
-		spinner = "dots",
-	},
-	fmt = {
-		task = function(task_name, message, percent)
-			message = string.lower(message)
-			percent = percent and string.format(" %s%%", percent) or ""
-			task_name = string.lower(task_name or "")
-			return string.format("%s%s %s", message, percent, task_name)
-		end,
-	},
-	sources = {
-		["null-ls"] = { ignore = true },
-	},
-})
-
 local cmp = require("cmp")
 local cmplsp = require("cmp_nvim_lsp")
 
