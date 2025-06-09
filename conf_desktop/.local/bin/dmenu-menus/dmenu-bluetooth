@@ -4,7 +4,7 @@ function notify() {
     notify-send --hint "string:x-dunst-stack-tag:$0" "$1" "$(strip-escape <<<"${@:2}" | lower)"
 }
 
-devices="$(bluetoothctl devices | lower)"
+devices="$(bluetoothctl devices | grep "^Device " | lower)"
 test -z "$devices" && exit 1
 
 device="$(printf "%s\n" "$devices" "disconnect" | dmenu bluetooth)"
