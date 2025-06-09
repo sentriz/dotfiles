@@ -15,6 +15,8 @@
 	s = status
 	l = log --reverse -n 20
 
+	pr = !git push && gh pr create -f
+
 	addf       = !git add -- $(git ls-files --modified --others --exclude-standard | fzf -m --preview 'cat {}')
 	checkoutf  = !git checkout $@ $(git branch --format '%(refname:short)' --sort committerdate | fzf +s --tac --preview 'git -c color.ui=always log master..{} && echo && echo --- && git -c color.ui=always diff master..{}')
 	checkoutff = !git checkout $@ -- $(git ls-files --modified --exclude-standard | fzf -m)
