@@ -44,6 +44,7 @@ set -gx NPM_CONFIG_CACHE "$XDG_CACHE_HOME/npm"
 set -gx NPM_CONFIG_INIT_MODULE "$XDG_CONFIG_HOME/npm/config/npm-init.js"
 set -gx DOCKER_CONFIG "$XDG_CONFIG_HOME/docker"
 set -gx COMPOSE_DOCKER_CLI_BUILD 1
+set -gx COMPOSE_BAKE 1
 set -gx DOCKER_BUILDKIT 1
 set -gx LESSKEY -
 set -gx LESSHISTFILE -
