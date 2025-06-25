@@ -1,5 +1,10 @@
 #!/usr/bin/env sh
 
+if [ "$1" -eq 1 ]; then
+    ffplay -f lavfi -i "sine=frequency=1108.73:duration=1" -autoexit -nodisp
+    exit
+fi
+
 ffplay -f lavfi -i "sine=frequency=1108.73:duration=1" -autoexit -nodisp
 ffplay -f lavfi -i "sine=frequency=1244.51:duration=1" -autoexit -nodisp
 ffplay -f lavfi -i "sine=frequency=1479.98:duration=1" -autoexit -nodisp
