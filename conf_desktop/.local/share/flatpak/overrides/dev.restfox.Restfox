@@ -1,2 +1,5 @@
+[Context]
+sockets=wayland
+
 [Environment]
-ELECTRON_OZONE_PLATFORM_HINT= 
+ELECTRON_OZONE_PLATFORM_HINT=wayland
