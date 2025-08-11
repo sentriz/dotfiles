@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+
+networkctl --json=short status \
+    | jq -r '[[.Interfaces.[] | select(.OperationalState == "routable" and (.Type == "wlan" or .Type == "ether")) | {priority: (.Routes.[] | select(.ConfigSource == "DHCPv4" and .ScopeString == "global") | .Priority), type: .Type, ssid: .SSID}] | sort_by(.priority) | .[] | [.type, .ssid] | map(select(. != null)) | join(" ")] | join(", ")'

@@ -17,7 +17,7 @@ signal=1
 color=#0496e7
 signal=2
 
-[wifi]
+[network]
 color=#f0f000
 
 [battery]
