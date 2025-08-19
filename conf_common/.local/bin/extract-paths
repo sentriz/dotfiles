@@ -1,0 +1,104 @@
+//usr/bin/env go-script "$0" "$@"; exit $?
+// vi: ft=go
+
+package main
+
+import (
+	"bufio"
+	"flag"
+	"fmt"
+	"os"
+	"regexp"
+	"strings"
+)
+
+var commonPrefixes = []string{
+	"/bin", "/boot", "/dev", "/etc", "/home", "/lib", "/lib64",
+	"/lost+found", "/mnt", "/opt", "/proc", "/root", "/run",
+	"/sbin", "/srv", "/sys", "/tmp", "/usr", "/var",
+}
+
+func main() {
+	vimFlag := flag.Bool("vim", false, "print line:column info when found beside paths, suitable for quickfix list")
+	filesFlag := flag.Bool("files", false, "only print paths that exist as files on the filesystem")
+	flag.Parse()
+
+	if err := run(*vimFlag, *filesFlag); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
+}
+
+func run(vimFlag bool, filesFlag bool) error {
+	var matchPrefixes []string
+
+	// add possible abs path prefixes
+	for _, absPath := range commonPrefixes {
+		matchPrefixes = append(matchPrefixes, regexp.QuoteMeta(absPath))
+	}
+
+	// add relative to current dir prefixes, fill be expanded to abs paths
+	relPaths, err := os.ReadDir(".")
+	if err != nil {
+		return fmt.Errorf("read local dir: %w", err)
+	}
+	for _, path := range relPaths {
+		matchPrefixes = append(matchPrefixes, regexp.QuoteMeta(path.Name()))
+	}
+
+	// add ~/ home dir prefix
+	matchPrefixes = append(matchPrefixes, regexp.QuoteMeta("~"))
+
+	expr, err := regexp.Compile(fmt.Sprintf(`(?:^|\s)((?P<path>(?:%s)(?:/[^$\s\;~\:\"]+)?)(?::(?P<line>\d+)(?::(?P<col>\d+))?)?)`, strings.Join(matchPrefixes, "|")))
+	if err != nil {
+		return fmt.Errorf("compile path regexp: %w", err)
+	}
+
+	var (
+		exprPath = expr.SubexpIndex("path")
+		exprLine = expr.SubexpIndex("line")
+		exprCol  = expr.SubexpIndex("col")
+	)
+
+	stdout := bufio.NewWriter(os.Stdout)
+	defer stdout.Flush()
+
+	stdin := bufio.NewScanner(os.Stdin)
+	for stdin.Scan() {
+		text := stdin.Text()
+		matches := expr.FindAllStringSubmatchIndex(text, -1)
+		for _, m := range matches {
+			path := text[m[exprPath*2]:m[exprPath*2+1]]
+
+			if filesFlag {
+				if stat, err := os.Stat(path); err != nil || stat.IsDir() {
+					continue
+				}
+			}
+			if !vimFlag {
+				fmt.Fprintln(stdout, path)
+				continue
+			}
+
+			var line, col string = "1", "1"
+			if m[exprLine*2] >= 0 {
+				line = text[m[exprLine*2]:m[exprLine*2+1]]
+			}
+			if m[exprCol*2] >= 0 {
+				col = text[m[exprCol*2]:m[exprCol*2+1]]
+			}
+			comment := text
+			for i := len(matches) - 1; i >= 0; i-- {
+				comment = comment[:matches[i][0]] + comment[matches[i][1]:]
+			}
+			comment = strings.Join(strings.Fields(comment), " ")
+			comment, _ = strings.CutPrefix(comment, ":")
+			comment = strings.TrimSpace(comment)
+			fmt.Fprintf(stdout, "%s:%s:%s:%s\n", path, line, col, comment)
+		}
+	}
+	if err := stdin.Err(); err != nil {
+		return err
+	}
+	return nil
+}

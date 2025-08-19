@@ -140,9 +140,8 @@ abbr fgrep "fgrep -Ei"
 abbr sed "sed -E"
 
 # rg
-alias rg 'rg --hyperlink-format=default'
+alias rg 'rg --hyperlink-format=default --vimgrep'
 abbr rg "rg -PS"
-abbr vrg "vrg -PS"
 
 # keep updated with `printf "set -g %s\n" (set -U | grep fish_color)`
 set -g fish_color_autosuggestion 555 brblack
