@@ -13,7 +13,7 @@ bin="$XDG_CACHE_HOME/go-scripts/$sum"
 test -f "$bin" \
     && exec "$bin" "$@"
 
-{
+(
     dir="$(mktemp -d)"
     cd "$dir" || exit 1
 
@@ -21,10 +21,9 @@ test -f "$bin" \
     sed -i '/^#/d' "$dir/m.go"
 
     go mod init tmp
-    go get ./...
     go build -o "$bin"
 
     rm -r "$dir"
-} 1>&2
+) 1>&2
 
 exec "$bin" "$@"
