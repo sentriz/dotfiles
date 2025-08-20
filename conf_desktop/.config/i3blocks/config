@@ -22,7 +22,7 @@ color=#f0f000
 
 [battery]
 color=#e184c2
-interval=30
+interval=60
 
 [time]
 
