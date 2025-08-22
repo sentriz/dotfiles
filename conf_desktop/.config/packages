@@ -41,7 +41,7 @@ go github.com/natesales/q@latest
 cargo git-absorb
 go go.senan.xyz/beside@latest
 go go.senan.xyz/case-replace@latest
-go go.senan.xyz/table@master
+go go.senan.xyz/table/cmd/table@master
 go go.senan.xyz/rsl@latest
 go go.senan.xyz/sync-procs@latest
 go go.senan.xyz/vi-paths@latest
