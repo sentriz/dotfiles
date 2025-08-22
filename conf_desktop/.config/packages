@@ -13,8 +13,8 @@ arch docker-buildx
 arch docker-compose
 
 # net
-arch:iwd
-arch:systemd-resolvconf
+arch iwd
+arch systemd-resolvconf
 
 arch man-db
 arch fish
@@ -62,7 +62,7 @@ arch perl-mime-tools
 go github.com/traefik/yaegi/cmd/yaegi@latest
 
 # sec
-bitwarden-cli
+arch bitwarden-cli
 
 # gui virt
 arch libvirt
