@@ -46,8 +46,11 @@ func run(vimFlag bool, filesFlag bool) error {
 		matchPrefixes = append(matchPrefixes, regexp.QuoteMeta(path.Name()))
 	}
 
-	// add ~/ home dir prefix
-	matchPrefixes = append(matchPrefixes, regexp.QuoteMeta("~"))
+	// add ~/ and ./ dir prefix
+	matchPrefixes = append(matchPrefixes,
+		regexp.QuoteMeta("~"),
+		regexp.QuoteMeta("."),
+	)
 
 	expr, err := regexp.Compile(fmt.Sprintf(`(?:^|\s)((?P<path>(?:%s)(?:/[^$\s\;~\:\"]+)?)(?::(?P<line>\d+)(?::(?P<col>\d+))?)?)`, strings.Join(matchPrefixes, "|")))
 	if err != nil {
