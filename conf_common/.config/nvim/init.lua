@@ -334,6 +334,15 @@ lspconfig.ts_ls.setup({
 	},
 })
 
+lspconfig.harper_ls.setup({
+	capabilities = capabilities,
+	settings = {
+		["harper-ls"] = {
+			dialect = "British",
+		},
+	},
+})
+
 lspconfig.jdtls.setup({
 	capabilities = capabilities,
 })

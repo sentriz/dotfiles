@@ -169,6 +169,7 @@ arch pandoc-bin
 arch pgformatter
 arch rust-analyzer
 arch shellcheck-bin
+arch harper
 cargo selene
 cargo stylua
 go github.com/golangci/golangci-lint/cmd/golangci-lint@master
