@@ -62,7 +62,7 @@ arch perl-mime-tools
 go github.com/traefik/yaegi/cmd/yaegi@latest
 
 # sec
-arch bitwarden-cli
+arch rbw
 
 # gui virt
 arch libvirt

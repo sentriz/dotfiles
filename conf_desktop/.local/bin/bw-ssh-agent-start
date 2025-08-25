@@ -1,8 +1,0 @@
-#!/usr/bin/env fish
-
-pkill -f 'bw-do bw-ssh-agent'
-
-while true
-    bw-do bw-ssh-agent
-    sleep 10
-end

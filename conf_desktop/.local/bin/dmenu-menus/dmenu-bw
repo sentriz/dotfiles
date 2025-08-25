@@ -1,10 +1,9 @@
 #!/usr/bin/env fish
-
-bw-do bw list items \
-    | jq -r '.[] | select(.login?.password?) | "\(.name)\t\(.login.username)\t\(.login.password)"' \
-    | dmenu password 1,2 \
-    | read -d \t name username password
-test -z "$password"
+rbw list --fields id --fields folder --fields name --fields user \
+    | sort -t\t -k 2,3 \
+    | dmenu password 2,3,4 \
+    | read -d \t id _rest
+test -z "$id"
 and exit
 
-echo "$password" | wl-copy
+rbw get "$id" | wl-copy -n

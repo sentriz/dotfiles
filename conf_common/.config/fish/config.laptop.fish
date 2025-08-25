@@ -4,7 +4,7 @@ set -gx LIBSEAT_BACKEND logind
 set -gx XDG_CURRENT_DESKTOP sway
 set -gx XDG_SESSION_TYPE wayland
 
-set -gx SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/bw-ssh-agent"
+set -gx SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/rbw/ssh-agent-socket"
 
 set -gx --path XDG_DATA_DIRS \
     /usr/local/share \
@@ -53,8 +53,6 @@ complete -x --command p --arguments ( \
 )
 
 if status is-login
-    bw-ssh-agent-start &
-
     switch (tty)
         case /dev/tty1
             exec sway >/tmp/sway_log 2>&1
