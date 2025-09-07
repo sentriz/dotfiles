@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+station="wlan0"
+
+if [[ "$#" -gt 0 ]]; then
+    IFS=$'\t' read -r name _ <<<"$1"
+    iwctl --dont-ask station "$station" connect "$name"
+    exit
+fi
+
+iwctl station "$station" scan >/dev/null 2>&1
+iwctl station "$station" get-networks \
+    | strip-escape \
+    | sed -E '/(Available networks|Network name|---)/d; /^$/d; s/^......//; s/ {2,}/\t/g; s/\t$//'

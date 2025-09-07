@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+connect_uri="$(secret virt_connect_uri)"
+
+function virsh() { command virsh --connect "$connect_uri" "$@"; }
+function virt-viewer() { command virt-viewer --connect "$connect_uri" "$@"; }
+
+if [[ "$#" -gt 0 ]]; then
+    machine="$1"
+    virsh resume "$machine" 2>/dev/null
+    virsh start "$machine" 2>/dev/null
+
+    # ensure remote's login shell is bash before this
+    virt-viewer "$machine"
+    exit 0
+fi
+
+virsh list --name --all

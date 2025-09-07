@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+
+playing_pre="> "
+
+pid_file="$XDG_CACHE_HOME/mpv_radio_pid"
+IFS=$'\t' read -r current_pid current_station <"$pid_file" 2>/dev/null
+
+if [[ "$#" -gt 0 ]]; then
+    [[ $current_pid -gt 0 ]] && kill "$current_pid"
+
+    station="$1"
+    if [[ "$station" = "stop" ]]; then
+        rm "$pid_file"
+        exit
+    fi
+
+    station="${station//$playing_pre/}"
+    station="${station//play /}"
+
+    mpv \
+        --no-ytdl \
+        --no-video \
+        --no-cache \
+        --quiet \
+        --force-media-title="$station" \
+        --no-resume-playback \
+        "$DOTS_RADIO_DIR/$station" &
+    echo -e "$!\t$station" >"$pid_file"
+    notify-send 'started radio station' "$station"
+
+    exit
+fi
+
+find \
+    "$DOTS_RADIO_DIR" \
+    -maxdepth 1 \
+    -not -name '.st*' \
+    -type f \
+    -printf "%f\n" | while read -r line; do
+    pre=""
+    if [[ "$line" = "$current_station" ]]; then
+        pre="$playing_pre"
+    fi
+    echo "${pre}play $line"
+done
+
+echo "stop"

@@ -121,6 +121,7 @@ arch noto-fonts
 arch noto-fonts-cjk
 arch noto-fonts-emoji
 go go.senan.xyz/cliphist@latest
+go go.senan.xyz/cmenu@latest
 arch chafa
 go go.senan.xyz/sway-rename-workspaces@latest
 go go.senan.xyz/xdg-desktop-list@latest

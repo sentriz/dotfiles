@@ -9,4 +9,9 @@ if [[ ! -f "$cache" ]]; then
     } >"$cache"
 fi
 
-<"$cache" table | dmenu emoji | col ' ' 1 | wl-copy --trim-newline
+if [[ "$#" -gt 0 ]]; then
+    col 1 <<<"$1" | wl-copy -n
+    exit
+fi
+
+cat "$cache"

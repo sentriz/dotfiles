@@ -6,8 +6,7 @@
 ##  mod shift [num row] -> move to workspaces  ##
 ##  mod alt [a-z]       -> modes               ##
 ##  mod return          -> launch term         ##
-##  mod [f1-f9]         -> launch dmenus       ##
-##  caps lock           -> scratchpad term     ##
+##  caps lock           -> launch cmenu        ##
 #################################################
 
 # var modifier
@@ -353,35 +352,22 @@ bindsym XF86AudioStop         exec mpris-ctrl stop
 bindsym XF86AudioNext         exec mpris-ctrl next
 bindsym XF86AudioPrev         exec mpris-ctrl previous
 
-# toggle and scratchpads
-bindcode 66 [app_id="^scratchpad-.*"] scratchpad show
-
 # bindings: gestures
 bindgesture swipe:3:right workspace next
-bindgesture swipe:3:left workspace prev
-bindgesture swipe:3:down workspace back_and_forth
-bindgesture swipe:3:up [app_id="^scratchpad-.*"] scratchpad show
+bindgesture swipe:3:left  workspace prev
+bindgesture swipe:3:down  workspace back_and_forth
 
 # bindings: programs
-bindsym $super+Return       exec $TERMINAL
-bindsym $super+Shift+Return exec sway-scratchpad
-bindsym $super+F1           exec once dmenu-package
-bindsym $super+F2           exec once dmenu-clipboard
-bindsym $super+F3           exec once dmenu-radio     && $up_block_3
-bindsym $super+F4           exec once dmenu-pulse     && $up_block_1
-bindsym $super+F5           exec once dmenu-bluetooth && $up_block_2
-bindsym $super+F6           exec once dmenu-emoji
-bindsym $super+F7           exec once dmenu-virt
-bindsym $super+F8           exec once dmenu-bw
-bindsym $super+F9           exec once dmenu-iwd
+bindsym $super+return       exec $TERMINAL
 
 # bindings: notifications
 bindsym $super+i exec makoctl invoke
 bindsym $super+o exec makoctl restore
 bindsym $super+p exec makoctl dismiss --all
 
-# dmenu term
-for_window [app_id="^launcher$"] floating enable, sticky enable, resize set 100 ppt 20 ppt, move position 0 0
+# cmenu
+bindcode 66 exec sway-cmenu && up_block_1 && up_block_2 && up_block_3
+for_window [app_id="^cmenu$"] floating enable, sticky enable, resize set 80 ppt 60 ppt
 
 # autostarts
 set $imp_vars "DISPLAY WAYLAND_DISPLAY SWAYSOCK SSH_AUTH_SOCK XDG_CURRENT_DESKTOP XDG_SESSION_TYPE"
@@ -399,8 +385,7 @@ exec_always 'pkill mako; exec mako \
     --text-color "#FFFFFF" \
     --anchor bottom-right \
     --ignore-timeout 1 \
-    --default-timeout 4000 \
-    --on-button-middle "exec makoctl menu -n \$id dmenu action"'
+    --default-timeout 4000'
 exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec wl-paste --watch cliphist store
 exec sway-rename-workspaces

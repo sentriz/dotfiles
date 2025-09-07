@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+cmenu=cmenu
+
+pidof "$cmenu" && exit
+
+"$TERMINAL" --app-id "cmenu" sh -c "theme light; $cmenu"

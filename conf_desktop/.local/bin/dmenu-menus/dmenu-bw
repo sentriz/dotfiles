@@ -1,9 +1,0 @@
-#!/usr/bin/env fish
-rbw list --fields id --fields folder --fields name --fields user \
-    | sort -t\t -k 2,3 \
-    | dmenu password 2,3,4 \
-    | read -d \t id _rest
-test -z "$id"
-and exit
-
-rbw get "$id" | wl-copy -n

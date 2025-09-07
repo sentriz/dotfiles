@@ -1,13 +1,13 @@
-#!/usr/bin/env fish
+#!/usr/bin/env bash
 
-set row (wpctl status \
+if [[ "$#" -gt 0 ]]; then
+    wpctl set-default "$(echo "$1" | grep -Eo "[0-9]+")"
+    exit
+fi
+
+wpctl status \
     | sed -E 's/[└─│├]/ /g; s/\[vol.*//; s/\*(.*)/ \1 */; s/([0-9 ]{4})\./ \1/; s/:\s*$//; s/.*/\L\0/' \
     | untree \
     | col ' ' ' ' \
     | grep -Ei "^audio (sinks|sources) " \
-    | dmenu sink)
-
-set id (echo "$row" | grep -Eo "[0-9]+")
-test -z "$id" && exit
-
-wpctl set-default "$id"
+    | sed -E 's/(.*) \*$/> \1/'

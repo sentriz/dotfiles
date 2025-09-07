@@ -42,7 +42,7 @@ function dark() {
 
 function light() {
     printf "$printf_template" \
-        0 "3a3e4b" \
+        0 "c2c3c4" \
         1 "18a3a7" \
         2 "ff5daf" \
         3 "5f75ff" \

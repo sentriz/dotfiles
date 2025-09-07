@@ -1,9 +1,0 @@
-#!/usr/bin/env fish
-
-xdg-desktop-list \
-    | dmenu application 1,2 \
-    | read -d \t category name command
-test -z $command
-and exit
-
-swaymsg exec -- "$command"

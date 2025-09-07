@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+if [[ "$#" -gt 0 ]]; then
+    IFS=$'\t' read -r id _ <<<"$1"
+    swaymsg "[con_id=$id]" focus
+    exit 0
+fi
+
+swaymsg -t get_tree | jq -r '.nodes[].nodes[] | {"w": .name} + ( if (.nodes|length) > 0 then [recurse(.nodes[])] else [] end + .floating_nodes | .[] | select(.nodes==[])) | [.id, .w, .name] | @tsv'

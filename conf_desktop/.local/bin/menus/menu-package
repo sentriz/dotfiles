@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+if [[ "$#" -gt 0 ]]; then
+    IFS=$'\t' read -r _ _ cmd <<<"$1"
+    swaymsg exec -- "$cmd"
+    exit
+fi
+
+xdg-desktop-list
