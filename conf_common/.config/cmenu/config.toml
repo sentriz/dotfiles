@@ -15,7 +15,6 @@
   stay_open = true
 
 [[scripts]]
-  triggers = ["s"]
   name = "sway"
   path = "menu-sway"
   colour = 5

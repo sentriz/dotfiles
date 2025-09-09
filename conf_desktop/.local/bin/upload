@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+cmd_prefix="upload-"
+
+case "$1" in
+list)
+    for cmd in $(compgen -c "$cmd_prefix"); do
+        echo "${cmd/$cmd_prefix/}"
+    done
+    ;;
+*)
+    cmd="$1"
+    shift
+    exec "$cmd_prefix$cmd" "$@"
+    ;;
+esac
