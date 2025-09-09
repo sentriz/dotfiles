@@ -340,9 +340,13 @@ bindsym XF86AudioRaiseVolume  exec wpctl set-volume @DEFAULT_SINK@   2%+    && $
 bindsym XF86AudioMute         exec wpctl set-mute   @DEFAULT_SINK@   toggle && $up_block_1
 bindsym XF86AudioMicMute      exec wpctl set-mute   @DEFAULT_SOURCE@ toggle && $up_block_1
 
-# push to talk with print screen button
-bindsym --no-repeat           print exec wpctl set-mute @DEFAULT_SOURCE@ 0 && $up_block_1
-bindsym --no-repeat --release print exec wpctl set-mute @DEFAULT_SOURCE@ 1 && $up_block_1
+# push to talk with print screen or right ctrl
+bindsym --no-repeat           print           exec wpctl set-mute @DEFAULT_SOURCE@ 0 && $up_block_1
+bindsym --no-repeat --release print           exec wpctl set-mute @DEFAULT_SOURCE@ 1 && $up_block_1
+bindsym                       shift+print     exec wpctl set-mute @DEFAULT_SOURCE@ 0 && $up_block_1
+bindsym --no-repeat           control_r       exec wpctl set-mute @DEFAULT_SOURCE@ 0 && $up_block_1
+bindsym --no-repeat --release control_r       exec wpctl set-mute @DEFAULT_SOURCE@ 1 && $up_block_1
+bindsym                       shift+control_r exec wpctl set-mute @DEFAULT_SOURCE@ 0 && $up_block_1
 
 bindsym XF86MonBrightnessDown exec xbacklight -dec 5
 bindsym XF86MonBrightnessUp   exec xbacklight -inc 5
