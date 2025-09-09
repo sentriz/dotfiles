@@ -3,18 +3,19 @@
 batt_level="$(cat /sys/class/power_supply/BAT*/uevent \
     | sed -rn 's/^POWER_SUPPLY_CAPACITY=([0-9]+)$/\1/p')"
 
-text="battery"
-acpi | grep -iq "\bcharging" \
-    && text="charging"
+[[ -z "$batt_level" ]] && exit
+[[ "$batt_level" -ge "100" ]] && exit
 
-test "$text" = "battery" -a "$batt_level" -le "10" \
-    && beep 1 &
-disown
+status="battery"
+if acpi | grep -iq "\bcharging"; then
+    status="charging"
+fi
 
-test -z "$batt_level" \
-    && exit
-test "$batt_level" -ge "100" \
-    && exit
-test "$batt_level" -le "10" \
-    && echo "$text ${batt_level}% ⚠" \
-    || echo "$text ${batt_level}%"
+warning=""
+if [[ "$status" = "battery" && "$batt_level" -le "10" ]]; then
+    beep 1 &
+    disown
+    warning=" ⚠"
+fi
+
+echo "$status ${batt_level}%$warning"
