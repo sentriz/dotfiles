@@ -126,6 +126,9 @@ nnoremap * *``
 " visual replace without yank https://superuser.com/a/321726
 vnoremap p "_dP
 
+" easy normal mode for term
+tnoremap <esc> <c-\><c-n>
+
 " easy split / quit
 nnoremap <enter>         :vsplit<cr><c-w>w
 nnoremap <s-enter>       :split<cr><c-w>w
