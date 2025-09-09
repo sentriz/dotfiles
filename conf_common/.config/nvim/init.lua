@@ -67,6 +67,9 @@ augroup AutoOSC7Dir
         \ call writefile([printf("\e\]7\;file://%s%s\e\\", hostname(), expand('%:p:h'))], '/dev/fd/2', 'b')
 augroup END
 
+" window title
+set title titlestring=%(%{expand(\"%:~:.:h\")}%)/%t\ vim
+
 " by Wouter Hanegraaff
 augroup AutoEditGPGFile
     autocmd!
