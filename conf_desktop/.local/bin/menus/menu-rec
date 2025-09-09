@@ -1,0 +1,105 @@
+#!/usr/bin/env bash
+
+if [[ "$#" -gt 0 ]]; then
+    IFS=$'\t' read -r cmd arg arg_2 <<<"$1"
+
+    case "$cmd" in
+    "screenshot")
+        filename="${DOTS_SCREENSHOTS_DIR}/$(date '+%Y%m%d_%H%M%S').png"
+
+        {
+            area="$(area "$arg")"
+            [[ -z "$area" ]] && exit 1
+
+            grim -g "$area" "$filename"
+            [[ ! -f "$filename" ]] && exit 1
+
+            wl-copy <"$filename"
+
+            notify-send "screenshot" "$filename"
+        } &
+        disown
+        ;;
+
+    "recording" | "recording audio")
+        filename="${DOTS_RECORDINGS_DIR}/$(date '+%Y%m%d_%H%M%S').mp4"
+
+        extra_args=()
+        [[ "$cmd" = "recording audio" ]] && extra_args=(-a)
+
+        {
+            area="$(area "$arg")"
+            [[ -z "$area" ]] && exit 1
+
+            wf-recorder "${extra_args[@]}" -f "$filename" -g "$area" -x yuv420p >/dev/null
+            [[ ! -f "$filename" ]] && exit 1
+
+            wl-copy -t text/uri-list "file://$filename"
+
+            notify-send "recorded" "$filename"
+        } &
+        disown
+        ;;
+
+    "recording stop")
+        killall --signal SIGINT wf-recorder
+        ;;
+
+    "upload")
+        filename="$(wl-paste --type text/uri-list 2>/dev/null | head -n 1 | sed 's@^file://@@')"
+        if [[ -n "$filename" ]]; then
+            url="$(upload "$arg_2" "$filename")"
+            [[ -z "$url" ]] && exit 1
+
+            wl-copy "$url"
+
+            notify-send "uploaded" "$url"
+            exit
+        fi
+
+        extension="$(wl-paste --type image | file -b --extension -)"
+        [[ -z "$extension" ]] && exit 1
+
+        filename="$(mktemp "/tmp/upload-XXX.$extension")"
+        wl-paste --type image >"$filename"
+
+        url="$(upload "$arg_2" "$filename")"
+        [[ -z "$url" ]] && exit 1
+
+        wl-copy "$url"
+
+        notify-send "uploaded" "$url"
+        ;;
+    esac
+
+    exit
+fi
+
+recording=false
+if pidof -q wf-recorder; then
+    recording=true
+fi
+
+for type in "screenshot" "recording" "recording audio"; do
+    if [[ "$recording" = true && "$type" =~ "recording" ]]; then
+        continue
+    fi
+
+    for area in $(area list); do
+        printf "%s\t%s\n" "$type" "$area"
+    done
+done
+
+if [[ "$recording" = true ]]; then
+    printf "%s\n" "recording stop"
+fi
+
+current_mime="$(wl-paste -l | head -n 1)"
+
+case "$current_mime" in
+image/* | text/uri-list)
+    for upl in $(upload list); do
+        printf "upload\t%s\t%s\n" "$current_mime" "$upl"
+    done
+    ;;
+esac

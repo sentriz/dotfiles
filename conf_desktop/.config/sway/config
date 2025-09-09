@@ -160,8 +160,6 @@ bindsym $super+r workspace back_and_forth, move workspace to output right, works
 # bindings: modes
 bindsym $super+$alt+space mode $mode_move_floating focus floating
 bindsym $super+$alt+q     mode $mode_system
-bindsym $super+$alt+s     mode $mode_scrot
-bindsym $super+$alt+r     mode $mode_recording
 bindsym $super+$alt+t     mode $mode_timer
 
 set $mode_system "system: [l]ock [s]uspend [h]ibernate [r]eboot shut[d]own e[x]it r[e]load"
@@ -183,41 +181,6 @@ mode $mode_move_floating {
     bindsym j move down
     bindsym k move up
     bindsym l move right
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
-
-set $mode_scrot_dest "screenshot dest: [h]ome [i]mgur [p]tpimg [x]0 [c]lipboard [d]rop"
-mode $mode_scrot_dest {
-    bindsym h exec screenshot $scrot_src home,      mode "default"
-    bindsym i exec screenshot $scrot_src imgur,     mode "default"
-    bindsym p exec screenshot $scrot_src ptp,       mode "default"
-    bindsym x exec screenshot $scrot_src x0,        mode "default"
-    bindsym c exec screenshot $scrot_src clipboard, mode "default"
-    bindsym d exec screenshot $scrot_src drop,      mode "default"
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
-
-set $mode_scrot "screenshot src: [r]egion [w]indow [m]onitor [c]lipboard"
-mode $mode_scrot {
-    bindsym r set $scrot_src region,    mode $mode_scrot_dest
-    bindsym w set $scrot_src window,    mode $mode_scrot_dest
-    bindsym m set $scrot_src monitor,   mode $mode_scrot_dest
-    bindsym c set $scrot_src clipboard, mode $mode_scrot_dest
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
-
-set $mode_recording "recording: [r]egion [w]indow [m]onitor [s]top (shift for audio)"
-mode $mode_recording {
-    bindsym r       exec recording start region,        mode "default"
-    bindsym w       exec recording start window,        mode "default"
-    bindsym m       exec recording start monitor,       mode "default"
-    bindsym shift+r exec recording start region audio,  mode "default"
-    bindsym shift+w exec recording start window audio,  mode "default"
-    bindsym shift+m exec recording start monitor audio, mode "default"
-    bindsym s       exec recording stop,                mode "default"
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
