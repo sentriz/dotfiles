@@ -89,10 +89,6 @@ __tmux_env \
     | sed -nE 's/^(SSH_[^=]+)=(.*)/set -gx \1 "\2"/p' \
     | source
 
-# direnv
-type -q direnv
-and direnv hook fish | source
-
 # plugin settings
 set -gx async_prompt_functions fish_right_prompt
 

@@ -19,7 +19,6 @@ arch systemd-resolvconf
 arch man-db
 arch fish
 arch fzf
-arch direnv
 arch git
 arch github-cli
 arch htop
