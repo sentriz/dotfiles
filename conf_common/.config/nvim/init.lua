@@ -56,7 +56,7 @@ autocmd FileType yaml.docker-compose setlocal cursorcolumn
 augroup AutoCursorLastPosition
     autocmd!
     autocmd BufReadPost *
-        \ if &ft != 'gitcommit' && line("'\"") > 0 && line("'\"") <= line("$") |
+        \ if &ft != 'netrw' && &ft != 'gitcommit' && line("'\"") > 0 && line("'\"") <= line("$") |
         \     exec "normal g`\"" |
         \ endif
 augroup END
