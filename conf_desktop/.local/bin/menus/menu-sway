@@ -6,4 +6,5 @@ if [[ "$#" -gt 0 ]]; then
     exit 0
 fi
 
-swaymsg -t get_tree | jq -r '.nodes[].nodes[] | {"w": .name} + ( if (.nodes|length) > 0 then [recurse(.nodes[])] else [] end + .floating_nodes | .[] | select(.nodes==[])) | [.id, .w, .name] | @tsv'
+swaymsg -t get_tree \
+    | jq -r '.nodes[].nodes[] | {"w": .num} + ( if (.nodes|length) > 0 then [recurse(.nodes[])] else [] end + .floating_nodes | .[] | select(.nodes==[])) | [.id, .w, (.name | gsub("^\\s+|\\s+$";""))] | @tsv'

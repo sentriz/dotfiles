@@ -15,6 +15,14 @@
   stay_open = true
 
 [[scripts]]
+  triggers = ["s"]
+  name = "sway"
+  path = "menu-sway"
+  colour = 5
+  preview = 10
+  columns = [2, 3]
+
+[[scripts]]
   triggers = ["p"]
   name = "package"
   path = "menu-package"
@@ -61,10 +69,4 @@
   triggers = ["v"]
   name = "virt"
   path = "menu-virt"
-  colour = 5
-
-[[scripts]]
-  triggers = ["s"]
-  name = "sway"
-  path = "menu-sway"
   colour = 5
