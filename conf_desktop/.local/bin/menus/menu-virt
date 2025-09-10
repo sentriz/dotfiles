@@ -15,4 +15,4 @@ if [[ "$#" -gt 0 ]]; then
     exit 0
 fi
 
-virsh list --name --all
+virsh list --name --all | grep .
