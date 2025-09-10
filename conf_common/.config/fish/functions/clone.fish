@@ -12,6 +12,11 @@ function clone
         set dest $DOTS_PROJECTS_DIR/$name
     end
 
+    if test -d "$dest"
+        cd $dest
+        return
+    end
+
     git clone $url $dest
     cd $dest
 end
