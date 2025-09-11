@@ -439,6 +439,15 @@ tsconfigs.setup({
 	incremental_selection = ts_incremental_selection,
 })
 
+-- ignore all treesitter errors
+do
+	local ts = vim.treesitter
+	local orig_start = ts.start
+	ts.start = function(...)
+		pcall(orig_start, ...)
+	end
+end
+
 vim.cmd([[
 set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
