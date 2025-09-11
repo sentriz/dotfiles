@@ -403,11 +403,17 @@ nullls.setup({
 		nullls.builtins.diagnostics.hadolint.with({ extra_args = { "--ignore", "DL3018", "--ignore", "DL3008" } }),
 		nullls.builtins.diagnostics.markdownlint,
 		nullls.builtins.diagnostics.pylint,
-		nullls.builtins.diagnostics.golangci_lint,
 		nullls.builtins.diagnostics.selene,
 	},
 })
 
+-- add rebuilt treesitter parsers to rtp
+local uname = vim.loop.os_uname()
+local arch = uname.machine:lower()
+local parser_bin = vim.fn.stdpath("data") .. "/treesitter-parser-bin/" .. arch
+vim.opt.rtp:append(parser_bin)
+
+-- treesitter
 local tscontext = require("treesitter-context")
 local tsconfigs = require("nvim-treesitter.configs")
 
@@ -428,8 +434,6 @@ local ts_incremental_selection = {
 }
 
 tsconfigs.setup({
-	ensure_installed = "all",
-	ignore_install = { "hoon" },
 	highlight = ts_highlight,
 	indent = ts_indent,
 	incremental_selection = ts_incremental_selection,
