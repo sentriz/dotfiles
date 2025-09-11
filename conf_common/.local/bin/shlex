@@ -4,6 +4,8 @@
 package main
 
 import (
+	"bufio"
+	"flag"
 	"fmt"
 	"io"
 	"os"
@@ -13,14 +15,28 @@ import (
 )
 
 func main() {
+	line := flag.Bool("line", false, "parse line by line")
+	flag.Parse()
+
 	var r io.Reader = os.Stdin
-	if in := strings.Join(os.Args[1:], " "); in != "" {
+	if in := strings.Join(flag.Args(), " "); in != "" {
 		r = strings.NewReader(in)
 	}
 
-	l := shlex.NewLexer(r)
+	if *line {
+		for sc := bufio.NewScanner(r); sc.Scan(); {
+			words, err := shlex.Split(sc.Text())
+			if err != nil {
+				continue
+			}
+			fmt.Println(strings.Join(words, "\t"))
+		}
+		return
+	}
+
+	lex := shlex.NewLexer(r)
 	for {
-		word, err := l.Next()
+		word, err := lex.Next()
 		if err != nil {
 			break
 		}
