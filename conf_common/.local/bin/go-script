@@ -21,6 +21,7 @@ test -f "$bin" \
     sed -i '/^#/d' "$dir/m.go"
 
     go mod init tmp
+    go get ./...
     go build -o "$bin"
 
     rm -r "$dir"
