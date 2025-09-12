@@ -3,7 +3,7 @@
   name = "bluetooth"
   path = "menu-bluetooth"
   preview = 10
-  colour = 4
+  colour = 3
   stay_open = true
 
 [[scripts]]
@@ -26,7 +26,7 @@
   name = "package"
   path = "menu-package"
   preview = 5
-  colour = 2
+  colour = 7
   columns = [1, 2]
 
 [[scripts]]
@@ -47,7 +47,7 @@
   name = "emoji"
   path = "menu-emoji"
   preview = 10
-  colour = 3
+  colour = 12
 
 [[scripts]]
   triggers = ["i"]
