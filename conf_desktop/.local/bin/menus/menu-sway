@@ -7,4 +7,4 @@ if [[ "$#" -gt 0 ]]; then
 fi
 
 swaymsg -t get_tree \
-    | jq -r '.nodes[].nodes[] | {"w": .num} + ( if (.nodes|length) > 0 then [recurse(.nodes[])] else [] end + .floating_nodes | .[] | select(.nodes==[])) | [.id, .w, (.name | gsub("^\\s+|\\s+$";""))] | @tsv'
+    | jq -r '.nodes[].nodes[] | {"w": .num} + ( if (.nodes|length) > 0 then [recurse(.nodes[])] else [] end + .floating_nodes | .[] | select(.nodes==[] and .app_id != "cmenu")) | [.id, .w, (.name | gsub("^\\s+|\\s+$";""))] | @tsv'
