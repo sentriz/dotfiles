@@ -50,10 +50,9 @@
   colour = 12
 
 [[scripts]]
-  triggers = ["i"]
+  triggers = ["w"]
   name = "iwd"
   path = "menu-iwd"
-  preview = 10
   colour = 10
   stay_open = true
 
