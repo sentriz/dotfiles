@@ -2,13 +2,18 @@
 
 set -e
 
-if test $# -ne 1; then
+if test $# -lt 1; then
     echo "please provide a repo" >&2
     exit 1
 fi
 
 repo="$1"
+branch="$2"
+
 name="$(grep -Po '[^\/]+$' <<<"$repo")"
 path="conf_common/.local/share/nvim/site/pack/plugins/start/$name"
 
-git submodule add -f "$repo" "$path"
+extra_args=()
+test -n "$branch" && extra_args=(-b "$branch")
+
+git submodule add "${extra_args[@]}" -f "$repo" "$path"
