@@ -26,6 +26,7 @@ arch jq
 arch less
 arch moreutils
 arch neovim-git
+arch nvim-treesitter-parsers-main-git
 arch rsync
 arch openbsd-netcat
 arch ripgrep

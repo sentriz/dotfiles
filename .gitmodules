@@ -16,10 +16,6 @@
 [submodule "conf_common/.config/fish/plugins/jethrokuan/z"]
 	path = conf_common/.config/fish/plugins/z
 	url = https://github.com/jethrokuan/z
-[submodule "conf_common/.local/share/nvim/site/pack/meta/opt/nvim-treesitter/nvim-treesitter"]
-	path = conf_common/.local/share/nvim/site/pack/plugins/start/nvim-treesitter
-	url = https://github.com/nvim-treesitter/nvim-treesitter
-	branch = main
 [submodule "conf_common/.local/share/nvim/site/pack/plugins/start/vim-sleuth"]
 	path = conf_common/.local/share/nvim/site/pack/plugins/start/vim-sleuth
 	url = https://github.com/tpope/vim-sleuth
@@ -74,6 +70,6 @@
 [submodule "conf_common/.local/share/nvim/site/pack/plugins/start/none-ls.nvim"]
 	path = conf_common/.local/share/nvim/site/pack/plugins/start/none-ls.nvim
 	url = https://github.com/nvimtools/none-ls.nvim
-[submodule "conf_common/.local/share/nvim/treesitter-parser-bin"]
-	path = conf_common/.local/share/nvim/treesitter-parser-bin
-	url = git@github.com:sentriz/treesitter-parser-bin.git
+[submodule "conf_common/.local/share/nvim/site/pack/plugins/start/nvim-treesitter-incremental-selection"]
+	path = conf_common/.local/share/nvim/site/pack/plugins/start/nvim-treesitter-incremental-selection
+	url = https://github.com/shushtain/nvim-treesitter-incremental-selection

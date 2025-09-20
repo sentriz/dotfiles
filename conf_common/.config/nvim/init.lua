@@ -407,57 +407,49 @@ nullls.setup({
 	},
 })
 
--- add rebuilt treesitter parsers to rtp
-local uname = vim.loop.os_uname()
-local arch = uname.machine:lower()
-local parser_bin = vim.fn.stdpath("data") .. "/treesitter-parser-bin/" .. arch
-vim.opt.rtp:append(parser_bin)
-
--- treesitter
-local tscontext = require("treesitter-context")
-local tsconfigs = require("nvim-treesitter.configs")
-
-local ts_highlight = {
-	enable = true,
-	use_languagetree = true,
-	additional_vim_regex_highlighting = false,
-}
-local ts_indent = { enable = true }
-local ts_incremental_selection = {
-	enable = true,
-	keymaps = {
-		init_selection = "=",
-		node_incremental = "=",
-		node_decremental = "-",
-		scope_incremental = "+",
-	},
-}
-
-tsconfigs.setup({
-	highlight = ts_highlight,
-	indent = ts_indent,
-	incremental_selection = ts_incremental_selection,
+-- treesitter incremental selection
+local tsincremental = require("nvim-treesitter-incremental-selection")
+tsincremental.setup({
+	ignore_injections = false,
+	loop_siblings = true,
+	fallback = true,
+	quiet = true,
 })
 
--- ignore all treesitter errors
-do
-	local ts = vim.treesitter
-	local orig_start = ts.start
-	ts.start = function(...)
-		pcall(orig_start, ...)
-	end
-end
+vim.keymap.set("n", "=", tsincremental.init_selection)
+vim.keymap.set("v", "=", tsincremental.increment_node)
+vim.keymap.set("v", "-", tsincremental.decrement_node)
 
-vim.cmd([[
-set foldmethod=expr
-set foldexpr=nvim_treesitter#foldexpr()
-set foldlevel=99
-set foldtext=FoldText()
-function! FoldText()
-  return getline(v:foldstart) . " ..."
-endfunction
-]])
+vim.keymap.set("v", "_", tsincremental.prev_sibling)
+vim.keymap.set("v", "+", tsincremental.next_sibling)
 
+-- treesitter parser name overrides
+vim.treesitter.language.register("angular", { "htmlangular" })
+vim.treesitter.language.register("bash", { "sh" })
+vim.treesitter.language.register("commonlisp", { "lisp" })
+vim.treesitter.language.register("diff", { "gitdiff" })
+vim.treesitter.language.register("elixir", { "ex" })
+vim.treesitter.language.register("git_config", { "gitconfig" })
+vim.treesitter.language.register("git_rebase", { "gitrebase" })
+vim.treesitter.language.register("haskell", { "hs" })
+vim.treesitter.language.register("ini", { "confini", "dosini" })
+vim.treesitter.language.register("javascript", { "javascriptreact", "ecma", "ecmascript", "jsx", "js" })
+vim.treesitter.language.register("latex", { "tex" })
+vim.treesitter.language.register("make", { "automake" })
+vim.treesitter.language.register("markdown", { "pandoc" })
+vim.treesitter.language.register("python", { "py", "gyp" })
+vim.treesitter.language.register("ssh_config", { "sshconfig" })
+vim.treesitter.language.register("typescript", { "ts" })
+
+-- treesitter auto start
+vim.api.nvim_create_autocmd("FileType", {
+	callback = function()
+		pcall(vim.treesitter.start)
+	end,
+})
+
+-- treesitter tscontext
+local tscontext = require("treesitter-context")
 tscontext.setup({
 	enable = true,
 	throttle = true,
@@ -471,9 +463,15 @@ tscontext.setup({
 	},
 })
 
+-- treesitter folding
 vim.cmd([[
-omap     m :<c-u>lua require('tsht').nodes()<cr>
-xnoremap m :lua require('tsht').nodes()<cr>
+set foldmethod=expr
+set foldexpr=v:lua.vim.treesitter.foldexpr()
+set foldlevel=99
+set foldtext=FoldText()
+function! FoldText()
+  return getline(v:foldstart) . " ..."
+endfunction
 ]])
 
 local dap = require("dap")
