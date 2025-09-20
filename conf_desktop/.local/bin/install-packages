@@ -42,7 +42,7 @@ function want() {
 if want arch; then
     yay --version
     readarray -t pkgs < <(list arch)
-    EDITOR=true yay -S --needed --noconfirm "${pkgs[@]}"
+    EDITOR=true yay -S --needed --noconfirm --answeredit N --answerdiff N "${pkgs[@]}"
 fi
 
 if want python; then
