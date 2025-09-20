@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+pidof -q bluetoothd || exit
+
 function notify() {
     notify-send --hint "string:x-dunst-stack-tag:$0" "$1" "$(strip-escape <<<"${@:2}" | lower)"
 }
