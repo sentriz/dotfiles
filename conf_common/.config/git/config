@@ -57,7 +57,7 @@
 	skippedCherryPicks = false
 [core]
 	editor = nvim
-	pager = less -r
+	pager = less --tabs 4
 [pull]
 	rebase = true
 [commit]
