@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-pidof -q bluetoothd || exit
+pidof -q bluetoothd || exit 0
 
 function notify() {
     notify-send --hint "string:x-dunst-stack-tag:$0" "$1" "$(strip-escape <<<"${@:2}" | lower)"
