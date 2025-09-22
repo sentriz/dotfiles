@@ -11,8 +11,9 @@ if [[ "$#" -gt 0 ]]; then
     virsh start "$machine" 2>/dev/null
 
     # ensure remote's login shell is bash before this
-    virt-viewer "$machine"
+    virt-viewer "$machine" &
+    disown
     exit 0
 fi
 
-virsh list --name --all | grep .
+virsh list --name --all | grep . | sort
