@@ -162,7 +162,7 @@ vim.keymap.set("t", "<esc>", "<c-\\><c-n>")
 -- easy split / quit
 function CloseIfSaved()
 	if not vim.bo.modified or #vim.fn.win_findbuf(vim.fn.bufnr()) > 1 then
-		vim.cmd("quit")
+		vim.cmd("silent! quit")
 	end
 end
 
