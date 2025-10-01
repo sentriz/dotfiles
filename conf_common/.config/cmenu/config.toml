@@ -74,3 +74,9 @@
   name = "rec"
   path = "menu-rec"
   colour = 6
+
+[[scripts]]
+  triggers = ["td"]
+  name = "tuned"
+  path = "menu-tuned"
+  colour = 7

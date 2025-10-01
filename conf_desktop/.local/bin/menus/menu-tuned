@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+if [[ "$#" -gt 0 ]]; then
+    IFS=$'\t' read -r id _ <<<"$1"
+    tuned-adm profile "$id"
+    exit 0
+fi
+
+tuned-adm profile | col "- " 2 3
