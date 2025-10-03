@@ -3,6 +3,10 @@
 # requires:
 # - bluez
 
+num_devices="$(bluetoothctl devices Connected | wc -l)"
+test "$num_devices" -gt 1 \
+    && echo "bluetooth $num_devices devices"
+
 function find-device() {
     grep -Po "Alias: \K.*" | lower
 }

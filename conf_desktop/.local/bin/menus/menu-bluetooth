@@ -3,7 +3,7 @@
 pidof -q bluetoothd || exit 0
 
 function notify() {
-    notify-send --hint "string:x-dunst-stack-tag:$0" "$1" "$(strip-escape <<<"${@:2}" | lower)"
+    notify-send --hint "string:x-dunst-stack-tag:$0" "$1" "$(strip-escape <<<"${@:2}")"
 }
 
 connected_pre="> "
@@ -11,29 +11,26 @@ connected_pre="> "
 if [[ "$#" -gt 0 ]]; then
     device="$1"
     device=${device#"$connected_pre"}
+    connected=
+    [[ "$1" != "$device" ]] && connected=1
 
-    device_mac="$(cut -d ' ' -f 2 <<<"$device")"
-    device_name="$(cut -d ' ' -f 3- <<<"$device")"
+    IFS=$'\t' read -r mac name <<<"$device"
 
-    if test "$device" = "disconnect"; then
-        bluetoothctl -- disconnect >/dev/null 2>&1
+    if [[ -n "$connected" ]]; then
+        bluetoothctl -- disconnect "$mac" >/dev/null 2>&1
         exit
     fi
 
-    notify "bluetooth $device_name" "$(bluetoothctl -- power on)"
-    notify "bluetooth $device_name" "$(bluetoothctl -- connect "$device_mac" | grep -v "^\[")"
+    notify "bluetooth $name" "$(bluetoothctl -- power on)"
+    notify "bluetooth $name" "$(bluetoothctl -- connect "$mac" | grep -v "^\[")"
 
     exit
 fi
 
-current_device_mac="$(bluetoothctl info | grep -Po "^Device \K[^ ]{17}")"
+connected="$(bluetoothctl devices Connected | lower)"
 
-bluetoothctl devices | grep "^Device " | while read -r line; do
+bluetoothctl devices | grep "^D" | lower | while IFS=" " read -r _ mac name; do
     pre=""
-    if [[ -n "$current_device_mac" && "$line" == *"$current_device_mac"* ]]; then
-        pre="$connected_pre"
-    fi
-    echo "$pre$line"
-done | lower
-
-echo "disconnect"
+    [[ -n "$connected" && "$connected" == *"$mac"* ]] && pre="$connected_pre"
+    printf "%s%s\t%s\n" "$pre" "$mac" "$name"
+done
