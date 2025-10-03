@@ -3,19 +3,24 @@
 playing_pre="> "
 
 pid_file="$XDG_CACHE_HOME/mpv_radio_pid"
+
 IFS=$'\t' read -r current_pid current_station <"$pid_file" 2>/dev/null
+if [[ -n "$current_pid" ]] && ! kill -0 "$current_pid" 2>/dev/null; then
+    current_pid=""
+    current_station=""
+    rm "$pid_file"
+fi
 
 if [[ "$#" -gt 0 ]]; then
-    [[ $current_pid -gt 0 ]] && kill "$current_pid"
+    [[ "$current_pid" -gt 0 ]] && kill "$current_pid"
 
     station="$1"
-    if [[ "$station" = "stop" ]]; then
+    station="${station//$playing_pre/}"
+
+    if [[ "$station" = "$current_station" ]]; then
         rm "$pid_file"
         exit
     fi
-
-    station="${station//$playing_pre/}"
-    station="${station//play /}"
 
     mpv \
         --no-ytdl \
@@ -41,7 +46,5 @@ find \
     if [[ "$line" = "$current_station" ]]; then
         pre="$playing_pre"
     fi
-    echo "${pre}play $line"
+    echo "${pre}$line"
 done
-
-echo "stop"
