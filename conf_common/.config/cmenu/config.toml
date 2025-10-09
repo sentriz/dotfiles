@@ -5,6 +5,7 @@
   preview = 10
   colour = 3
   stay_open = true
+  interval = "750ms"
 
 [[scripts]]
   triggers = ["a", "b"]
@@ -13,6 +14,7 @@
   preview = 10
   colour = 6
   stay_open = true
+  interval = "750ms"
 
 [[scripts]]
   name = "sway"
@@ -55,6 +57,7 @@
   path = "menu-iwd"
   colour = 10
   stay_open = true
+  interval = "1s"
 
 [[scripts]]
   triggers = ["r"]
