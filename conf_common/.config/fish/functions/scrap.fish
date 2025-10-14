@@ -1,6 +1,6 @@
 function scrap
-    if not test -d "$DOTS_SCRAP_DIR"
-        echo "DOTS_SCRAP_DIR not found" >&2
+    if not test -d "$SCRAP_DIR"
+        echo "SCRAP_DIR not found" >&2
         return 1
     end
 
@@ -79,7 +79,7 @@ function __scrap_
 end
 
 function __scrap_find
-    rg -g '**/*.go' -g '**/*.py' -g '**/*.ts' --line-number --no-heading --smart-case --color=never . "$DOTS_SCRAP_DIR" \
+    rg -g '**/*.go' -g '**/*.py' -g '**/*.ts' --line-number --no-heading --smart-case --color=never . "$SCRAP_DIR" \
         | sed -r 's/([^:]+)\:([0-9]+):/\1\t\2\t/g' \
         | fzf \
         | read -d \t path num rest
@@ -90,7 +90,7 @@ end
 
 function __scrap_setup_scrap_dir
     set -l prefix $argv[1]
-    set -l dir (mktemp -d "$DOTS_SCRAP_DIR/$prefix.XXXX")
+    set -l dir (mktemp -d "$SCRAP_DIR/$prefix.XXXX")
     cd "$dir"; or return 1
 
     function unscrap --inherit-variable dir

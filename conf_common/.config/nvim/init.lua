@@ -143,7 +143,7 @@ vim.keymap.set("n", "<leader>p", ":set spell!<cr>")
 vim.keymap.set("n", "<leader>s", ":%s/\\<<c-r><c-w>\\>/<c-r><c-w>/c<c-f>$F/")
 vim.keymap.set("n", "<leader>/", ":echo expand('%:p')<cr>")
 vim.keymap.set("n", "<leader>t", function()
-	return ":tabnew " .. vim.fn.expand("$DOTS_PROJECTS_DIR") .. "/"
+	return ":tabnew " .. vim.fn.expand("$PROJECTS_DIR") .. "/"
 end, { expr = true })
 
 -- better defaults

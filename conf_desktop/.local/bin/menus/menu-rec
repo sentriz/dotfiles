@@ -5,7 +5,7 @@ if [[ "$#" -gt 0 ]]; then
 
     case "$cmd" in
     "screenshot")
-        filename="${DOTS_SCREENSHOTS_DIR}/$(date '+%Y%m%d_%H%M%S').png"
+        filename="${SCREENSHOTS_DIR}/$(date '+%Y%m%d_%H%M%S').png"
 
         {
             area="$(area "$arg")"
@@ -22,7 +22,7 @@ if [[ "$#" -gt 0 ]]; then
         ;;
 
     "recording" | "recording audio")
-        filename="${DOTS_RECORDINGS_DIR}/$(date '+%Y%m%d_%H%M%S').mp4"
+        filename="${RECORDINGS_DIR}/$(date '+%Y%m%d_%H%M%S').mp4"
 
         extra_args=()
         [[ "$cmd" = "recording audio" ]] && extra_args=(-a)

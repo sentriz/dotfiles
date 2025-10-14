@@ -29,7 +29,7 @@ if [[ "$#" -gt 0 ]]; then
         --quiet \
         --force-media-title="$station" \
         --no-resume-playback \
-        "$DOTS_RADIO_DIR/$station" &
+        "$RADIO_DIR/$station" &
     echo -e "$!\t$station" >"$pid_file"
     notify-send 'started radio station' "$station"
 
@@ -37,7 +37,7 @@ if [[ "$#" -gt 0 ]]; then
 fi
 
 find \
-    "$DOTS_RADIO_DIR" \
+    "$RADIO_DIR" \
     -maxdepth 1 \
     -not -name '.st*' \
     -type f \

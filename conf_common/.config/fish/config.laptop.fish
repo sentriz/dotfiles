@@ -42,11 +42,11 @@ set -gx YABRIDGE_DEBUG_LEVEL ''
 abbr docker-compose "docker compose"
 
 function p --argument project
-    cd "$DOTS_PROJECTS_DIR/$project"
+    cd "$PROJECTS_DIR/$project"
 end
 
 complete -x --command p --arguments ( \
-    find "$DOTS_PROJECTS_DIR" \
+    find "$PROJECTS_DIR" \
         -maxdepth 1 -mindepth 1 \
         -type d \
         -printf '%P ' \
