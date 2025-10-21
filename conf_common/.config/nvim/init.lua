@@ -449,6 +449,7 @@ nullls.setup({
 	on_attach = on_attach,
 	sources = {
 		nullls.builtins.formatting.black,
+		nullls.builtins.formatting.clang_format,
 		nullls.builtins.formatting.fish_indent,
 		nullls.builtins.formatting.markdownlint.with({ extra_args = { "--disable", "MD014" } }),
 		nullls.builtins.formatting.pg_format.with({ extra_args = { "--keyword-case", 1, "--type-case", 1 } }),
