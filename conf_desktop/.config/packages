@@ -127,7 +127,7 @@ go go.senan.xyz/sway-rename-workspaces@latest
 go go.senan.xyz/xdg-desktop-list@latest
 go go.senan.xyz/last-dot-friends@master
 arch wlavu-git
-arch wlr-sunclock-git
+arch wlr-sunclock
 arch desktask
 
 # hw

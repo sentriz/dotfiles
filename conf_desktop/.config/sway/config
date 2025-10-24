@@ -359,5 +359,5 @@ exec sway-rename-workspaces
 exec gammastep
 exec last-dot-friends-notify
 
-exec wlr-sunclock                     -w 800  -a br -m "$default_gap,$default_gap,$default_gap,432" -S
+exec wlr-sunclock                     -w 800  -a br -m "$default_gap,$default_gap,$default_gap,432" -s
 exec desktask "$NOTES_DIR/general.md" -w 1000 -a br -m "$default_gap,$default_gap,$default_gap,$default_gap" -w 800 -h 400 -b "#303030" --display pending
