@@ -117,9 +117,6 @@ arch xdg-desktop-portal-wlr
 arch playerctl
 arch xdg-user-dirs
 arch xorg-xwayland
-arch noto-fonts
-arch noto-fonts-cjk
-arch noto-fonts-emoji
 go go.senan.xyz/cliphist@latest
 go go.senan.xyz/cmenu@latest
 arch chafa
@@ -129,6 +126,12 @@ go go.senan.xyz/last-dot-friends@master
 arch wlavu-git
 arch wlr-sunclock
 arch desktask
+
+# fonts
+arch noto-fonts
+arch noto-fonts-cjk
+arch noto-fonts-emoji
+arch adobe-source-code-pro-fonts
 
 # hw
 arch bluez
