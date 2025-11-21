@@ -363,13 +363,6 @@ vim.lsp.enable("tailwindcss", {
 	on_attach = on_attach,
 })
 
-vim.lsp.enable("denols", {
-	root_markers = { "deno.json" },
-	single_file_support = false,
-	capabilities = capabilities,
-	on_attach = on_attach,
-})
-
 vim.lsp.enable("ts_ls", {
 	root_markers = { "tsconfig.json", "jsconfig.json" },
 	handlers = {

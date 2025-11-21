@@ -60,11 +60,8 @@ function __scrap_typescript
     set -l file "main.ts"
 
     __write "$file" \
-        "// \$ cd \"$dir\"; and deno run \"$file\"" \
+        "// \$ cd \"$dir\"; and bun run \"$file\"" \
         ''
-
-    npm init --yes >/dev/null
-    touch deno.json
 
     $EDITOR "$file"
 end
