@@ -20,7 +20,7 @@
   name = "sway"
   path = "menu-sway"
   colour = 5
-  preview = 10
+  preview = 100
   columns = [2, 3]
 
 [[scripts]]
