@@ -78,7 +78,7 @@ vim.api.nvim_create_autocmd("FileType", {
 
 -- restore cursor position
 vim.api.nvim_create_augroup("AutoCursorLastPosition", { clear = true })
-vim.api.nvim_create_autocmd("BufReadPost", {
+vim.api.nvim_create_autocmd("BufWinEnter", {
 	group = "AutoCursorLastPosition",
 	callback = function()
 		local ft = vim.bo.filetype
