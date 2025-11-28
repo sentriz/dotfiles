@@ -39,7 +39,7 @@
 	                 git checkout "$2" && \
 	                 false
 
-	rebase-squash = !GIT_SEQUENCE_EDITOR=true git rebase --interactive --autosquash
+	rebase-squash = !GIT_SEQUENCE_EDITOR=true git rebase --interactive --autosquash --update-refs
 	commit-empty = !git commit --allow-empty -m "​"
 	master = !basename $(git symbolic-ref refs/remotes/origin/HEAD)
 
