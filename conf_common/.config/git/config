@@ -51,6 +51,7 @@
 [diff]
 	compactionHeuristic = true
 	noPrefix = true
+	renameLimit = 2048
 [advice]
 	statusHints = false
 	addEmptyPathspec = false
