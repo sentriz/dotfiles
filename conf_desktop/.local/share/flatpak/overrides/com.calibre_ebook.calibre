@@ -1,2 +1,2 @@
 [Context]
-filesystems=xdg-download;xdg-documents/books;!host
+filesystems=/run/media/senan/Kindle;xdg-documents/books;xdg-download;!host
