@@ -5,9 +5,11 @@ if [[ "$#" -gt 0 ]]; then
     exit
 fi
 
-wpctl status \
-    | sed -E 's/[└─│├]/ /g; s/\[vol.*//; s/\*(.*)/ \1 */; s/([0-9 ]{4})\./ \1/; s/:\s*$//; s/.*/\L\0/' \
-    | untree \
-    | col ' ' ' ' \
-    | grep -Ei "^audio (sinks|sources) " \
-    | sed -E 's/(.*) \*$/> \1/'
+default_sink="$(wpctl inspect @DEFAULT_AUDIO_SINK@ 2>/dev/null | grep -Po "^id \K[0-9]+")"
+default_source="$(wpctl inspect @DEFAULT_AUDIO_SOURCE@ 2>/dev/null | grep -Po "^id \K[0-9]+")"
+
+pw-dump \
+    | jq -r \
+        --argjson defaults "[$default_sink, $default_source]" \
+        '[.[] | select((.info.props["media.class"] // "") | test("^Audio/(Sink|Source)$"))] | sort_by(.info.props["media.class"]) | .[] | "\(if .id | IN($defaults[]) then "> " else "" end)\(.info.props["media.class"]) \(.id) \(.info.props["node.description"])"' \
+    | lower
