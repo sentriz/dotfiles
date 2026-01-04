@@ -104,6 +104,10 @@ output * {
     bg $XDG_PICTURES_DIR/wallpapers/flow.jpg fill
 }
 
+# output laptop lid close
+bindswitch --reload --locked lid:on output eDP-1 disable
+bindswitch --reload --locked lid:off output eDP-1 enable
+
 # right bar
 bar {
     font $default_font
