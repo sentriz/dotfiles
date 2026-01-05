@@ -358,7 +358,7 @@ exec_always 'pkill mako; exec mako \
 exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec wl-paste --watch cliphist store
 exec sway-rename-workspaces
-exec gammastep
+exec wlsunset -l 52.8 -L -6.9 -t 3000
 exec last-dot-friends-notify
 
 exec wlr-sunclock                     -w 800  -a br -m "$default_gap,$default_gap,$default_gap,432" -s

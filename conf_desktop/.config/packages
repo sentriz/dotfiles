@@ -112,7 +112,7 @@ arch swaylock
 arch wdisplays
 arch wf-recorder
 arch wl-clipboard
-arch gammastep
+arch wlsunset
 arch xdg-desktop-portal-gtk
 arch xdg-desktop-portal-wlr
 arch playerctl
