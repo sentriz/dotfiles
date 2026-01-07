@@ -57,6 +57,8 @@ set -gx PYTHON_VENVS_DIR "$XDG_CACHE_HOME/venvs"
 set -gx fish_user_paths \
     $HOME/.local/bin \
     $HOME/.local/bin/*/ \
+    /var/lib/flatpak/exports/bin \
+    $XDG_DATA_HOME/flatpak/exports/bin \
     $GOPATH/bin \
     $FNM_DIR/current/bin \
     $NPM_CONFIG_PREFIX/bin \
