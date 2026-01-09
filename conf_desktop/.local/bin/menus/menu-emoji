@@ -5,7 +5,7 @@ if [[ ! -f "$cache" ]]; then
     {
         echo "​	zero width space"
         echo "…	ellipsis"
-        fetch-emojis
+        uni -c emoji all -f "%(emoji)%(tab)%(name), %(cldr_full)" | sed "s/    /\t/"
     } >"$cache"
 fi
 
