@@ -52,7 +52,6 @@ go go.senan.xyz/serve@latest
 go go.senan.xyz/tmplc@latest
 go github.com/sentriz/numb@master
 go github.com/sentriz/once@master
-go github.com/tomnomnom/gron@latest
 go zgo.at/uni/v2@latest
 
 # git send email
