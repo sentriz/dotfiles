@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-playing_pre="> "
-
 pid_file="$XDG_CACHE_HOME/mpv_radio_pid"
 
 IFS=$'\t' read -r current_pid current_station <"$pid_file" 2>/dev/null
@@ -15,7 +13,6 @@ if [[ "$#" -gt 0 ]]; then
     [[ "$current_pid" -gt 0 ]] && kill "$current_pid"
 
     station="$1"
-    station="${station//$playing_pre/}"
 
     if [[ "$station" = "$current_station" ]]; then
         rm "$pid_file"
@@ -36,6 +33,8 @@ if [[ "$#" -gt 0 ]]; then
     exit
 fi
 
+highlight=$'\x1b]6366;highlight\x07'
+
 find \
     "$RADIO_DIR" \
     -maxdepth 1 \
@@ -43,8 +42,6 @@ find \
     -type f \
     -printf "%f\n" | while read -r line; do
     pre=""
-    if [[ "$line" = "$current_station" ]]; then
-        pre="$playing_pre"
-    fi
-    echo "${pre}$line"
+    [[ "$line" = "$current_station" ]] && pre="$highlight"
+    echo "$pre$line"
 done

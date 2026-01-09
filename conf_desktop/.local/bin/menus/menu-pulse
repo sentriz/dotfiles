@@ -1,15 +1,18 @@
 #!/usr/bin/env bash
 
 if [[ "$#" -gt 0 ]]; then
-    wpctl set-default "$(echo "$1" | grep -Eo "[0-9]+")"
+    wpctl set-default "$(echo "$1" | grep -Eo "[0-9]+\b")"
     exit
 fi
 
 default_sink="$(wpctl inspect @DEFAULT_AUDIO_SINK@ 2>/dev/null | grep -Po "^id \K[0-9]+")"
 default_source="$(wpctl inspect @DEFAULT_AUDIO_SOURCE@ 2>/dev/null | grep -Po "^id \K[0-9]+")"
 
+highlight=$'\x1b]6366;highlight\x07'
+
 pw-dump \
     | jq -r \
         --argjson defaults "[$default_sink, $default_source]" \
-        '[.[] | select((.info.props["media.class"] // "") | test("^Audio/(Sink|Source)$"))] | sort_by(.info.props["media.class"]) | .[] | "\(if .id | IN($defaults[]) then "> " else "" end)\(.info.props["media.class"]) \(.id) \(.info.props["node.description"])"' \
+        --arg highlight "$highlight" \
+        '[.[] | select((.info.props["media.class"] // "") | test("^Audio/(Sink|Source)$"))] | sort_by(.info.props["media.class"]) | .[] | "\(if .id | IN($defaults[]) then $highlight else "" end)\(.info.props["media.class"]) \(.id) \(.info.props["node.description"])"' \
     | lower

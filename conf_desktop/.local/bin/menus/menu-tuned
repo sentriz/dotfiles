@@ -6,4 +6,11 @@ if [[ "$#" -gt 0 ]]; then
     exit 0
 fi
 
-tuned-adm profile | col "- " 2 3
+highlight=$'\x1b]6366;highlight\x07'
+
+active="$(tuned-adm active | col " " -1)"
+tuned-adm profile | col "- " 2 3 | while IFS=$'\t' read -r id desc; do
+    pre=""
+    [[ "$id" == "$active" ]] && pre="$highlight"
+    printf "%s%s\t%s\n" "$pre" "$id" "$desc"
+done

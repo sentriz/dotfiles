@@ -1,18 +1,18 @@
 #!/usr/bin/env bash
 
 station="wlan0"
-connected_pre="> "
 
 if [[ "$#" -gt 0 ]]; then
     IFS=$'\t' read -r name _ <<<"$1"
-    name="${name//$connected_pre/}"
     iwctl --dont-ask station "$station" connect "$name"
     exit
 fi
+
+highlight=$'\x1b]6366;highlight\x07'
 
 iwctl station "$station" scan >/dev/null 2>&1
 iwctl station "$station" get-networks \
     | strip-escape \
     | sed -rn '1,4d;$d; s/..(>)? {3,}([^ ].+[^ ]) {3,}([^ ]+) {3,}([^ ]+).*/\2\t\3\t\1/p' \
     | sort -t $'\t' -k1 \
-    | sed -r "s/(.*)>\$/$connected_pre\1/; s/\t\$//"
+    | sed -r "s/(.*)>\$/$highlight\1/; s/\t\$//"

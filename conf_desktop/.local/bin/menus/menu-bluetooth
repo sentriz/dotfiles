@@ -6,11 +6,8 @@ function notify() {
     notify-send --hint "string:x-dunst-stack-tag:$0" "$1" "$(strip-escape <<<"${@:2}")"
 }
 
-connected_pre="> "
-
 if [[ "$#" -gt 0 ]]; then
     device="$1"
-    device=${device#"$connected_pre"}
     connected=
     [[ "$1" != "$device" ]] && connected=1
 
@@ -29,8 +26,10 @@ fi
 
 connected="$(bluetoothctl devices Connected | lower)"
 
+highlight=$'\x1b]6366;highlight\x07'
+
 bluetoothctl devices | grep "^D" | lower | while IFS=" " read -r _ mac name; do
     pre=""
-    [[ -n "$connected" && "$connected" == *"$mac"* ]] && pre="$connected_pre"
+    [[ -n "$connected" && "$connected" == *"$mac"* ]] && pre="$highlight"
     printf "%s%s\t%s\n" "$pre" "$mac" "$name"
 done
