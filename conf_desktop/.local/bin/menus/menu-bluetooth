@@ -6,14 +6,12 @@ function notify() {
     notify-send --hint "string:x-dunst-stack-tag:$0" "$1" "$(strip-escape <<<"${@:2}")"
 }
 
+readarray -t connected_macs < <(bluetoothctl devices Connected | lower | col " " 2)
+
 if [[ "$#" -gt 0 ]]; then
-    device="$1"
-    connected=
-    [[ "$1" != "$device" ]] && connected=1
+    IFS=$'\t' read -r mac name <<<"$1"
 
-    IFS=$'\t' read -r mac name <<<"$device"
-
-    if [[ -n "$connected" ]]; then
+    if [[ "${connected_macs[*]}" =~ $mac ]]; then
         bluetoothctl -- disconnect "$mac" >/dev/null 2>&1
         exit
     fi
@@ -24,12 +22,10 @@ if [[ "$#" -gt 0 ]]; then
     exit
 fi
 
-connected="$(bluetoothctl devices Connected | lower)"
-
 highlight=$'\x1b]6366;highlight\x07'
 
 bluetoothctl devices | grep "^D" | lower | while IFS=" " read -r _ mac name; do
     pre=""
-    [[ -n "$connected" && "$connected" == *"$mac"* ]] && pre="$highlight"
+    [[ "${connected_macs[*]}" =~ $mac ]] && pre="$highlight"
     printf "%s%s\t%s\n" "$pre" "$mac" "$name"
 done
