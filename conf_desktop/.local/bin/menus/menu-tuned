@@ -8,8 +8,15 @@ fi
 
 highlight=$'\x1b]6366;highlight\x07'
 
-active="$(tuned-adm active | col " " -1)"
-tuned-adm profile | col "- " 2 3 | while IFS=$'\t' read -r id desc; do
+output="$(tuned-adm profile)"
+
+active="$(grep -Po "^Current.*: \K.*" <<<"$output")"
+grep "^-" <<<"$output" | col "- " 2 3 | sort | while IFS=$'\t' read -r id desc; do
+    case "$id" in
+    *"power"* | *"perf"* | *"balance"*) ;;
+    *) continue ;;
+    esac
+
     pre=""
     [[ "$id" == "$active" ]] && pre="$highlight"
     printf "%s%s\t%s\n" "$pre" "$id" "$desc"
