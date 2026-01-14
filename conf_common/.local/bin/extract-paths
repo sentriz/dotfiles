@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"os"
 	"regexp"
+	"slices"
 	"strings"
 )
 
@@ -34,7 +35,7 @@ func run(vimFlag bool, filesFlag bool) error {
 
 	// add possible abs path prefixes
 	for _, absPath := range commonPrefixes {
-		matchPrefixes = append(matchPrefixes, regexp.QuoteMeta(absPath))
+		matchPrefixes = append(matchPrefixes, absPath)
 	}
 
 	// add relative to current dir prefixes, fill be expanded to abs paths
@@ -43,14 +44,22 @@ func run(vimFlag bool, filesFlag bool) error {
 		return fmt.Errorf("read local dir: %w", err)
 	}
 	for _, path := range relPaths {
-		matchPrefixes = append(matchPrefixes, regexp.QuoteMeta(path.Name()))
+		matchPrefixes = append(matchPrefixes, path.Name())
 	}
 
 	// add ~/ and ./ dir prefix
 	matchPrefixes = append(matchPrefixes,
-		regexp.QuoteMeta("~"),
-		regexp.QuoteMeta("."),
+		"~",
+		".",
 	)
+
+	slices.SortFunc(matchPrefixes, func(a, b string) int {
+		return len(b) - len(a)
+	})
+
+	for i := range matchPrefixes {
+		matchPrefixes[i] = regexp.QuoteMeta(matchPrefixes[i])
+	}
 
 	expr, err := regexp.Compile(fmt.Sprintf(`(?:^|\s)((?P<path>(?:%s)(?:/[^$\s\;~\:\"]+)?)(?::(?P<line>\d+)(?::(?P<col>\d+))?)?)`, strings.Join(matchPrefixes, "|")))
 	if err != nil {
