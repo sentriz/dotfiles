@@ -83,7 +83,7 @@ func run(vimFlag bool, filesFlag bool) error {
 			path := text[m[exprPath*2]:m[exprPath*2+1]]
 
 			if filesFlag {
-				if stat, err := os.Stat(path); err != nil || stat.IsDir() {
+				if stat, err := os.Stat(path); err != nil || !stat.Mode().IsRegular() {
 					continue
 				}
 			}
