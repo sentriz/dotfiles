@@ -2,7 +2,7 @@
 
 if [[ "$#" -gt 0 ]]; then
     IFS=$'\t' read -r id _ <<<"$1"
-    rbw get "$id" | wl-copy -n
+    rbw get "$id" | wl-copy -n --sensitive
     exit
 fi
 
