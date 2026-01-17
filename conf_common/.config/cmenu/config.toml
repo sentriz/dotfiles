@@ -76,3 +76,9 @@
   name = "tuned"
   path = "menu-tuned"
   colour = 7
+
+[[scripts]]
+  triggers = ["pre cc", "input"]
+  name = "calc"
+  path = "menu-calc"
+  colour = 2
