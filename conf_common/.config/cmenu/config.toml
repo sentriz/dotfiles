@@ -1,85 +1,78 @@
 [[scripts]]
-  triggers = ["b", "a"]
+  triggers = ["on-start", "pre b", "script pulse", "interval 750ms"]
   name = "bluetooth"
   path = "menu-bluetooth"
-  preview = 10
   colour = 3
   stay_open = true
-  interval = "750ms"
 
 [[scripts]]
-  triggers = ["a", "b"]
+  triggers = ["on-start", "pre a", "script bluetooth", "interval 750ms"]
   name = "pulse"
   path = "menu-pulse"
-  preview = 10
   colour = 6
   stay_open = true
-  interval = "750ms"
 
 [[scripts]]
+  triggers = ["on-start"]
   name = "sway"
   path = "menu-sway"
   colour = 5
-  preview = 100
   columns = [2, 3]
 
 [[scripts]]
-  triggers = ["p"]
+  triggers = ["on-start", "pre p"]
   name = "package"
   path = "menu-package"
-  preview = 5
   colour = 7
   columns = [1, 2]
 
 [[scripts]]
-  triggers = ["bw", "pw"]
+  triggers = ["pre pw"]
   name = "bw"
   path = "menu-bw"
   colour = 12
   columns = [2, 3, 4]
 
 [[scripts]]
-  triggers = ["c"]
+  triggers = ["pre c"]
   name = "clipboard"
   path = "menu-clipboard"
   colour = 11
 
 [[scripts]]
-  triggers = ["e"]
+  triggers = ["pre e"]
   name = "emoji"
   path = "menu-emoji"
-  preview = 10
   colour = 12
 
 [[scripts]]
-  triggers = ["w"]
+  triggers = ["pre w", "interval 1s"]
   name = "iwd"
   path = "menu-iwd"
   colour = 10
   stay_open = true
-  interval = "1s"
 
 [[scripts]]
-  triggers = ["r"]
+  triggers = ["pre r"]
   name = "radio"
   path = "menu-radio"
   colour = 1
   stay_open = true
 
 [[scripts]]
-  triggers = ["v"]
+  triggers = ["pre v"]
   name = "virt"
   path = "menu-virt"
   colour = 5
 
 [[scripts]]
-  triggers = ["s"]
+  triggers = ["pre s"]
   name = "rec"
   path = "menu-rec"
   colour = 6
 
 [[scripts]]
-  triggers = ["td"]
+  triggers = ["pre td"]
   name = "tuned"
   path = "menu-tuned"
   colour = 7
