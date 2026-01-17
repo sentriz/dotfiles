@@ -1,5 +1,5 @@
 [[scripts]]
-  triggers = ["on-start", "pre b", "script pulse", "interval 750ms"]
+  triggers = ["on-start", "pre b", "script audio", "interval 750ms"]
   name = "bluetooth"
   path = "menu-bluetooth"
   colour = 3
@@ -7,8 +7,8 @@
 
 [[scripts]]
   triggers = ["on-start", "pre a", "script bluetooth", "interval 750ms"]
-  name = "pulse"
-  path = "menu-pulse"
+  name = "audio"
+  path = "menu-audio"
   colour = 6
   stay_open = true
 
@@ -27,9 +27,9 @@
   columns = [1, 2]
 
 [[scripts]]
-  triggers = ["pre pw"]
-  name = "bw"
-  path = "menu-bw"
+  triggers = ["pre pw", "pre pass"]
+  name = "pass"
+  path = "menu-pass"
   colour = 12
   columns = [2, 3, 4]
 
@@ -47,8 +47,8 @@
 
 [[scripts]]
   triggers = ["pre w", "interval 1s"]
-  name = "iwd"
-  path = "menu-iwd"
+  name = "wifi"
+  path = "menu-wifi"
   colour = 10
   stay_open = true
 
@@ -67,8 +67,8 @@
 
 [[scripts]]
   triggers = ["pre s"]
-  name = "rec"
-  path = "menu-rec"
+  name = "scrot"
+  path = "menu-scrot"
   colour = 6
 
 [[scripts]]
