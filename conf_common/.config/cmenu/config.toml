@@ -82,3 +82,9 @@
   name = "calc"
   path = "menu-calc"
   colour = 2
+
+[[scripts]]
+  triggers = ["pre hh", "input"]
+  name = "hiphash"
+  path = "menu-hiphash"
+  colour = 2

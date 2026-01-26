@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+if [[ "$#" -gt 0 ]]; then
+    IFS=$'\t' read -r name hash id <<<"$1"
+    case "$name" in
+    "input")
+        wl-copy -n <<<"$id"
+        ;;
+    *)
+        wl-copy -n <<<"$hash"
+        ;;
+    esac
+
+    exit 0
+fi
+
+if [[ -z "$CMENU_QUERY" ]]; then
+    echo "no input"
+    exit
+fi
+
+if [[ "$CMENU_QUERY" =~ ^[0-9]+$ ]]; then
+    hiphash -enc all "$CMENU_QUERY" || exit 0
+fi
+
+hiphash "$CMENU_QUERY" || exit 0
