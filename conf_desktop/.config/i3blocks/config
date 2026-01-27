@@ -26,6 +26,10 @@ interval=60
 
 [time]
 
+[calendar]
+interval=30
+color=#4dcfbf
+
 [timer]
 interval=3
 signal=4
