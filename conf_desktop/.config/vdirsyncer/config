@@ -1,0 +1,55 @@
+[general]
+status_path = "~/.cache/vdirsyncer/status/"
+
+[pair contacts]
+a = "contacts_local"
+b = "contacts_radicale"
+collections = [["contacts", "contacts", "d9d9a7ee-5ad7-8c98-19f9-83c2917abc86"]]
+
+[storage contacts_local]
+type = "filesystem"
+path = "~/contacts/"
+fileext = ".vcf"
+
+[storage contacts_radicale]
+type = "carddav"
+read_only = true
+url.fetch = ["command", "secret", "vdirsyncer_radicale_url"]
+username.fetch = ["command", "secret", "vdirsyncer_radicale_username"]
+password.fetch = ["command", "secret", "vdirsyncer_radicale_password"]
+
+
+[pair calendar]
+a = "calendar_local"
+b = "calendar_radicale"
+collections = [["calendar", "calendar", "d88f863b-dca7-9c46-c1c0-8a02fb874cd5"], ["birthdays", "birthdays", "45493dcb-4991-c7f4-8d97-cdddc1208ecc"]]
+
+[storage calendar_local]
+type = "filesystem"
+path = "~/calendar/"
+fileext = ".ics"
+
+[storage calendar_radicale]
+type = "caldav"
+read_only = true
+url.fetch = ["command", "secret", "vdirsyncer_radicale_url"]
+username.fetch = ["command", "secret", "vdirsyncer_radicale_username"]
+password.fetch = ["command", "secret", "vdirsyncer_radicale_password"]
+
+
+[pair calendar_work]
+a = "calendar_work_local"
+b = "calendar_work_radicale"
+collections = [["work", "work", "senan@hipeople.io"]]
+
+[storage calendar_work_local]
+type = "filesystem"
+path = "~/calendar/"
+fileext = ".ics"
+
+[storage calendar_work_radicale]
+type = "google_calendar"
+read_only = true
+token_file = "~/.cache/vdirsyncer/google_token"
+client_id.fetch = ["command", "secret", "vdirsyncer_google_client_id"]
+client_secret.fetch = ["command", "secret", "vdirsyncer_google_client_secret"]

@@ -127,6 +127,9 @@ go go.senan.xyz/last-dot-friends@master
 arch wlavu-git
 arch wlr-sunclock
 arch desktask
+arch vdirsyncer
+arch python-aiohttp-oauthlib
+arch khal
 
 # fonts
 arch noto-fonts
