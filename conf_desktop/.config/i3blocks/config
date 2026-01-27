@@ -1,6 +1,6 @@
 full_text=
 command=~/.local/bin/blocks/block-$BLOCK_NAME
-interval=5
+interval=10
 separator=false
 
 [playing]
