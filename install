@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+set -e
+
+for type in "$@"; do
+    case "$type" in
+    "common")
+        stow -v --no-folding --ignore ".*\/tests\/.*" --target ~ -R conf_common
+        ;;
+    "desktop")
+        stow -v --ignore ".*\/tests\/.*" --target ~ -R conf_desktop
+        ;;
+    "phone")
+        stow -v --no-folding --ignore ".*\/tests\/.*" --target ~ -R conf_phone
+        ;;
+    "server")
+        stow -v --no-folding --ignore ".*\/tests\/.*" --target /etc -R conf_server
+        ;;
+    *)
+        echo "unknown <type> \"$type\"" >&2
+        exit 1
+        ;;
+    esac
+done

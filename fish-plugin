@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+
+set -e
+
+command="$1"
+shift
+
+case "$command" in
+"install")
+    if [[ -z "$1" ]]; then
+        echo "please provide a <repo>" >&2
+        exit 1
+    fi
+
+    repo="$1"
+    name="$(grep -Po '[^\/]+$' <<<"$repo")"
+    path="conf_common/.config/fish/plugins/$name"
+
+    git submodule add -f "$repo" "$path"
+    ;;
+
+"uninstall")
+    if [[ -z "$1" ]]; then
+        echo "please provide a <name>" >&2
+        exit 1
+    fi
+
+    name="$1"
+    path="conf_common/.config/fish/plugins/$name"
+
+    git submodule deinit -f "$path"
+    git rm -f "$path"
+    ;;
+
+*)
+    echo "unknown <command> \"$command\"" >&2
+    exit 1
+    ;;
+esac

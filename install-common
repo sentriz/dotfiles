@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-set -e
-
-stow -v --no-folding --ignore ".*\/tests\/.*" --target ~ -R conf_common

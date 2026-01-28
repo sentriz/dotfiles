@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-stow -v --ignore ".*\/tests\/.*" --target ~ -R conf_desktop

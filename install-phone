@@ -1,2 +1,0 @@
-#!/usr/bin/env bash
-stow -v --no-folding --ignore ".*\/tests\/.*" --target ~ -R conf_phone
