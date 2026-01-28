@@ -88,3 +88,10 @@
   name = "hiphash"
   path = "menu-hiphash"
   colour = 2
+
+[[scripts]]
+  triggers = ["pre lm", "input 500ms"]
+  name = "llm"
+  path = "menu-llm"
+  colour = 2
+  stay_open = true

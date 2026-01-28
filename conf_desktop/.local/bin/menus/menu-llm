@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+if [[ "$#" -gt 0 ]]; then
+    wl-copy -n <<<"$1"
+    exit 0
+fi
+
+if [[ -z "$CMENU_QUERY" ]]; then
+    echo "no input"
+    exit
+fi
+
+claude -p "$CMENU_QUERY"
+exit 0
