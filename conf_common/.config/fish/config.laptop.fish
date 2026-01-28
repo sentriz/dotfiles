@@ -53,6 +53,8 @@ complete -x --command p --arguments ( \
 )
 
 if status is-login
+    dbus-update-activation-environment --systemd SSH_AUTH_SOCK XDG_DATA_DIRS PATH
+
     switch (tty)
         case /dev/tty1
             exec sway >/tmp/sway_log 2>&1
