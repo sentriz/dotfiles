@@ -70,14 +70,14 @@ set -gx fish_user_paths \
     $ANDROID_HOME/platform-tools \
     $ANDROID_HOME/emulator \
     /usr/local/go/bin \
+    /usr/local/bin \
+    /usr/local/sbin \
     /bin \
     /opt/Etcher \
     /opt/balenaEtcher \
     /sbin \
     /usr/bin \
     /usr/bin/vendor_perl \
-    /usr/local/bin \
-    /usr/local/sbin \
     /usr/sbin \
     /usr/share/git/git-jump/ \
     /opt/flutter/bin/
