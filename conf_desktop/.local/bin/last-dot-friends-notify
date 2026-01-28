@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+killall last-dot-friends
+
 # requires: https://github.com/sentriz/last-dot-friends
 
 icon_path="$XDG_CACHE_HOME/last-dot-friends-icon.svg"

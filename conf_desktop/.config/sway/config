@@ -353,11 +353,13 @@ exec_always 'pkill mako; exec mako \
     --anchor bottom-right \
     --ignore-timeout 1 \
     --default-timeout 4000'
+
+exec last-dot-friends-notify
+
 exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec wl-paste --watch cliphist store
 exec sway-rename-workspaces
 exec wlsunset -l 52.8 -L -6.9 -t 3000
-exec last-dot-friends-notify
 
 exec wlr-sunclock                     -w 800  -a br -m "$default_gap,$default_gap,$default_gap,448" -s
 exec desktask "$NOTES_DIR/general.md" -w 1000 -a br -m "$default_gap,$default_gap,$default_gap,232"          -w 800 -h 200 -b "#303030" --display pending
