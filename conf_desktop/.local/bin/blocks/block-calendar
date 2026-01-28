@@ -1,17 +1,5 @@
 #!/usr/bin/env fish
 
-function fmt_duration
-    set -l secs $argv[1]
-    if test "$secs" -ge 3600
-        set -l h (math -s0 "$secs / 3600")
-        set -l m (math -s0 "($secs % 3600) / 60")
-        echo "$h"h "$m"m
-    else
-        set -l m (math -s0 "$secs / 60")
-        echo "$m"m
-    end
-end
-
 set now_secs (date "+%s")
 set buffer_hours 6
 
@@ -26,7 +14,7 @@ khal list today tomorrow -df "" -f "{start-date}{tab}{start-time}{tab}{end-date}
 
     set rel now
     test "$start_secs" -ge "$now_secs"
-    and set rel "in "(fmt_duration (math "$start_secs - $now_secs + $now_secs % 60"))
+    and set rel "in "(relative-duration (math "$start_secs - $now_secs + $now_secs % 60"))
 
     echo "($rel) $title"
     break

@@ -1,0 +1,13 @@
+#!/usr/bin/env fish
+
+set -l secs $argv[1]
+
+if test "$secs" -lt 3600
+    set -l m (math -s0 "$secs / 60")
+    echo "$m"m
+    exit
+end
+
+set -l h (math -s0 "$secs / 3600")
+set -l m (math -s0 "($secs % 3600) / 60")
+echo "$h"h "$m"m
