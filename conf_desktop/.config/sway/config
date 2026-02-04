@@ -350,6 +350,7 @@ exec_always 'pkill mako; exec mako \
     --border-size 2 \
     --border-color "#FFFFFF" \
     --text-color "#FFFFFF" \
+    --height 2000 \
     --anchor bottom-right \
     --ignore-timeout 1 \
     --default-timeout 4000'
