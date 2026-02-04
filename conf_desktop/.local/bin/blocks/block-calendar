@@ -1,5 +1,10 @@
 #!/usr/bin/env fish
 
+switch "$BLOCK_BUTTON"
+    case 1
+        notify-send (khal list today today -df "" -f "{start-time} {title}" | string replace -r '^ ' 'today ' | string collect)
+end
+
 set now_secs (date "+%s")
 set buffer_hours 6
 
