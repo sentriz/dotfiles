@@ -18,13 +18,6 @@ and locale \
     | sed -nE 's/^([^=#]+)=(.*)/set -gx \1 \2/gp' \
     | source
 
-function __tmux_env
-    string match -q -r 'tmux\-\d+' "$TMUX"
-    and tmux show-env
-    string match -q -r 'tmate\-\d+' "$TMUX"
-    and tmate show-env
-end
-
 set -gx SCRAP_DIR "$HOME/scrap"
 set -gx SCREENSHOTS_DIR "$XDG_PICTURES_DIR/screenshots"
 set -gx RECORDINGS_DIR "$XDG_PICTURES_DIR/recordings"
@@ -86,6 +79,13 @@ source "$__fish_config_dir/config.$HOSTNAME.fish" 2>/dev/null
 
 # only interactive from here onwards
 status is-interactive || exit
+
+function __tmux_env
+    string match -q -r 'tmux\-\d+' "$TMUX"
+    and tmux show-env
+    string match -q -r 'tmate\-\d+' "$TMUX"
+    and tmate show-env
+end
 
 # import tmux env
 __tmux_env \
