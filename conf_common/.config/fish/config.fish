@@ -22,7 +22,7 @@ set -gx SCRAP_DIR "$HOME/scrap"
 set -gx SCREENSHOTS_DIR "$XDG_PICTURES_DIR/screenshots"
 set -gx RECORDINGS_DIR "$XDG_PICTURES_DIR/recordings"
 set -gx RADIO_DIR "$HOME/radio"
-set -gx COPT_DIR /opt/containers
+set -gx CONTAINER_DIR /opt/containers
 set -gx PROJECTS_DIR "$HOME/projects"
 set -gx NOTES_DIR "$HOME/notes"
 

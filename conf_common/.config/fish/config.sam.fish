@@ -12,7 +12,7 @@ complete -x --command p --arguments ( \
 )
 
 function cc --argument container
-    cd "$COPT_DIR/$container"
+    cd "$CONTAINER_DIR/$container"
 end
 
 complete -x --command cc --arguments ( \
