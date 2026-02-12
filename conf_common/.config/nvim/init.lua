@@ -379,6 +379,7 @@ vim.lsp.enable("jdtls", { capabilities = capabilities })
 vim.lsp.enable("clangd", { capabilities = capabilities, on_attach = on_attach })
 vim.lsp.enable("dockerls", { capabilities = capabilities, on_attach = on_attach })
 vim.lsp.enable("rust_analyzer", { capabilities = capabilities, on_attach = on_attach })
+vim.lsp.enable("zls")
 
 -- lsp diagnostics
 vim.diagnostic.config({ virtual_text = false })
@@ -439,6 +440,8 @@ vim.keymap.set("n", "L", vim.diagnostic.goto_next, { silent = true })
 
 -- nullls
 local nullls = require("null-ls")
+local nullls_helpers = require("null-ls.helpers")
+
 nullls.setup({
 	log_level = "off",
 	on_attach = on_attach,
@@ -452,12 +455,23 @@ nullls.setup({
 		nullls.builtins.formatting.shfmt.with({ extra_args = { "-i", 4, "-bn" } }),
 		nullls.builtins.formatting.stylua,
 		nullls.builtins.formatting.goimports,
+		nullls.builtins.formatting.zig,
 
 		nullls.builtins.diagnostics.hadolint.with({ extra_args = { "--ignore", "DL3018", "--ignore", "DL3008" } }),
 		nullls.builtins.diagnostics.markdownlint,
 		nullls.builtins.diagnostics.pylint,
 		nullls.builtins.diagnostics.selene,
 	},
+})
+
+nullls.register({
+	method = nullls.methods.FORMATTING,
+	filetypes = { "zig" },
+	generator = nullls_helpers.formatter_factory({
+		command = "zig",
+		args = { "fmt", "--stdin" },
+		to_stdin = true,
+	}),
 })
 
 -- treesitter incremental selection
