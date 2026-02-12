@@ -44,6 +44,7 @@ vim.api.nvim_set_hl(0, "MatchParen", { underline = true })
 vim.api.nvim_set_hl(0, "Folded", { ctermfg = 8, italic = true })
 vim.api.nvim_set_hl(0, "TabLineSel", { ctermbg = 8 })
 vim.api.nvim_set_hl(0, "NormalFloat", { ctermbg = 0 })
+vim.api.nvim_set_hl(0, "QuickFixLine", { ctermbg = 0 })
 
 -- spelling
 vim.api.nvim_set_hl(0, "SpellLocal", { ctermfg = 9, underline = true })
