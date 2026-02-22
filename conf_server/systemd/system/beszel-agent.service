@@ -1,0 +1,22 @@
+[Unit]
+Description=Beszel Agent
+After=network.target
+
+[Service]
+User=containers
+Group=containers
+SupplementaryGroups=disk
+RuntimeDirectory=beszel-agent
+ExecStart=/usr/local/bin/beszel-agent
+Environment="KEY=ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIES/4pW4gSVRKNzzsIKapAY4r0ll7QPCKPbEvEcQ5HL"
+Environment="LISTEN=/run/beszel-agent/beszel.sock"
+Environment="EXTRA_FILESYSTEMS=/mnt/media__media,/mnt/tv__tv,/mnt/extra__extra"
+Environment="SMART_DEVICES=/dev/sda,/dev/sdb,/dev/sdc,/dev/sdd,/dev/nvme0"
+Environment="DOCKER_HOST=unix:///run/user/1000/podman/podman.sock"
+AmbientCapabilities=CAP_SYS_RAWIO CAP_SYS_ADMIN
+CapabilityBoundingSet=CAP_SYS_RAWIO CAP_SYS_ADMIN
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
