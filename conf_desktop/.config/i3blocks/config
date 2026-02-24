@@ -31,5 +31,5 @@ interval=30
 color=#4dcfbf
 
 [timer]
-interval=3
+interval=5
 signal=4
