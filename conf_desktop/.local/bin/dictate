@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+
+# depends
+#   - pipewire (pw-record)
+#   - whisper-cpp-git
+
+set -e
+
+model_name="tiny_en_acft_q8_0.bin"
+model_url="https://voiceinput.futo.org/VoiceInput/$model_name"
+model="$XDG_DATA_HOME/whisper-models/$model_name"
+pid="$XDG_RUNTIME_DIR/dictate.pid"
+wav="$XDG_RUNTIME_DIR/dictate.wav"
+
+case "$1" in
+"start")
+    [[ -f "$pid" ]] && kill "$(cat "$pid")" 2>/dev/null || true
+    rm -f "$pid" "$wav"
+
+    if [[ ! -f "$model" ]]; then
+        mkdir -p "$(dirname "$model")"
+        curl -L -o "$model" "$model_url"
+    fi
+
+    pw-record --format=s16 --rate=16000 --channels=1 "$wav" &
+    echo "$!" >"$pid"
+    ;;
+
+"stop")
+    if [[ ! -f "$pid" ]]; then
+        echo "not recording" >&2
+        exit 1
+    fi
+
+    kill -TERM "$(cat "$pid")" 2>/dev/null
+    wait "$(cat "$pid")" 2>/dev/null || true
+    rm -f "$pid"
+
+    whisper-cli -m "$model" -l en --no-timestamps --no-prints -f "$wav" 2>/dev/null | sed 's/^[[:space:]]*//;s/[[:space:]]*$//'
+    rm -f "$wav"
+    ;;
+
+*)
+    echo "need <command>" >&2
+    exit 1
+    ;;
+esac

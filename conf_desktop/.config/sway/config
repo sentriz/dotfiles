@@ -165,6 +165,7 @@ bindsym $super+r workspace back_and_forth, move workspace to output right, works
 bindsym $super+$alt+space mode $mode_move_floating focus floating
 bindsym $super+$alt+q     mode $mode_system
 bindsym $super+$alt+t     mode $mode_timer
+bindsym $super+$alt+d     mode $mode_dictate, exec dictate start
 
 set $mode_system "system: [l]ock [s]uspend [h]ibernate [r]eboot shut[d]own e[x]it r[e]load"
 mode $mode_system {
@@ -187,6 +188,13 @@ mode $mode_move_floating {
     bindsym l move right
     bindsym Return mode "default"
     bindsym Escape mode "default"
+}
+
+set $mode_dictate "dictate: [enter] copy, [space] type, [esc] cancel"
+mode $mode_dictate {
+    bindsym Return mode default, exec sh -c 'dictate stop | wl-copy'
+    bindsym space  mode default, exec sh -c 'dictate stop | xargs -0 wtype --'
+    bindsym Escape mode default, exec dictate stop >/dev/null
 }
 
 set $mode_timer "timer: [-]1m, [+]1m"

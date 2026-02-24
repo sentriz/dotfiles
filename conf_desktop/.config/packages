@@ -130,6 +130,8 @@ arch desktask
 arch vdirsyncer
 arch python-aiohttp-oauthlib
 arch khal
+arch wtype
+arch whisper-cpp-git
 
 # fonts
 arch noto-fonts
