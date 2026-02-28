@@ -180,30 +180,45 @@ vim.keymap.set("n", "<left>", ":vertical resize +2<cr>")
 vim.keymap.set("n", "<right>", ":vertical resize -2<cr>")
 
 -- navigation mappings
-vim.keymap.set("n", "[p", ":cprevious<cr>") -- qf list
-vim.keymap.set("n", "]p", ":cnext<cr>")
-vim.keymap.set("n", "{P", ":cpfile<cr>") -- qf list files (shift)
-vim.keymap.set("n", "}P", ":cnfile<cr>")
-vim.keymap.set("n", "[o", ":bprevious<cr>") -- buffer
-vim.keymap.set("n", "]o", ":bnext<cr>")
-vim.keymap.set("n", "{O", ":tabprevious<cr>") -- tab (shift)
-vim.keymap.set("n", "}O", ":tabnext<cr>")
-vim.keymap.set("n", "[q", ":colder<cr>") -- list of qf lists
-vim.keymap.set("n", "]q", ":cnewer<cr>")
+local function smart_nav(forward)
+	local cmd_next, cmd_prev, check
 
--- toggle quickfix list
-local function toggle_quickfix()
-	local windows = vim.fn.getwininfo()
-	for _, win in pairs(windows) do
-		if win["quickfix"] == 1 then
-			vim.cmd.cclose()
+	local loc_info = vim.fn.getloclist(0, { size = 0, winid = 0 })
+	if loc_info.size > 0 then
+		if loc_info.winid ~= 0 then
+			pcall(vim.cmd, forward and "lnext" or "lprev")
 			return
 		end
 	end
-	vim.cmd.copen()
+
+	local qf_info = vim.fn.getqflist({ size = 0, winid = 0 })
+	if qf_info.size > 0 then
+		if qf_info.winid ~= 0 then
+			pcall(vim.cmd, forward and "cnext" or "cprev")
+			return
+		end
+	end
+
+	if vim.fn.argc() > 1 then
+		local current_arg_idx = vim.fn.argidx()
+		if forward and current_arg_idx < vim.fn.argc() - 1 then
+			vim.cmd("next")
+			return
+		elseif not forward and current_arg_idx > 0 then
+			vim.cmd("prev")
+			return
+		end
+	end
+
+	pcall(vim.cmd, forward and "bnext" or "bprev")
 end
 
-vim.keymap.set("n", "]]", toggle_quickfix)
+vim.keymap.set("n", "{", function()
+	smart_nav(false)
+end)
+vim.keymap.set("n", "}", function()
+	smart_nav(true)
+end)
 
 -- copy character above/below cursor
 vim.keymap.set("i", "<c-y>", function()
