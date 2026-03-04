@@ -62,8 +62,10 @@ arch perl-mime-tools
 # bin / script
 go github.com/traefik/yaegi/cmd/yaegi@latest
 
-# sec
+# auth
 arch rbw
+arch gnome-keyring
+arch libsecret
 
 # gui virt
 arch libvirt
