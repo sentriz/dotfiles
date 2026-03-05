@@ -14,6 +14,7 @@ set -gx --path XDG_DATA_DIRS \
     "$XDG_DATA_HOME"
 
 set -gx TERMINAL foot
+set -gx TERMINAL_LIGHT foot -o initial-color-theme=light
 
 # set -gx GDK_BACKEND 'wayland'
 set -gx CLUTTER_BACKEND wayland
@@ -61,8 +62,4 @@ if status is-login
         case /dev/tty2
             exec htop
     end
-end
-
-if status is-interactive
-    theme dark
 end

@@ -4,4 +4,4 @@ cmenu=cmenu
 
 pidof "$cmenu" && exit
 
-"$TERMINAL" --app-id "cmenu" sh -c "theme light; $cmenu"
+$TERMINAL_LIGHT --app-id "cmenu" "$cmenu"

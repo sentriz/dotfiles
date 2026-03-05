@@ -25,9 +25,7 @@ if #groups_to_clear > 0 then
 	vim.cmd(table.concat(clear_commands, " | "))
 end
 
--- here trying to ask vim to only use the terminal's 16 ansi colours. then the
--- theme is switched for the terminal and vim at the same time with the script
--- $ theme <dark|light>
+-- only use 16 ansi colours, "real" colours are provided by the shell
 vim.cmd("set t_Co=16")
 
 -- basic highlights
