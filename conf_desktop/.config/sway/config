@@ -53,11 +53,12 @@ set $lock swaylock \
     --line-uses-ring \
     --daemonize
 
-set $up_block_1 pkill -RTMIN+1 i3blocks
-set $up_block_2 pkill -RTMIN+2 i3blocks
-set $up_block_3 pkill -RTMIN+3 i3blocks
-set $up_block_4 pkill -RTMIN+4 i3blocks
-set $up_block_5 pkill -RTMIN+5 i3blocks
+set $up_block_1   pkill -RTMIN+1 i3blocks
+set $up_block_2   pkill -RTMIN+2 i3blocks
+set $up_block_3   pkill -RTMIN+3 i3blocks
+set $up_block_4   pkill -RTMIN+4 i3blocks
+set $up_block_5   pkill -RTMIN+5 i3blocks
+set $up_block_all sh -c 'seq 5 | xargs -I{} pkill -RTMIN+{} i3blocks'
 
 # basic appearance
 smart_borders on
@@ -343,7 +344,7 @@ bindsym $super+o exec makoctl restore
 bindsym $super+p exec makoctl dismiss --all
 
 # cmenu
-bindcode 66 exec pidof cmenu || $TERMINAL_LIGHT --app-id cmenu cmenu && up_block_1 && up_block_2 && up_block_3
+bindcode 66 exec pidof cmenu || $TERMINAL_LIGHT --app-id cmenu cmenu && $up_block_all
 for_window [app_id="^cmenu$"] floating enable, sticky enable, resize set 100 ppt 45 ppt, move position 0 0
 
 # autostarts
