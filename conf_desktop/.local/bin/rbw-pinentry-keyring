@@ -1,0 +1,114 @@
+#!/bin/bash
+# Copyright (c) 2021 Jesse Luehrs
+# Licensed under the MIT License
+# https://github.com/doy/rbw
+
+[[ -z "${RBW_PROFILE}" ]] && rbw_profile='rbw' || rbw_profile="rbw-${RBW_PROFILE}"
+
+set -eEuo pipefail
+
+function help() {
+    cat <<EOHELP
+Usage: rbw-pinentry-keyring [options]
+
+Use this script as pinentry to store master password for rbw into your keyring.
+
+Options:
+  -h, --help, help     Display this help message
+  -c, --clear, clear   Clear the stored master password from the keyring
+
+Notes:
+  - Ensure "secret-tool" is installed to access the keyring.
+  - Add "rbw-pinentry-keyring" as the "pinentry" in rbw configuration (${XDG_CONFIG_HOME}/rbw/config.json).
+  - Master passwords are stored in the keyring as plaintext; secure your keyring appropriately.
+  - Supports multiple profiles; set RBW_PROFILE during setup to specify the profile.
+  - Can easily be rewritten to use other backends than keyring by setting the "secret_value"-variable
+
+Setup:
+  - This script will setup keyring if rbw does not already exists in the keyring (tested with pinentry-gnome3),
+    but you can run the "secret-tool store"-command manually as well. For example:
+
+    $ echo -n MASTER_PASSWORD | secret-tool store --label="$rbw_profile master password" application rbw profile "$rbw_profile" type master_password
+
+EOHELP
+}
+
+function clear() {
+    secret-tool clear application rbw profile "$rbw_profile" type master_password
+}
+
+function getpin() {
+    echo 'OK'
+
+    title=""
+    prompt=""
+    desc=""
+
+    while IFS=' ' read -r command args ; do
+        case "$command" in
+            SETTITLE)
+                title="$args"
+                echo 'OK'
+                ;;
+            SETDESC)
+                desc="$args"
+                echo 'OK'
+                ;;
+            SETPROMPT)
+                prompt="$args"
+                echo 'OK'
+                ;;
+            GETPIN)
+                if [[ "$prompt" == "Master Password" ]]; then
+                    set +e
+                    secret_value="$(secret-tool lookup application rbw profile "$rbw_profile" type master_password)"
+                    err=$?
+                    set -e
+
+                    if [[ $err == 1 ]]; then
+                        cmd="SETTITLE rbw\n"
+                        cmd+="SETPROMPT Master Password\n"
+                        cmd+="SETDESC Please enter the master password for '$rbw_profile'\n"
+                        cmd+="GETPIN\n"
+                        secret_value="$(printf '%b' "$cmd" | pinentry "$@" | grep -E "^D " | cut -c3-)"
+                        if [ -n "$secret_value" ]; then
+                            echo -n "$secret_value" | secret-tool store --label="$rbw_profile master password" application rbw profile "$rbw_profile" type master_password >/dev/null 2>&1
+                        fi
+                    fi
+
+                    printf 'D %s\n' "$secret_value"
+                    echo 'OK'
+                else
+                    cmd="SETTITLE $title\n"
+                    cmd+="SETPROMPT $prompt\n"
+                    cmd+="SETDESC $desc\n"
+                    cmd+="GETPIN\n"
+
+                    secret_value="$(printf '%b' "$cmd" | pinentry "$@" | grep -E "^D " | cut -c3-)"
+
+                    printf 'D %s\n' "$secret_value"
+                    echo 'OK'
+                fi
+                ;;
+            BYE)
+                exit
+                ;;
+            *)
+                echo 'ERR Unknown command'
+                ;;
+        esac
+    done
+}
+
+command="$1"
+case "$command" in
+    -h|--help|help)
+        help
+        ;;
+    -c|--clear|clear)
+        clear
+        ;;
+    *)
+        getpin "$@"
+        ;;
+esac
