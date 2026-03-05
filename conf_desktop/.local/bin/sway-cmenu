@@ -1,7 +1,0 @@
-#!/usr/bin/env sh
-
-cmenu=cmenu
-
-pidof "$cmenu" && exit
-
-$TERMINAL_LIGHT --app-id "cmenu" "$cmenu"
