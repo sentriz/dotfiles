@@ -8,9 +8,12 @@ end
 set now_secs (date "+%s")
 set buffer_hours 6
 
+set ignored (cat "$XDG_CONFIG_HOME/calendar-ignore")
+
 khal list today tomorrow -df "" -f "{start-date}{tab}{start-time}{tab}{end-date}{tab}{end-time}{tab}{title}" | while read -d \t start_date start_time end_date end_time title
     test -z "$start_time"; and continue
     test -z "$end_time"; and continue
+    contains "$title" "$ignored"; and continue
 
     set start_secs (date -d "$start_date $start_time" "+%s")
     set end_secs (date -d "$end_date $end_time" "+%s")
