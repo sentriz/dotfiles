@@ -26,7 +26,10 @@ if [[ "$#" -gt 0 ]]; then
         filename="${RECORDINGS_DIR}/$(date '+%Y%m%d_%H%M%S').mp4"
 
         extra_args=()
-        [[ "$cmd" = "recording audio" ]] && extra_args=(-a)
+        if [[ "$cmd" = "recording audio" ]]; then
+            default_sink="$(wpctl inspect @DEFAULT_AUDIO_SINK@ 2>/dev/null | grep -Po 'node\.name = "\K[^"]+')"
+            extra_args=(--audio="${default_sink}.monitor")
+        fi
 
         {
             area="$(area "$arg")"
