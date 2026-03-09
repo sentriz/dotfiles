@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-
-find "$CONTAINER_DIR" -maxdepth 2 -name 'docker-compose.yml' -printf '%h\n' \
-    | grep -Ei --invert-match --file "$CONTAINER_DIR/.ignore" \
-    | while read -r path; do (
-        cd "$path" || exit
-        label "$path" "$@"
-    ); done
