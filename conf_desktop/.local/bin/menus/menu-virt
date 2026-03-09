@@ -10,7 +10,6 @@ if [[ "$#" -gt 0 ]]; then
     virsh resume "$machine" 2>/dev/null
     virsh start "$machine" 2>/dev/null
 
-    # ensure remote's login shell is bash before this
     virt-viewer "$machine" &
     disown
     exit 0
