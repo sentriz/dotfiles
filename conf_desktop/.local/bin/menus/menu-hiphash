@@ -14,13 +14,17 @@ if [[ "$#" -gt 0 ]]; then
     exit 0
 fi
 
-if [[ -z "$CMENU_QUERY" ]]; then
+inp="$CMENU_QUERY"
+if [[ -z "$inp" ]]; then
+    inp="$(wl-paste -n)"
+fi
+if [[ -z "$inp" ]]; then
     echo "no input"
     exit
 fi
 
-if [[ "$CMENU_QUERY" =~ ^[0-9]+$ ]]; then
-    hiphash -enc all "$CMENU_QUERY" || exit 0
+if [[ "$inp" =~ ^[0-9]+$ ]]; then
+    hiphash -enc all "$inp" || exit 0
 fi
 
-hiphash "$CMENU_QUERY" || exit 0
+hiphash "$inp" || exit 0
