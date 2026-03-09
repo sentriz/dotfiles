@@ -13,9 +13,6 @@ for type in "$@"; do
     "phone")
         stow -v --no-folding --ignore ".*\/tests\/.*" --target ~ -R conf_phone
         ;;
-    "server")
-        stow -v --no-folding --ignore ".*\/tests\/.*" --target /etc -R conf_server
-        ;;
     *)
         echo "unknown <type> \"$type\"" >&2
         exit 1
