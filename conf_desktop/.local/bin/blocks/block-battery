@@ -1,13 +1,14 @@
 #!/usr/bin/env bash
 
-batt_level="$(cat /sys/class/power_supply/BAT*/uevent \
-    | sed -rn 's/^POWER_SUPPLY_CAPACITY=([0-9]+)$/\1/p')"
+acpi_out="$(acpi -b 2>/dev/null | head -1)"
+[[ -z "$acpi_out" ]] && exit
 
+batt_level="$(echo "$acpi_out" | grep -oP '[0-9]+(?=%)')"
 [[ -z "$batt_level" ]] && exit
 [[ "$batt_level" -ge "100" ]] && exit
 
 status="battery"
-if acpi | grep -iq "\bcharging"; then
+if echo "$acpi_out" | grep -iq "\bcharging"; then
     status="charging"
 fi
 
