@@ -206,7 +206,6 @@ mode $mode_timer {
     bindsym Escape mode "default"
 }
 
-bindsym $super+grave workspace back_and_forth
 bindsym $super+1     workspace number 1
 bindsym $super+2     workspace number 2
 bindsym $super+3     workspace number 3
@@ -346,6 +345,10 @@ bindsym $super+p exec makoctl dismiss --all
 # cmenu
 bindcode 66 exec pidof cmenu || $TERMINAL_LIGHT --app-id cmenu cmenu && $up_block_all
 for_window [app_id="^cmenu$"] floating enable, sticky enable, resize set 100 ppt 45 ppt, move position 0 0
+
+# i3 back
+bindsym $super+grave [con_mark=_back] focus
+exec i3-back
 
 # autostarts
 exec_always dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP XDG_SESSION_TYPE

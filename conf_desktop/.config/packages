@@ -134,6 +134,7 @@ arch python-aiohttp-oauthlib
 arch khal
 arch wtype
 arch whisper-cpp-git
+arch i3-back-bin
 
 # fonts
 arch noto-fonts
