@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
 if [[ "$#" -gt 0 ]]; then
-    wpctl set-default "$(echo "$1" | grep -Eo "[0-9]+\b")"
+    IFS=$'\t' read -r _ id _ <<<"$1"
+    wpctl set-default "$id"
     exit
 fi
 
@@ -14,5 +15,5 @@ pw-dump \
     | jq -r \
         --argjson defaults "[$default_sink, $default_source]" \
         --arg highlight "$highlight" \
-        '[.[] | select((.info.props["media.class"] // "") | test("^Audio/(Sink|Source)$"))] | sort_by(.info.props["media.class"]) | .[] | "\(if .id | IN($defaults[]) then $highlight else "" end)\(.info.props["media.class"]) \(.id) \(.info.props["node.description"])"' \
+        '[.[] | select((.info.props["media.class"] // "") | test("^Audio/(Sink|Source)$"))] | sort_by(.info.props["media.class"]) | .[] | "\(if .id | IN($defaults[]) then $highlight else "" end)\(.info.props["media.class"])\t\(.id)\t\(.info.props["node.description"])"' \
     | lower
