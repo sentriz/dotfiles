@@ -29,6 +29,7 @@ exec bwrap \
     --bind-try "$HOME/.vst3" "$HOME/.vst3" \
     --bind-try "$HOME/daw" "$HOME/daw" \
     --tmpfs "$XDG_RUNTIME_DIR" \
+    --bind-try "$XDG_RUNTIME_DIR/$WAYLAND_DISPLAY" "$XDG_RUNTIME_DIR/$WAYLAND_DISPLAY" \
     --bind-try "$YABRIDGE_TEMP_DIR" "$YABRIDGE_TEMP_DIR" \
     --new-session \
     --die-with-parent \
