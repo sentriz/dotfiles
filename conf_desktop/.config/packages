@@ -167,7 +167,7 @@ arch realtime-privileges
 arch bubblewrap
 arch yabridge
 arch yabridgectl
-arch wine-tkg-staging-fsync-git
+arch wine-pure-git
 arch winetricks
 arch bitwig-studio
 arch tal-plugins
