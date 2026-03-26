@@ -95,12 +95,6 @@ vim.api.nvim_set_hl(0, "DiagnosticSignHint", { ctermfg = 2, bold = true })
 vim.api.nvim_set_hl(0, "DiagnosticSignInfo", { ctermfg = 15, bold = true })
 vim.api.nvim_set_hl(0, "DiagnosticSignWarn", { ctermfg = 3, bold = true })
 
--- diagnostic signs
-vim.fn.sign_define("DiagnosticSignError", { text = "ee", texthl = "DiagnosticSignError" })
-vim.fn.sign_define("DiagnosticSignHint", { text = "hh", texthl = "DiagnosticSignHint" })
-vim.fn.sign_define("DiagnosticSignInfo", { text = "ii", texthl = "DiagnosticSignInfo" })
-vim.fn.sign_define("DiagnosticSignWarn", { text = "ww", texthl = "DiagnosticSignWarn" })
-
 -- treesitter playground
 vim.api.nvim_set_hl(0, "TSNodeUnmatched", { ctermfg = 0 })
 vim.api.nvim_set_hl(0, "TSNodeKey", { ctermfg = 11, bold = true })

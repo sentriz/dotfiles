@@ -397,7 +397,17 @@ vim.lsp.enable("rust_analyzer", { capabilities = capabilities, on_attach = on_at
 vim.lsp.enable("zls")
 
 -- lsp diagnostics
-vim.diagnostic.config({ virtual_text = false })
+vim.diagnostic.config({
+	virtual_text = false,
+	signs = {
+		text = {
+			[vim.diagnostic.severity.ERROR] = "ee",
+			[vim.diagnostic.severity.HINT] = "hh",
+			[vim.diagnostic.severity.INFO] = "ii",
+			[vim.diagnostic.severity.WARN] = "ww",
+		},
+	},
+})
 
 -- lsp document highlight
 vim.api.nvim_create_autocmd("CursorHold", {
