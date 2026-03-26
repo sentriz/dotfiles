@@ -12,6 +12,15 @@ vim.opt.laststatus = 2
 vim.opt.signcolumn = "number"
 vim.opt.mouse = "a"
 
+-- no regex highlighting
+vim.api.nvim_create_autocmd("FileType", {
+	callback = function()
+		vim.schedule(function()
+			vim.bo.syntax = ""
+		end)
+	end,
+})
+
 -- clear all highlights
 vim.cmd("highlight clear")
 vim.cmd("syntax reset")
