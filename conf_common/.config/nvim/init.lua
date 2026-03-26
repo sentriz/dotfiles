@@ -532,6 +532,7 @@ vim.treesitter.language.register("markdown", { "pandoc" })
 vim.treesitter.language.register("python", { "py", "gyp" })
 vim.treesitter.language.register("ssh_config", { "sshconfig" })
 vim.treesitter.language.register("typescript", { "ts" })
+vim.treesitter.language.register("tsx", { "typescriptreact" })
 
 -- treesitter auto start
 vim.api.nvim_create_autocmd("FileType", {
