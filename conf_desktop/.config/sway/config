@@ -346,9 +346,8 @@ bindsym $super+p exec makoctl dismiss --all
 bindcode 66 exec pidof cmenu || $TERMINAL_LIGHT --app-id cmenu cmenu && $up_block_all
 for_window [app_id="^cmenu$"] floating enable, sticky enable, resize set 100 ppt 45 ppt, move position 0 0
 
-# i3 back
+# sway-rename-workspaces
 bindsym $super+grave [con_mark=_back] focus
-exec i3-back
 
 # autostarts
 exec_always dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP XDG_SESSION_TYPE
