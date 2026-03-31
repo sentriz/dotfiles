@@ -45,7 +45,6 @@ set -gx LESSHISTFILE -
 set -gx CARGO_HOME "$XDG_DATA_HOME/cargo"
 set -gx CARGO_NET_GIT_FETCH_WITH_CLI true
 set -gx RUSTUP_HOME "$XDG_DATA_HOME/rustup"
-set -gx PYTHON_VENVS_DIR "$XDG_CACHE_HOME/venvs"
 
 set -gx fish_user_paths \
     $HOME/.local/bin \

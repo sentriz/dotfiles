@@ -323,23 +323,6 @@ local function on_attach(client, buffer)
 	})
 end
 
--- when using pylint or pyright, make sure we're in the right venv. eg
--- $ source $PYTHON_VENVS_DIR/<venv>/bin/activate.fish
--- $ pip install -r requirements-dev.txt .
--- $ which pylint
--- $ which pyright
-
-vim.lsp.enable("pyright", {
-	settings = {
-		python = {
-			analysis = { autoSearchPaths = true, useLibraryCodeForTypes = true, diagnosticMode = "workspace" },
-			venvPath = os.getenv("PYTHON_VENVS_DIR"),
-		},
-	},
-	capabilities = capabilities,
-	on_attach = on_attach,
-})
-
 vim.lsp.enable("gopls", {
 	settings = {
 		gopls = {
