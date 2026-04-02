@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+usage() {
+    echo "usage: watch-run cmd [arg]... -- [file]..." >&2
+    exit 1
+}
+
+cmd=()
+files=()
+for arg in "$@"; do
+    if [ "$arg" = "--" ]; then
+        shift
+        break
+    fi
+    cmd+=("$arg")
+    shift
+done
+files=("$@")
+
+[ ${#cmd[@]} -eq 0 ] && usage
+[ ${#files[@]} -eq 0 ] && usage
+
+trap 'kill -TERM -$pid 2>/dev/null' EXIT HUP
+printf '%s\n' "${files[@]}" | setsid entr -rn "${cmd[@]}" &
+pid=$!
+wait
