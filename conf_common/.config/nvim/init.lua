@@ -288,46 +288,57 @@ cmp.setup.cmdline(":", {
 })
 
 -- lsp
-local capabilities = cmplsp.default_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-
 local format_augroup = vim.api.nvim_create_augroup("LSPFormatting", {})
-local function on_attach(client, buffer)
-	if not client:supports_method("textDocument/formatting") then
-		return
-	end
 
-	vim.api.nvim_clear_autocmds({
-		group = format_augroup,
-		buffer = buffer,
-	})
-	vim.api.nvim_create_autocmd("BufWritePre", {
-		group = format_augroup,
-		buffer = buffer,
-		callback = function()
-			if vim.g.noformat ~= nil then
-				return
-			end
-			vim.lsp.buf.format({
-				async = false,
-				timeout_ms = 5000,
-				filter = function(c)
-					-- using goimports instead
-					if c.name == "gopls" then
-						return false
-					end
-					-- using prettierd via null-ls instead
-					if c.name == "ts_ls" then
-						return false
-					end
-					return true
-				end,
-			})
-		end,
-	})
-end
+vim.api.nvim_create_autocmd("LspAttach", {
+	callback = function(args)
+		local client = vim.lsp.get_client_by_id(args.data.client_id)
+		if not client then
+			return
+		end
 
-vim.lsp.enable("gopls", {
+		client.server_capabilities.semanticTokensProvider = nil
+
+		if not client:supports_method("textDocument/formatting") then
+			return
+		end
+
+		vim.api.nvim_clear_autocmds({
+			group = format_augroup,
+			buffer = args.buf,
+		})
+		vim.api.nvim_create_autocmd("BufWritePre", {
+			group = format_augroup,
+			buffer = args.buf,
+			callback = function()
+				if vim.g.noformat ~= nil then
+					return
+				end
+				vim.lsp.buf.format({
+					async = false,
+					timeout_ms = 5000,
+					filter = function(c)
+						-- using goimports instead
+						if c.name == "gopls" then
+							return false
+						end
+						-- using prettierd via null-ls instead
+						if c.name == "ts_ls" then
+							return false
+						end
+						return true
+					end,
+				})
+			end,
+		})
+	end,
+})
+
+vim.lsp.config("*", {
+	capabilities = cmplsp.default_capabilities(),
+})
+
+vim.lsp.config("gopls", {
 	settings = {
 		gopls = {
 			experimentalPostfixCompletions = true,
@@ -344,41 +355,27 @@ vim.lsp.enable("gopls", {
 			},
 		},
 	},
-	capabilities = capabilities,
-	on_attach = on_attach,
 })
 
-vim.lsp.enable("bashls", { capabilities = capabilities, on_attach = on_attach })
-
-vim.lsp.enable("vue_ls", {
+vim.lsp.config("vue_ls", {
 	root_markers = { "vite.config.js", "vite.config.ts", "shims-vue.d.ts" },
-	capabilities = capabilities,
-	on_attach = on_attach,
 })
 
-vim.lsp.enable("tailwindcss", {
+vim.lsp.config("tailwindcss", {
 	root_markers = { "tailwind.config.js" },
-	capabilities = capabilities,
-	on_attach = on_attach,
 })
 
-vim.lsp.enable("ts_ls", {
+vim.lsp.config("ts_ls", {
 	root_markers = { "tsconfig.json", "jsconfig.json" },
 	handlers = {
 		["textDocument/definition"] = function(err, result, ...)
-			result = vim.tbl_islist(result) and result[1] or result
+			result = vim.islist(result) and result[1] or result
 			vim.lsp.handlers["textDocument/definition"](err, result, ...)
 		end,
 	},
-	capabilities = capabilities,
-	on_attach = on_attach,
 })
 
-vim.lsp.enable("jdtls", { capabilities = capabilities })
-vim.lsp.enable("clangd", { capabilities = capabilities, on_attach = on_attach })
-vim.lsp.enable("dockerls", { capabilities = capabilities, on_attach = on_attach })
-vim.lsp.enable("rust_analyzer", { capabilities = capabilities, on_attach = on_attach })
-vim.lsp.enable("zls")
+vim.lsp.enable({ "gopls", "bashls", "vue_ls", "tailwindcss", "ts_ls", "jdtls", "clangd", "dockerls", "rust_analyzer", "zls" })
 
 -- lsp diagnostics
 vim.diagnostic.config({
@@ -394,18 +391,7 @@ vim.diagnostic.config({
 })
 
 -- lsp document highlight
-vim.api.nvim_create_autocmd("CursorHold", {
-	callback = function()
-		local clients = vim.lsp.get_clients({ bufnr = 0 })
-		for _, client in ipairs(clients) do
-			if client:supports_method("textDocument/documentHighlight") then
-				vim.lsp.buf.document_highlight()
-				break
-			end
-		end
-	end,
-})
-vim.api.nvim_create_autocmd("CursorHoldI", {
+vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
 	callback = function()
 		local clients = vim.lsp.get_clients({ bufnr = 0 })
 		for _, client in ipairs(clients) do
@@ -453,7 +439,7 @@ local nullls_helpers = require("null-ls.helpers")
 
 nullls.setup({
 	log_level = "off",
-	on_attach = on_attach,
+
 	sources = {
 		nullls.builtins.formatting.black,
 		nullls.builtins.formatting.clang_format,
