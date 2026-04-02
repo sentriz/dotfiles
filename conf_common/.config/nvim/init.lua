@@ -316,6 +316,10 @@ local function on_attach(client, buffer)
 					if c.name == "gopls" then
 						return false
 					end
+					-- using prettierd via null-ls instead
+					if c.name == "ts_ls" then
+						return false
+					end
 					return true
 				end,
 			})
