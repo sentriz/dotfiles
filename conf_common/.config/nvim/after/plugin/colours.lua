@@ -110,12 +110,12 @@ vim.api.nvim_set_hl(0, "TSNodeKey", { ctermfg = 11, bold = true })
 
 -- statusline highlights
 vim.api.nvim_set_hl(0, "statusReadOnly", { bold = true, ctermfg = 1, ctermbg = 15 })
-vim.api.nvim_set_hl(0, "statusModifided", { bold = true, ctermfg = 1, ctermbg = 15 })
+vim.api.nvim_set_hl(0, "statusModified", { bold = true, ctermfg = 1, ctermbg = 15 })
 
 -- statusline configuration
-vim.opt.statusline = ""
-vim.opt.statusline:append("%#statusReadOnly#%{&readonly?'read only ':''}%*")
-vim.opt.statusline:append("%{@%}")
-vim.opt.statusline:append("%#statusModifided#%{&modified?'  modified':''}%*")
-vim.opt.statusline:append("%=")
-vim.opt.statusline:append(" column %c")
+vim.o.statusline = ""
+	.. "%#statusReadOnly#%{&readonly?'read only ':''}%*"
+	.. "%{@%}"
+	.. "%#statusModified#%{&modified?'  modified':''}%*"
+	.. "%="
+	.. " column %c"

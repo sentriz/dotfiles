@@ -293,7 +293,7 @@ capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 local format_augroup = vim.api.nvim_create_augroup("LSPFormatting", {})
 local function on_attach(client, buffer)
-	if not client.supports_method("textDocument/formatting") then
+	if not client:supports_method("textDocument/formatting") then
 		return
 	end
 
@@ -394,7 +394,7 @@ vim.api.nvim_create_autocmd("CursorHold", {
 	callback = function()
 		local clients = vim.lsp.get_clients({ bufnr = 0 })
 		for _, client in ipairs(clients) do
-			if client.supports_method("textDocument/documentHighlight") then
+			if client:supports_method("textDocument/documentHighlight") then
 				vim.lsp.buf.document_highlight()
 				break
 			end
@@ -405,7 +405,7 @@ vim.api.nvim_create_autocmd("CursorHoldI", {
 	callback = function()
 		local clients = vim.lsp.get_clients({ bufnr = 0 })
 		for _, client in ipairs(clients) do
-			if client.supports_method("textDocument/documentHighlight") then
+			if client:supports_method("textDocument/documentHighlight") then
 				vim.lsp.buf.document_highlight()
 				break
 			end
@@ -460,7 +460,6 @@ nullls.setup({
 		nullls.builtins.formatting.shfmt.with({ extra_args = { "-i", 4, "-bn" } }),
 		nullls.builtins.formatting.stylua,
 		nullls.builtins.formatting.goimports,
-		nullls.builtins.formatting.zig,
 
 		nullls.builtins.diagnostics.hadolint.with({ extra_args = { "--ignore", "DL3018", "--ignore", "DL3008" } }),
 		nullls.builtins.diagnostics.markdownlint,
