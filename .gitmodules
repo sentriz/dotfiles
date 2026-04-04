@@ -70,6 +70,6 @@
 [submodule "conf_common/.local/share/nvim/site/pack/plugins/start/none-ls.nvim"]
 	path = conf_common/.local/share/nvim/site/pack/plugins/start/none-ls.nvim
 	url = https://github.com/nvimtools/none-ls.nvim
-[submodule "conf_common/.local/share/nvim/site/pack/plugins/start/nvim-treesitter-incremental-selection"]
-	path = conf_common/.local/share/nvim/site/pack/plugins/start/nvim-treesitter-incremental-selection
-	url = https://github.com/shushtain/nvim-treesitter-incremental-selection
+[submodule "conf_common/.local/share/nvim/site/pack/plugins/start/incselect.nvim"]
+	path = conf_common/.local/share/nvim/site/pack/plugins/start/incselect.nvim
+	url = https://github.com/shushtain/incselect.nvim

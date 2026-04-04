@@ -469,20 +469,14 @@ nullls.register({
 })
 
 -- treesitter incremental selection
-local tsincremental = require("nvim-treesitter-incremental-selection")
-tsincremental.setup({
-	ignore_injections = false,
-	loop_siblings = true,
-	fallback = true,
-	quiet = true,
-})
+local incselect = require("incselect")
 
-vim.keymap.set("n", "=", tsincremental.init_selection)
-vim.keymap.set("v", "=", tsincremental.increment_node)
-vim.keymap.set("v", "-", tsincremental.decrement_node)
+vim.keymap.set("n", "=", incselect.init)
+vim.keymap.set("v", "=", incselect.parent)
+vim.keymap.set("v", "-", incselect.undo)
 
-vim.keymap.set("v", "_", tsincremental.prev_sibling)
-vim.keymap.set("v", "+", tsincremental.next_sibling)
+vim.keymap.set("v", "_", incselect.prev)
+vim.keymap.set("v", "+", incselect.next)
 
 -- treesitter parser name overrides
 vim.treesitter.language.register("angular", { "htmlangular" })
