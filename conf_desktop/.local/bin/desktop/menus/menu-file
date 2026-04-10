@@ -1,0 +1,97 @@
+#!/usr/bin/env bash
+
+function current_file() {
+    mime="$(wl-paste -l 2>/dev/null | head -n 1)"
+    case "$mime" in
+    text/uri-list)
+        path="$(wl-paste --type text/uri-list 2>/dev/null | head -n 1)"
+        path="${path#file://}"
+        if [[ -f "$path" ]]; then
+            printf "%s\t%s\n" "clipboard-uri" "$(file --mime-type -b "$path")"
+            return
+        fi
+        ;;
+    image/* | video/*)
+        printf "%s\t%s\n" "clipboard-media" "$mime"
+        return
+        ;;
+    esac
+
+    path="$(find "$XDG_DOWNLOAD_DIR" "$SCREENSHOTS_DIR" "$RECORDINGS_DIR" -maxdepth 1 -type f -printf '%T@\t%p\n' 2>/dev/null \
+        | sort -rn | head -1 | cut -f2)"
+    if [[ -f "$path" ]]; then
+        printf "%s\t%s\n" "$path" "$(file --mime-type -b "$path")"
+        return
+    fi
+}
+
+function resolve_file() {
+    case "$1" in
+    clipboard-uri)
+        wl-paste --type text/uri-list 2>/dev/null | head -n 1 | sed 's@^file://@@'
+        ;;
+    clipboard-media)
+        extension="$(wl-paste --type "$2" 2>/dev/null | file -b --extension - | cut -d/ -f1)"
+        path="$(mktemp "$XDG_RUNTIME_DIR/upload-XXX.$extension")"
+        wl-paste --type "$2" >"$path"
+        echo "$path"
+        ;;
+    *)
+        echo "$1"
+        ;;
+    esac
+}
+
+if [[ "$#" -gt 0 ]]; then
+    IFS=$'\t' read -r cmd _ _ arg_2 <<<"$1"
+
+    IFS=$'\t' read -r source mime <<<"$(current_file)"
+    path="$(resolve_file "$source" "$mime")"
+    [[ -z "$path" ]] && exit 1
+
+    case "$cmd" in
+    "drop")
+        drop "$path" &
+        disown
+        ;;
+    "copy")
+        case "$mime" in
+        image/*) wl-copy --type "$mime" <"$path" ;;
+        *) wl-copy -t text/uri-list "file://$path" ;;
+        esac
+        ;;
+    "upload")
+        url="$(upload "$arg_2" "$path")"
+        [[ -z "$url" ]] && exit 1
+
+        wl-copy "$url"
+
+        notify-send "uploaded" "$url"
+        ;;
+    esac
+
+    exit
+fi
+
+IFS=$'\t' read -r source mime <<<"$(current_file)"
+if [[ -n "$mime" ]]; then
+    label="$source"
+    if [[ -f "$source" ]]; then
+        label="$(basename "$(dirname "$source")")/$(basename "$source")"
+    fi
+
+    case "$source" in
+    clipboard-*) ;;
+    *) printf "copy\t%s\t%s\n" "$label" "$mime" ;;
+    esac
+
+    printf "drop\t%s\t%s\n" "$label" "$mime"
+
+    case "$mime" in
+    image/*)
+        for upl in $(upload list); do
+            printf "upload\t%s\t%s\t%s\n" "$label" "$mime" "$upl"
+        done
+        ;;
+    esac
+fi
