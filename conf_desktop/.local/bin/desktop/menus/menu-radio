@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-pid_file="$XDG_CACHE_HOME/mpv_radio_pid"
+pid_file="$XDG_RUNTIME_DIR/mpv_radio_pid"
 
 IFS=$'\t' read -r current_pid current_station <"$pid_file" 2>/dev/null
 if [[ -n "$current_pid" ]] && ! kill -0 "$current_pid" 2>/dev/null; then

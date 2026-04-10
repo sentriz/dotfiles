@@ -3,7 +3,7 @@
 # create a chain from source -> virt sink -> pro-q 3 -> hw sink
 # requires yabridge, carla, pipewire
 
-exec 9>"$XDG_CACHE_HOME/pro-q"
+exec 9>"$XDG_RUNTIME_DIR/pro-q"
 flock -n 9 || exit 1
 
 DEFER=

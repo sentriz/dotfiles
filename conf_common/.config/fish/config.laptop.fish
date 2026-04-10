@@ -58,7 +58,7 @@ if status is-login
 
     switch (tty)
         case /dev/tty1
-            exec sway >/tmp/sway_log 2>&1
+            exec sway >"$XDG_RUNTIME_DIR/sway_log" 2>&1
         case /dev/tty2
             exec htop
     end

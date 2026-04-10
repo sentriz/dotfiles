@@ -10,7 +10,7 @@ function clipboard_file() {
     extension="$(wl-paste --type image | file -b --extension -)"
     [[ -z "$extension" ]] && exit 1
 
-    filename="$(mktemp "/tmp/upload-XXX.$extension")"
+    filename="$(mktemp "$XDG_RUNTIME_DIR/upload-XXX.$extension")"
     wl-paste --type image >"$filename"
 
     echo "$filename"
