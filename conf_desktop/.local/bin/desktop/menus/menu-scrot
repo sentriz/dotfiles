@@ -1,23 +1,7 @@
 #!/usr/bin/env bash
 
-function clipboard_file() {
-    filename="$(wl-paste --type text/uri-list 2>/dev/null | head -n 1 | sed 's@^file://@@')"
-    if [[ -n "$filename" ]]; then
-        echo "$filename"
-        return
-    fi
-
-    extension="$(wl-paste --type image | file -b --extension -)"
-    [[ -z "$extension" ]] && exit 1
-
-    filename="$(mktemp "$XDG_RUNTIME_DIR/upload-XXX.$extension")"
-    wl-paste --type image >"$filename"
-
-    echo "$filename"
-}
-
 if [[ "$#" -gt 0 ]]; then
-    IFS=$'\t' read -r cmd arg arg_2 <<<"$1"
+    IFS=$'\t' read -r cmd arg <<<"$1"
 
     case "$cmd" in
     "screenshot")
@@ -63,26 +47,6 @@ if [[ "$#" -gt 0 ]]; then
     "recording stop")
         killall --signal SIGINT wf-recorder
         ;;
-
-    "drop")
-        filename="$(clipboard_file)"
-        [[ -z "$filename" ]] && exit 1
-
-        drop "$filename" &
-        disown
-        ;;
-
-    "upload")
-        filename="$(clipboard_file)"
-        [[ -z "$filename" ]] && exit 1
-
-        url="$(upload "$arg_2" "$filename")"
-        [[ -z "$url" ]] && exit 1
-
-        wl-copy "$url"
-
-        notify-send "uploaded" "$url"
-        ;;
     esac
 
     exit
@@ -106,14 +70,3 @@ done
 if [[ "$recording" = true ]]; then
     printf "%s\n" "recording stop"
 fi
-
-current_mime="$(wl-paste -l | head -n 1)"
-
-case "$current_mime" in
-image/* | text/uri-list)
-    printf "drop\t%s\n" "$current_mime"
-    for upl in $(upload list); do
-        printf "upload\t%s\t%s\n" "$current_mime" "$upl"
-    done
-    ;;
-esac
