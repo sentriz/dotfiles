@@ -32,7 +32,6 @@ arch openbsd-netcat
 arch ripgrep
 arch sed
 arch sshfs
-arch stow
 arch sudo
 arch unzip
 arch inotify-tools

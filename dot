@@ -1,0 +1,146 @@
+#!/usr/bin/env bash
+# Copyright (c) 2012-2026, Hugo Osvaldo Barrera <hugo@barrera.io>
+# Copyright (c) 2025-2026, Senan Kelly <senan@senan.xyz>
+
+# dotfiles manager, directories containing a .nolink marker are descended into rather
+# than symlinked, so multiple packages (and runtime files) can coexist.
+
+set -euo pipefail
+shopt -s inherit_errexit
+
+state() {
+    local rel="$1" pkg="$2"
+    local h="$HOME/$rel" r="$pkg/$rel"
+
+    if [[ ! -e $h && ! -L $h ]]; then
+        echo missing
+    elif [[ ! -L $h ]]; then
+        echo conflict
+    elif [[ ! -e $h ]]; then
+        echo dangling
+    elif [[ "$(realpath "$h")" != "$(realpath "$r")" ]]; then
+        echo wrong
+    else
+        echo ok
+    fi
+}
+
+link() {
+    local rel="$1"
+    local pkg="$2"
+    local link_target="$pkg/$rel"
+    local link_path="$HOME/$rel"
+
+    mkdir -p "${link_path%/*}"
+    ln -snf "$link_target" "$link_path"
+}
+
+NOLINK_MARKER=".nolink"
+
+# walk paths in a package directory that should be symlinked.
+# directories with a .nolink marker anywhere beneath them are descended
+# into rather than linked. everything else is emitted as a link target.
+walk() {
+    local root="$1" dir="${2:-$1}"
+    find "$dir" -mindepth 1 -maxdepth 1 -not -name "$NOLINK_MARKER" | while IFS= read -r entry; do
+        if [[ -d $entry ]] && find "$entry" -name "$NOLINK_MARKER" -type f -print -quit | grep -q .; then
+            walk "$root" "$entry"
+        else
+            printf '%s\n' "${entry#"$root"/}"
+        fi
+    done
+}
+
+list() {
+    local pkg="$1"
+    walk "$pkg" | sort | while IFS= read -r rel; do
+        echo "$(state "$rel" "$pkg") $rel"
+    done
+}
+
+install() {
+    local pkg="$1"
+
+    walk "$pkg" | sort | while IFS= read -r rel; do
+        case "$(state "$rel" "$pkg")" in
+        missing | dangling | wrong)
+            link "$rel" "$pkg"
+            ;;
+        conflict)
+            if rmdir "$HOME/$rel" 2>/dev/null; then
+                link "$rel" "$pkg"
+            else
+                echo "cannot resolve: $HOME/$rel is non-empty" >&2
+            fi
+            ;;
+        esac
+        echo "$(state "$rel" "$pkg") $rel"
+    done
+}
+
+track() {
+    local path=$1
+    local pkg=$2
+    local abs rel target
+
+    abs=$(realpath "$path")
+    if [[ $abs == "$pkg"/* ]]; then
+        echo "path is already in package" >&2
+        exit 1
+    fi
+    if [[ $abs != "$HOME"/* ]]; then
+        echo "path must be under \$HOME" >&2
+        exit 1
+    fi
+
+    rel=${abs#"$HOME"/}
+    target="$pkg/$rel"
+
+    if [[ -e $target ]]; then
+        echo "path already exists in package" >&2
+        exit 1
+    fi
+
+    echo "moving $abs -> $target"
+
+    mkdir -p "$(dirname "$target")"
+    mv "$abs" "$target"
+    link "$rel" "$pkg"
+}
+
+pkg-path() {
+    [[ -d $1 ]] || {
+        echo "unknown package: $1" >&2
+        return 1
+    }
+    realpath "$1"
+}
+
+command="${1-}"
+[[ $# -gt 0 ]] && shift
+
+case "$command" in
+"install")
+    for pkg in "$@"; do
+        pkg=$(pkg-path "$pkg")
+        install "$pkg"
+    done
+    ;;
+"list")
+    for pkg in "$@"; do
+        pkg=$(pkg-path "$pkg")
+        list "$pkg"
+    done
+    ;;
+"track")
+    pkg=$(pkg-path "${2-}")
+    track "${1-}" "$pkg"
+    ;;
+*)
+    echo "usage:" >&2
+    echo "  $0 install PKG..." >&2
+    echo "  $0 list PKG..." >&2
+    echo "  $0 track PATH PKG" >&2
+    exit 1
+    ;;
+esac
