@@ -1,21 +1,164 @@
-#!/usr/bin/env bash
+#!/bin/sh
+# Copyright (c) 2012-2026, Hugo Osvaldo Barrera <hugo@barrera.io>
+# Copyright (c) 2025-2026, Senan Kelly <senan@senan.xyz>
 
-set -e
+# dotfiles manager, directories containing a .nolink marker are descended into rather
+# than symlinked, so multiple packages (and runtime files) can coexist.
 
-for type in "$@"; do
-    case "$type" in
-    "common")
-        stow -v --no-folding --ignore ".*\/tests\/.*" --target ~ -R conf_common
+# shellcheck disable=SC3043
+
+set -eu
+
+usage() {
+    echo "usage: $0 [-n|--dry-run] [-p|--print-path] [-t|--track PATH] <dir...>" >&2
+    exit 1
+}
+
+dry_run=0
+print_paths=0
+track_path=""
+
+while [ $# -gt 0 ]; do
+    case "$1" in
+    -n | --dry-run) dry_run=1 ;;
+    -p | --print-path) print_paths=1 ;;
+    -t | --track)
+        shift || usage
+        track_path=$1
         ;;
-    "desktop")
-        stow -v --ignore ".*\/tests\/.*" --target ~ -R conf_desktop
+    --)
+        shift
+        break
         ;;
-    "phone")
-        stow -v --no-folding --ignore ".*\/tests\/.*" --target ~ -R conf_phone
-        ;;
-    *)
-        echo "unknown <type> \"$type\"" >&2
+    -*) usage ;;
+    *) break ;;
+    esac
+    shift
+done
+
+[ $# -eq 0 ] && usage
+
+# Print the state of a path relative to the current package root
+state() {
+    local rel_path="$1"
+    local h="$HOME/$rel_path"
+    local r="$repo_home/$rel_path"
+
+    if [ -L "$h" ]; then
+        if [ -e "$h" ]; then
+            if [ "$(realpath "$h" 2>/dev/null || echo "")" = "$(realpath "$r" 2>/dev/null || echo "")" ]; then
+                echo ok
+            else
+                echo badlink
+            fi
+        else
+            echo broken
+        fi
+    elif [ -e "$h" ]; then
+        echo conflict
+    else
+        echo missing
+    fi
+}
+
+link() {
+    local link_target="$repo_home/$1"
+    local link_path="$HOME/$1"
+    local link_dir="${link_path%/*}"
+
+    [ "$link_dir" != "$link_path" ] && mkdir -p "$link_dir"
+    ln -snf "$link_target" "$link_path"
+}
+
+NOLINK_MARKER=".nolink"
+
+# List paths in a package directory that should be symlinked.
+# Directories with a .nolink marker anywhere beneath them are descended
+# into rather than linked. Everything else is emitted as a link target.
+list() {
+    local root="$1" dir="${2:-$1}"
+    find "$dir" -mindepth 1 -maxdepth 1 -not -name "$NOLINK_MARKER" | while IFS= read -r entry; do
+        if [ -d "$entry" ] && find "$entry" -name "$NOLINK_MARKER" -type f -print -quit | grep -q .; then
+            list "$root" "$entry"
+        else
+            printf '%s\n' "${entry#"$root"/}"
+        fi
+    done
+}
+
+install() {
+    list "$repo_home" | sort | while IFS= read -r rel; do
+        state=$(state "$rel")
+
+        if [ "$dry_run" -eq 1 ]; then
+            echo "$state $rel"
+        else
+            case "$state" in
+            missing)
+                link "$rel"
+                new_state=ok
+                ;;
+            broken | badlink)
+                ln -snf "$repo_home/$rel" "$HOME/$rel"
+                new_state=ok
+                ;;
+            conflict)
+                if rmdir "$HOME/$rel" 2>/dev/null; then
+                    link "$rel"
+                    new_state=ok
+                else
+                    new_state=$state
+                fi
+                ;;
+            ok)
+                new_state=$state
+                ;;
+            esac
+            echo "$new_state $rel"
+        fi
+    done
+}
+
+track() {
+    local path abs rel repo_target
+    path=$1
+    abs=$(realpath "$path")
+    case "$abs" in
+    "$repo_home"/*)
+        echo "path is already in repo" >&2
         exit 1
         ;;
     esac
+
+    rel=${abs#"$HOME"/}
+    repo_target="$repo_home/$rel"
+
+    if [ -e "$repo_target" ]; then
+        echo "path already exists in repo" >&2
+        exit 1
+    fi
+
+    echo "moving $abs -> $repo_target"
+
+    if [ "$dry_run" -eq 0 ]; then
+        mkdir -p "$(dirname "$repo_target")"
+        mv "$abs" "$repo_target"
+        link "$rel"
+    fi
+}
+
+for pkg in "$@"; do
+    if [ ! -d "$pkg" ]; then
+        echo "unknown package: $pkg" >&2
+        exit 1
+    fi
+    repo_home=$(cd "$pkg" && pwd)
+
+    if [ "$print_paths" -eq 1 ]; then
+        list "$repo_home" | sort
+    elif [ -n "$track_path" ]; then
+        track "$track_path"
+    else
+        install
+    fi
 done
