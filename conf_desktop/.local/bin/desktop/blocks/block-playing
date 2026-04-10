@@ -3,7 +3,7 @@
 # requires:
 # - https://github.com/sentriz/mpris-ctrl
 
-index_file="$XDG_CACHE_HOME/block_playing_index"
+index_file="$XDG_RUNTIME_DIR/block_playing_index"
 
 function index() {
     cat "$index_file" 2>/dev/null || echo 0
