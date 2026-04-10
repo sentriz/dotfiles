@@ -1,5 +1,5 @@
 full_text=
-command=~/.local/bin/blocks/block-$BLOCK_NAME
+command=~/.local/bin/desktop/blocks/block-$BLOCK_NAME
 interval=10
 separator=false
 

@@ -49,6 +49,7 @@ set -gx RUSTUP_HOME "$XDG_DATA_HOME/rustup"
 set -gx fish_user_paths \
     $HOME/.local/bin \
     $HOME/.local/bin/*/ \
+    $HOME/.local/bin/*/*/ \
     /var/lib/flatpak/exports/bin \
     $XDG_DATA_HOME/flatpak/exports/bin \
     $GOPATH/bin \
