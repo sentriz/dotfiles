@@ -85,6 +85,8 @@ vim.api.nvim_set_hl(0, "@diff.minus", { link = "DiffDelete" })
 -- completion menu
 vim.api.nvim_set_hl(0, "Pmenu", { ctermfg = 15, ctermbg = 0 })
 vim.api.nvim_set_hl(0, "PmenuSel", { ctermfg = 0, ctermbg = 15 })
+vim.api.nvim_set_hl(0, "PmenuKind", { ctermfg = 8, ctermbg = 0 })
+vim.api.nvim_set_hl(0, "PmenuKindSel", { ctermfg = 8, ctermbg = 15 })
 
 -- lsp highlights
 vim.api.nvim_set_hl(0, "LspReferenceText", { ctermfg = 11 })

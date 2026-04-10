@@ -22,18 +22,6 @@
 [submodule "conf_common/.local/share/nvim/site/pack/plugins/start/vim-exchange"]
 	path = conf_common/.local/share/nvim/site/pack/plugins/start/vim-exchange
 	url = https://github.com/tommcdo/vim-exchange
-[submodule "conf_common/.local/share/nvim/site/pack/plugins/start/nvim-cmp"]
-	path = conf_common/.local/share/nvim/site/pack/plugins/start/nvim-cmp
-	url = https://github.com/hrsh7th/nvim-cmp
-[submodule "conf_common/.local/share/nvim/site/pack/plugins/start/cmp-nvim-lsp"]
-	path = conf_common/.local/share/nvim/site/pack/plugins/start/cmp-nvim-lsp
-	url = https://github.com/hrsh7th/cmp-nvim-lsp
-[submodule "conf_common/.local/share/nvim/site/pack/plugins/start/cmp-buffer"]
-	path = conf_common/.local/share/nvim/site/pack/plugins/start/cmp-buffer
-	url = https://github.com/hrsh7th/cmp-buffer
-[submodule "conf_common/.local/share/nvim/site/pack/plugins/start/cmp-path"]
-	path = conf_common/.local/share/nvim/site/pack/plugins/start/cmp-path
-	url = https://github.com/hrsh7th/cmp-path
 [submodule "conf_common/.config/fish/plugins/mattgreen/park.fish"]
 	path = conf_common/.config/fish/plugins/park.fish
 	url = https://github.com/mattgreen/park.fish
@@ -43,9 +31,6 @@
 [submodule "conf_common/.local/share/nvim/site/pack/plugins/start/plenary.nvim"]
 	path = conf_common/.local/share/nvim/site/pack/plugins/start/plenary.nvim
 	url = https://github.com/nvim-lua/plenary.nvim
-[submodule "conf_common/.local/share/nvim/site/pack/plugins/start/cmp-tmux"]
-	path = conf_common/.local/share/nvim/site/pack/plugins/start/cmp-tmux
-	url = https://github.com/andersevenrud/cmp-tmux
 [submodule "conf_common/.config/fish/plugins/franciscolourenco/done"]
 	path = conf_common/.config/fish/plugins/done
 	url = https://github.com/franciscolourenco/done

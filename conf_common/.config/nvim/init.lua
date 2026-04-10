@@ -40,6 +40,10 @@ end
 
 setup_netrw_on_start()
 
+-- ui2
+local ui2 = require("vim._core.ui2")
+ui2.enable({})
+
 -- basic settings
 vim.opt.tabstop = 4
 vim.opt.virtualedit = "block"
@@ -117,7 +121,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 })
 
 -- completion settings
-vim.opt.completeopt = { "menu", "menuone", "noselect" }
+vim.opt.completeopt = { "menu", "menuone", "noselect", "popup" }
 vim.opt.shortmess = "filnxtToOFAc"
 
 -- oops (typo corrections)
@@ -231,6 +235,28 @@ vim.keymap.set("i", "<c-e>", function()
 	return vim.fn.matchstr(vim.fn.getline(line), pattern)
 end, { expr = true })
 
+-- accept completion with enter
+vim.keymap.set("i", "<cr>", function()
+	if vim.fn.pumvisible() == 1 then
+		return "<c-y>"
+	end
+	return "<cr>"
+end, { expr = true })
+
+-- snippet navigation
+vim.keymap.set({ "i", "s" }, "<tab>", function()
+	if vim.snippet.active({ direction = 1 }) then
+		return "<cmd>lua vim.snippet.jump(1)<cr>"
+	end
+	return "<tab>"
+end, { expr = true })
+vim.keymap.set({ "i", "s" }, "<s-tab>", function()
+	if vim.snippet.active({ direction = -1 }) then
+		return "<cmd>lua vim.snippet.jump(-1)<cr>"
+	end
+	return "<s-tab>"
+end, { expr = true })
+
 -- alternative escape
 vim.keymap.set("i", "jj", "<esc>")
 
@@ -238,54 +264,6 @@ vim.keymap.set("i", "jj", "<esc>")
 require("mini.surround").setup()
 require("mini.comment").setup()
 require("mini.ai").setup()
-
-local cmp = require("cmp")
-local cmplsp = require("cmp_nvim_lsp")
-
-cmp.setup({
-	sources = cmp.config.sources({
-		{ name = "nvim_lsp" },
-	}, {
-		{ name = "buffer" },
-		{ name = "path" },
-		{ name = "tmux" },
-	}),
-	snippet = {
-		expand = function(arg)
-			vim.snippet.expand(arg.body)
-		end,
-	},
-	mapping = {
-		["<c-x><c-o>"] = cmp.mapping.complete(),
-		["<c-space>"] = cmp.mapping.complete(),
-		["<c-p>"] = cmp.mapping.select_prev_item(),
-		["<c-n>"] = cmp.mapping.select_next_item(),
-		["<cr>"] = cmp.mapping.confirm({ select = true }),
-		["<c-e>"] = cmp.mapping.close(),
-		["<tab>"] = vim.snippet.jump(1),
-		["<s-tab>"] = vim.snippet.jump(-1),
-	},
-	experimental = {
-		ghost_text = { hl_group = "LineNr" },
-	},
-})
-
-cmp.setup.cmdline({ "/", "?" }, {
-	mapping = cmp.mapping.preset.cmdline(),
-	sources = cmp.config.sources({
-		{ name = "tmux" },
-		{ name = "buffer" },
-	}),
-})
-
-cmp.setup.cmdline(":", {
-	mapping = cmp.mapping.preset.cmdline(),
-	sources = cmp.config.sources({
-		{ name = "path" },
-		{ name = "tmux" },
-		{ name = "cmdline" },
-	}),
-})
 
 -- lsp
 local format_augroup = vim.api.nvim_create_augroup("LSPFormatting", {})
@@ -298,6 +276,14 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		end
 
 		client.server_capabilities.semanticTokensProvider = nil
+
+		local chars = {}
+		for i = 32, 126 do
+			table.insert(chars, string.char(i))
+		end
+		client.server_capabilities.completionProvider = client.server_capabilities.completionProvider or {}
+		client.server_capabilities.completionProvider.triggerCharacters = chars
+		vim.lsp.completion.enable(true, client.id, args.buf, { autotrigger = true })
 
 		if not client:supports_method("textDocument/formatting") then
 			return
@@ -332,10 +318,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
 			end,
 		})
 	end,
-})
-
-vim.lsp.config("*", {
-	capabilities = cmplsp.default_capabilities(),
 })
 
 vim.lsp.config("gopls", {
