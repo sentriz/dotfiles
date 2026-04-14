@@ -1,0 +1,62 @@
+#!/usr/bin/env -S uv run --script
+# /// script
+# requires-python = ">=3.12"
+# dependencies = ["httpx"]
+# ///
+
+import sys
+from typing import TypedDict
+
+import httpx
+
+API_URL = "https://apim-anpost-apwebapis.anpost.com/ttservice-public-apweb"
+API_KEY = "01b0162771e941639046a97936f72e95"  # just found this in browser
+
+
+class Item(TypedDict):
+    anPostNo: str
+    countryOfOrigin: str
+    date: str
+    status: str
+    location: str
+    receiverName: str
+    geisDeliveryOffice: str
+
+
+def format_item(item: Item) -> str:
+    status = item["status"]
+    extras = [
+        v
+        for k in ("receiverName", "location", "geisDeliveryOffice")
+        if (v := item.get(k, "").strip())
+    ]
+    if extras:
+        status += f" ({', '.join(extras)})"
+
+    return f"{item['anPostNo']}\t{item['countryOfOrigin']}\t{item['date']}\t{status}"
+
+
+def main() -> None:
+    codes = [c.strip() for c in sys.argv[1:]]
+    if not codes:
+        print(f"usage: {sys.argv[0]} <tracking-code> [...]", file=sys.stderr)
+        sys.exit(1)
+
+    resp = httpx.post(
+        f"{API_URL}/GetItemSummary",
+        headers={"Ocp-Apim-Subscription-Key": API_KEY},
+        json={"getItemSummary": {"trackingItems": codes}},
+    )
+    resp.raise_for_status()
+
+    items: list[Item] = resp.json()["getItemSummaryResponse"]["GetItemSummaryResult"]
+
+    by_code = {item["anPostNo"]: item for item in items}
+    for code in codes:
+        if item := by_code.get(code):
+            print(format_item(item))
+        else:
+            print(f"{code}\t\t\tno tracking info found")
+
+
+main()
