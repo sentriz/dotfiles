@@ -123,7 +123,7 @@ function pushd
 end
 abbr cd pushd
 
-# abbreviations
+# prog
 abbr g git
 abbr gti git
 abbr ps 'ps -axh -o pid,%cpu,cmd'
@@ -138,9 +138,10 @@ abbr egrep "egrep -Ei"
 abbr fgrep "fgrep -Ei"
 abbr sed "sed -E"
 
-# rg
+# workflow
 alias rg 'rg --hyperlink-format=default --vimgrep'
-abbr rg "rg -PS"
+abbr rg 'rg -PS'
+abbr vo vim-qf-paste
 
 # keep updated with `printf "set -g %s\n" (set -U | grep fish_color)`
 set -g fish_color_autosuggestion 555 brblack
