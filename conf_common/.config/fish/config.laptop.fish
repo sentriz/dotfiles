@@ -40,8 +40,6 @@ set -gx PYTHONHISTFILE "$XDG_CACHE_HOME/python_history"
 set -gx YABRIDGE_TEMP_DIR "$XDG_RUNTIME_DIR/yabridge"
 set -gx YABRIDGE_DEBUG_LEVEL ''
 
-abbr docker-compose "docker compose"
-
 function p --argument project
     cd "$PROJECTS_DIR/$project"
 end
