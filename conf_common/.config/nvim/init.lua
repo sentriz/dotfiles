@@ -410,10 +410,10 @@ vim.keymap.set("i", "<c-s>", vim.lsp.buf.signature_help, { silent = true })
 vim.keymap.set("n", "gh", function()
 	vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
 end, { silent = true })
-vim.keymap.set("n", "H", vim.diagnostic.goto_prev, { silent = true })
+vim.keymap.set("n", "H", function() vim.diagnostic.jump({ count = -1, on_jump = vim.diagnostic.open_float }) end, { silent = true })
 vim.keymap.set("n", "J", vim.diagnostic.open_float, { silent = true })
 vim.keymap.set("n", "K", vim.lsp.buf.hover, { silent = true })
-vim.keymap.set("n", "L", vim.diagnostic.goto_next, { silent = true })
+vim.keymap.set("n", "L", function() vim.diagnostic.jump({ count = 1, on_jump = vim.diagnostic.open_float }) end, { silent = true })
 
 -- nullls
 local nullls = require("null-ls")
