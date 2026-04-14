@@ -347,6 +347,12 @@ vim.lsp.config("tailwindcss", {
 	root_markers = { "tailwind.config.js" },
 })
 
+vim.lsp.config("ruff", {
+	on_attach = function(client)
+		client.server_capabilities.hoverProvider = false
+	end,
+})
+
 vim.lsp.config("ts_ls", {
 	root_markers = { "tsconfig.json", "jsconfig.json" },
 	handlers = {
@@ -357,7 +363,20 @@ vim.lsp.config("ts_ls", {
 	},
 })
 
-vim.lsp.enable({ "gopls", "bashls", "vue_ls", "tailwindcss", "ts_ls", "jdtls", "clangd", "dockerls", "rust_analyzer", "zls" })
+vim.lsp.enable({
+	"gopls",
+	"bashls",
+	"vue_ls",
+	"tailwindcss",
+	"ts_ls",
+	"jdtls",
+	"clangd",
+	"dockerls",
+	"rust_analyzer",
+	"zls",
+	"ruff",
+	"ty",
+})
 
 -- lsp diagnostics
 vim.diagnostic.config({
@@ -410,10 +429,14 @@ vim.keymap.set("i", "<c-s>", vim.lsp.buf.signature_help, { silent = true })
 vim.keymap.set("n", "gh", function()
 	vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
 end, { silent = true })
-vim.keymap.set("n", "H", function() vim.diagnostic.jump({ count = -1, on_jump = vim.diagnostic.open_float }) end, { silent = true })
+vim.keymap.set("n", "H", function()
+	vim.diagnostic.jump({ count = -1, on_jump = vim.diagnostic.open_float })
+end, { silent = true })
 vim.keymap.set("n", "J", vim.diagnostic.open_float, { silent = true })
 vim.keymap.set("n", "K", vim.lsp.buf.hover, { silent = true })
-vim.keymap.set("n", "L", function() vim.diagnostic.jump({ count = 1, on_jump = vim.diagnostic.open_float }) end, { silent = true })
+vim.keymap.set("n", "L", function()
+	vim.diagnostic.jump({ count = 1, on_jump = vim.diagnostic.open_float })
+end, { silent = true })
 
 -- nullls
 local nullls = require("null-ls")
@@ -423,7 +446,6 @@ nullls.setup({
 	log_level = "off",
 
 	sources = {
-		nullls.builtins.formatting.black,
 		nullls.builtins.formatting.clang_format,
 		nullls.builtins.formatting.fish_indent,
 		nullls.builtins.formatting.markdownlint.with({ extra_args = { "--disable", "MD014" } }),
@@ -435,7 +457,6 @@ nullls.setup({
 
 		nullls.builtins.diagnostics.hadolint.with({ extra_args = { "--ignore", "DL3018", "--ignore", "DL3008" } }),
 		nullls.builtins.diagnostics.markdownlint,
-		nullls.builtins.diagnostics.pylint,
 		nullls.builtins.diagnostics.selene,
 	},
 })

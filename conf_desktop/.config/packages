@@ -6,7 +6,7 @@ arch npm
 npm yarn
 arch bun-bin
 arch python
-arch python-pipx
+arch uv
 arch rust
 arch docker
 arch docker-buildx
@@ -199,8 +199,7 @@ npm markdownlint-cli
 npm prettier
 npm prettier-plugin-go-template
 npm prettier-plugin-svelte
-npm pyright
 npm typescript
 npm typescript-language-server
-python black
-python pylint
+python ruff
+python ty

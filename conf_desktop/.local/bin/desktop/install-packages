@@ -46,9 +46,10 @@ if want arch; then
 fi
 
 if want python; then
-    python -m pipx --version
-    readarray -t pkgs < <(list python)
-    python -m pipx install "${pkgs[@]}"
+    uv --version
+    list python | while IFS='' read -r pkg; do
+        uv tool install "$pkg"
+    done
 fi
 
 if want cargo; then
