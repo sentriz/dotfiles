@@ -1,24 +1,24 @@
 #!/usr/bin/env bash
+
 # Copyright (c) 2012-2026, Hugo Osvaldo Barrera <hugo@barrera.io>
 # Copyright (c) 2025-2026, Senan Kelly <senan@senan.xyz>
-
-# dotfiles manager, directories containing a .nolink marker are descended into rather
-# than symlinked, so multiple packages (and runtime files) can coexist.
 
 set -euo pipefail
 shopt -s inherit_errexit
 
 state() {
-    local rel="$1" pkg="$2"
-    local h="$HOME/$rel" r="$pkg/$rel"
+    local rel="$1"
+    local pkg="$2"
+    local link_path="$HOME/$rel"
+    local link_target="$pkg/$rel"
 
-    if [[ ! -e $h && ! -L $h ]]; then
+    if [[ ! -e $link_path && ! -L $link_path ]]; then
         echo missing
-    elif [[ ! -L $h ]]; then
+    elif [[ ! -L $link_path ]]; then
         echo conflict
-    elif [[ ! -e $h ]]; then
+    elif [[ ! -e $link_path ]]; then
         echo dangling
-    elif [[ "$(realpath "$h")" != "$(realpath "$r")" ]]; then
+    elif [[ "$(realpath "$link_path")" != "$(realpath "$link_target")" ]]; then
         echo wrong
     else
         echo ok
@@ -41,7 +41,9 @@ NOLINK_MARKER=".nolink"
 # directories with a .nolink marker anywhere beneath them are descended
 # into rather than linked. everything else is emitted as a link target.
 walk() {
-    local root="$1" dir="${2:-$1}"
+    local root="$1"
+    local dir="${2:-$1}"
+
     find "$dir" -mindepth 1 -maxdepth 1 -not -name "$NOLINK_MARKER" | while IFS= read -r entry; do
         if [[ -d $entry ]] && find "$entry" -name "$NOLINK_MARKER" -type f -print -quit | grep -q .; then
             walk "$root" "$entry"
@@ -53,6 +55,7 @@ walk() {
 
 list() {
     local pkg="$1"
+
     walk "$pkg" | sort | while IFS= read -r rel; do
         echo "$(state "$rel" "$pkg") $rel"
     done
@@ -69,8 +72,6 @@ install() {
         conflict)
             if rmdir "$HOME/$rel" 2>/dev/null; then
                 link "$rel" "$pkg"
-            else
-                echo "cannot resolve: $HOME/$rel is non-empty" >&2
             fi
             ;;
         esac
@@ -79,9 +80,11 @@ install() {
 }
 
 track() {
-    local path=$1
-    local pkg=$2
-    local abs rel target
+    local path="$1"
+    local pkg="$2"
+    local abs
+    local rel
+    local link_target
 
     abs=$(realpath "$path")
     if [[ $abs == "$pkg"/* ]]; then
@@ -94,17 +97,17 @@ track() {
     fi
 
     rel=${abs#"$HOME"/}
-    target="$pkg/$rel"
+    link_target="$pkg/$rel"
 
-    if [[ -e $target ]]; then
+    if [[ -e $link_target ]]; then
         echo "path already exists in package" >&2
         exit 1
     fi
 
-    echo "moving $abs -> $target"
+    echo "moving $abs -> $link_target"
 
-    mkdir -p "$(dirname "$target")"
-    mv "$abs" "$target"
+    mkdir -p "$(dirname "$link_target")"
+    mv "$abs" "$link_target"
     link "$rel" "$pkg"
 }
 
