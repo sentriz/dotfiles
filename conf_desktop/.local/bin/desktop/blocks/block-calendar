@@ -24,6 +24,6 @@ khal list today tomorrow -df "" -f "{start-date}{tab}{start-time}{tab}{end-date}
     test "$start_secs" -ge "$now_secs"
     and set rel "in "(relative-duration (math "$start_secs - $now_secs + $now_secs % 60"))
 
-    echo "($rel) $title"
+    echo "($rel) "(string shorten -m 30 -c … -- "$title")
     break
 end
