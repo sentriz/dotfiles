@@ -1,0 +1,63 @@
+//usr/bin/env go-script "$0" "$@"; exit $?
+// vi: ft=go
+
+package main
+
+import (
+	"bufio"
+	"fmt"
+	"io"
+	"log"
+	"net/netip"
+	"os"
+	"strings"
+
+	"go4.org/netipx"
+)
+
+func main() {
+	log.SetFlags(0)
+
+	var r io.Reader = os.Stdin
+	if len(os.Args) > 1 {
+		var buff strings.Builder
+		for _, arg := range os.Args[1:] {
+			buff.WriteString(arg)
+			buff.WriteByte('\n')
+		}
+		r = strings.NewReader(buff.String())
+	}
+
+	out := bufio.NewWriter(os.Stdout)
+	defer out.Flush()
+
+	for sc := bufio.NewScanner(r); sc.Scan(); {
+		line := strings.TrimSpace(sc.Text())
+		if line == "" {
+			continue
+		}
+		lo, hi, err := parsePair(line)
+		if err != nil {
+			log.Fatalf("parse %q: %v", line, err)
+		}
+		for _, p := range netipx.IPRangeFrom(lo, hi).Prefixes() {
+			fmt.Fprintln(out, p)
+		}
+	}
+}
+
+func parsePair(s string) (netip.Addr, netip.Addr, error) {
+	a, b, ok := strings.Cut(s, " ")
+	if !ok {
+		return netip.Addr{}, netip.Addr{}, fmt.Errorf(`expected "start end", got %q`, s)
+	}
+	lo, err := netip.ParseAddr(a)
+	if err != nil {
+		return netip.Addr{}, netip.Addr{}, fmt.Errorf("start: %w", err)
+	}
+	hi, err := netip.ParseAddr(b)
+	if err != nil {
+		return netip.Addr{}, netip.Addr{}, fmt.Errorf("end: %w", err)
+	}
+	return lo, hi, nil
+}
