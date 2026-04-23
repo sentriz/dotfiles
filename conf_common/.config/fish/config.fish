@@ -1,9 +1,3 @@
-set -gx HOSTNAME (uname -n)
-
-set -q TERMUX_VERSION
-and set -gx HOSTNAME android
-and set -gx XDG_RUNTIME_DIR "$HOME"
-
 set -gx XDG_CACHE_HOME "$HOME/.cache"
 set -gx XDG_CONFIG_HOME "$HOME/.config"
 set -gx XDG_DATA_HOME "$HOME/.local/share"
