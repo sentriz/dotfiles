@@ -1,0 +1,70 @@
+#!/usr/bin/env bash
+
+set -euf
+
+abs=0 head=0 must=0 selected=()
+for a in "$@"; do
+    case "$a" in
+    --abs) abs=1 ;;
+    --head) head=1 ;;
+    --must) must=1 ;;
+    *) selected+=("$a") ;;
+    esac
+done
+
+projects="$PROJECTS_DIR"
+projects_file="$XDG_CONFIG_HOME/projects"
+
+mappings=(
+    'go go.mod */go.mod'
+    'npm package.json */package.json'
+    'uv pyproject.toml */pyproject.toml'
+    'docker Dockerfile */Dockerfile'
+    'actions .github/workflows/*'
+    'dependabot .github/dependabot.yml'
+)
+
+cols=(path "${mappings[@]%% *}")
+((${#selected[@]})) && cols=("${selected[@]}")
+
+if ((head)); then
+    printf 'name'
+    for c in "${cols[@]}"; do printf '\t%s' "$c"; done
+    printf '\n'
+fi
+
+declare -A cells
+while IFS= read -r name; do
+    root="$projects/$name" cells=()
+    cells[path]="$root"
+    while IFS= read -r file; do
+        for m in "${mappings[@]}"; do
+            k="${m%% *}"
+            for pat in ${m#* }; do
+                # shellcheck disable=SC2053
+                [[ "$file" == $pat ]] || continue
+
+                dir="${file%/*}"
+                [[ "$dir" = "$file" ]] && dir=""
+                if ((abs)); then
+                    cells[$k]="$root${dir:+/$dir}"
+                else
+                    cells[$k]="${dir:-.}"
+                fi
+                continue 3
+            done
+        done
+    done < <(git -C "$root" ls-files)
+
+    if ((must)); then
+        for c in "${cols[@]}"; do
+            [[ -n "${cells[$c]:-}" ]] || continue 2
+        done
+    fi
+
+    printf '%s' "$name"
+    for c in "${cols[@]}"; do
+        printf '\t%s' "${cells[$c]:-}"
+    done
+    printf '\n'
+done <"$projects_file"
