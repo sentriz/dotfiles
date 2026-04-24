@@ -20,6 +20,11 @@ khal list today tomorrow -df "" -f "{start-date}{tab}{start-time}{tab}{end-date}
     test "$now_secs" -gt "$end_secs"; and continue
     test (math "$start_secs - $now_secs") -gt (math "3600 * $buffer_hours"); and continue
 
+    set diff (math "$start_secs - $now_secs")
+    if test "$diff" -ge 0; and test "$diff" -le 60
+        notify-send -- "$diff sec until $title"
+    end
+
     set rel now
     test "$start_secs" -ge "$now_secs"
     and set rel "in "(relative-duration (math "$start_secs - $now_secs + $now_secs % 60"))
