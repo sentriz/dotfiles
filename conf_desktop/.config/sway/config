@@ -135,24 +135,24 @@ bindsym $super+y     sticky toggle
 
 # bindings: focus
 bindsym $super+v focus parent
+bindsym $super+b focus child
 bindsym $super+h focus left
 bindsym $super+j focus down
 bindsym $super+k focus up
 bindsym $super+l focus right
 
 # bindings: layout
-bindsym $super+z layout stacking
-bindsym $super+x layout tabbed
-bindsym $super+c layout toggle split
-bindsym $super+n split h
-bindsym $super+m split v
+bindsym $super+z layout tabbed
+bindsym $super+x layout splith
+bindsym $super+c layout splitv
+bindsym $super+n splith
+bindsym $super+m splitv
 
 # bindings: position
 bindsym $super+Left  move left
 bindsym $super+Down  move down
 bindsym $super+Up    move up
 bindsym $super+Right move right
-bindsym $super+b     move position center
 
 bindsym $super+w move workspace to output up
 bindsym $super+a move workspace to output left
