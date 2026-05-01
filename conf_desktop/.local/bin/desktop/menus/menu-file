@@ -88,7 +88,7 @@ if [[ -n "$mime" ]]; then
     printf "drop\t%s\t%s\n" "$label" "$mime"
 
     case "$mime" in
-    image/*)
+    image/* | video/*)
         for upl in $(upload list); do
             printf "upload\t%s\t%s\t%s\n" "$label" "$mime" "$upl"
         done
