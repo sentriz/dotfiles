@@ -89,8 +89,8 @@ vim.api.nvim_set_hl(0, "PmenuKind", { ctermfg = 8, ctermbg = 0 })
 vim.api.nvim_set_hl(0, "PmenuKindSel", { ctermfg = 8, ctermbg = 15 })
 
 -- lsp highlights
-vim.api.nvim_set_hl(0, "LspReferenceText", { ctermfg = 11 })
-vim.api.nvim_set_hl(0, "LspReferenceRead", { ctermfg = 11 })
+vim.api.nvim_set_hl(0, "LspReferenceText", { ctermfg = 11, underline = true })
+vim.api.nvim_set_hl(0, "LspReferenceRead", { ctermfg = 11, underline = true })
 vim.api.nvim_set_hl(0, "LspReferenceWrite", { ctermfg = 11 })
 vim.api.nvim_set_hl(0, "LspInlayHint", { ctermfg = 0 })
 
