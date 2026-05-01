@@ -138,7 +138,7 @@ abbr sed "sed -E"
 # workflow
 alias rg 'rg --hyperlink-format=default --vimgrep'
 abbr rg 'rg -PS'
-abbr vo vim-qf-paste
+abbr vo 'wl-paste | vim-qf'
 
 # keep updated with `printf "set -g %s\n" (set -U | grep fish_color)`
 set -g fish_color_autosuggestion 555 brblack
