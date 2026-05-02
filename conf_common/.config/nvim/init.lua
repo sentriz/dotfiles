@@ -265,6 +265,26 @@ require("mini.surround").setup()
 require("mini.comment").setup()
 require("mini.ai").setup()
 
+-- lsp symbol usage
+local symbol_usage = require("symbol-usage")
+symbol_usage.setup({
+	vt_position = "end_of_line",
+	request_pending_text = false,
+	text_format = function(symbol)
+		if not symbol.references then
+			return ""
+		end
+		if symbol.references == 0 then
+			return "(no usage)"
+		end
+		if symbol.references == 1 then
+			return "(1 usage)"
+		end
+		return string.format("(%d usages)", symbol.references)
+	end,
+})
+symbol_usage.toggle_globally() -- start disabled, paired with `gh`
+
 -- lsp
 local format_augroup = vim.api.nvim_create_augroup("LSPFormatting", {})
 
@@ -426,8 +446,14 @@ vim.keymap.set("v", "ga", function()
 end, { silent = true })
 vim.keymap.set("n", "gt", vim.diagnostic.setqflist, { silent = true })
 vim.keymap.set("i", "<c-s>", vim.lsp.buf.signature_help, { silent = true })
+local lsp_hints_enabled = false
 vim.keymap.set("n", "gh", function()
-	vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+	lsp_hints_enabled = not lsp_hints_enabled
+	vim.lsp.inlay_hint.enable(lsp_hints_enabled)
+	symbol_usage.toggle_globally()
+	if lsp_hints_enabled then
+		symbol_usage.refresh()
+	end
 end, { silent = true })
 vim.keymap.set("n", "H", function()
 	vim.diagnostic.jump({ count = -1, on_jump = vim.diagnostic.open_float })

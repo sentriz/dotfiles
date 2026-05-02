@@ -77,7 +77,8 @@ vim.api.nvim_set_hl(0, "@operator", { bold = true })
 vim.api.nvim_set_hl(0, "@include", { bold = true })
 vim.api.nvim_set_hl(0, "@conditional", { bold = true })
 vim.api.nvim_set_hl(0, "@string", { ctermfg = 15 })
-vim.api.nvim_set_hl(0, "@comment", { ctermfg = 8, italic = true })
+vim.api.nvim_set_hl(0, "Comment", { ctermfg = 8, italic = true })
+vim.api.nvim_set_hl(0, "@comment", { link = "Comment" })
 
 vim.api.nvim_set_hl(0, "@diff.plus", { link = "DiffAdd" })
 vim.api.nvim_set_hl(0, "@diff.minus", { link = "DiffDelete" })
@@ -93,6 +94,7 @@ vim.api.nvim_set_hl(0, "LspReferenceText", { ctermfg = 11, underline = true })
 vim.api.nvim_set_hl(0, "LspReferenceRead", { ctermfg = 11, underline = true })
 vim.api.nvim_set_hl(0, "LspReferenceWrite", { ctermfg = 11 })
 vim.api.nvim_set_hl(0, "LspInlayHint", { ctermfg = 0 })
+vim.api.nvim_set_hl(0, "SymbolUsageText", { link = "LspInlayHint" })
 
 -- diagnostic highlights
 vim.api.nvim_set_hl(0, "DiagnosticFloatingError", { ctermfg = 15, bold = true })
