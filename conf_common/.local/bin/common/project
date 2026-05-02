@@ -1,70 +1,355 @@
-#!/usr/bin/env bash
+//usr/bin/env go-script "$0" "$@"; exit $?
+// vi: ft=go
 
-set -euf
+package main
 
-abs=0 head=0 must=0 selected=()
-for a in "$@"; do
-    case "$a" in
-    --abs) abs=1 ;;
-    --head) head=1 ;;
-    --must) must=1 ;;
-    *) selected+=("$a") ;;
-    esac
-done
+import (
+	"bufio"
+	"encoding/json"
+	"fmt"
+	"os"
+	"path/filepath"
+	"strings"
 
-projects="$PROJECTS_DIR"
-projects_file="$XDG_CONFIG_HOME/projects"
-
-mappings=(
-    'go go.mod */go.mod'
-    'npm package.json */package.json'
-    'uv pyproject.toml */pyproject.toml'
-    'docker Dockerfile */Dockerfile'
-    'actions .github/workflows/*'
-    'dependabot .github/dependabot.yml'
+	"github.com/BurntSushi/toml"
+	"gopkg.in/yaml.v3"
 )
 
-cols=(path "${mappings[@]%% *}")
-((${#selected[@]})) && cols=("${selected[@]}")
+func main() {
+	if err := run(); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
+}
 
-if ((head)); then
-    printf 'name'
-    for c in "${cols[@]}"; do printf '\t%s' "$c"; done
-    printf '\n'
-fi
+func run() error {
+	userConfig, err := os.UserConfigDir()
+	if err != nil {
+		return fmt.Errorf("read user config: %w", err)
+	}
 
-declare -A cells
-while IFS= read -r name; do
-    root="$projects/$name" cells=()
-    cells[path]="$root"
-    while IFS= read -r file; do
-        for m in "${mappings[@]}"; do
-            k="${m%% *}"
-            for pat in ${m#* }; do
-                # shellcheck disable=SC2053
-                [[ "$file" == $pat ]] || continue
+	projectsListPath := filepath.Join(userConfig, "projects")
+	projectsList, err := os.Open(projectsListPath)
+	if err != nil {
+		return fmt.Errorf("read projects list: %w", err)
+	}
 
-                dir="${file%/*}"
-                [[ "$dir" = "$file" ]] && dir=""
-                if ((abs)); then
-                    cells[$k]="$root${dir:+/$dir}"
-                else
-                    cells[$k]="${dir:-.}"
-                fi
-                continue 3
-            done
-        done
-    done < <(git -C "$root" ls-files)
+	projectsDir := os.Getenv("PROJECTS_DIR")
+	if projectsDir == "" {
+		return fmt.Errorf("read projects dir: %w", err)
+	}
 
-    if ((must)); then
-        for c in "${cols[@]}"; do
-            [[ -n "${cells[$c]:-}" ]] || continue 2
-        done
-    fi
+	out := bufio.NewWriter(os.Stdout)
+	defer out.Flush()
 
-    printf '%s' "$name"
-    for c in "${cols[@]}"; do
-        printf '\t%s' "${cells[$c]:-}"
-    done
-    printf '\n'
-done <"$projects_file"
+	enc := json.NewEncoder(out)
+	for sc := bufio.NewScanner(projectsList); sc.Scan(); {
+		name := sc.Text()
+		path := filepath.Join(projectsDir, name)
+
+		var dest = map[string]any{}
+		dest["path"] = path
+
+		for _, sn := range sniffers {
+			if err := sn(path, dest); err != nil {
+				return fmt.Errorf("sniff: %w", err)
+			}
+		}
+
+		if err := enc.Encode(dest); err != nil {
+			return fmt.Errorf("enc: %w", err)
+		}
+	}
+
+	return nil
+}
+
+type sniffer func(path string, dest map[string]any) error
+
+var sniffers []sniffer
+
+func addSniffer(sn sniffer) {
+	sniffers = append(sniffers, sn)
+}
+
+func globMany(dir string, patterns ...string) ([]string, error) {
+	var paths []string
+	for _, pat := range patterns {
+		p, err := globDir(dir, pat)
+		if err != nil {
+			return nil, err
+		}
+		paths = append(paths, p...)
+	}
+	return paths, nil
+}
+
+func globDir(dir, pattern string) ([]string, error) {
+	return filepath.Glob(filepath.Join(globEscape(dir), pattern))
+}
+
+func globEscape(path string) string {
+	var r strings.Builder
+	for _, c := range path {
+		switch c {
+		case '*', '?', '[':
+			r.WriteRune('[')
+			r.WriteRune(c)
+			r.WriteRune(']')
+		default:
+			r.WriteRune(c)
+		}
+	}
+	return r.String()
+}
+
+func init() {
+	type Use struct {
+		Action  string `json:"action"`
+		Version string `json:"version"`
+	}
+	type Workflow struct {
+		Path string `json:"path"`
+		Name string `json:"name"`
+		Uses []Use  `json:"uses"`
+	}
+
+	addSniffer(func(projectPath string, dest map[string]any) error {
+		paths, err := globMany(projectPath, ".github/workflows/*.yml", ".github/workflows/*.yaml")
+		if err != nil {
+			return err
+		}
+
+		var workflows []Workflow
+		for _, path := range paths {
+			bytes, err := os.ReadFile(path)
+			if err != nil {
+				return err
+			}
+
+			var doc struct {
+				Name string `yaml:"name"`
+				Jobs map[string]struct {
+					Steps []struct {
+						Uses string `yaml:"uses"`
+					} `yaml:"steps"`
+				} `yaml:"jobs"`
+			}
+			if err := yaml.Unmarshal(bytes, &doc); err != nil {
+				return err
+			}
+
+			wf := Workflow{Path: path, Name: doc.Name}
+			for _, job := range doc.Jobs {
+				for _, step := range job.Steps {
+					if step.Uses == "" {
+						continue
+					}
+					action, version, _ := strings.Cut(step.Uses, "@")
+					wf.Uses = append(wf.Uses, Use{Action: action, Version: version})
+				}
+			}
+
+			workflows = append(workflows, wf)
+		}
+
+		dest["actions"] = workflows
+		return nil
+	})
+}
+
+func init() {
+	type Update struct {
+		Ecosystem string `json:"ecosystem" yaml:"package-ecosystem"`
+		Directory string `json:"directory" yaml:"directory"`
+	}
+	type Dependabot struct {
+		Path    string   `json:"path"    yaml:"-"`
+		Updates []Update `json:"updates" yaml:"updates"`
+	}
+
+	addSniffer(func(projectPath string, dest map[string]any) error {
+		paths, err := globMany(projectPath, ".github/dependabot.yml", ".github/dependabot.yaml")
+		if err != nil {
+			return err
+		}
+
+		var dependabots []Dependabot
+		for _, path := range paths {
+			bytes, err := os.ReadFile(path)
+			if err != nil {
+				return err
+			}
+
+			var db Dependabot
+			if err := yaml.Unmarshal(bytes, &db); err != nil {
+				return err
+			}
+			db.Path = path
+
+			dependabots = append(dependabots, db)
+		}
+
+		dest["dependabot"] = dependabots
+		return nil
+	})
+}
+
+func init() {
+	type Dockerfile struct {
+		Path   string   `json:"path"`
+		Stages []string `json:"stages"`
+	}
+
+	addSniffer(func(projectPath string, dest map[string]any) error {
+		paths, err := globMany(projectPath, "Dockerfile", "*/Dockerfile")
+		if err != nil {
+			return err
+		}
+
+		var dockerfiles []Dockerfile
+		for _, path := range paths {
+			bytes, err := os.ReadFile(path)
+			if err != nil {
+				return err
+			}
+
+			var dockerfile Dockerfile
+			dockerfile.Path = path
+
+			for line := range strings.Lines(string(bytes)) {
+				cmd, rest, ok := strings.Cut(line, " ")
+				if !ok {
+					continue
+				}
+				if strings.ToUpper(cmd) != "FROM" {
+					continue
+				}
+
+				for t := range strings.FieldsSeq(rest) {
+					if strings.HasPrefix(t, "--") {
+						continue
+					}
+					dockerfile.Stages = append(dockerfile.Stages, t)
+					break
+				}
+			}
+
+			dockerfiles = append(dockerfiles, dockerfile)
+		}
+
+		dest["docker"] = dockerfiles
+		return nil
+	})
+}
+
+func init() {
+	type Module struct {
+		Path      string `json:"path"`
+		Go        string `json:"go"`
+		Toolchain string `json:"toolchain"`
+	}
+
+	addSniffer(func(projectPath string, dest map[string]any) error {
+		paths, err := globMany(projectPath, "go.mod", "*/go.mod")
+		if err != nil {
+			return err
+		}
+
+		var modules []Module
+		for _, path := range paths {
+			bytes, err := os.ReadFile(path)
+			if err != nil {
+				return err
+			}
+
+			var mod Module
+			mod.Path = path
+
+			for line := range strings.Lines(string(bytes)) {
+				cmd, rest, ok := strings.Cut(line, " ")
+				if !ok {
+					continue
+				}
+				rest = strings.TrimSpace(rest)
+				switch cmd {
+				case "go":
+					mod.Go = rest
+				case "toolchain":
+					mod.Toolchain = rest
+				}
+			}
+
+			modules = append(modules, mod)
+		}
+
+		dest["go"] = modules
+		return nil
+	})
+}
+
+func init() {
+	type Package struct {
+		Path    string            `json:"path"`
+		Name    string            `json:"name"`
+		Version string            `json:"version"`
+		Scripts map[string]string `json:"scripts"`
+	}
+
+	addSniffer(func(projectPath string, dest map[string]any) error {
+		paths, err := globMany(projectPath, "package.json", "*/package.json")
+		if err != nil {
+			return err
+		}
+
+		var packages []Package
+		for _, path := range paths {
+			bytes, err := os.ReadFile(path)
+			if err != nil {
+				return err
+			}
+
+			var pkg Package
+			if err := json.Unmarshal(bytes, &pkg); err != nil {
+				return err
+			}
+			pkg.Path = path
+
+			packages = append(packages, pkg)
+		}
+
+		dest["npm"] = packages
+		return nil
+	})
+}
+
+func init() {
+	type Project struct {
+		Path           string `json:"path"           toml:"-"`
+		Name           string `json:"name"           toml:"name"`
+		Version        string `json:"version"        toml:"version"`
+		RequiresPython string `json:"requires_python" toml:"requires-python"`
+	}
+
+	addSniffer(func(projectPath string, dest map[string]any) error {
+		paths, err := globMany(projectPath, "pyproject.toml", "*/pyproject.toml")
+		if err != nil {
+			return err
+		}
+
+		var projects []Project
+		for _, path := range paths {
+			var doc struct {
+				Project Project `toml:"project"`
+			}
+			if _, err := toml.DecodeFile(path, &doc); err != nil {
+				return err
+			}
+			doc.Project.Path = path
+			projects = append(projects, doc.Project)
+		}
+
+		dest["uv"] = projects
+		return nil
+	})
+}
