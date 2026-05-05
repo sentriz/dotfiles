@@ -84,19 +84,19 @@
   colour = 7
 
 [[scripts]]
-  triggers = ["pre cc", "input"]
+  triggers = ["pre cc"]
   name = "calc"
   path = "menu-calc"
   colour = 2
 
 [[scripts]]
-  triggers = ["pre hh", "input"]
+  triggers = ["pre hh"]
   name = "hiphash"
   path = "menu-hiphash"
   colour = 2
 
 [[scripts]]
-  triggers = ["pre lm", "input 500ms"]
+  triggers = ["pre lm"]
   name = "llm"
   path = "menu-llm"
   colour = 2
