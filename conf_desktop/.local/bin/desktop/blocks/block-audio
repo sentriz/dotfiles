@@ -3,8 +3,8 @@
 case "$BLOCK_BUTTON" in
 1) wpctl set-mute @DEFAULT_SINK@ toggle ;;          # left click
 3) wpctl set-mute @DEFAULT_SOURCE@ toggle ;;        # right click
-4) wpctl set-volume --limit 1 @DEFAULT_SINK@ 5%+ ;; # scroll up
-5) wpctl set-volume --limit 1 @DEFAULT_SINK@ 5%- ;; # scroll down
+4) wpctl set-volume --limit 1 @DEFAULT_SINK@ 1%+ ;; # scroll up
+5) wpctl set-volume --limit 1 @DEFAULT_SINK@ 1%- ;; # scroll down
 esac >/dev/null 2>&1
 
 function parse() {
