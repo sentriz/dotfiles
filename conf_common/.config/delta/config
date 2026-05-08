@@ -1,0 +1,11 @@
+[delta]
+	side-by-side = true
+	line-numbers = true
+	commit-style = omit
+	file-style = bold yellow
+	file-decoration-style = none
+	hunk-header-style = omit
+	line-numbers-left-style = "#444444"
+	line-numbers-right-style = "#444444"
+	line-numbers-left-format = "{nm:^4} "
+	line-numbers-right-format = " {np:^4} "

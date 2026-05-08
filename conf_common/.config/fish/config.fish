@@ -128,6 +128,7 @@ abbr curl 'curl -s'
 abbr less 'less -RKS#1'
 abbr jq jq -r '\'.\''
 abbr wget 'curl -fLO'
+alias delta 'command delta --config $XDG_CONFIG_HOME/delta/config'
 
 # extended regexp everywhere
 abbr grep "grep -Ei"
