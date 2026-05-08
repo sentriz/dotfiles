@@ -65,6 +65,9 @@ smart_borders on
 smart_gaps off
 default_border pixel 2
 gaps inner $default_gap
+gaps top   -$default_gap
+gaps left  -$default_gap
+gaps right -$default_gap
 font $default_font
 popup_during_fullscreen smart
 
