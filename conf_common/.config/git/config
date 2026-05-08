@@ -43,9 +43,6 @@
 	commit-empty = !git commit --allow-empty -m "​"
 	master = !basename $(git symbolic-ref refs/remotes/origin/HEAD)
 
-	edit = !git diff --name-only $@ | xargs --no-run-if-empty $EDITOR
-	editf = !git diff --name-only $@ | fzf +m | xargs --no-run-if-empty $EDITOR
-
 [diff "zip"]
 	textconv = unzip -c -a
 [diff]
