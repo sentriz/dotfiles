@@ -336,6 +336,7 @@ bindsym XF86AudioPrev         exec mpris-ctrl previous
 bindgesture swipe:3:right workspace next
 bindgesture swipe:3:left  workspace prev
 bindgesture swipe:3:down  workspace back_and_forth
+bindgesture swipe:3:up    workspace back_and_forth
 
 # bindings: programs
 bindsym $super+return       exec $TERMINAL
