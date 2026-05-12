@@ -1,17 +1,151 @@
-#!/usr/bin/env fish
+//usr/bin/env go-script "$0" "$@"; exit $?
+// vi: ft=go
 
-function __lookup
-    set -l ip (string trim "$argv[1]")
-    curl -s "https://json.geoiplookup.io/$ip" | jq -r '"\(.ip)\t\(.asn)\t\(.district)\t\(.city)\t\(.region)\t\(.country_name)"'
-end
+package main
 
-if test (count $argv) -gt 0
-    for line in $argv
-        __lookup $line
-    end
-    exit
-end
+import (
+	"bufio"
+	"bytes"
+	"compress/gzip"
+	"database/sql"
+	"encoding/binary"
+	"encoding/csv"
+	"errors"
+	"fmt"
+	"io"
+	"net/http"
+	"net/netip"
+	"net/url"
+	"os"
+	"path/filepath"
+	"strings"
 
-while read line
-    __lookup "$line"
-end
+	_ "github.com/ncruces/go-sqlite3/driver"
+)
+
+func main() {
+	cacheDir, err := os.UserCacheDir()
+	cerr(err)
+
+	var dbURI url.URL
+	dbURI.Scheme = "file"
+	dbURI.Path = filepath.Join(cacheDir, "dbip-city.db")
+	db, err := sql.Open("sqlite3", dbURI.String())
+	cerr(err)
+	defer db.Close()
+
+	_, err = db.Exec(`
+		create table if not exists ip_locs (
+			ip_start  integer primary key,
+			ip_end    integer not null,
+			country   text,
+			state1    text,
+			state2    text,
+			city      text,
+			postcode  text
+		);
+	`)
+	cerr(err)
+
+	err = ensureDB(db)
+	cerr(err)
+
+	var r io.Reader = os.Stdin
+	if len(os.Args) > 1 {
+		var buff bytes.Buffer
+		for _, arg := range os.Args[1:] {
+			fmt.Fprintln(&buff, arg)
+		}
+		r = &buff
+	}
+
+	for sc := bufio.NewScanner(r); sc.Scan(); {
+		ipStr := strings.TrimSpace(sc.Text())
+
+		addr, err := netip.ParseAddr(ipStr)
+		cerr(err)
+
+		b := addr.As4()
+		ipInt := binary.BigEndian.Uint32(b[:])
+
+		var country, state1, state2, city, postcode string
+		err = db.QueryRow("select country, state1, state2, city, postcode from ip_locs where ip_start <= ? and ip_end >= ? order by ip_start desc limit 1;", ipInt, ipInt).Scan(&country, &state1, &state2, &city, &postcode)
+		if errors.Is(err, sql.ErrNoRows) {
+			fmt.Printf("%s\t%s\t%s\t%s\t%s\t%s\n", ipStr, "", "", "", "", "")
+			continue
+		}
+		cerr(err)
+
+		fmt.Printf("%s\t%s\t%s\t%s\t%s\t%s\n", ipStr, country, state1, state2, city, postcode)
+	}
+}
+
+const ipsURL = `https://github.com/sapics/ip-location-db/raw/refs/heads/main/dbip-city/dbip-city-ipv4-num.csv.gz`
+
+func ensureDB(db *sql.DB) error {
+	{
+		var c int
+		if err := db.QueryRow("select 1 from ip_locs limit 1;").Scan(&c); err != nil && !errors.Is(err, sql.ErrNoRows) {
+			return fmt.Errorf("scan size: %w", err)
+		}
+		if c != 0 {
+			return nil
+		}
+	}
+
+	resp, err := http.Get(ipsURL)
+	if err != nil {
+		return fmt.Errorf("get: %w", err)
+	}
+	defer resp.Body.Close()
+
+	gr, err := gzip.NewReader(resp.Body)
+	if err != nil {
+		return fmt.Errorf("new gz: %w", err)
+	}
+	defer gr.Close()
+
+	cr := csv.NewReader(gr)
+
+	tx, err := db.Begin()
+	if err != nil {
+		return fmt.Errorf("begin: %w", err)
+	}
+	defer tx.Rollback()
+
+	stmt, err := tx.Prepare(`insert into ip_locs values (?, ?, ?, ?, ?, ?, ?)`)
+	if err != nil {
+		return fmt.Errorf("prepare: %w", err)
+	}
+	defer stmt.Close()
+
+	for {
+		row, err := cr.Read()
+		if errors.Is(err, io.EOF) {
+			break
+		}
+		if err != nil {
+			return fmt.Errorf("read csv: %w", err)
+		}
+
+		args := make([]any, 7)
+		for i := range args {
+			args[i] = row[i]
+		}
+		if _, err := stmt.Exec(args...); err != nil {
+			return fmt.Errorf("exec: %w", err)
+		}
+	}
+
+	if err := tx.Commit(); err != nil {
+		return fmt.Errorf("commit: %w", err)
+	}
+
+	return nil
+}
+
+func cerr(err error) {
+	if err != nil {
+		panic(err)
+	}
+}
