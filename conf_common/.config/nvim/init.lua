@@ -18,6 +18,9 @@ vim.keymap.set("n", "<c-g>", ":TmuxNavigatePrevious<cr>", { silent = true })
 -- plugin: print debug
 vim.keymap.set("n", "<leader>d", ":call print_debug#print_debug()<cr>", { silent = true })
 
+-- plugin: exchange (but with fixed cursor position)
+vim.keymap.set("x", "X", "<Plug>(Exchange)`]", { silent = true, remap = true })
+
 -- auto start netrw when no files opened
 local function setup_netrw_on_start()
 	local had_q = vim.fn.index(vim.v.argv, "-q") >= 0
