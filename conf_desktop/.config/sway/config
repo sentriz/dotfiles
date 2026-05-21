@@ -81,7 +81,7 @@ for_window [floating] border full
 # title
 titlebar_border_thickness 0
 titlebar_padding 2
-for_window [all] title_format "> %title"
+for_window [all] title_format "┃ %title"
 
 # window colours        border           background       text         indicator        child
 client.focused          #ffffff          #ffffff          $colour_grey #ffffff          #ffffff
