@@ -46,7 +46,6 @@
 [diff "zip"]
 	textconv = unzip -c -a
 [diff]
-	compactionHeuristic = true
 	noPrefix = true
 	renameLimit = 2048
 [advice]
@@ -72,6 +71,8 @@
 [diff]
 	tool = meld
 	algorithm = histogram
+	colorMoved = zebra
+	colorMovedWS = allow-indentation-change
 [difftool]
 	prompt = false
 [difftool "meld"]
