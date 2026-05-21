@@ -105,8 +105,9 @@ func globEscape(path string) string {
 
 func init() {
 	type Use struct {
-		Action  string `json:"action"`
-		Version string `json:"version"`
+		Action  string         `json:"action"`
+		Version string         `json:"version"`
+		With    map[string]any `json:"with"`
 	}
 	type Workflow struct {
 		Path string `json:"path"`
@@ -131,7 +132,8 @@ func init() {
 				Name string `yaml:"name"`
 				Jobs map[string]struct {
 					Steps []struct {
-						Uses string `yaml:"uses"`
+						Uses string         `yaml:"uses"`
+						With map[string]any `yaml:"with"`
 					} `yaml:"steps"`
 				} `yaml:"jobs"`
 			}
@@ -146,7 +148,7 @@ func init() {
 						continue
 					}
 					action, version, _ := strings.Cut(step.Uses, "@")
-					wf.Uses = append(wf.Uses, Use{Action: action, Version: version})
+					wf.Uses = append(wf.Uses, Use{Action: action, Version: version, With: step.With})
 				}
 			}
 
