@@ -7,13 +7,19 @@ list)
     printf "%s\n" region monitor window
     ;;
 region)
-    slurp
+    slurp -f $'geo\t%x,%y %wx%h\n'
     ;;
 monitor)
-    slurp -o
+    slurp -o -f $'geo\t%x,%y %wx%h\n'
     ;;
 window)
-    swaymsg -t get_tree | jq --argjson b $border -r '.. | select(.pid? and .visible?) | .rect | "\(.x + $b),\(.y + $b) \(.width - $b*2)x\(.height - $b*2)"' | slurp
+    swaymsg -t get_tree \
+        | jq --argjson b $border -r '
+            .. | select(.pid? and .visible?) | .rect as $r |
+            "\($r.x + $b),\($r.y + $b) \($r.width - $b*2)x\($r.height - $b*2) \(.foreign_toplevel_identifier // "")"
+        ' \
+        | slurp -f $'geo\t%x,%y %wx%h\ntoplevel\t%l\n' \
+        | grep -v $'^toplevel\t$'
     ;;
 *)
     exit 1

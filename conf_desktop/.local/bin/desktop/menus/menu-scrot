@@ -8,10 +8,19 @@ if [[ "$#" -gt 0 ]]; then
         filename="${SCREENSHOTS_DIR}/$(date '+%Y%m%d_%H%M%S').png"
 
         {
-            area="$(area "$arg")"
-            [[ -z "$area" ]] && exit 1
+            area_out="$(area "$arg")"
+            [[ -z "$area_out" ]] && exit 1
 
-            grim -g "$area" "$filename"
+            toplevel="$(grep -Po '^toplevel\t\K.+' <<<"$area_out")"
+            geo="$(grep -Po '^geo\t\K.+' <<<"$area_out")"
+
+            if [[ -n "$toplevel" ]]; then
+                grim -T "$toplevel" "$filename"
+            elif [[ -n "$geo" ]]; then
+                grim -g "$geo" "$filename"
+            else
+                exit 1
+            fi
             [[ ! -f "$filename" ]] && exit 1
 
             wl-copy <"$filename"
@@ -31,10 +40,11 @@ if [[ "$#" -gt 0 ]]; then
         fi
 
         {
-            area="$(area "$arg")"
-            [[ -z "$area" ]] && exit 1
+            area_out="$(area "$arg")"
+            geo="$(grep -Po '^geo\t\K.+' <<<"$area_out")"
+            [[ -z "$geo" ]] && exit 1
 
-            wf-recorder "${extra_args[@]}" -f "$filename" -g "$area" -x yuv420p >/dev/null
+            wf-recorder "${extra_args[@]}" -f "$filename" -g "$geo" -x yuv420p >/dev/null
             [[ ! -f "$filename" ]] && exit 1
 
             wl-copy -t text/uri-list "file://$filename"
