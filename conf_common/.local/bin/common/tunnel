@@ -1,37 +1,54 @@
 #!/usr/bin/env bash
 
-tunnel_host="sam"
-tunnel_subdomains=(
-    "tun-a"
-    "tun-b"
-    "tun-c"
-)
-tunnel_ports=(
-    "51401"
-    "51402"
-    "51403"
-)
+set -e
+
+tunnel_host="$(secret tunnel_host)"
+tunnel_domain="$(secret tunnel_domain)"
+
+# shellcheck disable=SC2016
+tunnel_dir='$HOME/.config/containers/systemd/traefik/config/dynamic'
+
 ssh_opts=(
     "ServerAliveInterval=15"
 )
 
-if [[ $# -ne 2 ]]; then
-    echo "please provide <tunnel number> and <local port>" >&2
+if [[ $# -ne 2 ]] || [[ $2 != *:* ]]; then
+    echo "usage: tunnel <subdomain> [host]:<port>" >&2
     exit 1
 fi
 
-if [[ $1 -lt 1 ]] || [[ $1 -gt "${#tunnel_ports[@]}" ]]; then
-    echo "invalid tunnel \"$1\" selected" >&2
-    exit 1
-fi
+subdomain="$1"
 
-tunnel_subdomain="${tunnel_subdomains[$1 - 1]}"
-tunnel_port="${tunnel_ports[$1 - 1]}"
-local_port="$2"
+target_host="${2%:*}"
+target_host="${target_host:-localhost}"
+target_port="${2##*:}"
 
-echo "starting tunnel $tunnel_subdomain.$tunnel_host -> localhost:$local_port"
+remote_port=$((51000 + $(printf '%s' "$subdomain" | cksum | cut -d' ' -f1) % 500))
+
+echo "registering route $subdomain.$tunnel_domain -> $tunnel_host:$remote_port"
+
+tunnel_config="$tunnel_dir/tunnel-$subdomain.yml"
+
+# shellcheck disable=SC2029,SC2087
+ssh "$tunnel_host" "cat > $tunnel_config" <<EOF
+http:
+  routers:
+    tunnel-$subdomain:
+      entryPoints: [web]
+      rule: Host(\`$subdomain.$tunnel_domain\`)
+      service: tunnel-$subdomain
+  services:
+    tunnel-$subdomain:
+      loadBalancer:
+        servers:
+          - url: http://host.containers.internal:$remote_port
+EOF
+trap 'ssh "$tunnel_host" rm -f "$tunnel_config"' EXIT
+
+echo "starting tunnel $tunnel_host:$remote_port -> $target_host:$target_port"
 while true; do
-    ssh -o "${ssh_opts[@]}" -N -R "*:$tunnel_port:0.0.0.0:$local_port" "$tunnel_host"
+    ssh -o "${ssh_opts[@]}" -N -R "*:$remote_port:$target_host:$target_port" "$tunnel_host"
+
     echo "tunnel disconnected, reconnecting in 5s..."
     sleep 5
 done
