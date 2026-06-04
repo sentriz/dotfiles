@@ -25,10 +25,17 @@ khal list today tomorrow -df "" -f "{start-date}{tab}{start-time}{tab}{end-date}
         notify-send -- "$diff sec until $title"
     end
 
-    set rel now
-    test "$start_secs" -ge "$now_secs"
-    and set rel "in "(relative-duration (math "$start_secs - $now_secs + $now_secs % 60"))
-
-    echo "($rel) "(string shorten -m 30 -c … -- "$title")
-    break
+    if test -z "$next_end"; or test "$end_secs" -lt "$next_end"
+        set next_end $end_secs
+        set next_start $start_secs
+        set next_title $title
+    end
 end
+
+test -z "$next_end"; and exit
+
+set rel now
+test "$next_start" -ge "$now_secs"
+and set rel "in "(relative-duration (math "$next_start - $now_secs + $now_secs % 60"))
+
+echo "($rel) "(string shorten -m 30 -c … -- "$next_title")
