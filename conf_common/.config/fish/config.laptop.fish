@@ -44,13 +44,6 @@ function p --argument project
     cd "$PROJECTS_DIR/$project"
 end
 
-complete -x --command p --arguments ( \
-    find "$PROJECTS_DIR" \
-        -maxdepth 1 -mindepth 1 \
-        -type d \
-        -printf '%P ' \
-)
-
 if status is-login
     dbus-update-activation-environment --systemd SSH_AUTH_SOCK XDG_DATA_DIRS PATH
 
