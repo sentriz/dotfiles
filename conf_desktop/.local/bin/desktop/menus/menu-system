@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+why="menu-system: lid stay awake"
+
+function lid_kept_awake() {
+    systemd-inhibit --list 2>/dev/null | grep -q "$why"
+}
+
 if [[ "$#" -gt 0 ]]; then
     IFS=$'\t' read -r id _ <<<"$1"
     case "$id" in
@@ -7,12 +13,26 @@ if [[ "$#" -gt 0 ]]; then
     hibernate) systemctl hibernate ;;
     reboot) systemctl reboot ;;
     shutdown) systemctl poweroff ;;
+    lid)
+        if lid_kept_awake; then
+            pkill -f "$why"
+        else
+            systemd-inhibit --what=handle-lid-switch --why="$why" sleep infinity &
+            disown
+        fi
+        ;;
     esac
     exit 0
 fi
+
+highlight=$'\x1b]6366;highlight\x07'
+
+lid_pre=""
+lid_kept_awake && lid_pre="$highlight"
 
 printf '%s\t%s\n' \
     suspend "to ram" \
     hibernate "to disk" \
     reboot "the machine" \
     shutdown "the machine"
+printf '%s%s\t%s\n' "$lid_pre" lid "stay awake when closed"
