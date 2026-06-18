@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+out="$XDG_RUNTIME_DIR/menu-dictate"
+
+if [[ "$#" -gt 0 ]]; then
+    IFS=$'\t' read -r id _ <<<"$1"
+    case "$id" in
+    record)
+        rm -f "$out"
+        dictate >"$out" 2>/dev/null &
+        disown
+        ;;
+    stop)
+        pkill -x pw-record
+        for _ in $(seq 50); do
+            [[ -s "$out" ]] && break
+            sleep 0.1
+        done
+        ;;
+    copy) wl-copy <"$out" && rm -f "$out" ;;
+    esac
+    exit 0
+fi
+
+if pidof -q pw-record; then
+    printf '%s\t%s\n' stop "recording"
+elif [[ -s "$out" ]]; then
+    printf '%s\t%s\n' \
+        copy "$(tr '\n' ' ' <"$out")" \
+        record "again"
+else
+    printf '%s\t%s\n' record "from the mic"
+fi

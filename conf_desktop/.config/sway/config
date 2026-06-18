@@ -139,16 +139,6 @@ bindsym $super+d move workspace to output right
 bindsym $super+e workspace back_and_forth, move workspace to output up,    workspace back_and_forth, move workspace to output down
 bindsym $super+r workspace back_and_forth, move workspace to output right, workspace back_and_forth, move workspace to output left
 
-# bindings: modes
-bindsym $super+$alt+d     mode $mode_dictate, exec dictate start
-
-set $mode_dictate "dictate: [enter] copy, [space] type, [esc] cancel"
-mode $mode_dictate {
-    bindsym Return mode default, exec sh -c 'dictate stop | wl-copy'
-    bindsym space  mode default, exec sh -c 'dictate stop | xargs -0 wtype --'
-    bindsym Escape mode default, exec dictate stop >/dev/null
-}
-
 bindsym $super+1     workspace number 1
 bindsym $super+2     workspace number 2
 bindsym $super+3     workspace number 3
