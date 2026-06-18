@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 
 future_file="$XDG_CACHE_HOME/timer_left"
+
+test "$1" = "clear" \
+    && rm -f "$future_file" \
+    && exit
+
 future="$(cat "$future_file" 2>/dev/null || date "+%s")"
 test $# -eq 1 \
     && echo "$(("$future" + "$1"))" >"$future_file" \

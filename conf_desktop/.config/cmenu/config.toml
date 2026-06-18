@@ -90,6 +90,13 @@
   colour = 5
 
 [[scripts]]
+  triggers = ["pre t"]
+  name = "timer"
+  path = "menu-timer"
+  colour = 3
+  stay_open = true
+
+[[scripts]]
   triggers = ["pre td"]
   name = "tuned"
   path = "menu-tuned"
