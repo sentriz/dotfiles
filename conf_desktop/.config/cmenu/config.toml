@@ -66,13 +66,13 @@
   colour = 5
 
 [[scripts]]
-  triggers = ["pre s", "script file"]
+  triggers = ["pre s"]
   name = "scrot"
   path = "menu-scrot"
   colour = 6
 
 [[scripts]]
-  triggers = ["pre f", "interval 750ms"]
+  triggers = ["pre f", "interval 750ms", "script scrot"]
   name = "file"
   path = "menu-file"
   colour = 5
