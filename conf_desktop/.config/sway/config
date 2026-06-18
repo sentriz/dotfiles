@@ -27,32 +27,6 @@ set $colour_red_alpha  #BC585860
 set $colour_inactive   #8D8D8D
 
 # var helpers
-set $lock_warning notify-send 'locking screen in 10 seconds'
-set $lock swaylock \
-    --image $XDG_PICTURES_DIR/wallpapers/fagan.png \
-    --font "$default_font" \
-    --inside-color "#00000000" \
-    --inside-caps-lock-color "#00000000" \
-    --inside-clear-color "#00000000" \
-    --inside-ver-color "$colour_grey_alpha" \
-    --inside-wrong-color "$colour_red_alpha" \
-    --ring-color "$colour_grey_alpha" \
-    --ring-caps-lock-color "#00000000" \
-    --ring-clear-color "#00000000" \
-    --ring-ver-color "#00000000" \
-    --ring-wrong-color "#00000000" \
-    --text-color "#FFFFFF" \
-    --text-caps-lock-color "#FFFFFF" \
-    --text-clear-color "#FFFFFF" \
-    --text-ver-color "#FFFFFF" \
-    --text-wrong-color "#FFFFFF" \
-    --separator-color "#00000000" \
-    --key-hl-color "$colour_blue_alpha" \
-    --layout-text-color "#FFFFFF" \
-    --line-uses-inside \
-    --line-uses-ring \
-    --daemonize
-
 set $up_block_1   pkill -RTMIN+1 i3blocks
 set $up_block_2   pkill -RTMIN+2 i3blocks
 set $up_block_3   pkill -RTMIN+3 i3blocks
@@ -166,22 +140,8 @@ bindsym $super+e workspace back_and_forth, move workspace to output up,    works
 bindsym $super+r workspace back_and_forth, move workspace to output right, workspace back_and_forth, move workspace to output left
 
 # bindings: modes
-bindsym $super+$alt+q     mode $mode_system
 bindsym $super+$alt+t     mode $mode_timer
 bindsym $super+$alt+d     mode $mode_dictate, exec dictate start
-
-set $mode_system "system: [l]ock [s]uspend [h]ibernate [r]eboot shut[d]own e[x]it r[e]load"
-mode $mode_system {
-    bindsym l exec $lock,               mode default
-    bindsym d exec systemctl poweroff,  mode default
-    bindsym r exec systemctl reboot,    mode default
-    bindsym s exec systemctl suspend,   mode default
-    bindsym h exec systemctl hibernate, mode default
-    bindsym x exit
-    bindsym e reload
-    bindsym Return mode default
-    bindsym Escape mode default
-}
 
 set $mode_dictate "dictate: [enter] copy, [space] type, [esc] cancel"
 mode $mode_dictate {

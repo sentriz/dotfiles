@@ -20,6 +20,18 @@
   columns = [2, 3]
 
 [[scripts]]
+  triggers = ["pre q"]
+  name = "system"
+  path = "menu-system"
+  colour = 4
+
+[[scripts]]
+  triggers = ["script system"]
+  name = "sway-session"
+  path = "menu-sway-session"
+  colour = 9
+
+[[scripts]]
   triggers = ["on-start", "pre p"]
   name = "package"
   path = "menu-package"
