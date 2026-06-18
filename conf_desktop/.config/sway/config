@@ -166,7 +166,6 @@ bindsym $super+e workspace back_and_forth, move workspace to output up,    works
 bindsym $super+r workspace back_and_forth, move workspace to output right, workspace back_and_forth, move workspace to output left
 
 # bindings: modes
-bindsym $super+$alt+space mode $mode_move_floating focus floating
 bindsym $super+$alt+q     mode $mode_system
 bindsym $super+$alt+t     mode $mode_timer
 bindsym $super+$alt+d     mode $mode_dictate, exec dictate start
@@ -182,16 +181,6 @@ mode $mode_system {
     bindsym e reload
     bindsym Return mode default
     bindsym Escape mode default
-}
-
-set $mode_move_floating "floating move: [h|j|k|l]"
-mode $mode_move_floating {
-    bindsym h move left
-    bindsym j move down
-    bindsym k move up
-    bindsym l move right
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
 }
 
 set $mode_dictate "dictate: [enter] copy, [space] type, [esc] cancel"
