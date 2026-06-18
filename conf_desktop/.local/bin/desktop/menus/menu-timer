@@ -7,7 +7,7 @@ if [[ "$#" -gt 0 ]]; then
     remove) timer -60 ;;
     clear) timer clear ;;
     esac
-    pkill -RTMIN+4 i3blocks
+    block-up timer
     exit 0
 fi
 

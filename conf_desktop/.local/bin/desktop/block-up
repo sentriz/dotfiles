@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+config="$XDG_CONFIG_HOME/i3blocks/config"
+
+function signals() {
+    local want="$1" name=""
+    while IFS= read -r line; do
+        [[ "$line" =~ ^\[(.*)\]$ ]] && name="${BASH_REMATCH[1]}" && continue
+        [[ "$line" =~ ^signal=([0-9]+) ]] || continue
+        [[ "$want" == all || "$want" == "$name" ]] && echo "${BASH_REMATCH[1]}"
+    done <"$config"
+}
+
+found=
+for signal in $(signals "$1"); do
+    pkill -RTMIN+"$signal" i3blocks &
+    found=1
+done
+
+test -n "$found"
