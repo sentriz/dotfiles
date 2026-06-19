@@ -1,28 +1,34 @@
 #!/usr/bin/env bash
 
 out="$XDG_RUNTIME_DIR/menu-dictate"
+pidfile="$XDG_RUNTIME_DIR/menu-dictate.pid"
+
+running_pid() {
+    local pid
+    read -r pid 2>/dev/null <"$pidfile" && kill -0 "$pid" 2>/dev/null && echo "$pid"
+}
 
 if [[ "$#" -gt 0 ]]; then
     IFS=$'\t' read -r id _ <<<"$1"
     case "$id" in
     record)
+        running_pid >/dev/null && exit 0
         rm -f "$out"
         dictate >"$out" 2>/dev/null &
+        echo $! >"$pidfile"
         disown
         ;;
     stop)
-        pkill -x pw-record
-        for _ in $(seq 50); do
-            [[ -s "$out" ]] && break
-            sleep 0.1
-        done
+        pid=$(running_pid) && kill -TERM "$pid" 2>/dev/null
+        while running_pid >/dev/null; do sleep 0.1; done
+        rm -f "$pidfile"
         ;;
     copy) wl-copy <"$out" && rm -f "$out" ;;
     esac
     exit 0
 fi
 
-if pidof -q pw-record; then
+if running_pid >/dev/null; then
     printf '%s\t%s\n' stop "recording"
 elif [[ -s "$out" ]]; then
     printf '%s\t%s\n' \
