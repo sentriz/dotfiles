@@ -8,7 +8,7 @@ if [[ "$#" -gt 0 ]]; then
     exit
 fi
 
-highlight=$'\x1b]6366;highlight\x07'
+highlight="$(cmenu highlight)"
 
 iwctl station "$station" scan >/dev/null 2>&1
 iwctl station "$station" get-networks \

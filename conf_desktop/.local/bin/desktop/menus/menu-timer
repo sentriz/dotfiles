@@ -8,8 +8,11 @@ if [[ "$#" -gt 0 ]]; then
     clear) timer clear ;;
     esac
     block-up timer
-    exit 0
+    exit
 fi
+
+left="$(timer)"
+[[ -n "$left" ]] && printf '%s%dm%02ds left\n' "$(cmenu label)" "$((left / 60))" "$((left % 60))"
 
 printf '%s\t%s\n' \
     add "a minute" \

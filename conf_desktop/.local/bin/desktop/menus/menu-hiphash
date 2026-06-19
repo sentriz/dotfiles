@@ -11,7 +11,7 @@ if [[ "$#" -gt 0 ]]; then
         ;;
     esac
 
-    exit 0
+    exit
 fi
 
 inp="$CMENU_QUERY"
@@ -19,7 +19,7 @@ if [[ -z "$inp" ]]; then
     inp="$(wl-paste -n)"
 fi
 if [[ -z "$inp" ]]; then
-    echo "no input"
+    echo "$(cmenu label)no input"
     exit
 fi
 

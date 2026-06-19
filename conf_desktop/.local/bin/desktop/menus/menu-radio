@@ -1,21 +1,24 @@
 #!/usr/bin/env bash
 
-pid_file="$XDG_RUNTIME_DIR/mpv_radio_pid"
+pidfile="$XDG_RUNTIME_DIR/menu-radio.pid"
 
-IFS=$'\t' read -r current_pid current_station <"$pid_file" 2>/dev/null
+IFS=$'\t' read -r current_pid current_station <"$pidfile" 2>/dev/null
 if [[ -n "$current_pid" ]] && ! kill -0 "$current_pid" 2>/dev/null; then
     current_pid=""
     current_station=""
-    rm "$pid_file"
+    rm -f "$pidfile"
 fi
 
 if [[ "$#" -gt 0 ]]; then
-    [[ "$current_pid" -gt 0 ]] && kill "$current_pid"
+    if [[ "$current_pid" -gt 0 ]]; then
+        kill "$current_pid" 2>/dev/null
+        while kill -0 "$current_pid" 2>/dev/null; do sleep 0.1; done
+    fi
 
     station="$1"
 
     if [[ "$station" = "$current_station" ]]; then
-        rm "$pid_file"
+        rm -f "$pidfile"
         exit
     fi
 
@@ -27,13 +30,13 @@ if [[ "$#" -gt 0 ]]; then
         --force-media-title="$station" \
         --no-resume-playback \
         "$RADIO_DIR/$station" &
-    echo -e "$!\t$station" >"$pid_file"
+    echo -e "$!\t$station" >"$pidfile"
     notify-send 'started radio station' "$station"
 
     exit
 fi
 
-highlight=$'\x1b]6366;highlight\x07'
+highlight="$(cmenu highlight)"
 
 find \
     "$RADIO_DIR" \
@@ -43,5 +46,5 @@ find \
     -printf "%f\n" | while read -r line; do
     pre=""
     [[ "$line" = "$current_station" ]] && pre="$highlight"
-    echo "$pre$line"
+    printf '%s%s\n' "$pre" "$line"
 done

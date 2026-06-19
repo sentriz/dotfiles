@@ -2,7 +2,7 @@
 
 why="menu-system: lid stay awake"
 
-function lid_kept_awake() {
+lid_kept_awake() {
     systemd-inhibit --list 2>/dev/null | grep -q "$why"
 }
 
@@ -16,19 +16,22 @@ if [[ "$#" -gt 0 ]]; then
     lid)
         if lid_kept_awake; then
             pkill -f "$why"
+            while lid_kept_awake; do sleep 0.1; done
         else
             systemd-inhibit --what=handle-lid-switch --why="$why" sleep infinity &
             disown
+            while ! lid_kept_awake; do sleep 0.1; done
         fi
         ;;
     esac
-    exit 0
+    exit
 fi
 
-highlight=$'\x1b]6366;highlight\x07'
+highlight="$(cmenu highlight)"
+stay="$(cmenu stay)"
 
-lid_pre=""
-lid_kept_awake && lid_pre="$highlight"
+lid_pre="$stay"
+lid_kept_awake && lid_pre="$stay$highlight"
 
 printf '%s\t%s\n' \
     suspend "to ram" \

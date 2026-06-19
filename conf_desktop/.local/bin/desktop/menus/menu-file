@@ -1,18 +1,18 @@
 #!/usr/bin/env bash
 
-function current_file() {
+current_file() {
     mime="$(wl-paste -l 2>/dev/null | head -n 1)"
     case "$mime" in
     text/uri-list)
         path="$(wl-paste --type text/uri-list 2>/dev/null | head -n 1)"
         path="${path#file://}"
         if [[ -f "$path" ]]; then
-            printf "%s\t%s\n" "clipboard-uri" "$(file --mime-type -b "$path")"
+            printf '%s\t%s\n' "clipboard-uri" "$(file --mime-type -b "$path")"
             return
         fi
         ;;
     image/* | video/*)
-        printf "%s\t%s\n" "clipboard-media" "$mime"
+        printf '%s\t%s\n' "clipboard-media" "$mime"
         return
         ;;
     esac
@@ -20,12 +20,12 @@ function current_file() {
     path="$(find "$XDG_DOWNLOAD_DIR" "$SCREENSHOTS_DIR" "$RECORDINGS_DIR" -maxdepth 1 -type f -printf '%T@\t%p\n' 2>/dev/null \
         | sort -rn | head -1 | cut -f2)"
     if [[ -f "$path" ]]; then
-        printf "%s\t%s\n" "$path" "$(file --mime-type -b "$path")"
+        printf '%s\t%s\n' "$path" "$(file --mime-type -b "$path")"
         return
     fi
 }
 
-function resolve_file() {
+resolve_file() {
     case "$1" in
     clipboard-uri)
         wl-paste --type text/uri-list 2>/dev/null | head -n 1 | sed 's@^file://@@'
@@ -82,15 +82,15 @@ if [[ -n "$mime" ]]; then
 
     case "$source" in
     clipboard-*) ;;
-    *) printf "copy\t%s\t%s\n" "$label" "$mime" ;;
+    *) printf 'copy\t%s\t%s\n' "$label" "$mime" ;;
     esac
 
-    printf "drop\t%s\t%s\n" "$label" "$mime"
+    printf 'drop\t%s\t%s\n' "$label" "$mime"
 
     case "$mime" in
     image/* | video/*)
         for upl in $(upload list); do
-            printf "upload\t%s\t%s\t%s\n" "$label" "$mime" "$upl"
+            printf 'upload\t%s\t%s\t%s\n' "$label" "$mime" "$upl"
         done
         ;;
     esac

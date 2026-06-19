@@ -94,7 +94,6 @@
   name = "dictate"
   path = "menu-dictate"
   colour = 14
-  stay_open = true
 
 [[scripts]]
   triggers = ["pre t"]
@@ -126,4 +125,3 @@
   name = "llm"
   path = "menu-llm"
   colour = 2
-  stay_open = true

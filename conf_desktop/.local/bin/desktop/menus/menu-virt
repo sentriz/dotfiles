@@ -2,8 +2,8 @@
 
 connect_uri="$(secret virt_connect_uri)"
 
-function virsh() { command virsh --connect "$connect_uri" "$@"; }
-function virt-viewer() { command virt-viewer --connect "$connect_uri" "$@"; }
+virsh() { command virsh --connect "$connect_uri" "$@"; }
+virt-viewer() { command virt-viewer --connect "$connect_uri" "$@"; }
 
 if [[ "$#" -gt 0 ]]; then
     machine="$1"
@@ -12,7 +12,7 @@ if [[ "$#" -gt 0 ]]; then
 
     virt-viewer "$machine" &
     disown
-    exit 0
+    exit
 fi
 
 virsh list --name --all | grep . | sort

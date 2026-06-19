@@ -56,6 +56,7 @@ if [[ "$#" -gt 0 ]]; then
 
     "recording stop")
         killall --signal SIGINT wf-recorder
+        while pidof -q wf-recorder; do sleep 0.1; done
         ;;
     esac
 
@@ -73,10 +74,10 @@ for type in "screenshot" "recording" "recording audio"; do
     fi
 
     for area in $(area list); do
-        printf "%s\t%s\n" "$type" "$area"
+        printf '%s\t%s\n' "$type" "$area"
     done
 done
 
 if [[ "$recording" = true ]]; then
-    printf "%s\n" "recording stop"
+    printf '%s\n' "recording stop"
 fi

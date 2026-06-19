@@ -2,7 +2,7 @@
 
 pidof -q bluetoothd || exit 0
 
-function notify() {
+notify() {
     notify-send --hint "string:x-dunst-stack-tag:$0" "$1" "$(strip-escape <<<"${@:2}")"
 }
 
@@ -22,10 +22,10 @@ if [[ "$#" -gt 0 ]]; then
     exit
 fi
 
-highlight=$'\x1b]6366;highlight\x07'
+highlight="$(cmenu highlight)"
 
 bluetoothctl devices | grep "^D" | lower | while IFS=" " read -r _ mac name; do
     pre=""
     [[ "${connected_macs[*]}" =~ $mac ]] && pre="$highlight"
-    printf "%s%s\t%s\n" "$pre" "$mac" "$name"
+    printf '%s%s\t%s\n' "$pre" "$mac" "$name"
 done

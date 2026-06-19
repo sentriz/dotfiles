@@ -2,11 +2,11 @@
 
 if [[ "$#" -gt 0 ]]; then
     wl-copy -n <<<"$1"
-    exit 0
+    exit
 fi
 
 if [[ -z "$CMENU_QUERY" ]]; then
-    echo "no input"
+    echo "$(cmenu label)no input"
     exit
 fi
 

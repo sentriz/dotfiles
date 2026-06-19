@@ -3,7 +3,7 @@
 if [[ "$#" -gt 0 ]]; then
     IFS=$'\t' read -r id _ <<<"$1"
     swaymsg "[con_id=$id]" focus
-    exit 0
+    exit
 fi
 
 swaymsg -t get_tree \

@@ -3,10 +3,10 @@
 if [[ "$#" -gt 0 ]]; then
     IFS=$'\t' read -r id _ <<<"$1"
     tuned-adm profile "$id"
-    exit 0
+    exit
 fi
 
-highlight=$'\x1b]6366;highlight\x07'
+highlight="$(cmenu highlight)"
 
 output="$(tuned-adm profile)"
 
@@ -19,5 +19,5 @@ grep "^-" <<<"$output" | col "- " 2 3 | sort | while IFS=$'\t' read -r id desc; 
 
     pre=""
     [[ "$id" == "$active" ]] && pre="$highlight"
-    printf "%s%s\t%s\n" "$pre" "$id" "$desc"
+    printf '%s%s\t%s\n' "$pre" "$id" "$desc"
 done

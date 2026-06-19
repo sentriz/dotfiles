@@ -12,10 +12,10 @@ fi
 
 if [[ "$#" -gt 0 ]]; then
     cliphist decode <<<"$1" | wl-copy
-    exit 0
+    exit
 fi
 
-highlight=$'\x1b]6366;highlight\x07'
+highlight="$(cmenu highlight)"
 
 mapfile -t rows < <(cliphist list)
 [[ "${#rows[@]}" -eq 0 ]] && exit 0

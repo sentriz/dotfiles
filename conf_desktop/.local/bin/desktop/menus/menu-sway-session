@@ -7,7 +7,7 @@ if [[ "$#" -gt 0 ]]; then
     exit) swaymsg exit ;;
     reload) swaymsg reload ;;
     esac
-    exit 0
+    exit
 fi
 
 printf '%s\t%s\n' \
