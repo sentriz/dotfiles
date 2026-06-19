@@ -1,0 +1,23 @@
+image=/home/senan/pictures/wallpapers/fagan.png
+font=Source Code Pro 10
+inside-color=00000000
+inside-caps-lock-color=00000000
+inside-clear-color=00000000
+inside-ver-color=35353560
+inside-wrong-color=BC585860
+ring-color=35353560
+ring-caps-lock-color=00000000
+ring-clear-color=00000000
+ring-ver-color=00000000
+ring-wrong-color=00000000
+text-color=FFFFFF
+text-caps-lock-color=FFFFFF
+text-clear-color=FFFFFF
+text-ver-color=FFFFFF
+text-wrong-color=FFFFFF
+separator-color=00000000
+key-hl-color=0088CC60
+layout-text-color=FFFFFF
+line-uses-inside
+line-uses-ring
+daemonize
