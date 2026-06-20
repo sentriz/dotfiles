@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 
-[ $# -eq 0 ] && { echo "usage: run-all 'cmd'..." >&2; exit 1; }
+[ $# -eq 0 ] && {
+    echo "usage: run-all 'cmd'..." >&2
+    exit 1
+}
 
 pids=()
 # shellcheck disable=SC2154
