@@ -3,6 +3,7 @@
 [ $# -eq 0 ] && { echo "usage: run-all 'cmd'..." >&2; exit 1; }
 
 pids=()
+# shellcheck disable=SC2154
 trap 'for pid in "${pids[@]}"; do kill -TERM -- "-$pid" 2>/dev/null; done' EXIT
 
 for cmd in "$@"; do
