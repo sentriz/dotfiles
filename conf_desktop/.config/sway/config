@@ -217,7 +217,7 @@ for_window [class="^QjackCtl$"]                                       floating e
 for_window [class="com.github.wwmm.easyeffects"]                      floating enable
 for_window [app_id="^pinentry-qt$"]                                   floating enable
 for_window [app_id="^valent$"]                                        floating enable
-for_window [app_id="^LibreWolf$" title="^Extension: .*"]              floating enable
+for_window [app_id="^librewolf$" title="^Extension: .*"]              floating enable
 for_window [class="^Pinentry-gtk$"]                                   floating enable
 
 # floating sticky
@@ -229,8 +229,8 @@ for_window [app_id="^dragon-drop$"]                     floating enable, sticky 
 for_window [app_id="^firefox$" title="Picture-in-Picture"] fullscreen enable, move container to workspace number 10
 for_window [app_id="^firefox$" title="Firefox — Sharing Indicator"] kill
 
-for_window [app_id="^LibreWolf$" title="Picture-in-Picture"] fullscreen enable, move container to workspace number 10
-for_window [app_id="^LibreWolf$" title="LibreWolf — Sharing Indicator"] kill
+for_window [app_id="^librewolf$" title="Picture-in-Picture"] fullscreen enable, move container to workspace number 10
+for_window [app_id="^librewolf$" title="LibreWolf — Sharing Indicator"] kill
 
 # bindings: xf86
 bindsym XF86AudioLowerVolume  exec wpctl set-volume @DEFAULT_SINK@   2%-    && block-up audio
