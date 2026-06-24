@@ -2,6 +2,15 @@
 
 pidof -q bluetoothd || exit 0
 
+if [[ "$CMENU_MODE" = "preview" ]]; then
+    IFS=$'\t' read -r mac _ <<<"$1"
+    bluetoothctl info "$mac" \
+        | sed -nE 's/^\t([^:]+): (.+)/\1\t\2/p' \
+        | grep -v '^UUID' \
+        | lower | table
+    exit 0
+fi
+
 notify() {
     notify-send --hint "string:x-dunst-stack-tag:$0" "$1" "$(strip-escape <<<"${@:2}")"
 }

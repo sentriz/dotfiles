@@ -1,11 +1,13 @@
 #!/usr/bin/env bash
 
-if [[ "$1" = "preview" ]]; then
-    row="$2"
+if [[ "$CMENU_MODE" = "preview" ]]; then
+    row="$1"
     if grep -vqP '^\d+\t\[\[ binary data .* \]\]' <<<"$row"; then
         cliphist decode <<<"$row"
     else
-        cliphist decode <<<"$row" | chafa -f sixel -s "${FZF_PREVIEW_COLUMNS}x${FZF_PREVIEW_LINES}"
+        format="$(grep -oP '\S+(?= \d+x\d+ \]\])' <<<"$row")"
+        [[ "$format" == "png" ]] || exit 0
+        cliphist decode <<<"$row" | cmenu image -
     fi
     exit 0
 fi

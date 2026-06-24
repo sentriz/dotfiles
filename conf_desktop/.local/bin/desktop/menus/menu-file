@@ -42,6 +42,19 @@ resolve_file() {
     esac
 }
 
+if [[ "$CMENU_MODE" = "preview" ]]; then
+    IFS=$'\t' read -r source mime <<<"$(current_file)"
+    path="$(resolve_file "$source" "$mime")"
+    [[ -f "$path" ]] || exit 0
+
+    case "$mime" in
+    image/png) cmenu image "$path" ;;
+    text/* | application/json) head -c 100000 "$path" ;;
+    *) printf '%s\t%s\n' type "$mime" size "$(du -h "$path" | cut -f1)" | table ;;
+    esac
+    exit 0
+fi
+
 if [[ "$#" -gt 0 ]]; then
     IFS=$'\t' read -r cmd _ _ arg_2 <<<"$1"
 

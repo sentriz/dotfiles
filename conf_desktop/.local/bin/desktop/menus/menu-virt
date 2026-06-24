@@ -5,6 +5,19 @@ connect_uri="$(secret virt_connect_uri)"
 virsh() { command virsh --connect "$connect_uri" "$@"; }
 virt-viewer() { command virt-viewer --connect "$connect_uri" "$@"; }
 
+if [[ "$CMENU_MODE" = "preview" ]]; then
+    machine="$1"
+    if [[ "$(virsh domstate "$machine" 2>/dev/null)" == running ]]; then
+        thumb="$(mktemp)"
+        if virsh screenshot "$machine" "$thumb" 2>&1 | grep -q png; then
+            cmenu image "$thumb"
+            exit 0
+        fi
+    fi
+    virsh dominfo "$machine" | sed -E 's/: +/\t/' | lower | table
+    exit 0
+fi
+
 if [[ "$#" -gt 0 ]]; then
     machine="$1"
     virsh resume "$machine" 2>/dev/null
@@ -15,4 +28,12 @@ if [[ "$#" -gt 0 ]]; then
     exit
 fi
 
-virsh list --name --all | grep . | sort
+highlight="$(cmenu highlight)"
+
+running="$(virsh list --name | grep .)"
+
+virsh list --name --all | grep . | sort | while read -r machine; do
+    pre=""
+    grep -qxF "$machine" <<<"$running" && pre="$highlight"
+    printf '%s%s\n' "$pre" "$machine"
+done

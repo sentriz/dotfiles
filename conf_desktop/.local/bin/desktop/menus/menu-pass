@@ -1,5 +1,19 @@
 #!/usr/bin/env bash
 
+if [[ "$CMENU_MODE" = "preview" ]]; then
+    IFS=$'\t' read -r id _ <<<"$1"
+    rbw get --raw "$id" | jq -r '
+      [
+        (.data.username // empty | "user\t\(.)"),
+        (if .data.totp then "totp\tpresent" else empty end),
+        (.data.uris[]?.uri // empty | "uri\t\(.)"),
+        (.fields[]? | select(.type != "hidden") | "\(.name)\t\(.value)"),
+        (.notes // empty | "notes\t\(.)")
+      ] | .[]
+    ' | table
+    exit 0
+fi
+
 if [[ "$#" -gt 0 ]]; then
     IFS=$'\t' read -r id _ <<<"$1"
     rbw get "$id" | wl-copy -n --sensitive

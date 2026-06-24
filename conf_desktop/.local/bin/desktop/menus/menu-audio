@@ -1,5 +1,15 @@
 #!/usr/bin/env bash
 
+if [[ "$CMENU_MODE" = "preview" ]]; then
+    IFS=$'\t' read -r _ id _ <<<"$1"
+    {
+        wpctl get-volume "$id" 2>/dev/null | sed -E 's/: /\t/'
+        wpctl inspect "$id" 2>/dev/null | sed -nE \
+            's/^[ *]*(node\.description|device\.api|api\.bluez5\.codec|api\.bluez5\.profile) = "(.+)"$/\1\t\2/p'
+    } | lower | table
+    exit 0
+fi
+
 if [[ "$#" -gt 0 ]]; then
     IFS=$'\t' read -r _ id _ <<<"$1"
     wpctl set-default "$id"

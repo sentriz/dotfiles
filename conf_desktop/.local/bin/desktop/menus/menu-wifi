@@ -2,6 +2,21 @@
 
 station="wlan0"
 
+if [[ "$CMENU_MODE" = "preview" ]]; then
+    IFS=$'\t' read -r security signal name <<<"$1"
+
+    info="$(iwctl station "$station" show | strip-escape \
+        | awk -F'  +' '$2 != "Settable" && $3 != "" { print $2 "\t" $3 }')"
+
+    if grep -qxF "Connected network"$'\t'"$name" <<<"$info"; then
+        printf '%s\n' "$info" | lower
+    else
+        printf '%s\t%s\n' ssid "$name" security "$security" signal "$signal"
+    fi \
+        | table
+    exit 0
+fi
+
 if [[ "$#" -gt 0 ]]; then
     IFS=$'\t' read -r _ _ name _ <<<"$1"
     iwctl --dont-ask station "$station" connect "$name"

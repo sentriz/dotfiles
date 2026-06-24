@@ -1,5 +1,16 @@
 #!/usr/bin/env bash
 
+if [[ "$CMENU_MODE" = "preview" ]]; then
+    IFS=$'\t' read -r id _ <<<"$1"
+    for dir in /etc/tuned/profiles /usr/lib/tuned/profiles; do
+        conf="$dir/$id/tuned.conf"
+        [[ -f "$conf" ]] || continue
+        grep -vE '^\s*(#|$)' "$conf"
+        break
+    done
+    exit 0
+fi
+
 if [[ "$#" -gt 0 ]]; then
     IFS=$'\t' read -r id _ <<<"$1"
     tuned-adm profile "$id"

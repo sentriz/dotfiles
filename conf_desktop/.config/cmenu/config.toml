@@ -4,6 +4,7 @@
   path = "menu-bluetooth"
   colour = 3
   stay_open = true
+  preview = true
 
 [[scripts]]
   triggers = ["on-start", "pre a", "script bluetooth", "interval 750ms"]
@@ -11,6 +12,7 @@
   path = "menu-audio"
   colour = 6
   stay_open = true
+  preview = true
 
 [[scripts]]
   triggers = ["on-start"]
@@ -44,12 +46,14 @@
   path = "menu-pass"
   colour = 12
   columns = [2, 3, 4]
+  preview = true
 
 [[scripts]]
   triggers = ["pre c"]
   name = "clipboard"
   path = "menu-clipboard"
   colour = 11
+  preview = true
 
 [[scripts]]
   triggers = ["pre e"]
@@ -63,6 +67,7 @@
   path = "menu-wifi"
   colour = 10
   stay_open = true
+  preview = true
 
 [[scripts]]
   triggers = ["pre r"]
@@ -76,6 +81,7 @@
   name = "virt"
   path = "menu-virt"
   colour = 5
+  preview = true
 
 [[scripts]]
   triggers = ["pre s"]
@@ -88,6 +94,7 @@
   name = "file"
   path = "menu-file"
   colour = 5
+  preview = true
 
 [[scripts]]
   triggers = ["pre d"]
@@ -107,6 +114,7 @@
   name = "tuned"
   path = "menu-tuned"
   colour = 7
+  preview = true
 
 [[scripts]]
   triggers = ["pre cc"]

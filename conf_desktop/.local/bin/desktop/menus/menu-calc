@@ -5,9 +5,9 @@ if [[ "$#" -gt 0 ]]; then
     exit
 fi
 
-if [[ -z "$CMENU_QUERY" ]]; then
+if [[ -z "$CMENU_INPUT" ]]; then
     echo "$(cmenu label)no input"
     exit
 fi
 
-numb "$CMENU_QUERY" || true
+numb "$CMENU_INPUT" || true

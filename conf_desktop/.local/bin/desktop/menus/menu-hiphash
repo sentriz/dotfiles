@@ -14,7 +14,7 @@ if [[ "$#" -gt 0 ]]; then
     exit
 fi
 
-inp="$CMENU_QUERY"
+inp="$CMENU_INPUT"
 if [[ -z "$inp" ]]; then
     inp="$(wl-paste -n)"
 fi
