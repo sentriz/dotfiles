@@ -283,7 +283,7 @@ exec_always 'pkill kanshi; exec kanshi'
 exec_always 'pkill mako; exec mako \
     --background-color "$colour_grey" \
     --margin "$default_gap,0" \
-    --outer-margin "$default_gap" \
+    --outer-margin "$default_gap,0" \
     --font "$default_font" \
     --border-size 2 \
     --border-color "#FFFFFF" \
