@@ -65,8 +65,10 @@ find \
     -maxdepth 1 \
     -not -name '.st*' \
     -type f \
-    -printf "%f\n" | while read -r line; do
-    pre=""
-    [[ "$line" = "$current_station" ]] && pre="$highlight"
-    printf '%s%s\n' "$pre" "$line"
-done
+    -printf "%f\n" \
+    | sort \
+    | while read -r line; do
+        pre=""
+        [[ "$line" = "$current_station" ]] && pre="$highlight"
+        printf '%s%s\n' "$pre" "$line"
+    done
