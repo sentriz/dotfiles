@@ -75,6 +75,7 @@
   path = "menu-radio"
   colour = 1
   stay_open = true
+  preview = true
 
 [[scripts]]
   triggers = ["pre v"]
