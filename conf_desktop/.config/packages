@@ -175,7 +175,7 @@ arch tal-plugins
 
 # blocks
 arch bluez-utils-compat
-arch i3blocks
+arch i3blocks-walltime-aur
 go go.senan.xyz/mpris-ctrl@latest
 
 # lsp
