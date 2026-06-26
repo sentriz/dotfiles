@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 
-pidof -q bluetoothd || exit 0
+if ! pidof -q bluetoothd; then
+    echo "$(cmenu label)bluetooth off"
+    exit 0
+fi
 
 if [[ "$CMENU_MODE" = "preview" ]]; then
     IFS=$'\t' read -r mac _ <<<"$1"

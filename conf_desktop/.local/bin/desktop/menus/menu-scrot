@@ -68,6 +68,11 @@ if pidof -q wf-recorder; then
     recording=true
 fi
 
+if [[ "$recording" = true ]]; then
+    secs="$(ps -o etimes= -C wf-recorder | head -1 | tr -d ' ')"
+    printf '%srecording %dm%02ds\n' "$(cmenu label)" "$((secs / 60))" "$((secs % 60))"
+fi
+
 for type in "screenshot" "recording" "recording audio"; do
     if [[ "$recording" = true && "$type" =~ "recording" ]]; then
         continue
