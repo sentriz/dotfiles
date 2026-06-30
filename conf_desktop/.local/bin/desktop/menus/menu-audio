@@ -6,6 +6,10 @@ if [[ "$CMENU_MODE" = "preview" ]]; then
         wpctl get-volume "$id" 2>/dev/null | sed -E 's/: /\t/'
         wpctl inspect "$id" 2>/dev/null | sed -nE \
             's/^[ *]*(node\.description|device\.api|api\.bluez5\.codec|api\.bluez5\.profile) = "(.+)"$/\1\t\2/p'
+        pw-dump | jq -r --argjson id "$id" '
+            .[] | select(.id == $id) | .info |
+            ("state\t\(.state)"),
+            (.params.Format[0]? | select(.) | "format\t\(.format) \(.rate)Hz \(.channels)ch")'
     } | lower | table
     exit 0
 fi
