@@ -21,8 +21,16 @@ vim.keymap.set("n", "<leader>d", ":call print_debug#print_debug()<cr>", { silent
 -- plugin: exchange (but with fixed cursor position)
 vim.keymap.set("x", "X", "<Plug>(Exchange)`]", { silent = true, remap = true })
 
--- auto start netrw when no files opened
-local function setup_netrw_on_start()
+-- plugin: oil
+local oil = require("oil")
+oil.setup({ skip_confirm_for_simple_edits = true })
+
+vim.keymap.set("n", "-", function()
+	oil.open()
+end)
+
+-- auto start file explorer when no files opened
+local function setup_explorer_on_start()
 	local had_q = vim.fn.index(vim.v.argv, "-q") >= 0
 	local have_stdin = 0
 
@@ -35,13 +43,15 @@ local function setup_netrw_on_start()
 	vim.api.nvim_create_autocmd("VimEnter", {
 		callback = function()
 			if not (vim.fn.argc() + have_stdin + (had_q and 1 or 0) > 0) then
-				vim.cmd("Explore!")
+				vim.schedule(function()
+					oil.open(vim.fn.getcwd())
+				end)
 			end
 		end,
 	})
 end
 
-setup_netrw_on_start()
+setup_explorer_on_start()
 
 -- ui2
 local ui2 = require("vim._core.ui2")
@@ -90,7 +100,7 @@ vim.api.nvim_create_autocmd("BufWinEnter", {
 	callback = function()
 		local ft = vim.bo.filetype
 		local last_pos = vim.fn.line("'\"")
-		if ft ~= "netrw" and ft ~= "gitcommit" and last_pos > 0 and last_pos <= vim.fn.line("$") then
+		if ft ~= "oil" and ft ~= "gitcommit" and last_pos > 0 and last_pos <= vim.fn.line("$") then
 			vim.cmd('normal! g`"')
 		end
 	end,

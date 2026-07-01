@@ -83,6 +83,9 @@ vim.api.nvim_set_hl(0, "@comment", { link = "Comment" })
 vim.api.nvim_set_hl(0, "@diff.plus", { link = "DiffAdd" })
 vim.api.nvim_set_hl(0, "@diff.minus", { link = "DiffDelete" })
 
+-- oil
+vim.api.nvim_set_hl(0, "OilDir", { ctermfg = 12, bold = true })
+
 -- completion menu
 vim.api.nvim_set_hl(0, "Pmenu", { ctermfg = 15, ctermbg = 0 })
 vim.api.nvim_set_hl(0, "PmenuSel", { ctermfg = 0, ctermbg = 15 })
