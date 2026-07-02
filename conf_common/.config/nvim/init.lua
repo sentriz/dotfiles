@@ -134,7 +134,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 })
 
 -- completion settings
-vim.opt.completeopt = { "menu", "menuone", "noselect", "popup" }
+vim.opt.completeopt = { "menu", "menuone", "noselect", "popup", "fuzzy" }
 vim.opt.shortmess = "filnxtToOFAc"
 
 -- oops (typo corrections)
