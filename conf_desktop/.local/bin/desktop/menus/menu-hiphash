@@ -24,7 +24,9 @@ if [[ -z "$inp" ]]; then
 fi
 
 if [[ "$inp" =~ ^[0-9]+$ ]]; then
-    hiphash -enc all "$inp" || exit 0
+    hiphash -enc all "$inp" || echo "$(cmenu label)invalid input"
+    exit 0
 fi
 
-hiphash "$inp" || exit 0
+hiphash "$inp" || echo "$(cmenu label)invalid input"
+exit 0
