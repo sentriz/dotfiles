@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+set -e
+
+n=${1:-0}
+
+ua="Mozilla/5.0 (X11; Linux x86_64) Firefox/127.0"
+
+curl -fsSL -A "$ua" https://saorview.ie/en/television/ \
+    | rsl html json \
+    | jq -r \
+        --arg now "$(date +%H:%M)" \
+        --argjson n "$n" \
+        '
+  def pad2: tostring | if length < 2 then "0" + . else . end;
+  def t24: capture("(?<h>[0-9]+):(?<m>[0-9]+) (?<ap>am|pm)")
+    | (((.h | tonumber) % 12) + (if .ap == "pm" then 12 else 0 end) | pad2) + ":" + .m;
+
+  ([.. | objects | select(."@id"? == "channel-picker")][0].option
+    | map({key: ."@value", value: ."#text"}) | from_entries) as $names |
+
+  [.. | objects | select(."@class"? // "" | test("channel-wrapper-[0-9]"))
+    | {
+        chan: (."@id" | sub("channel-wrapper-"; "")),
+        time: (.div[] | select(."@aria-label" == "Time") | .span."#text" | t24),
+        prog: (.div[] | select(."@aria-label" == "Programme") | ."#text")
+      }
+    | select(.chan | tonumber | . >= 1 and . < 200)]
+
+  | group_by(.chan | tonumber)[]
+  | (map(select(.time <= $now)) | length) as $started
+  | .[([$started - 1, 0] | max):]
+  | (if $n > 0 then .[:$n] else . end)[]
+  | [$names[.chan], .time, .prog] | @tsv
+'
