@@ -203,6 +203,5 @@ npm prettier
 npm prettier-plugin-go-template
 npm prettier-plugin-svelte
 npm typescript
-npm typescript-language-server
 python ruff
 python ty

@@ -342,7 +342,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 							return false
 						end
 						-- using prettierd via null-ls instead
-						if c.name == "ts_ls" then
+						if c.name == "tsgo" then
 							return false
 						end
 						return true
@@ -386,8 +386,8 @@ vim.lsp.config("ruff", {
 	end,
 })
 
-vim.lsp.config("ts_ls", {
-	root_markers = { "tsconfig.json", "jsconfig.json" },
+vim.lsp.config("tsgo", {
+	cmd = { "tsc", "--lsp", "--stdio" },
 	handlers = {
 		["textDocument/definition"] = function(err, result, ...)
 			result = vim.islist(result) and result[1] or result
@@ -401,7 +401,7 @@ vim.lsp.enable({
 	"bashls",
 	"vue_ls",
 	"tailwindcss",
-	"ts_ls",
+	"tsgo",
 	"jdtls",
 	"clangd",
 	"dockerls",
