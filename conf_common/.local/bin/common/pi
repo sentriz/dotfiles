@@ -1,0 +1,25 @@
+#!/usr/bin/env sh
+
+exec bwrap \
+    --ro-bind / / \
+    --dev /dev \
+    --proc /proc \
+    --tmpfs /tmp \
+    --tmpfs "$HOME/.ssh" \
+    --ro-bind-try "$HOME/.ssh/config" "$HOME/.ssh/config" \
+    --ro-bind-try "$HOME/.ssh/known_hosts" "$HOME/.ssh/known_hosts" \
+    --tmpfs /etc/ssh/ssh_config.d \
+    --bind "$PWD" "$PWD" \
+    --bind "$XDG_CONFIG_HOME/pi" "$HOME/.pi" \
+    --bind "$XDG_CACHE_HOME/mcp" "$XDG_CACHE_HOME/mcp" \
+    --bind "$XDG_CACHE_HOME/go-build" "$XDG_CACHE_HOME/go-build" \
+    --bind "$XDG_DATA_HOME/go/pkg/mod" "$XDG_DATA_HOME/go/pkg/mod" \
+    --bind "$XDG_CACHE_HOME/golangci-lint" "$XDG_CACHE_HOME/golangci-lint" \
+    --bind "$XDG_CACHE_HOME/npm" "$XDG_CACHE_HOME/npm" \
+    --bind "$XDG_CACHE_HOME/uv" "$XDG_CACHE_HOME/uv" \
+    --bind "$XDG_CACHE_HOME/go-scripts" "$XDG_CACHE_HOME/go-scripts" \
+    --setenv PI_OFFLINE 1 \
+    --unshare-all \
+    --share-net \
+    --die-with-parent \
+    /usr/bin/pi "$@"

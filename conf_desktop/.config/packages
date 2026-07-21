@@ -208,3 +208,7 @@ python ty
 arch terraform
 arch terraform-ls
 arch tflint
+
+# llm
+arch pi-coding-agent
+arch fd

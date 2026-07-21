@@ -64,3 +64,6 @@
 [submodule "conf_common/.local/share/nvim/site/pack/plugins/start/oil.nvim"]
 	path = conf_common/.local/share/nvim/site/pack/plugins/start/oil.nvim
 	url = https://github.com/stevearc/oil.nvim
+[submodule "conf_common/.config/pi/agent/extensions/pi-anthropic-auth"]
+	path = conf_common/.config/pi/agent/extensions/pi-anthropic-auth
+	url = https://github.com/gotgenes/pi-anthropic-auth
