@@ -208,3 +208,6 @@ python ty
 arch terraform
 arch terraform-ls
 arch tflint
+
+# llm
+go go.senan.xyz/mcp@latest

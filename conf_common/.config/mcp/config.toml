@@ -1,0 +1,91 @@
+[[server]]
+name = "linear"
+transport = "http"
+url = "https://mcp.linear.app/mcp"
+headers = { Authorization = "Bearer ${exec secret linear_token}" }
+instructions = """
+Filter values that look numeric must be quoted so they stay JSON strings: cycle='"116"' works, cycle=116 fails with "expected string".
+cycle=current is accepted but silently returns no issues - use the cycle number.
+"""
+
+[[server]]
+name = "dash0"
+transport = "http"
+url = "https://api.eu-west-1.aws.dash0.com/mcp"
+headers = { Authorization = "Bearer ${exec secret dash0_token}" }
+instructions = """
+Every tool requires arguments - even listDatasets needs dataset (use dataset=default to discover the rest).
+Most tools require dataset + timeRange={from,to}.
+sql (D0QL) column names differ from getSpans display names: use trace_id, span_id, timestamp, span_attributes['x'] - not otel_trace_id / otel.trace.id.
+getFullLogRecord takes logRecordId, not id.
+For sql queries with lots of quotes, write the JSON args to a file and pass "$(cat file.json)" instead of inline shell quoting.
+"""
+
+[[server]]
+name = "slack"
+transport = "http"
+url = "https://mcp.slack.com/mcp"
+auth = "oauth"
+scopes = [
+  "search:read.public",
+  "channels:history",
+  "channels:read",
+  "groups:history",
+  "groups:read",
+  "im:history",
+  "mpim:history",
+  "users:read",
+  "chat:write",
+  "reactions:read",
+  "files:read",
+]
+client_id = "${exec secret slack_client_id}"
+client_secret = "${exec secret slack_client_secret}"
+auth_metadata_url = "https://mcp.slack.com/.well-known/oauth-authorization-server"
+instructions = """
+slack_read_thread needs the thread PARENT's message_ts - a reply or unthreaded message gives thread_not_found.
+If you only have a reply ts, use slack_read_channel with oldest/latest around it to find the parent.
+"""
+
+[[server]]
+name = "chrome"
+transport = "stdio"
+command = ["npx", "-y", "chrome-devtools-mcp@latest", "--browserUrl", "http://127.0.0.1:9222"]
+instructions = """
+Connects to an already-running Chrome with --remote-debugging-port=9222. If "Could not connect to Chrome", ask the user to start it - don't retry.
+click/fill/hover uids come from take_snapshot; take a fresh snapshot of the page first or you get "No snapshot found".
+"""
+
+[[server]]
+name = "gmail"
+transport = "http"
+url = "https://gmailmcp.googleapis.com/mcp/v1"
+auth = "oauth"
+scopes = [
+  "https://www.googleapis.com/auth/gmail.readonly",
+  "https://www.googleapis.com/auth/gmail.compose",
+]
+instructions = """
+Ids are the hex API ids from search_threads (e.g. 19f5c02bfbca6b3b) - web-UI ids like FMfcgz... always fail with "Invalid id value".
+get_thread takes threadId, get_message takes messageId; pagination is pageSize (not maxResults/page_size).
+There is no search_messages tool - use search_threads.
+Use messageFormat=MINIMAL on get_thread/get_message to keep output small.
+"""
+client_id = "${exec secret google_mcp_client_id}"
+client_secret = "${exec secret google_mcp_client_secret}"
+auth_metadata_url = "https://accounts.google.com/.well-known/openid-configuration"
+auth_params = { access_type = "offline", prompt = "consent" }
+
+[[server]]
+name = "gcal"
+transport = "http"
+url = "https://calendarmcp.googleapis.com/mcp/v1"
+auth = "oauth"
+scopes = [
+  "https://www.googleapis.com/auth/calendar.calendarlist.readonly",
+  "https://www.googleapis.com/auth/calendar.events.readonly",
+]
+client_id = "${exec secret google_mcp_client_id}"
+client_secret = "${exec secret google_mcp_client_secret}"
+auth_metadata_url = "https://accounts.google.com/.well-known/openid-configuration"
+auth_params = { access_type = "offline", prompt = "consent" }
