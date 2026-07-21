@@ -1,0 +1,778 @@
+//usr/bin/env go-script "$0" "$@"; exit $?
+// vi: ft=go
+
+package main
+
+import (
+	"bytes"
+	"context"
+	"encoding/json"
+	"errors"
+	"fmt"
+	"io"
+	"net"
+	"net/http"
+	"os"
+	"os/exec"
+	"path/filepath"
+	"strings"
+	"syscall"
+	"time"
+
+	"github.com/BurntSushi/toml"
+	"github.com/google/shlex"
+	"github.com/mark3labs/mcp-go/client"
+	"github.com/mark3labs/mcp-go/client/transport"
+	"github.com/mark3labs/mcp-go/mcp"
+)
+
+const (
+	redirectURI  = "http://localhost:8085/oauth/callback"
+	callbackAddr = "localhost:8085"
+	callbackPath = "/oauth/callback"
+
+	daemonIdleTimeout = 10 * time.Minute
+)
+
+var errUsage = errors.New("bad usage")
+
+func main() {
+	err := run(context.Background(), os.Args[1:])
+	if errors.Is(err, errUsage) {
+		printUsage()
+	}
+	if err != nil {
+		fmt.Fprintln(os.Stderr, "mcp:", err)
+		os.Exit(1)
+	}
+}
+
+func run(ctx context.Context, args []string) error {
+	if len(args) == 0 {
+		return errUsage
+	}
+
+	switch args[0] {
+	case "server":
+		return runServer(ctx, args[1:])
+	case "usage":
+		printUsage()
+		return nil
+	default:
+		return errUsage
+	}
+}
+
+func runServer(ctx context.Context, args []string) error {
+	if len(args) == 0 {
+		return listServers()
+	}
+	if len(args) < 2 {
+		return errUsage
+	}
+	server, sub, rest := args[0], args[1], args[2:]
+
+	switch sub {
+	case "tools":
+		if len(rest) != 0 {
+			return errUsage
+		}
+		return listTools(ctx, server)
+	case "schema":
+		if len(rest) != 1 {
+			return errUsage
+		}
+		return showSchema(ctx, server, rest[0])
+	case "call":
+		if len(rest) < 1 || len(rest) > 2 {
+			return errUsage
+		}
+		var arguments string
+		if len(rest) == 2 {
+			arguments = rest[1]
+		}
+		return callTool(ctx, server, rest[0], arguments)
+	case "login":
+		if len(rest) != 0 {
+			return errUsage
+		}
+		return login(ctx, server)
+	case "stop":
+		if len(rest) != 0 {
+			return errUsage
+		}
+		return stopDaemon(server)
+	case "daemon":
+		if len(rest) != 0 {
+			return errUsage
+		}
+		return runDaemon(ctx, server)
+	default:
+		return errUsage
+	}
+}
+
+func listServers() error {
+	cfg, err := loadConfig()
+	if err != nil {
+		return err
+	}
+	for _, srv := range cfg.Servers {
+		fmt.Printf("%s\t%s\n", srv.Name, srv.Transport)
+	}
+	return nil
+}
+
+func listTools(ctx context.Context, server string) error {
+	tools, err := getTools(ctx, server)
+	if err != nil {
+		return err
+	}
+	for _, t := range tools {
+		fmt.Printf("%s\t%s\n", t.Name, t.Description)
+	}
+	return nil
+}
+
+func showSchema(ctx context.Context, server, tool string) error {
+	tools, err := getTools(ctx, server)
+	if err != nil {
+		return err
+	}
+	for _, t := range tools {
+		if t.Name != tool {
+			continue
+		}
+		out, err := json.MarshalIndent(t.InputSchema, "", "  ")
+		if err != nil {
+			return err
+		}
+		fmt.Println(string(out))
+		return nil
+	}
+	return fmt.Errorf("tool %q not found on server %q", tool, server)
+}
+
+func getTools(ctx context.Context, server string) ([]mcp.Tool, error) {
+	srv, err := getServer(server)
+	if err != nil {
+		return nil, err
+	}
+
+	if srv.Transport == "stdio" {
+		resp, err := daemonRoundTrip(server, rpcRequest{Method: "tools"})
+		if err != nil {
+			return nil, err
+		}
+		var tools []mcp.Tool
+		if err := json.Unmarshal(resp.Result, &tools); err != nil {
+			return nil, err
+		}
+		return tools, nil
+	}
+
+	c, err := connect(ctx, server)
+	if err != nil {
+		return nil, err
+	}
+	defer c.Close()
+
+	res, err := c.ListTools(ctx, mcp.ListToolsRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return res.Tools, nil
+}
+
+func callTool(ctx context.Context, server, tool, arguments string) error {
+	var args map[string]any
+	if arguments != "" {
+		if err := json.Unmarshal([]byte(arguments), &args); err != nil {
+			return fmt.Errorf("invalid arguments json: %w", err)
+		}
+	}
+
+	srv, err := getServer(server)
+	if err != nil {
+		return err
+	}
+
+	var out []byte
+	var isError bool
+	if srv.Transport == "stdio" {
+		resp, err := daemonRoundTrip(server, rpcRequest{Method: "call", Tool: tool, Args: args})
+		if err != nil {
+			return err
+		}
+		var buf bytes.Buffer
+		if err := json.Indent(&buf, resp.Result, "", "  "); err != nil {
+			return err
+		}
+		out, isError = buf.Bytes(), resp.IsError
+	} else {
+		c, err := connect(ctx, server)
+		if err != nil {
+			return err
+		}
+		defer c.Close()
+
+		var req mcp.CallToolRequest
+		req.Params.Name = tool
+		req.Params.Arguments = args
+		res, err := c.CallTool(ctx, req)
+		if err != nil {
+			return err
+		}
+		out, err = json.MarshalIndent(res.Content, "", "  ")
+		if err != nil {
+			return err
+		}
+		isError = res.IsError
+	}
+
+	if isError {
+		fmt.Fprintln(os.Stderr, string(out))
+		return errors.New("tool returned an error")
+	}
+	fmt.Println(string(out))
+	return nil
+}
+
+type rpcRequest struct {
+	Method string         `json:"method"`
+	Tool   string         `json:"tool,omitempty"`
+	Args   map[string]any `json:"args"`
+}
+
+type rpcResponse struct {
+	Error   string          `json:"error,omitempty"`
+	IsError bool            `json:"isError,omitempty"`
+	Result  json.RawMessage `json:"result,omitempty"`
+}
+
+func daemonRoundTrip(server string, req rpcRequest) (rpcResponse, error) {
+	conn, err := dialDaemon(server)
+	if err != nil {
+		return rpcResponse{}, err
+	}
+	defer conn.Close()
+
+	if err := json.NewEncoder(conn).Encode(req); err != nil {
+		return rpcResponse{}, err
+	}
+	var resp rpcResponse
+	if err := json.NewDecoder(conn).Decode(&resp); err != nil {
+		return rpcResponse{}, err
+	}
+	if resp.Error != "" {
+		return rpcResponse{}, errors.New(resp.Error)
+	}
+	return resp, nil
+}
+
+func dialDaemon(server string) (net.Conn, error) {
+	sock := daemonSocket(server)
+	conn, err := net.Dial("unix", sock)
+	if err == nil {
+		return conn, nil
+	}
+
+	if err := spawnDaemon(server); err != nil {
+		return nil, err
+	}
+	for range 50 {
+		time.Sleep(100 * time.Millisecond)
+		conn, err = net.Dial("unix", sock)
+		if err == nil {
+			return conn, nil
+		}
+	}
+	return nil, fmt.Errorf("daemon for %q did not start, see %s: %w", server, daemonLog(server), err)
+}
+
+func spawnDaemon(server string) error {
+	exe, err := os.Executable()
+	if err != nil {
+		return err
+	}
+
+	log, err := os.Create(daemonLog(server))
+	if err != nil {
+		return err
+	}
+	defer log.Close()
+
+	cmd := exec.Command(exe, "server", server, "daemon")
+	cmd.Stdout = log
+	cmd.Stderr = log
+	cmd.SysProcAttr = &syscall.SysProcAttr{Setsid: true}
+	return cmd.Start()
+}
+
+func runDaemon(ctx context.Context, server string) error {
+	sock := daemonSocket(server)
+	os.Remove(sock)
+	l, err := net.Listen("unix", sock)
+	if err != nil {
+		return err
+	}
+	defer os.Remove(sock)
+	defer l.Close()
+
+	c, err := connect(ctx, server)
+	if err != nil {
+		return err
+	}
+	defer c.Close()
+
+	idle := time.AfterFunc(daemonIdleTimeout, func() { l.Close() })
+	for {
+		conn, err := l.Accept()
+		if err != nil {
+			return nil
+		}
+		idle.Stop()
+		stop := serveConn(ctx, c, conn)
+		if stop {
+			return nil
+		}
+		idle.Reset(daemonIdleTimeout)
+	}
+}
+
+func serveConn(ctx context.Context, c *client.Client, conn net.Conn) bool {
+	defer conn.Close()
+
+	var req rpcRequest
+	if err := json.NewDecoder(conn).Decode(&req); err != nil {
+		return false
+	}
+	resp := handleRequest(ctx, c, req)
+	json.NewEncoder(conn).Encode(resp)
+	return req.Method == "stop"
+}
+
+func handleRequest(ctx context.Context, c *client.Client, req rpcRequest) rpcResponse {
+	switch req.Method {
+	case "stop":
+		return rpcResponse{}
+	case "tools":
+		res, err := c.ListTools(ctx, mcp.ListToolsRequest{})
+		if err != nil {
+			return rpcResponse{Error: err.Error()}
+		}
+		b, err := json.Marshal(res.Tools)
+		if err != nil {
+			return rpcResponse{Error: err.Error()}
+		}
+		return rpcResponse{Result: b}
+	case "call":
+		var creq mcp.CallToolRequest
+		creq.Params.Name = req.Tool
+		creq.Params.Arguments = req.Args
+		res, err := c.CallTool(ctx, creq)
+		if err != nil {
+			return rpcResponse{Error: err.Error()}
+		}
+		b, err := json.Marshal(res.Content)
+		if err != nil {
+			return rpcResponse{Error: err.Error()}
+		}
+		return rpcResponse{IsError: res.IsError, Result: b}
+	default:
+		return rpcResponse{Error: fmt.Sprintf("unknown method %q", req.Method)}
+	}
+}
+
+func stopDaemon(server string) error {
+	conn, err := net.Dial("unix", daemonSocket(server))
+	if err != nil {
+		return nil
+	}
+	defer conn.Close()
+
+	if err := json.NewEncoder(conn).Encode(rpcRequest{Method: "stop"}); err != nil {
+		return err
+	}
+	var resp rpcResponse
+	json.NewDecoder(conn).Decode(&resp)
+	return nil
+}
+
+func daemonSocket(server string) string {
+	return filepath.Join(os.TempDir(), "mcp-"+server+".sock")
+}
+
+func daemonLog(server string) string {
+	return filepath.Join(os.TempDir(), "mcp-"+server+"-daemon.log")
+}
+
+func getServer(server string) (Server, error) {
+	cfg, err := loadConfig()
+	if err != nil {
+		return Server{}, err
+	}
+	srv, ok := findServer(cfg, server)
+	if !ok {
+		return Server{}, fmt.Errorf("unknown server %q", server)
+	}
+	return srv, nil
+}
+
+func connect(ctx context.Context, server string) (*client.Client, error) {
+	cfg, err := loadConfig()
+	if err != nil {
+		return nil, err
+	}
+	srv, ok := findServer(cfg, server)
+	if !ok {
+		return nil, fmt.Errorf("unknown server %q", server)
+	}
+	if err := srv.resolve(); err != nil {
+		return nil, err
+	}
+
+	c, err := newClient(ctx, srv)
+	if err != nil {
+		return nil, notLoggedIn(server, err)
+	}
+	if _, err := c.Initialize(ctx, initRequest()); err != nil {
+		c.Close()
+		return nil, notLoggedIn(server, err)
+	}
+	return c, nil
+}
+
+func newClient(ctx context.Context, srv Server) (*client.Client, error) {
+	switch srv.Transport {
+	case "stdio":
+		if len(srv.Command) == 0 {
+			return nil, fmt.Errorf("server %q has no command", srv.Name)
+		}
+		return client.NewStdioMCPClient(srv.Command[0], envSlice(srv.Env), srv.Command[1:]...)
+	case "http":
+		c, err := newHTTPClient(srv)
+		if err != nil {
+			return nil, err
+		}
+		if err := c.Start(ctx); err != nil {
+			return nil, err
+		}
+		return c, nil
+	default:
+		return nil, fmt.Errorf("server %q has unknown transport %q", srv.Name, srv.Transport)
+	}
+}
+
+func newHTTPClient(srv Server) (*client.Client, error) {
+	if srv.Auth == "oauth" {
+		oc, err := oauthConfig(srv)
+		if err != nil {
+			return nil, err
+		}
+		return client.NewOAuthStreamableHttpClient(srv.URL, oc)
+	}
+	return client.NewStreamableHttpClient(srv.URL, transport.WithHTTPHeaders(srv.Headers))
+}
+
+func notLoggedIn(server string, err error) error {
+	if client.IsOAuthAuthorizationRequiredError(err) {
+		return fmt.Errorf("not authorized for %q; run: mcp server %s login", server, server)
+	}
+	return err
+}
+
+func login(ctx context.Context, server string) error {
+	cfg, err := loadConfig()
+	if err != nil {
+		return err
+	}
+	srv, ok := findServer(cfg, server)
+	if !ok {
+		return fmt.Errorf("unknown server %q", server)
+	}
+	if srv.Auth != "oauth" {
+		return fmt.Errorf("server %q is not configured for oauth", server)
+	}
+	if err := srv.resolve(); err != nil {
+		return err
+	}
+
+	oc, err := oauthConfig(srv)
+	if err != nil {
+		return err
+	}
+	c, err := client.NewOAuthStreamableHttpClient(srv.URL, oc)
+	if err != nil {
+		return err
+	}
+	defer c.Close()
+
+	err = c.Start(ctx)
+	if err == nil {
+		_, err = c.Initialize(ctx, initRequest())
+	}
+	if err == nil {
+		return nil
+	}
+	if !client.IsOAuthAuthorizationRequiredError(err) {
+		return err
+	}
+
+	if err := authorize(ctx, client.GetOAuthHandler(err)); err != nil {
+		return err
+	}
+	return nil
+}
+
+func authorize(ctx context.Context, h *transport.OAuthHandler) error {
+	verifier, err := client.GenerateCodeVerifier()
+	if err != nil {
+		return err
+	}
+	state, err := client.GenerateState()
+	if err != nil {
+		return err
+	}
+
+	if h.GetClientID() == "" {
+		if err := h.RegisterClient(ctx, "mcp"); err != nil {
+			return fmt.Errorf("register client: %w", err)
+		}
+	}
+
+	authURL, err := h.GetAuthorizationURL(ctx, state, client.GenerateCodeChallenge(verifier))
+	if err != nil {
+		return err
+	}
+
+	callback, err := awaitCallback(ctx, authURL)
+	if err != nil {
+		return err
+	}
+	if callback["state"] != state {
+		return errors.New("oauth state mismatch")
+	}
+	code := callback["code"]
+	if code == "" {
+		return fmt.Errorf("authorization failed: %s", callback["error"])
+	}
+	return h.ProcessAuthorizationResponse(ctx, code, state, verifier)
+}
+
+func awaitCallback(ctx context.Context, authURL string) (map[string]string, error) {
+	result := make(chan map[string]string, 1)
+	mux := http.NewServeMux()
+	mux.HandleFunc(callbackPath, func(w http.ResponseWriter, r *http.Request) {
+		params := map[string]string{}
+		for k, v := range r.URL.Query() {
+			if len(v) > 0 {
+				params[k] = v[0]
+			}
+		}
+		io.WriteString(w, "authorization complete, you can close this window")
+		result <- params
+	})
+
+	srv := &http.Server{Addr: callbackAddr, Handler: mux}
+	go srv.ListenAndServe()
+	defer srv.Close()
+
+	fmt.Fprintln(os.Stderr, authURL)
+
+	select {
+	case params := <-result:
+		return params, nil
+	case <-ctx.Done():
+		return nil, ctx.Err()
+	}
+}
+
+func oauthConfig(srv Server) (client.OAuthConfig, error) {
+	path, err := tokenPath(srv.Name)
+	if err != nil {
+		return client.OAuthConfig{}, err
+	}
+	return client.OAuthConfig{
+		ClientID:              srv.ClientID,
+		ClientSecret:          srv.ClientSecret,
+		RedirectURI:           redirectURI,
+		Scopes:                srv.Scopes,
+		TokenStore:            fileTokenStore{path: path},
+		PKCEEnabled:           true,
+		AuthServerMetadataURL: srv.AuthMetadataURL,
+	}, nil
+}
+
+type fileTokenStore struct{ path string }
+
+func (s fileTokenStore) GetToken(ctx context.Context) (*transport.Token, error) {
+	b, err := os.ReadFile(s.path)
+	if errors.Is(err, os.ErrNotExist) {
+		return nil, transport.ErrNoToken
+	}
+	if err != nil {
+		return nil, err
+	}
+	var token transport.Token
+	if err := json.Unmarshal(b, &token); err != nil {
+		return nil, err
+	}
+	return &token, nil
+}
+
+func (s fileTokenStore) SaveToken(ctx context.Context, token *transport.Token) error {
+	b, err := json.Marshal(token)
+	if err != nil {
+		return err
+	}
+	if err := os.MkdirAll(filepath.Dir(s.path), 0o700); err != nil {
+		return err
+	}
+	return os.WriteFile(s.path, b, 0o600)
+}
+
+func tokenPath(server string) (string, error) {
+	dir, err := os.UserCacheDir()
+	if err != nil {
+		return "", err
+	}
+	return filepath.Join(dir, "mcp", server+"-token.json"), nil
+}
+
+func findServer(cfg Config, name string) (Server, bool) {
+	for _, srv := range cfg.Servers {
+		if srv.Name == name {
+			return srv, true
+		}
+	}
+	return Server{}, false
+}
+
+func initRequest() mcp.InitializeRequest {
+	var req mcp.InitializeRequest
+	req.Params.ProtocolVersion = mcp.LATEST_PROTOCOL_VERSION
+	req.Params.ClientInfo = mcp.Implementation{Name: "mcp", Version: "0.1.0"}
+	return req
+}
+
+func printUsage() {
+	fmt.Fprint(os.Stderr, `usage:
+  mcp server                               list configured servers
+  mcp server <server> tools                list a server's tools
+  mcp server <server> schema <tool>        print a tool's input schema
+  mcp server <server> call <tool> [json]   call a tool with JSON arguments
+  mcp server <server> login                run the oauth login flow
+  mcp server <server> stop                 stop a persistent server daemon
+  mcp usage                                print this usage
+
+config: $XDG_CONFIG_HOME/mcp/config.toml
+`)
+}
+
+type Config struct {
+	Servers []Server `toml:"server"`
+}
+
+type Server struct {
+	Name            string            `toml:"name"`
+	Transport       string            `toml:"transport"`
+	Command         []string          `toml:"command"`
+	Env             map[string]string `toml:"env"`
+	URL             string            `toml:"url"`
+	Headers         map[string]string `toml:"headers"`
+	Auth            string            `toml:"auth"`
+	Scopes          []string          `toml:"scopes"`
+	ClientID        string            `toml:"client_id"`
+	ClientSecret    string            `toml:"client_secret"`
+	AuthMetadataURL string            `toml:"auth_metadata_url"`
+}
+
+func loadConfig() (Config, error) {
+	path, err := configPath()
+	if err != nil {
+		return Config{}, err
+	}
+	b, err := os.ReadFile(path)
+	if err != nil {
+		return Config{}, err
+	}
+
+	var cfg Config
+	if err := toml.Unmarshal(b, &cfg); err != nil {
+		return Config{}, fmt.Errorf("parse config: %w", err)
+	}
+	return cfg, nil
+}
+
+func (srv *Server) resolve() error {
+	var errs error
+	repl := func(s string) string {
+		out, err := expand(s)
+		if err != nil {
+			errs = errors.Join(errs, err)
+		}
+		return out
+	}
+
+	srv.URL = repl(srv.URL)
+	srv.ClientID = repl(srv.ClientID)
+	srv.ClientSecret = repl(srv.ClientSecret)
+	for i := range srv.Command {
+		srv.Command[i] = repl(srv.Command[i])
+	}
+	for k := range srv.Headers {
+		srv.Headers[k] = repl(srv.Headers[k])
+	}
+	for k := range srv.Env {
+		srv.Env[k] = repl(srv.Env[k])
+	}
+	return errs
+}
+
+func expand(s string) (string, error) {
+	var err error
+	out := os.Expand(s, func(key string) string {
+		command, ok := strings.CutPrefix(key, "exec ")
+		if !ok {
+			return os.Getenv(key)
+		}
+		val, runErr := runCommand(command)
+		if runErr != nil {
+			err = errors.Join(err, runErr)
+		}
+		return val
+	})
+	return out, err
+}
+
+func runCommand(command string) (string, error) {
+	fields, err := shlex.Split(command)
+	if err != nil {
+		return "", fmt.Errorf("split %q: %w", command, err)
+	}
+	if len(fields) == 0 {
+		return "", errors.New("empty command")
+	}
+	out, err := exec.Command(fields[0], fields[1:]...).Output()
+	if err != nil {
+		return "", fmt.Errorf("run %q: %w", command, err)
+	}
+	return strings.TrimSpace(string(out)), nil
+}
+
+func configPath() (string, error) {
+	dir, err := os.UserConfigDir()
+	if err != nil {
+		return "", err
+	}
+	return filepath.Join(dir, "mcp", "config.toml"), nil
+}
+
+func envSlice(senv map[string]string) []string {
+	env := os.Environ()
+	for k, v := range senv {
+		env = append(env, k+"="+v)
+	}
+	return env
+}

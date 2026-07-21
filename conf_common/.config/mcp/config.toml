@@ -1,0 +1,64 @@
+[[server]]
+name = "linear"
+transport = "http"
+url = "https://mcp.linear.app/mcp"
+headers = { Authorization = "Bearer ${exec secret linear_token}" }
+
+[[server]]
+name = "dash0"
+transport = "http"
+url = "https://api.eu-west-1.aws.dash0.com/mcp"
+headers = { Authorization = "Bearer ${exec secret dash0_token}" }
+
+[[server]]
+name = "slack"
+transport = "http"
+url = "https://mcp.slack.com/mcp"
+auth = "oauth"
+scopes = [
+  "search:read.public",
+  "channels:history",
+  "channels:read",
+  "groups:history",
+  "groups:read",
+  "im:history",
+  "mpim:history",
+  "users:read",
+  "chat:write",
+  "reactions:read",
+  "files:read",
+]
+client_id = "${exec secret slack_client_id}"
+client_secret = "${exec secret slack_client_secret}"
+auth_metadata_url = "https://mcp.slack.com/.well-known/oauth-authorization-server"
+
+[[server]]
+name = "chrome"
+transport = "stdio"
+command = ["npx", "-y", "chrome-devtools-mcp@latest", "--browserUrl", "http://127.0.0.1:9222"]
+
+[[server]]
+name = "gmail"
+transport = "http"
+url = "https://gmailmcp.googleapis.com/mcp/v1"
+auth = "oauth"
+scopes = [
+  "https://www.googleapis.com/auth/gmail.readonly",
+  "https://www.googleapis.com/auth/gmail.compose",
+]
+client_id = "${exec secret google_mcp_client_id}"
+client_secret = "${exec secret google_mcp_client_secret}"
+auth_metadata_url = "https://accounts.google.com/.well-known/openid-configuration"
+
+[[server]]
+name = "gcal"
+transport = "http"
+url = "https://calendarmcp.googleapis.com/mcp/v1"
+auth = "oauth"
+scopes = [
+  "https://www.googleapis.com/auth/calendar.calendarlist.readonly",
+  "https://www.googleapis.com/auth/calendar.events.readonly",
+]
+client_id = "${exec secret google_mcp_client_id}"
+client_secret = "${exec secret google_mcp_client_secret}"
+auth_metadata_url = "https://accounts.google.com/.well-known/openid-configuration"
