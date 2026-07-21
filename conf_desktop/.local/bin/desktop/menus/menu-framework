@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+
+limits=(80 90)
+
+charge-limit() { sudo framework_tool --charge-limit | grep -Po 'Maximum \K[0-9]+'; }
+
+if [[ "$#" -gt 0 ]]; then
+    IFS=$'\t' read -r action value <<<"$1"
+    case "$action" in
+    "charge limit")
+        [[ "$value" == "$(charge-limit)" ]] && value=100
+        sudo framework_tool --charge-limit "$value"
+        ;;
+    esac
+    exit
+fi
+
+label="$(cmenu label)"
+
+bat=/sys/class/power_supply/BAT1
+health=$(($(cat "$bat/charge_full") * 100 / $(cat "$bat/charge_full_design")))
+printf '%sbattery health %s%%, %s cycles\n' "$label" "$health" "$(cat "$bat/cycle_count")"
+
+privacy="$(sudo framework_tool --privacy)"
+cam="$(grep -Po 'Camera:\s+\K\w+' <<<"$privacy")"
+mic="$(grep -Po 'Microphone:\s+\K\w+' <<<"$privacy")"
+printf '%scam %s, mic %s\n' "$label" "${cam,,}" "${mic,,}"
+
+thermal="$(sudo framework_tool --thermal)"
+apu="$(grep -Po 'APU:\s+\K[0-9]+' <<<"$thermal")"
+fan="$(grep -Po 'APU Fan:\s+\K[0-9]+' <<<"$thermal")"
+printf '%sapu %s°C, fan %s rpm\n' "$label" "$apu" "$fan"
+
+printf '%skbd backlight %s\n' "$label" "$(sudo framework_tool --kblight | grep -Po ': \K.*')"
+
+highlight="$(cmenu highlight)"
+
+charge_limit="$(charge-limit)"
+
+for limit in "${limits[@]}"; do
+    pre=""
+    [[ "$limit" == "$charge_limit" ]] && pre="$highlight"
+    printf '%scharge limit\t%s\n' "$pre" "$limit"
+done

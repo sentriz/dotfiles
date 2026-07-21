@@ -146,6 +146,7 @@ arch bluez-tools
 arch bluez-utils
 arch iwd
 arch tuned
+arch framework-system
 
 # av
 arch libpipewire02

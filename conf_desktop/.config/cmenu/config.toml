@@ -34,6 +34,13 @@
   colour = 9
 
 [[scripts]]
+  triggers = ["script system"]
+  name = "framework"
+  path = "menu-framework"
+  colour = 3
+  stay_open = true
+
+[[scripts]]
   triggers = ["on-start", "pre p"]
   name = "package"
   path = "menu-package"
