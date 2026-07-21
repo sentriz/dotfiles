@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+
+extra_binds=()
+pi_args=()
+parsing_binds=""
+for arg in "$@"; do
+    if [ -n "$parsing_binds" ]; then
+        extra_binds+=(--bind "$arg" "$arg")
+    elif [ "$arg" = "--" ]; then
+        parsing_binds=1
+    else
+        pi_args+=("$arg")
+    fi
+done
+
+mkdir -p "$XDG_CACHE_HOME/jiti"
+mkdir -p "$XDG_RUNTIME_DIR/mcp"
+mkdir -p "$XDG_RUNTIME_DIR/pi"
+
+dbus_sock="$XDG_RUNTIME_DIR/pi/bus.$$"
+xdg-dbus-proxy "$DBUS_SESSION_BUS_ADDRESS" "$dbus_sock" --filter --talk=org.freedesktop.Notifications &
+dbus_proxy_pid=$!
+trap 'kill "$dbus_proxy_pid"; rm -f "$dbus_sock"' EXIT
+for _ in $(seq 50); do [ -e "$dbus_sock" ] && break; sleep 0.05; done
+
+bwrap \
+    --ro-bind / / \
+    --dev /dev \
+    --proc /proc \
+    --tmpfs /tmp \
+    --bind "$XDG_CACHE_HOME/jiti" /tmp/jiti \
+    --tmpfs "$HOME/.ssh" \
+    --ro-bind-try "$HOME/.ssh/config" "$HOME/.ssh/config" \
+    --ro-bind-try "$HOME/.ssh/known_hosts" "$HOME/.ssh/known_hosts" \
+    --tmpfs /etc/ssh/ssh_config.d \
+    --bind "$PWD" "$PWD" \
+    --bind "$XDG_CONFIG_HOME/pi" "$XDG_CONFIG_HOME/pi" \
+    --setenv PI_CODING_AGENT_DIR "$XDG_CONFIG_HOME/pi/agent" \
+    --bind "$XDG_CACHE_HOME" "$XDG_CACHE_HOME" \
+    --bind "$XDG_DATA_HOME/go/pkg/mod" "$XDG_DATA_HOME/go/pkg/mod" \
+    --bind "$XDG_DATA_HOME/tasks/" "$XDG_DATA_HOME/tasks/" \
+    --tmpfs "$XDG_RUNTIME_DIR" \
+    --bind "$XDG_RUNTIME_DIR/mcp" "$XDG_RUNTIME_DIR/mcp" \
+    --bind-try "$XDG_RUNTIME_DIR/rbw" "$XDG_RUNTIME_DIR/rbw" \
+    --bind-try "$dbus_sock" "$dbus_sock" \
+    --setenv DBUS_SESSION_BUS_ADDRESS "unix:path=$dbus_sock" \
+    --bind "$PROJECTS_DIR" "$PROJECTS_DIR" \
+    "${extra_binds[@]}" \
+    --setenv PI_OFFLINE 1 \
+    --unsetenv WAYLAND_DISPLAY \
+    --unsetenv SWAYSOCK \
+    --unshare-all \
+    --share-net \
+    --die-with-parent \
+    /usr/bin/pi \
+    "${pi_args[@]}"

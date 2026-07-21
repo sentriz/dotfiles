@@ -10,5 +10,5 @@ if [[ -z "$CMENU_INPUT" ]]; then
     exit
 fi
 
-claude -p "$CMENU_INPUT"
+pi --model openai/gpt-5.6-luna -p "$CMENU_INPUT"
 exit 0

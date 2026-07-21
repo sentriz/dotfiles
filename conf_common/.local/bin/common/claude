@@ -1,3 +1,0 @@
-#!/usr/bin/env sh
-
-HOME="$XDG_CACHE_HOME/claude" exec /opt/claude-code/bin/claude "$@"
