@@ -409,6 +409,8 @@ vim.lsp.enable({
 	"zls",
 	"ruff",
 	"ty",
+	"terraformls",
+	"tflint",
 })
 
 -- lsp diagnostics
