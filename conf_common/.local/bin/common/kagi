@@ -1,0 +1,11 @@
+#!/usr/bin/env sh
+set -e
+
+[ -n "$1" ] || { echo "usage: kagi <query>" >&2; exit 1; }
+
+KAGI_API_KEY=$(secret kagi_api_key)
+
+curl -sf "https://kagi.com/api/v1/search" \
+    -H "Authorization: Bearer $KAGI_API_KEY" \
+    -H "Content-Type: application/json" \
+    -d "$(jq -n --arg q "$*" '{query: $q, format: "markdown"}')"
