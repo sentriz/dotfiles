@@ -36,6 +36,7 @@ gaps left  -$default_gap
 gaps right -$default_gap
 font $default_font
 popup_during_fullscreen smart
+focus_on_window_activation focus
 
 # default horizonal tabbled but only if multiple windows
 hide_edge_borders --i3 none
