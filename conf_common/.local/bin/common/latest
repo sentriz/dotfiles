@@ -1,9 +1,14 @@
 #!/usr/bin/env fish
 
-if test \( (count $argv) -ne 1 \) -o ! \( -d "$argv[1]" \)
-    echo 'please provide a single directory' >&2
+if test \( (count $argv) -lt 1 \) -o ! \( -d "$argv[1]" \)
+    echo 'usage: latest <dir> [count]' >&2
     exit 1
 end
 
+set count 1
+if test (count $argv) -ge 2
+    set count $argv[2]
+end
+
 cd "$argv[1]"
-realpath (ls -t | head -n 1)
+realpath (ls -t | head -n $count)
