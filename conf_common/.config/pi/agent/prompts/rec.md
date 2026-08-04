@@ -1,8 +1,6 @@
 ---
-name: rec
 description: Recommend 5 music releases to check out today based on ListenBrainz listening history and gonic library
 ---
-
 # Music Recommendations
 
 Generate 5 release recommendations based on listening patterns and existing library.

@@ -1,11 +1,10 @@
 ---
-name: sam
 description: Interact with the "sam" home server - manage podman containers, quadlet services, troubleshoot issues
+argument-hint: "<task>"
 ---
-
 # Server "sam" - Home Server Management
 
-Use this skill when the user asks about their server "sam", needs to check on services, restart containers, troubleshoot podman, or manage the quadlet setup.
+Task: $@
 
 ## Connection
 
