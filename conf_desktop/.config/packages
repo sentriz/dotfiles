@@ -213,3 +213,4 @@ arch tflint
 go go.senan.xyz/mcp@latest
 arch pi-coding-agent
 arch fd
+arch way-secure
