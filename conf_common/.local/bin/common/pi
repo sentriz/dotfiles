@@ -1,17 +1,26 @@
 #!/usr/bin/env bash
 
-extra_binds=()
+extra_dirs=()
 pi_args=()
 parsing_binds=""
 for arg in "$@"; do
     if [ -n "$parsing_binds" ]; then
-        extra_binds+=(--bind "$arg" "$arg")
+        extra_dirs+=("$(realpath "$arg")")
     elif [ "$arg" = "--" ]; then
         parsing_binds=1
     else
         pi_args+=("$arg")
     fi
 done
+
+extra_binds=()
+for dir in "${extra_dirs[@]}"; do
+    extra_binds+=(--bind "$dir" "$dir")
+done
+
+if [ ${#extra_dirs[@]} -gt 0 ]; then
+    pi_args+=(--append-system-prompt "Additional directories available outside the working directory: ${extra_dirs[*]}")
+fi
 
 mkdir -p "$XDG_CACHE_HOME/jiti"
 mkdir -p "$XDG_RUNTIME_DIR/mcp"
