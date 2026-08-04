@@ -25,6 +25,7 @@
 - Declare variables near where they are used, not clustered at the top of functions.
 - Group related lines into logical blocks with whitespace between them.
 - Use consistent naming conventions throughout a file/project.
+- Don't invent new terms for concepts. Be conservative when naming: reuse existing names from the codebase or domain. If unsure what a concept should be called, ask.
 - NEVER write comments. This is the default. Two exceptions only:
   - 1. Creating an exported function whose sibling functions already have comments - match them.
   - 2. Writing something genuinely tricky/magic - in that case, ask me whether to add a comment rather than adding it silently.
