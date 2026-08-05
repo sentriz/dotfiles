@@ -3,8 +3,11 @@
 extra_dirs=()
 pi_args=()
 parsing_binds=""
+unsandboxed=""
 for arg in "$@"; do
-    if [ -n "$parsing_binds" ]; then
+    if [ "$arg" = "--unsandboxed" ]; then
+        unsandboxed=1
+    elif [ -n "$parsing_binds" ]; then
         extra_dirs+=("$(realpath "$arg")")
     elif [ "$arg" = "--" ]; then
         parsing_binds=1
@@ -12,6 +15,10 @@ for arg in "$@"; do
         pi_args+=("$arg")
     fi
 done
+
+if [ -n "$unsandboxed" ]; then
+    PI_CODING_AGENT_DIR="$XDG_CONFIG_HOME/pi/agent" PI_OFFLINE=1 exec /usr/bin/pi "${pi_args[@]}"
+fi
 
 extra_binds=()
 for dir in "${extra_dirs[@]}"; do
