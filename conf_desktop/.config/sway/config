@@ -1,10 +1,10 @@
 #################################################
 ##             my i3 config, 2016-             ##
 #################################################
-##  mod [a-z]           -> windows/postion     ##
+##  mod [a-z]           -> windows/position    ##
+##  mod [i o p]         -> notifications       ##
 ##  mod [num row]       -> workspaces          ##
 ##  mod shift [num row] -> move to workspaces  ##
-##  mod alt [a-z]       -> modes               ##
 ##  mod return          -> launch term         ##
 ##  caps lock           -> launch cmenu        ##
 #################################################
@@ -141,7 +141,6 @@ bindsym $super+6     workspace number 6
 bindsym $super+7     workspace number 7
 bindsym $super+8     workspace number 8
 bindsym $super+9     workspace number 9
-bindsym $super+0     [urgent=latest] focus
 
 bindsym $super+Shift+1 move container to workspace number 1
 bindsym $super+Shift+2 move container to workspace number 2
@@ -265,7 +264,7 @@ bindgesture swipe:3:up    workspace back_and_forth
 bindsym $super+return       exec $TERMINAL
 
 # bindings: notifications
-bindsym $super+i exec makoctl invoke
+bindsym $super+i exec 'swaymsg -q "[urgent=latest] focus" || makoctl invoke'
 bindsym $super+o exec makoctl restore
 bindsym $super+p exec makoctl dismiss --all
 
