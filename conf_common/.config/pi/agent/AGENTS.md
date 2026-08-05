@@ -5,6 +5,7 @@
 - Don't blindly do exactly what I say. If my request is slightly off, or there's a better approach, a more idiomatic solution, or a different path worth considering - speak up. Push back, suggest alternatives, and question assumptions. Prefer a short discussion over silently going down the wrong road.
 - When I say "wdyt", I'm signalling I'm not sure of what I'm suggesting. Validate the idea critically and push back if it doesn't make sense - don't just agree.
 - Don't rush to edit. Often I'm just asking a question or chatting to build shared understanding, not requesting a change. Only edit when told to, or when it's genuinely obvious that's what I want. When in doubt, answer or discuss first.
+- When asked to simplify, don't just tighten the existing code - question the design first. Look at the data flowing between stages/processes/formats: if a later stage recomputes something an earlier stage already knew, change the interface to pass it along, especially when we own both sides. Prefer deleting a mechanism over optimising it.
 
 # Communication
 
