@@ -1,0 +1,95 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+# flatpak-spawn --host and the org.freedesktop.Flatpak talk overrides let browsers run arbitrary
+# host commands. Replace them with xdg-native-messaging-proxy and the WebExtensions portal once
+# they are packaged by Arch and supported by the browsers.
+#
+# manual steps this script can't do: the bruvtab_mediator binary comes from $XDG_CONFIG_HOME/packages
+# (python bruvtab), and the BruvTab extension must be installed in each browser:
+#   https://chromewebstore.google.com/detail/bruvtab/bkifkhiemhgpnomgdcbcbkifekkecnhk
+#   https://github.com/pschmitt/bruvtab/releases (signed firefox xpi)
+#
+# the files below live in ~/.var/app/ and can't be dotfiles symlinks since the repo isn't
+# visible inside the flatpak sandbox.
+
+mediator="$HOME/.local/bin/bruvtab_mediator"
+
+main() {
+    if (($# == 0 || $# % 2)); then
+        echo "usage: setup-bruvtab ( <port> <browser> ) ..." >&2
+        exit 1
+    fi
+    if [[ ! -x $mediator ]]; then
+        echo "$mediator not found, install it first" >&2
+        exit 1
+    fi
+
+    while (($#)); do
+        "setup-$2" "$1"
+        shift 2
+    done
+}
+
+setup-librewolf() {
+    local port="$1"
+    local dir="$HOME/.var/app/io.gitlab.librewolf-community/.librewolf"
+
+    write-file "$dir/bruvtab-mediator" 755 <<EOF
+#!/bin/sh
+cd /
+exec flatpak-spawn --host --env=MIN_HTTP_PORT=$port --env=MAX_HTTP_PORT=$((port + 1)) $mediator "\$@"
+EOF
+
+    write-file "$dir/native-messaging-hosts/bruvtab_mediator.json" 644 <<EOF
+{
+  "name": "bruvtab_mediator",
+  "description": "This mediator exposes interface over TCP to control browser's tabs",
+  "path": "$HOME/.librewolf/bruvtab-mediator",
+  "type": "stdio",
+  "allowed_extensions": ["bruvtab_mediator@example.org"]
+}
+EOF
+}
+
+setup-google-chrome() {
+    local port="$1"
+    local dir="$HOME/.var/app/com.google.Chrome/config"
+
+    write-file "$dir/bruvtab-mediator" 755 <<EOF
+#!/bin/sh
+cd /
+exec flatpak-spawn --host --env=MIN_HTTP_PORT=$port --env=MAX_HTTP_PORT=$((port + 1)) $mediator "\$@"
+EOF
+
+    write-file "$dir/google-chrome/NativeMessagingHosts/bruvtab_mediator.json" 644 <<EOF
+{
+  "name": "bruvtab_mediator",
+  "description": "This mediator exposes interface over TCP to control browser's tabs",
+  "path": "$dir/bruvtab-mediator",
+  "type": "stdio",
+  "allowed_origins": [
+    "chrome-extension://edpgjheobdplebiikjgjgpmonakingef/",
+    "chrome-extension://bkifkhiemhgpnomgdcbcbkifekkecnhk/"
+  ]
+}
+EOF
+}
+
+write-file() {
+    local path="$1"
+    local mode="$2"
+    local content
+    content=$(</dev/stdin)
+
+    if [[ -f "$path" && $(<"$path") == "$content" ]]; then
+        return
+    fi
+
+    mkdir -p "${path%/*}"
+    printf '%s\n' "$content" >"$path"
+    chmod "$mode" "$path"
+}
+
+main "$@"

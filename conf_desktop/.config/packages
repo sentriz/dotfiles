@@ -205,6 +205,7 @@ npm prettier-plugin-svelte
 npm typescript
 python ruff
 python ty
+python bruvtab
 arch terraform
 arch terraform-ls
 arch tflint

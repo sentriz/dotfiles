@@ -1,2 +1,5 @@
 [Context]
 filesystems=xdg-pictures/screenshots;/tmp
+
+[Session Bus Policy]
+org.freedesktop.Flatpak=talk

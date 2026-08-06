@@ -1,10 +1,77 @@
 #!/usr/bin/env bash
 
+shopt -s nullglob
+
+declare -A port_browser=([4625]=librewolf [4626]=google-chrome)
+
 if [[ "$#" -gt 0 ]]; then
     IFS=$'\t' read -r id _ <<<"$1"
-    swaymsg "[con_id=$id]" focus
+    IFS=: read -r con_id _ port tab <<<"$id"
+
+    [[ -n $tab ]] && curl -s --max-time 1 "localhost:$port/activate_tab/${tab##*.}?focused=1" >/dev/null
+    [[ -n $con_id ]] && swaymsg "[con_id=$con_id]" focus
     exit
 fi
 
-swaymsg -t get_tree \
-    | jq -r '.nodes[].nodes[] | {"w": .num} + ( if (.nodes|length) > 0 then [recurse(.nodes[])] else [] end + .floating_nodes | .[] | select(.nodes==[] and .app_id != "cmenu")) | [.id, .w, (.name | gsub("^\\s+|\\s+$";""))] | @tsv'
+setup_args=()
+for port in "${!port_browser[@]}"; do
+    setup_args+=("$port" "${port_browser[$port]}")
+done
+setup-bruvtab "${setup_args[@]}"
+
+tabs_dir=$(mktemp -d)
+trap 'rm -rf "$tabs_dir"' EXIT
+
+tabs_pids=()
+for port in "${!port_browser[@]}"; do
+    browser=${port_browser[$port]}
+    curl -s --max-time 0.25 -o "$tabs_dir/$port:$browser" "localhost:$port/list_tabs" &
+    tabs_pids+=($!)
+done
+
+windows=$(swaymsg -t get_tree | jq -r '.nodes[].nodes[] | .num as $w | recurse(.nodes[], .floating_nodes[]) | select(.pid and .app_id != "cmenu") | [.id, $w, (.app_id // ""), (.name // "" | gsub("^\\s+|\\s+$";"")), (if .visible then "1" else "" end)] | @tsv')
+
+wait "${tabs_pids[@]}"
+
+awk -F'\t' -v hl="$(cmenu highlight)" '
+function winpfx(id) { sub(/\..*/, "", id); return id }
+function winrow(name) { printf "%s%s\t%s\t%s\n", ($5 != "" ? hl : ""), $1, $2, name }
+function tabrow(port, i, con) { printf "%s:tab:%s:%s\t\t%s %s\n", con, port, ids[port, i], urls[port, i], titles[port, i] }
+
+FILENAME != "-" {
+    source = FILENAME; sub(/.*\//, "", source)
+    split(source, parts, ":")
+    port = parts[1]
+    browser[port] = parts[2]
+    n = ++count[port]
+    ids[port, n] = $1
+    titles[port, n] = $2
+    sub(/[?#].*/, "", $3)
+    urls[port, n] = $3
+    next
+}
+
+{
+    for (port in count)
+        for (i = 1; i <= count[port]; i++) {
+            if (browser[port] != $3) break
+            if (titles[port, i] == "" || index($4, titles[port, i]) != 1) continue
+            win = winpfx(ids[port, i])
+            if ((port ":" win) in used) continue
+            used[port ":" win] = 1
+            winrow($3)
+            for (j = 1; j <= count[port]; j++)
+                if (index(ids[port, j], win ".") == 1 && titles[port, j] != "")
+                    tabrow(port, j, $1)
+            next
+        }
+    winrow($4)
+}
+
+END {
+    for (port in count)
+        for (i = 1; i <= count[port]; i++)
+            if (!((port ":" winpfx(ids[port, i])) in used) && titles[port, i] != "")
+                tabrow(port, i, "")
+}
+' "$tabs_dir"/* - <<<"$windows"
