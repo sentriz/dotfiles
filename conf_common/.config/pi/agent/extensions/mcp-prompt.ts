@@ -18,7 +18,8 @@ function buildSection(): string {
       "\n\n# MCP",
       `Reach MCP servers through the \`mcp\` CLI tool. Configured servers: ${servers.map((s) => `\`${s}\``).join(", ")}.`,
       "```\n" + mcpUsage() + "\n```",
-      "List a server's tools when you need it, discover the tool's schema, then call it. Prefer the key=value argument notation over raw JSON, though JSON is sometimes needed for nested values.",
+      "List a server's tools when you need it, discover the tool's schema, then call it. Pass args as key=value pairs; only use a JSON object when a value is deeply nested. Parse output with `jq`, never Python:",
+      "```\nmcp server linear call list_issues limit=10 query=\"foo bar\" | jq -r '.[].title'\n```",
       "Tools returning images, audio, or file blobs put base64 in a `data` field. Never print it - pipe it straight to a file and read that:",
       "```\nmcp server chrome call take_screenshot | jq -r '.[]|select(.type==\"image\").data' | base64 -d > /tmp/shot.png\n```",
     ].join("\n\n");
