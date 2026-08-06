@@ -45,6 +45,8 @@ auth_metadata_url = "https://mcp.slack.com/.well-known/oauth-authorization-serve
 instructions = """
 slack_read_thread needs the thread PARENT's message_ts - a reply or unthreaded message gives thread_not_found.
 If you only have a reply ts, use slack_read_channel with oldest/latest around it to find the parent.
+slack_search_users fails with missing_scopes - to get a user id, slack_search_public for their name and read the id out of an <@U...|Name> mention.
+A user id works as channel_id for slack_read_channel to read a DM.
 """
 
 [[server]]
@@ -68,8 +70,9 @@ scopes = [
 instructions = """
 Ids are the hex API ids from search_threads (e.g. 19f5c02bfbca6b3b) - web-UI ids like FMfcgz... always fail with "Invalid id value".
 get_thread takes threadId, get_message takes messageId; pagination is pageSize (not maxResults/page_size).
-There is no search_messages tool - use search_threads.
+There is no search_messages tool - use search_threads; its param is `query` (not `q`).
 Use messageFormat=MINIMAL on get_thread/get_message to keep output small.
+Message fields are `sender` and `plaintextBody` (there is no `from`/`body`). Full-content responses embed huge attachmentIds - always jq out the fields you want, never print the raw response.
 """
 client_id = "${exec secret google_mcp_client_id}"
 client_secret = "${exec secret google_mcp_client_secret}"
