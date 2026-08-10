@@ -54,6 +54,7 @@
 - Always use `jq` when parsing JSON. Prefer this over parsing with Python.
 - Use `kagi <query>` to search the web.
 - Use `find` instead of `fd` - `fd` is not installed.
+- Use `q` instead of `dig` for DNS queries.
 - Projects are stored at `$PROJECTS_DIR/<x>`. "project <x>" or "<x> project" mean a directory there.
 
 # Go
