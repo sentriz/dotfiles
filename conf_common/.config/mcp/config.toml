@@ -15,8 +15,10 @@ url = "https://api.eu-west-1.aws.dash0.com/mcp"
 headers = { Authorization = "Bearer ${exec secret dash0_token}" }
 instructions = """
 Every tool requires arguments - even listDatasets needs dataset (use dataset=default to discover the rest).
+App telemetry lives in dataset=production - dataset=default is empty, queries return 0 rows without erroring.
 Most tools require dataset + timeRange={from,to}.
-sql (D0QL) column names differ from getSpans display names: use trace_id, span_id, timestamp, span_attributes['x'] - not otel_trace_id / otel.trace.id.
+sql (D0QL) column names differ from getSpans display names: use trace_id, span_id, timestamp, name, span_attributes['x'] - not otel_trace_id / otel.trace.id / span_name.
+Pass args as ONE json object or ONLY key=value pairs - mixing both fails with "expected key=value".
 getFullLogRecord takes logRecordId, not id.
 For sql queries with lots of quotes, write the JSON args to a file and pass "$(cat file.json)" instead of inline shell quoting.
 """
@@ -44,6 +46,7 @@ client_secret = "${exec secret slack_client_secret}"
 auth_metadata_url = "https://mcp.slack.com/.well-known/oauth-authorization-server"
 instructions = """
 slack_read_thread needs the thread PARENT's message_ts - a reply or unthreaded message gives thread_not_found.
+ts args must stay strings: message_ts=1786051956.253439 becomes a JSON number (precision lost, thread_not_found) - quote it as message_ts='"1786051956.253439"' or use a json object arg.
 If you only have a reply ts, use slack_read_channel with oldest/latest around it to find the parent.
 slack_search_users fails with missing_scopes - to get a user id, slack_search_public for their name and read the id out of an <@U...|Name> mention.
 A user id works as channel_id for slack_read_channel to read a DM.
