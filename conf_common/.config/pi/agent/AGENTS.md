@@ -20,6 +20,11 @@
   - Relation: only say what's pertinent to the question.
   - Manner: be clear, brief, orderly; avoid obscurity and ambiguity.
 
+# Pull Requests
+
+- Don't open PRs unless explicitly asked.
+- PR bodies: no "What"/"Why"/"How" headings or templates. Just a concise plain-English explanation of the change - often identical to the commit message body (GitHub pre-fills it from there anyway; usually just keep that).
+
 # Code Style
 
 - Order code top-down like a book: main/biggest functions first, helpers below, in the order they are needed.
