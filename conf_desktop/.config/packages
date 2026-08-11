@@ -20,7 +20,6 @@ arch man-db
 arch fish
 arch fzf
 arch git
-arch git-delta
 arch github-cli
 arch htop
 arch jq

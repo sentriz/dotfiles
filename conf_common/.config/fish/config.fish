@@ -22,6 +22,8 @@ set -gx PROJECTS_DIR "$HOME/projects"
 set -gx NOTES_DIR "$HOME/notes"
 
 set -gx EDITOR nvim
+set -gx PAGER vpager
+set -gx MANPAGER "nvim +Man!"
 set -gx FZF_DEFAULT_OPTS "--info hidden --color pointer:-1,gutter:-1,prompt:-1,bg:-1,bg+:0,fg:-1,fg+:7,hl:-1,hl+:7,marker:-1"
 set -gx GOPATH "$XDG_DATA_HOME/go"
 set -gx GOPROXY direct
@@ -37,8 +39,6 @@ set -gx DOCKER_CONFIG "$XDG_CONFIG_HOME/docker"
 set -gx COMPOSE_DOCKER_CLI_BUILD 1
 set -gx COMPOSE_BAKE 1
 set -gx DOCKER_BUILDKIT 1
-set -gx LESSKEY -
-set -gx LESSHISTFILE -
 set -gx CARGO_HOME "$XDG_DATA_HOME/cargo"
 set -gx CARGO_NET_GIT_FETCH_WITH_CLI true
 set -gx RUSTUP_HOME "$XDG_DATA_HOME/rustup"
@@ -125,10 +125,8 @@ abbr g git
 abbr gti git
 abbr ps 'ps -axh -o pid,%cpu,cmd'
 abbr curl 'curl -s'
-abbr less 'less -RKS#1'
 abbr jq jq -r '\'.\''
 abbr wget 'curl -fLO'
-alias delta 'command delta --config $XDG_CONFIG_HOME/delta/config'
 
 # extended regexp everywhere
 abbr grep "grep -Ei"

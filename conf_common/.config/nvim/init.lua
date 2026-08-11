@@ -31,6 +31,10 @@ end)
 
 -- auto start file explorer when no files opened
 local function setup_explorer_on_start()
+	if vim.g.pager then
+		return
+	end
+
 	local had_q = vim.fn.index(vim.v.argv, "-q") >= 0
 	local have_stdin = 0
 

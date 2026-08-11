@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+if [[ $# -gt 0 ]]; then
+    exec nvim -R -- "$@"
+fi
+
+tmp=$(mktemp)
+trap 'rm -f "$tmp"' EXIT
+cat >"$tmp"
+
+if ! rows=$(tput lines 2>/dev/null) || (( $(wc -l <"$tmp") < rows )); then
+    cat "$tmp"
+    exit 0
+fi
+
+nvim </dev/tty -i NONE \
+    --cmd "let g:pager = v:true" \
+    -c "terminal cat $tmp" \
+    -c "setlocal nonumber signcolumn=no scrollback=1000000" \
+    -c "autocmd TermClose * ++once normal! L"
