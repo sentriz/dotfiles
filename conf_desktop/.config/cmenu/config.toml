@@ -129,6 +129,7 @@
   name = "calc"
   path = "menu-calc"
   colour = 2
+  debounce = "100ms"
 
 [[scripts]]
   triggers = ["pre hh"]
@@ -141,3 +142,4 @@
   name = "llm"
   path = "menu-llm"
   colour = 2
+  debounce = "1s"
