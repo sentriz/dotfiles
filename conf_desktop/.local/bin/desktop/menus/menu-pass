@@ -16,7 +16,13 @@ fi
 
 if [[ "$#" -gt 0 ]]; then
     IFS=$'\t' read -r id _ <<<"$1"
-    rbw get "$id" | wl-copy -n --sensitive --paste-once
+    rbw get "$id" | wl-copy -n --sensitive
+    hash=$(wl-paste -n | sha256sum)
+    # shellcheck disable=SC2016
+    setsid -f bash -c '
+        sleep 30
+        [[ "$(wl-paste -n 2>/dev/null | sha256sum)" = "$1" ]] && wl-copy --clear
+    ' _ "$hash"
     exit
 fi
 
