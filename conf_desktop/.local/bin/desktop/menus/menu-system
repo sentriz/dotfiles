@@ -33,6 +33,7 @@ stay="$(cmenu stay)"
 lid_pre="$stay"
 lid_kept_awake && lid_pre="$stay$highlight"
 
+printf '%suptime %s\n' "$(cmenu label)" "$(uptime --pretty | sed 's/^up //')"
 printf '%s\t%s\n' \
     suspend "to ram" \
     hibernate "to disk" \
