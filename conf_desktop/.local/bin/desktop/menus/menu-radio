@@ -24,7 +24,7 @@ if [[ "$CMENU_MODE" = "preview" ]]; then
     exit 0
 fi
 
-IFS=$'\t' read -r current_pid current_station <"$pidfile" 2>/dev/null
+[[ -f "$pidfile" ]] && IFS=$'\t' read -r current_pid current_station <"$pidfile"
 if [[ -n "$current_pid" ]] && ! kill -0 "$current_pid" 2>/dev/null; then
     current_pid=""
     current_station=""
