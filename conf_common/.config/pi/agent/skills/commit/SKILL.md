@@ -10,7 +10,9 @@ Create a git commit for the current staged and unstaged changes.
 3. Write a concise commit message:
    - Only add a commit body if the change genuinely needs explaining — most don't
    - Do NOT add a `Co-Authored-By` trailer
-   - If and only if the project mostly uses the conventional commits style (e.g. `fix(scanner):`, `feat(subsonic):`, `refactor(db):`) then use that. Otherwise do not.
+   - Default: a plain capitalised imperative subject, e.g. `Add thing`, `Fix thingy`. No `fix: ` / `feat: ` prefixes
+   - Only exception: if the project's log mostly uses conventional commits WITH a scope (`fix(scanner):`, `feat(subsonic):`, `refactor(db):`), match that style exactly
+   - If the project uses scopeless prefixes (`feat: `, `fix: `), ignore them and use the plain style instead
 4. Create the commit. Pass the message via HEREDOC:
 
    ```
