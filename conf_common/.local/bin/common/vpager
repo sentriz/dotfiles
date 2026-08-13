@@ -8,7 +8,10 @@ tmp=$(mktemp)
 trap 'rm -f "$tmp"' EXIT
 cat >"$tmp"
 
-if ! rows=$(tput lines 2>/dev/null) || (( $(wc -l <"$tmp") < rows )); then
+size=$(stty size </dev/tty 2>/dev/null)
+rows=${size%% *}
+
+if [[ -z $rows ]] || (($(wc -l <"$tmp") < rows)); then
     cat "$tmp"
     exit 0
 fi
