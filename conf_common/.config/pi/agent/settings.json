@@ -2,7 +2,7 @@
   "lastChangelogVersion": "0.83.0",
   "theme": "dark",
   "defaultProvider": "anthropic",
-  "defaultModel": "claude-fable-5",
+  "defaultModel": "claude-opus-5",
   "defaultThinkingLevel": "medium",
   "quietStartup": true,
   "warnings": {
