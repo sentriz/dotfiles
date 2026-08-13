@@ -95,6 +95,13 @@
   columns = [1, 4, 5, 6]
 
 [[scripts]]
+  triggers = ["script audio", "script radio", "script subsonic", "interval 750ms"]
+  name = "mpris"
+  path = "menu-mpris"
+  colour = 2
+  stay_open = true
+
+[[scripts]]
   triggers = ["pre v"]
   name = "virt"
   path = "menu-virt"

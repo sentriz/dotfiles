@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+index_file="$XDG_RUNTIME_DIR/block_playing_index"
+
+function index() {
+    cat "$index_file" 2>/dev/null || echo 0
+}
+
+function mpris() {
+    mpris-ctrl -player-index "$(index)" "$@"
+}
+
+if [[ "$#" -gt 0 ]]; then
+    IFS=$'\t' read -r id _ <<<"$1"
+    case "$id" in
+    player) tee "$index_file" <<<"$(($(index) + 1))" >/dev/null ;;
+    *) mpris "$id" ;;
+    esac
+    block-up playing
+    exit
+fi
+
+status="$(mpris)"
+[[ -n "$status" ]] && printf '%s%s\n' "$(cmenu label)" "$status"
+
+printf '%s\t%s\n' \
+    play-pause "playback" \
+    next "track" \
+    previous "track" \
+    stop "playback" \
+    player "next player"
