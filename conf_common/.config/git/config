@@ -54,7 +54,7 @@
 	skippedCherryPicks = false
 [core]
 	editor = nvim
-	pager = vpager
+	pager = add-osc-8-hyperlink | vpager
 [pull]
 	rebase = true
 [commit]
@@ -73,6 +73,7 @@
 	algorithm = histogram
 	colorMoved = zebra
 	colorMovedWS = allow-indentation-change
+	ignoreSubmodules = dirty
 [difftool]
 	prompt = false
 [difftool "meld"]
@@ -111,3 +112,14 @@
 	maxStack = 25
 [url "git@github.com:"]
 	insteadOf = https://github.com/
+[interactive]
+	diffFilter = "sed -E 's@(diff --git )a/(.*) b/@\\1\\2 @; s@(--- )a/@\\1@; s@(\\+\\+\\+ )b/@\\1@' | add-osc-8-hyperlink"
+[pager]
+	status = true
+	ls-files = true
+	ls-tree = true
+	diff-tree = true
+	submodule = true
+	clean = true
+	check-ignore = true
+	apply = true
