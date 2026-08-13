@@ -15,21 +15,25 @@ export default function (pi: ExtensionAPI) {
 				}
 			}
 
-			const fenced = [...text.matchAll(/```[^\n]*\n([\s\S]*?)```/g)].map((m) => m[1]);
-			const quoted = [...text.matchAll(/(?:^[ \t]*>[^\n]*\n?)+/gm)].map((m) =>
-				m[0]
+			const fenced = [...text.matchAll(/```[^\n]*\n([\s\S]*?)```/g)].map((m) => ({
+				index: m.index,
+				text: m[1],
+			}));
+			const quoted = [...text.matchAll(/(?:^[ \t]*>[^\n]*\n?)+/gm)].map((m) => ({
+				index: m.index,
+				text: m[0]
 					.split("\n")
 					.map((l) => l.replace(/^[ \t]*> ?/, ""))
 					.join("\n")
 					.trim(),
-			);
+			}));
 
-			const blocks = fenced.length ? fenced : quoted;
+			const blocks = [...fenced, ...quoted].sort((a, b) => a.index - b.index);
 			if (!blocks.length) {
 				ctx.ui.notify("No code block or quote found", "warning");
 				return;
 			}
-			const code = blocks[blocks.length - 1];
+			const code = blocks[blocks.length - 1].text;
 
 			try {
 				const fd = openSync("/dev/tty", "w");
