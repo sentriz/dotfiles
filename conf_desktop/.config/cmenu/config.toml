@@ -85,6 +85,16 @@
   preview = true
 
 [[scripts]]
+  triggers = ["pre m"]
+  name = "subsonic"
+  path = "menu-subsonic"
+  colour = 13
+  stay_open = true
+  preview = true
+  debounce = "300ms"
+  columns = [1, 4, 5, 6]
+
+[[scripts]]
   triggers = ["pre v"]
   name = "virt"
   path = "menu-virt"

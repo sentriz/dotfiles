@@ -1,0 +1,88 @@
+#!/usr/bin/env bash
+
+pidfile="$XDG_RUNTIME_DIR/menu-subsonic.pid"
+
+base="$(secret gonic_url)"
+user="$(secret gonic_username)"
+salt="$RANDOM$RANDOM$RANDOM"
+token="$(printf '%s%s' "$(secret gonic_password)" "$salt" | md5sum | cut -d' ' -f1)"
+
+auth=(-d v=1.16.1 -d c=cmenu -d f=json --data-urlencode "u=$user" --data-urlencode "s=$salt" --data-urlencode "t=$token")
+
+api() {
+    local endpoint="$1" args=() param
+    shift
+    for param in "$@"; do args+=(--data-urlencode "$param"); done
+    curl -fsG "$base/rest/$endpoint" "${auth[@]}" "${args[@]}" | jq -r '."subsonic-response"'
+}
+
+stream-url() {
+    printf '%s/rest/stream?v=1.16.1&c=cmenu&u=%s&s=%s&t=%s&id=%s' "$base" "$user" "$salt" "$token" "$1"
+}
+
+song-ids() {
+    local kind="$1" id="$2"
+    case "$kind" in
+    song) printf '%s\n' "$id" ;;
+    album) api getAlbum "id=$id" | jq -r '.album.song[].id' ;;
+    artist) api getTopSongs "id=$id" count=50 | jq -r '.topSongs.song[]?.id' ;;
+    esac
+}
+
+if [[ "$CMENU_MODE" = "preview" ]]; then
+    IFS=$'\t' read -r _ _ cover _ <<<"$1"
+    [[ -z "$cover" ]] && exit 0
+
+    curl -fsG "$base/rest/getCoverArt" "${auth[@]}" --data-urlencode "id=$cover" -d size=600 | magick - png:- | cmenu image -
+    exit 0
+fi
+
+[[ -f "$pidfile" ]] && IFS=$'\t' read -r current_pid current_id <"$pidfile"
+if [[ -n "$current_pid" ]] && ! kill -0 "$current_pid" 2>/dev/null; then
+    current_pid=""
+    current_id=""
+    rm -f "$pidfile"
+fi
+
+if [[ "$#" -gt 0 ]]; then
+    IFS=$'\t' read -r kind id _ _ title _ <<<"$1"
+
+    if [[ -n "$current_pid" ]]; then
+        kill "$current_pid" 2>/dev/null
+        while kill -0 "$current_pid" 2>/dev/null; do sleep 0.1; done
+        rm -f "$pidfile"
+        [[ "$id" = "$current_id" ]] && exit
+    fi
+
+    urls=()
+    while read -r song; do urls+=("$(stream-url "$song")"); done < <(song-ids "$kind" "$id")
+    [[ "${#urls[@]}" -eq 0 ]] && exit
+
+    mpv --no-ytdl --no-video --quiet --no-resume-playback "${urls[@]}" &
+    echo -e "$!\t$id" >"$pidfile"
+    notify-send 'started playing' "$title"
+
+    exit
+fi
+
+if [[ -n "$CMENU_INPUT" ]]; then
+    results="$(
+        api search3 "query=$CMENU_INPUT" artistCount=10 albumCount=20 songCount=20 | jq -r '
+            .searchResult3 // {} |
+            (.artist[]? | "artist\t\(.id)\t\(.coverArt // "")\t\t\(.name)\t"),
+            (.album[]?  | "album\t\(.id)\t\(.coverArt // "")\t\(.year // "")\t\(.name)\t\(.artist)"),
+            (.song[]?   | "song\t\(.id)\t\(.coverArt // "")\t\(.year // "")\t\(.title)\t\(.artist)")
+        '
+    )"
+else
+    results="$(api getAlbumList2 type=newest size=50 | jq -r '.albumList2.album[]? | "album\t\(.id)\t\(.coverArt // "")\t\(.year // "")\t\(.name)\t\(.artist)"')"
+fi
+
+highlight="$(cmenu highlight)"
+
+printf '%s\n' "$results" | grep . | while IFS= read -r line; do
+    IFS=$'\t' read -r _ id _ <<<"$line"
+    pre=""
+    [[ -n "$current_id" && "$id" = "$current_id" ]] && pre="$highlight"
+    printf '%s%s\n' "$pre" "$line"
+done
