@@ -18,7 +18,7 @@ function fish_prompt
     echo -n "$HOSTNAME"
 
     set_color --dim white
-    echo -n " "(prompt_pwd)
+    printf ' \e]8;;file://%s%s\e\\\\%s\e]8;;\e\\\\' "$HOSTNAME" "$PWD" (prompt_pwd)
 
     echo -n " "
     set_color normal
