@@ -22,8 +22,7 @@
 
 # Pull Requests
 
-- Don't open PRs unless explicitly asked.
-- PR bodies: no "What"/"Why"/"How" headings or templates. Just a concise plain-English explanation of the change - often identical to the commit message body (GitHub pre-fills it from there anyway; usually just keep that).
+- Don't open PRs unless explicitly asked. When asked, follow the commit skill - it covers both the commit message and the PR body.
 
 # Code Style
 

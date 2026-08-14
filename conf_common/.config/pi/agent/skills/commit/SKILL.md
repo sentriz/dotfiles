@@ -1,6 +1,6 @@
 ---
 name: commit
-description: Create a git commit
+description: Use when creating a git commit, or a branch/PR that needs one
 ---
 
 Create a git commit for the current staged and unstaged changes.
@@ -23,3 +23,7 @@ Create a git commit for the current staged and unstaged changes.
    ```
 
 5. Run `git status` to verify
+
+## PR bodies
+
+When the commit is going into a PR, the same message does double duty: no "What"/"Why"/"How" headings or templates, just a concise plain-English explanation of the change - often identical to the commit message body (GitHub pre-fills it from there anyway; usually just keep that).
