@@ -14,7 +14,7 @@ fi
 
 warning=""
 if [[ "$status" = "battery" && "$batt_level" -le "10" ]]; then
-    beep 1 &
+    beep 1 75 &
     disown
     warning=" ⚠"
 fi

@@ -16,7 +16,7 @@ test ! -e "$future_file" && exit
 left="$(("$future" - $(date "+%s")))"
 test "$left" -le 0 \
     && notify-send -t 600 "timer" "the time has passed" \
-    && beep >/dev/null 2>&1 \
+    && beep \
     && rm "$future_file" 2>/dev/null \
     && exit
 
