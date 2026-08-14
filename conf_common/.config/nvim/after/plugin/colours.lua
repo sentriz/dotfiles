@@ -122,7 +122,7 @@ vim.api.nvim_set_hl(0, "statusModified", { bold = true, ctermfg = 1, ctermbg = 1
 -- statusline configuration
 vim.o.statusline = ""
 	.. "%#statusReadOnly#%{&readonly?'read only ':''}%*"
-	.. "%{@%}"
+	.. "%{&buftype=='' && @%!=''?'file://'.expand('%:p'):@%}"
 	.. "%#statusModified#%{&modified?'  modified':''}%*"
 	.. "%="
 	.. " column %c"
