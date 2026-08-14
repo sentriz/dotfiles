@@ -1,10 +1,13 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
-if [ "$1" -eq 1 ]; then
-    ffplay -f lavfi -i "sine=frequency=1108.73:duration=1" -autoexit -nodisp
-    exit
-fi
+trap 'exit 1' INT
 
-ffplay -f lavfi -i "sine=frequency=1108.73:duration=1" -autoexit -nodisp
-ffplay -f lavfi -i "sine=frequency=1244.51:duration=1" -autoexit -nodisp
-ffplay -f lavfi -i "sine=frequency=1479.98:duration=1" -autoexit -nodisp
+count="${1:-3}"
+volume="${2:-100}"
+
+notes=(1108.73 1244.51 1479.98)
+
+for ((i = 0; i < count; i++)); do
+    freq="${notes[i % ${#notes[@]}]}"
+    ffplay -f lavfi -i "sine=frequency=$freq:duration=1" -volume "$volume" -autoexit -nodisp >/dev/null 2>&1
+done
