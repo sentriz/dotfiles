@@ -19,6 +19,7 @@
   - Quality: be truthful; don't state what you can't support.
   - Relation: only say what's pertinent to the question.
   - Manner: be clear, brief, orderly; avoid obscurity and ambiguity.
+- These rules apply just as hard to text you write *for* me - drafts, replies, comments, PR bodies, commit messages, issue descriptions. Write what I would write: a couple of sentences, plain, no background the reader already has, no bullet lists of everything considered, no sign-off flourishes. If a draft is longer than the thing it's replying to, it's too long.
 
 # Pull Requests
 
