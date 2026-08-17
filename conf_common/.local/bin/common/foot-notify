@@ -1,3 +1,0 @@
-#!/bin/bash
-
-exec notify-send --activation-token-fd 3 "$@" 3> >(sed 's/^/xdgtoken=/')

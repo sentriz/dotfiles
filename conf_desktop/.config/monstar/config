@@ -1,0 +1,6 @@
+command = direct:/usr/bin/fish
+font-family = Source Code Pro
+font-size = 13
+theme = light:light,dark:dark
+pipe-command-output = wl-copy -n
+inertial-scrolling = false
