@@ -98,10 +98,11 @@ flatpak org.wireshark.Wireshark
 arch libnotify
 arch acpilight
 arch dragon-drop-git
+arch foot
+arch foot-terminfo
 arch grim
 arch kanshi
 arch mako
-arch monstar-bin
 arch polkit-gnome
 arch qt5-wayland
 arch qt6-wayland
