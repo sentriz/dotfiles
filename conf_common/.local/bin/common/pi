@@ -33,16 +33,35 @@ mkdir -p "$XDG_CACHE_HOME/jiti"
 mkdir -p "$XDG_RUNTIME_DIR/mcp"
 mkdir -p "$XDG_RUNTIME_DIR/pi"
 
-dbus_sock="$XDG_RUNTIME_DIR/pi/bus.$$"
-xdg-dbus-proxy "$DBUS_SESSION_BUS_ADDRESS" "$dbus_sock" --filter --talk=org.freedesktop.Notifications &
-dbus_proxy_pid=$!
+session_pids=()
+session_socks=()
+session_binds=()
 
-wayland_sock="$XDG_RUNTIME_DIR/pi/wayland.$$"
-way-secure --socket-path "$wayland_sock" -e pi -a pi &
-way_secure_pid=$!
+if [ -n "$DBUS_SESSION_BUS_ADDRESS" ]; then
+    dbus_sock="$XDG_RUNTIME_DIR/pi/bus.$$"
+    xdg-dbus-proxy "$DBUS_SESSION_BUS_ADDRESS" "$dbus_sock" --filter --talk=org.freedesktop.Notifications &
+    session_pids+=($!)
+    session_socks+=("$dbus_sock")
+    session_binds+=(--bind-try "$dbus_sock" "$dbus_sock" --setenv DBUS_SESSION_BUS_ADDRESS "unix:path=$dbus_sock")
+fi
 
-trap 'kill "$dbus_proxy_pid" "$way_secure_pid"; rm -f "$dbus_sock" "$wayland_sock"' EXIT
-for _ in $(seq 50); do [ -e "$dbus_sock" ] && [ -e "$wayland_sock" ] && break; sleep 0.05; done
+if [ -n "$WAYLAND_DISPLAY" ]; then
+    wayland_sock="$XDG_RUNTIME_DIR/pi/wayland.$$"
+    way-secure --socket-path "$wayland_sock" -e pi -a pi &
+    session_pids+=($!)
+    session_socks+=("$wayland_sock")
+    session_binds+=(--bind-try "$wayland_sock" "$wayland_sock" --setenv WAYLAND_DISPLAY "$wayland_sock")
+fi
+
+if [ ${#session_pids[@]} -gt 0 ]; then
+    trap 'kill "${session_pids[@]}"; rm -f "${session_socks[@]}"' EXIT
+    for _ in $(seq 50); do
+        missing=""
+        for sock in "${session_socks[@]}"; do [ -e "$sock" ] || missing=1; done
+        [ -z "$missing" ] && break
+        sleep 0.05
+    done
+fi
 
 bwrap \
     --ro-bind / / \
@@ -63,10 +82,7 @@ bwrap \
     --tmpfs "$XDG_RUNTIME_DIR" \
     --bind "$XDG_RUNTIME_DIR/mcp" "$XDG_RUNTIME_DIR/mcp" \
     --bind-try "$XDG_RUNTIME_DIR/rbw" "$XDG_RUNTIME_DIR/rbw" \
-    --bind-try "$dbus_sock" "$dbus_sock" \
-    --setenv DBUS_SESSION_BUS_ADDRESS "unix:path=$dbus_sock" \
-    --bind-try "$wayland_sock" "$wayland_sock" \
-    --setenv WAYLAND_DISPLAY "$wayland_sock" \
+    "${session_binds[@]}" \
     --bind "$PROJECTS_DIR" "$PROJECTS_DIR" \
     "${extra_binds[@]}" \
     --setenv PI_OFFLINE 1 \
