@@ -7,6 +7,12 @@ description: Personal task/topic tracker stored in a YAML file. Use when the use
 
 Single source of truth: the tasks file (default `$XDG_DATA_HOME/tasks/tasks.yaml`). Read it first for every command - it also carries the user's own config under `meta`.
 
+To pull out one topic, query it structurally rather than grepping:
+
+```
+<$XDG_DATA_HOME/tasks/tasks.yaml rsl yaml json | jq '.topics[] | select(.id == "<id>")'
+```
+
 ## Schema
 
 ```yaml
@@ -26,7 +32,9 @@ topics:
     status: open | closed
     due: <YYYY-MM-DD>                # optional, only for real deadlines
     planned: true                    # optional; part of committed work (e.g. sprint); absent = unplanned/adhoc
+    prio: <1-4>                      # optional; Linear's scale - 1 urgent, 2 high, 3 medium, 4 low; absent = none
     last_me: <YYYY-MM-DD>            # optional; last date the user (`me`) acted on this topic - keep current on sync/edits; omit if never
+    last_activity: <YYYY-MM-DD>      # optional; newest REAL movement on the links (Linear updatedAt, PR push/comment, email/Slack message) - set by sync, never bumped by our own log-keeping
     next: <the next concrete step>
     notes: <standing context>        # optional, single string
     links:                           # optional, plain URL list
@@ -38,6 +46,17 @@ topics:
 ```
 
 Rules: never delete topics - set `status: closed` (log survives for handback). State changes flip `ball`/`status` and append a log line; don't rewrite history. Keep `next` current - it's the answer to "what do I do here".
+
+Priority: `prio` uses Linear's numbers so it sorts naturally and needs no translation. Where the topic's Linear tickets carry a priority, mirror the most urgent of them (lowest number) and keep it in step on sync. Otherwise - no ticket, or tickets set to No priority - judge it, since most customer work lives outside Linear and an unranked topic just disappears down the sort:
+
+- `1` urgent - customer escalated or blocked right now, deadline today or overdue, something in production is broken
+- `2` high - a customer is waiting on us, or a dated commitment depends on it (go-live, training, renewal)
+- `3` medium - internal improvement or cleanup, nobody outside is waiting
+- `4` low - nice to have, nothing happens if it slips
+
+A value the user set by hand wins until Linear says otherwise. Leave `prio` absent only when the topic is somebody else's to rank.
+
+Staleness: a topic is stale when it is `open`, the `ball` is with us (`me` or `team`), and `last_activity` is more than 30 days old - nothing has moved and nobody external is pushing. Never store a stale flag, it's derived. `last_activity` is deliberately separate from the log, so a sync writing "no movement in 3 months" can't make a topic look alive. Omit it when there's nothing to measure (no links, or commercial topics owned by someone else).
 
 Concurrency: other sessions may be editing the file at the same time. Immediately before every write, re-read the tasks file and apply your changes to that fresh copy - never write from a version read earlier in the conversation. Merge additively (append log lines, update only the fields you have news for); if a topic changed under you, keep the newer state unless your info clearly supersedes it.
 
@@ -51,7 +70,9 @@ Read the file, report only `status: open`, grouped by:
 3. **Scheduled** - `ball: scheduled`, sorted by `due`
 4. **Watching** - everything else (topics owned by others)
 
-One line per topic: title, party, next step, due if set; mark unplanned topics in Act now (e.g. `[adhoc]`). Skip the Watching group unless asked for everything.
+One line per topic: title, party, next step, due if set; mark unplanned topics in Act now (e.g. `[adhoc]`) and stale ones with their age (e.g. `[stale 98d]`). Skip the Watching group unless asked for everything.
+
+Asked what's stale: list only stale topics, oldest first, with the age and what stopped it. These are park-or-do decisions, not work.
 
 ### sync
 
@@ -60,7 +81,7 @@ Goal: bring the file up to date with what happened since `meta.last_sync`, inclu
 1. Read the tasks file, note `last_sync`, `me` and `sources`.
 2. Check every source in `meta.sources` in parallel, following the recipe for its `kind` below. For every `status: open` topic, fetch each URL in `links` via the matching source recipe; ignore links on closed topics. Only check kinds that are listed; if a source's tool isn't available, skip it and say so.
    Parallelise aggressively, within sources too: batch every set of independent calls into one block - the initial searches/lists for all sources together, then all the follow-up reads (gmail threads, slack channels/DMs, linear tickets, gh views) together. Only sequence a call when it needs a result from a previous one. A sync should take a handful of rounds, not one call per item.
-3. For each topic with news: append log lines (dated), update `ball`/`next`/`status`. Anything that clearly belongs to no existing topic: propose a new topic, create it if obvious.
+3. For each topic with news: append log lines (dated), update `ball`/`next`/`status`. Set `last_activity` on every open topic you checked to the newest movement date you actually saw across its links - especially when that date is old, since that is what makes staleness visible. Set `prio` from the most urgent Linear ticket in `links`. Anything that clearly belongs to no existing topic: propose a new topic, create it if obvious.
 4. Run any source's post-sync step (see below).
 5. Set `meta.last_sync` to now (`date -Iseconds`).
 6. Report a compact diff: topics changed, log lines added, external state adjusted, anything newly needing the user.
