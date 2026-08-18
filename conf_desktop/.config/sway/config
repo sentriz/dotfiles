@@ -220,6 +220,9 @@ for_window [app_id="^valent$"]                                        floating e
 for_window [app_id="^librewolf$" title="^Extension: .*"]              floating enable
 for_window [class="^Pinentry-gtk$"]                                   floating enable
 
+# floating to prevent glitch
+for_window [title="^wl-clipboard$"] floating enable, border none
+
 # floating sticky
 for_window [class="^jellyfin$"]                         floating enable, resize set 1334 568, sticky enable
 for_window [class="^Google-chrome$" title="^Jellyfin$"] floating enable, resize set 1334 568, sticky enable
