@@ -52,6 +52,7 @@
 
 - Prefer `gh` CLI over `curl` for GitHub interactions.
 - Always use `jq` when parsing JSON. Prefer this over parsing with Python.
+- Use `rsl <src format> <dest format>` to convert between file formats: `csv, csv-ph, html, ini, js, json, md, toml, tsv, tsv-ph, xml, yaml`. Pipe into `jq` to query non-JSON data instead of reaching for Python, e.g. `some-toml | rsl toml json | jq`. The `-ph` variants synthesise a pseudo header (`a`, `b`, `c`, ...) for headerless csv/tsv.
 - Use `kagi <query>` to search the web.
 - Use `find` instead of `fd` - `fd` is not installed.
 - Never search from `/` (e.g. `find / ...`) - it hammers IO. Scope searches to a specific directory.
