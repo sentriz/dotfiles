@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+if [[ "$#" -gt 0 ]]; then
+    wl-copy -n <<<"$1"
+    exit
+fi
+
+inp="$CMENU_INPUT"
+if [[ "$inp" == "now" ]]; then
+    inp="$(date -Iseconds)"
+fi
+if [[ -z "$inp" ]]; then
+    inp="$(wl-paste -n 2>/dev/null)"
+fi
+if [[ -z "$inp" ]]; then
+    echo "$(cmenu label)no input"
+    exit 0
+fi
+
+if ! out="$(parse-date "$inp" 2>/dev/null)"; then
+    echo "$(cmenu label)invalid input"
+    exit 0
+fi
+
+IFS=$'\t' read -r nano milli sec rfc <<<"$out"
+printf '%s\n' "$rfc" "$sec" "$milli" "$nano"
