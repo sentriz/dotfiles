@@ -117,9 +117,12 @@ GOTCHA (this has caused misses): a thread search returns only a SUBSET of each t
   dms:                               # optional; always read these, they're not in any topic's links
     - name: <person>
       id: <slack user id>
+  channels:                          # optional; always read these too
+    - name: <channel>
+      id: <slack channel id>
 ```
 
-Read the channels/DMs whose URLs appear in `links` (channel ID is the last path segment), plus every DM in `dms` - people drop asks/updates there that never appear in a topic. Read the actual latest messages by timestamp, and check thread replies on any message that has them.
+Read the channels/DMs whose URLs appear in `links` (channel ID is the last path segment), plus every DM in `dms` and channel in `channels` - people drop asks/updates there that never appear in a topic. Read the actual latest messages by timestamp, and check thread replies on any message that has them.
 
 ### kind: linear
 
