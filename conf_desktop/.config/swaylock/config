@@ -1,4 +1,4 @@
-image=/home/senan/pictures/wallpapers/fagan.png
+image=$XDG_PICTURES_DIR/wallpapers/fagan.png
 font=Source Code Pro 10
 inside-color=00000000
 inside-caps-lock-color=00000000
