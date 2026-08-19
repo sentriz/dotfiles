@@ -162,6 +162,13 @@
   debounce = "100ms"
 
 [[scripts]]
+  triggers = ["pre wp"]
+  name = "wallpaper"
+  path = "menu-wallpaper"
+  colour = 4
+  preview = true
+
+[[scripts]]
   triggers = ["pre lm"]
   name = "llm"
   path = "menu-llm"
