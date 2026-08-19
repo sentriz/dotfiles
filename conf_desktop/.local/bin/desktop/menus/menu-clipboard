@@ -5,8 +5,7 @@ if [[ "$CMENU_MODE" = "preview" ]]; then
     if grep -vqP '^\d+\t\[\[ binary data .* \]\]' <<<"$row"; then
         cliphist decode <<<"$row"
     else
-        format="$(grep -oP '\S+(?= \d+x\d+ \]\])' <<<"$row")"
-        [[ "$format" == "png" ]] || exit 0
+        grep -qP '\d+x\d+ \]\]' <<<"$row" || exit 0
         cliphist decode <<<"$row" | cmenu image -
     fi
     exit 0

@@ -48,7 +48,7 @@ if [[ "$CMENU_MODE" = "preview" ]]; then
     [[ -f "$path" ]] || exit 0
 
     case "$mime" in
-    image/png) cmenu image "$path" ;;
+    image/png | image/jpeg | image/gif | image/webp | image/bmp | image/tiff) cmenu image "$path" ;;
     text/* | application/json) head -c 100000 "$path" ;;
     *) printf '%s\t%s\n' type "$mime" size "$(du -h "$path" | cut -f1)" | table ;;
     esac

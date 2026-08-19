@@ -33,7 +33,7 @@ if [[ "$CMENU_MODE" = "preview" ]]; then
     IFS=$'\t' read -r _ _ cover _ <<<"$1"
     [[ -z "$cover" ]] && exit 0
 
-    curl -fsG "$base/rest/getCoverArt" "${auth[@]}" --data-urlencode "id=$cover" -d size=600 | magick - png:- | cmenu image -
+    curl -fsG "$base/rest/getCoverArt" "${auth[@]}" --data-urlencode "id=$cover" -d size=600 | cmenu image -
     exit 0
 fi
 
