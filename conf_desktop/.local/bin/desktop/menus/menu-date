@@ -22,5 +22,6 @@ if ! out="$(parse-date "$inp" 2>/dev/null)"; then
     exit 0
 fi
 
-IFS=$'\t' read -r nano milli sec rfc <<<"$out"
-printf '%s\n' "$rfc" "$sec" "$milli" "$nano"
+while IFS=$'\t' read -r nano milli sec rfc; do
+    printf '%s\n' "$rfc" "$sec" "$milli" "$nano"
+done <<<"$out"
