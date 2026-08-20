@@ -1,0 +1,205 @@
+//usr/bin/env go-script "$0" "$@"; exit $?
+// vi: ft=go
+
+package main
+
+import (
+	"bytes"
+	"fmt"
+	"io/fs"
+	"maps"
+	"os"
+	"os/exec"
+	"path/filepath"
+	"regexp"
+	"slices"
+	"strings"
+)
+
+var (
+	hexRe    = regexp.MustCompile(`[0-9a-fA-F]{6}(?:[0-9a-fA-F]{2})?`)
+	hex6Re   = regexp.MustCompile(`^[0-9a-fA-F]{6}$`)
+	specRe   = regexp.MustCompile(`([^\s/]+)(?:\s+/([^/]*)/)?(?:\s+([0-9a-fA-F]{2})\b)?`)
+	markerRe = regexp.MustCompile(`theme:[ \t]`)
+	leadRe   = regexp.MustCompile(`^[ \t]*(#+|;+|//+|<!--|/\*|--)?[ \t]*theme:[ \t]`)
+	trailRe  = regexp.MustCompile(`[ \t]*(-->|\*/)[ \t]*$`)
+	reloadRe = regexp.MustCompile(`theme-reload:[ \t]*(.*)$`)
+)
+
+func main() {
+	var exit int
+	defer func() { os.Exit(exit) }()
+
+	paletteFile := filepath.Join(os.Getenv("XDG_CONFIG_HOME"), "theme")
+	data, err := os.ReadFile(paletteFile)
+	if err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		exit = 1
+		return
+	}
+
+	var palette = map[string]string{}
+	var keys []string
+	for line := range strings.SplitSeq(string(data), "\n") {
+		line, _, _ = strings.Cut(line, "#")
+		line = strings.TrimSpace(line)
+		if line == "" {
+			continue
+		}
+		i := strings.IndexAny(line, " \t")
+		if i == -1 {
+			fmt.Fprintf(os.Stderr, "%s: expected \"<key> <value>\", got %q\n", paletteFile, line)
+			exit = 1
+			return
+		}
+		palette[line[:i]] = strings.TrimSpace(line[i:])
+		keys = append(keys, line[:i])
+	}
+	if len(keys) == 0 {
+		fmt.Fprintln(os.Stderr, "no theme values in "+paletteFile)
+		exit = 1
+		return
+	}
+
+	seen := map[string]struct{}{}
+	changes := map[string][]byte{}
+	reloads := map[string]struct{}{}
+
+	root := filepath.Join(os.Getenv("PROJECTS_DIR"), "dotfiles")
+	err = filepath.WalkDir(root, func(path string, d fs.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+		if d.IsDir() {
+			if d.Name() == ".git" {
+				return fs.SkipDir
+			}
+			return nil
+		}
+		if !d.Type().IsRegular() {
+			return nil
+		}
+
+		data, err := os.ReadFile(path)
+		if err != nil {
+			return err
+		}
+		if bytes.IndexByte(data, 0) != -1 || !bytes.Contains(data, []byte("theme:")) {
+			return nil
+		}
+
+		lines := strings.Split(string(data), "\n")
+		var pending string
+		for i, line := range lines {
+			if pending != "" {
+				lines[i], err = apply(path, i+1, line, pending, palette, seen)
+				if err != nil {
+					return err
+				}
+				pending = ""
+				continue
+			}
+			if m := markerRe.FindStringIndex(line); m != nil {
+				spec := trailRe.ReplaceAllString(line[m[1]:], "")
+				if leadRe.MatchString(line) {
+					pending = spec
+					continue
+				}
+				head, err := apply(path, i+1, line[:m[0]], spec, palette, seen)
+				if err != nil {
+					return err
+				}
+				lines[i] = head + line[m[0]:]
+			}
+		}
+
+		if out := strings.Join(lines, "\n"); out != string(data) {
+			changes[path] = []byte(out)
+			for _, line := range lines {
+				if m := reloadRe.FindStringSubmatch(line); m != nil {
+					reloads[trailRe.ReplaceAllString(m[1], "")] = struct{}{}
+				}
+			}
+		}
+		return nil
+	})
+	if err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		exit = 1
+		return
+	}
+
+	for _, key := range keys {
+		if _, ok := seen[key]; !ok {
+			fmt.Fprintf(os.Stderr, "no lines matched theme key %q\n", key)
+			exit = 1
+			return
+		}
+	}
+
+	for _, path := range slices.Sorted(maps.Keys(changes)) {
+		if err := os.WriteFile(path, changes[path], 0o644); err != nil {
+			fmt.Fprintln(os.Stderr, err)
+			exit = 1
+			return
+		}
+		fmt.Println("updated " + path)
+	}
+
+	for _, cmd := range slices.Sorted(maps.Keys(reloads)) {
+		c := exec.Command("sh", "-c", cmd)
+		c.Stdout, c.Stderr = os.Stdout, os.Stderr
+		if err := c.Run(); err != nil {
+			fmt.Fprintln(os.Stderr, "reload command failed: "+cmd)
+			exit = 1
+		}
+	}
+}
+
+func apply(path string, lineNo int, line, spec string, palette map[string]string, seen map[string]struct{}) (string, error) {
+	var out string
+	rest := line
+	for _, spec := range specRe.FindAllStringSubmatch(spec, -1) {
+		name, pattern, alpha := spec[1], spec[2], spec[3]
+
+		val, ok := palette[name]
+		if !ok {
+			return "", fmt.Errorf("%s:%d: unknown theme key %q", path, lineNo, name)
+		}
+
+		finder := hexRe
+		if pattern != "" {
+			re, err := regexp.Compile(pattern)
+			if err != nil {
+				return "", fmt.Errorf("%s:%d: %w", path, lineNo, err)
+			}
+			finder = re
+		}
+
+		if finder == hexRe {
+			if !hex6Re.MatchString(val) {
+				return "", fmt.Errorf("%s:%d: %q is not a 6 digit hex: %q", path, lineNo, name, val)
+			}
+			val += alpha
+		} else if alpha != "" {
+			return "", fmt.Errorf("%s:%d: alpha is only supported for hex values, got %q for %q", path, lineNo, alpha, name)
+		}
+
+		m := finder.FindStringSubmatchIndex(rest)
+		if m == nil {
+			return "", fmt.Errorf("%s:%d: nothing to replace for %q", path, lineNo, name)
+		}
+		start, end := m[0], m[1]
+		if finder.NumSubexp() > 0 {
+			if m[2] == -1 {
+				return "", fmt.Errorf("%s:%d: capture group did not match for %q", path, lineNo, name)
+			}
+			start, end = m[2], m[3]
+		}
+
+		out += rest[:start] + val
+		rest = rest[end:]
+		seen[name] = struct{}{}
+	}
+	return out + rest, nil
+}

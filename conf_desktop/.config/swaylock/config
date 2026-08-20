@@ -1,23 +1,34 @@
-image=$XDG_PICTURES_DIR/wallpapers/fagan.png
+image=$XDG_PICTURES_DIR/wallpapers/flow.jpg
+# theme: font /^font=(.*) \d+$/
 font=Source Code Pro 10
 inside-color=00000000
 inside-caps-lock-color=00000000
 inside-clear-color=00000000
-inside-ver-color=35353560
-inside-wrong-color=BC585860
-ring-color=35353560
+# theme: background 60
+inside-ver-color=33333360
+# theme: urgent 60
+inside-wrong-color=FF688060
+# theme: background 60
+ring-color=33333360
 ring-caps-lock-color=00000000
 ring-clear-color=00000000
 ring-ver-color=00000000
 ring-wrong-color=00000000
-text-color=FFFFFF
-text-caps-lock-color=FFFFFF
-text-clear-color=FFFFFF
-text-ver-color=FFFFFF
-text-wrong-color=FFFFFF
+# theme: grey2
+text-color=E5E5E5
+# theme: grey2
+text-caps-lock-color=E5E5E5
+# theme: grey2
+text-clear-color=E5E5E5
+# theme: grey2
+text-ver-color=E5E5E5
+# theme: grey2
+text-wrong-color=E5E5E5
 separator-color=00000000
-key-hl-color=0088CC60
-layout-text-color=FFFFFF
+# theme: accent 60
+key-hl-color=7D87FF60
+# theme: grey2
+layout-text-color=E5E5E5
 line-uses-inside
 line-uses-ring
 daemonize

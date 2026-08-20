@@ -16,15 +16,26 @@ set $alt   Mod1
 floating_modifier $super
 
 set $default_gap 16
+# theme: font /^set \$default_font (.*) \d+$/
 set $default_font Source Code Pro 10
 
-set $colour_grey       #353535
-set $colour_grey_alpha #35353560
-set $colour_blue       #0088CC
-set $colour_blue_alpha #0088CC60
-set $colour_red        #BC5858
-set $colour_red_alpha  #BC585860
-set $colour_inactive   #8D8D8D
+# theme-reload: swaymsg reload
+# theme: background
+set $colour_bg           #333333
+# theme: background B0
+set $colour_bg_alpha     #333333B0
+# theme: accent
+set $colour_accent       #7D87FF
+# theme: urgent
+set $colour_urgent       #FF6880
+# theme: urgent 60
+set $colour_urgent_alpha #FF688060
+# theme: grey5
+set $colour_inactive     #737373
+# theme: grey2
+set $colour_fg           #E5E5E5
+# theme: grey7
+set $colour_bg_light     #404040
 
 # basic appearance
 smart_borders on
@@ -50,11 +61,11 @@ titlebar_border_thickness 0
 titlebar_padding 2
 for_window [all] title_format "┃ %title"
 
-# window colours        border           background       text         indicator        child
-client.focused          #ffffff          #ffffff          $colour_grey #ffffff          #ffffff
-client.focused_inactive $colour_blue     $colour_blue     #ffffff      $colour_blue     $colour_blue
-client.unfocused        $colour_inactive $colour_inactive #ffffff      $colour_inactive $colour_inactive
-client.urgent           $colour_red      $colour_red      #ffffff      $colour_red      $colour_red
+# window colours        border           background       text       indicator        child
+client.focused          $colour_fg       $colour_fg       $colour_bg       $colour_fg       $colour_fg
+client.focused_inactive $colour_accent   $colour_accent   $colour_bg       $colour_accent   $colour_accent
+client.unfocused        $colour_inactive $colour_inactive $colour_fg       $colour_inactive $colour_inactive
+client.urgent           $colour_urgent   $colour_urgent   $colour_bg_light $colour_urgent   $colour_urgent
 
 # input
 input * {
@@ -74,7 +85,7 @@ input type:touchpad {
 output * {
     scale 1
 
-    bg $XDG_PICTURES_DIR/wallpapers/flow.jpg fill
+    bg $XDG_PICTURES_DIR/wallpapers/wallhaven-7j36j9-2256x1504.jpg fill
 }
 
 # output laptop lid close
@@ -89,14 +100,14 @@ bar {
     status_padding 0
     tray_padding 0
     tray_output primary
-    colors separator  $colour_grey_alpha
-    colors background $colour_grey_alpha
-    colors statusline #ffffff
-    #                         border             background         text
-    colors focused_workspace  $colour_blue       $colour_blue       #ffffff
-    colors active_workspace   $colour_grey       $colour_grey       #ffffff
-    colors inactive_workspace $colour_grey_alpha $colour_grey_alpha #ffffff
-    colors urgent_workspace   $colour_red        $colour_red        #ffffff
+    colors separator  $colour_bg_alpha
+    colors background $colour_bg_alpha
+    colors statusline $colour_fg
+    #                         border           background       text
+    colors focused_workspace  $colour_accent   $colour_accent   $colour_bg_light
+    colors active_workspace   $colour_bg       $colour_bg       $colour_fg
+    colors inactive_workspace $colour_bg_alpha $colour_bg_alpha $colour_fg
+    colors urgent_workspace   $colour_urgent   $colour_urgent   $colour_bg_light
 }
 
 # bindings: window/float
@@ -286,13 +297,14 @@ exec_always systemctl --user start sway-session.target
 
 exec_always 'pkill kanshi; exec kanshi'
 exec_always 'pkill mako; exec mako \
-    --background-color "$colour_grey" \
+    --background-color "$colour_bg" \
     --margin "$default_gap,0" \
     --outer-margin "$default_gap,0" \
     --font "$default_font" \
     --border-size 2 \
-    --border-color "#FFFFFF" \
-    --text-color "#FFFFFF" \
+    --border-color "$colour_accent" \
+    --progress-color "over $colour_accent" \
+    --text-color "$colour_fg" \
     --height 2000 \
     --anchor bottom-right \
     --ignore-timeout 1 \
@@ -305,6 +317,9 @@ exec wl-paste --watch cliphist store
 exec sway-rename-workspaces
 exec wlsunset -l 52.8 -L -6.9 -t 3000
 
-exec wlr-sunclock                     -w 800  -a br -m "$default_gap,$default_gap,$default_gap,448" -s
-exec desktask "$NOTES_DIR/general.md" -w 1000 -a br -m "$default_gap,$default_gap,$default_gap,232"          -w 800 -h 200 -b "#303030" --display pending
-exec desktask "$NOTES_DIR/monthly.md" -w 1000 -a br -m "$default_gap,$default_gap,$default_gap,$default_gap" -w 800 -h 200 -b "#303030" --display pending
+# theme: accent background 80 bryellow
+exec_always 'pkill wlr-sunclock; exec wlr-sunclock -w 800 -a br -m "$default_gap,$default_gap,$default_gap,448" -s -n "#7D87FF" -o "#33333380" -u "#FFE031"'
+# theme: background A0
+exec_always 'pkill -f "^desktask.*general"; exec desktask "$NOTES_DIR/general.md" -w 1000 -a br -m "$default_gap,$default_gap,$default_gap,232"          -w 800 -h 200 -b "#333333A0" --display pending'
+# theme: background A0
+exec_always 'pkill -f "^desktask.*monthly"; exec desktask "$NOTES_DIR/monthly.md" -w 1000 -a br -m "$default_gap,$default_gap,$default_gap,$default_gap" -w 800 -h 200 -b "#333333A0" --display pending'
