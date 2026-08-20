@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+set -e
+
+function show() {
+    if [[ $1 =~ ^[0-9]+$ ]] && ((10#$1 <= 15)); then
+        printf '\033[48;5;%dm    \033[0m\tansi(%d)\t\n' "$1" "$1"
+        return
+    fi
+
+    local hex=${1#\#}
+    if [[ ! $hex =~ ^[0-9a-fA-F]{6}$ ]]; then
+        echo "bad colour \"$1\"" >&2
+        return 1
+    fi
+
+    local r=$((0x${hex:0:2})) g=$((0x${hex:2:2})) b=$((0x${hex:4:2}))
+
+    printf '\033[48;2;%d;%d;%dm    \033[0m\trgb(%d, %d, %d)\t#%s\n' "$r" "$g" "$b" "$r" "$g" "$b" "$hex"
+}
+
+if test $# -gt 0; then
+    for arg in "$@"; do
+        show "$arg"
+    done
+else
+    while read -r line; do
+        show "$line"
+    done
+fi
