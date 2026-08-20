@@ -2,7 +2,7 @@
   triggers = ["on-start", "pre b", "script audio", "interval 750ms"]
   name = "bluetooth"
   path = "menu-bluetooth"
-  colour = 3
+  colour = 4
   stay_open = true
   preview = true
 
@@ -18,40 +18,40 @@
   triggers = ["on-start"]
   name = "sway"
   path = "menu-sway"
-  colour = 5
+  colour = 7
   columns = [2, 3]
 
 [[scripts]]
   triggers = ["pre q"]
   name = "system"
   path = "menu-system"
-  colour = 4
+  colour = 9
 
 [[scripts]]
   triggers = ["script system"]
   name = "sway-session"
   path = "menu-sway-session"
-  colour = 9
+  colour = 11
 
 [[scripts]]
   triggers = ["script system"]
   name = "framework"
   path = "menu-framework"
-  colour = 3
+  colour = 4
   stay_open = true
 
 [[scripts]]
   triggers = ["on-start", "pre p"]
   name = "package"
   path = "menu-package"
-  colour = 7
+  colour = 10
   columns = [1, 2]
 
 [[scripts]]
   triggers = ["pre pw", "pre pass"]
   name = "pass"
   path = "menu-pass"
-  colour = 12
+  colour = 1
   columns = [2, 3, 4]
   preview = true
 
@@ -59,20 +59,20 @@
   triggers = ["pre c"]
   name = "clipboard"
   path = "menu-clipboard"
-  colour = 11
+  colour = 3
   preview = true
 
 [[scripts]]
   triggers = ["pre e"]
   name = "emoji"
   path = "menu-emoji"
-  colour = 12
+  colour = 13
 
 [[scripts]]
   triggers = ["pre w", "interval 1s"]
   name = "wifi"
   path = "menu-wifi"
-  colour = 10
+  colour = 2
   stay_open = true
   preview = true
 
@@ -80,7 +80,7 @@
   triggers = ["pre r"]
   name = "radio"
   path = "menu-radio"
-  colour = 1
+  colour = 5
   stay_open = true
   preview = true
 
@@ -88,7 +88,7 @@
   triggers = ["pre m"]
   name = "subsonic"
   path = "menu-subsonic"
-  colour = 13
+  colour = 5
   stay_open = true
   preview = true
   debounce = "300ms"
@@ -98,27 +98,27 @@
   triggers = ["script audio", "script radio", "script subsonic", "interval 750ms"]
   name = "mpris"
   path = "menu-mpris"
-  colour = 2
+  colour = 14
   stay_open = true
 
 [[scripts]]
   triggers = ["pre v"]
   name = "virt"
   path = "menu-virt"
-  colour = 5
+  colour = 7
   preview = true
 
 [[scripts]]
   triggers = ["pre s"]
   name = "scrot"
   path = "menu-scrot"
-  colour = 6
+  colour = 3
 
 [[scripts]]
   triggers = ["pre f", "interval 750ms", "script scrot"]
   name = "file"
   path = "menu-file"
-  colour = 5
+  colour = 3
   preview = true
 
 [[scripts]]
@@ -131,7 +131,7 @@
   triggers = ["pre t"]
   name = "timer"
   path = "menu-timer"
-  colour = 3
+  colour = 11
   stay_open = true
 
 [[scripts]]
@@ -165,7 +165,7 @@
   triggers = ["pre wp"]
   name = "wallpaper"
   path = "menu-wallpaper"
-  colour = 4
+  colour = 13
   preview = true
 
 [[scripts]]

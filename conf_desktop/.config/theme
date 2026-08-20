@@ -1,0 +1,44 @@
+# seeded from tailwind css v4.3.3 http://tailwindcss.com/docs/colors
+# applied to every config carrying a "theme:" marker by $ theme
+
+font       Source Code Pro
+
+background 353535  # between neutral-800 and 700
+urgent     FF6880  # rose-400
+accent     7D87FF  # indigo-400
+
+grey100    F5F5F5  # neutral-100
+grey200    E5E5E5  # neutral-200
+grey300    D4D4D4  # neutral-300
+grey400    A1A1A1  # neutral-400
+grey500    737373  # neutral-500
+grey600    525252  # neutral-600
+grey700    404040  # neutral-700
+
+term1      FF6568  # red-400
+term2      05DF72  # green-400
+term3      F7C902  # yellow-400
+term4      57A2FF  # blue-400
+term5      EC6DFF  # fuchsia-400
+term6      02D1EC  # cyan-400
+
+term9      FFA3A4  # red-300
+term10     7BF1A8  # green-300
+term11     FFE031  # yellow-300
+term12     91C5FF  # blue-300
+term13     F2A9FF  # fuchsia-300
+term14     53EAFD  # cyan-300
+
+light1     E30117  # red-600
+light2     02A447  # green-600
+light3     CA8A01  # yellow-600
+light4     155DFC  # blue-600
+light5     C501DA  # fuchsia-600
+light6     0291B2  # cyan-600
+
+light9     FB2C36  # red-500
+light10    01C65A  # green-500
+light11    EAB302  # yellow-500
+light12    3280FF  # blue-500
+light13    E12AFB  # fuchsia-500
+light14    04B6D4  # cyan-500

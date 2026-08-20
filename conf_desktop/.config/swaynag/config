@@ -1,0 +1,34 @@
+# theme: font /^font=(.*) \d+$/
+font=Source Code Pro 10
+
+[error]
+# theme: background
+background=353535
+# theme: grey200
+text=E5E5E5
+# theme: grey700
+button-background=404040
+# theme: grey200
+button-text=E5E5E5
+# theme: grey700
+details-background=404040
+# theme: urgent
+border=FF6880
+# theme: urgent
+border-bottom=FF6880
+
+[warning]
+# theme: background
+background=353535
+# theme: grey200
+text=E5E5E5
+# theme: grey700
+button-background=404040
+# theme: grey200
+button-text=E5E5E5
+# theme: grey700
+details-background=404040
+# theme: term11
+border=FFE031
+# theme: term11
+border-bottom=FFE031
