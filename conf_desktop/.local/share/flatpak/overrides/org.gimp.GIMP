@@ -1,2 +1,2 @@
 [Context]
-filesystems=~/documents/renders;~/documents/gimp;~/downloads;~/pictures/screenshots;!host
+filesystems=xdg-pictures/wallpapers;xdg-pictures/screenshots;~/downloads;~/documents/gimp;~/documents/renders;!host
