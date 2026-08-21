@@ -72,6 +72,8 @@ input type:touchpad {
 
 # output
 output * {
+    scale 1
+
     bg $XDG_PICTURES_DIR/wallpapers/flow.jpg fill
 }
 
