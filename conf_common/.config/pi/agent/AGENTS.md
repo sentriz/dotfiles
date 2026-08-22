@@ -57,6 +57,7 @@
 - Use `find` instead of `fd` - `fd` is not installed.
 - Never search from `/` (e.g. `find / ...`) - it hammers IO. Scope searches to a specific directory.
 - Use `q` instead of `dig` for DNS queries.
+- Some `~/.local/bin` scripts shadow system commands (`col`, `sum`, `diff`). They are unrelated to the originals - use `/usr/bin/<cmd>` when you want the system one.
 - Projects are stored at `$PROJECTS_DIR/<x>`. "project <x>" or "<x> project" mean a directory there.
 
 # Go
