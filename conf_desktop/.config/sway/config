@@ -22,8 +22,8 @@ set $default_font Source Code Pro 10
 # theme-reload: swaymsg reload
 # theme: background
 set $colour_bg           #333333
-# theme: background B0
-set $colour_bg_alpha     #333333B0
+# theme: background D9
+set $colour_bg_alpha     #333333D9
 # theme: accent
 set $colour_accent       #7D87FF
 # theme: urgent

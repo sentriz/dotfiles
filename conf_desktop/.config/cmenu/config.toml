@@ -10,7 +10,7 @@
   triggers = ["on-start", "pre a", "script bluetooth", "interval 750ms"]
   name = "audio"
   path = "menu-audio"
-  colour = 6
+  colour = 10
   stay_open = true
   preview = true
 
@@ -72,7 +72,7 @@
   triggers = ["pre w", "interval 1s"]
   name = "wifi"
   path = "menu-wifi"
-  colour = 2
+  colour = 11
   stay_open = true
   preview = true
 
@@ -80,7 +80,7 @@
   triggers = ["pre r"]
   name = "radio"
   path = "menu-radio"
-  colour = 5
+  colour = 14
   stay_open = true
   preview = true
 
@@ -88,7 +88,7 @@
   triggers = ["pre m"]
   name = "subsonic"
   path = "menu-subsonic"
-  colour = 5
+  colour = 14
   stay_open = true
   preview = true
   debounce = "300ms"

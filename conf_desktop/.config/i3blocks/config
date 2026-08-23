@@ -8,22 +8,22 @@ separator=false
 signal=3
 
 [sharing]
-# theme: yellow
-color=#F7C902
+# theme: brmagenta
+color=#F2A9FF
 
 [audio]
-# theme: cyan
-color=#02D1EC
+# theme: brgreen
+color=#7BF1A8
 signal=1
 
 [bluetooth]
-# theme: blue
-color=#57A2FF
+# theme: brblue
+color=#A3B3FF
 signal=2
 
 [network]
-# theme: green
-color=#05DF72
+# theme: bryellow
+color=#FFE031
 
 [battery]
 # theme: brred
@@ -34,8 +34,8 @@ interval=60
 
 [calendar]
 interval=30
-# theme: bryellow
-color=#FFE031
+# theme: brcyan
+color=#53EAFD
 
 [timer]
 interval=5
