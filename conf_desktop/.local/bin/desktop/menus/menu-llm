@@ -10,5 +10,16 @@ if [[ -z "$CMENU_INPUT" ]]; then
     exit
 fi
 
-pi --model openai/gpt-5.6-luna -p "$CMENU_INPUT"
+pi \
+    --model openai/gpt-5.6-luna \
+    --no-tools \
+    --no-prompt-templates \
+    --no-context-files \
+    --no-skills \
+    --no-extensions \
+    --session-dir "$XDG_RUNTIME_DIR/pi/menu-llm-sessions" \
+    --session-id "menu-llm-$PPID" \
+    --system-prompt "Answer concisely in plain text only. No markdown, no latex." \
+    --print "$CMENU_INPUT" \
+    | awk -v label="$(cmenu label)" 'NF { print; next } { print label }'
 exit 0
