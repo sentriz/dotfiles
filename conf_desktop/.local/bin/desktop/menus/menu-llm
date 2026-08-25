@@ -5,8 +5,8 @@ if [[ "$#" -gt 0 ]]; then
     exit
 fi
 
-if [[ -z "$CMENU_INPUT" ]]; then
-    echo "$(cmenu label)no input"
+if [[ "$CMENU_INPUT" != *\? ]]; then
+    echo "$(cmenu label)no question"
     exit
 fi
 

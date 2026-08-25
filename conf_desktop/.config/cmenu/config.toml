@@ -181,4 +181,4 @@
   name = "llm"
   path = "menu-llm"
   colour = 2
-  debounce = "1s"
+  debounce = "200ms"
