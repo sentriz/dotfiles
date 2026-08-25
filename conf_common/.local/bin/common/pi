@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+pi_bin=$(PATH="/usr/bin:/usr/local/bin" command -v pi)
+
 extra_dirs=()
 pi_args=()
 parsing_binds=""
@@ -17,7 +19,7 @@ for arg in "$@"; do
 done
 
 if [ -n "$unsandboxed" ]; then
-    PI_CODING_AGENT_DIR="$XDG_CONFIG_HOME/pi/agent" PI_OFFLINE=1 exec /usr/bin/pi "${pi_args[@]}"
+    PI_CODING_AGENT_DIR="$XDG_CONFIG_HOME/pi/agent" PI_OFFLINE=1 exec "$pi_bin" "${pi_args[@]}"
 fi
 
 extra_binds=()
@@ -91,5 +93,5 @@ bwrap \
     --unshare-all \
     --share-net \
     --die-with-parent \
-    /usr/bin/pi \
+    "$pi_bin" \
     "${pi_args[@]}"
