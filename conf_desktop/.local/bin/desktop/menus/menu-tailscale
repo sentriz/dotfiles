@@ -25,16 +25,22 @@ fi
 
 routes="$(jq -r '[.Peer[]?.PrimaryRoutes // [] | .[]] | join(", ")' <<<"$status")"
 if [[ "$(jq -r '[.Peer[]? | select(.ExitNode) | .PrimaryRoutes | length > 0] | any' <<<"$status")" == "true" ]]; then
-    printf '%saccept routes (%s) implied by exit node\n' "$label" "$routes"
+    printf '%saccept routes %s implied\n' "$label" "$routes"
 elif [[ "$(tailscale debug prefs | jq -r '.RouteAll')" == "true" ]]; then
-    printf '%saccept routes (%s)\t%s\n' "$highlight" "$routes" "set --accept-routes=false"
+    printf '%saccept routes %s\t%s\n' "$highlight" "$routes" "set --accept-routes=false"
 else
-    printf '%s\t%s\n' "accept routes ($routes)" "set --accept-routes"
+    printf '%s\t%s\n' "accept routes $routes" "set --accept-routes"
 fi
 
-peers="$(jq -r '
+show_all=false
+[[ "$CMENU_INPUT" == "all" ]] && show_all=true
+country="$(locale | awk -F'[=_.]' '/^LANG=/ {print $3}')"
+
+peers="$(jq -r --argjson all "$show_all" --arg country "$country" '
     .Peer[]?
-    | ["peer", .HostName, (if .Online then "online" else "offline" end), (.OS | ascii_downcase),
+    | select(.Location == null or .ExitNode or $all or .Location.CountryCode == $country)
+    | ["peer", .HostName, (if .Online then "online" else "offline" end),
+       (if .Location then "\(.Location.Country) \(.Location.City)" else .OS end | ascii_downcase),
        "rx", .RxBytes, "tx", .TxBytes, (if .ExitNodeOption then "exit node" else "" end),
        .ExitNodeOption, .ExitNode, .TailscaleIPs[0]]
     | @tsv' <<<"$status" \
