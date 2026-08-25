@@ -12,15 +12,10 @@ highlight="$(cmenu highlight)"
 
 status="$(tailscale status --json)"
 
-health="$(jq -r '.Health[]?' <<<"$status")"
-if [[ -n "$health" ]]; then
-    while read -r line; do
-        line="${line%.}"
-        printf '%s%s\n' "$label" "${line,,}"
-    done <<<"$health"
-else
-    printf '%shealthy\n' "$label"
-fi
+health="$(jq -r '.Health[]? | ascii_downcase | rtrimstr(".")' <<<"$status" | grep -v 'advertising routes')"
+while read -r line; do
+    printf '%s%s\n' "$label" "${line:-healthy}"
+done <<<"$health"
 
 if [[ "$(jq -r '.BackendState' <<<"$status")" == "Running" ]]; then
     printf '%s%s\t%s\n' "$highlight" connected down
@@ -28,24 +23,32 @@ else
     printf '%s\t%s\n' connect up
 fi
 
-if [[ "$(tailscale debug prefs | jq -r '.RouteAll')" == "true" ]]; then
-    printf '%saccept routes\t%s\n' "$highlight" "set --accept-routes=false"
+routes="$(jq -r '[.Peer[]?.PrimaryRoutes // [] | .[]] | join(", ")' <<<"$status")"
+if [[ "$(jq -r '[.Peer[]? | select(.ExitNode) | .PrimaryRoutes | length > 0] | any' <<<"$status")" == "true" ]]; then
+    printf '%saccept routes (%s) implied by exit node\n' "$label" "$routes"
+elif [[ "$(tailscale debug prefs | jq -r '.RouteAll')" == "true" ]]; then
+    printf '%saccept routes (%s)\t%s\n' "$highlight" "$routes" "set --accept-routes=false"
 else
-    printf '%s\t%s\n' "accept routes" "set --accept-routes"
+    printf '%s\t%s\n' "accept routes ($routes)" "set --accept-routes"
 fi
 
-jq -r '.Peer[]? | select(.ExitNodeOption) | [.ExitNode, .HostName, .TailscaleIPs[0]] | @tsv' <<<"$status" \
-    | while IFS=$'\t' read -r active host ip; do
-        if [[ "$active" == "true" ]]; then
-            printf '%sexit node\t%s\t%s\n' "$highlight" "set --exit-node=" "$host"
-        else
-            printf 'exit node\t%s\t%s\n' "set --exit-node=$ip" "$host"
-        fi
-    done
+peers="$(jq -r '
+    .Peer[]?
+    | ["peer", .HostName, (if .Online then "online" else "offline" end), (.OS | ascii_downcase),
+       "rx", .RxBytes, "tx", .TxBytes, (if .ExitNodeOption then "exit node" else "" end),
+       .ExitNodeOption, .ExitNode, .TailscaleIPs[0]]
+    | @tsv' <<<"$status" \
+    | sort -t$'\t' -k2 \
+    | numfmt -d$'\t' --field=6,8 --to=iec)"
+[[ -n "$peers" ]] || exit 0
 
-jq -r '.Peer[]? | [.HostName, (if .Online then "online" else "offline" end), .OS, .RxBytes, .TxBytes] | @tsv' <<<"$status" \
-    | sort \
-    | while IFS=$'\t' read -r host online os rx tx; do
-        printf '%speer %s %s %s rx %s tx %s\n' "$label" "$host" "$online" "${os,,}" \
-            "$(numfmt --to=iec <<<"$rx")" "$(numfmt --to=iec <<<"$tx")"
+paste <(cut -f1-9 <<<"$peers" | table) <(cut -f10- <<<"$peers") \
+    | while IFS=$'\t' read -r line can_exit is_exit ip; do
+        if [[ "$is_exit" == "true" ]]; then
+            printf '%s%s\t%s\n' "$highlight" "$line" "set --exit-node="
+        elif [[ "$can_exit" == "true" ]]; then
+            printf '%s\t%s\n' "$line" "set --exit-node=$ip"
+        else
+            printf '%s%s\n' "$label" "$line"
+        fi
     done
