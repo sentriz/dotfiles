@@ -135,6 +135,14 @@
   stay_open = true
 
 [[scripts]]
+  triggers = ["pre ts", "interval 1s", "script wifi"]
+  name = "tailscale"
+  path = "menu-tailscale"
+  colour = 6
+  stay_open = true
+  columns = [1, 3]
+
+[[scripts]]
   triggers = ["pre td"]
   name = "tuned"
   path = "menu-tuned"
