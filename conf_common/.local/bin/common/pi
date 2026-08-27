@@ -88,6 +88,7 @@ bwrap \
     --bind "$XDG_RUNTIME_DIR/mcp" "$XDG_RUNTIME_DIR/mcp" \
     --bind "$XDG_RUNTIME_DIR/pi" "$XDG_RUNTIME_DIR/pi" \
     --bind-try "$XDG_RUNTIME_DIR/rbw" "$XDG_RUNTIME_DIR/rbw" \
+    --bind-try "$SSH_AUTH_SOCK" "$SSH_AUTH_SOCK" \
     "${session_binds[@]}" \
     --bind "$PROJECTS_DIR" "$PROJECTS_DIR" \
     "${extra_binds[@]}" \
