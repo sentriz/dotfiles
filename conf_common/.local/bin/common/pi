@@ -22,6 +22,8 @@ if [ -n "$unsandboxed" ]; then
     PI_CODING_AGENT_DIR="$XDG_CONFIG_HOME/pi/agent" PI_OFFLINE=1 exec "$pi_bin" "${pi_args[@]}"
 fi
 
+cwd=$(realpath "$PWD")
+
 extra_binds=()
 for dir in "${extra_dirs[@]}"; do
     extra_binds+=(--bind "$dir" "$dir")
@@ -75,7 +77,8 @@ bwrap \
     --ro-bind-try "$HOME/.ssh/config" "$HOME/.ssh/config" \
     --ro-bind-try "$HOME/.ssh/known_hosts" "$HOME/.ssh/known_hosts" \
     --tmpfs /etc/ssh/ssh_config.d \
-    --bind "$PWD" "$PWD" \
+    --bind "$cwd" "$cwd" \
+    --chdir "$cwd" \
     --bind "$XDG_CONFIG_HOME/pi" "$XDG_CONFIG_HOME/pi" \
     --setenv PI_CODING_AGENT_DIR "$XDG_CONFIG_HOME/pi/agent" \
     --bind "$XDG_CACHE_HOME" "$XDG_CACHE_HOME" \
