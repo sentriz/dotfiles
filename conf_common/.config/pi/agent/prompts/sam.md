@@ -42,14 +42,19 @@ Task: $@
 ## Tailscale
 
 - sam is a tailnet node: hostname `sam`, tailscale IPs via `ssh sam tailscale ip`. tailscaled runs as a system service on the host (not containerized).
-- **Subnet router**: advertises the LAN subnet and the static public IP as a `/32` (so tailnet devices reach public hostnames via hairpin NAT through the tunnel).
-- **tailnet-dns** quadlet: blocky bound to the tailscale IP on port 53. Answers `*.senan.xyz` → sam's tailscale IP (`customDNS`, A record + empty AAAA — Android treats REFUSED as server failure); forwards everything else to Mullvad's ad-blocking DoH upstream (`bootstrapDns` pins the upstream IP — without it blocky needs the system resolver to find the upstream, which can loop back to itself).
-- **Tailnet DNS config** (admin console): global nameserver = tailnet-dns's IP with "Override local DNS"; no split DNS entry; MagicDNS **off** — Android's in-app DNS forwarder drops queries to tailnet-IP resolvers (tailscale/tailscale#20983); re-enable MagicDNS once fixed.
-- sam has `--accept-dns=false`: the DNS provider must not consume its own tailnet DNS (boot ordering, repair coupling). Set via `tailscale set`, device state — not in the repo.
+- **Subnet router**: advertises the LAN subnet only (`192.168.1.0/24`). Public services are reached over the plain internet even from tailnet devices.
+- **DNS is public-only** (Cloudflare, both records DNS-only, no proxy):
+  - `*.senan.xyz` → sam's public IP — public services
+  - `*.i.senan.xyz` → sam's tailscale IP — internal services, only reachable over the tailnet
+  - Deliberately no in-tailnet resolver: pointing tailnet clients at a tailnet-IP resolver breaks Android's DNS forwarder (tailscale/tailscale#20983) and keeps the phone's tunnel warm for every background query (radio never sleeps, ~35% battery).
+- **Tailnet DNS config** (admin console): MagicDNS **on**; global nameserver = `https://adblock.dns.mullvad.net/dns-query` (ad-blocking DoH, reached outside the tunnel). Careful: the DoH provider must be a *known provider* in tailscale's `net/dns/publicdns` (has compiled-in bootstrap IPs) — an unknown one (e.g. AdGuard) deadlocks and kills DNS on every accept-dns device.
+- **ACL `nodeAttrs`**: `silent-disco` for all devices — suppresses magicsock's 3s disco heartbeats (mobile battery).
+- sam has `--accept-dns=false` (device state via `tailscale set`, not in the repo): the server's DNS stays independent of tailnet DNS config.
 - **Public vs tailnet-only services**: two Traefik entrypoints, both `asDefault: true`:
   - `web` — public, socket `https.socket` bound to the LAN IP on 443 (router forwards 80/443 here)
   - `web-tailnet` — socket `https-tailnet.socket` bound to the tailscale IPs
-  - Private services set `Label=traefik.http.routers.<name>.entrypoints=web-tailnet` — they don't exist on the public entrypoint (404). No explicit entrypoints label = public (serves on both).
+  - Private services use a `<name>.i.senan.xyz` hostname **and** set `Label=traefik.http.routers.<name>.entrypoints=web-tailnet` — they don't exist on the public entrypoint (404). No explicit entrypoints label = public (serves on both), named `<name>.senan.xyz`.
+  - Cert SANs: `*.senan.xyz` and `*.i.senan.xyz` wildcards via ACME DNS-01 (Cloudflare), configured in `traefik/config/traefik.yml`.
 - **Direct-published ports**: syncthing 22000 and IRC 6697 bind the tailscale IP (tailnet-only); camera RTSP 8554 binds the LAN IP (LAN-only, camera pushes to it).
 - **Router port forwards**: only 80, 443, sshd (non-standard port, break-glass), and transmission's peer port.
 - **Cross-service calls** use container names (`http://systemd-<name>:<port>`), never `*.senan.xyz` hostnames.
