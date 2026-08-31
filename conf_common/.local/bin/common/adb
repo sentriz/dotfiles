@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+HOME="$XDG_DATA_HOME/android" exec /usr/bin/adb "$@"

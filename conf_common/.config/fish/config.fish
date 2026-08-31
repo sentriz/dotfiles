@@ -55,10 +55,6 @@ set -gx fish_user_paths \
     $XDG_DATA_HOME/cargo/bin \
     $HOME/bin \
     $HOME/bin/*/ \
-    $ANDROID_HOME/tools/ \
-    $ANDROID_HOME/tools/bin \
-    $ANDROID_HOME/platform-tools \
-    $ANDROID_HOME/emulator \
     /usr/local/go/bin \
     /usr/local/bin \
     /usr/local/sbin \

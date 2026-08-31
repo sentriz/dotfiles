@@ -29,8 +29,6 @@ set -gx WLR_NO_HARDWARE_CURSORS 1
 set -gx _JAVA_AWT_WM_NONREPARENTING 1
 set -gx ELECTRON_OZONE_PLATFORM_HINT auto
 
-set -gx ANDROID_SDK_ROOT /opt/android-sdk
-set -gx ANDROID_HOME /opt/android-sdk
 set -gx JAVA_HOME /usr/lib/jvm/default-runtime
 set -gx JAVA_OPTS '-XX:+IgnoreUnrecognizedVMOptions'
 set -gx JDTLS_HOME /usr/share/java/jdtls
