@@ -23,10 +23,18 @@ else
     printf '%s\t%s\n' connect up
 fi
 
+prefs="$(tailscale debug prefs)"
+
+if [[ "$(jq -r '.CorpDNS' <<<"$prefs")" == "true" ]]; then
+    printf '%saccept dns\t%s\n' "$highlight" "set --accept-dns=false"
+else
+    printf '%s\t%s\n' "accept dns" "set --accept-dns"
+fi
+
 routes="$(jq -r '[.Peer[]?.PrimaryRoutes // [] | .[]] | join(", ")' <<<"$status")"
 if [[ "$(jq -r '[.Peer[]? | select(.ExitNode) | .PrimaryRoutes | length > 0] | any' <<<"$status")" == "true" ]]; then
     printf '%saccept routes %s implied\n' "$label" "$routes"
-elif [[ "$(tailscale debug prefs | jq -r '.RouteAll')" == "true" ]]; then
+elif [[ "$(jq -r '.RouteAll' <<<"$prefs")" == "true" ]]; then
     printf '%saccept routes %s\t%s\n' "$highlight" "$routes" "set --accept-routes=false"
 else
     printf '%s\t%s\n' "accept routes $routes" "set --accept-routes"
@@ -39,16 +47,16 @@ country="$(locale | awk -F'[=_.]' '/^LANG=/ {print $3}')"
 peers="$(jq -r --argjson all "$show_all" --arg country "$country" '
     .Peer[]?
     | select(.Location == null or .ExitNode or $all or .Location.CountryCode == $country)
-    | ["peer", .HostName, (if .Online then "online" else "offline" end),
+    | ["peer", .HostName, .TailscaleIPs[0], (if .Online then "online" else "offline" end),
        (if .Location then "\(.Location.Country) \(.Location.City)" else .OS end | ascii_downcase),
        "rx", .RxBytes, "tx", .TxBytes, (if .ExitNodeOption then "exit node" else "" end),
        .ExitNodeOption, .ExitNode, .TailscaleIPs[0]]
     | @tsv' <<<"$status" \
     | sort -t$'\t' -k2 \
-    | numfmt -d$'\t' --field=6,8 --to=iec)"
+    | numfmt -d$'\t' --field=7,9 --to=iec)"
 [[ -n "$peers" ]] || exit 0
 
-paste <(cut -f1-9 <<<"$peers" | table) <(cut -f10- <<<"$peers") \
+paste <(cut -f1-10 <<<"$peers" | table) <(cut -f11- <<<"$peers") \
     | while IFS=$'\t' read -r line can_exit is_exit ip; do
         if [[ "$is_exit" == "true" ]]; then
             printf '%s%s\t%s\n' "$highlight" "$line" "set --exit-node="
