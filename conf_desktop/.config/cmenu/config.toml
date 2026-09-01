@@ -77,7 +77,7 @@
   triggers = ["pre r"]
   name = "radio"
   path = "menu-radio"
-  colour = 14
+  colour = 6
   stay_open = true
   preview = true
 
