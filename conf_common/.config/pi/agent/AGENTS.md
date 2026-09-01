@@ -9,6 +9,8 @@
 
 # Communication
 
+- Use Irish English spelling and vocabulary (colour, organise, etc).
+
 - Never post replies/comments/messages on my behalf (GitHub, Slack, Linear, email, anywhere) unless explicitly asked. Show me the draft instead; I send it myself. If the platform has a draft tool (e.g. Slack drafts), using that is fine.
 
 - Outputting far too much text by default is hard to parse. Humans don't write this much. Cut aggressively - prioritise the important ideas, drop everything not needed. Err heavily on the side of less.
