@@ -16,11 +16,13 @@ if [[ "$#" -gt 0 ]]; then
     exit
 fi
 
-mapfile -t rows < <(cliphist list)
-[[ "${#rows[@]}" -eq 0 ]] && exit 0
+newest_id="$(cliphist list | head -1 | cut -f1)"
+[[ -z "$newest_id" ]] && exit 0
 
-pre=""
-cmp -s <(cliphist decode <<<"${rows[0]}") <(wl-paste -n 2>/dev/null) && pre="$(cmenu highlight)"
+# the newest entry is the clipboard, unless something has copied or cleared it since
+current_id=""
+cmp -s <(cliphist decode "$newest_id") <(wl-paste -n 2>/dev/null) && current_id="$newest_id"
 
-printf '%s\n' "${rows[@]}" \
-    | awk -F'\t' -v d="$(cmenu data)" -v hl="$pre" '{ id = $1; sub(/^[^\t]*\t/, ""); printf "%s%s%s%s\n", (NR == 1 ? hl : ""), $0, d, id }'
+cliphist list \
+    | awk -F'\t' -v d="$(cmenu data)" -v hl="$(cmenu highlight)" -v cur="$current_id" \
+        '{ id = $1; sub(/^[^\t]*\t/, ""); printf "%s%s%s%s\n", (id == cur ? hl : ""), $0, d, id }'
