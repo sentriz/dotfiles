@@ -55,8 +55,8 @@ Task: $@
   - `web-tailnet` — socket `https-tailnet.socket` bound to the tailscale IPs
   - Private services use a `<name>.i.senan.xyz` hostname **and** set `Label=traefik.http.routers.<name>.entrypoints=web-tailnet` — they don't exist on the public entrypoint (404). No explicit entrypoints label = public (serves on both), named `<name>.senan.xyz`.
   - Cert SANs: `*.senan.xyz` and `*.i.senan.xyz` wildcards via ACME DNS-01 (Cloudflare), configured in `traefik/config/traefik.yml`.
-- **Direct-published ports**: syncthing 22000 and IRC 6697 bind the tailscale IP (tailnet-only); camera RTSP 8554 binds the LAN IP (LAN-only, camera pushes to it).
-- **Router port forwards**: only 80, 443, sshd (non-standard port, break-glass), and transmission's peer port.
+- **Direct-published ports**: syncthing 22000, IRC 6697, and camera RTSP 8554 bind the tailscale IP (tailnet-only).
+- **Router port forwards**: only 80, 443, and transmission's peer port. sshd (port 22) is tailnet-only — no WAN forward.
 - **Cross-service calls** use container names (`http://systemd-<name>:<port>`), never `*.senan.xyz` hostnames.
 - Socket units live in `~/projects/sam/home/.config/systemd/user/` and are `systemctl --user link`ed.
 
