@@ -182,3 +182,4 @@
   path = "menu-llm"
   colour = 2
   debounce = "200ms"
+  wrap = true
