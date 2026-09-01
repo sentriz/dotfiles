@@ -34,31 +34,36 @@ mkdir -p "$XDG_CACHE_HOME/jiti"
 mkdir -p "$XDG_RUNTIME_DIR/mcp"
 mkdir -p "$XDG_RUNTIME_DIR/pi"
 
-session_pids=()
-session_socks=()
+socks=()
 session_binds=()
+cleanups=()
+
+cleanup() {
+    for cmd in "${cleanups[@]}"; do eval "$cmd"; done
+    return 0
+}
+trap cleanup EXIT
 
 if [ -n "$DBUS_SESSION_BUS_ADDRESS" ]; then
     dbus_sock="$XDG_RUNTIME_DIR/pi/bus.$$"
     xdg-dbus-proxy "$DBUS_SESSION_BUS_ADDRESS" "$dbus_sock" --filter --talk=org.freedesktop.Notifications &
-    session_pids+=($!)
-    session_socks+=("$dbus_sock")
+    cleanups+=("kill $!" "rm -f ${dbus_sock@Q}")
+    socks+=("$dbus_sock")
     session_binds+=(--bind-try "$dbus_sock" "$dbus_sock" --setenv DBUS_SESSION_BUS_ADDRESS "unix:path=$dbus_sock")
 fi
 
 if [ -n "$WAYLAND_DISPLAY" ]; then
     wayland_sock="$XDG_RUNTIME_DIR/pi/wayland.$$"
     way-secure --socket-path "$wayland_sock" -e pi -a pi &
-    session_pids+=($!)
-    session_socks+=("$wayland_sock")
+    cleanups+=("kill $!" "rm -f ${wayland_sock@Q}")
+    socks+=("$wayland_sock")
     session_binds+=(--bind-try "$wayland_sock" "$wayland_sock" --setenv WAYLAND_DISPLAY "$wayland_sock")
 fi
 
-if [ ${#session_pids[@]} -gt 0 ]; then
-    trap 'kill "${session_pids[@]}"; rm -f "${session_socks[@]}"' EXIT
+if [ ${#socks[@]} -gt 0 ]; then
     for _ in $(seq 50); do
         missing=""
-        for sock in "${session_socks[@]}"; do [ -e "$sock" ] || missing=1; done
+        for sock in "${socks[@]}"; do [ -e "$sock" ] || missing=1; done
         [ -z "$missing" ] && break
         sleep 0.05
     done
