@@ -58,7 +58,12 @@ transport = "stdio"
 command = ["npx", "-y", "chrome-devtools-mcp@latest", "--browserUrl", "http://127.0.0.1:9222"]
 instructions = """
 Connects to an already-running Chrome with --remote-debugging-port=9222. If "Could not connect to Chrome", ask the user to start it - don't retry.
-click/fill/hover uids come from take_snapshot; take a fresh snapshot of the page first or you get "No snapshot found".
+click/fill/hover uids come from take_snapshot; take a fresh snapshot of the page first or you get "No snapshot found". uids are regenerated on every re-render, so re-snapshot before each interaction instead of reusing them.
+take_snapshot returns one huge JSON blob - grep the fields you want out of jq -r '.[].text'.
+fill appends to a field that already has a value - to replace, click the field, press_key key="Control+a", then type_text.
+fill_form stops at the first field it can't set, silently leaving the rest empty; verify with a snapshot afterwards.
+fill on a <select> can time out with "did not become interactive" (overlapping tooltips) and option text may have leading whitespace - set it with evaluate_script instead: pick the option by text.trim(), assign s.value, then dispatch a bubbling "change" event. For text inputs in React apps use the native value setter plus "input" and "change" events.
+evaluate_script requires pageId; pass waitForStableDom=false for read-only scripts.
 """
 
 [[server]]
