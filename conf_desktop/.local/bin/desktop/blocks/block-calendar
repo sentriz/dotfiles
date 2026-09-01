@@ -11,32 +11,47 @@ set buffer_hours 6
 set ignored (cat "$XDG_CONFIG_HOME/calendar-ignore")
 
 khal list today tomorrow -df "" -f "{start-date}{tab}{start-time}{tab}{end-date}{tab}{end-time}{tab}{title}" | while read -d \t start_date start_time end_date end_time title
-    test -z "$start_time"; and continue
-    test -z "$end_time"; and continue
     contains "$title" "$ignored"; and continue
+
+    set is_all_day (test -z "$start_time"; and echo 1)
+    test -z "$start_time"; and set start_time 00:00
+    test -z "$end_time"; and set end_time "00:00 next day"
 
     set start_secs (date -d "$start_date $start_time" "+%s")
     set end_secs (date -d "$end_date $end_time" "+%s")
     test "$now_secs" -gt "$end_secs"; and continue
-    test (math "$start_secs - $now_secs") -gt (math "3600 * $buffer_hours"); and continue
 
     set diff (math "$start_secs - $now_secs")
+    test "$diff" -gt (math "3600 * $buffer_hours"); and continue
+
+    if test -n "$is_all_day"
+        if test -z "$all_day_end"; or test "$end_secs" -lt "$all_day_end"
+            set all_day_end $end_secs
+            set all_day_start $start_secs
+            set all_day_title $title
+        end
+        continue
+    end
+
     if test "$diff" -ge 0; and test "$diff" -le 60
         notify-send -- "$diff sec until $title"
     end
 
     if test -z "$next_end"; or test "$end_secs" -lt "$next_end"
-        set next_end $end_secs
         set next_start $start_secs
+        set next_end $end_secs
         set next_title $title
     end
 end
 
-test -z "$next_end"; and exit
+if test -z "$next_end"
+    set next_end $all_day_end
+    set next_start $all_day_start
+    set next_title $all_day_title
+end
+test -z "$next_end"; and exit 0
 
 set rel now
 set diff (math "$next_start - $now_secs")
-test "$diff" -gt 0
-and set rel "in "(relative-duration $diff)
-
-echo "($rel) "(string shorten -m 30 -c … -- "$next_title") | string trim
+test "$diff" -gt 0; and set rel "in "(relative-duration $diff)
+echo "($rel) "(string shorten -m 30 -c … -- "$next_title")
