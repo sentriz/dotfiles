@@ -52,6 +52,12 @@ if [ -n "$DBUS_SESSION_BUS_ADDRESS" ]; then
     session_binds+=(--bind-try "$dbus_sock" "$dbus_sock" --setenv DBUS_SESSION_BUS_ADDRESS "unix:path=$dbus_sock")
 fi
 
+secrets_sock="$XDG_RUNTIME_DIR/pi/secrets.$$"
+socat "UNIX-LISTEN:$secrets_sock,fork,mode=600" "EXEC:$(command -v secret-get)" 2>/dev/null &
+cleanups+=("kill $!" "rm -f ${secrets_sock@Q}")
+socks+=("$secrets_sock")
+session_binds+=(--bind "$secrets_sock" "$secrets_sock" --setenv SECRETS_SOCK "$secrets_sock")
+
 if [ -n "$WAYLAND_DISPLAY" ]; then
     wayland_sock="$XDG_RUNTIME_DIR/pi/wayland.$$"
     way-secure --socket-path "$wayland_sock" -e pi -a pi &
@@ -90,7 +96,6 @@ bwrap \
     --bind "$XDG_DOWNLOAD_DIR" "$XDG_DOWNLOAD_DIR" \
     --bind "$XDG_RUNTIME_DIR/mcp" "$XDG_RUNTIME_DIR/mcp" \
     --bind "$XDG_RUNTIME_DIR/pi" "$XDG_RUNTIME_DIR/pi" \
-    --bind-try "$XDG_RUNTIME_DIR/rbw" "$XDG_RUNTIME_DIR/rbw" \
     --bind-try "$SSH_AUTH_SOCK" "$SSH_AUTH_SOCK" \
     "${session_binds[@]}" \
     --bind "$PROJECTS_DIR" "$PROJECTS_DIR" \
