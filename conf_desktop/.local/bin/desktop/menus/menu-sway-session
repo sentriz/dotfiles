@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 if [[ "$#" -gt 0 ]]; then
-    IFS=$'\t' read -r id _ <<<"$1"
+    IFS=$'\t' read -r _ id <<<"$1"
     case "$id" in
     lock) swaylock ;;
     exit) swaymsg exit ;;
@@ -10,7 +10,9 @@ if [[ "$#" -gt 0 ]]; then
     exit
 fi
 
-printf '%s\t%s\n' \
-    lock "the screen" \
-    exit "sway" \
-    reload "sway config"
+data="$(cmenu data)"
+
+printf '%s%s%s\n' \
+    "lock screen" "$data" lock \
+    "exit sway" "$data" exit \
+    "reload config" "$data" reload

@@ -95,10 +95,10 @@ if [[ -n "$mime" ]]; then
 
     case "$source" in
     clipboard-*) ;;
-    *) printf 'copy\t%s\t%s\n' "$label" "$mime" ;;
+    *) printf 'copy\t%s\t%s\t\n' "$label" "$mime" ;;
     esac
 
-    printf 'drop\t%s\t%s\n' "$label" "$mime"
+    printf 'drop\t%s\t%s\t\n' "$label" "$mime"
 
     case "$mime" in
     image/* | video/*)

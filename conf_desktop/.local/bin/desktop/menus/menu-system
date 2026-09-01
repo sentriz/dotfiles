@@ -7,7 +7,7 @@ lid_kept_awake() {
 }
 
 if [[ "$#" -gt 0 ]]; then
-    IFS=$'\t' read -r id _ <<<"$1"
+    IFS=$'\t' read -r _ id <<<"$1"
     case "$id" in
     suspend) systemctl suspend ;;
     hibernate) systemctl hibernate ;;
@@ -29,14 +29,15 @@ fi
 
 highlight="$(cmenu highlight)"
 stay="$(cmenu stay)"
+data="$(cmenu data)"
 
 lid_pre="$stay"
 lid_kept_awake && lid_pre="$stay$highlight"
 
 printf '%suptime %s\n' "$(cmenu label)" "$(uptime --pretty | sed 's/^up //')"
-printf '%s\t%s\n' \
-    suspend "to ram" \
-    hibernate "to disk" \
-    reboot "the machine" \
-    shutdown "the machine"
-printf '%s%s\t%s\n' "$lid_pre" lid "stay awake when closed"
+printf '%s%s%s\n' \
+    suspend "$data" suspend \
+    hibernate "$data" hibernate \
+    reboot "$data" reboot \
+    shutdown "$data" shutdown
+printf '%s%s%s%s\n' "$lid_pre" "lid stay awake" "$data" lid

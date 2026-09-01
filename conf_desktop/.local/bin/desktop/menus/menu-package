@@ -6,4 +6,5 @@ if [[ "$#" -gt 0 ]]; then
     exit
 fi
 
-xdg-desktop-list
+xdg-desktop-list \
+    | awk -F'\t' -v d="$(cmenu data)" '{ printf "%s\t%s%s%s\n", $1, $2, d, $3 }'

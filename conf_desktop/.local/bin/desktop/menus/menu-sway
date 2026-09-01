@@ -5,8 +5,7 @@ shopt -s nullglob
 declare -A port_browser=([4625]=librewolf [4626]=google-chrome)
 
 if [[ "$#" -gt 0 ]]; then
-    IFS=$'\t' read -r id _ <<<"$1"
-    IFS=: read -r con_id _ port tab <<<"$id"
+    IFS=$'\t' read -r _ _ con_id port tab <<<"$1"
 
     [[ -n $tab ]] && curl -s --max-time 1 "localhost:$port/activate_tab/${tab##*.}?focused=1" >/dev/null
     [[ -n $con_id ]] && swaymsg "[con_id=$con_id]" focus
@@ -33,10 +32,10 @@ windows=$(swaymsg -t get_tree | jq -r '.nodes[].nodes[] | .num as $w | recurse(.
 
 wait "${tabs_pids[@]}"
 
-awk -F'\t' -v hl="$(cmenu highlight)" '
+awk -F'\t' -v hl="$(cmenu highlight)" -v d="$(cmenu data)" '
 function winpfx(id) { sub(/\..*/, "", id); return id }
-function winrow(name) { printf "%s%s\t%s\t%s\n", ($5 != "" ? hl : ""), $1, $2, name }
-function tabrow(port, i, con) { printf "%s:tab:%s:%s\t\t%s %s\n", con, port, ids[port, i], urls[port, i], titles[port, i] }
+function winrow(name) { printf "%s%s\t%s%s%s\t\t\n", ($5 != "" ? hl : ""), $2, name, d, $1 }
+function tabrow(port, i, con) { printf "\t%s %s%s%s\t%s\t%s\n", urls[port, i], titles[port, i], d, con, port, ids[port, i] }
 
 FILENAME != "-" {
     source = FILENAME; sub(/.*\//, "", source)

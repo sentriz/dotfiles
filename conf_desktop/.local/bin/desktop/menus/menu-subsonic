@@ -30,7 +30,7 @@ song-ids() {
 }
 
 if [[ "$CMENU_MODE" = "preview" ]]; then
-    IFS=$'\t' read -r _ _ cover _ <<<"$1"
+    IFS=$'\t' read -r _ _ _ _ _ cover <<<"$1"
     [[ -z "$cover" ]] && exit 0
 
     curl -fsG "$base/rest/getCoverArt" "${auth[@]}" --data-urlencode "id=$cover" -d size=600 | cmenu image -
@@ -45,7 +45,7 @@ if [[ -n "$current_pid" ]] && ! kill -0 "$current_pid" 2>/dev/null; then
 fi
 
 if [[ "$#" -gt 0 ]]; then
-    IFS=$'\t' read -r kind id _ _ title _ <<<"$1"
+    IFS=$'\t' read -r kind _ title _ id _ <<<"$1"
 
     if [[ -n "$current_pid" ]]; then
         kill "$current_pid" 2>/dev/null
@@ -65,24 +65,20 @@ if [[ "$#" -gt 0 ]]; then
     exit
 fi
 
+jq_args=(-r --arg d "$(cmenu data)" --arg hl "$(cmenu highlight)" --arg cur "$current_id")
+# shellcheck disable=SC2016
+jq_row='def row(kind; year; title; artist):
+    "\(if .id == $cur then $hl else "" end)\(kind)\t\(year)\t\(title)\t\(artist)\($d)\(.id)\t\(.coverArt // "")";'
+
 if [[ -n "$CMENU_INPUT" ]]; then
-    results="$(
-        api search3 "query=$CMENU_INPUT" artistCount=10 albumCount=20 songCount=20 | jq -r '
-            .searchResult3 // {} |
-            (.artist[]? | "artist\t\(.id)\t\(.coverArt // "")\t\t\(.name)\t"),
-            (.album[]?  | "album\t\(.id)\t\(.coverArt // "")\t\(.year // "")\t\(.name)\t\(.artist)"),
-            (.song[]?   | "song\t\(.id)\t\(.coverArt // "")\t\(.year // "")\t\(.title)\t\(.artist)")
-        '
-    )"
+    api search3 "query=$CMENU_INPUT" artistCount=10 albumCount=20 songCount=20 | jq "${jq_args[@]}" "$jq_row"'
+        .searchResult3 // {} |
+        (.artist[]? | row("artist"; ""; .name; "")),
+        (.album[]?  | row("album"; .year // ""; .name; .artist)),
+        (.song[]?   | row("song"; .year // ""; .title; .artist))
+    '
 else
-    results="$(api getAlbumList2 type=newest size=50 | jq -r '.albumList2.album[]? | "album\t\(.id)\t\(.coverArt // "")\t\(.year // "")\t\(.name)\t\(.artist)"')"
+    api getAlbumList2 type=newest size=50 | jq "${jq_args[@]}" "$jq_row"'
+        .albumList2.album[]? | row("album"; .year // ""; .name; .artist)
+    '
 fi
-
-highlight="$(cmenu highlight)"
-
-printf '%s\n' "$results" | grep . | while IFS= read -r line; do
-    IFS=$'\t' read -r _ id _ <<<"$line"
-    pre=""
-    [[ -n "$current_id" && "$id" = "$current_id" ]] && pre="$highlight"
-    printf '%s%s\n' "$pre" "$line"
-done

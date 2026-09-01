@@ -11,7 +11,7 @@ function mpris() {
 }
 
 if [[ "$#" -gt 0 ]]; then
-    IFS=$'\t' read -r id _ <<<"$1"
+    IFS=$'\t' read -r _ id <<<"$1"
     case "$id" in
     player) tee "$index_file" <<<"$(($(index) + 1))" >/dev/null ;;
     *) mpris "$id" ;;
@@ -23,9 +23,11 @@ fi
 status="$(mpris)"
 [[ -n "$status" ]] && printf '%s%s\n' "$(cmenu label)" "$status"
 
-printf '%s\t%s\n' \
-    play-pause "playback" \
-    next "track" \
-    previous "track" \
-    stop "playback" \
-    player "next player"
+data="$(cmenu data)"
+
+printf '%s%s%s\n' \
+    play-pause "$data" play-pause \
+    "next track" "$data" next \
+    "previous track" "$data" previous \
+    stop "$data" stop \
+    "next player" "$data" player

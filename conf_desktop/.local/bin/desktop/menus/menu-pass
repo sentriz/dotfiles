@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 if [[ "$CMENU_MODE" = "preview" ]]; then
-    IFS=$'\t' read -r id _ <<<"$1"
+    IFS=$'\t' read -r _ _ _ id <<<"$1"
     rbw get --raw "$id" | jq -r '
       [
         (.data.username // empty | "user\t\(.)"),
@@ -15,7 +15,7 @@ if [[ "$CMENU_MODE" = "preview" ]]; then
 fi
 
 if [[ "$#" -gt 0 ]]; then
-    IFS=$'\t' read -r id _ <<<"$1"
+    IFS=$'\t' read -r _ _ _ id <<<"$1"
     rbw get "$id" | wl-copy -n --sensitive
     hash=$(wl-paste -n | sha256sum)
     # shellcheck disable=SC2016
@@ -27,4 +27,5 @@ if [[ "$#" -gt 0 ]]; then
 fi
 
 rbw list --fields id --fields folder --fields name --fields user \
-    | sort -t$'\t' -k 2,3
+    | sort -t$'\t' -k 2,3 \
+    | awk -F'\t' -v d="$(cmenu data)" '{ printf "%s\t%s\t%s%s%s\n", $2, $3, $4, d, $1 }'
