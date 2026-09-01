@@ -51,6 +51,7 @@
 
 # Environment
 
+- When showing me shell commands to run, use my shell's syntax (check `$SHELL`). Commands you run yourself via the bash tool are still bash.
 - Prefer `gh` CLI over `curl` for GitHub interactions.
 - Always use `jq` when parsing JSON. Prefer this over parsing with Python.
 - Use `rsl <src format> <dest format>` to convert between formats: `csv, csv-ph, html, ini, js, json, md, toml, tsv, tsv-ph, xml, yaml`. It makes anything jqable - `rsl <fmt> json | jq` instead of Python, e.g. `rsl toml json < x.toml | jq`. Also handy: `curl -s <url> | rsl html md` to read a web page, `rsl csv md` to render a table. The `-ph` variants synthesise a pseudo header (`a`, `b`, `c`, ...) for headerless csv/tsv.
