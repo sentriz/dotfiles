@@ -12,10 +12,9 @@ highlight="$(cmenu highlight)"
 
 status="$(tailscale status --json)"
 
-health="$(jq -r '.Health[]? | ascii_downcase | rtrimstr(".")' <<<"$status" | grep -v 'advertising routes')"
-while read -r line; do
-    printf '%s%s\n' "$label" "${line:-healthy}"
-done <<<"$health"
+jq -r '[.Health[]? | ascii_downcase | rtrimstr(".") | select(contains("advertising routes") | not)]
+    | if length == 0 then ["healthy"] else . end | .[]' <<<"$status" \
+    | sed "s/^/$label/"
 
 if [[ "$(jq -r '.BackendState' <<<"$status")" == "Running" ]]; then
     printf '%s%s\t%s\n' "$highlight" connected down
@@ -23,40 +22,50 @@ else
     printf '%s\t%s\n' connect up
 fi
 
-prefs="$(tailscale debug prefs)"
+read -r corp_dns route_all has_exit_node lan_access < <(
+    tailscale debug prefs | jq -r '[.CorpDNS, .RouteAll, .ExitNodeID != "", .ExitNodeAllowLANAccess] | join(" ")')
 
-if [[ "$(jq -r '.CorpDNS' <<<"$prefs")" == "true" ]]; then
-    printf '%saccept dns\t%s\n' "$highlight" "set --accept-dns=false"
+dns_upstream="$(tailscale dns status --json 2>/dev/null | jq -r '
+    [(.Resolvers[0].Addr // "system" | sub("^[a-z]+://"; "") | sub("/.*"; "")),
+     (if .CurrentTailnet.MagicDNSEnabled then "magicdns" else empty end)]
+    | join(", ")')"
+if [[ "$corp_dns" == "true" ]]; then
+    printf '%saccept dns via %s\t%s\n' "$highlight" "$dns_upstream" "set --accept-dns=false"
 else
-    printf '%s\t%s\n' "accept dns" "set --accept-dns"
+    printf '%s\t%s\n' "accept dns via $dns_upstream" "set --accept-dns"
 fi
 
-routes="$(jq -r '[.Peer[]?.PrimaryRoutes // [] | .[]] | join(", ")' <<<"$status")"
+routes="$(jq -r '[.Peer[]? | . as $p | (.PrimaryRoutes // [])[] | "\(.) via \($p.DNSName | split(".")[0])"] | join(", ")' <<<"$status")"
 if [[ "$(jq -r '[.Peer[]? | select(.ExitNode) | .PrimaryRoutes | length > 0] | any' <<<"$status")" == "true" ]]; then
     printf '%saccept routes %s implied\n' "$label" "$routes"
-elif [[ "$(jq -r '.RouteAll' <<<"$prefs")" == "true" ]]; then
+elif [[ "$route_all" == "true" ]]; then
     printf '%saccept routes %s\t%s\n' "$highlight" "$routes" "set --accept-routes=false"
 else
     printf '%s\t%s\n' "accept routes $routes" "set --accept-routes"
 fi
 
-show_all=false
-[[ "$CMENU_INPUT" == "all" ]] && show_all=true
+if [[ "$has_exit_node" == "true" && "$lan_access" == "true" ]]; then
+    printf '%sexit node lan access\t%s\n' "$highlight" "set --exit-node-allow-lan-access=false"
+elif [[ "$has_exit_node" == "true" ]]; then
+    printf '%s\t%s\n' "exit node lan access" "set --exit-node-allow-lan-access"
+fi
+
 country="$(locale | awk -F'[=_.]' '/^LANG=/ {print $3}')"
 
-peers="$(jq -r --argjson all "$show_all" --arg country "$country" '
+peers="$(jq -r --arg input "$CMENU_INPUT" --arg country "$country" '
     .Peer[]?
-    | select(.Location == null or .ExitNode or $all or .Location.CountryCode == $country)
-    | ["peer", .HostName, .TailscaleIPs[0], (if .Online then "online" else "offline" end),
+    | select(.Location == null or .ExitNode or $input == "all" or .Location.CountryCode == $country)
+    | ["peer", (.DNSName | split(".")[0]), .TailscaleIPs[0], (if .Online then "online" else "offline" end),
+       (if .Active | not then "" elif .CurAddr != "" then "direct" else "relay \(.Relay)" end),
        (if .Location then "\(.Location.Country) \(.Location.City)" else .OS end | ascii_downcase),
        "rx", .RxBytes, "tx", .TxBytes, (if .ExitNodeOption then "exit node" else "" end),
        .ExitNodeOption, .ExitNode, .TailscaleIPs[0]]
     | @tsv' <<<"$status" \
     | sort -t$'\t' -k2 \
-    | numfmt -d$'\t' --field=7,9 --to=iec)"
+    | numfmt -d$'\t' --field=8,10 --to=iec)"
 [[ -n "$peers" ]] || exit 0
 
-paste <(cut -f1-10 <<<"$peers" | table) <(cut -f11- <<<"$peers") \
+paste <(cut -f1-11 <<<"$peers" | table) <(cut -f12- <<<"$peers") \
     | while IFS=$'\t' read -r line can_exit is_exit ip; do
         if [[ "$is_exit" == "true" ]]; then
             printf '%s%s\t%s\n' "$highlight" "$line" "set --exit-node="
