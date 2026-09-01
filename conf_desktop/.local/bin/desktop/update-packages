@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+set -e
+
+yay --version
+EDITOR=true yay -Syu --noconfirm --answeredit N --answerdiff N
+
+uv --version
+uv tool upgrade --all
+
+if type -p cargo-install-update >/dev/null; then
+    cargo install-update -a
+fi
+
+npm version
+npm update -g
+
+flatpak --version
+flatpak update --user --noninteractive --assumeyes
