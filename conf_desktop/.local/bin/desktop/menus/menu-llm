@@ -1,17 +1,45 @@
 #!/usr/bin/env bash
 
+settings="$XDG_CONFIG_HOME/pi/agent/settings.json"
+state="$XDG_RUNTIME_DIR/menu-llm-$PPID"
+
 if [[ "$#" -gt 0 ]]; then
-    wl-copy -n <<<"$1"
+    readarray -td $'\t' f < <(printf '%s' "$1")
+    if [[ -n "${f[2]}" ]]; then
+        printf '%s\n' "${f[2]}" >"$state"
+    else
+        wl-copy -n <<<"$1"
+    fi
     exit
 fi
+
+spec="$(jq -r '.defaultProvider + "/" + .defaultModel + ":" + .defaultThinkingLevel' "$settings")"
+[[ -s "$state" ]] && read -r spec <"$state"
+model="${spec%:*}" thinking="${spec##*:}"
 
 if [[ "$CMENU_INPUT" != *\? ]]; then
+    readarray -t models < <(jq -r '.enabledModels[]' "$settings")
+    thinkings=(off low medium high)
+
+    for i in "${!models[@]}"; do [[ "${models[i]}" = "$model" ]] && break; done
+    next_model="${models[$(((i + 1) % ${#models[@]}))]}"
+
+    for i in "${!thinkings[@]}"; do [[ "${thinkings[i]}" = "$thinking" ]] && break; done
+    next_thinking="${thinkings[$(((i + 1) % ${#thinkings[@]}))]}"
+
+    stay="$(cmenu stay)"
+    data="$(cmenu data)"
+
     echo "$(cmenu label)no question"
+    printf '%smodel\t%s%s%s\n' "$stay" "$model" "$data" "$next_model:$thinking"
+    printf '%sthinking\t%s%s%s\n' "$stay" "$thinking" "$data" "$model:$next_thinking"
     exit
 fi
 
+echo "$(cmenu label)$spec"
+
 pi \
-    --model openai/gpt-5.6-luna \
+    --model "$spec" \
     --no-tools \
     --no-prompt-templates \
     --no-context-files \
@@ -21,5 +49,5 @@ pi \
     --session-id "menu-llm-$PPID" \
     --system-prompt "Answer concisely in plain text only. No markdown, no latex." \
     --print "$CMENU_INPUT" \
-    | awk -v label="$(cmenu label)" 'NF { print; next } { print label }'
+    | awk -v label="$(cmenu label)" '{ gsub(/\t/, " ") } NF { print; next } { print label }'
 exit 0
