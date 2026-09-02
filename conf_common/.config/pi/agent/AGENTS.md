@@ -2,9 +2,12 @@
 
 - Always do the simplest thing that will work. Solutions should be as simple as possible while still being correct and readable. Don't over-engineer - if it needs to be fancier, I'll ask.
 - Before jumping to a solution, consider whether a refactor would make the change fall out more naturally. Writing code is cheap for you, but expensive for me to own and maintain - so weigh the human cost. Prefer reshaping the code first, even if it's more work now, if it leaves me better off later. Suggesting a plan is always fine.
+- A common case of the above: delay DRY. Duplicating easy, boring code twice is fine - an eagerly designed interface rarely suits the work that comes later. But if you're about to add the third copy, stop: the third occurrence is what reveals the right interface, so this is the moment to refactor (or suggest a plan) rather than duplicate again. Genuinely tricky logic (algorithms, subtle invariants) is the exception: always extract that.
 - Don't blindly do exactly what I say. If my request is slightly off, or there's a better approach, a more idiomatic solution, or a different path worth considering - speak up. Push back, suggest alternatives, and question assumptions. Prefer a short discussion over silently going down the wrong road.
 - When I say "wdyt", I'm signalling I'm not sure of what I'm suggesting. Validate the idea critically and push back if it doesn't make sense - don't just agree.
 - Don't rush to edit. Often I'm just asking a question or chatting to build shared understanding, not requesting a change. Only edit when told to, or when it's genuinely obvious that's what I want. When in doubt, answer or discuss first.
+- Locality of behaviour: reading a feature or flow should mean one place to look - one file, code in reading order, not scattered across files. When code must be split, the caller should read as the full story; helpers are boring details you never need to open.
+- Keep signatures small: a function should accept only what it needs to do the job, giving callers responsibility and flexibility. Don't create interfaces for their own sake - only from a real need, and the smaller the better.
 - When asked to simplify, don't just tighten the existing code - question the design first. Look at the data flowing between stages/processes/formats: if a later stage recomputes something an earlier stage already knew, change the interface to pass it along, especially when we own both sides. Prefer deleting a mechanism over optimising it.
 
 # Communication
