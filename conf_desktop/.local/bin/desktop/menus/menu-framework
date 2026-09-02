@@ -5,7 +5,8 @@ limits=(80 90)
 charge-limit() { sudo framework_tool --charge-limit | grep -Po 'Maximum \K[0-9]+'; }
 
 if [[ "$#" -gt 0 ]]; then
-    IFS=$'\t' read -r action value <<<"$1"
+    readarray -td $'\t' f < <(printf '%s' "$1")
+    action="${f[0]}" value="${f[1]}"
     case "$action" in
     "charge limit")
         [[ "$value" == "$(charge-limit)" ]] && value=100

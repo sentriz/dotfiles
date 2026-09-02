@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
 if [[ "$#" -gt 0 ]]; then
-    IFS=$'\t' read -r name hash id <<<"$1"
+    readarray -td $'\t' f < <(printf '%s' "$1")
+    name="${f[0]}" hash="${f[1]}" id="${f[2]}"
     case "$name" in
     "input")
         wl-copy -n <<<"$id"

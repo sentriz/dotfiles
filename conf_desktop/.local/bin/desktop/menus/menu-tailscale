@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
 if [[ "$#" -gt 0 ]]; then
-    IFS=$'\t' read -r _ cmd <<<"$1"
+    readarray -td $'\t' f < <(printf '%s' "$1")
+    cmd="${f[1]}"
     read -ra cmd <<<"$cmd"
     tailscale "${cmd[@]}"
     exit

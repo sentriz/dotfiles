@@ -10,7 +10,8 @@ if [[ -n "$pid" ]] && ! kill -0 "$pid" 2>/dev/null; then
 fi
 
 if [[ "$#" -gt 0 ]]; then
-    IFS=$'\t' read -r _ id <<<"$1"
+    readarray -td $'\t' f < <(printf '%s' "$1")
+    id="${f[1]}"
     case "$id" in
     record)
         [[ -n "$pid" ]] && exit 0

@@ -56,7 +56,8 @@ if [[ "$CMENU_MODE" = "preview" ]]; then
 fi
 
 if [[ "$#" -gt 0 ]]; then
-    IFS=$'\t' read -r cmd _ _ arg_2 <<<"$1"
+    readarray -td $'\t' f < <(printf '%s' "$1")
+    cmd="${f[0]}" arg_2="${f[3]}"
 
     IFS=$'\t' read -r source mime <<<"$(current_file)"
     path="$(resolve_file "$source" "$mime")"

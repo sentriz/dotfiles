@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
 if [[ "$#" -gt 0 ]]; then
-    IFS=$'\t' read -r _ id <<<"$1"
+    readarray -td $'\t' f < <(printf '%s' "$1")
+    id="${f[1]}"
     case "$id" in
     lock) swaylock ;;
     exit) swaymsg exit ;;

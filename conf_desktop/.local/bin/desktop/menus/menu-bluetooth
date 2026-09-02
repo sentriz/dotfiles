@@ -6,7 +6,8 @@ if ! pidof -q bluetoothd; then
 fi
 
 if [[ "$CMENU_MODE" = "preview" ]]; then
-    IFS=$'\t' read -r _ mac <<<"$1"
+    readarray -td $'\t' f < <(printf '%s' "$1")
+    mac="${f[1]}"
     bluetoothctl info "$mac" \
         | sed -nE 's/^\t([^:]+): (.+)/\1\t\2/p' \
         | grep -v '^UUID' \
@@ -21,7 +22,8 @@ notify() {
 readarray -t connected_macs < <(bluetoothctl devices Connected | lower | col " " 2)
 
 if [[ "$#" -gt 0 ]]; then
-    IFS=$'\t' read -r name mac <<<"$1"
+    readarray -td $'\t' f < <(printf '%s' "$1")
+    name="${f[0]}" mac="${f[1]}"
 
     if [[ "${connected_macs[*]}" =~ $mac ]]; then
         bluetoothctl -- disconnect "$mac" >/dev/null 2>&1

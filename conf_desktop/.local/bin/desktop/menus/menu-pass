@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
 if [[ "$CMENU_MODE" = "preview" ]]; then
-    IFS=$'\t' read -r _ _ _ id <<<"$1"
+    readarray -td $'\t' f < <(printf '%s' "$1")
+    id="${f[3]}"
     rbw get --raw "$id" | jq -r '
       [
         (.data.username // empty | "user\t\(.)"),
@@ -15,7 +16,8 @@ if [[ "$CMENU_MODE" = "preview" ]]; then
 fi
 
 if [[ "$#" -gt 0 ]]; then
-    IFS=$'\t' read -r _ _ _ id <<<"$1"
+    readarray -td $'\t' f < <(printf '%s' "$1")
+    id="${f[3]}"
     rbw get "$id" | wl-copy -n --sensitive
     hash=$(wl-paste -n | sha256sum)
     # shellcheck disable=SC2016
