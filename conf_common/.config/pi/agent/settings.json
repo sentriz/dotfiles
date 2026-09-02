@@ -1,10 +1,11 @@
 {
-  "lastChangelogVersion": "0.84.2",
+  "lastChangelogVersion": "0.84.4",
   "theme": "ansi",
   "defaultProvider": "anthropic",
   "defaultModel": "claude-opus-5",
   "defaultThinkingLevel": "medium",
   "quietStartup": true,
+  "collapseChangelog": true,
   "warnings": {
     "anthropicExtraUsage": false
   },
