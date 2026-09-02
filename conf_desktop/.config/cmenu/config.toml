@@ -172,7 +172,7 @@
   preview = true
 
 [[scripts]]
-  triggers = ["pre lm"]
+  triggers = ["pre lm", "pre pi"]
   name = "llm"
   path = "menu-llm"
   colour = 2
