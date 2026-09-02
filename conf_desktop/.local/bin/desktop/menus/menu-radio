@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 pidfile="$XDG_RUNTIME_DIR/menu-radio.pid"
+statsfile="stats.tsv"
 
 if [[ "$CMENU_MODE" = "preview" ]]; then
     url="$(rsl ini json <"$RADIO_DIR/$1" | jq -r '.playlist.File1')"
@@ -52,8 +53,16 @@ if [[ "$#" -gt 0 ]]; then
         --force-media-title="$station" \
         --no-resume-playback \
         "$RADIO_DIR/$station" &
-    echo -e "$!\t$station" >"$pidfile"
+    pid="$!"
+    echo -e "$pid\t$station" >"$pidfile"
     notify-send 'started radio station' "$station"
+
+    start="$EPOCHSECONDS"
+    (
+        while kill -0 "$pid" 2>/dev/null; do sleep 5; done
+        printf '%s\t%s\t%s\n' "$start" "$((EPOCHSECONDS - start))" "$station" >>"$RADIO_DIR/$statsfile"
+    ) &
+    disown
 
     exit
 fi
@@ -64,6 +73,7 @@ find \
     "$RADIO_DIR" \
     -maxdepth 1 \
     -not -name '.st*' \
+    -not -name "$statsfile" \
     -type f \
     -printf "%f\n" \
     | sort \
