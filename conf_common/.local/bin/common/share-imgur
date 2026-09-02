@@ -1,0 +1,24 @@
+#!/usr/bin/env fish
+
+if test "$argv[1]" = types
+    echo 'image/*'
+    echo 'video/*'
+    exit
+end
+
+set path $argv[1]
+test -f "$path"; or exit 1
+
+set field image
+string match -q 'video/*' (file --mime-type -b "$path"); and set field video
+
+set client_id (secret imgur_apikey)
+set upload_url 'https://api.imgur.com/3/upload'
+
+set response (curl --silent --fail --header "Authorization: Client-ID $client_id" --form "$field=@$path" "$upload_url")
+test -z "$response"; and exit 1
+
+set link (echo "$response" | jq -r '.data.link')
+test -z "$link"; and exit 1
+
+echo "$link"

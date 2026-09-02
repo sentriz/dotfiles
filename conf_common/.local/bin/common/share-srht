@@ -1,11 +1,21 @@
 #!/usr/bin/env fish
 
+if test "$argv[1]" = types
+    echo 'text/*'
+    echo 'application/json'
+    echo 'application/xml'
+    exit
+end
+
+set path $argv[1]
+test -f "$path"; or exit 1
+
 set base 'https://paste.sr.ht'
 set token (secret srht_pat)
 test -z "$token"; and exit 1
 
 set tmpl '{ "files": [ { "contents": . } ], "visibility": "unlisted" }'
-set result (jq -sR "$tmpl" | curl -sf -X POST -H "Authorization: token $token" --json @- "$base/api/pastes")
+set result (jq -sR "$tmpl" <"$path" | curl -sf -X POST -H "Authorization: token $token" --json @- "$base/api/pastes")
 test -z "$result"; and exit 1
 
 set user (echo $result | jq -r .user.canonical_name)

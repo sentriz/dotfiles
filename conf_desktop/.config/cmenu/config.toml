@@ -112,8 +112,8 @@
 
 [[scripts]]
   triggers = ["pre f", "interval 750ms", "script scrot"]
-  name = "file"
-  path = "menu-file"
+  name = "share"
+  path = "menu-share"
   colour = 3
   preview = true
 

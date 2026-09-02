@@ -43,7 +43,9 @@ resolve_file() {
 }
 
 if [[ "$CMENU_MODE" = "preview" ]]; then
-    IFS=$'\t' read -r source mime <<<"$(current_file)"
+    readarray -td $'\t' f < <(printf '%s' "$1")
+    mime="${f[0]}" source="${f[3]}"
+
     path="$(resolve_file "$source" "$mime")"
     [[ -f "$path" ]] || exit 0
 
@@ -57,55 +59,31 @@ fi
 
 if [[ "$#" -gt 0 ]]; then
     readarray -td $'\t' f < <(printf '%s' "$1")
-    cmd="${f[0]}" arg_2="${f[3]}"
+    mime="${f[0]}" dest="${f[2]}" source="${f[3]}"
 
-    IFS=$'\t' read -r source mime <<<"$(current_file)"
     path="$(resolve_file "$source" "$mime")"
-    [[ -z "$path" ]] && exit 1
+    [[ -n "$path" ]] || exit 1
 
-    case "$cmd" in
-    "drop")
-        drop "$path" &
-        disown
-        ;;
-    "copy")
-        case "$mime" in
-        image/*) wl-copy --type "$mime" <"$path" ;;
-        *) wl-copy -t text/uri-list "file://$path" ;;
-        esac
-        ;;
-    "upload")
-        url="$(upload "$arg_2" "$path")"
-        [[ -z "$url" ]] && exit 1
+    url="$(share "$dest" "$path")" || exit 1
+    [[ -n "$url" ]] || exit 0
 
-        wl-copy "$url"
+    wl-copy "$url"
 
-        notify-send "uploaded" "$url"
-        ;;
-    esac
+    notify-send "shared" "$url"
 
     exit
 fi
 
 IFS=$'\t' read -r source mime <<<"$(current_file)"
 if [[ -n "$mime" ]]; then
+    data="$(cmenu data)"
+
     label="$source"
     if [[ -f "$source" ]]; then
         label="$(basename "$(dirname "$source")")/$(basename "$source")"
     fi
 
-    case "$source" in
-    clipboard-*) ;;
-    *) printf 'copy\t%s\t%s\t\n' "$label" "$mime" ;;
-    esac
-
-    printf 'drop\t%s\t%s\t\n' "$label" "$mime"
-
-    case "$mime" in
-    image/* | video/*)
-        for upl in $(upload list); do
-            printf 'upload\t%s\t%s\t%s\n' "$label" "$mime" "$upl"
-        done
-        ;;
-    esac
+    for dest in $(share list "$mime"); do
+        printf '%s\t%s\t%s%s\n' "$mime" "$label" "$dest" "$data$source"
+    done
 fi

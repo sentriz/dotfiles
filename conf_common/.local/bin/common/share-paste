@@ -1,0 +1,17 @@
+#!/usr/bin/env fish
+
+if test "$argv[1]" = types
+    echo 'text/*'
+    echo 'application/json'
+    echo 'application/xml'
+    exit
+end
+
+set path $argv[1]
+test -f "$path"; or exit 1
+
+set paste_url (secret paste_url)
+test -z "$paste_url"; and exit 1
+
+set key (curl -sf --data-binary @"$path" "$paste_url/documents" | jq -r '.key')
+printf "%s/raw/%s\n" $paste_url $key

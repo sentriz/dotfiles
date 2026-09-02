@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+[[ "$1" == types ]] && { echo '*/*'; exit; }
+
+path="$1"
+[[ -f "$path" ]] || exit 1
+
+mime="$(file --mime-type -b "$path")"
+
+case "$mime" in
+image/*) wl-copy --type "$mime" <"$path" ;;
+text/* | application/json | application/xml) wl-copy <"$path" ;;
+*) wl-copy -t text/uri-list "file://$path" ;;
+esac

@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+[[ "$1" == types ]] && { echo '*/*'; exit; }
+
+path="$1"
+[[ -f "$path" ]] || exit 1
+
+setsid -f dragon-drop --thumb-size 64 --on-top "$path"

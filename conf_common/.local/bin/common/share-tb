@@ -1,0 +1,13 @@
+#!/usr/bin/env fish
+
+if test "$argv[1]" = types
+    echo 'text/*'
+    echo 'application/json'
+    echo 'application/xml'
+    exit
+end
+
+set path $argv[1]
+test -f "$path"; or exit 1
+
+nc -N termbin.com 9999 <"$path"

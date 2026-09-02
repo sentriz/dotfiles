@@ -1,3 +1,0 @@
-#!/usr/bin/env fish
-
-nc -N termbin.com 9999

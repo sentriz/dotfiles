@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+
+[ $# -eq 0 ] && {
+    echo "usage:" >&2
+    echo "  share list [mime]" >&2
+    echo "  share <dest> <path>" >&2
+    echo "  share <dest> -" >&2
+    exit 1
+}
+
+cmd_prefix="share-"
+
+case "$1" in
+list)
+    mime="$2"
+    set -f
+
+    for cmd in $(compgen -c "$cmd_prefix" | sort -u); do
+        printf '%s\t%s\n' "${cmd#"$cmd_prefix"}" "$("$cmd" types | tr '\n' ' ')" &
+    done \
+        | sort \
+        | while IFS=$'\t' read -r name globs; do
+            [[ -z "$mime" ]] && echo "$name" && continue
+
+            for glob in $globs; do
+                # shellcheck disable=SC2053
+                [[ "$mime" == $glob ]] || continue
+
+                echo "$name"
+                break
+            done
+        done
+    ;;
+*)
+    name="$1" path="$2"
+    if [[ "$path" == "-" ]]; then
+        path="$(mktemp "$XDG_RUNTIME_DIR/share-XXX")"
+        cat >"$path"
+    fi
+
+    exec "$cmd_prefix$name" "$path"
+    ;;
+esac

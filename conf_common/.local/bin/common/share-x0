@@ -1,0 +1,16 @@
+#!/usr/bin/env fish
+
+if test "$argv[1]" = types
+    echo '*/*'
+    exit
+end
+
+set path $argv[1]
+test -f "$path"; or exit 1
+
+set upload_url 'https://x0.at'
+
+set response (curl --silent --fail --form "file=@$path" "$upload_url")
+test -z "$response"; and exit 1
+
+echo "$response"
