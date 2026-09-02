@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+
+if [[ "$#" -gt 0 ]]; then
+    readarray -td $'\t' f < <(printf '%s' "$1")
+    if [[ "${f[0]}" == "get" ]]; then
+        tailscale file get --conflict=rename "$XDG_DOWNLOAD_DIR" || notify-send "get failed"
+        exit 0
+    fi
+
+    mime="${f[0]}" peer="${f[2]}" source="${f[3]}"
+
+    if ! path="$(current-files resolve "$source" "$mime")"; then
+        notify-send "send failed" "$source is gone"
+        exit 0
+    fi
+
+    if ! tailscale file cp "$path" "$peer:"; then
+        notify-send "send failed" "$(basename "$path") to $peer"
+        exit 0
+    fi
+
+    notify-send "sent" "$(basename "$path") to $peer"
+
+    exit
+fi
+
+pending="$(tailscale debug localapi v0/files/ 2>/dev/null \
+    | jq -r '(. // [])[] | [.Name, .Size] | @tsv' \
+    | numfmt -d$'\t' --field=2 --to=iec \
+    | awk -F'\t' '{ printf "%s%s %s", sep, $1, $2; sep = ", " }')"
+[[ -n "$pending" ]] && printf 'get\t%s\n' "$pending"
+
+peers="$(tailscale status --json | jq -r '
+    select(.BackendState == "Running") | .Self.UserID as $user | .Peer[]?
+    | select(.Online and .UserID == $user) | .DNSName | split(".")[0]')"
+[[ -n "$peers" ]] || exit 0
+
+data="$(cmenu data)"
+
+while IFS=$'\t' read -r _ mime source; do
+    label="$source"
+    [[ -f "$source" ]] && label="$(basename "$(dirname "$source")")/$(basename "$source")"
+
+    for peer in $peers; do
+        printf '%s\t%s\t%s%s\n' "$mime" "$label" "$peer" "$data$source"
+    done
+done < <(current-files)

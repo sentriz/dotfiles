@@ -118,6 +118,13 @@
   preview = true
 
 [[scripts]]
+  triggers = ["script share", "script tailscale", "interval 1s"]
+  name = "taildrop"
+  path = "menu-taildrop"
+  colour = 14
+  stay_open = true
+
+[[scripts]]
   triggers = ["pre d"]
   name = "dictate"
   path = "menu-dictate"
