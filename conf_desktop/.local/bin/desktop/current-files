@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+
+if [[ "$1" == "resolve" ]]; then
+    source="$2" mime="$3"
+
+    case "$source" in
+    clipboard)
+        case "$mime" in
+        text/*) extension=txt ;;
+        *) extension="$(wl-paste --type "$mime" 2>/dev/null | file -b --extension - | cut -d/ -f1)" ;;
+        esac
+
+        path="$XDG_RUNTIME_DIR/current-clipboard.$extension"
+        wl-paste --type "$mime" >"$path" 2>/dev/null
+        ;;
+    *)
+        path="$source"
+        ;;
+    esac
+
+    [[ -s "$path" ]] || exit 1
+    echo "$path"
+
+    exit
+fi
+
+types="$(wl-paste -l 2>/dev/null)"
+
+path=""
+if grep -qx 'text/uri-list' <<<"$types"; then
+    path="$(wl-paste --type text/uri-list 2>/dev/null | head -n 1)"
+    path="${path#file://}"
+fi
+
+files="$(for dir in "$XDG_DOWNLOAD_DIR" "$SCREENSHOTS_DIR" "$RECORDINGS_DIR"; do
+    find "$dir" -maxdepth 1 -type f -size +0 ! -name '*.part' ! -name '*.crdownload' -printf '%T@\t%p\n' 2>/dev/null | sort -rn | head -1
+done \
+    | sort -rn \
+    | while IFS=$'\t' read -r mtime file; do
+        [[ "$file" == "$path" ]] && continue
+        printf '%d\t%s\t%s\n' "${mtime%.*}" "$(file --mime-type -b "$file")" "$file"
+    done)"
+
+if [[ -s "$path" ]]; then
+    printf '%s\t%s\t%s\n' "$EPOCHSECONDS" "$(file --mime-type -b "$path")" "$path"
+else
+    mime="$(grep -m1 -E '^(image|video)/' <<<"$types")" || mime="$(grep -m1 -x 'text/plain' <<<"$types")"
+    dup=""
+    while IFS=$'\t' read -r _ fmime file; do
+        [[ "$fmime" == "$mime" ]] || continue
+        wl-paste --type "$mime" 2>/dev/null | cmp -s - "$file" && dup=1 && break
+    done <<<"$files"
+    [[ -n "$mime" && -z "$dup" ]] && printf '%s\t%s\t%s\n' "$EPOCHSECONDS" "$mime" clipboard
+fi
+
+[[ -n "$files" ]] && echo "$files"
