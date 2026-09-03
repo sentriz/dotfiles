@@ -1,6 +1,9 @@
 function clone
-    not test -d "$PROJECTS_DIR"
-    and return 1
+    set -q PROJECTS_DIR
+    or begin
+        echo "PROJECTS_DIR not set" >&2
+        return 1
+    end
 
     set -l url $argv[1]
     test -z $url

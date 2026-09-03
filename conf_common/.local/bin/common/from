@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 
+set -u
+
 cd "$1" || exit
 shift
 "$@"

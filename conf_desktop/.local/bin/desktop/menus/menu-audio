@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
-if [[ "$CMENU_MODE" = "preview" ]]; then
+set -u
+
+if [[ "${CMENU_MODE-}" = "preview" ]]; then
     readarray -td $'\t' f < <(printf '%s' "$1")
     id="${f[1]}"
     {

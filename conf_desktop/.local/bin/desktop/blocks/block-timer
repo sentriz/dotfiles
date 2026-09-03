@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -u
+
 left="$(timer)"
 test -z "$left" && exit
 

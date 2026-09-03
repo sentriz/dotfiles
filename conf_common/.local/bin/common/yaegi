@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
 
+set -u
+
 env HOME=/tmp rlwrap "$GOPATH"/bin/yaegi "$@"

@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 
+set -u
+
 echo "┌─ $1" >&2
 shift
 "$@" 2>&1 | sed 's/^/│ /'

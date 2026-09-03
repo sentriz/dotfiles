@@ -1,11 +1,13 @@
 #!/usr/bin/env bash
 
+set -u
+
 connect_uri="$(secret virt_connect_uri)"
 
 virsh() { command virsh --connect "$connect_uri" "$@"; }
 virt-viewer() { command virt-viewer --connect "$connect_uri" "$@"; }
 
-if [[ "$CMENU_MODE" = "preview" ]]; then
+if [[ "${CMENU_MODE-}" = "preview" ]]; then
     machine="$1"
     if [[ "$(virsh domstate "$machine" 2>/dev/null)" == running ]]; then
         thumb="$(mktemp)"

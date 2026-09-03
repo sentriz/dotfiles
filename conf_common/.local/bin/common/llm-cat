@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -u
+
 for f in "$@"; do
     echo "--" "$f" "--"
     cat "$f"

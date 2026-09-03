@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -u
+
 if [[ $# -gt 0 ]]; then
     exec nvim -R -- "$@"
 fi

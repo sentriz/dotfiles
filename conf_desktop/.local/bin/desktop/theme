@@ -30,7 +30,21 @@ func main() {
 	var exit int
 	defer func() { os.Exit(exit) }()
 
-	paletteFile := filepath.Join(os.Getenv("XDG_CONFIG_HOME"), "theme")
+	userConfig, err := os.UserConfigDir()
+	if err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		exit = 1
+		return
+	}
+
+	projectsDir := os.Getenv("PROJECTS_DIR")
+	if projectsDir == "" {
+		fmt.Fprintln(os.Stderr, "PROJECTS_DIR not set")
+		exit = 1
+		return
+	}
+
+	paletteFile := filepath.Join(userConfig, "theme")
 	data, err := os.ReadFile(paletteFile)
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err)
@@ -65,7 +79,7 @@ func main() {
 	changes := map[string][]byte{}
 	reloads := map[string]struct{}{}
 
-	root := filepath.Join(os.Getenv("PROJECTS_DIR"), "dotfiles")
+	root := filepath.Join(projectsDir, "dotfiles")
 	err = filepath.WalkDir(root, func(path string, d fs.DirEntry, err error) error {
 		if err != nil {
 			return err

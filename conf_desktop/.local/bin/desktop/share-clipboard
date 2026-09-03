@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
-[[ "$1" == types ]] && { echo '*/*'; exit; }
+set -u
+
+[[ "${1-}" == types ]] && { echo '*/*'; exit; }
 
 path="$1"
 [[ -f "$path" ]] || exit 1

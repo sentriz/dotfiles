@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -u
+
 acpi_out="$(acpi -b 2>/dev/null | head -1)"
 [[ -z "$acpi_out" ]] && exit
 

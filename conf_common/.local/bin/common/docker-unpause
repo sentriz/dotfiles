@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
 
+set -u
+
 docker ps --format '{{.ID}}' | xargs -r docker unpause

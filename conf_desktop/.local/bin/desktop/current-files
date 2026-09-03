@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
-if [[ "$1" == "resolve" ]]; then
+set -u
+
+if [[ "${1-}" == "resolve" ]]; then
     source="$2" mime="$3"
 
     case "$source" in

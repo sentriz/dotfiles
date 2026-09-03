@@ -1,3 +1,5 @@
 #!/usr/bin/env sh
 
+set -u
+
 cat "$@" | extract-paths -files -vim | ifne "$EDITOR" -q - -c copen

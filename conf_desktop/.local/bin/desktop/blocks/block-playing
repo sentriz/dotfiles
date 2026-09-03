@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -u
+
 # requires:
 # - https://github.com/sentriz/mpris-ctrl
 
@@ -18,7 +20,7 @@ function scroll() {
     mpris
 }
 
-case "$BLOCK_BUTTON" in
+case "${BLOCK_BUTTON-}" in
 1) mpris play-pause ;; # left click
 3) mpris stop ;;       # right click
 4) scroll +1 ;;        # scroll up

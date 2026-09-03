@@ -1,3 +1,5 @@
 #!/usr/bin/env sh
 
+set -u
+
 tr '[:upper:]' '[:lower:]'

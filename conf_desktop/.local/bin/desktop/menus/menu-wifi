@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
+set -u
+
 station="wlan0"
 
-if [[ "$CMENU_MODE" = "preview" ]]; then
+if [[ "${CMENU_MODE-}" = "preview" ]]; then
     readarray -td $'\t' f < <(printf '%s' "$1")
     security="${f[0]}" signal="${f[1]}" name="${f[2]}"
 

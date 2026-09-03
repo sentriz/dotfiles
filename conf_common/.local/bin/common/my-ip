@@ -1,3 +1,5 @@
 #!/usr/bin/env sh
 
+set -u
+
 curl -s "https://httpbin.org/ip" | jq -r .origin

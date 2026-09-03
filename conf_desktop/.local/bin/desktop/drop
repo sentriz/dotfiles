@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
 
+set -u
+
 dragon-drop --thumb-size 64 --on-top "$@"

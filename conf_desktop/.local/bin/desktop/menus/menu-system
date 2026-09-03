@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -u
+
 why="menu-system: lid stay awake"
 
 lid_kept_awake() {

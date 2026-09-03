@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -u
+
 pi_bin=$(PATH="/usr/bin:/usr/local/bin" command -v pi)
 
 extra_dirs=()
@@ -15,7 +17,7 @@ for arg in "$@"; do
     fi
 done
 
-if [ -n "$PI_UNSANDBOXED" ]; then
+if [ -n "${PI_UNSANDBOXED-}" ]; then
     PI_CODING_AGENT_DIR="$XDG_CONFIG_HOME/pi/agent" PI_OFFLINE=1 exec "$pi_bin" "${pi_args[@]}"
 fi
 
@@ -44,12 +46,16 @@ cleanup() {
 }
 trap cleanup EXIT
 
-if [ -n "$DBUS_SESSION_BUS_ADDRESS" ]; then
+if [ -n "${DBUS_SESSION_BUS_ADDRESS-}" ]; then
     dbus_sock="$XDG_RUNTIME_DIR/pi/bus.$$"
     xdg-dbus-proxy "$DBUS_SESSION_BUS_ADDRESS" "$dbus_sock" --filter --talk=org.freedesktop.Notifications &
     cleanups+=("kill $!" "rm -f ${dbus_sock@Q}")
     socks+=("$dbus_sock")
     session_binds+=(--bind-try "$dbus_sock" "$dbus_sock" --setenv DBUS_SESSION_BUS_ADDRESS "unix:path=$dbus_sock")
+fi
+
+if [ -n "${SSH_AUTH_SOCK-}" ]; then
+    session_binds+=(--bind-try "$SSH_AUTH_SOCK" "$SSH_AUTH_SOCK")
 fi
 
 secrets_sock="$XDG_RUNTIME_DIR/pi/secrets.$$"
@@ -58,7 +64,7 @@ cleanups+=("kill $!" "rm -f ${secrets_sock@Q}")
 socks+=("$secrets_sock")
 session_binds+=(--bind "$secrets_sock" "$secrets_sock" --setenv SECRETS_SOCK "$secrets_sock")
 
-if [ -n "$WAYLAND_DISPLAY" ]; then
+if [ -n "${WAYLAND_DISPLAY-}" ]; then
     wayland_sock="$XDG_RUNTIME_DIR/pi/wayland.$$"
     way-secure --socket-path "$wayland_sock" -e pi -a pi &
     cleanups+=("kill $!" "rm -f ${wayland_sock@Q}")
@@ -96,7 +102,6 @@ bwrap \
     --bind "$XDG_DOWNLOAD_DIR" "$XDG_DOWNLOAD_DIR" \
     --bind "$XDG_RUNTIME_DIR/mcp" "$XDG_RUNTIME_DIR/mcp" \
     --bind "$XDG_RUNTIME_DIR/pi" "$XDG_RUNTIME_DIR/pi" \
-    --bind-try "$SSH_AUTH_SOCK" "$SSH_AUTH_SOCK" \
     "${session_binds[@]}" \
     --bind "$PROJECTS_DIR" "$PROJECTS_DIR" \
     "${extra_binds[@]}" \

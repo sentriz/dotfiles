@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -u
+
 if [[ "$#" -gt 0 ]]; then
     readarray -td $'\t' f < <(printf '%s' "$1")
     cmd="${f[1]}"
@@ -54,7 +56,7 @@ fi
 
 country="$(locale | awk -F'[=_.]' '/^LANG=/ {print $3}')"
 
-peers="$(jq -r --arg input "$CMENU_INPUT" --arg country "$country" '
+peers="$(jq -r --arg input "${CMENU_INPUT-}" --arg country "$country" '
     .Peer[]?
     | select(.Location == null or .ExitNode or $input == "all" or .Location.CountryCode == $country)
     | ["peer", (.DNSName | split(".")[0]), .TailscaleIPs[0], (if .Online then "online" else "offline" end),

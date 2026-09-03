@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -u
+
 git diff "$@" -U0 | awk '
   /^\+\+\+/ {f=$2; next}
   /^@@/ {split($3,a,","); sub(/^\+/,"",a[1]); h=f":"a[1]; p=0; next}

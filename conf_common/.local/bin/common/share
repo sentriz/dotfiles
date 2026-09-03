@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -u
+
 [ $# -eq 0 ] && {
     echo "usage:" >&2
     echo "  share list [mime]" >&2
@@ -12,7 +14,7 @@ cmd_prefix="share-"
 
 case "$1" in
 list)
-    mime="$2"
+    mime="${2-}"
     set -f
 
     for cmd in $(compgen -c "$cmd_prefix" | sort -u); do

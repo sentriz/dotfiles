@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -u
+
 # create a chain from source -> virt sink -> pro-q 3 -> hw sink
 # requires yabridge, carla, pipewire
 

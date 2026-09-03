@@ -4,7 +4,7 @@
 #   - pipewire (pw-record)
 #   - whisper-cpp-git
 
-set -e
+set -eu
 
 model_name="tiny_en_acft_q8_0.bin"
 model_url="https://voiceinput.futo.org/VoiceInput/$model_name"

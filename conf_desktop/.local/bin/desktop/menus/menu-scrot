@@ -1,11 +1,14 @@
 #!/usr/bin/env bash
 
+set -u
+
 if [[ "$#" -gt 0 ]]; then
     readarray -td $'\t' f < <(printf '%s' "$1")
-    cmd="${f[0]}" arg="${f[1]}"
+    cmd="${f[0]}"
 
     case "$cmd" in
     "screenshot")
+        arg="${f[1]}"
         filename="${SCREENSHOTS_DIR}/$(date '+%Y%m%d_%H%M%S').png"
 
         {
@@ -32,6 +35,7 @@ if [[ "$#" -gt 0 ]]; then
         ;;
 
     "recording" | "recording audio")
+        arg="${f[1]}"
         filename="${RECORDINGS_DIR}/$(date '+%Y%m%d_%H%M%S').mp4"
 
         extra_args=()

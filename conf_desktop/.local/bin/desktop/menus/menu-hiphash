@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -u
+
 if [[ "$#" -gt 0 ]]; then
     readarray -td $'\t' f < <(printf '%s' "$1")
     name="${f[0]}" hash="${f[1]}" id="${f[2]}"
@@ -15,7 +17,7 @@ if [[ "$#" -gt 0 ]]; then
     exit
 fi
 
-inp="$CMENU_INPUT"
+inp="${CMENU_INPUT-}"
 if [[ -z "$inp" ]]; then
     inp="$(wl-paste -n)"
 fi

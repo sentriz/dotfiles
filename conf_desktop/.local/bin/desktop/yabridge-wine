@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -u
+
 wine="$(which wine)"
 
 export WINEARCH=win64
@@ -13,7 +15,15 @@ mkdir -p "$XDG_CACHE_HOME/wine" 2>/dev/null
 mkdir -p "$XDG_CACHE_HOME/winetricks" 2>/dev/null
 
 share_net=("--unshare-net")
-[[ -n "$WINE_SHARE_NET" ]] && share_net=()
+[[ -n "${WINE_SHARE_NET-}" ]] && share_net=()
+
+session_binds=()
+if [[ -n "${WAYLAND_DISPLAY-}" ]]; then
+    session_binds+=(--bind-try "$XDG_RUNTIME_DIR/$WAYLAND_DISPLAY" "$XDG_RUNTIME_DIR/$WAYLAND_DISPLAY")
+fi
+if [[ -n "${YABRIDGE_TEMP_DIR-}" ]]; then
+    session_binds+=(--bind-try "$YABRIDGE_TEMP_DIR" "$YABRIDGE_TEMP_DIR")
+fi
 
 exec bwrap \
     "${share_net[@]}" \
@@ -29,8 +39,7 @@ exec bwrap \
     --bind-try "$HOME/.vst3" "$HOME/.vst3" \
     --bind-try "$HOME/daw" "$HOME/daw" \
     --tmpfs "$XDG_RUNTIME_DIR" \
-    --bind-try "$XDG_RUNTIME_DIR/$WAYLAND_DISPLAY" "$XDG_RUNTIME_DIR/$WAYLAND_DISPLAY" \
-    --bind-try "$YABRIDGE_TEMP_DIR" "$YABRIDGE_TEMP_DIR" \
+    "${session_binds[@]}" \
     --new-session \
     --die-with-parent \
     "$(basename "$0")" "$@"

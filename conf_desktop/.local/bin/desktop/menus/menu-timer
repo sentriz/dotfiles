@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -u
+
 if [[ "$#" -gt 0 ]]; then
     readarray -td $'\t' f < <(printf '%s' "$1")
     id="${f[0]}"

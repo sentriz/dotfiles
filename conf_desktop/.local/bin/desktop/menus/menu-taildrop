@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -u
+
 if [[ "$#" -gt 0 ]]; then
     readarray -td $'\t' f < <(printf '%s' "$1")
     if [[ "${f[0]}" == "get" ]]; then
@@ -33,7 +35,10 @@ pending="$(tailscale debug localapi v0/files/ 2>/dev/null \
 peers="$(tailscale status --json | jq -r '
     select(.BackendState == "Running") | .Self.UserID as $user | .Peer[]?
     | select(.Online and .UserID == $user) | .DNSName | split(".")[0]')"
-[[ -n "$peers" ]] || exit 0
+if [[ -z "$peers" ]]; then
+    echo "$(cmenu label)no peers online"
+    exit 0
+fi
 
 data="$(cmenu data)"
 

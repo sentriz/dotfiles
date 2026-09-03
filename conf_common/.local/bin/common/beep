@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -u
+
 trap 'exit 1' INT
 
 count="${1:-3}"

@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 
+set -u
+
 jq -r '
   [ 
     path(..)

@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -u
+
 cache="$XDG_CACHE_HOME/emojis"
 if [[ ! -f "$cache" ]]; then
     {

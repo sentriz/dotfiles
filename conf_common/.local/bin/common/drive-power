@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -u
+
 if test $# -eq 0; then
     echo "please provide some drives" >&2
     echo "eg. $0 /dev/sd{b,d,a,c}" >&2

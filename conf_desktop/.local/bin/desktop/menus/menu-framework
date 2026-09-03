@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -u
+
 limits=(80 90)
 
 charge-limit() { sudo framework_tool --charge-limit | grep -Po 'Maximum \K[0-9]+'; }

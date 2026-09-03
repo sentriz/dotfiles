@@ -1,11 +1,13 @@
 #!/usr/bin/env bash
 
+set -u
+
 if [[ "$#" -gt 0 ]]; then
     wl-copy -n <<<"$1"
     exit
 fi
 
-inp="$CMENU_INPUT"
+inp="${CMENU_INPUT-}"
 if [[ "$inp" == "now" ]]; then
     inp="$(date -Iseconds)"
 fi

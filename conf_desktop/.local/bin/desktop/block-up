@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -u
+
 config="$XDG_CONFIG_HOME/i3blocks/config"
 
 function signals() {

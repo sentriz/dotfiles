@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
+set -u
+
 wallpapers="$XDG_PICTURES_DIR/wallpapers"
 
-if [[ "$CMENU_MODE" = "preview" ]]; then
+if [[ "${CMENU_MODE-}" = "preview" ]]; then
     cmenu image "$wallpapers/$1"
     exit 0
 fi

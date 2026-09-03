@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
 
+set -u
+
 HOME="$XDG_CACHE_HOME/aws" exec /usr/bin/aws "$@"

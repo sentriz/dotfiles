@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -u
+
 shopt -s nullglob
 
 declare -A port_browser=([4625]=librewolf [4626]=google-chrome)

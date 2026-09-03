@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
 
+set -u
+
 pg_format "$@" | sed -r 's/(group_concat|json_extract|array_agg) \(/\1\(/gI'

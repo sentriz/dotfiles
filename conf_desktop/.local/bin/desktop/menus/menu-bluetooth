@@ -1,11 +1,13 @@
 #!/usr/bin/env bash
 
+set -u
+
 if ! pidof -q bluetoothd; then
     echo "$(cmenu label)bluetooth off"
     exit 0
 fi
 
-if [[ "$CMENU_MODE" = "preview" ]]; then
+if [[ "${CMENU_MODE-}" = "preview" ]]; then
     readarray -td $'\t' f < <(printf '%s' "$1")
     mac="${f[1]}"
     bluetoothctl info "$mac" \

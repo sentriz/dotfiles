@@ -1,13 +1,15 @@
 #!/usr/bin/env bash
 
+set -u
+
 if [[ "$#" -gt 0 ]]; then
     wl-copy -n <<<"$1"
     exit
 fi
 
-if [[ -z "$CMENU_INPUT" ]]; then
+if [[ -z "${CMENU_INPUT-}" ]]; then
     echo "$(cmenu label)no input"
     exit
 fi
 
-numb "$CMENU_INPUT" || true
+numb "${CMENU_INPUT-}" || true

@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
+set -u
+
 future_file="$XDG_CACHE_HOME/timer_left"
 
-test "$1" = "clear" \
+test "${1-}" = "clear" \
     && rm -f "$future_file" \
     && exit
 

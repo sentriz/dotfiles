@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
 
+set -u
+
 out="$XDG_RUNTIME_DIR/menu-dictate"
 pidfile="$XDG_RUNTIME_DIR/menu-dictate.pid"
 
+pid=""
 read -r pid <"$pidfile" 2>/dev/null
 if [[ -n "$pid" ]] && ! kill -0 "$pid" 2>/dev/null; then
     pid=""

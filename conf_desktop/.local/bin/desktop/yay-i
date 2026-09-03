@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -u
+
 yay --sync --list --quiet \
     | fzf --multi --preview 'yay --sync --info {1}' \
     | xargs --no-run-if-empty --open-tty yay -S

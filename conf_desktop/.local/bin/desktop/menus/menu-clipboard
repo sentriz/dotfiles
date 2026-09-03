@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
 
-readarray -td $'\t' f < <(printf '%s' "$1")
-text="${f[0]}" id="${f[1]}"
+set -u
 
-if [[ "$CMENU_MODE" = "preview" ]]; then
+if [[ "${CMENU_MODE-}" = "preview" ]]; then
+    readarray -td $'\t' f < <(printf '%s' "$1")
+    text="${f[0]}" id="${f[1]}"
+
     if [[ "$text" != "[[ binary data "*" ]]" ]]; then
         cliphist decode "$id"
     elif [[ "$text" =~ [0-9]+x[0-9]+\ \]\]$ ]]; then
@@ -13,6 +15,9 @@ if [[ "$CMENU_MODE" = "preview" ]]; then
 fi
 
 if [[ "$#" -gt 0 ]]; then
+    readarray -td $'\t' f < <(printf '%s' "$1")
+    id="${f[1]}"
+
     cliphist decode "$id" | wl-copy
     exit
 fi

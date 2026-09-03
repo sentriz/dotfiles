@@ -1,10 +1,12 @@
 #!/usr/bin/env sh
 
+set -u
+
 interfaces() {
     networkctl --json=short status | jq '[.Interfaces.[] | select(.OperationalState == "routable" and (.Type == "wlan" or .Type == "ether"))]'
 }
 
-case "$BLOCK_BUTTON" in
+case "${BLOCK_BUTTON-}" in
 1) notify-send "$(interfaces | jq -r '.[] | "\(.Type) \(.Addresses[] | select(.Family == 2 and .ScopeString == "global") | .Address | map(tostring) | join("."))"')" ;;
 esac
 

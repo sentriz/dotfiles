@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -u
+
 # requires:
 # - pip boi-balance
 # - pip revolut
@@ -21,7 +23,7 @@ function get-balance-revolut() {
 }
 
 function get-balance() {
-    case "$BLOCK_INSTANCE" in
+    case "${BLOCK_INSTANCE-}" in
     'boi') get-balance-boi ;;
     'revolut') get-balance-revolut ;;
     *) return 1 ;;
@@ -29,10 +31,10 @@ function get-balance() {
 }
 
 # hide balance with a right click
-test "$BLOCK_BUTTON" -eq 3 2>/dev/null && exit
+test "${BLOCK_BUTTON-}" -eq 3 2>/dev/null && exit
 
 balance="$(get-balance)"
 test -z "$balance" && exit
 
-test "$BLOCK_BUTTON" -eq 1 2>/dev/null && notify-send -- "$BLOCK_INSTANCE updated"
-printf "%'.2f\n" "$balance" | sed -E "s/(\-|\+)?(.*)/$BLOCK_INSTANCE \1€\2/"
+test "${BLOCK_BUTTON-}" -eq 1 2>/dev/null && notify-send -- "${BLOCK_INSTANCE-} updated"
+printf "%'.2f\n" "$balance" | sed -E "s/(\-|\+)?(.*)/${BLOCK_INSTANCE-} \1€\2/"

@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -u
+
 usage() {
     echo "usage: watch-run cmd [arg]... -- [file]..." >&2
     exit 1

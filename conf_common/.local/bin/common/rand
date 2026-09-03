@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -u
+
 if test $# -ne 1; then
     echo "please provide a length" >&2
     exit 1

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -e
+set -eu
 
 export GIT_CONFIG_GLOBAL=/dev/null
 

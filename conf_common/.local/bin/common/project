@@ -36,7 +36,7 @@ func run() error {
 
 	projectsDir := os.Getenv("PROJECTS_DIR")
 	if projectsDir == "" {
-		return fmt.Errorf("read projects dir: %w", err)
+		return fmt.Errorf("PROJECTS_DIR not set")
 	}
 
 	out := bufio.NewWriter(os.Stdout)

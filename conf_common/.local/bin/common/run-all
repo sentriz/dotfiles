@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -u
+
 [ $# -eq 0 ] && {
     echo "usage: run-all 'cmd'..." >&2
     exit 1

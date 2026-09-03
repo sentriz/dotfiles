@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
+set -u
+
 border=2
 
-case "$1" in
+case "${1-}" in
 list)
     printf "%s\n" region monitor window
     ;;

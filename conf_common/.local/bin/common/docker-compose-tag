@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -u
+
 if test $# -ne 2; then
     echo "please provide <service> <tag>" >&2
     exit 1

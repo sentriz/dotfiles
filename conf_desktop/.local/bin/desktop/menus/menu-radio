@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
 
+set -u
+
 pidfile="$XDG_RUNTIME_DIR/menu-radio.pid"
 statsfile="stats.tsv"
 
-if [[ "$CMENU_MODE" = "preview" ]]; then
+if [[ "${CMENU_MODE-}" = "preview" ]]; then
     url="$(rsl ini json <"$RADIO_DIR/$1" | jq -r '.playlist.File1')"
     info="$(
         timeout 8 \
@@ -25,6 +27,7 @@ if [[ "$CMENU_MODE" = "preview" ]]; then
     exit 0
 fi
 
+current_pid="" current_station=""
 [[ -f "$pidfile" ]] && IFS=$'\t' read -r current_pid current_station <"$pidfile"
 if [[ -n "$current_pid" ]] && ! kill -0 "$current_pid" 2>/dev/null; then
     current_pid=""

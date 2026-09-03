@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -u
+
 pidfile="$XDG_RUNTIME_DIR/menu-subsonic.pid"
 
 base="$(secret gonic_url)"
@@ -29,7 +31,7 @@ song-ids() {
     esac
 }
 
-if [[ "$CMENU_MODE" = "preview" ]]; then
+if [[ "${CMENU_MODE-}" = "preview" ]]; then
     readarray -td $'\t' f < <(printf '%s' "$1")
     cover="${f[5]}"
     [[ -z "$cover" ]] && exit 0
@@ -38,6 +40,7 @@ if [[ "$CMENU_MODE" = "preview" ]]; then
     exit 0
 fi
 
+current_pid="" current_id=""
 [[ -f "$pidfile" ]] && IFS=$'\t' read -r current_pid current_id <"$pidfile"
 if [[ -n "$current_pid" ]] && ! kill -0 "$current_pid" 2>/dev/null; then
     current_pid=""
@@ -72,8 +75,8 @@ jq_args=(-r --arg d "$(cmenu data)" --arg hl "$(cmenu highlight)" --arg cur "$cu
 jq_row='def row(kind; year; title; artist):
     "\(if .id == $cur then $hl else "" end)\(kind)\t\(year)\t\(title)\t\(artist)\($d)\(.id)\t\(.coverArt // "")";'
 
-if [[ -n "$CMENU_INPUT" ]]; then
-    api search3 "query=$CMENU_INPUT" artistCount=10 albumCount=20 songCount=20 | jq "${jq_args[@]}" "$jq_row"'
+if [[ -n "${CMENU_INPUT-}" ]]; then
+    api search3 "query=${CMENU_INPUT-}" artistCount=10 albumCount=20 songCount=20 | jq "${jq_args[@]}" "$jq_row"'
         .searchResult3 // {} |
         (.artist[]? | row("artist"; ""; .name; "")),
         (.album[]?  | row("album"; .year // ""; .name; .artist)),

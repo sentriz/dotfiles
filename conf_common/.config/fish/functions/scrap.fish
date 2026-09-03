@@ -1,6 +1,7 @@
 function scrap
-    if not test -d "$SCRAP_DIR"
-        echo "SCRAP_DIR not found" >&2
+    set -q SCRAP_DIR
+    or begin
+        echo "SCRAP_DIR not set" >&2
         return 1
     end
 
