@@ -16,19 +16,9 @@
 
 - Never post replies/comments/messages on my behalf (GitHub, Slack, Linear, email, anywhere) unless explicitly asked. Show me the draft instead; I send it myself. If the platform has a draft tool (e.g. Slack drafts), using that is fine.
 
-- Outputting far too much text by default is hard to parse. Humans don't write this much. Cut aggressively - prioritise the important ideas, drop everything not needed. Err heavily on the side of less.
-- Answer in as few words as the question allows - often a sentence or two. Lead with the answer. No preamble, summary, hedging, or restating the question unless asked. Don't explain unless asked.
-- Prefer short sentences and tight bullets over paragraphs. Don't pad.
-- Follow Grice's maxims:
-  - Quantity: give exactly the information needed - no less, no more.
-  - Quality: be truthful; don't state what you can't support.
-  - Relation: only say what's pertinent to the question.
-  - Manner: be clear, brief, orderly; avoid obscurity and ambiguity.
+- Answer in as few words as the question allows - often a sentence or two. Lead with the answer. No preamble, summary, hedging, or restating the question. Don't explain unless asked. Humans don't write as much as you default to - cut aggressively, err heavily on the side of less.
+- Prefer short sentences and tight bullets over paragraphs. Don't pad. Follow Grice's maxims.
 - These rules apply just as hard to text you write *for* me - drafts, replies, comments, PR bodies, commit messages, issue descriptions. Write what I would write: a couple of sentences, plain, no background the reader already has, no bullet lists of everything considered, no sign-off flourishes. If a draft is longer than the thing it's replying to, it's too long.
-
-# Pull Requests
-
-- Don't open PRs unless explicitly asked. When asked, follow the commit skill - it covers both the commit message and the PR body.
 
 # Code Style
 
@@ -48,12 +38,6 @@
 - When reading a main file under 500 lines, read it all in one go - don't chunk it. You can use `wc -l` first to measure the line count. This applies when the codebase is very small - list the root directory to check.
 - When changing approach or moving code, always clean up dormant/redundant artefacts left behind.
 
-# Pi
-
-- pi is installed at `/usr/lib/pi-coding-agent` (docs in `/usr/lib/pi-coding-agent/docs`); the binary is bun-compiled with the JS embedded, so grepping it for strings is futile - search the docs
-- `which pi` is a `bwrap` wrapper that binds `$XDG_CONFIG_HOME/pi` and sets `PI_CODING_AGENT_DIR`
-- If something fails because of the `bwrap` sandbox (missing path, read-only mount, denied access, etc) and a small wrapper tweak would fix it for good, stop and ask me to adjust the sandbox rather than working around it.
-
 # Environment
 
 - When showing me shell commands to run, use my shell's syntax (check `$SHELL`). Commands you run yourself via the bash tool are still bash.
@@ -66,11 +50,3 @@
 - Use `q` instead of `dig` for DNS queries.
 - Some `~/.local/bin` scripts shadow system commands (`col`, `sum`, `diff`). They are unrelated to the originals - use `/usr/bin/<cmd>` when you want the system one.
 - Projects are stored at `$PROJECTS_DIR/<x>`. "project <x>" or "<x> project" mean a directory there.
-
-# Go
-
-- For renames spanning more than one site, use `gopls rename -w <file>:<line>:<col> <newName>` instead of hand-edits. Run `gofmt -w` after if struct field alignment is disturbed.
-- Prefer `gopls` for LSP-style queries (`references`, `implementation`, `definition`, `call_hierarchy`) over `grep` when the question is "where is X used / defined / implemented" - it understands types, embedding, and interfaces; `grep` doesn't.
-- When building a slice in a loop, prefer `make([]T, 0, n)` + `append` over `make([]T, n)` + indexed assignment.
-- Keep the number of functions low. Long functions are fine - less indirection is easier to read. Only extract a function when the work is reused or needs testing; a function should have more than one caller. This keeps the package namespace uncluttered and spares readers wondering "who calls this?" when the answer is one place that could be inlined. A guideline, not a hard rule - keep the philosophy in mind.
-- Generally don't write methods. Only write a method if it mutates the struct or is required to satisfy an interface - otherwise make it a normal function.

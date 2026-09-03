@@ -1,6 +1,6 @@
 ---
 name: tasks
-description: Personal task/topic tracker stored in a YAML file. Use when the user asks what's open, where they're needed, to add/close/update a task, or runs a sync to pull updates from email, Slack, Linear, GitHub since the last sync.
+description: Use when the user asks what's open, where they're needed, to add/close/update a task, or runs a sync to pull updates from email, Slack, Linear, GitHub - a personal task tracker kept in a YAML file.
 ---
 
 # tasks
