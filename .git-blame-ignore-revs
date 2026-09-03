@@ -1,2 +1,2 @@
-# add set -u to all bash/sh scripts
-a2f20517210743472523cd378ea4bde55de7b67b
+# error when expected env vars are unset (set -u across all bash/sh scripts)
+28c72042d8d30fbb14476e0226cd073e53c4f4ed
