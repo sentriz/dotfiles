@@ -1,5 +1,10 @@
 set -gx fish_colour_host brgreen
 
+set -gx SCREENSHOTS_DIR "$XDG_PICTURES_DIR/screenshots"
+set -gx RECORDINGS_DIR "$XDG_PICTURES_DIR/recordings"
+set -gx RADIO_DIR "$HOME/radio"
+set -gx NOTES_DIR "$HOME/notes"
+
 set -gx LIBSEAT_BACKEND logind
 set -gx XDG_CURRENT_DESKTOP sway
 set -gx XDG_SESSION_TYPE wayland
@@ -12,6 +17,13 @@ set -gx --path XDG_DATA_DIRS \
     /var/lib/flatpak/exports/share \
     "$XDG_DATA_HOME/flatpak/exports/share" \
     "$XDG_DATA_HOME"
+
+set -a fish_user_paths \
+    /var/lib/flatpak/exports/bin \
+    "$XDG_DATA_HOME/flatpak/exports/bin" \
+    /opt/Etcher \
+    /opt/balenaEtcher \
+    /opt/flutter/bin/
 
 set -gx TERMINAL foot
 set -gx TERMINAL_LIGHT foot -o initial-color-theme=light
@@ -37,10 +49,6 @@ set -gx PYTHONHISTFILE "$XDG_CACHE_HOME/python_history"
 
 set -gx YABRIDGE_TEMP_DIR "$XDG_RUNTIME_DIR/yabridge"
 set -gx YABRIDGE_DEBUG_LEVEL ''
-
-function p --argument project
-    cd "$PROJECTS_DIR/$project"
-end
 
 if status is-login
     dbus-update-activation-environment --systemd SSH_AUTH_SOCK XDG_DATA_DIRS PATH

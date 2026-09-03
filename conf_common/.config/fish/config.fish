@@ -15,11 +15,7 @@ and locale \
     | source
 
 set -gx SCRAP_DIR "$HOME/scrap"
-set -gx SCREENSHOTS_DIR "$XDG_PICTURES_DIR/screenshots"
-set -gx RECORDINGS_DIR "$XDG_PICTURES_DIR/recordings"
-set -gx RADIO_DIR "$HOME/radio"
 set -gx PROJECTS_DIR "$HOME/projects"
-set -gx NOTES_DIR "$HOME/notes"
 
 set -gx EDITOR nvim
 set -gx PAGER vpager
@@ -48,8 +44,6 @@ set -gx fish_user_paths \
     $HOME/.local/bin \
     $HOME/.local/bin/*/ \
     $HOME/.local/bin/*/*/ \
-    /var/lib/flatpak/exports/bin \
-    $XDG_DATA_HOME/flatpak/exports/bin \
     $GOPATH/bin \
     $FNM_DIR/current/bin \
     $NPM_CONFIG_PREFIX/bin \
@@ -60,16 +54,15 @@ set -gx fish_user_paths \
     /usr/local/bin \
     /usr/local/sbin \
     /bin \
-    /opt/Etcher \
-    /opt/balenaEtcher \
     /sbin \
     /usr/bin \
     /usr/bin/vendor_perl \
     /usr/sbin \
-    /usr/share/git/git-jump/ \
-    /opt/flutter/bin/
+    /usr/share/git/git-jump/
 
-source "$__fish_config_dir/config.$HOSTNAME.fish" 2>/dev/null
+for file in $__fish_config_dir/config.*.fish
+    source "$file"
+end
 
 # only interactive from here onwards
 status is-interactive || exit
