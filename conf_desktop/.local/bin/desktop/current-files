@@ -35,7 +35,10 @@ if grep -qx 'text/uri-list' <<<"$types"; then
 fi
 
 files="$(for dir in "$XDG_DOWNLOAD_DIR" "$SCREENSHOTS_DIR" "$RECORDINGS_DIR"; do
-    find "$dir" -maxdepth 1 -type f -size +0 ! -name '*.part' ! -name '*.crdownload' -printf '%T@\t%p\n' 2>/dev/null | sort -rn | head -1
+    age=()
+    [[ "$dir" == "$XDG_DOWNLOAD_DIR" ]] && age=(-mmin -15)
+
+    find "$dir" -maxdepth 1 -type f -size +0 "${age[@]}" ! -name '*.part' ! -name '*.crdownload' -printf '%T@\t%p\n' 2>/dev/null | sort -rn | head -1
 done \
     | sort -rn \
     | while IFS=$'\t' read -r mtime file; do
