@@ -38,9 +38,9 @@ lid_pre="$stay"
 lid_kept_awake && lid_pre="$stay$highlight"
 
 printf '%suptime %s\n' "$(cmenu label)" "$(uptime --pretty | sed 's/^up //')"
-printf '%s%s%s\n' \
+printf '%s\t%s%s\n' \
     suspend "$data" suspend \
     hibernate "$data" hibernate \
     reboot "$data" reboot \
     shutdown "$data" shutdown
-printf '%s%s%s%s\n' "$lid_pre" "lid stay awake" "$data" lid
+printf '%s%s\t%s%s\n' "$lid_pre" "lid stay awake" "$data" lid

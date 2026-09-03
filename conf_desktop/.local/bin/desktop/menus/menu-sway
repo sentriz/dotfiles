@@ -37,8 +37,8 @@ wait "${tabs_pids[@]}"
 
 awk -F'\t' -v hl="$(cmenu highlight)" -v d="$(cmenu data)" '
 function winpfx(id) { sub(/\..*/, "", id); return id }
-function winrow(name) { printf "%s%s\t%s%s%s\t\t\n", ($5 != "" ? hl : ""), $2, name, d, $1 }
-function tabrow(port, i, con) { printf "\t%s %s%s%s\t%s\t%s\n", urls[port, i], titles[port, i], d, con, port, ids[port, i] }
+function winrow(name) { printf "%s%s\t%s\t%s%s\t\t\n", ($5 != "" ? hl : ""), $2, name, d, $1 }
+function tabrow(port, i, con) { printf "\t%s %s\t%s%s\t%s\t%s\n", urls[port, i], titles[port, i], d, con, port, ids[port, i] }
 
 $0 == "" { next }
 

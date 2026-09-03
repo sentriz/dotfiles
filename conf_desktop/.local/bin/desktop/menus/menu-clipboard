@@ -31,4 +31,4 @@ cmp -s <(cliphist decode "$newest_id") <(wl-paste -n 2>/dev/null) && current_id=
 
 cliphist list \
     | awk -F'\t' -v d="$(cmenu data)" -v hl="$(cmenu highlight)" -v cur="$current_id" \
-        '{ id = $1; sub(/^[^\t]*\t/, ""); printf "%s%s%s%s\n", (id == cur ? hl : ""), $0, d, id }'
+        '{ id = $1; sub(/^[^\t]*\t/, ""); printf "%s%s\t%s%s\n", (id == cur ? hl : ""), $0, d, id }'

@@ -28,7 +28,7 @@ status="$(mpris)"
 
 data="$(cmenu data)"
 
-printf '%s%s%s\n' \
+printf '%s\t%s%s\n' \
     play-pause "$data" play-pause \
     "next track" "$data" next \
     "previous track" "$data" previous \

@@ -44,5 +44,5 @@ data="$(cmenu data)"
 bluetoothctl devices | grep "^D" | lower | while IFS=" " read -r _ mac name; do
     pre=""
     [[ "${connected_macs[*]}" =~ $mac ]] && pre="$highlight"
-    printf '%s%s%s%s\n' "$pre" "$name" "$data" "$mac"
+    printf '%s%s\t%s%s\n' "$pre" "$name" "$data" "$mac"
 done

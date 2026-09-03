@@ -15,7 +15,7 @@ fi
 
 data="$(cmenu data)"
 
-printf '%s%s%s\n' \
+printf '%s\t%s%s\n' \
     "lock screen" "$data" lock \
     "exit sway" "$data" exit \
     "reload config" "$data" reload

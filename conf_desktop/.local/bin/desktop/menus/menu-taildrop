@@ -47,6 +47,6 @@ while IFS=$'\t' read -r _ mime source; do
     [[ -f "$source" ]] && label="$(basename "$(dirname "$source")")/$(basename "$source")"
 
     for peer in $peers; do
-        printf '%s\t%s\t%s%s\n' "$mime" "$label" "$peer" "$data$source"
+        printf '%s\t%s\t%s\t%s\n' "$mime" "$label" "$peer" "$data$source"
     done
 done < <(current-files)

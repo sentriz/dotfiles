@@ -33,8 +33,8 @@ if [[ "${CMENU_INPUT-}" != *\? ]]; then
     data="$(cmenu data)"
 
     echo "$(cmenu label)no question"
-    printf '%smodel\t%s%s%s\n' "$stay" "$model" "$data" "$next_model:$thinking"
-    printf '%sthinking\t%s%s%s\n' "$stay" "$thinking" "$data" "$model:$next_thinking"
+    printf '%smodel\t%s\t%s%s\n' "$stay" "$model" "$data" "$next_model:$thinking"
+    printf '%sthinking\t%s\t%s%s\n' "$stay" "$thinking" "$data" "$model:$next_thinking"
     exit
 fi
 

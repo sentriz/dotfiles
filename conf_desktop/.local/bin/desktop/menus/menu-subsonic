@@ -73,7 +73,7 @@ fi
 jq_args=(-r --arg d "$(cmenu data)" --arg hl "$(cmenu highlight)" --arg cur "$current_id")
 # shellcheck disable=SC2016
 jq_row='def row(kind; year; title; artist):
-    "\(if .id == $cur then $hl else "" end)\(kind)\t\(year)\t\(title)\t\(artist)\($d)\(.id)\t\(.coverArt // "")";'
+    "\(if .id == $cur then $hl else "" end)\(kind)\t\(year)\t\(title)\t\(artist)\t\($d)\(.id)\t\(.coverArt // "")";'
 
 if [[ -n "${CMENU_INPUT-}" ]]; then
     api search3 "query=${CMENU_INPUT-}" artistCount=10 albumCount=20 songCount=20 | jq "${jq_args[@]}" "$jq_row"'
