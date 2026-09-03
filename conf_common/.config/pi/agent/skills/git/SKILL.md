@@ -1,6 +1,6 @@
 ---
 name: git
-description: Use for any git work - staging, committing, branching, opening or writing a PR
+description: Use for any git work - staging, committing, branching, opening, or writing a PR
 ---
 
 ## Staging

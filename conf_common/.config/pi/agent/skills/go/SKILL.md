@@ -1,6 +1,6 @@
 ---
 name: go
-description: Use when reading, writing or refactoring Go code
+description: Use when reading, writing, or refactoring Go code
 ---
 
 - Keep the number of functions low. Long functions are fine - less indirection is easier to read. Only extract a function when the work is reused or needs testing; a function should have more than one caller. This keeps the package namespace uncluttered and spares readers wondering "who calls this?" when the answer is one place that could be inlined. A guideline, not a hard rule - keep the philosophy in mind.

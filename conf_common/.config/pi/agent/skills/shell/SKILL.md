@@ -1,6 +1,6 @@
 ---
 name: shell
-description: Use when reading, writing or refactoring shell scripts - bash, sh or fish
+description: Use when reading, writing, or refactoring shell scripts - bash, sh, or fish
 ---
 
 - `set -u` goes in every bash/sh script, right after the shebang. A script that depends on an env var should abort when it is unset, not act on an empty string.

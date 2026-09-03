@@ -13,6 +13,7 @@
 # Communication
 
 - Use Irish English spelling and vocabulary (colour, organise, etc).
+- Use the Oxford comma.
 
 - Never post replies/comments/messages on my behalf (GitHub, Slack, Linear, email, anywhere) unless explicitly asked. Show me the draft instead; I send it myself. If the platform has a draft tool (e.g. Slack drafts), using that is fine.
 
