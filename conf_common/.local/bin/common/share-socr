@@ -1,7 +1,12 @@
 #!/usr/bin/env fish
 
 if test "$argv[1]" = types
-    echo 'image/*'
+    echo 'image/gif'
+    echo 'image/png'
+    echo 'image/jpeg'
+    echo 'video/webm'
+    echo 'video/mp4'
+    echo 'video/mpeg'
     exit
 end
 
