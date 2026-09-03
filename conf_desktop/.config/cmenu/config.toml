@@ -43,7 +43,7 @@
   triggers = ["on-start", "pre p"]
   name = "package"
   path = "menu-package"
-  colour = 10
+  colour = 2
 
 [[scripts]]
   triggers = ["pre pw", "pre pass"]
@@ -85,7 +85,7 @@
   triggers = ["pre m"]
   name = "subsonic"
   path = "menu-subsonic"
-  colour = 14
+  colour = 6
   stay_open = true
   preview = true
   debounce = "300ms"
@@ -108,7 +108,7 @@
   triggers = ["pre s"]
   name = "scrot"
   path = "menu-scrot"
-  colour = 3
+  colour = 11
 
 [[scripts]]
   triggers = ["pre f", "interval 750ms", "script scrot"]
