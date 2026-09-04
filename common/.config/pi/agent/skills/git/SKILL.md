@@ -7,6 +7,10 @@ description: Use for any git work - staging, committing, branching, opening, or 
 
 Stage the files you worked on by name, or `git add -u` when that covers it. Never `git add -A` or `git add .`.
 
+## Folding into unpushed commits
+
+Unpushed history should tell a lean story. If a change modifies or undoes something from an earlier unpushed commit, fold it in (`git commit --fixup`/`--amend`, then `git rebase --autosquash`) rather than adding a new commit. Check `git log --oneline @{upstream}..` to see what's unpushed.
+
 ## Commit messages
 
 Check `git log --oneline -10` for the project's style, then:
