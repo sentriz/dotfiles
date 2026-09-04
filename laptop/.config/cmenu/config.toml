@@ -64,7 +64,7 @@
   path = "menu-subsonic"
 
 [[scripts]]
-  triggers = ["script audio", "script radio", "script subsonic", "interval 750ms"]
+  triggers = ["pre mp", "script audio", "script radio", "script subsonic", "interval 750ms"]
   name = "mpris"
   path = "menu-mpris"
 
