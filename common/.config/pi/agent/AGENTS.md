@@ -36,6 +36,7 @@
 
 # Workflow
 
+- Before your first edit or write to a file, check the skill list for a match on that file's language and load it. Do this even if the session started as a discussion.
 - When reading a main file under 500 lines, read it all in one go - don't chunk it. You can use `wc -l` first to measure the line count. This applies when the codebase is very small - list the root directory to check.
 - When changing approach or moving code, always clean up dormant/redundant artefacts left behind.
 
