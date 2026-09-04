@@ -1,66 +1,63 @@
 [submodule "conf_common/.local/share/nvim/site/pack/look/opt/tpope/vim-vinegar"]
-	path = conf_common/.local/share/nvim/site/pack/plugins/start/vim-vinegar
+	path = common/.local/share/nvim/site/pack/plugins/start/vim-vinegar
 	url = https://github.com/tpope/vim-vinegar
 [submodule "conf_common/.local/share/nvim/site/pack/meta/opt/christoomey/vim-tmux-navigator"]
-	path = conf_common/.local/share/nvim/site/pack/plugins/start/vim-tmux-navigator
+	path = common/.local/share/nvim/site/pack/plugins/start/vim-tmux-navigator
 	url = https://github.com/christoomey/vim-tmux-navigator
-[submodule "conf_common/.local/share/nvim/site/pack/text/opt/tpope/vim-surround"]
-	path = conf_common/.local/share/nvim/site/pack/plugins/start/vim-surround
-	url = https://github.com/tpope/vim-surround
 [submodule "conf_common/.local/share/nvim/site/pack/text/opt/sentriz/vim-print-debug"]
-	path = conf_common/.local/share/nvim/site/pack/plugins/start/vim-print-debug
+	path = common/.local/share/nvim/site/pack/plugins/start/vim-print-debug
 	url = https://github.com/sentriz/vim-print-debug
 [submodule "conf_common/.config/fish/plugins/jethrokuan/fzf"]
-	path = conf_common/.config/fish/plugins/fzf
+	path = common/.config/fish/plugins/fzf
 	url = https://github.com/jethrokuan/fzf
 [submodule "conf_common/.config/fish/plugins/jethrokuan/z"]
-	path = conf_common/.config/fish/plugins/z
+	path = common/.config/fish/plugins/z
 	url = https://github.com/jethrokuan/z
 [submodule "conf_common/.local/share/nvim/site/pack/plugins/start/vim-sleuth"]
-	path = conf_common/.local/share/nvim/site/pack/plugins/start/vim-sleuth
+	path = common/.local/share/nvim/site/pack/plugins/start/vim-sleuth
 	url = https://github.com/tpope/vim-sleuth
 [submodule "conf_common/.local/share/nvim/site/pack/plugins/start/vim-exchange"]
-	path = conf_common/.local/share/nvim/site/pack/plugins/start/vim-exchange
+	path = common/.local/share/nvim/site/pack/plugins/start/vim-exchange
 	url = https://github.com/tommcdo/vim-exchange
 [submodule "conf_common/.local/share/nvim/site/pack/plugins/start/nvim-lspconfig"]
-	path = conf_common/.local/share/nvim/site/pack/plugins/start/nvim-lspconfig
+	path = common/.local/share/nvim/site/pack/plugins/start/nvim-lspconfig
 	url = https://github.com/neovim/nvim-lspconfig
 [submodule "conf_common/.local/share/nvim/site/pack/plugins/start/plenary.nvim"]
-	path = conf_common/.local/share/nvim/site/pack/plugins/start/plenary.nvim
+	path = common/.local/share/nvim/site/pack/plugins/start/plenary.nvim
 	url = https://github.com/nvim-lua/plenary.nvim
 [submodule "conf_common/.config/fish/plugins/franciscolourenco/done"]
-	path = conf_common/.config/fish/plugins/done
+	path = common/.config/fish/plugins/done
 	url = https://github.com/franciscolourenco/done
 [submodule "conf_common/.local/share/nvim/site/pack/plugins/start/nvim-treesitter-context"]
-	path = conf_common/.local/share/nvim/site/pack/plugins/start/nvim-treesitter-context
+	path = common/.local/share/nvim/site/pack/plugins/start/nvim-treesitter-context
 	url = https://github.com/romgrk/nvim-treesitter-context
 [submodule "conf_common/.local/share/nvim/site/pack/plugins/start/nvim-dap"]
-	path = conf_common/.local/share/nvim/site/pack/plugins/start/nvim-dap
+	path = common/.local/share/nvim/site/pack/plugins/start/nvim-dap
 	url = https://github.com/mfussenegger/nvim-dap
 [submodule "conf_common/.local/share/nvim/site/pack/plugins/start/QFEnter"]
-	path = conf_common/.local/share/nvim/site/pack/plugins/start/QFEnter
+	path = common/.local/share/nvim/site/pack/plugins/start/QFEnter
 	url = https://github.com/yssl/QFEnter
 [submodule "conf_common/.local/share/nvim/site/pack/plugins/start/mini.nvim.git"]
-	path = conf_common/.local/share/nvim/site/pack/plugins/start/mini.nvim.git
+	path = common/.local/share/nvim/site/pack/plugins/start/mini.nvim.git
 	url = https://github.com/echasnovski/mini.nvim.git
 [submodule "conf_common/.config/fish/plugins/fish-async-prompt"]
-	path = conf_common/.config/fish/plugins/fish-async-prompt
+	path = common/.config/fish/plugins/fish-async-prompt
 	url = https://github.com/acomagu/fish-async-prompt
 [submodule "conf_common/.local/share/nvim/site/pack/plugins/start/mini.surround"]
-	path = conf_common/.local/share/nvim/site/pack/plugins/start/mini.surround
+	path = common/.local/share/nvim/site/pack/plugins/start/mini.surround
 	url = https://github.com/echasnovski/mini.surround
 [submodule "conf_common/.local/share/nvim/site/pack/plugins/start/none-ls.nvim"]
-	path = conf_common/.local/share/nvim/site/pack/plugins/start/none-ls.nvim
+	path = common/.local/share/nvim/site/pack/plugins/start/none-ls.nvim
 	url = https://github.com/nvimtools/none-ls.nvim
 [submodule "conf_common/.local/share/nvim/site/pack/plugins/start/incselect.nvim"]
-	path = conf_common/.local/share/nvim/site/pack/plugins/start/incselect.nvim
+	path = common/.local/share/nvim/site/pack/plugins/start/incselect.nvim
 	url = https://github.com/shushtain/incselect.nvim
 [submodule "conf_common/.local/share/nvim/site/pack/plugins/start/symbol-usage.nvim"]
-	path = conf_common/.local/share/nvim/site/pack/plugins/start/symbol-usage.nvim
+	path = common/.local/share/nvim/site/pack/plugins/start/symbol-usage.nvim
 	url = https://github.com/Wansmer/symbol-usage.nvim
 [submodule "conf_common/.local/share/nvim/site/pack/plugins/start/oil.nvim"]
-	path = conf_common/.local/share/nvim/site/pack/plugins/start/oil.nvim
+	path = common/.local/share/nvim/site/pack/plugins/start/oil.nvim
 	url = https://github.com/stevearc/oil.nvim
 [submodule "conf_common/.config/pi/agent/extensions/pi-anthropic-auth"]
-	path = conf_common/.config/pi/agent/extensions/pi-anthropic-auth
+	path = common/.config/pi/agent/extensions/pi-anthropic-auth
 	url = https://github.com/gotgenes/pi-anthropic-auth

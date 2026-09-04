@@ -12,6 +12,8 @@ switch "$BLOCK_BUTTON"
 end
 
 set now_secs (date "+%s")
+# TODO: khal exposes each event's own reminders via {alarms-list} (eg "reminder@-10m"),
+# so we could use those instead of a fixed buffer to decide when to start showing the "(in ...)"
 set buffer_hours 6
 
 set ignored (cat "$XDG_CONFIG_HOME/calendar-ignore")
