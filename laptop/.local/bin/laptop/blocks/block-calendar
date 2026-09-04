@@ -18,6 +18,13 @@ set buffer_hours 6
 
 set ignored (cat "$XDG_CONFIG_HOME/calendar-ignore")
 
+# rank by start clamped to now, so events already running all tie and the earliest-ending one wins
+function is_sooner -a key end best_key best_end
+    test -z "$best_key"; and return 0
+    test "$key" -lt "$best_key"; and return 0
+    test "$key" -eq "$best_key"; and test "$end" -lt "$best_end"
+end
+
 khal list today tomorrow -df "" -f "{start-date}{tab}{start-time}{tab}{end-date}{tab}{end-time}{tab}{title}" | while read -d \t start_date start_time end_date end_time title
     contains "$title" "$ignored"; and continue
 
@@ -32,10 +39,13 @@ khal list today tomorrow -df "" -f "{start-date}{tab}{start-time}{tab}{end-date}
     set diff (math "$start_secs - $now_secs")
     test "$diff" -gt (math "3600 * $buffer_hours"); and continue
 
+    set key_secs (math "max($start_secs, $now_secs)")
+
     if test -n "$is_all_day"
-        if test -z "$all_day_end"; or test "$end_secs" -lt "$all_day_end"
-            set all_day_end $end_secs
+        if is_sooner $key_secs $end_secs $all_day_key $all_day_end
+            set all_day_key $key_secs
             set all_day_start $start_secs
+            set all_day_end $end_secs
             set all_day_title $title
         end
         continue
@@ -45,19 +55,20 @@ khal list today tomorrow -df "" -f "{start-date}{tab}{start-time}{tab}{end-date}
         notify-send -- "$diff sec until $title"
     end
 
-    if test -z "$next_end"; or test "$end_secs" -lt "$next_end"
+    if is_sooner $key_secs $end_secs $next_key $next_end
+        set next_key $key_secs
         set next_start $start_secs
         set next_end $end_secs
         set next_title $title
     end
 end
 
-if test -z "$next_end"
+if test -z "$next_start"
     set next_end $all_day_end
     set next_start $all_day_start
     set next_title $all_day_title
 end
-test -z "$next_end"; and exit 0
+test -z "$next_start"; and exit 0
 
 set rel now
 set diff (math "$next_start - $now_secs")
