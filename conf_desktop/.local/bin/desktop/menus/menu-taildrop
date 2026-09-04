@@ -3,13 +3,11 @@
 set -u
 
 if [[ "$#" -gt 0 ]]; then
-    readarray -td $'\t' f < <(printf '%s' "$1")
-    if [[ "${f[0]}" == "get" ]]; then
+    IFS=$'\t' read -r mime _ peer source <<<"$1"
+    if [[ "$mime" == "get" ]]; then
         tailscale file get --conflict=rename "$XDG_DOWNLOAD_DIR" || notify-send "get failed"
         exit 0
     fi
-
-    mime="${f[0]}" peer="${f[2]}" source="${f[3]}"
 
     if ! path="$(current-files resolve "$source" "$mime")"; then
         notify-send "send failed" "$source is gone"
@@ -40,13 +38,16 @@ if [[ -z "$peers" ]]; then
     exit 0
 fi
 
-data="$(cmenu data)"
+cmenu set \
+    colour 14 \
+    stay_open true \
+    hide 4
 
 while IFS=$'\t' read -r _ mime source; do
     label="$source"
     [[ -f "$source" ]] && label="$(basename "$(dirname "$source")")/$(basename "$source")"
 
     for peer in $peers; do
-        printf '%s\t%s\t%s\t%s\n' "$mime" "$label" "$peer" "$data$source"
+        printf '%s\t%s\t%s\t%s\n' "$mime" "$label" "$peer" "$source"
     done
 done < <(current-files)

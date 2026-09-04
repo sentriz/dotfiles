@@ -30,6 +30,10 @@ if [[ "$#" -gt 0 ]]; then
     exit
 fi
 
+cmenu set \
+    colour 7 \
+    preview true
+
 highlight="$(cmenu highlight)"
 
 running="$(virsh list --name | grep .)"

@@ -3,8 +3,7 @@
 set -u
 
 if [[ "$#" -gt 0 ]]; then
-    readarray -td $'\t' f < <(printf '%s' "$1")
-    id="${f[1]}"
+    IFS=$'\t' read -r _ id <<<"$1"
     case "$id" in
     lock) swaylock ;;
     exit) swaymsg exit ;;
@@ -13,9 +12,11 @@ if [[ "$#" -gt 0 ]]; then
     exit
 fi
 
-data="$(cmenu data)"
+cmenu set \
+    colour 11 \
+    hide 2
 
-printf '%s\t%s%s\n' \
-    "lock screen" "$data" lock \
-    "exit sway" "$data" exit \
-    "reload config" "$data" reload
+printf '%s\t%s\n' \
+    "lock screen" lock \
+    "exit sway" exit \
+    "reload config" reload

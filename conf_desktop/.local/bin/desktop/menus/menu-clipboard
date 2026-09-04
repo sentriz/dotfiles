@@ -3,8 +3,7 @@
 set -u
 
 if [[ "${CMENU_MODE-}" = "preview" ]]; then
-    readarray -td $'\t' f < <(printf '%s' "$1")
-    text="${f[0]}" id="${f[1]}"
+    IFS=$'\t' read -r id text <<<"$1"
 
     if [[ "$text" != "[[ binary data "*" ]]" ]]; then
         cliphist decode "$id"
@@ -15,8 +14,7 @@ if [[ "${CMENU_MODE-}" = "preview" ]]; then
 fi
 
 if [[ "$#" -gt 0 ]]; then
-    readarray -td $'\t' f < <(printf '%s' "$1")
-    id="${f[1]}"
+    IFS=$'\t' read -r id _ <<<"$1"
 
     cliphist decode "$id" | wl-copy
     exit
@@ -29,6 +27,11 @@ newest_id="$(cliphist list | head -1 | cut -f1)"
 current_id=""
 cmp -s <(cliphist decode "$newest_id") <(wl-paste -n 2>/dev/null) && current_id="$newest_id"
 
+cmenu set \
+    colour 3 \
+    preview true \
+    hide 1
+
 cliphist list \
-    | awk -F'\t' -v d="$(cmenu data)" -v hl="$(cmenu highlight)" -v cur="$current_id" \
-        '{ id = $1; sub(/^[^\t]*\t/, ""); printf "%s%s\t%s%s\n", (id == cur ? hl : ""), $0, d, id }'
+    | awk -F'\t' -v hl="$(cmenu highlight)" -v cur="$current_id" \
+        '{ id = $1; sub(/^[^\t]*\t/, ""); gsub(/\t/, " "); printf "%s%s\t%s\n", (id == cur ? hl : ""), id, $0 }'

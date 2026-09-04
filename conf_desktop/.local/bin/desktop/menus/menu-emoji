@@ -16,4 +16,6 @@ if [[ "$#" -gt 0 ]]; then
     exit
 fi
 
+cmenu set colour 13
+
 cat "$cache"

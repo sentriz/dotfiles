@@ -3,12 +3,10 @@
 set -u
 
 if [[ "$#" -gt 0 ]]; then
-    readarray -td $'\t' f < <(printf '%s' "$1")
-    cmd="${f[0]}"
+    IFS=$'\t' read -r cmd arg <<<"$1"
 
     case "$cmd" in
     "screenshot")
-        arg="${f[1]}"
         filename="${SCREENSHOTS_DIR}/$(date '+%Y%m%d_%H%M%S').png"
 
         {
@@ -35,7 +33,6 @@ if [[ "$#" -gt 0 ]]; then
         ;;
 
     "recording" | "recording audio")
-        arg="${f[1]}"
         filename="${RECORDINGS_DIR}/$(date '+%Y%m%d_%H%M%S').mp4"
 
         extra_args=()
@@ -67,6 +64,8 @@ if [[ "$#" -gt 0 ]]; then
 
     exit
 fi
+
+cmenu set colour 11
 
 recording=false
 if pidof -q wf-recorder; then

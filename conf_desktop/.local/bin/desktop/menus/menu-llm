@@ -6,14 +6,19 @@ settings="$XDG_CONFIG_HOME/pi/agent/settings.json"
 state="$XDG_RUNTIME_DIR/menu-llm-$PPID"
 
 if [[ "$#" -gt 0 ]]; then
-    readarray -td $'\t' f < <(printf '%s' "$1")
-    if [[ -n "${f[2]-}" ]]; then
-        printf '%s\n' "${f[2]}" >"$state"
+    IFS=$'\t' read -r _ _ spec <<<"$1"
+    if [[ -n "$spec" ]]; then
+        printf '%s\n' "$spec" >"$state"
     else
         wl-copy -n <<<"$1"
     fi
     exit
 fi
+
+cmenu set \
+    colour 2 \
+    wrap true \
+    debounce 200ms
 
 spec="$(jq -r '.defaultProvider + "/" + .defaultModel + ":" + .defaultThinkingLevel' "$settings")"
 [[ -s "$state" ]] && read -r spec <"$state"
@@ -30,11 +35,12 @@ if [[ "${CMENU_INPUT-}" != *\? ]]; then
     next_thinking="${thinkings[$(((i + 1) % ${#thinkings[@]}))]}"
 
     stay="$(cmenu stay)"
-    data="$(cmenu data)"
+
+    cmenu set hide 3
 
     echo "$(cmenu label)no question"
-    printf '%smodel\t%s\t%s%s\n' "$stay" "$model" "$data" "$next_model:$thinking"
-    printf '%sthinking\t%s\t%s%s\n' "$stay" "$thinking" "$data" "$model:$next_thinking"
+    printf '%smodel\t%s\t%s\n' "$stay" "$model" "$next_model:$thinking"
+    printf '%sthinking\t%s\t%s\n' "$stay" "$thinking" "$model:$next_thinking"
     exit
 fi
 

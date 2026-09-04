@@ -7,6 +7,10 @@ if [[ "$#" -gt 0 ]]; then
     exit
 fi
 
+cmenu set \
+    colour 2 \
+    debounce 100ms
+
 if [[ -z "${CMENU_INPUT-}" ]]; then
     echo "$(cmenu label)no input"
     exit

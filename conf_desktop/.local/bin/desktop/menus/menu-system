@@ -9,8 +9,7 @@ lid_kept_awake() {
 }
 
 if [[ "$#" -gt 0 ]]; then
-    readarray -td $'\t' f < <(printf '%s' "$1")
-    id="${f[1]}"
+    IFS=$'\t' read -r _ id <<<"$1"
     case "$id" in
     suspend) systemctl suspend ;;
     hibernate) systemctl hibernate ;;
@@ -32,15 +31,18 @@ fi
 
 highlight="$(cmenu highlight)"
 stay="$(cmenu stay)"
-data="$(cmenu data)"
 
 lid_pre="$stay"
 lid_kept_awake && lid_pre="$stay$highlight"
 
+cmenu set \
+    colour 9 \
+    hide 2
+
 printf '%suptime %s\n' "$(cmenu label)" "$(uptime --pretty | sed 's/^up //')"
-printf '%s\t%s%s\n' \
-    suspend "$data" suspend \
-    hibernate "$data" hibernate \
-    reboot "$data" reboot \
-    shutdown "$data" shutdown
-printf '%s%s\t%s%s\n' "$lid_pre" "lid stay awake" "$data" lid
+printf '%s\t%s\n' \
+    suspend suspend \
+    hibernate hibernate \
+    reboot reboot \
+    shutdown shutdown
+printf '%s%s\t%s\n' "$lid_pre" "lid stay awake" lid

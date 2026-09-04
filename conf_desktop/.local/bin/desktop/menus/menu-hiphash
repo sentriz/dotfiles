@@ -3,8 +3,7 @@
 set -u
 
 if [[ "$#" -gt 0 ]]; then
-    readarray -td $'\t' f < <(printf '%s' "$1")
-    name="${f[0]}" hash="${f[1]}" id="${f[2]}"
+    IFS=$'\t' read -r name hash id <<<"$1"
     case "$name" in
     "input")
         wl-copy -n <<<"$id"
@@ -16,6 +15,8 @@ if [[ "$#" -gt 0 ]]; then
 
     exit
 fi
+
+cmenu set colour 2
 
 inp="${CMENU_INPUT-}"
 if [[ -z "$inp" ]]; then

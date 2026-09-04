@@ -3,8 +3,7 @@
 set -u
 
 if [[ "${CMENU_MODE-}" = "preview" ]]; then
-    readarray -td $'\t' f < <(printf '%s' "$1")
-    id="${f[1]}"
+    IFS=$'\t' read -r _ id _ <<<"$1"
     {
         wpctl get-volume "$id" 2>/dev/null | sed -E 's/: /\t/'
         wpctl inspect "$id" 2>/dev/null | sed -nE \
@@ -18,11 +17,15 @@ if [[ "${CMENU_MODE-}" = "preview" ]]; then
 fi
 
 if [[ "$#" -gt 0 ]]; then
-    readarray -td $'\t' f < <(printf '%s' "$1")
-    id="${f[1]}"
+    IFS=$'\t' read -r _ id _ <<<"$1"
     wpctl set-default "$id"
     exit
 fi
+
+cmenu set \
+    colour 10 \
+    preview true \
+    stay_open true
 
 default_sink="$(wpctl inspect @DEFAULT_AUDIO_SINK@ 2>/dev/null | grep -Po "^id \K[0-9]+")"
 default_source="$(wpctl inspect @DEFAULT_AUDIO_SOURCE@ 2>/dev/null | grep -Po "^id \K[0-9]+")"

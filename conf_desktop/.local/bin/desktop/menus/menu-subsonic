@@ -32,8 +32,8 @@ song-ids() {
 }
 
 if [[ "${CMENU_MODE-}" = "preview" ]]; then
-    readarray -td $'\t' f < <(printf '%s' "$1")
-    cover="${f[5]}"
+    IFS=$'\t' read -r payload _ <<<"$1"
+    IFS=: read -r _ cover _ <<<"$payload"
     [[ -z "$cover" ]] && exit 0
 
     curl -fsG "$base/rest/getCoverArt" "${auth[@]}" --data-urlencode "id=$cover" -d size=600 | cmenu image -
@@ -49,8 +49,8 @@ if [[ -n "$current_pid" ]] && ! kill -0 "$current_pid" 2>/dev/null; then
 fi
 
 if [[ "$#" -gt 0 ]]; then
-    readarray -td $'\t' f < <(printf '%s' "$1")
-    kind="${f[0]}" title="${f[2]}" id="${f[4]}"
+    IFS=$'\t' read -r payload kind _ title _ <<<"$1"
+    IFS=: read -r id _ <<<"$payload"
 
     if [[ -n "$current_pid" ]]; then
         kill "$current_pid" 2>/dev/null
@@ -70,20 +70,27 @@ if [[ "$#" -gt 0 ]]; then
     exit
 fi
 
-jq_args=(-r --arg d "$(cmenu data)" --arg hl "$(cmenu highlight)" --arg cur "$current_id")
+jq_args=(-r --arg hl "$(cmenu highlight)" --arg cur "$current_id")
 # shellcheck disable=SC2016
 jq_row='def row(kind; year; title; artist):
-    "\(if .id == $cur then $hl else "" end)\(kind)\t\(year)\t\(title)\t\(artist)\t\($d)\(.id)\t\(.coverArt // "")";'
+    "\(if .id == $cur then $hl else "" end)\(.id):\(.coverArt // "")\t\(kind)\t\(year)\t\(title)\t\(artist)";'
+
+cmenu set \
+    colour 6 \
+    preview true \
+    stay_open true \
+    hide 1 \
+    debounce 300ms
 
 if [[ -n "${CMENU_INPUT-}" ]]; then
     api search3 "query=${CMENU_INPUT-}" artistCount=10 albumCount=20 songCount=20 | jq "${jq_args[@]}" "$jq_row"'
         .searchResult3 // {} |
-        (.artist[]? | row("artist"; ""; .name; "")),
-        (.album[]?  | row("album"; .year // ""; .name; .artist)),
-        (.song[]?   | row("song"; .year // ""; .title; .artist))
+        (.artist[]? | row("artist"; "-"; .name; "")),
+        (.album[]?  | row("album"; .year // "-"; .name; .artist)),
+        (.song[]?   | row("song"; .year // "-"; .title; .artist))
     '
 else
     api getAlbumList2 type=newest size=50 | jq "${jq_args[@]}" "$jq_row"'
-        .albumList2.album[]? | row("album"; .year // ""; .name; .artist)
+        .albumList2.album[]? | row("album"; .year // "-"; .name; .artist)
     '
 fi

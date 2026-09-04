@@ -13,8 +13,7 @@ if [[ -n "$pid" ]] && ! kill -0 "$pid" 2>/dev/null; then
 fi
 
 if [[ "$#" -gt 0 ]]; then
-    readarray -td $'\t' f < <(printf '%s' "$1")
-    id="${f[1]}"
+    IFS=$'\t' read -r _ id <<<"$1"
     case "$id" in
     record)
         [[ -n "$pid" ]] && exit 0
@@ -35,14 +34,17 @@ if [[ "$#" -gt 0 ]]; then
 fi
 
 stay="$(cmenu stay)"
-data="$(cmenu data)"
+
+cmenu set \
+    colour 14 \
+    hide 2
 
 if [[ -n "$pid" ]]; then
-    printf '%s%s\t%s%s\n' "$stay" "stop recording" "$data" stop
+    printf '%s%s\t%s\n' "$stay" "stop recording" stop
 elif [[ -s "$out" ]]; then
     printf '%s%s\n' "$(cmenu label)" "$(tr '\n' ' ' <"$out")"
-    printf '%s\t%s%s\n' copy "$data" copy
-    printf '%s%s\t%s%s\n' "$stay" "record again" "$data" record
+    printf '%s\t%s\n' copy copy
+    printf '%s%s\t%s\n' "$stay" "record again" record
 else
-    printf '%s%s\t%s%s\n' "$stay" record "$data" record
+    printf '%s%s\t%s\n' "$stay" record record
 fi

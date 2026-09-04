@@ -3,8 +3,7 @@
 set -u
 
 if [[ "$#" -gt 0 ]]; then
-    readarray -td $'\t' f < <(printf '%s' "$1")
-    cmd="${f[1]}"
+    IFS=$'\t' read -r _ cmd <<<"$1"
     read -ra cmd <<<"$cmd"
     tailscale "${cmd[@]}"
     exit
@@ -12,7 +11,11 @@ fi
 
 label="$(cmenu label)"
 highlight="$(cmenu highlight)"
-data="$(cmenu data)"
+
+cmenu set \
+    colour 6 \
+    stay_open true \
+    hide 2
 
 status="$(tailscale status --json)"
 
@@ -21,9 +24,9 @@ jq -r '[.Health[]? | ascii_downcase | rtrimstr(".") | select(contains("advertisi
     | sed "s/^/$label/"
 
 if [[ "$(jq -r '.BackendState' <<<"$status")" == "Running" ]]; then
-    printf '%s%s\t%s%s\n' "$highlight" connected "$data" down
+    printf '%s%s\t%s\n' "$highlight" connected down
 else
-    printf '%s\t%s%s\n' connect "$data" up
+    printf '%s\t%s\n' connect up
 fi
 
 read -r corp_dns route_all has_exit_node lan_access < <(
@@ -34,24 +37,24 @@ dns_upstream="$(tailscale dns status --json 2>/dev/null | jq -r '
      (if .CurrentTailnet.MagicDNSEnabled then "magicdns" else empty end)]
     | join(", ")')"
 if [[ "$corp_dns" == "true" ]]; then
-    printf '%saccept dns via %s\t%s%s\n' "$highlight" "$dns_upstream" "$data" "set --accept-dns=false"
+    printf '%saccept dns via %s\t%s\n' "$highlight" "$dns_upstream" "set --accept-dns=false"
 else
-    printf '%s\t%s%s\n' "accept dns via $dns_upstream" "$data" "set --accept-dns"
+    printf '%s\t%s\n' "accept dns via $dns_upstream" "set --accept-dns"
 fi
 
 routes="$(jq -r '[.Peer[]? | . as $p | (.PrimaryRoutes // [])[] | "\(.) via \($p.DNSName | split(".")[0])"] | join(", ")' <<<"$status")"
 if [[ "$(jq -r '[.Peer[]? | select(.ExitNode) | .PrimaryRoutes | length > 0] | any' <<<"$status")" == "true" ]]; then
     printf '%saccept routes %s implied\n' "$label" "$routes"
 elif [[ "$route_all" == "true" ]]; then
-    printf '%saccept routes %s\t%s%s\n' "$highlight" "$routes" "$data" "set --accept-routes=false"
+    printf '%saccept routes %s\t%s\n' "$highlight" "$routes" "set --accept-routes=false"
 else
-    printf '%s\t%s%s\n' "accept routes $routes" "$data" "set --accept-routes"
+    printf '%s\t%s\n' "accept routes $routes" "set --accept-routes"
 fi
 
 if [[ "$has_exit_node" == "true" && "$lan_access" == "true" ]]; then
-    printf '%sexit node lan access\t%s%s\n' "$highlight" "$data" "set --exit-node-allow-lan-access=false"
+    printf '%sexit node lan access\t%s\n' "$highlight" "set --exit-node-allow-lan-access=false"
 elif [[ "$has_exit_node" == "true" ]]; then
-    printf '%s\t%s%s\n' "exit node lan access" "$data" "set --exit-node-allow-lan-access"
+    printf '%s\t%s\n' "exit node lan access" "set --exit-node-allow-lan-access"
 fi
 
 country="$(locale | awk -F'[=_.]' '/^LANG=/ {print $3}')"
@@ -72,9 +75,9 @@ peers="$(jq -r --arg input "${CMENU_INPUT-}" --arg country "$country" '
 paste <(cut -f1-11 <<<"$peers" | table) <(cut -f12- <<<"$peers") \
     | while IFS=$'\t' read -r line can_exit is_exit ip; do
         if [[ "$is_exit" == "true" ]]; then
-            printf '%s%s\t%s%s\n' "$highlight" "$line" "$data" "set --exit-node="
+            printf '%s%s\t%s\n' "$highlight" "$line" "set --exit-node="
         elif [[ "$can_exit" == "true" ]]; then
-            printf '%s\t%s%s\n' "$line" "$data" "set --exit-node=$ip"
+            printf '%s\t%s\n' "$line" "set --exit-node=$ip"
         else
             printf '%s%s\n' "$label" "$line"
         fi

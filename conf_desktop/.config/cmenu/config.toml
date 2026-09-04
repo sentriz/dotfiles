@@ -2,186 +2,133 @@
   triggers = ["on-start", "pre b", "script audio", "interval 750ms"]
   name = "bluetooth"
   path = "menu-bluetooth"
-  colour = 12
-  stay_open = true
-  preview = true
 
 [[scripts]]
   triggers = ["on-start", "pre a", "script bluetooth", "interval 750ms"]
   name = "audio"
   path = "menu-audio"
-  colour = 10
-  stay_open = true
-  preview = true
 
 [[scripts]]
   triggers = ["on-start"]
   name = "sway"
   path = "menu-sway"
-  colour = 7
 
 [[scripts]]
   triggers = ["pre q"]
   name = "system"
   path = "menu-system"
-  colour = 9
 
 [[scripts]]
   triggers = ["script system"]
   name = "sway-session"
   path = "menu-sway-session"
-  colour = 11
 
 [[scripts]]
   triggers = ["script system"]
   name = "framework"
   path = "menu-framework"
-  colour = 4
-  stay_open = true
 
 [[scripts]]
   triggers = ["on-start", "pre p"]
   name = "package"
   path = "menu-package"
-  colour = 2
 
 [[scripts]]
   triggers = ["pre pw", "pre pass"]
   name = "pass"
   path = "menu-pass"
-  colour = 1
-  preview = true
 
 [[scripts]]
   triggers = ["pre c"]
   name = "clipboard"
   path = "menu-clipboard"
-  colour = 3
-  preview = true
 
 [[scripts]]
   triggers = ["pre e"]
   name = "emoji"
   path = "menu-emoji"
-  colour = 13
 
 [[scripts]]
   triggers = ["pre w", "interval 1s"]
   name = "wifi"
   path = "menu-wifi"
-  colour = 11
-  stay_open = true
-  preview = true
 
 [[scripts]]
   triggers = ["pre r"]
   name = "radio"
   path = "menu-radio"
-  colour = 6
-  stay_open = true
-  preview = true
 
 [[scripts]]
   triggers = ["pre m"]
   name = "subsonic"
   path = "menu-subsonic"
-  colour = 6
-  stay_open = true
-  preview = true
-  debounce = "300ms"
 
 [[scripts]]
   triggers = ["script audio", "script radio", "script subsonic", "interval 750ms"]
   name = "mpris"
   path = "menu-mpris"
-  colour = 14
-  stay_open = true
 
 [[scripts]]
   triggers = ["pre v"]
   name = "virt"
   path = "menu-virt"
-  colour = 7
-  preview = true
 
 [[scripts]]
   triggers = ["pre s"]
   name = "scrot"
   path = "menu-scrot"
-  colour = 11
 
 [[scripts]]
   triggers = ["pre f", "interval 750ms", "script scrot"]
   name = "share"
   path = "menu-share"
-  colour = 3
-  preview = true
 
 [[scripts]]
   triggers = ["script share", "script tailscale", "interval 1s"]
   name = "taildrop"
   path = "menu-taildrop"
-  colour = 14
-  stay_open = true
 
 [[scripts]]
   triggers = ["pre d"]
   name = "dictate"
   path = "menu-dictate"
-  colour = 14
 
 [[scripts]]
   triggers = ["pre t"]
   name = "timer"
   path = "menu-timer"
-  colour = 11
-  stay_open = true
 
 [[scripts]]
   triggers = ["pre ts", "interval 1s", "script wifi"]
   name = "tailscale"
   path = "menu-tailscale"
-  colour = 6
-  stay_open = true
 
 [[scripts]]
   triggers = ["pre td"]
   name = "tuned"
   path = "menu-tuned"
-  colour = 7
-  preview = true
 
 [[scripts]]
   triggers = ["pre cc"]
   name = "calc"
   path = "menu-calc"
-  colour = 2
-  debounce = "100ms"
 
 [[scripts]]
   triggers = ["pre hh"]
   name = "hiphash"
   path = "menu-hiphash"
-  colour = 2
 
 [[scripts]]
   triggers = ["pre dd"]
   name = "date"
   path = "menu-date"
-  colour = 2
-  debounce = "100ms"
 
 [[scripts]]
   triggers = ["pre wp"]
   name = "wallpaper"
   path = "menu-wallpaper"
-  colour = 13
-  preview = true
 
 [[scripts]]
   triggers = ["pre lm", "pre pi"]
   name = "llm"
   path = "menu-llm"
-  colour = 2
-  debounce = "200ms"
-  wrap = true

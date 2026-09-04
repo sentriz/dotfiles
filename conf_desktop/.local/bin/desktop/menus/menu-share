@@ -3,8 +3,7 @@
 set -u
 
 if [[ "${CMENU_MODE-}" = "preview" ]]; then
-    readarray -td $'\t' f < <(printf '%s' "$1")
-    mime="${f[0]}" source="${f[3]}"
+    IFS=$'\t' read -r mime _ _ source <<<"$1"
 
     path="$(current-files resolve "$source" "$mime")"
     [[ -n "$path" ]] || exit 0
@@ -18,8 +17,7 @@ if [[ "${CMENU_MODE-}" = "preview" ]]; then
 fi
 
 if [[ "$#" -gt 0 ]]; then
-    readarray -td $'\t' f < <(printf '%s' "$1")
-    mime="${f[0]}" dest="${f[2]}" source="${f[3]}"
+    IFS=$'\t' read -r mime _ dest source <<<"$1"
 
     if ! path="$(current-files resolve "$source" "$mime")"; then
         notify-send "share failed" "$source is gone"
@@ -39,13 +37,16 @@ if [[ "$#" -gt 0 ]]; then
     exit
 fi
 
-data="$(cmenu data)"
+cmenu set \
+    colour 3 \
+    preview true \
+    hide 4
 
 while IFS=$'\t' read -r _ mime source; do
     label="$source"
     [[ -f "$source" ]] && label="$(basename "$(dirname "$source")")/$(basename "$source")"
 
     for dest in $(share list "$mime"); do
-        printf '%s\t%s\t%s\t%s\n' "$mime" "$label" "$dest" "$data$source"
+        printf '%s\t%s\t%s\t%s\n' "$mime" "$label" "$dest" "$source"
     done
 done < <(current-files)
