@@ -3,24 +3,81 @@
 # depends
 #   - pipewire (pw-record)
 #   - whisper-cpp-git
+#   - sox
 
 set -eu
 
-model_name="tiny_en_acft_q8_0.bin"
-model_url="https://voiceinput.futo.org/VoiceInput/$model_name"
-model="$XDG_DATA_HOME/whisper-models/$model_name"
+models="$XDG_DATA_HOME/whisper-models"
+model="$models/tiny_en_acft_q8_0.bin"
+vad="$models/ggml-silero-v5.1.2.bin"
 
-if [[ ! -f "$model" ]]; then
-    mkdir -p "$(dirname "$model")"
-    curl -L -o "$model" "$model_url"
-fi
+fetch() {
+    local path="$1" url="$2"
+    [[ -f "$path" ]] && return 0
+    mkdir -p "$models"
+    curl -L -o "$path" "$url"
+}
 
-wav="$(mktemp "$XDG_RUNTIME_DIR/dictate.XXXXXX.wav")"
-trap 'rm -f "$wav"' EXIT
+committed=0
 
-pw-record --format=s16 --rate=16000 --channels=1 "$wav" >/dev/null 2>&1 &
+emit() {
+    local silence="$1" bytes pending duration cut text
+
+    bytes="$(stat -c %s "$raw")"
+    bytes=$((bytes - bytes % 2))
+    pending=$((bytes - committed))
+    ((pending > 16000)) || return 0
+
+    tail -c "+$((committed + 1))" "$raw" | head -c "$pending" |
+        sox -t raw -r 16000 -e signed -b 16 -c 1 - "$wav"
+    duration="$(awk -v bytes="$pending" 'BEGIN { printf "%.2f", bytes / 32000 }')"
+
+    if [[ "$silence" == 0 ]]; then
+        cut="$duration"
+    else
+        cut="$(
+            whisper-vad-speech-segments -np -vm "$vad" -f "$wav" 2>/dev/null |
+                awk -v duration="$duration" -v silence="$silence" '
+                    /^Speech segment/ { end = $NF / 100 }
+                    END {
+                        if (end == "" || duration - end < silence) exit
+                        printf "%.2f", (end + 0.2 > duration) ? duration : end + 0.2
+                    }
+                '
+        )"
+        [[ -n "$cut" ]] || return 0
+    fi
+
+    sox "$wav" "$clip" trim 0 "$cut"
+    committed=$((committed + $(awk -v cut="$cut" 'BEGIN { printf "%d", int(cut * 16000) * 2 }')))
+
+    text="$(whisper-cli -m "$model" -l en --no-timestamps --no-prints -f "$clip" 2>/dev/null |
+        tr '\n' ' ' | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')"
+    if [[ -n "$text" && "$text" != \[*\] ]]; then
+        printf '%s\n' "$text"
+    fi
+}
+
+fetch "$model" "https://voiceinput.futo.org/VoiceInput/$(basename "$model")"
+fetch "$vad" "https://huggingface.co/ggml-org/whisper-vad/resolve/main/$(basename "$vad")"
+
+raw="$(mktemp "$XDG_RUNTIME_DIR/dictate.XXXXXX.raw")"
+wav="${raw%.raw}.wav"
+clip="${raw%.raw}.clip.wav"
+trap 'rm -f "$raw" "$wav" "$clip"' EXIT
+
+pw-record --raw --format=s16 --rate=16000 --channels=1 "$raw" >/dev/null 2>&1 &
 rec=$!
-trap 'kill -TERM "$rec" 2>/dev/null' INT TERM
+
+recording=1
+trap 'recording=0' INT TERM
+
+while ((recording)) && kill -0 "$rec" 2>/dev/null; do
+    sleep 1
+    emit 0.8
+done
+
+kill -TERM "$rec" 2>/dev/null || true
 wait "$rec" 2>/dev/null || true
 
-whisper-cli -m "$model" -l en --no-timestamps --no-prints -f "$wav" 2>/dev/null | sed 's/^[[:space:]]*//;s/[[:space:]]*$//'
+emit 0
