@@ -1,6 +1,6 @@
 # theme-reload: swaymsg reload
 full_text=
-command=~/.local/bin/desktop/blocks/block-$BLOCK_NAME
+command=~/.local/bin/laptop/blocks/block-$BLOCK_NAME
 interval=10
 separator=false
 
