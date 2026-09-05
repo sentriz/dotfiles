@@ -119,6 +119,7 @@ arch xdg-desktop-portal-wlr
 arch playerctl
 arch xdg-user-dirs
 arch xorg-xwayland
+arch wtype
 go go.senan.xyz/cliphist@latest
 go go.senan.xyz/cmenu@latest
 arch chafa

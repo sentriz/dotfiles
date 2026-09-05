@@ -2,8 +2,10 @@
 
 # depends
 #   - dictate
-#   - wl-ime-type
+#   - wtype
 #   - libnotify
+
+# TODO: use wl-ime-type when more programs support text-input-v3 (it hangs with electron, chromium, firefox)
 
 set -u
 
@@ -35,7 +37,7 @@ trap 'rm -f "$state"' EXIT
 
 words=0
 while IFS= read -r -u 3 line; do
-    wl-ime-type "$line "
+    wtype "$line "
     words=$((words + $(wc -w <<<"$line")))
     notify "dictate: $words words" "$line" >/dev/null
 done
