@@ -21,6 +21,8 @@
 - Prefer short sentences and tight bullets over paragraphs. Don't pad. Follow Grice's maxims.
 - These rules apply just as hard to text you write *for* me - drafts, replies, comments, PR bodies, commit messages, issue descriptions. Write what I would write: a couple of sentences, plain, no background the reader already has, no bullet lists of everything considered, no sign-off flourishes. If a draft is longer than the thing it's replying to, it's too long.
 
+- Write from the perspective of the artefact, not the session that produced it. Docs, comments, and config outlive the conversation: the reader sees only the text and has none of our path through it. Describe how things are, not what we changed, tried, ruled out, or cleaned up. Phrases like "now uses", "no longer", "still", "as discussed", or "nothing left in place" are the tell - they only mean something to someone who watched it happen. Commit messages and PR bodies are the exception: describing the change *is* their job.
+
 # Code Style
 
 - Order code top-down like a book: main/biggest functions first, helpers below, in the order they are needed.
@@ -31,7 +33,7 @@
 - NEVER write comments. This is the default. Two exceptions only:
   - 1. Creating an exported function whose sibling functions already have comments - match them.
   - 2. Writing something genuinely tricky/magic - in that case, ask me whether to add a comment rather than adding it silently.
-- In the rare case a comment is warranted: keep it short, follow the file's existing style, comment the non-obvious WHY never the WHAT, write from the perspective of the file it lives in, and don't wrap at 80 chars - aim for ~120.
+- In the rare case a comment is warranted: keep it short, follow the file's existing style, comment the non-obvious WHY never the WHAT, and don't wrap at 80 chars - aim for ~120.
 - Never use emdashes in comments or text. Use a hyphen or reword instead.
 
 # Workflow
