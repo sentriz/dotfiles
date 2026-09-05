@@ -58,11 +58,7 @@ if [ -n "${SSH_AUTH_SOCK-}" ]; then
     session_binds+=(--bind-try "$SSH_AUTH_SOCK" "$SSH_AUTH_SOCK")
 fi
 
-secrets_sock="$XDG_RUNTIME_DIR/pi/secrets.$$"
-socat "UNIX-LISTEN:$secrets_sock,fork,mode=600" "EXEC:$(command -v secret-get)" 2>/dev/null &
-cleanups+=("kill $!" "rm -f ${secrets_sock@Q}")
-socks+=("$secrets_sock")
-session_binds+=(--bind "$secrets_sock" "$secrets_sock" --setenv SECRETS_SOCK "$secrets_sock")
+session_binds+=(--bind "$SECRETS_SOCK" "$SECRETS_SOCK")
 
 if [ -n "${WAYLAND_DISPLAY-}" ]; then
     wayland_sock="$XDG_RUNTIME_DIR/pi/wayland.$$"

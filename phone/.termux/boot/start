@@ -5,3 +5,5 @@ set -eu
 termux-wake-lock
 sshd
 rbw-agent
+
+SECRETS_SOCK="$TMPDIR/secrets-socket" "$HOME/.local/bin/common/secret" daemon

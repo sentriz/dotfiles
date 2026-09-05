@@ -10,6 +10,7 @@ set -gx XDG_CURRENT_DESKTOP sway
 set -gx XDG_SESSION_TYPE wayland
 
 set -gx SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/rbw/ssh-agent-socket"
+set -gx SECRETS_SOCK "$XDG_RUNTIME_DIR/secrets-socket"
 
 set -gx --path XDG_DATA_DIRS \
     /usr/local/share \
@@ -51,7 +52,7 @@ set -gx YABRIDGE_TEMP_DIR "$XDG_RUNTIME_DIR/yabridge"
 set -gx YABRIDGE_DEBUG_LEVEL ''
 
 if status is-login
-    dbus-update-activation-environment --systemd SSH_AUTH_SOCK XDG_DATA_DIRS PATH
+    dbus-update-activation-environment --systemd SSH_AUTH_SOCK SECRETS_SOCK XDG_DATA_DIRS PATH
 
     switch (tty)
         case /dev/tty1
