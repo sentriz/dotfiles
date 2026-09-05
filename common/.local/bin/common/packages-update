@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+
+set -eu
+
+function list() {
+    grep -Po "^$1\s+\K.*" "$XDG_CONFIG_HOME/packages"
+}
+
+function has() {
+    list "$1" | grep -q .
+}
+
+if has arch; then
+    yay --version
+    EDITOR=true yay -Syu --noconfirm --answeredit N --answerdiff N
+fi
+
+if has pkg; then
+    type -p pkg >/dev/null
+    pkg upgrade -y
+fi
+
+if has python; then
+    uv --version
+    uv tool upgrade --all
+fi
+
+if has cargo && type -p cargo-install-update >/dev/null; then
+    cargo install-update -a
+fi
+
+if has npm; then
+    npm version
+    npm update -g
+fi
+
+if has flatpak; then
+    flatpak --version
+    flatpak update --user --noninteractive --assumeyes
+fi

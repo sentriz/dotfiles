@@ -1,0 +1,11 @@
+pkg fish
+pkg fzf
+pkg git
+pkg golang
+pkg jq
+pkg neovim
+pkg openssh
+pkg rbw
+pkg ripgrep
+pkg socat
+pkg tmux

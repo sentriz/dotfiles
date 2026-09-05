@@ -4,34 +4,17 @@ set -eu
 
 export GIT_CONFIG_GLOBAL=/dev/null
 
-if ! type -p yay >/dev/null; then
-    sudo pacman -S --needed git base-devel
-    git clone "https://aur.archlinux.org/yay-bin.git" /tmp/yay
-    cd /tmp/yay || exit
-    makepkg -si
-
-    sudo pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
-    sudo pacman-key --lsign-key 3056513887B78AEB
-    sudo pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst'
-    sudo pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'
-
-    sudo tee -a /etc/pacman.conf <<-EOF
-        [multilib]
-        Include = /etc/pacman.d/mirrorlist
-        [chaotic-aur]
-        Include = /etc/pacman.d/chaotic-mirrorlist
-EOF
-    sudo pacman -Syu
-
-    cd -
-fi
-
 function list() {
     grep -Po "^$1\s+\K.*" "$XDG_CONFIG_HOME/packages"
 }
 
+function has() {
+    list "$1" | grep -q .
+}
+
 wanted=("${@:1}")
 function want() {
+    has "$1" || return
     [[ "${#wanted[@]}" == 0 ]] && return
     for w in "${wanted[@]}"; do
         [[ "$w" == "$1" ]] && return
@@ -40,9 +23,37 @@ function want() {
 }
 
 if want arch; then
+    if ! type -p yay >/dev/null; then
+        sudo pacman -S --needed git base-devel
+        git clone "https://aur.archlinux.org/yay-bin.git" /tmp/yay
+        cd /tmp/yay || exit
+        makepkg -si
+
+        sudo pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
+        sudo pacman-key --lsign-key 3056513887B78AEB
+        sudo pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst'
+        sudo pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'
+
+        sudo tee -a /etc/pacman.conf <<-EOF
+            [multilib]
+            Include = /etc/pacman.d/mirrorlist
+            [chaotic-aur]
+            Include = /etc/pacman.d/chaotic-mirrorlist
+EOF
+        sudo pacman -Syu
+
+        cd -
+    fi
+
     yay --version
     readarray -t pkgs < <(list arch)
     EDITOR=true yay -S --needed --noconfirm --answeredit N --answerdiff N "${pkgs[@]}"
+fi
+
+if want pkg; then
+    type -p pkg >/dev/null
+    readarray -t pkgs < <(list pkg)
+    pkg install -y "${pkgs[@]}"
 fi
 
 if want python; then
