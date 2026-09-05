@@ -1,0 +1,7 @@
+#!/data/data/com.termux/files/usr/bin/bash
+
+set -eu
+
+termux-wake-lock
+sshd
+rbw-agent
