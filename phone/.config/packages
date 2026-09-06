@@ -9,3 +9,5 @@ pkg rbw
 pkg ripgrep
 pkg socat
 pkg tmux
+
+go go.senan.xyz/add-osc-8-hyperlink@latest
