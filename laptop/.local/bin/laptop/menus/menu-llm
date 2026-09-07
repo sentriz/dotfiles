@@ -4,21 +4,25 @@ set -u
 
 settings="$XDG_CONFIG_HOME/pi/agent/settings.json"
 state="$XDG_RUNTIME_DIR/menu-llm-$PPID"
+session="menu-llm-$PPID"
 
 if [[ "$#" -gt 0 ]]; then
-    IFS=$'\t' read -r _ _ spec <<<"$1"
-    if [[ -n "$spec" ]]; then
-        printf '%s\n' "$spec" >"$state"
-    else
-        wl-copy -n <<<"$1"
-    fi
+    IFS=$'\t' read -r _ _ action <<<"$1"
+    case "$action" in
+    "") wl-copy -n <<<"$1" ;;
+    copy-session) wl-copy -n <<<"$session" ;;
+    set-spec:*) printf '%s\n' "${action#set-spec:}" >"$state" ;;
+    esac
     exit
 fi
+
+label="$(cmenu label)"
 
 cmenu set \
     colour 2 \
     wrap true \
-    debounce 200ms
+    debounce 200ms \
+    hide 3
 
 spec="$(jq -r '.defaultProvider + "/" + .defaultModel + ":" + .defaultThinkingLevel' "$settings")"
 [[ -s "$state" ]] && read -r spec <"$state"
@@ -36,15 +40,17 @@ if [[ "${CMENU_INPUT-}" != *\? ]]; then
 
     stay="$(cmenu stay)"
 
-    cmenu set hide 3
-
-    echo "$(cmenu label)no question"
-    printf '%smodel\t%s\t%s\n' "$stay" "$model" "$next_model:$thinking"
-    printf '%sthinking\t%s\t%s\n' "$stay" "$thinking" "$model:$next_thinking"
+    printf '%smodel\t%s\tset-spec:%s\n' "$stay" "$model" "$next_model:$thinking"
+    printf '%sthinking\t%s\tset-spec:%s\n' "$stay" "$thinking" "$model:$next_thinking"
+    printf 'session\t%s\tcopy-session\n' "$session"
+    echo "$label"
+    echo "${label}no question"
     exit
 fi
 
-echo "$(cmenu label)$spec"
+echo "$label$spec"
+printf 'session\t%s\tcopy-session\n' "$session"
+echo "$label"
 
 pi \
     --model "$spec" \
@@ -54,8 +60,9 @@ pi \
     --no-skills \
     --no-extensions \
     --session-dir "$XDG_RUNTIME_DIR/pi/menu-llm-sessions" \
-    --session-id "menu-llm-$PPID" \
+    --session-id "$session" \
     --system-prompt "Answer concisely in plain text only. No markdown, no latex." \
     --print "${CMENU_INPUT-}" \
-    | awk -v label="$(cmenu label)" '{ gsub(/\t/, " ") } NF { print; next } { print label }'
+    | awk -v label="$label" '{ gsub(/\t/, " ") } NF { print; next } { print label }'
+
 exit 0
