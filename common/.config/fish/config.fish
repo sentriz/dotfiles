@@ -59,6 +59,8 @@ set -gx fish_user_paths \
     /usr/sbin \
     /usr/share/git/git-jump/
 
+set -gx SECRETS_SOCK (secret socket-path)
+
 for file in $__fish_config_dir/config.*.fish
     source "$file"
 end

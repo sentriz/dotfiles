@@ -10,7 +10,6 @@ set -gx XDG_CURRENT_DESKTOP sway
 set -gx XDG_SESSION_TYPE wayland
 
 set -gx SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/rbw/ssh-agent-socket"
-set -gx SECRETS_SOCK "$XDG_RUNTIME_DIR/secrets-socket"
 
 set -gx --path XDG_DATA_DIRS \
     /usr/local/share \
