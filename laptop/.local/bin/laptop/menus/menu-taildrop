@@ -3,9 +3,9 @@
 set -u
 
 if [[ "$#" -gt 0 ]]; then
-    IFS=$'\t' read -r mime _ peer source <<<"$1"
-    if [[ "$mime" == "get" ]]; then
-        tailscale file get --conflict=rename "$XDG_DOWNLOAD_DIR" || notify-send "get failed"
+    IFS=$'\t' read -r action _ _ _ peer mime source <<<"$1"
+    if [[ "$action" == "receive" ]]; then
+        tailscale file get --conflict=rename "$XDG_DOWNLOAD_DIR" || notify-send "receive failed"
         exit 0
     fi
 
@@ -25,10 +25,9 @@ if [[ "$#" -gt 0 ]]; then
 fi
 
 pending="$(tailscale debug localapi v0/files/ 2>/dev/null \
-    | jq -r '(. // [])[] | [.Name, .Size] | @tsv' \
-    | numfmt -d$'\t' --field=2 --to=iec \
-    | awk -F'\t' '{ printf "%s%s %s", sep, $1, $2; sep = ", " }')"
-[[ -n "$pending" ]] && printf 'get\t%s\n' "$pending"
+    | jq -r '(. // []) | select(length > 0) | [([.[].Size] | add), ([.[].Name] | join(", "))] | @tsv' \
+    | numfmt -d$'\t' --field=1 --to=iec)"
+[[ -n "$pending" ]] && printf 'receive\t%s\t\t\n' "$pending"
 
 peers="$(tailscale status --json | jq -r '
     select(.BackendState == "Running") | .Self.UserID as $user | .Peer[]?
@@ -41,13 +40,18 @@ fi
 cmenu set \
     colour 14 \
     stay_open true \
-    hide 4
+    hide 6,7
 
 while IFS=$'\t' read -r _ mime source; do
-    label="$source"
-    [[ -f "$source" ]] && label="$(basename "$(dirname "$source")")/$(basename "$source")"
+    if [[ -f "$source" ]]; then
+        label="$(basename "$(dirname "$source")")/$(basename "$source")"
+        size="$(du -h "$source" | cut -f1)"
+    else
+        label="$source $mime"
+        size="$(wl-paste --type "$mime" 2>/dev/null | wc -c | numfmt --to=iec)"
+    fi
 
     for peer in $peers; do
-        printf '%s\t%s\t%s\t%s\n' "$mime" "$label" "$peer" "$source"
+        printf 'send\t%s\t%s\tto\t%s\t%s\t%s\n' "$size" "$label" "$peer" "$mime" "$source"
     done
 done < <(current-files)
