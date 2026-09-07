@@ -155,6 +155,7 @@ bindsym $super+6     workspace number 6
 bindsym $super+7     workspace number 7
 bindsym $super+8     workspace number 8
 bindsym $super+9     workspace number 9
+bindsym $super+0     workspace number 10
 
 bindsym $super+Shift+1 move container to workspace number 1
 bindsym $super+Shift+2 move container to workspace number 2
@@ -165,6 +166,7 @@ bindsym $super+Shift+6 move container to workspace number 6
 bindsym $super+Shift+7 move container to workspace number 7
 bindsym $super+Shift+8 move container to workspace number 8
 bindsym $super+Shift+9 move container to workspace number 9
+bindsym $super+Shift+0 move container to workspace number 10
 
 # don't lock for video
 for_window [class="Firefox"]                            inhibit_idle fullscreen
