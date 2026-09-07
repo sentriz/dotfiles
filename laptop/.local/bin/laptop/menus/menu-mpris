@@ -2,37 +2,43 @@
 
 set -u
 
-index_file="$XDG_RUNTIME_DIR/block_playing_index"
+index_file="$XDG_RUNTIME_DIR/mpris_player_index"
 
 function index() {
     cat "$index_file" 2>/dev/null || echo 0
 }
 
-function mpris() {
-    mpris-ctrl -player-index "$(index)" "$@"
-}
-
 if [[ "$#" -gt 0 ]]; then
-    IFS=$'\t' read -r _ id <<<"$1"
+    IFS=$'\t' read -r id _ <<<"$1"
     case "$id" in
-    player) tee "$index_file" <<<"$(($(index) + 1))" >/dev/null ;;
-    *) mpris "$id" ;;
+    index:*) tee "$index_file" <<<"${id#index:}" >/dev/null ;;
+    *) mpris-ctrl -player-index "$(index)" "$id" >/dev/null ;;
     esac
     block-up playing
     exit
 fi
 
-status="$(mpris)"
-[[ -n "$status" ]] && printf '%s%s\n' "$(cmenu label)" "$status"
-
 cmenu set \
     colour 14 \
     stay_open true \
-    hide 2
+    hide 1
 
-printf '%s\t%s\n' \
-    play-pause play-pause \
-    "next track" next \
-    "previous track" previous \
-    stop stop \
-    "next player" player
+mapfile -t players < <(mpris-ctrl)
+count="${#players[@]}"
+
+if ((count)); then
+    highlight="$(cmenu highlight)"
+    current=$((($(index) % count + count) % count))
+
+    for i in "${!players[@]}"; do
+        pre=""
+        [[ "$i" == "$current" ]] && pre="$highlight"
+        printf '%s%s\tplayer %s\n' "$pre" "index:$i" "${players[i]}"
+    done
+fi
+
+printf '%s\t%s\t\t\n' \
+    play-pause "play-pause" \
+    next "next" \
+    previous "previous" \
+    stop "stop"
