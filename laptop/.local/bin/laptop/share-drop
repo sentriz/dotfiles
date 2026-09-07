@@ -7,4 +7,4 @@ set -u
 path="$1"
 [[ -f "$path" ]] || exit 1
 
-setsid -f dragon-drop --thumb-size 64 --on-top "$path"
+setsid -f dragon-drop --thumb-size 64 --on-top "$path" >/dev/null 2>&1
