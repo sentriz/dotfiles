@@ -15,6 +15,11 @@ if has arch; then
     EDITOR=true yay -Syu --noconfirm --answeredit N --answerdiff N
 fi
 
+if has dnf; then
+    dnf --version >/dev/null
+    sudo dnf upgrade -y
+fi
+
 if has pkg; then
     type -p pkg >/dev/null
     pkg upgrade -y

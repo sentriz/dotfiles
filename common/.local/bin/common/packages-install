@@ -50,6 +50,15 @@ EOF
     EDITOR=true yay -S --needed --noconfirm --answeredit N --answerdiff N "${pkgs[@]}"
 fi
 
+if want dnf; then
+    dnf --version >/dev/null
+    if list dnf | grep -qx tailscale && [[ ! -e /etc/yum.repos.d/tailscale.repo ]]; then
+        sudo dnf config-manager addrepo --from-repofile=https://pkgs.tailscale.com/stable/fedora/tailscale.repo
+    fi
+    readarray -t pkgs < <(list dnf)
+    sudo dnf install -y --setopt=install_weak_deps=False "${pkgs[@]}"
+fi
+
 if want pkg; then
     type -p pkg >/dev/null
     readarray -t pkgs < <(list pkg)
