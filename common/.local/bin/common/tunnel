@@ -34,7 +34,7 @@ ssh "$tunnel_host" "cat > $tunnel_config" <<EOF
 http:
   routers:
     tunnel-$subdomain:
-      entryPoints: [web]
+      entryPoints: [web, web6]
       rule: Host(\`$subdomain.$tunnel_domain\`)
       service: tunnel-$subdomain
   services:
