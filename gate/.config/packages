@@ -1,0 +1,10 @@
+dnf fish
+dnf git
+dnf golang
+dnf neovim
+dnf podman
+dnf sqlite
+dnf tailscale
+dnf tmux
+
+go go.senan.xyz/add-osc-8-hyperlink@latest
