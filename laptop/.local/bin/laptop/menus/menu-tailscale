@@ -3,7 +3,7 @@
 set -u
 
 if [[ "$#" -gt 0 ]]; then
-    IFS=$'\t' read -r _ cmd <<<"$1"
+    IFS=$'\t' read -r cmd _ <<<"$1"
     read -ra cmd <<<"$cmd"
     tailscale "${cmd[@]}"
     exit
@@ -15,25 +15,25 @@ highlight="$(cmenu highlight)"
 cmenu set \
     colour 6 \
     stay_open true \
-    hide 2
+    hide 1
 
 status="$(tailscale status --json)"
 
 jq -r '[.Health[]? | ascii_downcase | rtrimstr(".") | select(contains("advertising routes") | not)]
     | if length == 0 then ["healthy"] else . end | .[]' <<<"$status" \
-    | sed "s/^/$label/"
+    | sed "s/^/$label\thealth\t/"
 
-tailnets="$(tailscale switch --list \
-    | awk 'NR > 1 { current = sub(/\*$/, "", $3); print "tailnet\t" $2 "\t" $3 "\t" $1 "\t" current }')"
+backend="$(jq -r '.BackendState' <<<"$status")"
 
-paste <(cut -f1-3 <<<"$tailnets" | table) <(cut -f4- <<<"$tailnets") \
-    | while IFS=$'\t' read -r line id current; do
+tailscale switch --list \
+    | awk 'NR > 1 { current = sub(/\*$/, "", $3); print $1 "\t" $2 "\t" $3 "\t" current }' \
+    | while IFS=$'\t' read -r id name account current; do
         if [[ "$current" != 1 ]]; then
-            printf '%s\t%s\n' "$line" "switch $id"
-        elif [[ "$(jq -r '.BackendState' <<<"$status")" == "Running" ]]; then
-            printf '%s%s\t%s\n' "$highlight" "$line" down
+            printf 'switch %s\ttailnet\t%s\t%s\n' "$id" "$name" "$account"
+        elif [[ "$backend" == Running ]]; then
+            printf '%sdown\ttailnet\t%s\t%s\n' "$highlight" "$name" "$account"
         else
-            printf '%s\t%s\n' "$line" up
+            printf 'up\ttailnet\t%s\t%s\n' "$name" "$account"
         fi
     done
 
@@ -44,46 +44,39 @@ dns_upstream="$(tailscale dns status --json 2>/dev/null | jq -r '
     [(.Resolvers[0].Addr // "system" | sub("^[a-z]+://"; "") | sub("/.*"; "")),
      (if .CurrentTailnet.MagicDNSEnabled then "magicdns" else empty end)]
     | join(", ")')"
-if [[ "$corp_dns" == "true" ]]; then
-    printf '%saccept dns via %s\t%s\n' "$highlight" "$dns_upstream" "set --accept-dns=false"
+if [[ "$corp_dns" == true ]]; then
+    printf '%sset --accept-dns=false\tdns\t%s\n' "$highlight" "$dns_upstream"
 else
-    printf '%s\t%s\n' "accept dns via $dns_upstream" "set --accept-dns"
+    printf 'set --accept-dns\tdns\t%s\n' "$dns_upstream"
 fi
 
 routes="$(jq -r '[.Peer[]? | . as $p | (.PrimaryRoutes // [])[] | "\(.) via \($p.DNSName | split(".")[0])"] | join(", ")' <<<"$status")"
-if [[ "$(jq -r '[.Peer[]? | select(.ExitNode) | .PrimaryRoutes | length > 0] | any' <<<"$status")" == "true" ]]; then
-    printf '%saccept routes %s implied\n' "$label" "$routes"
-elif [[ "$route_all" == "true" ]]; then
-    printf '%saccept routes %s\t%s\n' "$highlight" "$routes" "set --accept-routes=false"
+if [[ "$(jq -r '[.Peer[]? | select(.ExitNode) | .PrimaryRoutes | length > 0] | any' <<<"$status")" == true ]]; then
+    printf '%s\troutes\t%s\n' "$label" "$routes"
+elif [[ "$route_all" == true ]]; then
+    printf '%sset --accept-routes=false\troutes\t%s\n' "$highlight" "$routes"
 else
-    printf '%s\t%s\n' "accept routes $routes" "set --accept-routes"
+    printf 'set --accept-routes\troutes\t%s\n' "$routes"
 fi
 
-if [[ "$has_exit_node" == "true" && "$lan_access" == "true" ]]; then
-    printf '%sexit node lan access\t%s\n' "$highlight" "set --exit-node-allow-lan-access=false"
-elif [[ "$has_exit_node" == "true" ]]; then
-    printf '%s\t%s\n' "exit node lan access" "set --exit-node-allow-lan-access"
+if [[ "$has_exit_node" != true ]]; then
+    printf '%s\tlan\texit node access\n' "$label"
+elif [[ "$lan_access" == true ]]; then
+    printf '%sset --exit-node-allow-lan-access=false\tlan\texit node access\n' "$highlight"
+else
+    printf 'set --exit-node-allow-lan-access\tlan\texit node access\n'
 fi
 
-peers="$(jq -r '
-    .Peer[]?
-    | ["peer", (.DNSName | split(".")[0]), .TailscaleIPs[0], (if .Online then "online" else "offline" end),
+jq -r --arg highlight "$highlight" --arg label "$label" '
+    [.Peer[]?]
+    | sort_by(.ExitNodeOption, (.DNSName | split(".")[0]))
+    | .[]
+    | [(if .ExitNode then "\($highlight)set --exit-node="
+        elif .ExitNodeOption then "set --exit-node=\(.TailscaleIPs[0])"
+        else $label end),
+       "peer", (.DNSName | split(".")[0]), .TailscaleIPs[0], (if .Online then "online" else "offline" end),
        (if .Active | not then "" elif .CurAddr != "" then "direct" else "relay \(.Relay)" end),
        (if .Location then "\(.Location.Country) \(.Location.City)" else .OS end | ascii_downcase),
-       "rx", .RxBytes, "tx", .TxBytes, (if .ExitNodeOption then "exit node" else "" end),
-       .ExitNodeOption, .ExitNode, .TailscaleIPs[0]]
+       "rx", .RxBytes, "tx", .TxBytes, (if .ExitNodeOption then "exit node" else "" end)]
     | @tsv' <<<"$status" \
-    | sort -t$'\t' -k12,12 -k2,2 \
-    | numfmt -d$'\t' --field=8,10 --to=iec)"
-[[ -n "$peers" ]] || exit 0
-
-paste <(cut -f1-11 <<<"$peers" | table) <(cut -f12- <<<"$peers") \
-    | while IFS=$'\t' read -r line can_exit is_exit ip; do
-        if [[ "$is_exit" == "true" ]]; then
-            printf '%s%s\t%s\n' "$highlight" "$line" "set --exit-node="
-        elif [[ "$can_exit" == "true" ]]; then
-            printf '%s\t%s\n' "$line" "set --exit-node=$ip"
-        else
-            printf '%s%s\n' "$label" "$line"
-        fi
-    done
+    | numfmt -d$'\t' --field=9,11 --to=iec
