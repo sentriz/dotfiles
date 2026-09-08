@@ -23,11 +23,19 @@ jq -r '[.Health[]? | ascii_downcase | rtrimstr(".") | select(contains("advertisi
     | if length == 0 then ["healthy"] else . end | .[]' <<<"$status" \
     | sed "s/^/$label/"
 
-if [[ "$(jq -r '.BackendState' <<<"$status")" == "Running" ]]; then
-    printf '%s%s\t%s\n' "$highlight" connected down
-else
-    printf '%s\t%s\n' connect up
-fi
+tailnets="$(tailscale switch --list \
+    | awk 'NR > 1 { current = sub(/\*$/, "", $3); print "tailnet\t" $2 "\t" $3 "\t" $1 "\t" current }')"
+
+paste <(cut -f1-3 <<<"$tailnets" | table) <(cut -f4- <<<"$tailnets") \
+    | while IFS=$'\t' read -r line id current; do
+        if [[ "$current" != 1 ]]; then
+            printf '%s\t%s\n' "$line" "switch $id"
+        elif [[ "$(jq -r '.BackendState' <<<"$status")" == "Running" ]]; then
+            printf '%s%s\t%s\n' "$highlight" "$line" down
+        else
+            printf '%s\t%s\n' "$line" up
+        fi
+    done
 
 read -r corp_dns route_all has_exit_node lan_access < <(
     tailscale debug prefs | jq -r '[.CorpDNS, .RouteAll, .ExitNodeID != "", .ExitNodeAllowLANAccess] | join(" ")')
@@ -57,18 +65,15 @@ elif [[ "$has_exit_node" == "true" ]]; then
     printf '%s\t%s\n' "exit node lan access" "set --exit-node-allow-lan-access"
 fi
 
-country="$(locale | awk -F'[=_.]' '/^LANG=/ {print $3}')"
-
-peers="$(jq -r --arg input "${CMENU_INPUT-}" --arg country "$country" '
+peers="$(jq -r '
     .Peer[]?
-    | select(.Location == null or .ExitNode or $input == "all" or .Location.CountryCode == $country)
     | ["peer", (.DNSName | split(".")[0]), .TailscaleIPs[0], (if .Online then "online" else "offline" end),
        (if .Active | not then "" elif .CurAddr != "" then "direct" else "relay \(.Relay)" end),
        (if .Location then "\(.Location.Country) \(.Location.City)" else .OS end | ascii_downcase),
        "rx", .RxBytes, "tx", .TxBytes, (if .ExitNodeOption then "exit node" else "" end),
        .ExitNodeOption, .ExitNode, .TailscaleIPs[0]]
     | @tsv' <<<"$status" \
-    | sort -t$'\t' -k2 \
+    | sort -t$'\t' -k12,12 -k2,2 \
     | numfmt -d$'\t' --field=8,10 --to=iec)"
 [[ -n "$peers" ]] || exit 0
 
