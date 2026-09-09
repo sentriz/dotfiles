@@ -24,7 +24,7 @@
   path = "menu-sway-session"
 
 [[scripts]]
-  triggers = ["script system"]
+  triggers = ["script system", "interval 1s"]
   name = "framework"
   path = "menu-framework"
 
