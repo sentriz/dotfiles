@@ -1,3 +1,4 @@
+import os from "node:os";
 import type { AssistantMessage } from "@earendil-works/pi-ai";
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import { truncateToWidth, visibleWidth } from "@earendil-works/pi-tui";
@@ -23,7 +24,7 @@ export default function (pi: ExtensionAPI) {
 					? `${usage.percent?.toFixed(1) ?? "?"}%/${fmt(usage.contextWindow)}`
 					: "";
 
-				const left = theme.fg("dim", `↑${fmt(input)} ↓${fmt(output)} ${usageStr}`);
+				const left = theme.fg("dim", `${shortenHome(ctx.cwd)} • ↑${fmt(input)} ↓${fmt(output)} ${usageStr}`);
 				const right = theme.fg("dim", `${ctx.model?.id ?? "no-model"} • ${pi.getThinkingLevel()}`);
 
 				const pad = " ".repeat(Math.max(1, width - visibleWidth(left) - visibleWidth(right)));
@@ -31,6 +32,11 @@ export default function (pi: ExtensionAPI) {
 			},
 		}));
 	});
+}
+
+function shortenHome(p: string): string {
+	const home = os.homedir();
+	return p === home || p.startsWith(`${home}/`) ? `~${p.slice(home.length)}` : p;
 }
 
 function fmt(n: number): string {
