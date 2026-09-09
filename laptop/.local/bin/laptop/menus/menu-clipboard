@@ -2,44 +2,47 @@
 
 set -u
 
-if [[ "${CMENU_MODE-}" = "preview" ]]; then
-    IFS=$'\t' read -r id text <<<"$1"
-
-    if [[ "$text" != "[[ binary data "*" ]]" ]]; then
-        cliphist decode "$id"
-    elif [[ "$text" =~ [0-9]+x[0-9]+\ \]\]$ ]]; then
-        cliphist decode "$id" | cmenu image -
-    fi
-    exit 0
-fi
-
 if [[ "$#" -gt 0 ]]; then
-    IFS=$'\t' read -r id _ <<<"$1"
+    IFS=$'\t' read -r id _ text mime <<<"$1"
 
-    if [[ "${CMENU_INPUT-}" = "del" ]]; then
-        printf '%s\t\n' "$id" | cliphist delete
+    if [[ "${CMENU_MODE-}" != "preview" && "${CMENU_INPUT-}" = "del" ]]; then
+        printf '%s\n' "$id" | cliphist delete
         exit
     fi
 
-    cliphist decode "$id" | wl-copy
+    if [[ "${CMENU_MODE-}" = "preview" ]]; then
+        case "$mime" in
+        image/*) cliphist decode "$id" | cmenu image - ;;
+        text/* | application/json | application/xml) cliphist decode "$id" ;;
+        *) printf '%s\n' "$text" ;;
+        esac
+        exit 0
+    fi
+
+    copy_args=()
+    [[ -n "$mime" ]] && copy_args=(--type "$mime")
+    cliphist decode "$id" | wl-copy "${copy_args[@]}"
     exit
 fi
 
-newest_id="$(cliphist list | head -1 | cut -f1)"
+IFS=$'\t' read -r newest_id mime < <(cliphist list -fields id,mime | head -1)
 [[ -z "$newest_id" ]] && exit 0
 
 # the newest entry is the clipboard, unless something has copied or cleared it since
 current_id=""
-cmp -s <(cliphist decode "$newest_id") <(wl-paste -n 2>/dev/null) && current_id="$newest_id"
+paste_args=(-n)
+[[ -n "$mime" ]] && paste_args+=(--type "$mime")
+cmp -s <(cliphist decode "$newest_id") <(wl-paste "${paste_args[@]}" 2>/dev/null) && current_id="$newest_id"
 
 cmenu set \
     colour 3 \
     preview true \
-    hide 1
+    hide 1,4
 
 pre=""
 [[ "${CMENU_INPUT-}" = "del" ]] && pre="$(cmenu stay)"
 
-cliphist list \
+cliphist list -fields id,timestamp,preview,mime \
+    | beside "col 2 | numb '$EPOCHSECONDS - {}' | relative-duration" \
     | awk -F'\t' -v hl="$(cmenu highlight)" -v cur="$current_id" -v pre="$pre" \
-        '{ id = $1; sub(/^[^\t]*\t/, ""); gsub(/\t/, " "); printf "%s%s%s\t%s\n", pre, (id == cur ? hl : ""), id, $0 }'
+        '{ printf "%s%s%s\t%s\t%s\t%s\n", pre, ($1 == cur ? hl : ""), $1, ($5 == "0s" ? "now" : $5 " ago"), $3, $4 }'
