@@ -16,6 +16,11 @@ fi
 if [[ "$#" -gt 0 ]]; then
     IFS=$'\t' read -r id _ <<<"$1"
 
+    if [[ "${CMENU_INPUT-}" = "del" ]]; then
+        printf '%s\t\n' "$id" | cliphist delete
+        exit
+    fi
+
     cliphist decode "$id" | wl-copy
     exit
 fi
@@ -32,6 +37,9 @@ cmenu set \
     preview true \
     hide 1
 
+pre=""
+[[ "${CMENU_INPUT-}" = "del" ]] && pre="$(cmenu stay)"
+
 cliphist list \
-    | awk -F'\t' -v hl="$(cmenu highlight)" -v cur="$current_id" \
-        '{ id = $1; sub(/^[^\t]*\t/, ""); gsub(/\t/, " "); printf "%s%s\t%s\n", (id == cur ? hl : ""), id, $0 }'
+    | awk -F'\t' -v hl="$(cmenu highlight)" -v cur="$current_id" -v pre="$pre" \
+        '{ id = $1; sub(/^[^\t]*\t/, ""); gsub(/\t/, " "); printf "%s%s%s\t%s\n", pre, (id == cur ? hl : ""), id, $0 }'
