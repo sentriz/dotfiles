@@ -17,29 +17,29 @@ if [[ "$#" -gt 0 ]]; then
     exit
 fi
 
+hottest() { grep -Po ": +\K[0-9]+(?= $1\$)" <<<"$thermal" | sort -rn | head -1; }
+
 cmenu set \
     colour 4 \
     stay_open true
 
 label="$(cmenu label)"
+highlight="$(cmenu highlight)"
 
 bat=/sys/class/power_supply/BAT1
 health=$(($(cat "$bat/charge_full") * 100 / $(cat "$bat/charge_full_design")))
-printf '%sbattery health %s%%, %s cycles\n' "$label" "$health" "$(cat "$bat/cycle_count")"
+printf '%sbattery health\t%s%%\n' "$label" "$health"
+printf '%sbattery cycles\t%s\n' "$label" "$(cat "$bat/cycle_count")"
 
 privacy="$(sudo framework_tool --privacy)"
 cam="$(grep -Po 'Camera:\s+\K\w+' <<<"$privacy")"
 mic="$(grep -Po 'Microphone:\s+\K\w+' <<<"$privacy")"
-printf '%scam %s, mic %s\n' "$label" "${cam,,}" "${mic,,}"
+printf '%sprivacy camera\t%s\n' "$label" "${cam,,}"
+printf '%sprivacy microphone\t%s\n' "$label" "${mic,,}"
 
 thermal="$(sudo framework_tool --thermal)"
-apu="$(grep -Po 'APU:\s+\K[0-9]+' <<<"$thermal")"
-fan="$(grep -Po 'APU Fan:\s+\K[0-9]+' <<<"$thermal")"
-printf '%sapu %s°C, fan %s rpm\n' "$label" "$apu" "$fan"
-
-printf '%skbd backlight %s\n' "$label" "$(sudo framework_tool --kblight | grep -Po ': \K.*')"
-
-highlight="$(cmenu highlight)"
+printf '%stemperature\t%s°C\n' "$label" "$(hottest C)"
+printf '%sfan\t%s rpm\n' "$label" "$(hottest RPM)"
 
 charge_limit="$(charge-limit)"
 
