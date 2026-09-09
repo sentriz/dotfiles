@@ -1,11 +1,19 @@
 #!/usr/bin/env fish
 
-set -l secs $argv[1]
+function relative-duration -a secs
+    if test "$secs" -lt 60
+        echo "$secs"s
+    else if test "$secs" -lt 3600
+        echo (math -s0 "$secs / 60")m
+    else
+        echo (math -s0 "$secs / 3600")h (math -s0 "($secs % 3600) / 60")m
+    end
+end
 
-if test "$secs" -lt 60
-    echo "$secs"s
-else if test "$secs" -lt 3600
-    echo (math -s0 "$secs / 60")m
+if set -q argv[1]
+    relative-duration $argv[1]
 else
-    echo (math -s0 "$secs / 3600")h (math -s0 "($secs % 3600) / 60")m
+    while read -l secs
+        relative-duration $secs
+    end
 end
