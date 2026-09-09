@@ -2,91 +2,143 @@
 
 set -u
 
-if [[ "$#" -gt 0 ]]; then
-    IFS=$'\t' read -r cmd arg <<<"$1"
+main() {
+    if [[ "$#" -gt 0 ]]; then
+        IFS=$'\t' read -r cmd arg <<<"$1"
 
-    case "$cmd" in
-    "screenshot")
-        filename="${SCREENSHOTS_DIR}/$(date '+%Y%m%d_%H%M%S').png"
+        case "$cmd" in
+        "screenshot")
+            filename="${SCREENSHOTS_DIR}/$(date '+%Y%m%d_%H%M%S').png"
 
-        {
-            area_out="$(area "$arg")"
-            [[ -z "$area_out" ]] && exit 1
+            {
+                area_out="$(area "$arg")"
+                [[ -z "$area_out" ]] && exit 1
 
-            toplevel="$(grep -Po '^toplevel\t\K.+' <<<"$area_out")"
-            geo="$(grep -Po '^geo\t\K.+' <<<"$area_out")"
+                toplevel="$(grep -Po '^toplevel\t\K.+' <<<"$area_out")"
+                geo="$(grep -Po '^geo\t\K.+' <<<"$area_out")"
 
-            if [[ -n "$toplevel" ]]; then
-                grim -T "$toplevel" "$filename"
-            elif [[ -n "$geo" ]]; then
-                grim -g "$geo" "$filename"
-            else
-                exit 1
-            fi
-            [[ ! -f "$filename" ]] && exit 1
+                if [[ -n "$toplevel" ]]; then
+                    grim -T "$toplevel" "$filename"
+                elif [[ -n "$geo" ]]; then
+                    grim -g "$geo" "$filename"
+                else
+                    exit 1
+                fi
+                [[ ! -f "$filename" ]] && exit 1
 
-            wl-copy <"$filename"
+                wl-copy <"$filename"
 
-            notify-send "screenshot" "$filename"
-        } &
-        disown
-        ;;
+                notify-send "screenshot" "$filename"
+            } &
+            disown
+            ;;
 
-    "recording" | "recording audio")
-        filename="${RECORDINGS_DIR}/$(date '+%Y%m%d_%H%M%S').mp4"
+        "recording" | "recording audio" | "recording audio mic")
+            filename="${RECORDINGS_DIR}/$(date '+%Y%m%d_%H%M%S').mp4"
 
-        extra_args=()
-        if [[ "$cmd" = "recording audio" ]]; then
-            default_sink="$(wpctl inspect @DEFAULT_AUDIO_SINK@ 2>/dev/null | grep -Po 'node\.name = "\K[^"]+')"
-            extra_args=(--audio="${default_sink}.monitor")
-        fi
+            {
+                area_out="$(area "$arg")"
+                geo="$(grep -Po '^geo\t\K.+' <<<"$area_out")"
+                [[ -z "$geo" ]] && exit 1
 
-        {
-            area_out="$(area "$arg")"
-            geo="$(grep -Po '^geo\t\K.+' <<<"$area_out")"
-            [[ -z "$geo" ]] && exit 1
+                extra_args=()
+                loopbacks=()
 
-            wf-recorder "${extra_args[@]}" -f "$filename" -g "$geo" -x yuv420p >/dev/null
-            [[ ! -f "$filename" ]] && exit 1
+                case "$cmd" in
+                "recording audio")
+                    extra_args=(--audio="$(node-name @DEFAULT_AUDIO_SINK@).monitor")
+                    ;;
+                "recording audio mic")
+                    read -ra loopbacks <<<"$(start-mic-mix)"
+                    extra_args=(--audio=scrotmix.monitor)
+                    ;;
+                esac
 
-            wl-copy -t text/uri-list "file://$filename"
+                wf-recorder "${extra_args[@]}" -f "$filename" -g "$geo" -x yuv420p >/dev/null
 
-            notify-send "recorded" "$filename"
-        } &
-        disown
-        ;;
+                for pid in "${loopbacks[@]}"; do
+                    kill "$pid"
+                done
 
-    "recording stop")
-        killall --signal SIGINT wf-recorder
-        while pidof -q wf-recorder; do sleep 0.1; done
-        ;;
-    esac
+                [[ ! -f "$filename" ]] && exit 1
 
-    exit
-fi
+                wl-copy -t text/uri-list "file://$filename"
 
-cmenu set colour 11
+                notify-send "recorded" "$filename"
+            } &
+            disown
+            ;;
 
-recording=false
-if pidof -q wf-recorder; then
-    recording=true
-fi
+        "recording stop")
+            killall --signal SIGINT wf-recorder
+            while pidof -q wf-recorder; do sleep 0.1; done
+            ;;
+        esac
 
-if [[ "$recording" = true ]]; then
-    secs="$(ps -o etimes= -C wf-recorder | head -1 | tr -d ' ')"
-    printf '%srecording %dm%02ds\n' "$(cmenu label)" "$((secs / 60))" "$((secs % 60))"
-fi
-
-for type in "screenshot" "recording" "recording audio"; do
-    if [[ "$recording" = true && "$type" =~ "recording" ]]; then
-        continue
+        exit
     fi
 
-    for area in $(area list); do
-        printf '%s\t%s\n' "$type" "$area"
-    done
-done
+    cmenu set colour 11
 
-if [[ "$recording" = true ]]; then
-    printf '%s\n' "recording stop"
-fi
+    recording=false
+    if pidof -q wf-recorder; then
+        recording=true
+    fi
+
+    if [[ "$recording" = true ]]; then
+        secs="$(ps -o etimes= -C wf-recorder | head -1 | tr -d ' ')"
+        printf '%srecording %dm%02ds\n' "$(cmenu label)" "$((secs / 60))" "$((secs % 60))"
+    fi
+
+    for type in "screenshot" "recording" "recording audio" "recording audio mic"; do
+        if [[ "$recording" = true && "$type" =~ "recording" ]]; then
+            continue
+        fi
+
+        for area in $(area list); do
+            printf '%s\t%s\n' "$type" "$area"
+        done
+    done
+
+    if [[ "$recording" = true ]]; then
+        printf '%s\n' "recording stop"
+    fi
+}
+
+system_volume=0.6
+
+start-mic-mix() {
+    local sink source
+    sink="$(node-name @DEFAULT_AUDIO_SINK@)"
+    source="$(node-name @DEFAULT_AUDIO_SOURCE@)"
+
+    pw-loopback -m '[FL FR]' \
+        --capture-props='media.class=Audio/Sink node.name=scrotmix' \
+        --playback-props='media.class=Audio/Source node.name=scrotmix.out' >/dev/null 2>&1 &
+    local sink_pid=$!
+
+    pw-loopback -P scrotmix \
+        --capture-props="node.target=${sink} stream.capture.sink=true" \
+        --playback-props='node.name=scrotmix.system' >/dev/null 2>&1 &
+    local system_pid=$!
+
+    pw-loopback -P scrotmix \
+        --capture-props="node.target=${source}" >/dev/null 2>&1 &
+    local mic_pid=$!
+
+    local node
+    for _ in $(seq 20); do
+        node="$(pw-dump | jq -r '.[] | select(.info.props."node.name" == "scrotmix.system") | .id')"
+        [[ -n "$node" ]] && break
+        sleep 0.1
+    done
+    [[ -n "$node" ]] && wpctl set-volume "$node" "$system_volume"
+
+    echo "$sink_pid $system_pid $mic_pid"
+}
+
+node-name() {
+    wpctl inspect "$1" 2>/dev/null | grep -Po 'node\.name = "\K[^"]+'
+}
+
+main "$@"
