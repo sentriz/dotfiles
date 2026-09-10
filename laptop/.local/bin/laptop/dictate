@@ -11,6 +11,16 @@ models="$XDG_DATA_HOME/whisper-models"
 model="$models/tiny_en_acft_q8_0.bin"
 vad="$models/ggml-silero-v5.1.2.bin"
 
+# what the mic is captured as, and what raw pcm on stdin must be
+sample_format="s16"
+rate=16000
+channels=1
+
+if [ "${1-}" = "--format" ]; then
+    printf '%s\t%s\t%s\n' "$sample_format" "$rate" "$channels"
+    exit
+fi
+
 fetch() {
     local path="$1" url="$2"
     [[ -f "$path" ]] && return 0
@@ -68,7 +78,11 @@ wav="${raw%.raw}.wav"
 clip="${raw%.raw}.clip.wav"
 trap 'rm -f "$raw" "$wav" "$clip"' EXIT
 
-pw-record --raw --format=s16 --rate=16000 --channels=1 "$raw" >/dev/null 2>&1 &
+if [[ -p /dev/stdin || -f /dev/stdin ]]; then
+    cat <&0 >"$raw" &
+else
+    pw-record --raw --format="$sample_format" --rate="$rate" --channels="$channels" "$raw" >/dev/null 2>&1 &
+fi
 rec=$!
 
 recording=1
