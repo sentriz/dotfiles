@@ -21,7 +21,7 @@ fetch() {
 committed=0
 
 emit() {
-    local silence="$1" bytes pending duration cut text
+    local silence="$1" bytes pending src duration cut text
 
     bytes="$(stat -c %s "$raw")"
     bytes=$((bytes - bytes % 2))
@@ -30,11 +30,12 @@ emit() {
 
     tail -c "+$((committed + 1))" "$raw" | head -c "$pending" |
         sox -t raw -r 16000 -e signed -b 16 -c 1 - "$wav"
-    duration="$(awk -v bytes="$pending" 'BEGIN { printf "%.2f", bytes / 32000 }')"
 
+    src="$wav"
     if [[ "$silence" == 0 ]]; then
-        cut="$duration"
+        committed=$((committed + pending))
     else
+        duration="$(awk -v bytes="$pending" 'BEGIN { printf "%.2f", bytes / 32000 }')"
         cut="$(
             whisper-vad-speech-segments -np -vm "$vad" -f "$wav" 2>/dev/null |
                 awk -v duration="$duration" -v silence="$silence" '
@@ -46,12 +47,13 @@ emit() {
                 '
         )"
         [[ -n "$cut" ]] || return 0
+
+        sox "$wav" "$clip" trim 0 "$cut"
+        src="$clip"
+        committed=$((committed + $(awk -v cut="$cut" 'BEGIN { printf "%d", int(cut * 16000) * 2 }')))
     fi
 
-    sox "$wav" "$clip" trim 0 "$cut"
-    committed=$((committed + $(awk -v cut="$cut" 'BEGIN { printf "%d", int(cut * 16000) * 2 }')))
-
-    text="$(whisper-cli -m "$model" -l en --no-timestamps --no-prints -f "$clip" 2>/dev/null |
+    text="$(whisper-cli -m "$model" -l en --no-timestamps --no-prints -f "$src" 2>/dev/null |
         tr '\n' ' ' | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')"
     if [[ -n "$text" && "$text" != \[*\] ]]; then
         printf '%s\n' "$text"
