@@ -54,3 +54,4 @@
 - Use `q` instead of `dig` for DNS queries.
 - Some `~/.local/bin` scripts shadow system commands (`col`, `sum`, `diff`). They are unrelated to the originals - use `/usr/bin/<cmd>` when you want the system one.
 - Projects are stored at `$PROJECTS_DIR/<x>`. "project <x>" or "<x> project" mean a directory there.
+- Most paths under `~/.config`, `~/.local`, and `~/.ssh` are symlinks into `$PROJECTS_DIR/dotfiles`. Never edit the path under `~`: resolve it with `readlink -f` and edit the file in the repo.
