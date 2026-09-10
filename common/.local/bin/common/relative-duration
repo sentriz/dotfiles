@@ -1,19 +1,26 @@
 #!/usr/bin/env fish
 
-function relative-duration -a secs
-    if test "$secs" -lt 60
-        echo "$secs"s
-    else if test "$secs" -lt 3600
-        echo (math -s0 "$secs / 60")m
-    else
-        echo (math -s0 "$secs / 3600")h (math -s0 "($secs % 3600) / 60")m
+function relative-duration -a secs parts
+    set -l out
+    for unit in 86400/d 3600/h 60/m 1/s
+        set -l div (string split / $unit)
+        test "$secs" -ge "$div[1]"; or test "$div[1]" -eq 1 -a -z "$out"
+        or continue
+
+        set -a out (math -s0 "$secs / $div[1]")$div[2]
+        set secs (math "$secs % $div[1]")
+        test (count $out) -lt "$parts"; or break
     end
+    echo $out
 end
 
-if set -q argv[1]
-    relative-duration $argv[1]
+set parts 1
+set -q argv[2]; and set parts $argv[2]
+
+if set -q argv[1]; and test "$argv[1]" != -
+    relative-duration $argv[1] $parts
 else
     while read -l secs
-        relative-duration $secs
+        relative-duration $secs $parts
     end
 end
