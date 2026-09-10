@@ -511,7 +511,6 @@ nullls.setup({
 	sources = {
 		nullls.builtins.formatting.clang_format,
 		nullls.builtins.formatting.fish_indent,
-		nullls.builtins.formatting.markdownlint.with({ extra_args = { "--disable", "MD014" } }),
 		nullls.builtins.formatting.pg_format.with({ extra_args = { "--keyword-case", 1, "--type-case", 1 } }),
 		nullls.builtins.formatting.prettierd,
 		nullls.builtins.formatting.shfmt.with({ extra_args = { "-i", 4, "-bn" } }),
@@ -519,7 +518,6 @@ nullls.setup({
 		nullls.builtins.formatting.goimports,
 
 		nullls.builtins.diagnostics.hadolint.with({ extra_args = { "--ignore", "DL3018", "--ignore", "DL3008" } }),
-		nullls.builtins.diagnostics.markdownlint,
 		nullls.builtins.diagnostics.selene,
 	},
 })

@@ -198,8 +198,6 @@ npm @tailwindcss/language-server
 npm @vue/language-server
 npm bash-language-server
 npm dockerfile-language-server-nodejs
-npm markdownlint
-npm markdownlint-cli
 npm prettier
 npm prettier-plugin-go-template
 npm prettier-plugin-svelte
