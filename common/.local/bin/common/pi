@@ -2,10 +2,8 @@
 
 set -u
 
-pi_bin=$(PATH="/usr/bin:/usr/local/bin" command -v pi)
-
 extra_dirs=()
-pi_args=()
+cmd_args=()
 parsing_binds=""
 for arg in "$@"; do
     if [ -n "$parsing_binds" ]; then
@@ -13,71 +11,172 @@ for arg in "$@"; do
     elif [ "$arg" = "--" ]; then
         parsing_binds=1
     else
-        pi_args+=("$arg")
+        cmd_args+=("$arg")
     fi
 done
 
+cmd=("$(PATH="/usr/bin:/usr/local/bin" command -v pi)" "${cmd_args[@]}")
+
+if [ ${#extra_dirs[@]} -gt 0 ]; then
+    cmd+=(--append-system-prompt "Additional directories available outside the working directory: ${extra_dirs[*]}")
+fi
+
+if [ -n "${PI_SHELL-}" ]; then
+    [ ${#cmd_args[@]} -gt 0 ] || {
+        echo "usage: PI_SHELL=1 pi <cmd> [args...]" >&2
+        exit 1
+    }
+    cmd=("${cmd_args[@]}")
+fi
+
 if [ -n "${PI_UNSANDBOXED-}" ]; then
-    PI_CODING_AGENT_DIR="$XDG_CONFIG_HOME/pi/agent" PI_OFFLINE=1 exec "$pi_bin" "${pi_args[@]}"
+    PI_CODING_AGENT_DIR="$XDG_CONFIG_HOME/pi/agent" PI_OFFLINE=1 exec "${cmd[@]}"
 fi
 
 cwd=$(realpath "$PWD")
 
-extra_binds=()
-for dir in "${extra_dirs[@]}"; do
-    extra_binds+=(--bind "$dir" "$dir")
-done
+ro_paths=()
+ro() { ro_paths+=("$@"); }
 
-if [ ${#extra_dirs[@]} -gt 0 ]; then
-    pi_args+=(--append-system-prompt "Additional directories available outside the working directory: ${extra_dirs[*]}")
-fi
+rw_paths=()
+rw() { rw_paths+=("$@"); }
 
-mkdir -p "$XDG_CACHE_HOME/jiti"
-mkdir -p "$XDG_RUNTIME_DIR/mcp"
-mkdir -p "$XDG_RUNTIME_DIR/pi"
+keep_paths=()
+keep() {
+    keep_paths+=("$@")
+    rw "$@"
+}
+
+override_args=()
+blank() { for path in "$@"; do override_args+=(--tmpfs "$path"); done; }
+redirect() { override_args+=(--bind "$1" "$2"); }
+
+base_args=()
+env_args=()
+
+# system
+base_args+=(--dev /dev --proc /proc --tmpfs /tmp --tmpfs /var/tmp --tmpfs "$XDG_RUNTIME_DIR")
+base_args+=(--symlink usr/bin /bin --symlink usr/bin /sbin --symlink usr/lib /lib --symlink usr/lib /lib64)
+ro /usr /etc /opt /run/systemd/resolve
+
+# workspace
+[ "$cwd" = "$HOME" ] || rw "$cwd"
+rw "$PROJECTS_DIR" "${extra_dirs[@]}" "$XDG_DOWNLOAD_DIR"
+
+# pi
+rw "$XDG_CONFIG_HOME/pi"
+keep "$XDG_CACHE_HOME/pi" "$XDG_RUNTIME_DIR/pi"
+env_args+=(--setenv PI_CODING_AGENT_DIR "$XDG_CONFIG_HOME/pi/agent" --setenv PI_OFFLINE 1)
+keep "$XDG_CACHE_HOME/jiti"
+redirect "$XDG_CACHE_HOME/jiti" /tmp/jiti
+
+# shell
+IFS=: read -ra path_entries <<<"$PATH"
+ro "${path_entries[@]}" "$XDG_CONFIG_HOME/fish"
+rw "$XDG_CACHE_HOME/fish"
+
+# secrets
+rw "$SECRETS_SOCK"
+
+# ssh
+ro "$HOME/.ssh/config" "$HOME/.ssh/known_hosts"
+rw "${SSH_AUTH_SOCK-}"
+blank /etc/ssh/ssh_config.d
+
+# git and github
+ro "$XDG_CONFIG_HOME/git"
+rw "$XDG_CONFIG_HOME/gh" "$XDG_CACHE_HOME/gh" "$XDG_DATA_HOME/gh"
+
+# mcp
+ro "$XDG_CONFIG_HOME/mcp"
+rw "$XDG_CACHE_HOME/mcp"
+keep "$XDG_RUNTIME_DIR/mcp"
+
+# aws
+keep "$XDG_CACHE_HOME/aws"
+
+# tasks
+rw "$XDG_DATA_HOME/tasks"
+
+# notes
+rw "$NOTES_DIR/machines"
+
+# go
+ro "$XDG_CONFIG_HOME/go"
+rw "$GOPATH/pkg/mod" "$XDG_CACHE_HOME"/{go,go-build,gopls,golangci-lint}
+
+# node, bun, and deno
+ro "${NPM_CONFIG_INIT_MODULE%/*}"
+rw "$NPM_CONFIG_CACHE" "$NPM_CONFIG_PREFIX" "$BUN_INSTALL_CACHE_DIR"
+rw "$XDG_CACHE_HOME"/{node-gyp,typescript,bun,deno}
+
+# python
+rw "$XDG_CACHE_HOME"/{uv,pip} "$XDG_DATA_HOME"/{uv,pipx} "$XDG_STATE_HOME/pipx"
+
+# rust, c, and zig
+rw "$CARGO_HOME" "$XDG_CACHE_HOME"/{ccache,zig}
+
+# direnv
+rw "$XDG_DATA_HOME/direnv"
+
+bind_args=()
+add-binds() {
+    local mode="$1" paths=() targets=() path target i
+    shift
+    for path in "$@"; do
+        [ -e "$path" ] && paths+=("$path")
+    done
+    [ ${#paths[@]} -gt 0 ] || return 0
+
+    mapfile -t targets < <(realpath "${paths[@]}")
+    for i in "${!paths[@]}"; do
+        path="${paths[i]}" target="${targets[i]}"
+        case "$target" in /usr/*) continue ;; esac
+        [ -L "$path" ] && bind_args+=(--symlink "$target" "$path")
+        bind_args+=("$mode" "$target" "$target")
+    done
+}
+
+mkdir -p "${keep_paths[@]}"
+
+# read-only first, so a writable group wins wherever it is declared
+add-binds --ro-bind "${ro_paths[@]}"
+add-binds --bind "${rw_paths[@]}"
 
 socks=()
-session_binds=()
-cleanups=()
+cleanups=""
 
-cleanup() {
-    for cmd in "${cleanups[@]}"; do eval "$cmd"; done
-    return 0
-}
-trap cleanup EXIT
+trap 'eval "$cleanups"; true' EXIT HUP INT TERM
 
+# notifications
 if [ -n "${DBUS_SESSION_BUS_ADDRESS-}" ]; then
     dbus_sock="$XDG_RUNTIME_DIR/pi/bus.$$"
-    xdg-dbus-proxy "$DBUS_SESSION_BUS_ADDRESS" "$dbus_sock" --filter --talk=org.freedesktop.Notifications &
-    cleanups+=("kill $!" "rm -f ${dbus_sock@Q}")
+    setpriv --pdeathsig=TERM xdg-dbus-proxy "$DBUS_SESSION_BUS_ADDRESS" "$dbus_sock" --filter --talk=org.freedesktop.Notifications &
+    cleanups+="kill $!; rm -f ${dbus_sock@Q}; "
     socks+=("$dbus_sock")
-    session_binds+=(--bind-try "$dbus_sock" "$dbus_sock" --setenv DBUS_SESSION_BUS_ADDRESS "unix:path=$dbus_sock")
+    override_args+=(--bind-try "$dbus_sock" "$dbus_sock")
+    env_args+=(--setenv DBUS_SESSION_BUS_ADDRESS "unix:path=$dbus_sock")
 fi
 
-if [ -n "${SSH_AUTH_SOCK-}" ]; then
-    session_binds+=(--bind-try "$SSH_AUTH_SOCK" "$SSH_AUTH_SOCK")
-fi
-
-if [ -n "${XDG_DOWNLOAD_DIR-}" ]; then
-    session_binds+=(--bind-try "$XDG_DOWNLOAD_DIR" "$XDG_DOWNLOAD_DIR")
-fi
-
-session_binds+=(--bind "$SECRETS_SOCK" "$SECRETS_SOCK")
-
+# clipboard
 if [ -n "${WAYLAND_DISPLAY-}" ]; then
     wayland_sock="$XDG_RUNTIME_DIR/pi/wayland.$$"
-    way-secure --socket-path "$wayland_sock" -e pi -a pi &
-    cleanups+=("kill $!" "rm -f ${wayland_sock@Q}")
+    setpriv --pdeathsig=TERM way-secure --socket-path "$wayland_sock" -e pi -a pi &
+    cleanups+="kill $!; rm -f ${wayland_sock@Q}; "
     socks+=("$wayland_sock")
-    session_binds+=(--bind-try "$wayland_sock" "$wayland_sock" --setenv WAYLAND_DISPLAY "$wayland_sock")
+    override_args+=(--bind-try "$wayland_sock" "$wayland_sock")
+    env_args+=(--setenv WAYLAND_DISPLAY "$wayland_sock")
 fi
 
+env_args+=(--unsetenv SWAYSOCK)
+
+# speech
 # one player per clip: pw-play reads in pipewire's rt thread, so a reader parked on an
 # idle fifo would stall the whole graph. eof ends it and the loop blocks in open() instead.
 speak_fifo="$XDG_RUNTIME_DIR/pi/speak.$$"
 mkfifo "$speak_fifo"
 IFS=$'\t' read -r sample_format rate channels < <(speak --format)
-bash -c '
+setpriv --pdeathsig=TERM bash -c '
     player=""
     trap '\''kill "$player" 2>/dev/null; exit'\'' TERM
     while :; do
@@ -86,45 +185,23 @@ bash -c '
         wait "$player" || exit
     done
 ' _ "$sample_format" "$rate" "$channels" "$speak_fifo" &
-cleanups+=("kill $! 2>/dev/null" "rm -f ${speak_fifo@Q}")
-session_binds+=(--setenv SPEAK_FIFO "$speak_fifo")
+cleanups+="kill $! 2>/dev/null; rm -f ${speak_fifo@Q}; "
+env_args+=(--setenv SPEAK_FIFO "$speak_fifo")
 
-if [ ${#socks[@]} -gt 0 ]; then
-    for _ in $(seq 50); do
-        missing=""
-        for sock in "${socks[@]}"; do [ -e "$sock" ] || missing=1; done
-        [ -z "$missing" ] && break
-        sleep 0.05
-    done
-fi
+for ((i = 0; i < 200; i++)); do
+    missing=""
+    for sock in "${socks[@]}"; do [ -e "$sock" ] || missing=1; done
+    [ -z "$missing" ] && break
+    sleep 0.005
+done
 
 bwrap \
-    --ro-bind / / \
-    --dev /dev \
-    --proc /proc \
-    --tmpfs /tmp \
-    --bind "$XDG_CACHE_HOME/jiti" /tmp/jiti \
-    --tmpfs "$HOME/.ssh" \
-    --ro-bind-try "$HOME/.ssh/config" "$HOME/.ssh/config" \
-    --ro-bind-try "$HOME/.ssh/known_hosts" "$HOME/.ssh/known_hosts" \
-    --tmpfs /etc/ssh/ssh_config.d \
-    --bind "$cwd" "$cwd" \
+    "${base_args[@]}" \
+    "${bind_args[@]}" \
+    "${override_args[@]}" \
+    "${env_args[@]}" \
     --chdir "$cwd" \
-    --bind "$XDG_CONFIG_HOME/pi" "$XDG_CONFIG_HOME/pi" \
-    --setenv PI_CODING_AGENT_DIR "$XDG_CONFIG_HOME/pi/agent" \
-    --bind "$XDG_CACHE_HOME" "$XDG_CACHE_HOME" \
-    --bind "$XDG_DATA_HOME/go/pkg/mod" "$XDG_DATA_HOME/go/pkg/mod" \
-    --bind "$XDG_DATA_HOME/tasks/" "$XDG_DATA_HOME/tasks/" \
-    --tmpfs "$XDG_RUNTIME_DIR" \
-    --bind "$XDG_RUNTIME_DIR/mcp" "$XDG_RUNTIME_DIR/mcp" \
-    --bind "$XDG_RUNTIME_DIR/pi" "$XDG_RUNTIME_DIR/pi" \
-    "${session_binds[@]}" \
-    --bind "$PROJECTS_DIR" "$PROJECTS_DIR" \
-    "${extra_binds[@]}" \
-    --setenv PI_OFFLINE 1 \
-    --unsetenv SWAYSOCK \
     --unshare-all \
     --share-net \
     --die-with-parent \
-    "$pi_bin" \
-    "${pi_args[@]}"
+    "${cmd[@]}"

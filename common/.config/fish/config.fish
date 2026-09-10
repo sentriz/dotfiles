@@ -3,6 +3,7 @@ set -gx HOSTNAME (uname -n)
 set -gx XDG_CACHE_HOME "$HOME/.cache"
 set -gx XDG_CONFIG_HOME "$HOME/.config"
 set -gx XDG_DATA_HOME "$HOME/.local/share"
+set -gx XDG_STATE_HOME "$HOME/.local/state"
 
 # import user-dirs as env vars
 test -e "$XDG_CONFIG_HOME/user-dirs.dirs"
