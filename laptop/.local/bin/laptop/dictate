@@ -75,7 +75,11 @@ recording=1
 trap 'recording=0' INT TERM
 
 while ((recording)) && kill -0 "$rec" 2>/dev/null; do
-    sleep 1
+    if [[ -t 0 ]]; then
+        if read -rsn1 -t 1 key && [[ "$key" == $'\e' ]]; then recording=0; fi
+    else
+        sleep 1 || true
+    fi
     emit 0.8
 done
 
