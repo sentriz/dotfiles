@@ -44,7 +44,6 @@ keep() {
 }
 
 override_args=()
-blank() { for path in "$@"; do override_args+=(--tmpfs "$path"); done; }
 redirect() { override_args+=(--bind "$1" "$2"); }
 
 base_args=()
@@ -73,15 +72,6 @@ rw "$XDG_CACHE_HOME/fish"
 
 # secrets
 rw "$SECRETS_SOCK"
-
-# ssh
-if [ -n "${PI_SSH-}" ]; then
-    ro "$HOME/.ssh/config" "$HOME/.ssh/known_hosts"
-    rw "${SSH_AUTH_SOCK-}"
-    blank /etc/ssh/ssh_config.d
-else
-    env_args+=(--unsetenv SSH_AUTH_SOCK)
-fi
 
 # git and github
 ro "$XDG_CONFIG_HOME/git"
@@ -169,6 +159,14 @@ if [ -n "${WAYLAND_DISPLAY-}" ]; then
 fi
 
 env_args+=(--unsetenv SWAYSOCK)
+
+# git signing
+sign_sock="$XDG_RUNTIME_DIR/pi/ssh-sign.$$"
+setpriv --pdeathsig=TERM ssh-agent-sign-only "$sign_sock" &
+cleanups+="kill $!; rm -f ${sign_sock@Q}; "
+socks+=("$sign_sock")
+override_args+=(--bind-try "$sign_sock" "$sign_sock")
+env_args+=(--setenv SSH_AUTH_SOCK "$sign_sock")
 
 # speech
 # one player per clip: pw-play reads in pipewire's rt thread, so a reader parked on an

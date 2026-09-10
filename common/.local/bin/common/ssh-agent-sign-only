@@ -1,0 +1,90 @@
+//usr/bin/env go-script "$0" "$@"; exit $?
+// vi: ft=go
+
+package main
+
+import (
+	"bytes"
+	"errors"
+	"fmt"
+	"io"
+	"log"
+	"net"
+	"os"
+	"os/signal"
+	"syscall"
+
+	"golang.org/x/crypto/ssh"
+	"golang.org/x/crypto/ssh/agent"
+)
+
+func main() {
+	if len(os.Args) != 2 {
+		fmt.Fprintln(os.Stderr, "usage: ssh-agent-sign-only <socket-path>")
+		os.Exit(1)
+	}
+	listenPath := os.Args[1]
+
+	upstreamPath := os.Getenv("SSH_AUTH_SOCK")
+	if upstreamPath == "" {
+		log.Fatal("SSH_AUTH_SOCK not set")
+	}
+
+	os.Remove(listenPath)
+	listener, err := net.Listen("unix", listenPath)
+	if err != nil {
+		log.Fatalf("listen: %v", err)
+	}
+	defer listener.Close()
+
+	signals := make(chan os.Signal, 1)
+	signal.Notify(signals, os.Interrupt, syscall.SIGTERM, syscall.SIGHUP)
+	go func() {
+		<-signals
+		listener.Close()
+	}()
+
+	for {
+		conn, err := listener.Accept()
+		if err != nil {
+			return
+		}
+		go func() {
+			defer conn.Close()
+
+			upstream, err := net.Dial("unix", upstreamPath)
+			if err != nil {
+				log.Printf("dial upstream: %v", err)
+				return
+			}
+			defer upstream.Close()
+
+			if err := agent.ServeAgent(signOnly{agent.NewClient(upstream)}, conn); err != nil && !errors.Is(err, io.EOF) {
+				log.Printf("serve: %v", err)
+			}
+		}()
+	}
+}
+
+type signOnly struct{ agent.ExtendedAgent }
+
+func (s signOnly) Sign(key ssh.PublicKey, data []byte) (*ssh.Signature, error) {
+	return s.SignWithFlags(key, data, 0)
+}
+
+func (s signOnly) SignWithFlags(key ssh.PublicKey, data []byte, flags agent.SignatureFlags) (*ssh.Signature, error) {
+	if !bytes.HasPrefix(data, []byte("SSHSIG")) {
+		return nil, errors.New("refusing to sign: not an sshsig payload")
+	}
+	return s.ExtendedAgent.SignWithFlags(key, data, flags)
+}
+
+func (s signOnly) Add(agent.AddedKey) error                 { return errRefused }
+func (s signOnly) Remove(ssh.PublicKey) error               { return errRefused }
+func (s signOnly) RemoveAll() error                         { return errRefused }
+func (s signOnly) Lock([]byte) error                        { return errRefused }
+func (s signOnly) Unlock([]byte) error                      { return errRefused }
+func (s signOnly) Signers() ([]ssh.Signer, error)           { return nil, errRefused }
+func (s signOnly) Extension(string, []byte) ([]byte, error) { return nil, errRefused }
+
+var errRefused = errors.New("refused")
