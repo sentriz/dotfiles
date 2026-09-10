@@ -80,6 +80,13 @@ vim.api.nvim_set_hl(0, "@string", { ctermfg = 8 })
 vim.api.nvim_set_hl(0, "Comment", { ctermfg = 8, italic = true })
 vim.api.nvim_set_hl(0, "@comment", { link = "Comment" })
 
+vim.api.nvim_set_hl(0, "@markup.heading.1", { ctermfg = 12, bold = true })
+vim.api.nvim_set_hl(0, "@markup.heading.2", { ctermfg = 14, bold = true })
+vim.api.nvim_set_hl(0, "@markup.heading.3", { ctermfg = 10, bold = true })
+vim.api.nvim_set_hl(0, "@markup.heading.4", { ctermfg = 13, bold = true })
+vim.api.nvim_set_hl(0, "@markup.heading.5", { ctermfg = 11, bold = true })
+vim.api.nvim_set_hl(0, "@markup.heading.6", { ctermfg = 8, bold = true })
+
 vim.api.nvim_set_hl(0, "@diff.plus", { link = "DiffAdd" })
 vim.api.nvim_set_hl(0, "@diff.minus", { link = "DiffDelete" })
 
