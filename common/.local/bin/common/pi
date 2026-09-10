@@ -180,9 +180,10 @@ env_args+=(--unsetenv SWAYSOCK)
 speak_fifo="$XDG_RUNTIME_DIR/pi/speak.$$"
 mkfifo "$speak_fifo"
 IFS=$'\t' read -r sample_format rate channels < <(speak --format)
+# shellcheck disable=SC2016
 setpriv --pdeathsig=TERM bash -c '
     player=""
-    trap '\''kill "$player" 2>/dev/null; exit'\'' TERM
+    trap "kill \$player 2>/dev/null; exit" TERM
     while :; do
         pw-play --raw --format "$1" --rate "$2" --channels "$3" "$4" &
         player=$!
