@@ -17,10 +17,6 @@ done
 
 cmd=("$(PATH="/usr/bin:/usr/local/bin" command -v pi)" "${cmd_args[@]}")
 
-if [ ${#extra_dirs[@]} -gt 0 ]; then
-    cmd+=(--append-system-prompt "Additional directories available outside the working directory: ${extra_dirs[*]}")
-fi
-
 if [ -n "${PI_SHELL-}" ]; then
     [ ${#cmd_args[@]} -gt 0 ] || {
         echo "usage: PI_SHELL=1 pi <cmd> [args...]" >&2
