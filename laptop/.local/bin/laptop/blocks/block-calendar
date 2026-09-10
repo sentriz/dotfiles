@@ -72,5 +72,5 @@ test -z "$next_start"; and exit 0
 
 set rel now
 set diff (math "$next_start - $now_secs")
-test "$diff" -gt 0; and set rel "in "(relative-duration $diff)
+test "$diff" -gt 0; and set rel "in "(relative-duration $diff 2)
 echo "($rel) "(string shorten -m 30 -c … -- "$next_title")
