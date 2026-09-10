@@ -72,6 +72,23 @@ if [ -n "${WAYLAND_DISPLAY-}" ]; then
     session_binds+=(--bind-try "$wayland_sock" "$wayland_sock" --setenv WAYLAND_DISPLAY "$wayland_sock")
 fi
 
+# one player per clip: pw-play reads in pipewire's rt thread, so a reader parked on an
+# idle fifo would stall the whole graph. eof ends it and the loop blocks in open() instead.
+speak_fifo="$XDG_RUNTIME_DIR/pi/speak.$$"
+mkfifo "$speak_fifo"
+IFS=$'\t' read -r sample_format rate channels < <(speak --format)
+bash -c '
+    player=""
+    trap '\''kill "$player" 2>/dev/null; exit'\'' TERM
+    while :; do
+        pw-play --raw --format "$1" --rate "$2" --channels "$3" "$4" &
+        player=$!
+        wait "$player" || exit
+    done
+' _ "$sample_format" "$rate" "$channels" "$speak_fifo" &
+cleanups+=("kill $! 2>/dev/null" "rm -f ${speak_fifo@Q}")
+session_binds+=(--setenv SPEAK_FIFO "$speak_fifo")
+
 if [ ${#socks[@]} -gt 0 ]; then
     for _ in $(seq 50); do
         missing=""
