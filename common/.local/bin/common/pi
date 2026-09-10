@@ -79,9 +79,13 @@ rw "$XDG_CACHE_HOME/fish"
 rw "$SECRETS_SOCK"
 
 # ssh
-ro "$HOME/.ssh/config" "$HOME/.ssh/known_hosts"
-rw "${SSH_AUTH_SOCK-}"
-blank /etc/ssh/ssh_config.d
+if [ -n "${PI_SSH-}" ]; then
+    ro "$HOME/.ssh/config" "$HOME/.ssh/known_hosts"
+    rw "${SSH_AUTH_SOCK-}"
+    blank /etc/ssh/ssh_config.d
+else
+    env_args+=(--unsetenv SSH_AUTH_SOCK)
+fi
 
 # git and github
 ro "$XDG_CONFIG_HOME/git"
