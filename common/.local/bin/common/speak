@@ -1,0 +1,73 @@
+#!/usr/bin/env bash
+
+# depends
+#   - pipewire (pw-play)
+#   - jq
+#   - secret
+
+set -eu
+
+model="gpt-4o-mini-tts"
+voice="ballad"
+instructions="Speak briskly, a little faster than a normal conversational pace. Plain and matter-of-fact."
+
+# what response_format below decodes to, for players we hand raw pcm to
+sample_format="s16"
+rate=24000
+channels=1
+
+if [ "${1-}" = "--format" ]; then
+    printf '%s\t%s\t%s\n' "$sample_format" "$rate" "$channels"
+    exit
+fi
+
+play() {
+    pw-play --raw --format "$sample_format" --rate "$rate" --channels "$channels" -
+}
+
+if [ "$#" -gt 0 ]; then
+    text="$*"
+else
+    text="$(cat)"
+fi
+
+speech() {
+    local chunk="$1" body
+
+    body="$(
+        jq -n \
+            --arg model "$model" \
+            --arg voice "$voice" \
+            --arg instructions "$instructions" \
+            --arg input "$chunk" \
+            '{$model, $voice, $instructions, $input, response_format: "pcm"}'
+    )"
+
+    curl -fsS --no-buffer https://api.openai.com/v1/audio/speech \
+        -H "authorization: Bearer $key" \
+        -H "content-type: application/json" \
+        -d "$body"
+}
+
+# the api takes at most 4096 characters per request, so long text goes in sentence-aligned pieces
+speak-all() {
+    while IFS= read -r -d '' chunk; do
+        speech "$chunk"
+    done < <(
+        printf '%s' "$text" | awk -v limit=3500 '
+            BEGIN { RS = "[.!?][ \n]"; ORS = "" }
+            { sentence = $0 RT
+              if (length(buffer) + length(sentence) > limit) { print buffer "\0"; buffer = "" }
+              buffer = buffer sentence }
+            END { if (buffer != "") print buffer "\0" }
+        '
+    )
+}
+
+key="$(secret openai_key_3)"
+
+if [ -t 1 ]; then
+    speak-all | play
+else
+    speak-all
+fi
