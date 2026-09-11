@@ -45,10 +45,12 @@ read -r corp_dns route_all has_exit_node lan_access < <(
     tailscale debug prefs | jq -r '[.CorpDNS, .RouteAll, .ExitNodeID != "", .ExitNodeAllowLANAccess] | join(" ")')
 
 dns_upstream="$(tailscale dns status --json 2>/dev/null | jq -r '
-    [(.Resolvers[0].Addr // "system" | sub("^[a-z]+://"; "") | sub("/.*"; "")),
+    [(.Resolvers[0].Addr // empty | sub("^[a-z]+://"; "") | sub("/.*"; "")),
      (if .CurrentTailnet.MagicDNSEnabled then "magicdns" else empty end)]
     | join(", ")')"
-if [[ "$corp_dns" == true ]]; then
+if [[ -z "$dns_upstream" ]]; then
+    printf '%s\tdns\tsystem resolver\n' "$label"
+elif [[ "$corp_dns" == true ]]; then
     printf '%sset --accept-dns=false\tdns\t%s\n' "$highlight" "$dns_upstream"
 else
     printf 'set --accept-dns\tdns\t%s\n' "$dns_upstream"
