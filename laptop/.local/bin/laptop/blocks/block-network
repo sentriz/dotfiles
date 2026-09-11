@@ -2,12 +2,10 @@
 
 set -u
 
-interfaces() {
-    networkctl --json=short status | jq '[.Interfaces.[] | select(.OperationalState == "routable" and (.Type == "wlan" or .Type == "ether"))]'
-}
-
-case "${BLOCK_BUTTON-}" in
-1) notify-send "$(interfaces | jq -r '.[] | "\(.Type) \(.Addresses[] | select(.Family == 2 and .ScopeString == "global") | .Address | map(tostring) | join("."))"')" ;;
-esac
-
-interfaces | jq -r '[[.[] | {priority: (.Routes.[] | select(.ConfigSource == "DHCPv4" and .ScopeString == "global") | .Priority), type: .Type, ssid: .SSID}] | sort_by(.priority) | unique | .[] | [.type, .ssid] | map(select(. != null)) | join(" ")] | join(", ")'
+networkctl --json=short status | jq -r '
+    [.Interfaces[] | select(.OperationalState == "routable" and (.Type == "wlan" or .Type == "ether" or .Kind == "tun"))
+     | {type: (if .Type == "none" then .Kind else .Type end), ssid: .SSID,
+        priority: ([.Routes[]? | select(.ConfigSource == "DHCPv4" and .ScopeString == "global") | .Priority] | first)}]
+    | sort_by(.priority // infinite)
+    | [.[] | [.type, .ssid] | map(select(. != null)) | join(" ")]
+    | join(", ")'

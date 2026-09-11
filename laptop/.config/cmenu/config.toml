@@ -99,6 +99,11 @@
   path = "menu-tailscale"
 
 [[scripts]]
+  triggers = ["script tailscale", "script wifi"]
+  name = "network"
+  path = "menu-network"
+
+[[scripts]]
   triggers = ["pre td"]
   name = "tuned"
   path = "menu-tuned"

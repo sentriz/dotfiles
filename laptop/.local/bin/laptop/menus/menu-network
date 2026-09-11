@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+set -u
+
+cmenu set \
+    colour 11 \
+    stay_open true
+
+label="$(cmenu label)"
+
+status="$(networkctl --json=short status)"
+resolved="$(resolvectl --json=short status | jq '.[0]')"
+
+printf '%sstate\t%s\n' "$label" \
+    "$(networkctl status | strip-escape | sed -nE 's/^ *(State|Online state): +(.+)/\2/p' | paste -sd' ')"
+
+jq -r --arg label "$label" '
+    ["\($label)dns", ([(.currentServer | if . then [.name, .addressString] | map(select(. != null)) | join(" ") else "none" end),
+                        (if .dnsOverTLS == "yes" then "dns over tls" else empty end),
+                        (if .dnssec != "no" then "dnssec" else empty end)] | join(" "))],
+    ["\($label)resolv.conf", .resolvConfMode]
+    | @tsv' <<<"$resolved"
+
+jq -r --arg label "$label" '
+    [.Interfaces[] | select(.OperationalState == "routable" and (.Type == "wlan" or .Type == "ether" or .Kind == "tun"))
+     | {name: .Name, type: (if .Type == "none" then .Kind else .Type end), ssid: .SSID,
+        priority: ([.Routes[]? | select(.ConfigSource == "DHCPv4" and .ScopeString == "global") | .Priority] | first),
+        address: ([.Addresses[]? | select(.Family == 2 and .ScopeString == "global") | .Address | map(tostring) | join(".")] | first)}]
+    | sort_by(.priority // infinite)
+    | .[]
+    | ["\($label)\(.type)", .name, (.address // ""), (.ssid // "")]
+    | @tsv' <<<"$status"
