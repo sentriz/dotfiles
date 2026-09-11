@@ -19,11 +19,15 @@ cmenu set \
 
 status="$(tailscale status --json)"
 
-jq -r '[.Health[]? | ascii_downcase | rtrimstr(".") | select(contains("advertising routes") | not)]
-    | if length == 0 then ["healthy"] else . end | .[]' <<<"$status" \
-    | sed "s/^/$label\thealth\t/"
-
 backend="$(jq -r '.BackendState' <<<"$status")"
+
+if [[ "$backend" == Running ]]; then
+    jq -r '[.Health[]? | ascii_downcase | rtrimstr(".") | select(contains("advertising routes") | not)]
+        | if length == 0 then ["healthy"] else sort end | .[]' <<<"$status" \
+        | sed "s/^/$label\thealth\t/"
+else
+    printf '%s\thealth\t%s\n' "$label" "$(lower <<<"$backend")"
+fi
 
 tailscale switch --list \
     | awk 'NR > 1 { current = sub(/\*$/, "", $3); print $1 "\t" $2 "\t" $3 "\t" current }' \
