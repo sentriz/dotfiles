@@ -44,6 +44,7 @@ keep() {
 }
 
 override_args=()
+blank() { for path in "$@"; do override_args+=(--tmpfs "$path"); done; }
 redirect() { override_args+=(--bind "$1" "$2"); }
 
 base_args=()
@@ -72,6 +73,9 @@ rw "$XDG_CACHE_HOME/fish"
 
 # secrets
 rw "$SECRETS_SOCK"
+
+# ssh, which has no keys here, and whose root owned config reads as nobody inside the namespace
+blank /etc/ssh
 
 # git and github
 ro "$XDG_CONFIG_HOME/git"
