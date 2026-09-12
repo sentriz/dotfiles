@@ -52,12 +52,14 @@ env_args=()
 
 # system
 base_args+=(--dev /dev --proc /proc --tmpfs /tmp --tmpfs /var/tmp --tmpfs "$XDG_RUNTIME_DIR")
-base_args+=(--symlink usr/bin /bin --symlink usr/bin /sbin --symlink usr/lib /lib --symlink usr/lib /lib64)
+for path in /bin /sbin /lib /lib64; do
+    [ -L "$path" ] && base_args+=(--symlink "$(readlink "$path")" "$path")
+done
 ro /usr /etc /opt /run/systemd/resolve
 
 # workspace
 [ "$cwd" = "$HOME" ] || rw "$cwd"
-rw "$PROJECTS_DIR" "${extra_dirs[@]}" "$XDG_DOWNLOAD_DIR"
+rw "$PROJECTS_DIR" "${extra_dirs[@]}" "${XDG_DOWNLOAD_DIR-}"
 
 # pi
 rw "$XDG_CONFIG_HOME/pi"
@@ -93,7 +95,7 @@ keep "$XDG_CACHE_HOME/aws"
 rw "$XDG_DATA_HOME/tasks"
 
 # notes
-rw "$NOTES_DIR/machines"
+rw "${NOTES_DIR:+$NOTES_DIR/machines}"
 
 # go
 ro "$XDG_CONFIG_HOME/go"
@@ -175,21 +177,23 @@ env_args+=(--setenv SSH_AUTH_SOCK "$sign_sock")
 # speech
 # one player per clip: pw-play reads in pipewire's rt thread, so a reader parked on an
 # idle fifo would stall the whole graph. eof ends it and the loop blocks in open() instead.
-speak_fifo="$XDG_RUNTIME_DIR/pi/speak.$$"
-mkfifo "$speak_fifo"
-IFS=$'\t' read -r sample_format rate channels < <(speak --format)
-# shellcheck disable=SC2016
-setpriv --pdeathsig=TERM bash -c '
-    player=""
-    trap "kill \$player 2>/dev/null; exit" TERM
-    while :; do
-        pw-play --raw --format "$1" --rate "$2" --channels "$3" "$4" &
-        player=$!
-        wait "$player" || exit
-    done
-' _ "$sample_format" "$rate" "$channels" "$speak_fifo" &
-cleanups+="kill $! 2>/dev/null; rm -f ${speak_fifo@Q}; "
-env_args+=(--setenv SPEAK_FIFO "$speak_fifo")
+if command -v pw-play >/dev/null; then
+    speak_fifo="$XDG_RUNTIME_DIR/pi/speak.$$"
+    mkfifo "$speak_fifo"
+    IFS=$'\t' read -r sample_format rate channels < <(speak --format)
+    # shellcheck disable=SC2016
+    setpriv --pdeathsig=TERM bash -c '
+        player=""
+        trap "kill \$player 2>/dev/null; exit" TERM
+        while :; do
+            pw-play --raw --format "$1" --rate "$2" --channels "$3" "$4" &
+            player=$!
+            wait "$player" || exit
+        done
+    ' _ "$sample_format" "$rate" "$channels" "$speak_fifo" &
+    cleanups+="kill $! 2>/dev/null; rm -f ${speak_fifo@Q}; "
+    env_args+=(--setenv SPEAK_FIFO "$speak_fifo")
+fi
 
 for ((i = 0; i < 200; i++)); do
     missing=""
