@@ -13,7 +13,6 @@ arch docker-buildx
 arch docker-compose
 
 # net
-arch iwd
 arch systemd-resolvconf
 
 arch man-db
@@ -148,6 +147,7 @@ arch bluez-utils
 arch iwd
 arch tuned
 arch framework-system
+arch iwd
 
 # av
 arch libpipewire02
@@ -212,5 +212,6 @@ arch tflint
 # llm
 go go.senan.xyz/mcp@latest
 arch pi-coding-agent
+arch bubblewrap
 arch fd
 arch way-secure
