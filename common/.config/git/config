@@ -3,7 +3,7 @@
 [user]
 	email = senan@senan.xyz
 	name = sentriz
-	signingkey = key::ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC+EofI1dAKVNT4FumGP63hj61Xb7+mmXJ2SHsgpaiGr
+	signingkey = key::ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMjW2tnkVBYuHVw26jRjyUqf8sFXMX9J8mUF8VCUp8KX
 [github]
 	user = sentriz
 [push]

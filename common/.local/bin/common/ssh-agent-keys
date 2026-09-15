@@ -1,0 +1,115 @@
+//usr/bin/env go-script "$0" "$@"; exit $?
+// vi: ft=go
+
+package main
+
+import (
+	"errors"
+	"fmt"
+	"io"
+	"log"
+	"net"
+	"os"
+	"os/signal"
+	"syscall"
+
+	"golang.org/x/crypto/ssh"
+	"golang.org/x/crypto/ssh/agent"
+)
+
+func main() {
+	if len(os.Args) < 3 {
+		fmt.Fprintln(os.Stderr, "usage: ssh-agent-keys <socket-path> <public-key>...")
+		os.Exit(1)
+	}
+	listenPath := os.Args[1]
+
+	allowed := map[string]struct{}{}
+	for _, arg := range os.Args[2:] {
+		key, _, _, _, err := ssh.ParseAuthorizedKey([]byte(arg))
+		if err != nil {
+			log.Fatalf("parse public key: %v", err)
+		}
+		allowed[string(key.Marshal())] = struct{}{}
+	}
+
+	upstreamPath := os.Getenv("SSH_AUTH_SOCK")
+	if upstreamPath == "" {
+		log.Fatal("SSH_AUTH_SOCK not set")
+	}
+
+	os.Remove(listenPath)
+	listener, err := net.Listen("unix", listenPath)
+	if err != nil {
+		log.Fatalf("listen: %v", err)
+	}
+	defer listener.Close()
+
+	signals := make(chan os.Signal, 1)
+	signal.Notify(signals, os.Interrupt, syscall.SIGTERM, syscall.SIGHUP)
+	go func() {
+		<-signals
+		listener.Close()
+	}()
+
+	for {
+		conn, err := listener.Accept()
+		if err != nil {
+			return
+		}
+		go func() {
+			defer conn.Close()
+
+			upstream, err := net.Dial("unix", upstreamPath)
+			if err != nil {
+				log.Printf("dial upstream: %v", err)
+				return
+			}
+			defer upstream.Close()
+
+			if err := agent.ServeAgent(filtered{agent.NewClient(upstream), allowed}, conn); err != nil && !errors.Is(err, io.EOF) {
+				log.Printf("serve: %v", err)
+			}
+		}()
+	}
+}
+
+type filtered struct {
+	agent.ExtendedAgent
+	allowed map[string]struct{}
+}
+
+func (f filtered) List() ([]*agent.Key, error) {
+	keys, err := f.ExtendedAgent.List()
+	if err != nil {
+		return nil, err
+	}
+	allowed := make([]*agent.Key, 0, len(f.allowed))
+	for _, key := range keys {
+		if _, ok := f.allowed[string(key.Marshal())]; ok {
+			allowed = append(allowed, key)
+		}
+	}
+	return allowed, nil
+}
+
+func (f filtered) Sign(key ssh.PublicKey, data []byte) (*ssh.Signature, error) {
+	return f.SignWithFlags(key, data, 0)
+}
+
+func (f filtered) SignWithFlags(key ssh.PublicKey, data []byte, flags agent.SignatureFlags) (*ssh.Signature, error) {
+	if _, ok := f.allowed[string(key.Marshal())]; !ok {
+		return nil, errors.New("refusing to sign: key not allowed")
+	}
+	return f.ExtendedAgent.SignWithFlags(key, data, flags)
+}
+
+func (f filtered) Add(agent.AddedKey) error                 { return errRefused }
+func (f filtered) Remove(ssh.PublicKey) error               { return errRefused }
+func (f filtered) RemoveAll() error                         { return errRefused }
+func (f filtered) Lock([]byte) error                        { return errRefused }
+func (f filtered) Unlock([]byte) error                      { return errRefused }
+func (f filtered) Signers() ([]ssh.Signer, error)           { return nil, errRefused }
+func (f filtered) Extension(string, []byte) ([]byte, error) { return nil, errRefused }
+
+var errRefused = errors.New("refused")

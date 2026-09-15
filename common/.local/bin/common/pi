@@ -78,6 +78,7 @@ rw "$SECRETS_SOCK"
 
 # ssh, which has no keys here, and whose root owned config reads as nobody inside the namespace
 blank /etc/ssh
+ro "$HOME/.ssh/known_hosts"
 
 # git and github
 ro "$XDG_CONFIG_HOME/git"
@@ -166,13 +167,15 @@ fi
 
 env_args+=(--unsetenv SWAYSOCK)
 
-# git signing
-sign_sock="$XDG_RUNTIME_DIR/pi/ssh-sign.$$"
-setpriv --pdeathsig=TERM ssh-agent-sign-only "$sign_sock" &
-cleanups+="kill $!; rm -f ${sign_sock@Q}; "
-socks+=("$sign_sock")
-override_args+=(--bind-try "$sign_sock" "$sign_sock")
-env_args+=(--setenv SSH_AUTH_SOCK "$sign_sock")
+# git signing and forge auth, with an agent exposing the dev key alone
+dev_key=$(git config --get user.signingkey)
+dev_key=${dev_key#key::}
+agent_sock="$XDG_RUNTIME_DIR/pi/ssh.$$"
+setpriv --pdeathsig=TERM ssh-agent-keys "$agent_sock" "$dev_key" &
+cleanups+="kill $!; rm -f ${agent_sock@Q}; "
+socks+=("$agent_sock")
+override_args+=(--bind-try "$agent_sock" "$agent_sock")
+env_args+=(--setenv SSH_AUTH_SOCK "$agent_sock")
 
 # speech
 # one player per clip: pw-play reads in pipewire's rt thread, so a reader parked on an
