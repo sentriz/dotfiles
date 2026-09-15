@@ -7,5 +7,6 @@ description: Use when reading, writing, or refactoring Go code
 - Generally don't write methods. Only write a method if it mutates the struct or is required to satisfy an interface - otherwise make it a normal function.
 - Check required env vars explicitly - `os.Getenv` plus an empty check - rather than letting an empty string flow on. For the user config dir use `os.UserConfigDir()`.
 - When building a slice in a loop, prefer `make([]T, 0, n)` + `append` over `make([]T, n)` + indexed assignment.
+- For a set, use `map[T]struct{}` over `map[T]bool`.
 - Prefer `gopls` for LSP-style queries (`references`, `implementation`, `definition`, `call_hierarchy`) over `grep` when the question is "where is X used / defined / implemented" - it understands types, embedding, and interfaces; `grep` doesn't.
 - For renames spanning more than one site, use `gopls rename -w <file>:<line>:<col> <newName>` instead of hand-edits. Run `gofmt -w` after if struct field alignment is disturbed.
