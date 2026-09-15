@@ -39,7 +39,7 @@ cmenu set \
     colour 9 \
     hide 2
 
-printf '%suptime %s\n' "$(cmenu label)" "$(uptime --pretty | sed 's/^up //')"
+printf '%suptime %s\n' "$(cmenu label)" "$(relative-duration "$(cut -d. -f1 /proc/uptime)" 2)"
 printf '%s\t%s\n' \
     suspend suspend \
     hibernate hibernate \
