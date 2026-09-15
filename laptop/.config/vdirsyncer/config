@@ -22,7 +22,7 @@ password.fetch = ["command", "secret", "vdirsyncer_radicale_password"]
 [pair calendar]
 a = "calendar_local"
 b = "calendar_radicale"
-collections = [["calendar", "calendar", "d88f863b-dca7-9c46-c1c0-8a02fb874cd5"], ["birthdays", "birthdays", "45493dcb-4991-c7f4-8d97-cdddc1208ecc"]]
+collections = [["calendar", "calendar", "d88f863b-dca7-9c46-c1c0-8a02fb874cd5"], ["birthdays", "birthdays", "45493dcb-4991-c7f4-8d97-cdddc1208ecc"], ["carol_senan", "carol_senan", "52e7ec2a-c05d-e43a-acb8-2284cbadf1f4"]]
 
 [storage calendar_local]
 type = "filesystem"
