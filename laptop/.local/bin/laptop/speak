@@ -11,7 +11,7 @@ model="gpt-4o-mini-tts"
 voice="ballad"
 instructions="Speak briskly, a little faster than a normal conversational pace. Plain and matter-of-fact."
 
-# what response_format below decodes to, for players we hand raw pcm to
+# what response_format below decodes to, and what --stdout writes
 sample_format="s16"
 rate=24000
 channels=1
@@ -21,14 +21,10 @@ if [ "${1-}" = "--format" ]; then
     exit
 fi
 
-play() {
-    pw-play --raw --format "$sample_format" --rate "$rate" --channels "$channels" -
-}
-
-if [ "$#" -gt 0 ]; then
-    text="$*"
-else
-    text="$(cat)"
+stdout=""
+if [ "${1-}" = "--stdout" ]; then
+    stdout=1
+    shift
 fi
 
 speech() {
@@ -64,10 +60,23 @@ speak-all() {
     )
 }
 
+play() {
+    pw-play --raw --format "$sample_format" --rate "$rate" --channels "$channels" -
+}
+
 key="$(secret openai_key_3)"
 
-if [ -t 1 ]; then
-    speak-all | play
+if [ "$#" -eq 0 ]; then
+    echo "usage: speak [--stdout] <text...|->" >&2
+    exit 1
+elif [ "$1" = - ]; then
+    text="$(cat)"
 else
+    text="$*"
+fi
+
+if [ -n "$stdout" ]; then
     speak-all
+else
+    speak-all | play
 fi

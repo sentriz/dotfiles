@@ -133,6 +133,7 @@ arch vdirsyncer
 arch python-aiohttp-oauthlib
 arch khal
 arch whisper-cpp-git
+arch sox
 
 # fonts
 arch noto-fonts

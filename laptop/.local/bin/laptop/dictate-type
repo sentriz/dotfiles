@@ -21,7 +21,10 @@ close() {
 
 pid=""
 id=0
-[[ -f "$state" ]] && { read -r pid; read -r id; } <"$state"
+[[ -f "$state" ]] && {
+    read -r pid
+    read -r id
+} <"$state"
 
 if [[ -n "$pid" ]] && kill -0 "$pid" 2>/dev/null; then
     kill -TERM "$pid"
