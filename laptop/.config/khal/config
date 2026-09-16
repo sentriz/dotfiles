@@ -1,16 +1,8 @@
 [calendars]
 
-[[calendar]]
-path = ~/calendar/calendar/
-type = calendar
-
-[[birthdays]]
-path = ~/calendar/birthdays/
-type = calendar
-
-[[work]]
-path = ~/calendar/work/
-type = calendar
+[[calendars]]
+path = ~/calendar/*
+type = discover
 
 [locale]
 timeformat = %H:%M
