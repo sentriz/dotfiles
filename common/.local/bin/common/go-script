@@ -2,13 +2,14 @@
 
 set -eu
 
-mkdir -p "$XDG_CACHE_HOME/go-scripts"
+scripts_dir="$XDG_CACHE_HOME/go-scripts"
+mkdir -p "$scripts_dir"
 
 src="$(readlink -f "$1")"
 shift
 
 sum=$(sha1sum "$src" | grep -Eo '^\w+')
-bin="$XDG_CACHE_HOME/go-scripts/$sum"
+bin="$scripts_dir/$sum"
 
 test -f "$bin" \
     && exec "$bin" "$@"
