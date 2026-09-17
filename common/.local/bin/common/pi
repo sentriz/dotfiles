@@ -148,7 +148,7 @@ trap 'eval "$cleanups"; true' EXIT HUP INT TERM
 # notifications
 if [ -n "${DBUS_SESSION_BUS_ADDRESS-}" ]; then
     dbus_sock="$XDG_RUNTIME_DIR/pi/bus.$$"
-    setpriv --pdeathsig=TERM xdg-dbus-proxy "$DBUS_SESSION_BUS_ADDRESS" "$dbus_sock" --filter --talk=org.freedesktop.Notifications &
+    setpriv --pdeathsig=TERM xdg-dbus-proxy "$DBUS_SESSION_BUS_ADDRESS" "$dbus_sock" --filter --talk=org.freedesktop.Notifications >/dev/null &
     cleanups+="kill $!; rm -f ${dbus_sock@Q}; "
     socks+=("$dbus_sock")
     override_args+=(--bind-try "$dbus_sock" "$dbus_sock")
@@ -158,7 +158,7 @@ fi
 # clipboard
 if [ -n "${WAYLAND_DISPLAY-}" ]; then
     wayland_sock="$XDG_RUNTIME_DIR/pi/wayland.$$"
-    setpriv --pdeathsig=TERM way-secure --socket-path "$wayland_sock" -e pi -a pi &
+    setpriv --pdeathsig=TERM way-secure --socket-path "$wayland_sock" -e pi -a pi >/dev/null &
     cleanups+="kill $!; rm -f ${wayland_sock@Q}; "
     socks+=("$wayland_sock")
     override_args+=(--bind-try "$wayland_sock" "$wayland_sock")
@@ -171,7 +171,7 @@ env_args+=(--unsetenv SWAYSOCK)
 dev_key=$(git config --get user.signingkey)
 dev_key=${dev_key#key::}
 agent_sock="$XDG_RUNTIME_DIR/pi/ssh.$$"
-setpriv --pdeathsig=TERM ssh-agent-keys "$agent_sock" "$dev_key" &
+setpriv --pdeathsig=TERM ssh-agent-keys "$agent_sock" "$dev_key" >/dev/null &
 cleanups+="kill $!; rm -f ${agent_sock@Q}; "
 socks+=("$agent_sock")
 override_args+=(--bind-try "$agent_sock" "$agent_sock")
