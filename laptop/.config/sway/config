@@ -293,8 +293,8 @@ bindsym $super+BackSpace exec dictate-type
 # cmenu
 bindcode 66 exec 'pidof cmenu || windowtolayer -l overlay -i all -k exclusive -a top,left,right -s 0x690 $TERMINAL_LIGHT --app-id cmenu cmenu && block-up all'
 
-# sway-rename-workspaces
-bindsym $super+grave [con_mark=_back] focus
+# sway-focus
+bindsym $super+grave exec sway-focus back
 
 # autostarts
 exec_always dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP XDG_SESSION_TYPE
@@ -324,6 +324,7 @@ exec last-dot-friends-notify
 exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec wl-paste --watch cliphist store
 exec sway-rename-workspaces
+exec sway-focus
 exec wlsunset -l 52.8 -L -6.9 -t 3000
 
 # theme: accent background 80 bryellow

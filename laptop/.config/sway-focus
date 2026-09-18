@@ -1,0 +1,2 @@
+browser librewolf     bruvtab http://localhost:4625
+browser google-chrome bruvtab http://localhost:4626
