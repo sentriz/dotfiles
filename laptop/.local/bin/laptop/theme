@@ -37,12 +37,12 @@ func main() {
 		return
 	}
 
-	projectsDir := os.Getenv("PROJECTS_DIR")
-	if projectsDir == "" {
-		fmt.Fprintln(os.Stderr, "PROJECTS_DIR not set")
+	if len(os.Args) != 2 {
+		fmt.Fprintln(os.Stderr, "usage: theme <dest dir>")
 		exit = 1
 		return
 	}
+	destDir := os.Args[1]
 
 	paletteFile := filepath.Join(userConfig, "theme")
 	data, err := os.ReadFile(paletteFile)
@@ -79,8 +79,7 @@ func main() {
 	changes := map[string][]byte{}
 	reloads := map[string]struct{}{}
 
-	root := filepath.Join(projectsDir, "dotfiles")
-	err = filepath.WalkDir(root, func(path string, d fs.DirEntry, err error) error {
+	err = filepath.WalkDir(destDir, func(path string, d fs.DirEntry, err error) error {
 		if err != nil {
 			return err
 		}
