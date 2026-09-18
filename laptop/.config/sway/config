@@ -313,6 +313,7 @@ exec_always 'pkill mako; exec mako \
     --border-color "$colour_accent" \
     --progress-color "over $colour_accent" \
     --text-color "$colour_fg" \
+    --width 400 \
     --height 350 \
     --anchor bottom-right \
     --default-timeout 6000'
