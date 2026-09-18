@@ -8,5 +8,8 @@ description: Use when reading, writing, or refactoring Go code
 - Check required env vars explicitly - `os.Getenv` plus an empty check - rather than letting an empty string flow on. For the user config dir use `os.UserConfigDir()`.
 - When building a slice in a loop, prefer `make([]T, 0, n)` + `append` over `make([]T, n)` + indexed assignment.
 - For a set, use `map[T]struct{}` over `map[T]bool`.
+- Use `var x = ...` for a variable that gets reassigned later, and `x := ...` for one that doesn't, so the declaration says which it is.
+- Declare maps as `var m = M{}`, not `m := M{}`, so they read like a zero value being declared - the form Go would give maps if they had a usable one.
+- Package-level identifiers for an optional dependency all take its name as a prefix (`depGet`, `depTab`), so the seam between it and the rest of the program is visible at a glance.
 - Prefer `gopls` for LSP-style queries (`references`, `implementation`, `definition`, `call_hierarchy`) over `grep` when the question is "where is X used / defined / implemented" - it understands types, embedding, and interfaces; `grep` doesn't.
 - For renames spanning more than one site, use `gopls rename -w <file>:<line>:<col> <newName>` instead of hand-edits. Run `gofmt -w` after if struct field alignment is disturbed.
