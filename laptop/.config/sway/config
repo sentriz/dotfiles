@@ -307,7 +307,7 @@ exec_always 'pkill kanshi; exec kanshi'
 exec_always 'pkill mako; exec mako \
     --background-color "$colour_bg" \
     --margin "$default_gap,0" \
-    --outer-margin "$default_gap,0" \
+    --outer-margin "0,$default_gap" \
     --font "$default_font" \
     --border-size 2 \
     --border-color "$colour_accent" \
@@ -315,7 +315,8 @@ exec_always 'pkill mako; exec mako \
     --text-color "$colour_fg" \
     --width 400 \
     --height 350 \
-    --anchor bottom-right \
+    --anchor top-right \
+    --sort +time \
     --default-timeout 6000'
 
 exec last-dot-friends-notify
