@@ -14,7 +14,7 @@ case "$command" in
 
     repo="$1"
     name="$(grep -Po '[^\/]+$' <<<"$repo")"
-    path="conf_common/.config/fish/plugins/$name"
+    path="common/.config/fish/plugins/$name"
 
     git submodule add -f "$repo" "$path"
     ;;
@@ -26,7 +26,7 @@ case "$command" in
     fi
 
     name="$1"
-    path="conf_common/.config/fish/plugins/$name"
+    path="common/.config/fish/plugins/$name"
 
     git submodule deinit -f "$path"
     git rm -f "$path"

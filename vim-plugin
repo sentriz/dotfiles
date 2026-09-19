@@ -16,7 +16,7 @@ case "$command" in
     branch="$2"
 
     name="$(grep -Po '[^\/]+$' <<<"$repo")"
-    path="conf_common/.local/share/nvim/site/pack/plugins/start/$name"
+    path="common/.local/share/nvim/site/pack/plugins/start/$name"
 
     extra_args=()
     test -n "$branch" && extra_args=(-b "$branch")
@@ -31,7 +31,7 @@ case "$command" in
     fi
 
     name="$1"
-    path="conf_common/.local/share/nvim/site/pack/plugins/start/$name"
+    path="common/.local/share/nvim/site/pack/plugins/start/$name"
 
     git submodule deinit -f "$path"
     git rm -f "$path"
