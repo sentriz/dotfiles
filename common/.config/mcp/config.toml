@@ -6,6 +6,7 @@ headers = { Authorization = "Bearer ${exec secret linear_token}" }
 instructions = """
 Filter values that look numeric must be quoted so they stay JSON strings: cycle='"116"' works, cycle=116 fails with "expected string".
 cycle=current is accepted but silently returns no issues - use the cycle number.
+list_issues wraps its result: unwrap with jq -r '.[0].text' | jq '.issues[]', not '.[]'.
 """
 
 [[server]]
@@ -50,6 +51,7 @@ ts args must stay strings: message_ts=1786051956.253439 becomes a JSON number (p
 If you only have a reply ts, use slack_read_channel with oldest/latest around it to find the parent.
 slack_search_users fails with missing_scopes - to get a user id, slack_search_public for their name and read the id out of an <@U...|Name> mention.
 A user id works as channel_id for slack_read_channel to read a DM.
+slack_search_public returns {"results": "<markdown>"} - one prose blob, not structured messages. Read it with jq -r '.[0].text' | jq -r .results and grep/eyeball it; there is no .messages[] to iterate.
 """
 
 [[server]]
