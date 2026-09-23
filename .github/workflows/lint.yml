@@ -1,14 +1,23 @@
 name: "Lint"
 on:
   push:
-    branch:
+    branches:
       - master
+  pull_request:
 jobs:
   shellcheck:
-    name: ShellCheck
+    name: Run ShellCheck
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v7
       - name: Run ShellCheck
-        uses: ludeeus/action-shellcheck@master
+        uses: ludeeus/action-shellcheck@2.0.0
+  shfmt:
+    name: Run shfmt
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+      - name: Run shfmt
+        run: go run mvdan.cc/sh/v3/cmd/shfmt@v3.13.1 -d -i 4 -bn .
