@@ -12,8 +12,10 @@ cmenu set \
     colour 7 \
     hide 1
 
-sway-focus list | awk -F'\t' -v hl="$(cmenu highlight)" '
-{ split($1, id, ":") }
+sway-focus list | awk -F'\t' -v hl="$(cmenu highlight)" -v lb="$(cmenu label)" -v app="$CMENU_INPUT" '
+app != "" && $4 != app { next }
+{ split($1, id, ":"); found++ }
 id[3] == "" { printf "%s%s\t%s\t%s\n", ($3 != "" ? hl : ""), $1, $2, (id[2] != "" ? $4 : $5); next }
 { sub(/[?#].*/, "", $6); printf "%s%s\t\t%s %s\n", ($3 != "" ? hl : ""), $1, $6, $5 }
+END { if (!found) printf "%s\t\tno windows for %s\n", lb, app }
 '
