@@ -44,16 +44,32 @@ func run() error {
 
 	enc := json.NewEncoder(out)
 	for sc := bufio.NewScanner(projectsList); sc.Scan(); {
-		name := sc.Text()
-		path := filepath.Join(projectsDir, name)
+		projectPath := filepath.Join(projectsDir, sc.Text())
 
-		var dest = map[string]any{}
-		dest["path"] = path
-
+		var dest = map[string]any{"path": projectPath}
 		for _, sn := range sniffers {
-			if err := sn(path, dest); err != nil {
-				return fmt.Errorf("sniff: %w", err)
+			var found []any
+			for _, pattern := range sn.patterns {
+				paths, err := filepath.Glob(filepath.Join(globEscape(projectPath), pattern))
+				if err != nil {
+					return fmt.Errorf("glob %s: %w", pattern, err)
+				}
+
+				for _, path := range paths {
+					data, err := os.ReadFile(path)
+					if err != nil {
+						return fmt.Errorf("read %s: %w", path, err)
+					}
+
+					parsed, err := sn.parse(path, data)
+					if err != nil {
+						return fmt.Errorf("parse %s: %w", path, err)
+					}
+
+					found = append(found, parsed)
+				}
 			}
+			dest[sn.key] = found
 		}
 
 		if err := enc.Encode(dest); err != nil {
@@ -64,28 +80,168 @@ func run() error {
 	return nil
 }
 
-type sniffer func(path string, dest map[string]any) error
-
-var sniffers []sniffer
-
-func addSniffer(sn sniffer) {
-	sniffers = append(sniffers, sn)
+type sniffer struct {
+	key      string
+	patterns []string
+	parse    func(path string, data []byte) (any, error)
 }
 
-func globMany(dir string, patterns ...string) ([]string, error) {
-	var paths []string
-	for _, pat := range patterns {
-		p, err := globDir(dir, pat)
-		if err != nil {
-			return nil, err
-		}
-		paths = append(paths, p...)
-	}
-	return paths, nil
-}
+var sniffers = []sniffer{
+	{
+		key:      "actions",
+		patterns: []string{".github/workflows/*.yml", ".github/workflows/*.yaml"},
+		parse: func(path string, data []byte) (any, error) {
+			type Use struct {
+				Action  string         `json:"action"`
+				Version string         `json:"version"`
+				With    map[string]any `json:"with"`
+			}
+			type Workflow struct {
+				Path string `json:"path"`
+				Name string `json:"name"`
+				Uses []Use  `json:"uses"`
+			}
 
-func globDir(dir, pattern string) ([]string, error) {
-	return filepath.Glob(filepath.Join(globEscape(dir), pattern))
+			var doc struct {
+				Name string `yaml:"name"`
+				Jobs map[string]struct {
+					Steps []struct {
+						Uses string         `yaml:"uses"`
+						With map[string]any `yaml:"with"`
+					} `yaml:"steps"`
+				} `yaml:"jobs"`
+			}
+			if err := yaml.Unmarshal(data, &doc); err != nil {
+				return nil, err
+			}
+
+			workflow := Workflow{Path: path, Name: doc.Name}
+			for _, job := range doc.Jobs {
+				for _, step := range job.Steps {
+					if step.Uses == "" {
+						continue
+					}
+					action, version, _ := strings.Cut(step.Uses, "@")
+					workflow.Uses = append(workflow.Uses, Use{Action: action, Version: version, With: step.With})
+				}
+			}
+			return workflow, nil
+		},
+	},
+	{
+		key:      "dependabot",
+		patterns: []string{".github/dependabot.yml", ".github/dependabot.yaml"},
+		parse: func(path string, data []byte) (any, error) {
+			type Update struct {
+				Ecosystem string `json:"ecosystem" yaml:"package-ecosystem"`
+				Directory string `json:"directory" yaml:"directory"`
+			}
+			type Dependabot struct {
+				Path    string   `json:"path"    yaml:"-"`
+				Updates []Update `json:"updates" yaml:"updates"`
+			}
+
+			var dependabot Dependabot
+			if err := yaml.Unmarshal(data, &dependabot); err != nil {
+				return nil, err
+			}
+			dependabot.Path = path
+			return dependabot, nil
+		},
+	},
+	{
+		key:      "docker",
+		patterns: []string{"Dockerfile", "*/Dockerfile"},
+		parse: func(path string, data []byte) (any, error) {
+			type Dockerfile struct {
+				Path   string   `json:"path"`
+				Stages []string `json:"stages"`
+			}
+
+			dockerfile := Dockerfile{Path: path}
+			for line := range strings.Lines(string(data)) {
+				cmd, rest, ok := strings.Cut(line, " ")
+				if !ok || strings.ToUpper(cmd) != "FROM" {
+					continue
+				}
+
+				for t := range strings.FieldsSeq(rest) {
+					if strings.HasPrefix(t, "--") {
+						continue
+					}
+					dockerfile.Stages = append(dockerfile.Stages, t)
+					break
+				}
+			}
+			return dockerfile, nil
+		},
+	},
+	{
+		key:      "go",
+		patterns: []string{"go.mod", "*/go.mod"},
+		parse: func(path string, data []byte) (any, error) {
+			type Module struct {
+				Path      string `json:"path"`
+				Go        string `json:"go"`
+				Toolchain string `json:"toolchain"`
+			}
+
+			module := Module{Path: path}
+			for line := range strings.Lines(string(data)) {
+				cmd, rest, ok := strings.Cut(line, " ")
+				if !ok {
+					continue
+				}
+				switch cmd {
+				case "go":
+					module.Go = strings.TrimSpace(rest)
+				case "toolchain":
+					module.Toolchain = strings.TrimSpace(rest)
+				}
+			}
+			return module, nil
+		},
+	},
+	{
+		key:      "npm",
+		patterns: []string{"package.json", "*/package.json"},
+		parse: func(path string, data []byte) (any, error) {
+			type Package struct {
+				Path    string            `json:"path"`
+				Name    string            `json:"name"`
+				Version string            `json:"version"`
+				Scripts map[string]string `json:"scripts"`
+			}
+
+			var pkg Package
+			if err := json.Unmarshal(data, &pkg); err != nil {
+				return nil, err
+			}
+			pkg.Path = path
+			return pkg, nil
+		},
+	},
+	{
+		key:      "uv",
+		patterns: []string{"pyproject.toml", "*/pyproject.toml"},
+		parse: func(path string, data []byte) (any, error) {
+			type Project struct {
+				Path           string `json:"path"            toml:"-"`
+				Name           string `json:"name"            toml:"name"`
+				Version        string `json:"version"         toml:"version"`
+				RequiresPython string `json:"requires_python" toml:"requires-python"`
+			}
+
+			var doc struct {
+				Project Project `toml:"project"`
+			}
+			if _, err := toml.Decode(string(data), &doc); err != nil {
+				return nil, err
+			}
+			doc.Project.Path = path
+			return doc.Project, nil
+		},
+	},
 }
 
 func globEscape(path string) string {
@@ -101,257 +257,4 @@ func globEscape(path string) string {
 		}
 	}
 	return r.String()
-}
-
-func init() {
-	type Use struct {
-		Action  string         `json:"action"`
-		Version string         `json:"version"`
-		With    map[string]any `json:"with"`
-	}
-	type Workflow struct {
-		Path string `json:"path"`
-		Name string `json:"name"`
-		Uses []Use  `json:"uses"`
-	}
-
-	addSniffer(func(projectPath string, dest map[string]any) error {
-		paths, err := globMany(projectPath, ".github/workflows/*.yml", ".github/workflows/*.yaml")
-		if err != nil {
-			return err
-		}
-
-		var workflows []Workflow
-		for _, path := range paths {
-			bytes, err := os.ReadFile(path)
-			if err != nil {
-				return err
-			}
-
-			var doc struct {
-				Name string `yaml:"name"`
-				Jobs map[string]struct {
-					Steps []struct {
-						Uses string         `yaml:"uses"`
-						With map[string]any `yaml:"with"`
-					} `yaml:"steps"`
-				} `yaml:"jobs"`
-			}
-			if err := yaml.Unmarshal(bytes, &doc); err != nil {
-				return err
-			}
-
-			wf := Workflow{Path: path, Name: doc.Name}
-			for _, job := range doc.Jobs {
-				for _, step := range job.Steps {
-					if step.Uses == "" {
-						continue
-					}
-					action, version, _ := strings.Cut(step.Uses, "@")
-					wf.Uses = append(wf.Uses, Use{Action: action, Version: version, With: step.With})
-				}
-			}
-
-			workflows = append(workflows, wf)
-		}
-
-		dest["actions"] = workflows
-		return nil
-	})
-}
-
-func init() {
-	type Update struct {
-		Ecosystem string `json:"ecosystem" yaml:"package-ecosystem"`
-		Directory string `json:"directory" yaml:"directory"`
-	}
-	type Dependabot struct {
-		Path    string   `json:"path"    yaml:"-"`
-		Updates []Update `json:"updates" yaml:"updates"`
-	}
-
-	addSniffer(func(projectPath string, dest map[string]any) error {
-		paths, err := globMany(projectPath, ".github/dependabot.yml", ".github/dependabot.yaml")
-		if err != nil {
-			return err
-		}
-
-		var dependabots []Dependabot
-		for _, path := range paths {
-			bytes, err := os.ReadFile(path)
-			if err != nil {
-				return err
-			}
-
-			var db Dependabot
-			if err := yaml.Unmarshal(bytes, &db); err != nil {
-				return err
-			}
-			db.Path = path
-
-			dependabots = append(dependabots, db)
-		}
-
-		dest["dependabot"] = dependabots
-		return nil
-	})
-}
-
-func init() {
-	type Dockerfile struct {
-		Path   string   `json:"path"`
-		Stages []string `json:"stages"`
-	}
-
-	addSniffer(func(projectPath string, dest map[string]any) error {
-		paths, err := globMany(projectPath, "Dockerfile", "*/Dockerfile")
-		if err != nil {
-			return err
-		}
-
-		var dockerfiles []Dockerfile
-		for _, path := range paths {
-			bytes, err := os.ReadFile(path)
-			if err != nil {
-				return err
-			}
-
-			var dockerfile Dockerfile
-			dockerfile.Path = path
-
-			for line := range strings.Lines(string(bytes)) {
-				cmd, rest, ok := strings.Cut(line, " ")
-				if !ok {
-					continue
-				}
-				if strings.ToUpper(cmd) != "FROM" {
-					continue
-				}
-
-				for t := range strings.FieldsSeq(rest) {
-					if strings.HasPrefix(t, "--") {
-						continue
-					}
-					dockerfile.Stages = append(dockerfile.Stages, t)
-					break
-				}
-			}
-
-			dockerfiles = append(dockerfiles, dockerfile)
-		}
-
-		dest["docker"] = dockerfiles
-		return nil
-	})
-}
-
-func init() {
-	type Module struct {
-		Path      string `json:"path"`
-		Go        string `json:"go"`
-		Toolchain string `json:"toolchain"`
-	}
-
-	addSniffer(func(projectPath string, dest map[string]any) error {
-		paths, err := globMany(projectPath, "go.mod", "*/go.mod")
-		if err != nil {
-			return err
-		}
-
-		var modules []Module
-		for _, path := range paths {
-			bytes, err := os.ReadFile(path)
-			if err != nil {
-				return err
-			}
-
-			var mod Module
-			mod.Path = path
-
-			for line := range strings.Lines(string(bytes)) {
-				cmd, rest, ok := strings.Cut(line, " ")
-				if !ok {
-					continue
-				}
-				rest = strings.TrimSpace(rest)
-				switch cmd {
-				case "go":
-					mod.Go = rest
-				case "toolchain":
-					mod.Toolchain = rest
-				}
-			}
-
-			modules = append(modules, mod)
-		}
-
-		dest["go"] = modules
-		return nil
-	})
-}
-
-func init() {
-	type Package struct {
-		Path    string            `json:"path"`
-		Name    string            `json:"name"`
-		Version string            `json:"version"`
-		Scripts map[string]string `json:"scripts"`
-	}
-
-	addSniffer(func(projectPath string, dest map[string]any) error {
-		paths, err := globMany(projectPath, "package.json", "*/package.json")
-		if err != nil {
-			return err
-		}
-
-		var packages []Package
-		for _, path := range paths {
-			bytes, err := os.ReadFile(path)
-			if err != nil {
-				return err
-			}
-
-			var pkg Package
-			if err := json.Unmarshal(bytes, &pkg); err != nil {
-				return err
-			}
-			pkg.Path = path
-
-			packages = append(packages, pkg)
-		}
-
-		dest["npm"] = packages
-		return nil
-	})
-}
-
-func init() {
-	type Project struct {
-		Path           string `json:"path"           toml:"-"`
-		Name           string `json:"name"           toml:"name"`
-		Version        string `json:"version"        toml:"version"`
-		RequiresPython string `json:"requires_python" toml:"requires-python"`
-	}
-
-	addSniffer(func(projectPath string, dest map[string]any) error {
-		paths, err := globMany(projectPath, "pyproject.toml", "*/pyproject.toml")
-		if err != nil {
-			return err
-		}
-
-		var projects []Project
-		for _, path := range paths {
-			var doc struct {
-				Project Project `toml:"project"`
-			}
-			if _, err := toml.DecodeFile(path, &doc); err != nil {
-				return err
-			}
-			doc.Project.Path = path
-			projects = append(projects, doc.Project)
-		}
-
-		dest["uv"] = projects
-		return nil
-	})
 }
