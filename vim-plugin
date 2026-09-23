@@ -1,36 +1,33 @@
 #!/usr/bin/env bash
 
-set -e
+set -eu
 
-command="$1"
-shift
+usage() {
+    echo "usage:" >&2
+    echo "  $0 install <repo> [branch]" >&2
+    echo "  $0 uninstall <name>" >&2
+    exit 1
+}
 
-case "$command" in
+case "${1-}" in
 "install")
-    if [[ -z "$1" ]]; then
-        echo "please provide a <repo>" >&2
-        exit 1
-    fi
+    repo="${2-}"
+    branch="${3-}"
+    [[ -n "$repo" ]] || usage
 
-    repo="$1"
-    branch="$2"
-
-    name="$(grep -Po '[^\/]+$' <<<"$repo")"
+    name="${repo##*/}"
     path="common/.local/share/nvim/site/pack/plugins/start/$name"
 
     extra_args=()
-    test -n "$branch" && extra_args=(-b "$branch")
+    [[ -n "$branch" ]] && extra_args=(-b "$branch")
 
     git submodule add "${extra_args[@]}" -f "$repo" "$path"
     ;;
 
 "uninstall")
-    if [[ -z "$1" ]]; then
-        echo "please provide a <name>" >&2
-        exit 1
-    fi
+    name="${2-}"
+    [[ -n "$name" ]] || usage
 
-    name="$1"
     path="common/.local/share/nvim/site/pack/plugins/start/$name"
 
     git submodule deinit -f "$path"
@@ -38,7 +35,6 @@ case "$command" in
     ;;
 
 *)
-    echo "unknown <command> \"$command\"" >&2
-    exit 1
+    usage
     ;;
 esac
