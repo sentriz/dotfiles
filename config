@@ -37,34 +37,59 @@ link() {
 
 NOLINK_MARKER=".nolink"
 
-# walk paths in a package directory that should be symlinked.
-# directories with a .nolink marker anywhere beneath them are descended
-# into rather than linked. everything else is emitted as a link target.
+# "link REL" for each path that should be symlinked
+# "dir REL" for each directory descended into
+# directories with a .nolink marker anywhere beneath them are descended into rather than linked
 walk() {
     local root="$1"
     local dir="${2:-$1}"
+    local rel="${dir#"$root"}"
+
+    printf 'dir %s\n' "${rel#/}"
 
     find "$dir" -mindepth 1 -maxdepth 1 -not -name "$NOLINK_MARKER" | while IFS= read -r entry; do
         if [[ -d $entry ]] && find "$entry" -name "$NOLINK_MARKER" -type f -print -quit | grep -q .; then
             walk "$root" "$entry"
         else
-            printf '%s\n' "${entry#"$root"/}"
+            printf 'link %s\n' "${entry#"$root"/}"
         fi
+    done
+}
+
+links() {
+    walk "$1" | sed -n 's/^link //p' | sort
+}
+
+orphans() {
+    local pkg="$1"
+
+    walk "$pkg" | sed -n 's/^dir //p' | sort | while IFS= read -r rel; do
+        local dir="$HOME/$rel"
+        [[ -d $dir ]] || continue
+
+        find "$dir" -mindepth 1 -maxdepth 1 -xtype l | while IFS= read -r path; do
+            if [[ "$(readlink "$path")" == "$pkg"/* ]]; then
+                printf '%s\n' "${path#"$HOME"/}"
+            fi
+        done
     done
 }
 
 list() {
     local pkg="$1"
 
-    walk "$pkg" | sort | while IFS= read -r rel; do
+    links "$pkg" | while IFS= read -r rel; do
         echo "$(state "$rel" "$pkg") $rel"
+    done
+    orphans "$pkg" | while IFS= read -r rel; do
+        echo "orphan $rel"
     done
 }
 
 install() {
     local pkg="$1"
 
-    walk "$pkg" | sort | while IFS= read -r rel; do
+    links "$pkg" | while IFS= read -r rel; do
         case "$(state "$rel" "$pkg")" in
         missing | dangling | wrong)
             link "$rel" "$pkg"
@@ -76,6 +101,11 @@ install() {
             ;;
         esac
         echo "$(state "$rel" "$pkg") $rel"
+    done
+
+    orphans "$pkg" | while IFS= read -r rel; do
+        rm "$HOME/$rel"
+        echo "pruned $rel"
     done
 }
 
