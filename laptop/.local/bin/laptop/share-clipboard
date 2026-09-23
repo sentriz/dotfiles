@@ -2,7 +2,10 @@
 
 set -u
 
-[[ "${1-}" == types ]] && { echo '*/*'; exit; }
+[[ "${1-}" == types ]] && {
+    echo '*/*'
+    exit
+}
 
 path="$1"
 [[ -f "$path" ]] || exit 1

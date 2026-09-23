@@ -1,7 +1,10 @@
 #!/usr/bin/env sh
 set -eu
 
-[ -n "$1" ] || { echo "usage: kagi <query>" >&2; exit 1; }
+[ -n "$1" ] || {
+    echo "usage: kagi <query>" >&2
+    exit 1
+}
 
 KAGI_API_KEY=$(secret kagi_api_key)
 

@@ -42,7 +42,8 @@ tailscale switch --list \
     done
 
 read -r corp_dns route_all has_exit_node lan_access < <(
-    tailscale debug prefs | jq -r '[.CorpDNS, .RouteAll, .ExitNodeID != "", .ExitNodeAllowLANAccess] | join(" ")')
+    tailscale debug prefs | jq -r '[.CorpDNS, .RouteAll, .ExitNodeID != "", .ExitNodeAllowLANAccess] | join(" ")'
+)
 
 dns_upstream="$(tailscale dns status --json 2>/dev/null | jq -r '
     [(.Resolvers[0].Addr // empty | sub("^[a-z]+://"; "") | sub("/.*"; "")),

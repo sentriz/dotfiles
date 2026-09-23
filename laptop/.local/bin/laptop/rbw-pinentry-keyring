@@ -44,71 +44,71 @@ function getpin() {
     prompt=""
     desc=""
 
-    while IFS=' ' read -r command args ; do
+    while IFS=' ' read -r command args; do
         case "$command" in
-            SETTITLE)
-                title="$args"
-                echo 'OK'
-                ;;
-            SETDESC)
-                desc="$args"
-                echo 'OK'
-                ;;
-            SETPROMPT)
-                prompt="$args"
-                echo 'OK'
-                ;;
-            GETPIN)
-                if [[ "$prompt" == "Master Password" ]]; then
-                    set +e
-                    secret_value="$(secret-tool lookup application rbw profile "$rbw_profile" type master_password)"
-                    err=$?
-                    set -e
+        SETTITLE)
+            title="$args"
+            echo 'OK'
+            ;;
+        SETDESC)
+            desc="$args"
+            echo 'OK'
+            ;;
+        SETPROMPT)
+            prompt="$args"
+            echo 'OK'
+            ;;
+        GETPIN)
+            if [[ "$prompt" == "Master Password" ]]; then
+                set +e
+                secret_value="$(secret-tool lookup application rbw profile "$rbw_profile" type master_password)"
+                err=$?
+                set -e
 
-                    if [[ $err == 1 ]]; then
-                        cmd="SETTITLE rbw\n"
-                        cmd+="SETPROMPT Master Password\n"
-                        cmd+="SETDESC Please enter the master password for '$rbw_profile'\n"
-                        cmd+="GETPIN\n"
-                        secret_value="$(printf '%b' "$cmd" | pinentry "$@" | grep -E "^D " | cut -c3-)"
-                        if [ -n "$secret_value" ]; then
-                            echo -n "$secret_value" | secret-tool store --label="$rbw_profile master password" application rbw profile "$rbw_profile" type master_password >/dev/null 2>&1
-                        fi
-                    fi
-
-                    printf 'D %s\n' "$secret_value"
-                    echo 'OK'
-                else
-                    cmd="SETTITLE $title\n"
-                    cmd+="SETPROMPT $prompt\n"
-                    cmd+="SETDESC $desc\n"
+                if [[ $err == 1 ]]; then
+                    cmd="SETTITLE rbw\n"
+                    cmd+="SETPROMPT Master Password\n"
+                    cmd+="SETDESC Please enter the master password for '$rbw_profile'\n"
                     cmd+="GETPIN\n"
-
                     secret_value="$(printf '%b' "$cmd" | pinentry "$@" | grep -E "^D " | cut -c3-)"
-
-                    printf 'D %s\n' "$secret_value"
-                    echo 'OK'
+                    if [ -n "$secret_value" ]; then
+                        echo -n "$secret_value" | secret-tool store --label="$rbw_profile master password" application rbw profile "$rbw_profile" type master_password >/dev/null 2>&1
+                    fi
                 fi
-                ;;
-            BYE)
-                exit
-                ;;
-            *)
-                echo 'ERR Unknown command'
-                ;;
+
+                printf 'D %s\n' "$secret_value"
+                echo 'OK'
+            else
+                cmd="SETTITLE $title\n"
+                cmd+="SETPROMPT $prompt\n"
+                cmd+="SETDESC $desc\n"
+                cmd+="GETPIN\n"
+
+                secret_value="$(printf '%b' "$cmd" | pinentry "$@" | grep -E "^D " | cut -c3-)"
+
+                printf 'D %s\n' "$secret_value"
+                echo 'OK'
+            fi
+            ;;
+        BYE)
+            exit
+            ;;
+        *)
+            echo 'ERR Unknown command'
+            ;;
         esac
     done
 }
 
 command="$1"
 case "$command" in
-    -h|--help|help)
-        help
-        ;;
-    -c|--clear|clear)
-        clear
-        ;;
-    *)
-        getpin "$@"
-        ;;
+-h | --help | help)
+    help
+    ;;
+-c | --clear | clear)
+    clear
+    ;;
+*)
+    getpin "$@"
+    ;;
 esac
