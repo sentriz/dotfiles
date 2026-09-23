@@ -276,8 +276,9 @@ bindsym XF86AudioPrev         exec mpris-ctrl previous   && block-up playing
 # bindings: gestures
 bindgesture swipe:3:right workspace next
 bindgesture swipe:3:left  workspace prev
-bindgesture swipe:3:down  workspace back_and_forth
-bindgesture swipe:3:up    workspace back_and_forth
+bindgesture swipe:3:down  exec sway-cmenu "#sway [$(swaymsg -t get_tree | jq -r 'recurse(.nodes[]?, .floating_nodes[]?) | select(.focused) | .app_id')]"
+bindgesture swipe:3:up    exec sway-cmenu '#sway '
+bindgesture hold:3        workspace back_and_forth
 
 # bindings: programs
 bindsym $super+return       exec $TERMINAL
@@ -291,7 +292,7 @@ bindsym $super+p exec makoctl dismiss --all
 bindsym $super+BackSpace exec dictate-type
 
 # cmenu
-bindcode 66 exec 'pidof cmenu || windowtolayer -l overlay -i all -k exclusive -a top,left,right -s 0x690 $TERMINAL_LIGHT --app-id cmenu cmenu && block-up all'
+bindcode 66 exec sway-cmenu
 
 # sway-focus
 bindsym $super+grave exec sway-focus back

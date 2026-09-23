@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+set -u
+
+pidof -q cmenu && exit
+
+args=(cmenu)
+[[ "$#" -gt 0 ]] && args+=(open "$1")
+
+# TERMINAL_LIGHT carries its own flags, so it splits
+# shellcheck disable=SC2086
+windowtolayer -l overlay -i all -k exclusive -a top,left,right -s 0x690 \
+    $TERMINAL_LIGHT --app-id cmenu "${args[@]}"
+
+block-up all
