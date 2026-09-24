@@ -66,13 +66,10 @@ vim.opt.tabstop = 4
 vim.opt.virtualedit = "block"
 vim.opt.number = true
 vim.opt.wrap = false
-vim.opt.autoread = true
 vim.opt.clipboard:prepend({ "unnamed", "unnamedplus" })
 vim.opt.diffopt:append("vertical")
 vim.opt.gdefault = true
 vim.opt.ignorecase = true
-vim.opt.inccommand = "nosplit"
-vim.opt.incsearch = true
 vim.opt.updatetime = 300
 vim.opt.scrolloff = 5
 vim.opt.autowriteall = true
@@ -85,11 +82,7 @@ vim.opt.spelllang = "en_gb"
 
 -- filetype settings
 vim.api.nvim_create_autocmd("FileType", {
-	pattern = "markdown",
-	command = "setlocal spell",
-})
-vim.api.nvim_create_autocmd("FileType", {
-	pattern = "gitcommit",
+	pattern = { "markdown", "gitcommit" },
 	command = "setlocal spell",
 })
 vim.api.nvim_create_autocmd("FileType", {
@@ -166,25 +159,21 @@ vim.keymap.set("n", "<leader>/", ":echo expand('%:p')<cr>")
 
 -- yank as grep-style path:line: content lines, compatible with vim-qf
 local function yank_with_location(first, last)
-  local path = vim.fn.expand("%:.")
-  local lines = vim.api.nvim_buf_get_lines(0, first - 1, last, false)
-  for i, line in ipairs(lines) do
-    lines[i] = string.format("%s:%d: %s", path, first + i - 1, line)
-  end
-  vim.fn.setreg("+", table.concat(lines, "\n"))
+	local path = vim.fn.expand("%:.")
+	local lines = vim.api.nvim_buf_get_lines(0, first - 1, last, false)
+	for i, line in ipairs(lines) do
+		lines[i] = string.format("%s:%d: %s", path, first + i - 1, line)
+	end
+	vim.fn.setreg("+", table.concat(lines, "\n"))
 end
 vim.keymap.set("n", "<leader>y", function()
-  local line = vim.fn.line(".")
-  yank_with_location(line, line)
+	local line = vim.fn.line(".")
+	yank_with_location(line, line)
 end)
 vim.keymap.set("x", "<leader>y", function()
-  vim.cmd("normal! \27")
-  yank_with_location(vim.fn.line("'<"), vim.fn.line("'>"))
+	vim.cmd("normal! \27")
+	yank_with_location(vim.fn.line("'<"), vim.fn.line("'>"))
 end)
-
--- better defaults
-vim.keymap.set("n", "Y", "y$")
-vim.keymap.set("v", "yP", "yP")
 
 -- don't move cursor on * search
 vim.keymap.set("n", "*", "*``")
