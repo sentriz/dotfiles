@@ -6,6 +6,7 @@ if [[ "$#" -gt 0 ]]; then
     IFS=$'\t' read -r cmd _ <<<"$1"
     read -ra cmd <<<"$cmd"
     tailscale "${cmd[@]}"
+    block-up network
     exit
 fi
 

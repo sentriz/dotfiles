@@ -33,12 +33,13 @@ if [[ "$#" -gt 0 ]]; then
 
     if [[ "${connected_macs[*]}" =~ $mac ]]; then
         bluetoothctl -- disconnect "$mac" >/dev/null 2>&1
-        exit
+    else
+        notify "bluetooth $name" "$(bluetoothctl -- power on)"
+        notify "bluetooth $name" "$(bluetoothctl -- connect "$mac" | grep -v "^\[")"
     fi
 
-    notify "bluetooth $name" "$(bluetoothctl -- power on)"
-    notify "bluetooth $name" "$(bluetoothctl -- connect "$mac" | grep -v "^\[")"
-
+    block-up bluetooth
+    block-up audio
     exit
 fi
 

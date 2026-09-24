@@ -19,6 +19,7 @@ fi
 if [[ "$#" -gt 0 ]]; then
     IFS=$'\t' read -r _ id _ <<<"$1"
     wpctl set-default "$id"
+    block-up audio
     exit
 fi
 

@@ -24,6 +24,7 @@ signal=2
 [network]
 # theme: bryellow
 color=#FFE031
+signal=5
 
 [battery]
 # theme: brred
