@@ -21,3 +21,26 @@ jobs:
         uses: actions/checkout@v7
       - name: Run shfmt
         run: go run mvdan.cc/sh/v3/cmd/shfmt@v3.13.1 -d -i 4 -bn .
+  fish_indent:
+    name: Run fish_indent
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+      - name: Run fish_indent
+        run: |
+          curl -sL https://github.com/fish-shell/fish-shell/releases/download/4.9.3/fish-4.9.3-linux-x86_64.tar.xz | tar -xJ -C "$RUNNER_TEMP"
+          ln -s fish "$RUNNER_TEMP/fish_indent"
+          { git ls-files '*.fish'; git grep -l '^#!.*fish'; } | sort -u | xargs "$RUNNER_TEMP/fish_indent" --check
+  stylua:
+    name: Run StyLua
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+      - name: Run StyLua
+        uses: JohnnyMorganz/stylua-action@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          version: 2.3.1
+          args: --check .
