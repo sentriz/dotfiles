@@ -33,6 +33,7 @@ func run() error {
 	if err != nil {
 		return fmt.Errorf("read projects list: %w", err)
 	}
+	defer projectsList.Close()
 
 	projectsDir := os.Getenv("PROJECTS_DIR")
 	if projectsDir == "" {
@@ -43,7 +44,12 @@ func run() error {
 	defer out.Flush()
 
 	enc := json.NewEncoder(out)
-	for sc := bufio.NewScanner(projectsList); sc.Scan(); {
+	sc := bufio.NewScanner(projectsList)
+	for sc.Scan() {
+		if sc.Text() == "" {
+			continue
+		}
+
 		projectPath := filepath.Join(projectsDir, sc.Text())
 
 		var dest = map[string]any{"path": projectPath}
@@ -75,6 +81,9 @@ func run() error {
 		if err := enc.Encode(dest); err != nil {
 			return fmt.Errorf("enc: %w", err)
 		}
+	}
+	if err := sc.Err(); err != nil {
+		return fmt.Errorf("read projects list: %w", err)
 	}
 
 	return nil
