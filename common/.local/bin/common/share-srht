@@ -2,8 +2,8 @@
 
 if test "$argv[1]" = types
     echo 'text/*'
-    echo 'application/json'
-    echo 'application/xml'
+    echo application/json
+    echo application/xml
     exit
 end
 
