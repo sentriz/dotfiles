@@ -12,7 +12,7 @@ function has() {
     list "$1" | grep -q .
 }
 
-wanted=("${@:1}")
+wanted=("$@")
 function want() {
     has "$1" || return
     [[ "${#wanted[@]}" == 0 ]] && return
@@ -26,7 +26,7 @@ if want arch; then
     if ! type -p yay >/dev/null; then
         sudo pacman -S --needed git base-devel
         git clone "https://aur.archlinux.org/yay-bin.git" /tmp/yay
-        cd /tmp/yay || exit
+        cd /tmp/yay
         makepkg -si
 
         sudo pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
@@ -96,7 +96,11 @@ if want flatpak; then
     flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
     flatpak remote-add --user --if-not-exists flathub-beta https://flathub.org/beta-repo/flathub-beta.flatpakrepo
     readarray -t pkgs < <(list flatpak)
-    [[ ${#pkgs[@]} -gt 0 ]] && flatpak install --user --noninteractive --assumeyes flathub "${pkgs[@]}"
+    if [[ ${#pkgs[@]} -gt 0 ]]; then
+        flatpak install --user --noninteractive --assumeyes flathub "${pkgs[@]}"
+    fi
     readarray -t pkgs < <(list flatpak-beta)
-    [[ ${#pkgs[@]} -gt 0 ]] && flatpak install --user --noninteractive --assumeyes flathub-beta "${pkgs[@]}"
+    if [[ ${#pkgs[@]} -gt 0 ]]; then
+        flatpak install --user --noninteractive --assumeyes flathub-beta "${pkgs[@]}"
+    fi
 fi
