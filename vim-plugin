@@ -16,6 +16,7 @@ case "${1-}" in
     [[ -n "$repo" ]] || usage
 
     name="${repo##*/}"
+    name="${name%.git}"
     path="common/.local/share/nvim/site/pack/plugins/start/$name"
 
     extra_args=()

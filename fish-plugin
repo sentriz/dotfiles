@@ -15,6 +15,7 @@ case "${1-}" in
     [[ -n "$repo" ]] || usage
 
     name="${repo##*/}"
+    name="${name%.git}"
     path="common/.config/fish/plugins/$name"
 
     git submodule add -f "$repo" "$path"

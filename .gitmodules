@@ -34,15 +34,12 @@
 [submodule "common/.local/share/nvim/site/pack/plugins/start/QFEnter"]
 	path = common/.local/share/nvim/site/pack/plugins/start/QFEnter
 	url = https://github.com/yssl/QFEnter
-[submodule "common/.local/share/nvim/site/pack/plugins/start/mini.nvim.git"]
-	path = common/.local/share/nvim/site/pack/plugins/start/mini.nvim.git
+[submodule "common/.local/share/nvim/site/pack/plugins/start/mini.nvim"]
+	path = common/.local/share/nvim/site/pack/plugins/start/mini.nvim
 	url = https://github.com/echasnovski/mini.nvim.git
 [submodule "common/.config/fish/plugins/fish-async-prompt"]
 	path = common/.config/fish/plugins/fish-async-prompt
 	url = https://github.com/acomagu/fish-async-prompt
-[submodule "common/.local/share/nvim/site/pack/plugins/start/mini.surround"]
-	path = common/.local/share/nvim/site/pack/plugins/start/mini.surround
-	url = https://github.com/echasnovski/mini.surround
 [submodule "common/.local/share/nvim/site/pack/plugins/start/none-ls.nvim"]
 	path = common/.local/share/nvim/site/pack/plugins/start/none-ls.nvim
 	url = https://github.com/nvimtools/none-ls.nvim
