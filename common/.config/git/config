@@ -18,26 +18,23 @@
 	pr = !git push && gh pr create -f
 
 	addf       = !git add -- $(git ls-files --modified --others --exclude-standard | fzf -m --preview 'cat {}')
-	checkoutf  = !git checkout $@ $(git branch --format '%(refname:short)' --sort committerdate | fzf +s --tac --preview 'git -c color.ui=always log master..{} && echo && echo --- && git -c color.ui=always diff master..{}')
-	checkoutff = !git checkout $@ -- $(git ls-files --modified --exclude-standard | fzf -m)
+	checkoutf  = "!f() { git checkout \"$@\" $(git branch --format '%(refname:short)' --sort committerdate | fzf +s --tac --preview 'git -c color.ui=always log master..{} && echo && echo --- && git -c color.ui=always diff master..{}'); }; f"
+	checkoutff = "!f() { git checkout \"$@\" -- $(git ls-files --modified --exclude-standard | fzf -m); }; f"
 	difff      = !git diff -- $(git ls-files --modified --exclude-standard | fzf -m)
 	fixupf     = !git commit --fixup=$(git log --pretty=oneline --abbrev-commit | fzf +s | col ' ' 1)
 	rebasef    = !git rebase $(git branch --format '%(refname:short)' --sort committerdate | fzf +s --tac --preview 'git -c color.ui=always log master..{}')
 	revertf    = !git revert $(git log --pretty=oneline --abbrev-commit | fzf -m +s --preview 'git -c color.ui=always show (echo {} | col \" \" 1)' | col ' ' 1)
 	showf      = !git show $(git log --pretty=oneline --abbrev-commit | fzf +s --preview 'git -c color.ui=always show --pretty=fuller (echo {} | col \" \" 1)' | col ' ' 1)
-	resetf     = !git reset $@ $(git log --pretty=oneline --abbrev-commit | fzf +s | col ' ' 1)
+	resetf     = "!f() { git reset \"$@\" $(git log --pretty=oneline --abbrev-commit | fzf +s | col ' ' 1); }; f"
 
 	branch-set-upstream      = !git branch --set-upstream-to=origin/$(git symbolic-ref --short HEAD)
 	branch-clean-remote-show = !git remote prune origin --dry-run
 	branch-clean-remote      = !git remote prune origin
-	branch-clean-local-show  = !git branch --format '%(refname:short)' --merged | grep -Ev '(master|dev)'
-	branch-clean-local       = !git branch --format '%(refname:short)' --merged | grep -Ev '(master|dev)' | xargs git branch -d
+	branch-clean-local-show  = !git branch --format '%(refname:short)' --merged | grep -Evx 'master|dev'
+	branch-clean-local       = !git branch --format '%(refname:short)' --merged | grep -Evx 'master|dev' | xargs git branch -d
 	branch-from-origin       = !git fetch origin "$(git master)" && git checkout origin/"$(git master)" -b
 
-	checkout-take = !git branch -f "$2" $(git rev-parse HEAD) && \
-	                 git reset --hard "HEAD~$1" && \
-	                 git checkout "$2" && \
-	                 false
+	checkout-take = "!f() { git branch -f \"$2\" $(git rev-parse HEAD) && git reset --hard \"HEAD~$1\" && git checkout \"$2\"; }; f"
 
 	rebase-squash = !GIT_SEQUENCE_EDITOR=true git rebase --interactive --autosquash --update-refs
 	commit-empty = !git commit --allow-empty -m "​"
@@ -45,9 +42,6 @@
 
 [diff "zip"]
 	textconv = unzip -c -a
-[diff]
-	noPrefix = true
-	renameLimit = 2048
 [advice]
 	statusHints = false
 	addEmptyPathspec = false
@@ -69,6 +63,8 @@
 	tool = meld
 	conflictstyle = diff3
 [diff]
+	noPrefix = true
+	renameLimit = 2048
 	tool = meld
 	algorithm = histogram
 	colorMoved = zebra
