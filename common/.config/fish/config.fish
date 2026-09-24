@@ -164,8 +164,8 @@ function __list
         | sed "s/"(date +%Y-%m-%d)"/\x1b[32m     today\x1b[m/; s/"(date +'%Y-%m-%d' -d yesterday)"/\x1b[33m yesterday\x1b[m/"
 end
 
-alias l "__list $argv"
-alias ll "__list -A $argv"
+alias l __list
+alias ll "__list -A"
 
 function __super_vim
     if test \( (count $argv) -eq 1 \) -a \( -e "$argv[1]" \) -a ! \( -w "$argv[1]" \)
