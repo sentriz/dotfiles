@@ -43,6 +43,7 @@ pre=""
 [[ "${CMENU_INPUT-}" = "del" ]] && pre="$(cmenu stay)"
 
 cliphist list -fields id,timestamp,preview,mime \
+    | tr -d '\000' \
     | beside "col 2 | numb '$EPOCHSECONDS - {}' | relative-duration" \
     | awk -F'\t' -v hl="$(cmenu highlight)" -v cur="$current_id" -v pre="$pre" \
         '{ printf "%s%s%s\t%s\t%s\t%s\n", pre, ($1 == cur ? hl : ""), $1, ($5 == "0s" ? "now" : $5 " ago"), $3, $4 }'
