@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+set -eu
+
+url="https://speed.cloudflare.com"
+
+down() {
+    local b
+    b="$(curl -sSfo /dev/null -w '%{speed_download}' "$url/__down?bytes=50000000")"
+    awk -v b="$b" 'BEGIN { printf "down\t%.1f Mbit/s\n", b * 8 / 1e6 }'
+}
+
+up() {
+    local b
+    b="$(head -c 25000000 /dev/zero | curl -sSfo /dev/null -w '%{speed_upload}' --data-binary @- "$url/__up")"
+    awk -v b="$b" 'BEGIN { printf "up\t%.1f Mbit/s\n", b * 8 / 1e6 }'
+}
+
+ping() {
+    local ms
+    ms="$(
+        for _ in 1 2 3 4 5; do
+            curl -sSfo /dev/null -w '%{time_pretransfer} %{time_starttransfer}\n' "$url/__down?bytes=0"
+        done | awk '{ print ($2 - $1) * 1000 }' | sort -n | sed -n 3p
+    )"
+    printf "ping\t%.0f ms\n" "$ms"
+}
+
+test $# -eq 0 && set -- down up ping
+
+for m in "$@"; do
+    case "$m" in
+    down | up | ping) "$m" ;;
+    *) exit 1 ;;
+    esac
+done
