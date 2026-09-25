@@ -21,4 +21,12 @@ if [[ "$status" = "battery" && "$batt_level" -le "10" ]]; then
     warning=" ⚠"
 fi
 
-echo "$status ${batt_level}%$warning"
+power=""
+if [[ "$status" = "battery" ]]; then
+    current_ua="$(cat /sys/class/power_supply/BAT1/current_now)"
+    voltage_uv="$(cat /sys/class/power_supply/BAT1/voltage_now)"
+    power_w="$((current_ua * voltage_uv / 1000000000000))"
+    [[ "$power_w" -gt "0" ]] && power=" ${power_w}W"
+fi
+
+echo "$status ${batt_level}%$power$warning"
