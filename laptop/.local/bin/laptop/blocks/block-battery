@@ -2,16 +2,16 @@
 
 set -u
 
-acpi_out="$(acpi -b 2>/dev/null | head -1)"
-[[ -z "$acpi_out" ]] && exit
+batts=(/sys/class/power_supply/BAT*)
+batt="${batts[0]}"
+[[ -e "$batt" ]] || exit
 
-batt_level="$(echo "$acpi_out" | grep -oP '[0-9]+(?=%)')"
-[[ -z "$batt_level" ]] && exit
+batt_level="$(cat "$batt/capacity")"
 [[ "$batt_level" -ge "100" ]] && exit
 
-status="battery"
-if echo "$acpi_out" | grep -iq "\bcharging"; then
-    status="charging"
+status="charging"
+if [[ "$(cat "$batt/status")" = "Discharging" ]]; then
+    status="battery"
 fi
 
 warning=""
@@ -23,8 +23,8 @@ fi
 
 power=""
 if [[ "$status" = "battery" ]]; then
-    current_ua="$(cat /sys/class/power_supply/BAT1/current_now)"
-    voltage_uv="$(cat /sys/class/power_supply/BAT1/voltage_now)"
+    current_ua="$(cat "$batt/current_now")"
+    voltage_uv="$(cat "$batt/voltage_now")"
     power_w="$((current_ua * voltage_uv / 1000000000000))"
     [[ "$power_w" -gt "0" ]] && power=" ${power_w}W"
 fi
