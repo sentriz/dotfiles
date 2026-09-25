@@ -1,10 +1,10 @@
 [[scripts]]
-  triggers = ["on-start", "pre b", "script audio", "interval 750ms"]
+  triggers = ["on-start", "pre b", "script audio", "interval 1s"]
   name = "bluetooth"
   path = "menu-bluetooth"
 
 [[scripts]]
-  triggers = ["on-start", "pre a", "script bluetooth", "interval 750ms"]
+  triggers = ["on-start", "pre a", "script bluetooth", "interval 1s"]
   name = "audio"
   path = "menu-audio"
 
@@ -24,7 +24,7 @@
   path = "menu-sway-session"
 
 [[scripts]]
-  triggers = ["script system", "interval 1s"]
+  triggers = ["script system", "interval 5s"]
   name = "framework"
   path = "menu-framework"
 
@@ -49,7 +49,7 @@
   path = "menu-emoji"
 
 [[scripts]]
-  triggers = ["pre w", "interval 1s"]
+  triggers = ["pre w", "interval 2s"]
   name = "wifi"
   path = "menu-wifi"
 
@@ -64,7 +64,7 @@
   path = "menu-subsonic"
 
 [[scripts]]
-  triggers = ["pre mp", "script audio", "script radio", "script subsonic", "interval 750ms"]
+  triggers = ["pre mp", "script audio", "script radio", "script subsonic", "interval 1s"]
   name = "mpris"
   path = "menu-mpris"
 
@@ -79,12 +79,12 @@
   path = "menu-scrot"
 
 [[scripts]]
-  triggers = ["pre f", "interval 750ms", "script scrot"]
+  triggers = ["pre f", "interval 2s", "script scrot"]
   name = "share"
   path = "menu-share"
 
 [[scripts]]
-  triggers = ["script share", "script tailscale", "interval 1s"]
+  triggers = ["script share", "script tailscale", "interval 2s"]
   name = "taildrop"
   path = "menu-taildrop"
 

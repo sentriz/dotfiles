@@ -32,6 +32,7 @@ color=#FFA3A4
 interval=60
 
 [time]
+interval=60
 
 [calendar]
 interval=30

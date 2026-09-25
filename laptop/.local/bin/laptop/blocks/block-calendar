@@ -51,7 +51,7 @@ khal list today tomorrow -df "" -f "{start-date}{tab}{start-time}{tab}{end-date}
         continue
     end
 
-    if test "$diff" -ge 0; and test "$diff" -le 60
+    if test "$diff" -gt 30; and test "$diff" -le 60
         notify-send -- "$diff sec until $title"
     end
 
