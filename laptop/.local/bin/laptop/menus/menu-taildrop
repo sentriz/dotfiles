@@ -24,6 +24,11 @@ if [[ "$#" -gt 0 ]]; then
     exit
 fi
 
+cmenu set \
+    colour 14 \
+    stay_open true \
+    hide 6,7
+
 pending="$(tailscale debug localapi v0/files/ 2>/dev/null \
     | jq -r '(. // []) | select(length > 0) | [([.[].Size] | add), ([.[].Name] | join(", "))] | @tsv' \
     | numfmt -d$'\t' --field=1 --to=iec)"
@@ -37,15 +42,10 @@ if [[ -z "$peers" ]]; then
     exit 0
 fi
 
-cmenu set \
-    colour 14 \
-    stay_open true \
-    hide 6,7
-
 while IFS=$'\t' read -r _ mime source; do
     if [[ -f "$source" ]]; then
         label="$(basename "$(dirname "$source")")/$(basename "$source")"
-        size="$(du -h "$source" | cut -f1)"
+        size="$(du -h "$source" | col 1)"
     else
         label="$source $mime"
         size="$(wl-paste --type "$mime" 2>/dev/null | wc -c | numfmt --to=iec)"

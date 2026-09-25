@@ -11,7 +11,7 @@ cmenu set \
     colour 2 \
     debounce 100ms
 
-inp="${CMENU_INPUT-}"
+inp="$CMENU_INPUT"
 if [[ "$inp" == "now" ]]; then
     inp="$(date -Iseconds)"
 fi

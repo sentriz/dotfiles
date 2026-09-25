@@ -2,7 +2,7 @@
 
 set -u
 
-if [[ "${CMENU_MODE-}" = "preview" ]]; then
+if [[ "$CMENU_MODE" = "preview" ]]; then
     IFS=$'\t' read -r id _ <<<"$1"
     rbw get --raw "$id" | jq -r '
       [

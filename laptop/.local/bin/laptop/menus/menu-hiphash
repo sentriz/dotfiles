@@ -18,9 +18,9 @@ fi
 
 cmenu set colour 2
 
-inp="${CMENU_INPUT-}"
+inp="$CMENU_INPUT"
 if [[ -z "$inp" ]]; then
-    inp="$(wl-paste -n)"
+    inp="$(wl-paste -n 2>/dev/null)"
 fi
 if [[ -z "$inp" ]]; then
     echo "$(cmenu label)no input"

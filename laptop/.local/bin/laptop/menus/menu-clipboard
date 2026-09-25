@@ -5,12 +5,12 @@ set -u
 if [[ "$#" -gt 0 ]]; then
     IFS=$'\t' read -r id _ text mime <<<"$1"
 
-    if [[ "${CMENU_MODE-}" != "preview" && "${CMENU_INPUT-}" = "del" ]]; then
+    if [[ "$CMENU_MODE" != "preview" && "$CMENU_INPUT" = "del" ]]; then
         printf '%s\n' "$id" | cliphist delete
         exit
     fi
 
-    if [[ "${CMENU_MODE-}" = "preview" ]]; then
+    if [[ "$CMENU_MODE" = "preview" ]]; then
         case "$mime" in
         image/*) cliphist decode "$id" | cmenu image - ;;
         text/* | application/json | application/xml) cliphist decode "$id" ;;
@@ -40,7 +40,7 @@ cmenu set \
     hide 1,4
 
 pre=""
-[[ "${CMENU_INPUT-}" = "del" ]] && pre="$(cmenu stay)"
+[[ "$CMENU_INPUT" = "del" ]] && pre="$(cmenu stay)"
 
 cliphist list -fields id,timestamp,preview,mime \
     | tr -d '\000' \

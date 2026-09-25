@@ -2,7 +2,7 @@
 
 set -u
 
-if [[ "${CMENU_MODE-}" = "preview" ]]; then
+if [[ "$CMENU_MODE" = "preview" ]]; then
     IFS=$'\t' read -r _ mac <<<"$1"
     bluetoothctl info "$mac" \
         | sed -nE 's/^\t([^:]+): (.+)/\1\t\2/p' \

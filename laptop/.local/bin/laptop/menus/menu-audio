@@ -2,7 +2,7 @@
 
 set -u
 
-if [[ "${CMENU_MODE-}" = "preview" ]]; then
+if [[ "$CMENU_MODE" = "preview" ]]; then
     IFS=$'\t' read -r _ id _ <<<"$1"
     {
         wpctl get-volume "$id" 2>/dev/null | sed -E 's/: /\t/'

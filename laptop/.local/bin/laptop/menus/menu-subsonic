@@ -7,7 +7,7 @@ pidfile="$XDG_RUNTIME_DIR/menu-subsonic.pid"
 base="$(secret gonic_url)"
 user="$(secret gonic_username)"
 salt="$RANDOM$RANDOM$RANDOM"
-token="$(printf '%s%s' "$(secret gonic_password)" "$salt" | md5sum | cut -d' ' -f1)"
+token="$(printf '%s%s' "$(secret gonic_password)" "$salt" | md5sum | col ' ' 1)"
 
 auth=(-d v=1.16.1 -d c=cmenu -d f=json --data-urlencode "u=$user" --data-urlencode "s=$salt" --data-urlencode "t=$token")
 
@@ -31,7 +31,7 @@ song-ids() {
     esac
 }
 
-if [[ "${CMENU_MODE-}" = "preview" ]]; then
+if [[ "$CMENU_MODE" = "preview" ]]; then
     IFS=$'\t' read -r payload _ <<<"$1"
     IFS=: read -r _ cover _ <<<"$payload"
     [[ -z "$cover" ]] && exit 0
@@ -64,7 +64,7 @@ if [[ "$#" -gt 0 ]]; then
     [[ "${#urls[@]}" -eq 0 ]] && exit
 
     mpv --no-ytdl --no-video --quiet --no-resume-playback "${urls[@]}" &
-    echo -e "$!\t$id" >"$pidfile"
+    printf '%s\t%s\n' "$!" "$id" >"$pidfile"
     notify-send 'started playing' "$title"
 
     exit
@@ -82,8 +82,8 @@ cmenu set \
     hide 1 \
     debounce 300ms
 
-if [[ -n "${CMENU_INPUT-}" ]]; then
-    api search3 "query=${CMENU_INPUT-}" artistCount=10 albumCount=20 songCount=20 | jq "${jq_args[@]}" "$jq_row"'
+if [[ -n "$CMENU_INPUT" ]]; then
+    api search3 "query=$CMENU_INPUT" artistCount=10 albumCount=20 songCount=20 | jq "${jq_args[@]}" "$jq_row"'
         .searchResult3 // {} |
         (.artist[]? | row("artist"; "-"; .name; "")),
         (.album[]?  | row("album"; .year // "-"; .name; .artist)),

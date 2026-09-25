@@ -5,7 +5,7 @@ set -u
 pidfile="$XDG_RUNTIME_DIR/menu-radio.pid"
 statsfile="stats.tsv"
 
-if [[ "${CMENU_MODE-}" = "preview" ]]; then
+if [[ "$CMENU_MODE" = "preview" ]]; then
     url="$(rsl ini json <"$RADIO_DIR/$1" | jq -r '.playlist.File1')"
     info="$(
         timeout 8 \
@@ -36,7 +36,7 @@ if [[ -n "$current_pid" ]] && ! kill -0 "$current_pid" 2>/dev/null; then
 fi
 
 if [[ "$#" -gt 0 ]]; then
-    if [[ "$current_pid" -gt 0 ]]; then
+    if [[ -n "$current_pid" ]]; then
         kill "$current_pid" 2>/dev/null
         while kill -0 "$current_pid" 2>/dev/null; do sleep 0.1; done
     fi
@@ -57,7 +57,7 @@ if [[ "$#" -gt 0 ]]; then
         --no-resume-playback \
         "$RADIO_DIR/$station" &
     pid="$!"
-    echo -e "$pid\t$station" >"$pidfile"
+    printf '%s\t%s\n' "$pid" "$station" >"$pidfile"
     notify-send 'started radio station' "$station"
 
     start="$EPOCHSECONDS"

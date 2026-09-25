@@ -4,7 +4,7 @@ set -u
 
 station="wlan0"
 
-if [[ "${CMENU_MODE-}" = "preview" ]]; then
+if [[ "$CMENU_MODE" = "preview" ]]; then
     IFS=$'\t' read -r security signal name <<<"$1"
 
     info="$(iwctl station "$station" show | strip-escape \

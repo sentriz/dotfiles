@@ -28,7 +28,7 @@ spec="$(jq -r '.defaultProvider + "/" + .defaultModel + ":" + .defaultThinkingLe
 [[ -s "$state" ]] && read -r spec <"$state"
 model="${spec%:*}" thinking="${spec##*:}"
 
-if [[ "${CMENU_INPUT-}" != *\? ]]; then
+if [[ "$CMENU_INPUT" != *\? ]]; then
     readarray -t models < <(jq -r '.enabledModels[]' "$settings")
     thinkings=(off low medium high)
 
@@ -62,7 +62,7 @@ pi \
     --session-dir "$XDG_RUNTIME_DIR/pi/menu-llm-sessions" \
     --session-id "$session" \
     --system-prompt "Answer concisely in plain text only. No markdown, no latex." \
-    --print "${CMENU_INPUT-}" \
+    --print "$CMENU_INPUT" \
     | awk -v label="$label" '{ gsub(/\t/, " ") } NF { print; next } { print label }'
 
 exit 0

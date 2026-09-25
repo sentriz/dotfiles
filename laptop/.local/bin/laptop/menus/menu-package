@@ -12,5 +12,4 @@ cmenu set \
     colour 2 \
     hide 3
 
-xdg-desktop-list \
-    | awk -F'\t' '{ printf "%s\t%s\t%s\n", $1, $2, $3 }'
+xdg-desktop-list | col 1 2 3
