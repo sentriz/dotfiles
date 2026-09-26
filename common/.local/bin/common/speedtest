@@ -3,17 +3,20 @@
 set -eu
 
 url="https://speed.cloudflare.com"
+secs=5
 
 down() {
-    local b
-    b="$(curl -sSfo /dev/null -w '%{speed_download}' "$url/__down?bytes=50000000")"
-    awk -v b="$b" 'BEGIN { printf "down\t%.1f Mbit/s\n", b * 8 / 1e6 }'
+    measure down curl -sfo /dev/null -m "$secs" -w '%{speed_download}' "$url/__down?bytes=99999999"
 }
 
 up() {
+    measure up curl -sfo /dev/null -m "$secs" -w '%{speed_upload}' -X POST -T - "$url/__up" </dev/zero
+}
+
+measure() {
     local b
-    b="$(head -c 25000000 /dev/zero | curl -sSfo /dev/null -w '%{speed_upload}' --data-binary @- "$url/__up")"
-    awk -v b="$b" 'BEGIN { printf "up\t%.1f Mbit/s\n", b * 8 / 1e6 }'
+    b="$("${@:2}" || test $? -eq 28)"
+    awk -v m="$1" -v b="$b" 'BEGIN { printf "%s\t%.1f Mbit/s\n", m, b * 8 / 1e6 }'
 }
 
 ping() {
