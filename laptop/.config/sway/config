@@ -274,11 +274,14 @@ bindsym XF86AudioNext         exec mpris-ctrl next       && block-up playing
 bindsym XF86AudioPrev         exec mpris-ctrl previous   && block-up playing
 
 # bindings: gestures
-bindgesture swipe:3:right workspace next
-bindgesture swipe:3:left  workspace prev
-bindgesture swipe:3:down  exec sway-cmenu "#sway [$(swaymsg -t get_tree | jq -r 'recurse(.nodes[]?, .floating_nodes[]?) | select(.focused) | .app_id')]"
-bindgesture swipe:3:up    exec sway-cmenu '#sway '
-bindgesture hold:3        workspace back_and_forth
+bindgesture swipe:3:right workspace next_on_output
+bindgesture swipe:3:left  workspace prev_on_output
+bindgesture swipe:4:right move container to workspace next_on_output
+bindgesture swipe:4:left  move container to workspace prev_on_output
+
+bindgesture swipe:3:up    exec sway-focus back
+bindgesture swipe:3:down  exec sway-cmenu
+bindgesture hold:3        fullscreen toggle
 
 # bindings: programs
 bindsym $super+return       exec $TERMINAL
