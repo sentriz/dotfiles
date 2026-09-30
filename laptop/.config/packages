@@ -133,6 +133,7 @@ arch desktask
 arch vdirsyncer
 arch python-aiohttp-oauthlib
 arch khal
+arch todoman
 arch whisper-cpp-git
 arch sox
 

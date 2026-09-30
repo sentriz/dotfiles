@@ -4,6 +4,7 @@ set -gx SCREENSHOTS_DIR "$XDG_PICTURES_DIR/screenshots"
 set -gx RECORDINGS_DIR "$XDG_PICTURES_DIR/recordings"
 set -gx RADIO_DIR "$HOME/radio"
 set -gx NOTES_DIR "$HOME/notes"
+set -gx TASKS_DIR "$HOME/tasks"
 
 set -gx LIBSEAT_BACKEND logind
 set -gx XDG_CURRENT_DESKTOP sway

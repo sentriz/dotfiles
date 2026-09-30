@@ -32,6 +32,26 @@ fileext = ".ics"
 [storage calendar_radicale]
 type = "caldav"
 read_only = true
+item_types = ["VEVENT"]
+url.fetch = ["command", "secret", "vdirsyncer_radicale_url"]
+username.fetch = ["command", "secret", "vdirsyncer_radicale_username"]
+password.fetch = ["command", "secret", "vdirsyncer_radicale_password"]
+
+
+[pair tasks]
+a = "tasks_local"
+b = "tasks_radicale"
+collections = [["personal", "personal", "97c990ef-3914-63ed-7495-ae85ddc14267"], ["tinkering", "tinkering", "a64c3370-def9-ebd1-3f41-257f9973bfb6"], ["shopping", "shopping", "e54d278a-9de3-be04-9579-737e2da13915"], ["carol_senan", "carol_senan", "52e7ec2a-c05d-e43a-acb8-2284cbadf1f4"]]
+conflict_resolution = "b wins"
+
+[storage tasks_local]
+type = "filesystem"
+path = "~/tasks/"
+fileext = ".ics"
+
+[storage tasks_radicale]
+type = "caldav"
+item_types = ["VTODO"]
 url.fetch = ["command", "secret", "vdirsyncer_radicale_url"]
 username.fetch = ["command", "secret", "vdirsyncer_radicale_username"]
 password.fetch = ["command", "secret", "vdirsyncer_radicale_password"]
