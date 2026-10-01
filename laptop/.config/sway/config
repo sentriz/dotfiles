@@ -301,7 +301,6 @@ bindcode 66 exec sway-cmenu
 bindsym $super+grave exec sway-focus back
 
 # autostarts
-exec_always systemctl --user start sway-session.target
 exec_always dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP XDG_SESSION_TYPE SSH_AUTH_SOCK SECRETS_SOCK XDG_DATA_DIRS PATH
 
 exec rbw-agent
