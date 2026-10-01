@@ -323,7 +323,7 @@ exec_always 'pkill mako; exec mako \
     --sort +time \
     --default-timeout 6000'
 
-exec last-dot-friends-notify
+exec 'secret wait && exec last-dot-friends-notify'
 
 exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec wl-paste --watch cliphist store
