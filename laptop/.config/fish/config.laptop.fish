@@ -52,8 +52,6 @@ set -gx YABRIDGE_TEMP_DIR "$XDG_RUNTIME_DIR/yabridge"
 set -gx YABRIDGE_DEBUG_LEVEL ''
 
 if status is-login
-    dbus-update-activation-environment --systemd SSH_AUTH_SOCK SECRETS_SOCK XDG_DATA_DIRS PATH
-
     switch (tty)
         case /dev/tty1
             exec sway >"$XDG_RUNTIME_DIR/sway_log" 2>&1
