@@ -20,7 +20,8 @@ function is_sooner -a key end best_key best_end
     test "$key" -eq "$best_key"; and test "$end" -lt "$best_end"
 end
 
-khal list today tomorrow -df "" -f "{start-date}{tab}{start-time}{tab}{end-date}{tab}{end-time}{tab}{title}" | while read -d \t start_date start_time end_date end_time title
+khal list today tomorrow -df "" -f "{start-date}{tab}{start-time}{tab}{end-date}{tab}{end-time}{tab}{status}{tab}{title}" | while read -d \t start_date start_time end_date end_time event_status title
+    test (string trim -- "$event_status") = CANCELLED; and continue
     contains "$title" "$ignored"; and continue
 
     set is_all_day (test -z "$start_time"; and echo 1)
