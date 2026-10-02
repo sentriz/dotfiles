@@ -104,7 +104,7 @@
   path = "menu-network"
 
 [[scripts]]
-  triggers = ["pre td"]
+  triggers = ["pre tn"]
   name = "tuned"
   path = "menu-tuned"
 
