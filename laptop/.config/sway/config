@@ -332,6 +332,4 @@ exec sway-focus
 exec wlsunset -l 52.8 -L -6.9 -t 3000
 
 # theme: accent background 80 bryellow
-exec_always 'pkill wlr-sunclock; exec wlr-sunclock -w 800 -a br -m "$default_gap,$default_gap,$default_gap,448" -s -n "#7D87FF" -o "#33333380" -u "#FFE031"'
-# theme: background A0
-exec_always 'pkill -f "^desktask"; exec desktask $CALENDARS_DIR/* -a br -m "$default_gap,$default_gap,$default_gap,$default_gap" -w 800 -h 416 -b "#333333A0" --display pending'
+exec_always 'pkill wlr-sunclock; exec wlr-sunclock -w 800 -a br -m "$default_gap,$default_gap,$default_gap,$default_gap" -s -n "#7D87FF" -o "#33333380" -u "#FFE031"'
