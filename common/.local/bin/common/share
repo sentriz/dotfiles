@@ -2,7 +2,7 @@
 
 set -u
 
-[ $# -eq 0 ] && {
+[[ $# -eq 0 || ($1 != list && $# -lt 2) ]] && {
     echo "usage:" >&2
     echo "  share list [mime]" >&2
     echo "  share <dest> <path>" >&2
