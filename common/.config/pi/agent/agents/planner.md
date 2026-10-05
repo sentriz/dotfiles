@@ -1,1 +1,1 @@
-/usr/lib/pi-coding-agent/examples/extensions/subagent/agents/planner.md
+/usr/lib/node_modules/pi/packages/coding-agent/examples/extensions/subagent/agents/planner.md

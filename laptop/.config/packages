@@ -212,7 +212,7 @@ arch tflint
 
 # llm
 go go.senan.xyz/mcp@latest
-arch pi-coding-agent
+arch pi
 arch bubblewrap
 arch fd
 arch way-secure
