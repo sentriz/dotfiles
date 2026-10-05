@@ -52,6 +52,11 @@ if [[ "$#" -gt 0 ]]; then
     IFS=$'\t' read -r payload kind _ title _ <<<"$1"
     IFS=: read -r id _ <<<"$payload"
 
+    if [[ "$kind" != song && "$CMENU_INPUT" != "$kind:$id" ]]; then
+        cmenu query "${CMENU_PREFIX}[$kind:$id]"
+        exit
+    fi
+
     if [[ -n "$current_pid" ]]; then
         kill "$current_pid" 2>/dev/null
         while kill -0 "$current_pid" 2>/dev/null; do sleep 0.1; done
@@ -82,15 +87,32 @@ cmenu set \
     hide 1 \
     debounce 300ms
 
-if [[ -n "$CMENU_INPUT" ]]; then
+case "$CMENU_INPUT" in
+artist:*)
+    api getArtist "id=${CMENU_INPUT#artist:}" | jq "${jq_args[@]}" "$jq_row"'
+        .artist |
+        row("artist"; "-"; .name; ""),
+        (.album[]? | row("album"; .year // "-"; .name; .artist))
+    '
+    ;;
+album:*)
+    api getAlbum "id=${CMENU_INPUT#album:}" | jq "${jq_args[@]}" "$jq_row"'
+        .album |
+        row("album"; .year // "-"; .name; .artist),
+        (.song[]? | row("song"; .year // "-"; .title; .artist))
+    '
+    ;;
+"")
+    api getAlbumList2 type=newest size=50 | jq "${jq_args[@]}" "$jq_row"'
+        .albumList2.album[]? | row("album"; .year // "-"; .name; .artist)
+    '
+    ;;
+*)
     api search3 "query=$CMENU_INPUT" artistCount=10 albumCount=20 songCount=20 | jq "${jq_args[@]}" "$jq_row"'
         .searchResult3 // {} |
         (.artist[]? | row("artist"; "-"; .name; "")),
         (.album[]?  | row("album"; .year // "-"; .name; .artist)),
         (.song[]?   | row("song"; .year // "-"; .title; .artist))
     '
-else
-    api getAlbumList2 type=newest size=50 | jq "${jq_args[@]}" "$jq_row"'
-        .albumList2.album[]? | row("album"; .year // "-"; .name; .artist)
-    '
-fi
+    ;;
+esac
