@@ -1,0 +1,116 @@
+#!/usr/bin/env bash
+
+set -u
+
+if [[ "$CMENU_MODE" = "preview" ]]; then
+    info="$(cut -f2 <<<"$1")"
+    description="$(cut -f3 <<<"$1")"
+    printf '%b\n' "$info" | table
+    [[ -n "$description" ]] && printf '\n%b\n' "$description"
+    exit 0
+fi
+
+if [[ "$#" -gt 0 ]]; then
+    IFS=: read -r action rest <<<"${1%%$'\t'*}"
+    case "$action" in
+    new)
+        mapfile -d '' args < <(xargs -r printf '%s\0' <<<"$rest" 2>/dev/null)
+        khal new "${args[@]}"
+        ;;
+    copy) wl-copy -n <<<"$rest" ;;
+    esac
+    exit
+fi
+
+cmenu set \
+    colour 4 \
+    debounce 200ms \
+    preview true \
+    hide 1,2,3
+
+label="$(cmenu label)" highlight="$(cmenu highlight)" back="$(cmenu back)"
+marks=(--arg label "$label" --arg highlight "$highlight" --arg back "$back")
+
+# same as menu-todo, keep in sync
+defs='
+    def day: strptime("%Y/%m/%d") | mktime / 86400;
+    def today: now | strflocaltime("%Y/%m/%d") | day;
+    def day_label:
+        if . < today then "overdue \(. * 86400 | strftime("%-d %b"))"
+        elif . == today then "today"
+        elif . == today + 1 then "tomorrow"
+        else . * 86400 | strftime("%a %-d %b") end;
+    def tagged(text): [(.categories[] | "#\(.)"), text] | join(" ");
+'
+defs+='
+    def parse_categories: .categories |= (gsub("\\\\"; "") | split(",") | unique);
+'
+
+if [[ -n "$CMENU_INPUT" ]]; then
+    mapfile -d '' args < <(xargs -r printf '%s\0' <<<"$CMENU_INPUT" 2>/dev/null)
+    scratch="$(mktemp -d)"
+    rsync -a --include='*/' --include=displayname --exclude='*' "$CALENDARS_DIR/" "$scratch/"
+
+    fields=(calendar start-date start-time end-time title categories)
+    if event="$(CALENDARS_DIR="$scratch" XDG_CACHE_HOME="$scratch" \
+        khal new "${fields[@]/#/--json=}" "${args[@]}" 2>"$scratch/err")"; then
+        jq -r --arg action "${back}new:$CMENU_INPUT" "$defs"'
+            .[]
+            | parse_categories
+            | [
+                $action,
+                "",
+                "",
+                .calendar,
+                "\(.["start-date"] | day | day_label) \(if .["start-time"] != "" then "\(.["start-time"])-\(.["end-time"])" else "all day" end)",
+                tagged(.title)
+            ] | @tsv
+        ' <<<"$event"
+    else
+        printf '%s\t\t\t%s\n' "$label" "$(sed -nE 's/^(Error|critical): //p' "$scratch/err" | head -1)"
+    fi
+
+    rm -rf "$scratch"
+    exit 0
+fi
+
+fields=(start end start-date end-date start-time end-time title calendar location description url repeat-pattern categories status)
+khal list --once "${fields[@]/#/--json=}" today 7d \
+    | jq -rs \
+        "${marks[@]}" \
+        --arg now "$(date '+%Y/%m/%d %H:%M')" "$defs"'
+    today as $today
+    | add // []
+    | map(select(.status != "CANCELLED"))
+    | map(
+        parse_categories
+        | (.["start-date"] | day) as $start
+        | (.["end-date"] | day) as $end
+        | (if .["start-time"] != "" and .["end-time"] == "00:00" and $end > $start then $end - 1 else $end end) as $end
+        | . + {day: range([$start, $today] | max; ([$end, $today + 7] | min) + 1)}
+        | .when = (
+            if .["start-time"] == "" then "all day"
+            elif $start == $end then .["start-time"]
+            elif .day == $start then "\(.["start-time"])—"
+            elif .day == $end then "—\(.["end-time"])"
+            else "all day" end
+        )
+    )
+    | group_by(.day)[]
+    | "\($label)\t\t\t\(.[0].day | day_label)",
+        (.[]
+            | (if .["start-time"] != "" and .day == $today and .start <= $now and $now < .end then $highlight else "" end) as $pre
+            | ([(.url, .location, .description) | match("https?://[^\\s<>\"]+").string] | first) as $url
+            | ([
+                "title\t\(.title)",
+                "calendar\t\(.calendar)",
+                "start\t\(.start)",
+                "end\t\(.end)",
+                (.location | select(. != "") | "location\t\(.)"),
+                (.url | select(. != "") | "url\t\(.)"),
+                (.["repeat-pattern"] | select(. != "") | "repeat\t\(.)"),
+                (.categories | select(length > 0) | "categories\t\(map("#\(.)") | join(" "))")
+            ] | join("\n")) as $info
+            | ["\($pre)copy:\($url // .title)", $info, .description, .calendar, .when, tagged(.title)]
+            | @tsv)
+'

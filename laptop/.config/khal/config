@@ -13,3 +13,4 @@ longdatetimeformat = %Y/%m/%d %H:%M
 
 [default]
 default_calendar = senan
+print_new = event

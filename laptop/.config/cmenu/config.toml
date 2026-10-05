@@ -94,6 +94,16 @@
   path = "menu-timer"
 
 [[scripts]]
+  triggers = ["pre td", "script calendar"]
+  name = "todo"
+  path = "menu-todo"
+
+[[scripts]]
+  triggers = ["pre cl", "script todo"]
+  name = "calendar"
+  path = "menu-calendar"
+
+[[scripts]]
   triggers = ["pre ts", "interval 1s", "script wifi"]
   name = "tailscale"
   path = "menu-tailscale"
