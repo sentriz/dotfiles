@@ -24,7 +24,7 @@ if [[ "$#" -gt 0 ]]; then
     setsid -f bash -c '
         sleep 30
         [[ "$(wl-paste -n 2>/dev/null | sha256sum)" = "$1" ]] && wl-copy --clear
-    ' _ "$hash"
+    ' _ "$hash" >/dev/null
     exit
 fi
 

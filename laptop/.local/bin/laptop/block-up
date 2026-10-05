@@ -18,5 +18,6 @@ for signal in $(signals "$1"); do
     pkill -RTMIN+"$signal" i3blocks &
     found=1
 done
+wait
 
 test -n "$found"

@@ -55,7 +55,7 @@ if [[ "$#" -gt 0 ]]; then
         --quiet \
         --force-media-title="$station" \
         --no-resume-playback \
-        "$RADIO_DIR/$station" &
+        "$RADIO_DIR/$station" >/dev/null &
     pid="$!"
     printf '%s\t%s\n' "$pid" "$station" >"$pidfile"
     notify-send 'started radio station' "$station"
@@ -64,8 +64,7 @@ if [[ "$#" -gt 0 ]]; then
     (
         while kill -0 "$pid" 2>/dev/null; do sleep 5; done
         printf '%s\t%s\t%s\n' "$start" "$((EPOCHSECONDS - start))" "$station" >>"$RADIO_DIR/$statsfile"
-    ) &
-    disown
+    ) >/dev/null &
 
     exit
 fi

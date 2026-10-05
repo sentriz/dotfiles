@@ -29,8 +29,7 @@ main() {
                 wl-copy <"$filename"
 
                 notify-send "screenshot" "$filename"
-            } &
-            disown
+            } >/dev/null &
             ;;
 
         "recording" | "recording audio" | "recording audio mic")
@@ -54,7 +53,7 @@ main() {
                     ;;
                 esac
 
-                wf-recorder "${extra_args[@]}" -f "$filename" -g "$geo" -x yuv420p >/dev/null
+                wf-recorder "${extra_args[@]}" -f "$filename" -g "$geo" -x yuv420p
 
                 for pid in "${loopbacks[@]}"; do
                     kill "$pid"
@@ -65,8 +64,7 @@ main() {
                 wl-copy -t text/uri-list "file://$filename"
 
                 notify-send "recorded" "$filename"
-            } &
-            disown
+            } >/dev/null &
             ;;
 
         "recording stop")

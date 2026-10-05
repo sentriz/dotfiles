@@ -63,7 +63,7 @@ if [[ "$#" -gt 0 ]]; then
     while read -r song; do urls+=("$(stream-url "$song")"); done < <(song-ids "$kind" "$id")
     [[ "${#urls[@]}" -eq 0 ]] && exit
 
-    mpv --no-ytdl --no-video --quiet --no-resume-playback "${urls[@]}" &
+    mpv --no-ytdl --no-video --quiet --no-resume-playback "${urls[@]}" >/dev/null &
     printf '%s\t%s\n' "$!" "$id" >"$pidfile"
     notify-send 'started playing' "$title"
 
