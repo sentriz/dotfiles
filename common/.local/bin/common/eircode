@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+set -eu
+
+if [[ $# -eq 0 ]]; then
+    echo "usage: $0 <eircode or address>" >&2
+    exit 1
+fi
+
+api="https://api-finder3.eircode.ie"
+version="3.3.4"
+
+get() {
+    curl -sSf -G -H "Referer: https://finder.eircode.ie/" "$@"
+}
+
+token=$(get "$api/createtoken" | jq -r .token)
+
+get "$api/autocomplete" \
+    --data-urlencode "address=$*" \
+    --data-urlencode "token=$token" \
+    --data-urlencode "version=$version" \
+    | jq -r '.options | to_entries[] | select(.value.link.rel == "lookup") | [.key, .value.value, .value.link.href] | @tsv' \
+    | {
+        while IFS=$'\t' read -r i address link; do {
+            eircode=$(get "$link" --data-urlencode "version=$version" | jq -r .address.postcode.value)
+            printf '%s\t%s\t%s\n' "$i" "$eircode" "$address"
+        } & done
+        wait
+    } \
+    | sort -n \
+    | cut -f2-
