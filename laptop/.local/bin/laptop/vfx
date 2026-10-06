@@ -31,6 +31,7 @@ module=""
 state_dir="$XDG_STATE_HOME/vfx"
 mkdir -p "$state_dir"
 
+export WINELOADER="$HOME/.local/bin/laptop/yabridge-wine"
 (cd "$state_dir" && CARLA_CLIENT_NAME="$node" exec carla-single native "$type" "$plugin") 9>&- &
 carla=$!
 trap 'kill "$carla" 2>/dev/null; pactl set-default-sink "$sink_hw"; [[ $module ]] && pactl unload-module "$module"' EXIT

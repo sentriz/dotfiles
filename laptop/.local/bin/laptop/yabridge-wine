@@ -14,6 +14,11 @@ mkdir -p "$WINEPREFIX" 2>/dev/null
 mkdir -p "$XDG_CACHE_HOME/wine" 2>/dev/null
 mkdir -p "$XDG_CACHE_HOME/winetricks" 2>/dev/null
 
+cmd=("$wine" "$@")
+case "${1-}" in
+winetricks | wineserver) cmd=("$@") ;;
+esac
+
 share_net=("--unshare-net")
 [[ -n "${WINE_SHARE_NET-}" ]] && share_net=()
 
@@ -37,9 +42,8 @@ exec bwrap \
     --bind-try "$HOME/daw" "$HOME/daw" \
     --bind-try "$HOME/.vst" "$HOME/.vst" \
     --bind-try "$HOME/.vst3" "$HOME/.vst3" \
-    --bind-try "$HOME/daw" "$HOME/daw" \
     --tmpfs "$XDG_RUNTIME_DIR" \
     "${session_binds[@]}" \
     --new-session \
     --die-with-parent \
-    "$(basename "$0")" "$@"
+    "${cmd[@]}"

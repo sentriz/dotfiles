@@ -1,0 +1,13 @@
+[Desktop Entry]
+Name=Carla
+GenericName=Carla Plugin Host
+GenericName[fr]=Hôte de greffon Carla
+Comment=Audio Plugin Host
+Comment[fr]=Hôte de greffon audio
+Exec=sh -c 'WINELOADER="$HOME/.local/bin/laptop/yabridge-wine" exec carla "$@"' sh %u
+Icon=carla
+Terminal=false
+Type=Application
+Categories=AudioVideo;X-AudioEditing;Qt;
+MimeType=application/x-carla-project;
+Version=1.0
