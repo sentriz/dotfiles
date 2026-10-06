@@ -211,7 +211,6 @@ arch terraform-ls
 arch tflint
 
 # llm
-go go.senan.xyz/mcp@latest
 arch pi
 arch bubblewrap
 arch fd

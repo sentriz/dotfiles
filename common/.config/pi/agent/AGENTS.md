@@ -41,6 +41,7 @@
 - Before your first edit or write to a file, check the skill list for a match on that file's language and load it. Do this even if the session started as a discussion.
 - When reading a main file under 500 lines, read it all in one go - don't chunk it. You can use `wc -l` first to measure the line count. This applies when the codebase is very small - list the root directory to check.
 - When changing approach or moving code, always clean up dormant/redundant artefacts left behind.
+- Only use codemode to batch independent calls or filter large output. For a single command, call bash directly - wrapping it in codemode just hides the command.
 
 # Environment
 
@@ -58,3 +59,11 @@
 - Some `~/.local/bin` scripts shadow system commands (`col`, `sum`, `diff`). They are unrelated to the originals - use `/usr/bin/<cmd>` when you want the system one.
 - Projects are stored at `$PROJECTS_DIR/<x>`. "project <x>" or "<x> project" mean a directory there.
 - Most paths under `~/.config`, `~/.local`, and `~/.ssh` are symlinks into `$PROJECTS_DIR/dotfiles`. Never edit the path under `~`: resolve it with `readlink -f` and edit the file in the repo.
+
+# MCP
+
+- linear: `cycle=current` silently returns no issues - use the cycle number. `list_issues` returns `{issues: [...]}`.
+- dash0: app telemetry lives in dataset `production` - `default` is empty and queries return 0 rows without erroring. Most tools need `dataset` and `timeRange: {from, to}`. `sql` (D0QL) columns differ from `getSpans` display names: use `trace_id`, `span_id`, `timestamp`, `name`, `span_attributes['x']`.
+- slack: `slack_read_thread` needs the thread parent's `message_ts` - a reply gives `thread_not_found`; find the parent with `slack_read_channel` and `oldest`/`latest` around the reply. Pass ts values as strings. `slack_search_users` fails with `missing_scopes` - find a user id via `slack_search_public` and read it from an `<@U...|Name>` mention. A user id works as `channel_id` to read a DM. `slack_search_public` returns one markdown blob in `results`, not structured messages.
+- chrome: connects to a running Chrome on port 9222 - if it can't connect, ask me to start it, don't retry. Click/fill/hover uids come from `take_snapshot` and change on every re-render, so re-snapshot before each interaction. Snapshots are huge - filter them in the script. `fill` appends to a field with a value - to replace, click it, `press_key` `Control+a`, then `type_text`. `fill_form` stops at the first field it can't set, silently leaving the rest empty - verify with a snapshot. For a `<select>`, use `evaluate_script`: pick the option by `text.trim()`, set `value`, dispatch a bubbling `change` event; for React text inputs use the native value setter plus `input` and `change` events. `evaluate_script` needs `pageId`; pass `waitForStableDom: false` for read-only scripts.
+- gmail: ids are the hex API ids from `search_threads` - web UI ids like `FMfcgz...` fail. Use `messageFormat: MINIMAL`. Message fields are `sender` and `plaintextBody`; full responses embed huge attachment ids, so pick out the fields you want.

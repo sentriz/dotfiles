@@ -59,14 +59,14 @@ prep work:
 ## Chrome MCP × MusicBrainz mechanics
 
 - Forms are React. `fill` **appends** to a field that already has a value (Harmony imports, prefilled
-  sort names). To replace: `click` the field, `press_key key="Control+a"`, then `type_text`.
+  sort names). To replace: `click` the field, `press_key` `Control+a`, then `type_text`.
 - `fill` on a MB `<select>` sometimes never becomes interactive (tooltips overlap it) and options can
   have leading whitespace (`"   Original Production"`). Set it with a script instead:
   `evaluate_script pageId=N function='() => { const s=document.getElementById("id-edit-label.type_id"); const o=[...s.options].find(o=>o.text.trim()==="Original Production"); s.value=o.value; s.dispatchEvent(new Event("change",{bubbles:true})); }'`
   Date-part inputs (`id-edit-label.period.begin_date.year`) often need the same treatment, via the
   native value setter plus `input` + `change` events.
 - Every autocomplete (artist, label, area, relationship target) works the same way: type the name,
-  wait ~2s, screenshot to confirm the dropdown, then `press_key key=Enter` to take the highlighted
+  wait ~2s, screenshot to confirm the dropdown, then `press_key` `Enter` to take the highlighted
   row. Confirm afterwards - the field turns green and a "You selected X" tooltip appears.
 - If an autocomplete can't find an entity (indexed search lag on brand-new or underscore names),
   **paste the MBID** into the field instead of the name. That always resolves.

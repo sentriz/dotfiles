@@ -1,0 +1,46 @@
+{
+  "mcpServers": {
+    "linear": {
+      "url": "https://mcp.linear.app/mcp",
+      "headers": { "Authorization": "!echo Bearer $(secret linear_token)" }
+    },
+    "dash0": {
+      "url": "https://api.eu-west-1.aws.dash0.com/mcp",
+      "headers": { "Authorization": "!echo Bearer $(secret dash0_token)" }
+    },
+    "slack": {
+      "url": "https://mcp.slack.com/mcp",
+      "oauth": {
+        "clientId": "690085431090.11644984668068",
+        "clientSecret": "!secret slack_client_secret",
+        "callbackUrl": "http://localhost:8085/oauth/callback",
+        "scope": "search:read.public channels:history channels:read groups:history groups:read im:history mpim:history users:read chat:write reactions:read files:read",
+        "authServerMetadataUrl": "https://mcp.slack.com/.well-known/oauth-authorization-server"
+      }
+    },
+    "chrome": {
+      "command": "npx",
+      "args": ["-y", "chrome-devtools-mcp@latest", "--browserUrl", "http://127.0.0.1:9222"]
+    },
+    "gmail": {
+      "url": "https://gmailmcp.googleapis.com/mcp/v1",
+      "oauth": {
+        "clientId": "499778445863-0lo3qfi8jflmsb1bt4q10b9bdrnvvd61.apps.googleusercontent.com",
+        "clientSecret": "!secret google_mcp_client_secret",
+        "callbackUrl": "http://localhost:8085/oauth/callback",
+        "scope": "https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/gmail.compose",
+        "authServerMetadataUrl": "https://accounts.google.com/.well-known/openid-configuration"
+      }
+    },
+    "gcal": {
+      "url": "https://calendarmcp.googleapis.com/mcp/v1",
+      "oauth": {
+        "clientId": "499778445863-0lo3qfi8jflmsb1bt4q10b9bdrnvvd61.apps.googleusercontent.com",
+        "clientSecret": "!secret google_mcp_client_secret",
+        "callbackUrl": "http://localhost:8085/oauth/callback",
+        "scope": "https://www.googleapis.com/auth/calendar.calendarlist.readonly https://www.googleapis.com/auth/calendar.events.readonly",
+        "authServerMetadataUrl": "https://accounts.google.com/.well-known/openid-configuration"
+      }
+    }
+  }
+}

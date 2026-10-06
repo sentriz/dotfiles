@@ -84,11 +84,6 @@ ro "$HOME/.ssh/known_hosts"
 ro "$XDG_CONFIG_HOME/git"
 rw "$XDG_CONFIG_HOME/gh" "$XDG_CACHE_HOME/gh" "$XDG_DATA_HOME/gh"
 
-# mcp
-ro "$XDG_CONFIG_HOME/mcp"
-rw "$XDG_CACHE_HOME/mcp"
-keep "$XDG_RUNTIME_DIR/mcp"
-
 # aws
 keep "$XDG_CACHE_HOME/aws"
 
