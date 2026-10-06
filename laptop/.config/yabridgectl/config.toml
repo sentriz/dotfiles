@@ -18,4 +18,4 @@ blacklist = []
 
 [last_known_config]
 wine_version = 'wine-10.14-268-ge3c9d3ac76b (Staging)'
-yabridge_host_hash = -307586910960095749
+yabridge_host_hash = -5640544490467266216

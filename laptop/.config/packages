@@ -170,6 +170,7 @@ arch realtime-privileges
 arch bubblewrap
 arch yabridge
 arch yabridgectl
+# needs "bcrypt: Handle SHA512 in key_asymmetric_verify()" Wine bug 59613 fix
 arch wine-pure-git
 arch winetricks
 arch bitwig-studio
