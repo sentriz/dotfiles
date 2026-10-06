@@ -27,8 +27,8 @@ set -a fish_user_paths \
     /opt/balenaEtcher \
     /opt/flutter/bin/
 
-set -gx TERMINAL foot
-set -gx TERMINAL_LIGHT foot -o initial-color-theme=light
+set -gx TERMINAL footclient
+set -gx TERMINAL_LIGHT footclient -o initial-color-theme=light
 
 # set -gx GDK_BACKEND 'wayland'
 set -gx CLUTTER_BACKEND wayland

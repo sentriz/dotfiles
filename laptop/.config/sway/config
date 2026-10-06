@@ -303,6 +303,7 @@ bindsym $super+grave exec sway-focus back
 # autostarts
 exec_always dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP XDG_SESSION_TYPE SSH_AUTH_SOCK SECRETS_SOCK XDG_DATA_DIRS PATH
 
+exec foot --server
 exec rbw-agent
 exec secret daemon
 exec 'secret wait && until pimsync daemon || [ $? -eq 74 ]; do sleep 60; done'
