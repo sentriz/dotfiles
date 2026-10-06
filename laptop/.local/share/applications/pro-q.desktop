@@ -1,4 +1,4 @@
 [Desktop Entry]
 Type=Application
-Name=Pro-Q 3 monitor
-Exec=pro-q
+Name=Pro-Q 4 monitor
+Exec=sh -c 'vfx "$HOME/.vst3/yabridge/FabFilter/FabFilter Pro-Q 4.vst3"'

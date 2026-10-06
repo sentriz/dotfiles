@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+
+set -u
+
+# create a chain from source -> virt sink -> plugin -> hw sink
+# requires yabridge, carla, pipewire
+
+if (($# != 1)); then
+    echo "usage: $0 <plugin path>" >&2
+    exit 1
+fi
+plugin="$(realpath -s "$1")"
+
+case "$plugin" in
+*.clap) type="clap" ;;
+*.vst3) type="vst3" ;;
+*)
+    echo "unknown plugin type: $plugin" >&2
+    exit 1
+    ;;
+esac
+
+exec 9>"$XDG_RUNTIME_DIR/vfx"
+flock -n 9 || exit 1
+
+sink_hw="$(pactl get-default-sink)"
+sink_virt="vfx"
+node="$(basename "$plugin" ".$type")"
+module=""
+
+state_dir="$XDG_STATE_HOME/vfx"
+mkdir -p "$state_dir"
+
+(cd "$state_dir" && CARLA_CLIENT_NAME="$node" exec carla-single native "$type" "$plugin") 9>&- &
+carla=$!
+trap 'kill "$carla" 2>/dev/null; pactl set-default-sink "$sink_hw"; [[ $module ]] && pactl unload-module "$module"' EXIT
+
+while ! pw-cli info "$node" 2>/dev/null | grep -qE "id: [0-9]+"; do
+    kill -0 "$carla" 2>/dev/null || exit 1
+    sleep 0.5
+done
+
+module="$(pactl load-module module-null-sink sink_name="$sink_virt")"
+pactl set-default-sink "$sink_virt"
+pw-link "$sink_virt" "$node"
+pw-link "$node" "$sink_hw"
+
+wait
