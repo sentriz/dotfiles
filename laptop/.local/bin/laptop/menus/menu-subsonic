@@ -52,11 +52,6 @@ if [[ "$#" -gt 0 ]]; then
     IFS=$'\t' read -r payload kind _ title _ <<<"$1"
     IFS=: read -r id _ <<<"$payload"
 
-    if [[ "$kind" != song && "$CMENU_INPUT" != "$kind:$id" ]]; then
-        cmenu query "${CMENU_PREFIX}[$kind:$id]"
-        exit
-    fi
-
     if [[ -n "$current_pid" ]]; then
         kill "$current_pid" 2>/dev/null
         while kill -0 "$current_pid" 2>/dev/null; do sleep 0.1; done
@@ -75,10 +70,11 @@ if [[ "$#" -gt 0 ]]; then
     exit
 fi
 
-jq_args=(-r --arg hl "$(cmenu highlight)" --arg cur "$current_id")
+jq_args=(-r --arg hl "$(cmenu highlight)" --arg nav "$(cmenu input %s)" --arg cur "$current_id" --arg level "$CMENU_INPUT")
 # shellcheck disable=SC2016
-jq_row='def row(kind; year; title; artist):
-    "\(if .id == $cur then $hl else "" end)\(.id):\(.coverArt // "")\t\(kind)\t\(year)\t\(title)\t\(artist)";'
+jq_row='def go(target): target as $target | $nav | sub("%s"; $target);
+def row(kind; year; title; artist):
+    "\(if .id == $cur then $hl else "" end)\(if kind != "song" and "\(kind):\(.id)" != $level then go("[\(kind):\(.id)]") else "" end)\(.id):\(.coverArt // "")\t\(kind)\t\(year)\t\(title)\t\(artist)";'
 
 cmenu set \
     colour 6 \
