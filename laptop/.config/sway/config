@@ -14,6 +14,10 @@
 set $super Mod4
 set $alt   Mod1
 
+# var cmenu
+set $cmenu_sock $XDG_RUNTIME_DIR/foot-cmenu.sock
+set $cmenu      pidof -q cmenu || footclient -s $cmenu_sock --app-id cmenu cmenu
+
 floating_modifier $super
 
 set $default_gap 16
@@ -280,11 +284,11 @@ bindgesture swipe:4:right move container to workspace next_on_output
 bindgesture swipe:4:left  move container to workspace prev_on_output
 
 bindgesture swipe:3:up    exec sway-focus back
-bindgesture swipe:3:down  exec sway-cmenu
+bindgesture swipe:3:down  exec $cmenu
 bindgesture hold:3        fullscreen toggle
 
 # bindings: programs
-bindsym $super+return       exec $TERMINAL
+bindsym $super+return       exec footclient
 
 # bindings: notifications
 bindsym $super+i exec 'swaymsg -q "[urgent=latest] focus" || makoctl invoke'
@@ -295,7 +299,7 @@ bindsym $super+p exec makoctl dismiss --all
 bindsym $super+BackSpace exec dictate-type
 
 # cmenu
-bindcode 66 exec sway-cmenu
+bindcode 66 exec $cmenu
 
 # sway-focus
 bindsym $super+grave exec sway-focus back
@@ -304,6 +308,7 @@ bindsym $super+grave exec sway-focus back
 exec_always dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP XDG_SESSION_TYPE SSH_AUTH_SOCK SECRETS_SOCK XDG_DATA_DIRS PATH
 
 exec foot --server
+exec 'windowtolayer -l overlay -i all -k exclusive -a top,left,right -s 0x690 foot --server=$cmenu_sock -o initial-color-theme=light'
 exec rbw-agent
 exec secret daemon
 exec 'secret wait && until pimsync daemon || [ $? -eq 74 ]; do sleep 60; done'
