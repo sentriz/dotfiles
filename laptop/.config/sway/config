@@ -20,9 +20,9 @@ set $cmenu      pidof -q cmenu || footclient -s $cmenu_sock --app-id cmenu cmenu
 
 floating_modifier $super
 
-set $default_gap 16
-# theme: font /^set \$default_font (.*) \d+$/
-set $default_font Source Code Pro 10
+set $default_gap 12
+# theme: font /^set \$default_font (.*) \d+$/ font-size-system /(\d+)$/
+set $default_font Source Code Pro 9
 
 # theme-reload: swaymsg reload
 # theme: background
@@ -100,7 +100,7 @@ bindswitch --reload --locked lid:off output eDP-1 enable
 # right bar
 bar {
     font $default_font
-    height 24
+    height 20
     status_command i3blocks
     status_padding 0
     tray_padding 0
@@ -306,9 +306,11 @@ bindsym $super+grave exec sway-focus back
 
 # autostarts
 exec_always dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP XDG_SESSION_TYPE SSH_AUTH_SOCK SECRETS_SOCK XDG_DATA_DIRS PATH
+# theme: font /"(.*) \d+"/ font-size /(\d+)"/
+exec_always 'gsettings set org.gnome.desktop.interface monospace-font-name "Source Code Pro 10"'
 
-exec foot --server
-exec 'windowtolayer -l overlay -i all -k exclusive -a top,left,right -s 0x690 foot --server=$cmenu_sock -o initial-color-theme=light'
+exec_always 'pkill -fx "foot --server"; pidwait -fx "foot --server"; exec foot --server'
+exec_always 'pkill -f "^foot --server=$cmenu_sock"; pidwait -f "^foot --server=$cmenu_sock"; exec windowtolayer -l overlay -i all -k exclusive -a top,left,right -s 0x550 foot --server=$cmenu_sock -o initial-color-theme=light'
 exec rbw-agent
 exec secret daemon
 exec 'secret wait && until pimsync daemon || [ $? -eq 74 ]; do sleep 60; done'
@@ -338,4 +340,4 @@ exec sway-focus
 exec wlsunset -l 52.8 -L -6.9 -t 3000
 
 # theme: accent background 80 bryellow
-exec_always 'pkill wlr-sunclock; exec wlr-sunclock -w 800 -a br -m "$default_gap,$default_gap,$default_gap,$default_gap" -s -n "#7D87FF" -o "#33333380" -u "#FFE031"'
+exec_always 'pkill wlr-sunclock; exec wlr-sunclock -w 600 -a br -m "$default_gap,$default_gap,$default_gap,$default_gap" -s -n "#7D87FF" -o "#33333380" -u "#FFE031"'

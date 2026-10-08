@@ -1,5 +1,5 @@
-# theme: font /^font=(.*) \d+$/
-font=Source Code Pro 10
+# theme: font /^font=(.*) \d+$/ font-size-system /(\d+)$/
+font=Source Code Pro 9
 
 [error]
 # theme: background

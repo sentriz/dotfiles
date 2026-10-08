@@ -1,7 +1,9 @@
 # seeded from tailwind css v4 http://tailwindcss.com/docs/colors
 # applied to every config carrying a "theme:" marker by $ theme
 
-font       Source Code Pro
+font             Source Code Pro
+font-size        10
+font-size-system 9
 
 background 333333  # midway between neutral-800 and neutral-700
 urgent     FF6880  # rose-400

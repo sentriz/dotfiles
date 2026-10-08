@@ -1,6 +1,6 @@
 image=$XDG_PICTURES_DIR/wallpapers/flow.jpg
-# theme: font /^font=(.*) \d+$/
-font=Source Code Pro 10
+# theme: font /^font=(.*) \d+$/ font-size-system /(\d+)$/
+font=Source Code Pro 9
 inside-color=00000000
 inside-caps-lock-color=00000000
 inside-clear-color=00000000
