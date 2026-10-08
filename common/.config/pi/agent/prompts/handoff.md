@@ -2,7 +2,7 @@
 description: Write a handoff brief for another pi session
 argument-hint: "<task>"
 ---
-Write a handoff brief so I can delegate work to another pi instance. The other pi has no context from this conversation, so the brief must be fully self-contained.
+Write a handoff brief so I can delegate work to another pi instance. The other pi has no context from this conversation, but it has the same tools and can read the codebase itself. The brief is for context only known in this session: findings, decisions, intent, and gotchas. Leave out anything the other pi can cheaply find out on its own, like file contents or how code works.
 
 Task to hand off: $@
 
@@ -19,7 +19,7 @@ handoff-id: hx-XXXX
 <one paragraph, what needs to be done and why>
 
 # Context
-<everything the other pi needs: relevant files with absolute paths, key findings from this conversation, decisions already made, gotchas>
+<what only this session knows: key findings, decisions already made, gotchas, and pointers to relevant files with absolute paths>
 
 # Constraints
 <what not to touch, style requirements, scope limits>
