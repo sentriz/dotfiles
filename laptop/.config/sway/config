@@ -295,20 +295,7 @@ exec secret daemon
 exec 'secret wait && until pimsync daemon || [ $? -eq 74 ]; do sleep 60; done'
 
 exec_always 'pkill kanshi; exec kanshi'
-exec_always 'pkill mako; exec mako \
-    --background-color "$colour_bg" \
-    --margin "$default_gap,0" \
-    --outer-margin "0,$default_gap" \
-    --font "$default_font" \
-    --border-size 2 \
-    --border-color "$colour_accent" \
-    --progress-color "over $colour_accent" \
-    --text-color "$colour_fg" \
-    --width 400 \
-    --height 350 \
-    --anchor top-right \
-    --sort +time \
-    --default-timeout 6000'
+exec_always 'pkill mako; exec mako'
 
 exec 'secret wait && exec last-dot-friends-notify'
 

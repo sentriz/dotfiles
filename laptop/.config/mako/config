@@ -1,0 +1,23 @@
+# theme-reload: makoctl reload
+# theme: font /^font=(.*) \d+$/ font-size-system /(\d+)$/
+font=Source Code Pro 9
+# theme: background
+background-color=#333333
+# theme: grey2
+text-color=#E5E5E5
+# theme: accent
+border-color=#7D87FF
+# theme: accent
+progress-color=over #7D87FF
+border-size=2
+margin=12,0
+outer-margin=0,12
+width=400
+height=350
+anchor=top-right
+sort=+time
+default-timeout=6000
+
+[urgency=critical]
+# theme: urgent
+border-color=#FF6880
