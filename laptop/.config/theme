@@ -5,6 +5,8 @@ font             Source Code Pro
 font-size        10
 font-size-system 9
 
+gap 12
+
 background 333333  # midway between neutral-800 and neutral-700
 urgent     FF6880  # rose-400
 accent     7D87FF  # indigo-400

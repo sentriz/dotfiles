@@ -20,6 +20,7 @@ set $cmenu      pidof -q cmenu || footclient -s $cmenu_sock --app-id cmenu cmenu
 
 floating_modifier $super
 
+# theme: gap /(\d+)$/
 set $default_gap 12
 # theme: font /^set \$default_font (.*) \d+$/ font-size-system /(\d+)$/
 set $default_font Source Code Pro 9
