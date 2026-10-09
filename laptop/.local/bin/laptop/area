@@ -3,16 +3,18 @@
 set -u
 
 border=2
+# theme: background 80 accent
+style=(-b '#33333380' -c '#7D87FF')
 
 case "${1-}" in
 list)
     printf "%s\n" region monitor window
     ;;
 region)
-    slurp -f $'geo\t%x,%y %wx%h\n'
+    slurp "${style[@]}" -f $'geo\t%x,%y %wx%h\n'
     ;;
 monitor)
-    slurp -o -f $'geo\t%x,%y %wx%h\n'
+    slurp "${style[@]}" -o -f $'geo\t%x,%y %wx%h\n'
     ;;
 window)
     swaymsg -t get_tree \
@@ -20,7 +22,7 @@ window)
             .. | select(.pid? and .visible?) | .rect as $r |
             "\($r.x + $b),\($r.y + $b) \($r.width - $b*2)x\($r.height - $b*2) \(.foreign_toplevel_identifier // "")"
         ' \
-        | slurp -f $'geo\t%x,%y %wx%h\ntoplevel\t%l\n' \
+        | slurp "${style[@]}" -f $'geo\t%x,%y %wx%h\ntoplevel\t%l\n' \
         | grep -v $'^toplevel\t$'
     ;;
 *)
