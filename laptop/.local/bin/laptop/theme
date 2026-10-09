@@ -5,6 +5,7 @@ package main
 
 import (
 	"bytes"
+	"flag"
 	"fmt"
 	"io/fs"
 	"maps"
@@ -37,12 +38,15 @@ func main() {
 		return
 	}
 
-	if len(os.Args) != 2 {
-		fmt.Fprintln(os.Stderr, "usage: theme <dest dir>")
+	whereFlag := flag.String("w", "", "print where a key is used in vim quickfix format, without writing")
+	flag.Parse()
+
+	if flag.NArg() != 1 {
+		fmt.Fprintln(os.Stderr, "usage: theme [-w <key>] <dest dir>")
 		exit = 1
 		return
 	}
-	destDir := os.Args[1]
+	destDir := flag.Arg(0)
 
 	paletteFile := filepath.Join(userConfig, "theme")
 	data, err := os.ReadFile(paletteFile)
@@ -74,8 +78,13 @@ func main() {
 		exit = 1
 		return
 	}
+	if _, ok := palette[*whereFlag]; *whereFlag != "" && !ok {
+		fmt.Fprintf(os.Stderr, "unknown theme key %q\n", *whereFlag)
+		exit = 1
+		return
+	}
 
-	seen := map[string]struct{}{}
+	var seen = map[string][]string{}
 	changes := map[string][]byte{}
 	reloads := map[string]struct{}{}
 
@@ -142,8 +151,15 @@ func main() {
 		return
 	}
 
+	if *whereFlag != "" {
+		for _, loc := range seen[*whereFlag] {
+			fmt.Println(loc)
+		}
+		return
+	}
+
 	for _, key := range keys {
-		if _, ok := seen[key]; !ok {
+		if len(seen[key]) == 0 {
 			fmt.Fprintf(os.Stderr, "no lines matched theme key %q\n", key)
 			exit = 1
 			return
@@ -169,7 +185,7 @@ func main() {
 	}
 }
 
-func apply(path string, lineNo int, line, spec string, palette map[string]string, seen map[string]struct{}) (string, error) {
+func apply(path string, lineNo int, line, spec string, palette map[string]string, seen map[string][]string) (string, error) {
 	var out string
 	rest := line
 	for _, spec := range specRe.FindAllStringSubmatch(spec, -1) {
@@ -210,9 +226,11 @@ func apply(path string, lineNo int, line, spec string, palette map[string]string
 			start, end = m[2], m[3]
 		}
 
+		col := len(line) - len(rest) + start + 1
+		seen[name] = append(seen[name], fmt.Sprintf("%s:%d:%d:%s", path, lineNo, col, strings.TrimSpace(line)))
+
 		out += rest[:start] + val
 		rest = rest[end:]
-		seen[name] = struct{}{}
 	}
 	return out + rest, nil
 }
