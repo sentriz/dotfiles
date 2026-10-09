@@ -6,6 +6,10 @@ todo() {
     flock "$XDG_RUNTIME_DIR/menu-todo.lock" todo "$@"
 }
 
+ids-with-subtasks() {
+    todo --porcelain list | jq -r --arg uid "$1" '.[] | select(.uid == $uid or .parent == $uid) | .id'
+}
+
 dry-run() {
     local scratch status
     scratch="$(mktemp -d)"
@@ -23,24 +27,31 @@ dry-run() {
 }
 
 if [[ "$CMENU_MODE" = "preview" ]]; then
-    IFS=: read -r action uid <<<"${1%%$'\t'*}"
-    [[ "$action" == "task" || "$action" == "done" ]] || exit 0
+    IFS=: read -r action rest <<<"${1%%$'\t'*}"
+    case "$action" in
+    task | "done")
+        task="$(todo --porcelain list | jq --arg uid "$rest" '(.[] | select(.uid == $uid)) + {subtasks: [.[] | select(.parent == $uid) | .summary]}')"
+        ;;
+    new)
+        mapfile -d '' args < <(xargs -r printf '%s\0' <<<"$rest" 2>/dev/null)
+        task="$(dry-run "${args[@]}")" || exit 0
+        ;;
+    *)
+        exit 0
+        ;;
+    esac
 
-    tasks="$(todo --porcelain list)"
-    jq -r --arg uid "$uid" '
-        (.[] | select(.uid == $uid)) as $task
-        | [.[] | select(.parent == $uid) | .summary] as $subtasks
-        | $task
-        | "summary\t\(.summary)",
+    jq -r '
+        "summary\t\(.summary)",
             "list\t\(.list)",
             (.due // empty | "due\t\(strflocaltime("%Y/%m/%d %H:%M"))"),
             (.start // empty | "start\t\(strflocaltime("%Y/%m/%d %H:%M"))"),
             (.location | select(. != "") | "location\t\(.)"),
             (.categories | select(length > 0) | "categories\t\(map("#\(.)") | join(" "))"),
-            ($subtasks | to_entries[] | "\(if .key == 0 then "subtasks" else "" end)\t\(.value)")
-    ' <<<"$tasks" | table
+            (.subtasks // [] | to_entries[] | "\(if .key == 0 then "subtasks" else "" end)\t\(.value)")
+    ' <<<"$task" | table
 
-    description="$(jq -r --arg uid "$uid" '.[] | select(.uid == $uid) | .description' <<<"$tasks")"
+    description="$(jq -r .description <<<"$task")"
     [[ -n "$description" ]] && printf '\n%s\n' "$description"
     exit 0
 fi
@@ -53,12 +64,16 @@ if [[ "$#" -gt 0 ]]; then
         todo new "${args[@]}" </dev/null
         ;;
     "done")
-        mapfile -t ids < <(todo --porcelain list | jq -r --arg uid "$rest" '.[] | select(.uid == $uid or .parent == $uid) | .id')
+        mapfile -t ids < <(ids-with-subtasks "$rest")
         todo "done" "${ids[@]}"
+        ;;
+    delete)
+        mapfile -t ids < <(ids-with-subtasks "$rest")
+        todo delete --yes "${ids[@]}"
         ;;
     set-list)
         IFS=: read -r uid list <<<"$rest"
-        mapfile -t ids < <(todo --porcelain list | jq -r --arg uid "$uid" '.[] | select(.uid == $uid or .parent == $uid) | .id')
+        mapfile -t ids < <(ids-with-subtasks "$uid")
         todo move -l "$list" "${ids[@]}"
         ;;
     new-sub)
@@ -118,12 +133,14 @@ row='
 
 case "$CMENU_INPUT" in
 "")
+    known="$(todo --porcelain list --status ANY | jq 'map({key: .uid, value: true}) | from_entries')"
     todo --porcelain list \
         | jq -r \
+            --argjson known "$known" \
             "${marks[@]}" "$defs$row"'
         . as $tasks
         | map(.uid as $uid | .subtasks = ([$tasks[] | select(.parent == $uid)] | length))
-        | map(select(.parent as $parent | $parent == null or all($tasks[]; .uid != $parent)))
+        | map(select(.parent == null or $known[.parent] == null))
         | by_due
         | group_by(.list)[]
         | "\($label)\t\(.[0].list)",
@@ -144,7 +161,8 @@ task:*)
             "\($label)\tactions",
             "\(go("[sub:\($uid) "))sub\tadd subtask",
             "\(go("[due:\($uid) "))due\tset due",
-            "\(go("[move:\($uid)]"))move\tmove"
+            "\(go("[move:\($uid)]"))move\tmove",
+            "\($back)delete:\($uid)\tdelete"
     '
     ;;
 move:*)
@@ -198,14 +216,7 @@ due:*)
     mapfile -d '' args < <(xargs -r printf '%s\0' <<<"$CMENU_INPUT" 2>/dev/null)
 
     if task="$(dry-run "${args[@]}")"; then
-        jq -r --arg action "${back}new:$CMENU_INPUT" "$defs"'
-            [
-                $action,
-                .list,
-                tagged(.summary),
-                (.due // empty | strflocaltime("%Y/%m/%d") | day | day_label)
-            ] | @tsv
-        ' <<<"$task"
+        jq -r --arg action "${back}new:$CMENU_INPUT" '[$action, .summary] | @tsv' <<<"$task"
     else
         printf '%s\t%s\n' "$label" "${task:-no summary}"
     fi
