@@ -16,6 +16,7 @@ if [[ "$#" -gt 0 ]]; then
     new)
         mapfile -d '' args < <(xargs -r printf '%s\0' <<<"$rest" 2>/dev/null)
         khal new "${args[@]}"
+        block-up calendar
         ;;
     copy) wl-copy -n <<<"$rest" ;;
     esac

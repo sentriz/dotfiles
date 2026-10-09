@@ -22,6 +22,10 @@ fi
 if [[ "$#" -gt 0 ]]; then
     IFS=$'\t' read -r _ _ name <<<"$1"
     iwctl --dont-ask station "$station" connect "$name"
+    {
+        /usr/lib/systemd/systemd-networkd-wait-online --interface="$station" --timeout=10
+        block-up network
+    } >/dev/null 2>&1 &
     exit
 fi
 

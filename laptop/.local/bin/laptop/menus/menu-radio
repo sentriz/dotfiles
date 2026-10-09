@@ -39,6 +39,7 @@ if [[ "$#" -gt 0 ]]; then
     if [[ -n "$current_pid" ]]; then
         kill "$current_pid" 2>/dev/null
         while kill -0 "$current_pid" 2>/dev/null; do sleep 0.1; done
+        block-up playing
     fi
 
     station="$1"
@@ -59,6 +60,7 @@ if [[ "$#" -gt 0 ]]; then
     pid="$!"
     printf '%s\t%s\n' "$pid" "$station" >"$pidfile"
     notify-send 'started radio station' "$station"
+    { sleep 1 && block-up playing; } >/dev/null &
 
     start="$EPOCHSECONDS"
     (
