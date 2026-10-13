@@ -2,10 +2,10 @@
 # applied to every config carrying a "theme:" marker by $ theme
 
 font             Source Code Pro
-font-size        10
-font-size-system 9
+font-size        13
+font-size-system 10
 
-gap 12
+gap 16
 
 background 333333  # midway between neutral-800 and neutral-700
 urgent     FF6880  # rose-400

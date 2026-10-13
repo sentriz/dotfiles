@@ -1,6 +1,6 @@
 # theme-reload: makoctl reload
 # theme: font /^font=(.*) \d+$/ font-size-system /(\d+)$/
-font=Source Code Pro 9
+font=Source Code Pro 10
 # theme: background
 background-color=#333333
 # theme: grey2
@@ -11,9 +11,9 @@ border-color=#7D87FF
 progress-color=over #7D87FF
 border-size=2
 # theme: gap /=(\d+)/
-margin=12,0
+margin=16,0
 # theme: gap /,(\d+)$/
-outer-margin=0,12
+outer-margin=0,16
 width=400
 height=350
 anchor=top-right
