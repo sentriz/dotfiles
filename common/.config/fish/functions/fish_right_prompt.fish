@@ -6,6 +6,9 @@ function fish_right_prompt
     test $count -eq 1; and echo -n "$count change "
     test $count -gt 1; and echo -n "$count changes "
 
+    set -l hooks (path filter -x (git rev-parse --git-path hooks)/* | string match -v '*.sample' | path basename | string replace -ra '(\w)\w*-?' '$1')
+    set -q hooks[1]; and echo -n (string join , $hooks)" "
+
     test "$branch" = master
     and set_color brred
     or set_color brgreen
