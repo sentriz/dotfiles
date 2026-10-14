@@ -42,8 +42,8 @@ set $colour_inactive     #737373
 set $colour_fg           #E5E5E5
 # theme: grey4
 set $colour_fg_dim       #A1A1A1
-# theme: grey7
-set $colour_bg_light     #404040
+# theme: grey8
+set $colour_bg_dark      #262626
 
 # basic appearance
 smart_borders on
@@ -70,10 +70,10 @@ titlebar_padding 2 3
 for_window [all] title_format "┃ %title"
 
 # window colours        border           background       text       indicator        child
-client.focused          $colour_accent   $colour_accent   $colour_bg       $colour_accent   $colour_accent
+client.focused          $colour_accent   $colour_accent   $colour_bg_dark  $colour_accent   $colour_accent
 client.focused_inactive $colour_fg_dim   $colour_fg_dim   $colour_bg       $colour_fg_dim   $colour_fg_dim
 client.unfocused        $colour_inactive $colour_inactive $colour_fg       $colour_inactive $colour_inactive
-client.urgent           $colour_urgent   $colour_urgent   $colour_bg_light $colour_urgent   $colour_urgent
+client.urgent           $colour_urgent   $colour_urgent   $colour_bg_dark  $colour_urgent   $colour_urgent
 
 # input
 input * {
@@ -111,10 +111,10 @@ bar {
     colors background $colour_bg_alpha
     colors statusline $colour_fg
     #                         border           background       text
-    colors focused_workspace  $colour_accent   $colour_accent   $colour_bg_light
+    colors focused_workspace  $colour_accent   $colour_accent   $colour_bg_dark
     colors active_workspace   $colour_bg       $colour_bg       $colour_fg
     colors inactive_workspace $colour_bg_alpha $colour_bg_alpha $colour_fg
-    colors urgent_workspace   $colour_urgent   $colour_urgent   $colour_bg_light
+    colors urgent_workspace   $colour_urgent   $colour_urgent   $colour_bg_dark
 }
 
 # bindings: window/float

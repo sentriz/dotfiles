@@ -18,6 +18,7 @@ grey4      A1A1A1  # neutral-400
 grey5      737373  # neutral-500
 grey6      525252  # neutral-600
 grey7      404040  # neutral-700
+grey8      262626  # neutral-800
 
 red        FF6568  # red-400
 green      05DF72  # green-400
