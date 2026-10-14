@@ -7,7 +7,7 @@ inside-clear-color=00000000
 # theme: background 60
 inside-ver-color=33333360
 # theme: urgent 60
-inside-wrong-color=FF688060
+inside-wrong-color=FF637E60
 # theme: background 60
 ring-color=33333360
 ring-caps-lock-color=00000000
@@ -26,7 +26,7 @@ text-ver-color=E5E5E5
 text-wrong-color=E5E5E5
 separator-color=00000000
 # theme: accent 60
-key-hl-color=7D87FF60
+key-hl-color=7C86FF60
 # theme: grey2
 layout-text-color=E5E5E5
 line-uses-inside

@@ -6,9 +6,9 @@ background-color=#333333
 # theme: grey2
 text-color=#E5E5E5
 # theme: accent
-border-color=#7D87FF
+border-color=#7C86FF
 # theme: accent
-progress-color=over #7D87FF
+progress-color=over #7C86FF
 border-size=2
 # theme: gap /=(\d+)/
 margin=16,0
@@ -22,4 +22,4 @@ default-timeout=6000
 
 [urgency=critical]
 # theme: urgent
-border-color=#FF6880
+border-color=#FF637E

@@ -9,7 +9,7 @@ signal=3
 
 [sharing]
 # theme: brmagenta
-color=#F2A9FF
+color=#F4A8FF
 
 [audio]
 # theme: brgreen
@@ -23,12 +23,12 @@ signal=2
 
 [network]
 # theme: bryellow
-color=#FFE031
+color=#FFDF20
 signal=5
 
 [battery]
 # theme: brred
-color=#FFA3A4
+color=#FFA2A2
 interval=60
 
 [time]

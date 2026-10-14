@@ -13,9 +13,9 @@ button-text=E5E5E5
 # theme: grey7
 details-background=404040
 # theme: urgent
-border=FF6880
+border=FF637E
 # theme: urgent
-border-bottom=FF6880
+border-bottom=FF637E
 
 [warning]
 # theme: background
@@ -29,6 +29,6 @@ button-text=E5E5E5
 # theme: grey7
 details-background=404040
 # theme: bryellow
-border=FFE031
+border=FFDF20
 # theme: bryellow
-border-bottom=FFE031
+border-bottom=FFDF20

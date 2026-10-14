@@ -4,7 +4,7 @@ set -u
 
 border=2
 # theme: background 80 accent
-style=(-b '#33333380' -c '#7D87FF')
+style=(-b '#33333380' -c '#7C86FF')
 
 case "${1-}" in
 list)

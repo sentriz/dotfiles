@@ -31,11 +31,11 @@ set $colour_bg           #333333
 # theme: background D9
 set $colour_bg_alpha     #333333D9
 # theme: accent
-set $colour_accent       #7D87FF
+set $colour_accent       #7C86FF
 # theme: urgent
-set $colour_urgent       #FF6880
+set $colour_urgent       #FF637E
 # theme: urgent 60
-set $colour_urgent_alpha #FF688060
+set $colour_urgent_alpha #FF637E60
 # theme: grey5
 set $colour_inactive     #737373
 # theme: grey2
@@ -308,4 +308,4 @@ exec sway-focus
 exec wlsunset -l 52.8 -L -6.9 -t 3000
 
 # theme: accent background 80 bryellow
-exec_always 'pkill wlr-sunclock; exec wlr-sunclock -w 800 -a br -m "$default_gap,$default_gap,$default_gap,$default_gap" -s -n "#7D87FF" -o "#33333380" -u "#FFE031"'
+exec_always 'pkill wlr-sunclock; exec wlr-sunclock -w 800 -a br -m "$default_gap,$default_gap,$default_gap,$default_gap" -s -n "#7C86FF" -o "#33333380" -u "#FFDF20"'
