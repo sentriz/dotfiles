@@ -40,6 +40,8 @@ set $colour_urgent_alpha #FF688060
 set $colour_inactive     #737373
 # theme: grey2
 set $colour_fg           #E5E5E5
+# theme: grey4
+set $colour_fg_dim       #A1A1A1
 # theme: grey7
 set $colour_bg_light     #404040
 
@@ -68,8 +70,8 @@ titlebar_padding 2 3
 for_window [all] title_format "┃ %title"
 
 # window colours        border           background       text       indicator        child
-client.focused          $colour_fg       $colour_fg       $colour_bg       $colour_fg       $colour_fg
-client.focused_inactive $colour_accent   $colour_accent   $colour_bg       $colour_accent   $colour_accent
+client.focused          $colour_accent   $colour_accent   $colour_bg       $colour_accent   $colour_accent
+client.focused_inactive $colour_fg_dim   $colour_fg_dim   $colour_bg       $colour_fg_dim   $colour_fg_dim
 client.unfocused        $colour_inactive $colour_inactive $colour_fg       $colour_inactive $colour_inactive
 client.urgent           $colour_urgent   $colour_urgent   $colour_bg_light $colour_urgent   $colour_urgent
 
