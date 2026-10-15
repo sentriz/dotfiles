@@ -127,7 +127,7 @@ row='
         [
             "\(if .due and (.due | strflocaltime("%Y/%m/%d") | day) <= today then $highlight else "" end)\(if action == "task" then go("[task:\(.uid)]") else "" end)\(action):\(.uid)",
             tagged(.summary) + (if .subtasks > 0 then " (+\(.subtasks))" else "" end),
-            (.due // empty | strflocaltime("%Y/%m/%d") | day | day_label)
+            (if .due then .due | strflocaltime("%Y/%m/%d") | day | day_label else "" end)
         ] | @tsv;
 '
 
