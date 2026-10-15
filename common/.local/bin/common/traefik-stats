@@ -1,0 +1,81 @@
+#!/usr/bin/env bash
+
+set -u
+
+main() {
+    if (($# != 1)) || ! declare -F "report-$1" >/dev/null; then
+        echo "usage: <access.log traefik-stats routers|countries|clients|errors" >&2
+        exit 1
+    fi
+
+    jq -r '
+        [.RouterName // "-", .DownstreamStatus, .Duration / 1e6, .DownstreamContentSize,
+         .ClientHost, .RequestMethod, .RequestPath] | @tsv' \
+        | "report-$1"
+}
+
+report-routers() {
+    cut -f1-4 \
+        | sort -t$'\t' -k1,1 -k3,3n \
+        | awk -F'\t' -v OFS='\t' '
+            $1 != router { flush(); router = $1 }
+            { dur[++n] = $3; c4xx += $2 ~ /^4/; c5xx += $2 ~ /^5/; bytes += $4 }
+            END { flush() }
+            function flush() {
+                if (n) printf "%s\t%d\t%d\t%d\t%.0f\t%.0f\t%.0f\t%.1f\n", router, n, c4xx, c5xx, p(.5), p(.95), p(.99), bytes / 1e6
+                n = c4xx = c5xx = bytes = 0
+                delete dur
+            }
+            function p(q) { return dur[int((n - 1) * q) + 1] }' \
+        | sort -t$'\t' -k2,2nr \
+        | with-header router hits 4xx 5xx p50ms p95ms p99ms mb
+}
+
+report-countries() {
+    local ignored_clients=(
+        '^10\.'                                          # private
+        '^127\.'                                         # loopback
+        '^192\.168\.'                                    # home lan
+        '^100\.(6[4-9]|[7-9][0-9]|1[01][0-9]|12[0-7])\.' # tailnet, 100.64.0.0/10
+        '^66\.249\.66\.'                                 # googlebot
+        '^103\.168\.172\.'                               # fastmail
+    )
+
+    ignored="$(IFS='|' && echo "${ignored_clients[*]}")" \
+        awk -F'\t' -v OFS='\t' '$2 < 400 && $5 !~ ENVIRON["ignored"] { print $1, $5 }' \
+        | count \
+        | beside "col 3 | geo-ip | col 2" \
+        | awk -F'\t' -v OFS='\t' '{ c[$2 OFS ($4 == "" ? "?" : $4)] += $1 } END { for (k in c) print k, c[k] }' \
+        | sort -t$'\t' -k1,1 -k3,3nr \
+        | awk -F'\t' -v OFS='\t' '
+            !($1 in seen) { seen[$1]; order[++n] = $1 }
+            { a[$1] = a[$1] (a[$1] == "" ? "" : " ") $2 ":" $3 }
+            END { for (i = 1; i <= n; i++) print order[i], a[order[i]] }' \
+        | with-header router countries
+}
+
+report-clients() {
+    awk -F'\t' -v OFS='\t' '{ print $5, $1 }' \
+        | count \
+        | head -n 50 \
+        | beside "col 2 | geo-ip | col 2" \
+        | with-header hits ip router country
+}
+
+report-errors() {
+    awk -F'\t' -v OFS='\t' '$2 >= 400 { print $2, $1, $6, $7 }' \
+        | count \
+        | head -n 50 \
+        | with-header hits status router method path
+}
+
+count() {
+    awk -F'\t' -v OFS='\t' '{ c[$0]++ } END { for (k in c) print c[k], k }' | sort -t$'\t' -k1,1nr
+}
+
+with-header() {
+    (IFS=$'\t' && echo "$*")
+    cat
+}
+
+main "$@"
