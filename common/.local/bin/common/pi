@@ -67,6 +67,8 @@ keep "$XDG_CACHE_HOME/pi" "$XDG_RUNTIME_DIR/pi"
 env_args+=(--setenv PI_CODING_AGENT_DIR "$XDG_CONFIG_HOME/pi/agent" --setenv PI_OFFLINE 1)
 keep "$XDG_CACHE_HOME/jiti"
 redirect "$XDG_CACHE_HOME/jiti" /tmp/jiti
+keep "$XDG_CACHE_HOME/node-compile-cache"
+env_args+=(--setenv NODE_COMPILE_CACHE "$XDG_CACHE_HOME/node-compile-cache")
 
 # shell
 IFS=: read -ra path_entries <<<"$PATH"
