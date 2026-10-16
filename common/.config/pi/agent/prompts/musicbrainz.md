@@ -81,6 +81,9 @@ prep work:
   resolve.
 - External links: fill the "Add link" box, wait, and MB detects the type and appends a fresh
   "Add another link" box with a new uid. Add links one at a time, re-snapshotting between.
+  `fill` on the new box is sometimes lost - `click` it, `type_text`, then `press_key` `Tab`.
+  Unrecognised sites (personal homepages) get a blank Type select, `select[id^=url-link-type]`;
+  set it by script - the option text is plural (`official homepages`).
 - Screenshots beat snapshots for verifying MB forms - tooltips, yellow style warnings and
   green/red field validation only show up visually.
 - Chrome MCP calls need `pageId` on every tool; `type_text` takes no `uid` (types into the focused
@@ -98,7 +101,10 @@ prep work:
 - Sort name: invert firstname-surname shaped names ("Ogma, Lucas"), leave mononyms/wordmarks as-is.
 - Area = country the artist is identified with; smaller area only if strongly associated.
 - **Begin date on a Person is date of birth**, not "started producing". Leave it blank unless a
-  birth date is sourced.
+  birth date is sourced. Birthplace goes in *Born in* (the begin area); look up city MBIDs with
+  `curl -s "https://musicbrainz.org/ws/2/area?query=area:NAME%20AND%20type:City&fmt=json"` and
+  check the parent with `/ws/2/area/MBID?inc=area-rels` - many cities share a name.
+  United States is `489ce91b-6658-3307-9877-795b68554c98`.
 - Disambiguation: short and factual, e.g. "Irish techno producer".
 - Stage name vs legal name: two Person entities linked by the `performs as / performance name of`
   relationship, added from the legal-name side. Put the social/streaming links on the stage-name
