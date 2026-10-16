@@ -53,6 +53,9 @@ prep work:
 - MB does *not* search for existing recordings when adding a release - every track defaults to
   "(add a new recording)". That default is only correct if you checked:
   `curl -s "https://musicbrainz.org/ws/2/recording?artist=MBID&limit=100&fmt=json" -H 'User-Agent: cli/1.0' | jq -r '.recordings[]?|.title'`
+  For titles, lengths, and appearances in one go, use search instead (browse has no `inc=releases`;
+  page with `offset`, `.count` gives the total):
+  `curl -s "https://musicbrainz.org/ws/2/recording?query=arid:MBID&limit=100&fmt=json" -H 'User-Agent: cli/1.0' | jq -r '.recordings[]|"\(.title) | \(.length) | \(.id) | \([.releases[]?.title]|join(", "))"'`
 - Verify after submitting with the API rather than reading the page:
   `curl -s "https://musicbrainz.org/ws/2/label/MBID?inc=artist-rels+url-rels&fmt=json" -H 'User-Agent: cli/1.0' | jq`
 
@@ -80,6 +83,12 @@ prep work:
   "Add another link" box with a new uid. Add links one at a time, re-snapshotting between.
 - Screenshots beat snapshots for verifying MB forms - tooltips, yellow style warnings and
   green/red field validation only show up visually.
+- Chrome MCP calls need `pageId` on every tool; `type_text` takes no `uid` (types into the focused
+  element); `wait_for` takes `text` as an array. Screenshots come back as `content[].type=="image"`
+  blocks - pass the block to `image()`. Codemode has no `setTimeout`; use `wait_for` to pause. Full-page
+  screenshots can hang Chrome past the 60s MCP timeout - read state with `evaluate_script` instead.
+- A focused button's snapshot line has a suffix (`button "Next" focusable focused`), so don't match
+  with `"Next"$`.
 - The submit button is `Enter edit` (artist/label) or `Finish` (release editor). Clicking it applies
   the edit immediately - don't click it if the user wants to review.
 
@@ -136,7 +145,15 @@ release editor in a new tab - then fix, tab by tab:
   `Rite of Passage`. The editor's own yellow warnings flag most of this.
 
 **Recordings** - all rows say "(add a new recording)" by default; confirm against the API (above)
-before accepting it, especially for artists that already exist in MB.
+before accepting it, especially for artists that already exist in MB. To link one: click the first
+row's `Edit`, then in the dialog paste the recording MBID into the search box (`click`, `Control+a`,
+`type_text`) - it resolves and selects it. The dialog's `Next` walks through the tracks, so one
+dialog session covers the whole release; `Done` at the end. Lengths within a few seconds are the same
+recording (different encode/fade).
+
+**Release-information selects** (`primary-type`, `secondary-types` multi-select, `language`) and the
+`no-barcode` checkbox are all settable in one `evaluate_script` by id. A Bandcamp compilation of
+an artist's previously released tracks is Album + Compilation.
 
 **Edit note** - Harmony writes a good one; append a short line describing the manual corrections.
 
