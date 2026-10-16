@@ -3,7 +3,7 @@
 set -eu
 
 url="https://speed.cloudflare.com"
-secs=5
+secs=10
 
 down() {
     measure down curl -sfo /dev/null -m "$secs" -w '%{speed_download}' "$url/__down?bytes=99999999"
