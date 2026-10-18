@@ -1,0 +1,4 @@
+{
+  "app.session.delete": [],
+  "tui.select.cancel": ["escape", "ctrl+c", "ctrl+d"]
+}
