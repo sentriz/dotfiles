@@ -121,7 +121,7 @@ defs='
 
 # shellcheck disable=SC2016
 row='
-    def by_due: sort_by(.due != null, .due, .summary);
+    def by_due: sort_by(.due == null, .due, .summary);
     def go(target): target as $target | $nav | sub("%s"; $target);
     def row(action):
         [
