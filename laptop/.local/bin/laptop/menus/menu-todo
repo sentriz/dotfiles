@@ -123,12 +123,13 @@ defs='
 row='
     def by_due: sort_by(.due == null, .due, .summary);
     def go(target): target as $target | $nav | sub("%s"; $target);
-    def row(action):
+    def cells:
         [
-            "\(if .due and (.due | strflocaltime("%Y/%m/%d") | day) <= today then $highlight else "" end)\(if action == "task" then go("[task:\(.uid)]") else "" end)\(action):\(.uid)",
             tagged(.summary) + (if .subtasks > 0 then " (+\(.subtasks))" else "" end),
             (if .due then .due | strflocaltime("%Y/%m/%d") | day | day_label else "" end)
-        ] | @tsv;
+        ];
+    def row:
+        ["\(if .due and (.due | strflocaltime("%Y/%m/%d") | day) <= today then $highlight else "" end)\(go("[task:\(.uid)]"))task:\(.uid)"] + cells | @tsv;
 '
 
 case "$CMENU_INPUT" in
@@ -144,7 +145,7 @@ case "$CMENU_INPUT" in
         | by_due
         | group_by(.list)[]
         | "\($label)\t\(.[0].list)",
-            (.[] | row("task"))
+            (.[] | row)
     '
     ;;
 task:*)
@@ -154,15 +155,14 @@ task:*)
             "${marks[@]}" "$defs$row"'
         (.[] | select(.uid == $uid)) as $task
         | [.[] | select(.parent == $uid)] as $subtasks
-        | "\($label)\t\($task.list)",
-            "\($back)\($task | row("done"))",
-            ($subtasks | select(length > 0) | "\($label)\tsubtasks"),
-            ($subtasks | by_due[] | row("done")),
-            "\($label)\tactions",
+        | [$label] + ($task | cells) | @tsv,
+            "\($back)done:\($uid)\tdone",
             "\(go("[sub:\($uid) "))sub\tadd subtask",
             "\(go("[due:\($uid) "))due\tset due",
             "\(go("[move:\($uid)]"))move\tmove",
-            "\($back)delete:\($uid)\tdelete"
+            "\($back)delete:\($uid)\tdelete",
+            ($subtasks | select(length > 0) | "\($label)\tsubtasks"),
+            ($subtasks | by_due[] | row)
     '
     ;;
 move:*)
