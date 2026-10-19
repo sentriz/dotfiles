@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+# For systems with strict DNS-over-TLS that ignore DHCP DNS. Captive portals block DoT and need their own DNS to resolve
+# the login page, so this allows the network's plain DNS on wifi until enter or Ctrl-C.
+
+set -eu
+
+[[ "$EUID" -eq 0 ]] || exec sudo "$0"
+
+dropin=/run/systemd/network/wireless.network.d/captive-portal.conf
+
+function revert() {
+    rm -f "$dropin"
+    networkctl reload
+}
+
+mkdir -p "$(dirname "$dropin")"
+cat >"$dropin" <<EOF
+[Network]
+DNSOverTLS=no
+
+[DHCP]
+UseDNS=yes
+
+[IPv6AcceptRA]
+UseDNS=yes
+EOF
+trap revert EXIT
+networkctl reload
+
+echo http://neverssl.com
+read -r
