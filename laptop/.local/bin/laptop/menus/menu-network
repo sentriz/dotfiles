@@ -9,16 +9,17 @@ cmenu set \
 label="$(cmenu label)"
 
 status="$(networkctl --json=short status)"
-resolved="$(resolvectl --json=short status | jq '.[0]')"
+resolved="$(resolvectl --json=short status)"
 
 printf '%sstate\t%s\n' "$label" \
     "$(networkctl status | strip-escape | sed -nE 's/^ *(State|Online state): +(.+)/\2/p' | paste -sd' ')"
 
 jq -r --arg label "$label" '
-    ["\($label)dns", ([(.currentServer | if . then [.name, .addressString] | map(select(. != null)) | join(" ") else "none" end),
+    (.[] | select(.servers | length > 0)
+     | ["\($label)dns\(if .ifname then " \(.ifname)" else "" end)", ([(.currentServer | if . then [.name, .addressString] | map(select(. != null)) | join(" ") else "none" end),
                         (if .dnsOverTLS == "yes" then "dns over tls" else empty end),
-                        (if .dnssec != "no" then "dnssec" else empty end)] | join(" "))],
-    ["\($label)resolv.conf", .resolvConfMode]
+                        (if .dnssec != "no" then "dnssec" else empty end)] | join(" "))]),
+    ["\($label)resolv.conf", .[0].resolvConfMode]
     | @tsv' <<<"$resolved"
 
 jq -r --arg label "$label" '
