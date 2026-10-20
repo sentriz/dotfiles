@@ -19,6 +19,8 @@ height=350
 anchor=top-right
 sort=+time
 default-timeout=6000
+# maybe move to [urgency=critical] if this gets annoying over fullscreen
+layer=overlay
 
 [urgency=critical]
 # theme: urgent
