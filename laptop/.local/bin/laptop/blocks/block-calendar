@@ -1,69 +1,38 @@
 #!/usr/bin/env fish
 
-set -q XDG_CONFIG_HOME
-or begin
-    echo "XDG_CONFIG_HOME not set" >&2
-    exit 1
-end
-
 set now_secs (date "+%s")
-# TODO: khal exposes each event's own reminders via {alarms-list} (eg "reminder@-10m"),
-# so we could use those instead of a fixed buffer to decide when to start showing the "(in ...)"
-set buffer_hours 6
+set buffer_secs (math "6 * 3600")
 
-set ignored (cat "$XDG_CONFIG_HOME/calendar-ignore")
-
-# rank by start clamped to now, so events already running all tie and the earliest-ending one wins
-function is_sooner -a key end best_key best_end
-    test -z "$best_key"; and return 0
-    test "$key" -lt "$best_key"; and return 0
-    test "$key" -eq "$best_key"; and test "$end" -lt "$best_end"
-end
-
-khal list today tomorrow -df "" -f "{start-date}{tab}{start-time}{tab}{end-date}{tab}{end-time}{tab}{status}{tab}{title}" | while read -d \t start_date start_time end_date end_time event_status title
-    test (string trim -- "$event_status") = CANCELLED; and continue
-    contains "$title" "$ignored"; and continue
-
-    set is_all_day (test -z "$start_time"; and echo 1)
-    test -z "$start_time"; and set start_time 00:00
-    test -z "$end_time"; and set end_time "00:00 next day"
+khal list today tomorrow -df "" --json start-date --json start-time --json end-date --json end-time --json cancelled --json title --json alarms-list \
+    | jq -r '.[] | select(.cancelled == "") | [."start-date", ."start-time", ."end-date", ."end-time", .title, (."alarms-list" | map(.delta) | join(" "))] | @tsv' \
+    | while read -d \t start_date start_time end_date end_time title alarms
+    set is_all_day 0
+    if test -z "$start_time"
+        set is_all_day 1
+        set start_time 00:00
+        set end_time "00:00 next day"
+    end
 
     set start_secs (date -d "$start_date $start_time" "+%s")
     set end_secs (date -d "$end_date $end_time" "+%s")
     test "$now_secs" -gt "$end_secs"; and continue
 
     set diff (math "$start_secs - $now_secs")
-    test "$diff" -gt (math "3600 * $buffer_hours"); and continue
-
-    set key_secs (math "max($start_secs, $now_secs)")
-
-    if test -n "$is_all_day"
-        if is_sooner $key_secs $end_secs $all_day_key $all_day_end
-            set all_day_key $key_secs
-            set all_day_start $start_secs
-            set all_day_end $end_secs
-            set all_day_title $title
+    for alarm in (string split -n " " -- $alarms)
+        set until_alarm (math "$start_secs + $alarm - $now_secs")
+        if test "$until_alarm" -le 0; and test "$until_alarm" -gt -30
+            set rel now
+            test "$diff" -gt 0; and set rel "in "(relative-duration $diff 2)
+            notify-send -- "$title" "$rel"
         end
-        continue
     end
 
-    if test "$diff" -gt 30; and test "$diff" -le 60
-        notify-send -- "$diff sec until $title"
-    end
+    test "$diff" -gt "$buffer_secs"; and continue
 
-    if is_sooner $key_secs $end_secs $next_key $next_end
-        set next_key $key_secs
-        set next_start $start_secs
-        set next_end $end_secs
-        set next_title $title
-    end
-end
+    # rank by start clamped to now, so events already running all tie and the earliest-ending one wins
+    printf '%s\t%s\t%s\t%s\t%s\n' $is_all_day (math "max($start_secs, $now_secs)") $end_secs $start_secs "$title"
+end | sort -t \t -k1,1n -k2,2n -k3,3n | head -1 | read -d \t is_all_day key_secs end_secs next_start next_title
 
-if test -z "$next_start"
-    set next_end $all_day_end
-    set next_start $all_day_start
-    set next_title $all_day_title
-end
 test -z "$next_start"; and exit 0
 
 set rel now
