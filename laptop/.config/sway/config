@@ -225,6 +225,7 @@ for_window [app_id="^pinentry-qt$"]                                   floating e
 for_window [app_id="^valent$"]                                        floating enable
 for_window [app_id="^librewolf$" title="^Extension: .*"]              floating enable
 for_window [class="^Pinentry-gtk$"]                                   floating enable
+for_window [app_id="^google-chrome$" title="^about:blank - Google Chrome$"] floating enable
 
 # floating to prevent glitch
 for_window [title="^wl-clipboard$"] floating enable, border none
