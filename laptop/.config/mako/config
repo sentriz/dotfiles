@@ -22,6 +22,9 @@ default-timeout=6000
 # maybe move to [urgency=critical] if this gets annoying over fullscreen
 layer=overlay
 
+[category=transient]
+history=0
+
 [urgency=critical]
 # theme: urgent
 border-color=#FF637E

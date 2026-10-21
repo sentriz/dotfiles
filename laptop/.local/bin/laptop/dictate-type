@@ -12,11 +12,11 @@ set -u
 state="$XDG_RUNTIME_DIR/dictate.state"
 
 notify() {
-    notify-send -a dictate -t 0 -p -r "$id" "$@"
+    notify-send -a dictate -c transient -t 0 -p -r "$id" "$@"
 }
 
 close() {
-    notify-send -a dictate -t 1 -r "$id" dictate
+    notify-send -a dictate -c transient -t 1 -r "$id" dictate
 }
 
 pid=""
