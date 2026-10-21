@@ -240,9 +240,10 @@ for_window [app_id="^librewolf$" title="Picture-in-Picture"] fullscreen enable, 
 for_window [app_id="^librewolf$" title="LibreWolf — Sharing Indicator"] kill
 
 # bindings: xf86
-bindsym XF86AudioLowerVolume  exec wpctl set-volume @DEFAULT_SINK@   2%-    && block-up audio
-bindsym XF86AudioRaiseVolume  exec wpctl set-volume @DEFAULT_SINK@   2%+    && block-up audio
-bindsym XF86AudioMute         exec wpctl set-mute   @DEFAULT_SINK@   toggle && block-up audio
+set $volume wpctl get-volume @DEFAULT_SINK@ | awk '{print $2 * 100, $3 ? "muted" : ""}'
+bindsym XF86AudioLowerVolume  exec wpctl set-volume @DEFAULT_SINK@   2%-    && osd volume $($volume) && block-up audio
+bindsym XF86AudioRaiseVolume  exec wpctl set-volume @DEFAULT_SINK@   2%+    && osd volume $($volume) && block-up audio
+bindsym XF86AudioMute         exec wpctl set-mute   @DEFAULT_SINK@   toggle && osd volume $($volume) && block-up audio
 bindsym XF86AudioMicMute      exec wpctl set-mute   @DEFAULT_SOURCE@ toggle && block-up audio
 
 # push to talk with print screen or right ctrl
@@ -253,8 +254,8 @@ bindsym --no-repeat           control_r       exec wpctl set-mute @DEFAULT_SOURC
 bindsym --no-repeat --release control_r       exec wpctl set-mute @DEFAULT_SOURCE@ 1 && block-up audio
 bindsym                       shift+control_r exec wpctl set-mute @DEFAULT_SOURCE@ 0 && block-up audio
 
-bindsym XF86MonBrightnessDown exec xbacklight -dec 5
-bindsym XF86MonBrightnessUp   exec xbacklight -inc 5
+bindsym XF86MonBrightnessDown exec xbacklight -dec 5 && osd brightness $(xbacklight -get)
+bindsym XF86MonBrightnessUp   exec xbacklight -inc 5 && osd brightness $(xbacklight -get)
 
 bindsym XF86AudioPlay         exec mpris-ctrl play-pause && block-up playing
 bindsym XF86AudioStop         exec mpris-ctrl stop       && block-up playing
