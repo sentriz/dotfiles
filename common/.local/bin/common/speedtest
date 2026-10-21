@@ -1,22 +1,23 @@
 #!/usr/bin/env bash
 
-set -eu
+set -euo pipefail
 
 url="https://speed.cloudflare.com"
 secs=10
 
 down() {
-    measure down curl -sfo /dev/null -m "$secs" -w '%{speed_download}' "$url/__down?bytes=99999999"
+    measure down curl -fo /dev/null -m "$secs" -w '\n%{speed_download}\n' "$url/__down?bytes=99999999"
 }
 
 up() {
-    measure up curl -sfo /dev/null -m "$secs" -w '%{speed_upload}' -X POST -T - "$url/__up" </dev/zero
+    measure up curl -fo /dev/null -m "$secs" -w '\n%{speed_upload}\n' -X POST -T - "$url/__up" </dev/zero
 }
 
 measure() {
-    local b
-    b="$("${@:2}" || test $? -eq 28)"
-    awk -v m="$1" -v b="$b" 'BEGIN { printf "%s\t%.1f Mbit/s\n", m, b * 8 / 1e6 }'
+    { "${@:2}" 2>&1 || test $? -eq 28; } | awk -v RS='[\r\n]' -v m="$1" '
+        NF == 1 { printf "\r\033[K" > "/dev/stderr"; printf "%s\t%.1f Mbit/s\n", m, $1 * 8 / 1e6 }
+        NF > 1 && $1 ~ /^[0-9]+$/ { printf "\r%s\t%.1f Mbit/s\033[K", m, bytes($NF) * 8 / 1e6 > "/dev/stderr" }
+        function bytes(s) { return s * 1024 ^ index("kMGTP", substr(s, length(s))) }'
 }
 
 ping() {
