@@ -2,21 +2,22 @@
 
 set -u
 
-if [[ "$#" -gt 0 ]]; then
-    IFS=$'\t' read -r id _ text mime <<<"$1"
+if [[ "$CMENU_MODE" = "preview" ]]; then
+    IFS=$'\t' read -r _ id _ text mime <<<"$1"
+    case "$mime" in
+    image/*) cliphist decode "$id" | cmenu image - ;;
+    text/* | application/json | application/xml) cliphist decode "$id" ;;
+    *) printf '%s\n' "$text" ;;
+    esac
+    exit 0
+fi
 
-    if [[ "$CMENU_MODE" != "preview" && "$CMENU_INPUT" = "del" ]]; then
+if [[ "$#" -gt 0 ]]; then
+    IFS=$'\t' read -r action id _ _ mime <<<"$1"
+
+    if [[ "$action" == delete ]]; then
         printf '%s\n' "$id" | cliphist delete
         exit
-    fi
-
-    if [[ "$CMENU_MODE" = "preview" ]]; then
-        case "$mime" in
-        image/*) cliphist decode "$id" | cmenu image - ;;
-        text/* | application/json | application/xml) cliphist decode "$id" ;;
-        *) printf '%s\n' "$text" ;;
-        esac
-        exit 0
     fi
 
     copy_args=()
@@ -37,13 +38,13 @@ cmp -s <(cliphist decode "$newest_id") <(wl-paste "${paste_args[@]}" 2>/dev/null
 cmenu set \
     colour 3 \
     preview true \
-    hide 1,4
+    hide 1,2,5
 
-pre=""
-[[ "$CMENU_INPUT" = "del" ]] && pre="$(cmenu stay)"
+pre="" action=copy
+[[ "$CMENU_INPUT" = "del" ]] && pre="$(cmenu stay)" action=delete
 
 cliphist list -fields id,timestamp,preview,mime \
     | tr -d '\000' \
     | beside "col 2 | numb '$EPOCHSECONDS - {}' | relative-duration" \
-    | awk -F'\t' -v hl="$(cmenu highlight)" -v cur="$current_id" -v pre="$pre" \
-        '{ printf "%s%s%s\t%s\t%s\t%s\n", pre, ($1 == cur ? hl : ""), $1, ($5 == "0s" ? "now" : $5 " ago"), $3, $4 }'
+    | awk -F'\t' -v hl="$(cmenu highlight)" -v cur="$current_id" -v pre="$pre" -v action="$action" \
+        '{ printf "%s%s%s\t%s\t%s\t%s\t%s\n", pre, ($1 == cur ? hl : ""), action, $1, ($5 == "0s" ? "now" : $5 " ago"), $3, $4 }'
