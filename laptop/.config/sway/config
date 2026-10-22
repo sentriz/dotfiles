@@ -254,8 +254,9 @@ bindsym --no-repeat           control_r       exec wpctl set-mute @DEFAULT_SOURC
 bindsym --no-repeat --release control_r       exec wpctl set-mute @DEFAULT_SOURCE@ 1 && block-up audio
 bindsym                       shift+control_r exec wpctl set-mute @DEFAULT_SOURCE@ 0 && block-up audio
 
-bindsym XF86MonBrightnessDown exec xbacklight -dec 5 && osd brightness $(xbacklight -get)
-bindsym XF86MonBrightnessUp   exec xbacklight -inc 5 && osd brightness $(xbacklight -get)
+set $backlight xbacklight -perceived
+bindsym XF86MonBrightnessDown exec $backlight -fps 60 -dec 2 && osd brightness $($backlight -get)
+bindsym XF86MonBrightnessUp   exec $backlight -fps 60 -inc 2 && osd brightness $($backlight -get)
 
 bindsym XF86AudioPlay         exec mpris-ctrl play-pause && block-up playing
 bindsym XF86AudioStop         exec mpris-ctrl stop       && block-up playing
