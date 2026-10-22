@@ -11,10 +11,6 @@ lid_kept_awake() {
 if [[ "$#" -gt 0 ]]; then
     IFS=$'\t' read -r _ id <<<"$1"
     case "$id" in
-    suspend) systemctl suspend ;;
-    hibernate) systemctl hibernate ;;
-    reboot) systemctl reboot ;;
-    shutdown) systemctl poweroff ;;
     lid)
         if lid_kept_awake; then
             pkill -f "$why"
@@ -24,6 +20,7 @@ if [[ "$#" -gt 0 ]]; then
             while ! lid_kept_awake; do sleep 0.1; done
         fi
         ;;
+    *) systemctl "$id" ;;
     esac
     exit
 fi
@@ -43,5 +40,5 @@ printf '%s\t%s\n' \
     suspend suspend \
     hibernate hibernate \
     reboot reboot \
-    shutdown shutdown
+    shutdown poweroff
 printf '%s%s\t%s\n' "$lid_pre" "lid stay awake" lid
