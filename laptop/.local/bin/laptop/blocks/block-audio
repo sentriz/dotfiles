@@ -16,6 +16,8 @@ function parse() {
 IFS=$'\t' read -r sink_vol sink_muted < <(wpctl get-volume "@DEFAULT_SINK@" | parse)
 IFS=$'\t' read -r _ source_muted < <(wpctl get-volume "@DEFAULT_SOURCE@" | parse)
 
+[[ "${BLOCK_BUTTON-}" == [45] ]] && osd volume "$sink_vol" ${sink_muted:+muted}
+
 out=""
 test -n "$sink_muted" \
     && out+="muted" \
