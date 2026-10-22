@@ -4,19 +4,13 @@ set -u
 
 limits=(80 90)
 
-charge-limit() { sudo framework_tool --charge-limit | grep -Po 'Maximum \K[0-9]+'; }
-
 if [[ "$#" -gt 0 ]]; then
-    IFS=$'\t' read -r action value <<<"$1"
-    case "$action" in
-    "charge limit")
-        [[ "$value" == "$(charge-limit)" ]] && value=100
-        sudo framework_tool --charge-limit "$value"
-        ;;
-    esac
+    IFS=$'\t' read -r value _ <<<"$1"
+    sudo framework_tool --charge-limit "$value"
     exit
 fi
 
+charge-limit() { sudo framework_tool --charge-limit | grep -Po 'Maximum \K[0-9]+'; }
 hottest() { grep -Po ": +\K[0-9]+(?= $1\$)" <<<"$thermal" | sort -rn | head -1; }
 
 cmenu set \
@@ -43,8 +37,9 @@ printf '%sfan\t%s rpm\n' "$label" "$(hottest RPM)"
 
 charge_limit="$(charge-limit)"
 
+cmenu set hide 1
 for limit in "${limits[@]}"; do
-    pre=""
-    [[ "$limit" == "$charge_limit" ]] && pre="$highlight"
-    printf '%scharge limit\t%s\n' "$pre" "$limit"
+    pre="" value="$limit"
+    [[ "$limit" == "$charge_limit" ]] && pre="$highlight" value=100
+    printf '%s%s\tcharge limit\t%s\n' "$pre" "$value" "$limit"
 done
