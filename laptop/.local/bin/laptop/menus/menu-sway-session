@@ -3,12 +3,9 @@
 set -u
 
 if [[ "$#" -gt 0 ]]; then
-    IFS=$'\t' read -r _ id <<<"$1"
-    case "$id" in
-    lock) swaylock ;;
-    exit) swaymsg exit ;;
-    reload) swaymsg reload ;;
-    esac
+    IFS=$'\t' read -r _ cmd <<<"$1"
+    read -ra cmd <<<"$cmd"
+    "${cmd[@]}"
     exit
 fi
 
@@ -17,6 +14,6 @@ cmenu set \
     hide 2
 
 printf '%s\t%s\n' \
-    "lock screen" lock \
-    "exit sway" exit \
-    "reload config" reload
+    "lock screen" swaylock \
+    "exit sway" "swaymsg exit" \
+    "reload config" "swaymsg reload"
