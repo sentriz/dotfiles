@@ -3,7 +3,7 @@
 set -u
 
 if [[ "$CMENU_MODE" = "preview" ]]; then
-    IFS=$'\t' read -r _ mac <<<"$1"
+    IFS=$'\t' read -r _ mac _ <<<"$1"
     bluetoothctl info "$mac" \
         | sed -nE 's/^\t([^:]+): (.+)/\1\t\2/p' \
         | grep -v '^UUID' \
@@ -11,27 +11,14 @@ if [[ "$CMENU_MODE" = "preview" ]]; then
     exit 0
 fi
 
-cmenu set \
-    colour 12 \
-    preview true \
-    stay_open true \
-    hide 2
-
-if ! pidof -q bluetoothd; then
-    echo "$(cmenu label)bluetooth off"
-    exit 0
-fi
-
 notify() {
     notify-send --hint "string:x-dunst-stack-tag:$0" "$1" "$(strip-escape <<<"${@:2}")"
 }
 
-readarray -t connected_macs < <(bluetoothctl devices Connected | lower | col " " 2)
-
 if [[ "$#" -gt 0 ]]; then
-    IFS=$'\t' read -r name mac <<<"$1"
+    IFS=$'\t' read -r action mac name <<<"$1"
 
-    if [[ "${connected_macs[*]}" =~ $mac ]]; then
+    if [[ "$action" == disconnect ]]; then
         bluetoothctl -- disconnect "$mac" >/dev/null 2>&1
     else
         notify "bluetooth $name" "$(bluetoothctl -- power on)"
@@ -43,10 +30,23 @@ if [[ "$#" -gt 0 ]]; then
     exit
 fi
 
+cmenu set \
+    colour 12 \
+    preview true \
+    stay_open true
+
+if ! pidof -q bluetoothd; then
+    echo "$(cmenu label)bluetooth off"
+    exit 0
+fi
+
+readarray -t connected_macs < <(bluetoothctl devices Connected | lower | col " " 2)
+
 highlight="$(cmenu highlight)"
 
+cmenu set hide 1,2
 bluetoothctl devices | grep "^D" | lower | while IFS=" " read -r _ mac name; do
-    pre=""
-    [[ "${connected_macs[*]}" =~ $mac ]] && pre="$highlight"
-    printf '%s%s\t%s\n' "$pre" "$name" "$mac"
+    pre="" action=connect
+    [[ "${connected_macs[*]}" =~ $mac ]] && pre="$highlight" action=disconnect
+    printf '%s%s\t%s\t%s\n' "$pre" "$action" "$mac" "$name"
 done
