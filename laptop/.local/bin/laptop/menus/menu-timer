@@ -3,24 +3,37 @@
 set -u
 
 if [[ "$#" -gt 0 ]]; then
-    IFS=$'\t' read -r id _ <<<"$1"
-    case "$id" in
-    add) timer +60 ;;
-    remove) timer -60 ;;
-    clear) timer clear ;;
-    esac
+    IFS=$'\t' read -r arg _ <<<"$1"
+    timer "$arg"
     block-up timer
     exit
 fi
 
 cmenu set \
     colour 11 \
-    stay_open true
+    stay_open true \
+    debounce 300ms
+
+if [[ -n "$CMENU_INPUT" ]]; then
+    if [[ "$CMENU_INPUT" =~ ^[0-9]+$ ]]; then
+        row="$(printf '+%d\tadd %d minutes' "$((CMENU_INPUT * 60))" "$CMENU_INPUT")"
+    elif target="$(date -d "$CMENU_INPUT" +%s 2>/dev/null)" && [[ "$target" -gt "$(date +%s)" ]]; then
+        row="$(printf '@%d\tset to %s' "$target" "$(date -d "@$target" +%H:%M)")"
+    else
+        echo "$(cmenu label)invalid input"
+        exit
+    fi
+
+    cmenu set hide 1
+    printf '%s%s\n' "$(cmenu back)" "$row"
+    exit
+fi
 
 left="$(timer)"
 [[ -n "$left" ]] && printf '%s%dm%02ds left\n' "$(cmenu label)" "$((left / 60))" "$((left % 60))"
 
+cmenu set hide 1
 printf '%s\t%s\n' \
-    add "a minute" \
-    remove "a minute" \
-    clear "the timer"
+    +60 "add a minute" \
+    -60 "remove a minute" \
+    clear "clear the timer"
