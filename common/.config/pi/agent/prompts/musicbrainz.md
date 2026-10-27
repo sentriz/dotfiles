@@ -164,3 +164,23 @@ an artist's previously released tracks is Album + Compilation.
 **Edit note** - Harmony writes a good one; append a short line describing the manual corrections.
 
 Cover art: Harmony can submit it after the release exists - don't upload it by hand.
+
+## Releases without a digital source (Discogs, a CD rip)
+
+Harmony can't help, so seed the release editor directly. `/release/add` ignores GET params - POST them by
+building a form on any musicbrainz.org page with `evaluate_script` (`textarea` per field, `f.submit()`).
+Seed keys: `name`, `release_group`, `artist_credit.names.0.mbid`/`.name`, `type`, `status`, `language`,
+`script`, `events.0.date.year`, `events.0.country`, `labels.0.mbid`, `labels.0.catalog_number`,
+`mediums.0.format`, `mediums.0.track.N.name`/`.length` (ms)/`.recording` (MBID - links it, no dialog needed),
+`urls.0.url` + `urls.0.link_type` (Discogs release = 76), `annotation`, `edit_note`. Tick `no-barcode` by id.
+Fields left out of the seed default to the release's: track artist credits inherit the release credit. To change
+a seeded value, re-POST the seed rather than fighting the dialogs (`click` on the artist `Edit` button can miss).
+Discogs API needs no auth: `https://api.discogs.com/releases/<id>`, `/masters/<id>/versions`.
+
+Discogs tracklists can be wrong in order as well as titles - compare printed lengths against other editions
+and the rip. Enter the order on the disc and note the discrepancy in the annotation.
+
+An EAC log's TOC gives the disc ID: offsets are start sectors + 150, leadout is the last end sector + 151,
+then `toc=1+N+leadout+offsets...`. Check `/ws/2/discid/<id>?toc=...` - a fuzzy TOC match shows which existing
+release shares the mastering (and so the recordings). Attach it after the release exists with
+`/cdtoc/attach?toc=...`. A `.cue` and EAC `.log` pasted together are UTF-8 followed by UTF-16 (split at the BOM).
