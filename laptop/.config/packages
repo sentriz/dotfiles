@@ -11,9 +11,15 @@ arch rust
 arch docker
 arch docker-buildx
 arch docker-compose
+post sudo systemctl enable --now docker.socket
+post sudo usermod -aG docker senan
 
 # net
 arch systemd-resolvconf
+arch openssh
+post sudo systemctl enable --now sshd
+arch tailscale
+post sudo systemctl enable --now tailscaled
 
 arch man-db
 arch fish
@@ -74,6 +80,7 @@ arch nautilus
 arch pavucontrol
 arch qjackctl
 arch syncthing
+post systemctl --user enable --now syncthing
 flatpak com.google.Chrome
 flatpak com.calibre_ebook.calibre
 flatpak com.github.Eloston.UngoogledChromium
@@ -96,6 +103,7 @@ flatpak org.wireshark.Wireshark
 # wm
 arch libnotify
 arch acpilight
+post sudo usermod -aG video senan
 arch dragon-drop-git
 arch foot
 arch foot-terminfo
@@ -143,12 +151,15 @@ arch adobe-source-code-pro-fonts
 
 # hw
 arch bluez
+post sudo systemctl enable --now bluetooth
 arch bluez-tools
 arch bluez-utils
 arch iwd
+post sudo systemctl enable --now iwd
 arch tuned
+post sudo systemctl enable --now tuned
 arch framework-system
-arch iwd
+post sudo systemctl enable --now fstrim.timer
 
 # av
 arch libpipewire02
@@ -167,6 +178,7 @@ arch ffmpeg
 arch carla
 arch qpwgraph
 arch realtime-privileges
+post sudo usermod -aG realtime senan
 arch bubblewrap
 arch yabridge
 arch yabridgectl
