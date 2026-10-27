@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+set -u
+
+grep -Po "^$1\s+\K.*" "$XDG_CONFIG_HOME/packages"

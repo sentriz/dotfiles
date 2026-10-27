@@ -4,12 +4,8 @@ set -eu
 
 export GIT_CONFIG_GLOBAL=/dev/null
 
-function list() {
-    grep -Po "^$1\s+\K.*" "$XDG_CONFIG_HOME/packages"
-}
-
 function has() {
-    list "$1" | grep -q .
+    packages-list "$1" | grep -q .
 }
 
 wanted=("$@")
@@ -46,48 +42,48 @@ EOF
     fi
 
     yay --version
-    readarray -t pkgs < <(list arch)
+    readarray -t pkgs < <(packages-list arch)
     EDITOR=true yay -S --needed --noconfirm --answeredit N --answerdiff N "${pkgs[@]}"
 fi
 
 if want dnf; then
     dnf --version >/dev/null
-    if list dnf | grep -qx tailscale && [[ ! -e /etc/yum.repos.d/tailscale.repo ]]; then
+    if packages-list dnf | grep -qx tailscale && [[ ! -e /etc/yum.repos.d/tailscale.repo ]]; then
         sudo dnf config-manager addrepo --from-repofile=https://pkgs.tailscale.com/stable/fedora/tailscale.repo
     fi
-    readarray -t pkgs < <(list dnf)
+    readarray -t pkgs < <(packages-list dnf)
     sudo dnf install -y --setopt=install_weak_deps=False "${pkgs[@]}"
 fi
 
 if want pkg; then
     type -p pkg >/dev/null
-    readarray -t pkgs < <(list pkg)
+    readarray -t pkgs < <(packages-list pkg)
     pkg install -y "${pkgs[@]}"
 fi
 
 if want python; then
     uv --version
-    list python | while IFS='' read -r pkg; do
+    packages-list python | while IFS='' read -r pkg; do
         uv tool install "$pkg"
     done
 fi
 
 if want cargo; then
     cargo version
-    readarray -t pkgs < <(list cargo)
+    readarray -t pkgs < <(packages-list cargo)
     cargo install "${pkgs[@]}"
 fi
 
 if want go; then
     go version
-    list go | while IFS='' read -r pkg; do
+    packages-list go | while IFS='' read -r pkg; do
         go install "$pkg"
     done
 fi
 
 if want npm; then
     npm version
-    readarray -t pkgs < <(list npm)
+    readarray -t pkgs < <(packages-list npm)
     npm install -g "${pkgs[@]}"
 fi
 
@@ -95,11 +91,11 @@ if want flatpak; then
     flatpak --version
     flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
     flatpak remote-add --user --if-not-exists flathub-beta https://flathub.org/beta-repo/flathub-beta.flatpakrepo
-    readarray -t pkgs < <(list flatpak)
+    readarray -t pkgs < <(packages-list flatpak)
     if [[ ${#pkgs[@]} -gt 0 ]]; then
         flatpak install --user --noninteractive --assumeyes flathub "${pkgs[@]}"
     fi
-    readarray -t pkgs < <(list flatpak-beta)
+    readarray -t pkgs < <(packages-list flatpak-beta)
     if [[ ${#pkgs[@]} -gt 0 ]]; then
         flatpak install --user --noninteractive --assumeyes flathub-beta "${pkgs[@]}"
     fi

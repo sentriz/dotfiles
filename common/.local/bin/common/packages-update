@@ -2,12 +2,8 @@
 
 set -eu
 
-function list() {
-    grep -Po "^$1\s+\K.*" "$XDG_CONFIG_HOME/packages"
-}
-
 function has() {
-    list "$1" | grep -q .
+    packages-list "$1" | grep -q .
 }
 
 if has arch; then
