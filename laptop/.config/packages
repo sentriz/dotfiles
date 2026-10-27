@@ -159,6 +159,8 @@ post sudo systemctl enable --now iwd
 arch tuned
 post sudo systemctl enable --now tuned
 arch framework-system
+arch kernel-modules-hook
+post sudo systemctl enable linux-modules-cleanup
 post sudo systemctl enable --now fstrim.timer
 
 # av
