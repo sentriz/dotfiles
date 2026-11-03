@@ -95,7 +95,7 @@ input type:touchpad {
 output * {
     scale 1
 
-    bg $XDG_PICTURES_DIR/wallpapers/wallhaven-7j36j9-2256x1504.jpg fill
+    bg $XDG_PICTURES_DIR/wallpapers/wallhaven-7j36j9-accent-2256x1504.jpg fill
 }
 
 # output laptop lid close
@@ -312,5 +312,5 @@ exec sway-rename-workspaces
 exec sway-focus
 exec wlsunset -l 52.8 -L -6.9 -t 3000
 
-# theme: accent background 80 bryellow
-exec_always 'pkill wlr-sunclock; exec wlr-sunclock -w 800 -a br -m "$default_gap,$default_gap,$default_gap,$default_gap" -s -n "#7C86FF" -o "#33333380" -u "#FFDF20"'
+# theme: grey7 D9 grey4 grey1 66 bryellow
+exec_always 'pkill wlr-sunclock; exec wlr-sunclock -w 800 -a br -m "$default_gap,$default_gap,$default_gap,$default_gap" -s -o "#404040D9" -n "#A1A1A1" -g "#F5F5F566" -u "#FFDF20" -b 2 -c "$colour_accent_alpha"'
