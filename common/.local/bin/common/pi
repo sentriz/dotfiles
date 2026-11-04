@@ -92,6 +92,10 @@ keep "$XDG_CACHE_HOME/aws"
 # tasks
 rw "$XDG_DATA_HOME/tasks"
 
+# todoman
+ro "$XDG_CONFIG_HOME/todoman"
+rw "$CALENDARS_DIR" "$XDG_CACHE_HOME/todoman"
+
 # notes
 rw "${NOTES_DIR:+$NOTES_DIR/machines}"
 
