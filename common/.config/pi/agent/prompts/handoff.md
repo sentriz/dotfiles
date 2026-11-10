@@ -26,9 +26,12 @@ handoff-id: hx-XXXX
 
 # Done when
 <concrete, checkable definition of done>
+
+# Log
+When a concrete decision is settled or a concrete action is completed and I'm happy with it, emit a single line `hx-XXXX <what>` in your reply. This is a log so the parent session can follow progress by grepping for `hx-XXXX`. Err on the side of less: only milestones, not every step.
 ```
 
-Keep it tight - include everything necessary, nothing more. Do not include instructions for the child to report back; I check on it via its session file.
+Keep it tight - include everything necessary, nothing more. Do not include any other instructions for the child to report back; I check on it via its session file.
 
 ## Checking up later
 
@@ -40,4 +43,5 @@ When I later ask how this handoff is going:
    ```
    stat -c '%y' "$f"; jq -r 'select(.type=="message") | .message.role as $r | (if (.message.content|type)=="string" then [$r+": "+.message.content] else [.message.content[]? | if .type=="text" then $r+": "+.text[0:300] elif .type=="toolCall" then $r+" ["+.name+"] "+(.arguments|tostring|.[0:200]) else empty end] end) | .[]' "$f" | tail -60
    ```
-3. Summarize: what the child has done, what it's doing now, whether it looks finished/working/stuck/waiting, and the session mtime as last activity. If nothing matches, the brief probably hasn't been pasted yet.
+3. Get the log lines: `grep -o 'hx-XXXX [^"\\]*' "$f"` (dropping the `handoff-id:` line). Use these as the main history; the tail covers what's happened since.
+4. Summarize: what the child has done, what it's doing now, whether it looks finished/working/stuck/waiting, and the session mtime as last activity. If nothing matches, the brief probably hasn't been pasted yet.
