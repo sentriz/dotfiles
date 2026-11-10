@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "1.4.0",
+  "lastChangelogVersion": "1.5.1",
   "theme": "ansi",
   "defaultProvider": "anthropic",
   "defaultModel": "claude-opus-5-5",
