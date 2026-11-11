@@ -6,8 +6,12 @@ todo() {
     flock "$XDG_RUNTIME_DIR/menu-todo.lock" todo "$@"
 }
 
+tasks() {
+    todo --porcelain list "$@" | jq 'map(.summary |= ltrimstr("List : "))'
+}
+
 ids-with-subtasks() {
-    todo --porcelain list | jq -r --arg uid "$1" '.[] | select(.uid == $uid or .parent == $uid) | .id'
+    tasks | jq -r --arg uid "$1" '.[] | select(.uid == $uid or .parent == $uid) | .id'
 }
 
 dry-run() {
@@ -30,7 +34,7 @@ if [[ "$CMENU_MODE" = "preview" ]]; then
     IFS=: read -r action rest <<<"${1%%$'\t'*}"
     case "$action" in
     task | "done")
-        task="$(todo --porcelain list | jq --arg uid "$rest" '(.[] | select(.uid == $uid)) + {subtasks: [.[] | select(.parent == $uid) | .summary]}')"
+        task="$(tasks | jq --arg uid "$rest" '(.[] | select(.uid == $uid)) + {subtasks: [.[] | select(.parent == $uid) | .summary]}')"
         ;;
     new)
         mapfile -d '' args < <(xargs -r printf '%s\0' <<<"$rest" 2>/dev/null)
@@ -79,14 +83,14 @@ if [[ "$#" -gt 0 ]]; then
     new-sub)
         read -r parent summary <<<"$rest"
         mapfile -d '' args < <(xargs -r printf '%s\0' <<<"$summary" 2>/dev/null)
-        list="$(todo --porcelain list | jq -r --arg uid "$parent" '.[] | select(.uid == $uid) | .list')"
+        list="$(tasks | jq -r --arg uid "$parent" '.[] | select(.uid == $uid) | .list')"
         id="$(todo new -l "$list" "${args[@]}" </dev/null | awk '{ print $3 }')"
         [[ -n "$id" ]] || exit
         sed -i "/^END:VTODO/i RELATED-TO;RELTYPE=PARENT:$parent\r" "$(todo path "$id")"
         ;;
     set-due)
         read -r uid date <<<"$rest"
-        id="$(todo --porcelain list | jq -r --arg uid "$uid" '.[] | select(.uid == $uid) | .id')"
+        id="$(tasks | jq -r --arg uid "$uid" '.[] | select(.uid == $uid) | .id')"
         if [[ "$date" == "none" ]]; then
             sed -i '/^DUE[;:]/d' "$(todo path "$id")"
         else
@@ -122,6 +126,10 @@ defs='
 # shellcheck disable=SC2016
 row='
     def by_due: sort_by(.due == null, (.due // 0 | strflocaltime("%Y/%m/%d")), (if .priority > 0 then .priority else 10 end), .summary);
+    def resolve($tasks):
+        def subtasks: .uid as $uid | $tasks[] | select(.parent == $uid);
+        def earliest_due: [.due, (subtasks | earliest_due)] | map(values) | min;
+        .due = earliest_due | .subtasks = ([subtasks] | length);
     def go(target): target as $target | $nav | sub("%s"; $target);
     def cells:
         [
@@ -134,14 +142,13 @@ row='
 
 case "$CMENU_INPUT" in
 "")
-    known="$(todo --porcelain list --status ANY | jq 'map({key: .uid, value: true}) | from_entries')"
-    todo --porcelain list \
+    known="$(tasks --status ANY | jq 'map({key: .uid, value: true}) | from_entries')"
+    tasks \
         | jq -r \
             --argjson known "$known" \
             "${marks[@]}" "$defs$row"'
         . as $tasks
-        | map(.uid as $uid | .subtasks = ([$tasks[] | select(.parent == $uid)] | length))
-        | map(select(.parent == null or $known[.parent] == null))
+        | map(select(.parent == null or $known[.parent] == null) | resolve($tasks))
         | by_due
         | group_by(.list)[]
         | "\($label)\t\(.[0].list)",
@@ -149,12 +156,13 @@ case "$CMENU_INPUT" in
     '
     ;;
 task:*)
-    todo --porcelain list \
+    tasks \
         | jq -r \
             --arg uid "${CMENU_INPUT#task:}" \
             "${marks[@]}" "$defs$row"'
-        (.[] | select(.uid == $uid)) as $task
-        | [.[] | select(.parent == $uid)] as $subtasks
+        . as $tasks
+        | (.[] | select(.uid == $uid) | resolve($tasks)) as $task
+        | [.[] | select(.parent == $uid) | resolve($tasks)] as $subtasks
         | [$label] + ($task | cells) | @tsv,
             "\($back)done:\($uid)\tdone",
             "\(go("[sub:\($uid) "))sub\tadd subtask",
@@ -167,7 +175,7 @@ task:*)
     ;;
 move:*)
     lists="$(todo --porcelain lists)"
-    todo --porcelain list \
+    tasks \
         | jq -r \
             --arg uid "${CMENU_INPUT#move:}" \
             --argjson lists "$lists" \
@@ -180,7 +188,7 @@ move:*)
 sub:*)
     read -r parent summary <<<"${CMENU_INPUT#sub:}"
     mapfile -d '' args < <(xargs -r printf '%s\0' <<<"$summary" 2>/dev/null)
-    list="$(todo --porcelain list | jq -r --arg uid "$parent" '.[] | select(.uid == $uid) | .list')"
+    list="$(tasks | jq -r --arg uid "$parent" '.[] | select(.uid == $uid) | .list')"
 
     if task="$(dry-run -l "$list" "${args[@]}")"; then
         jq -r --arg action "${back}new-sub:$parent $summary" "$defs"'
