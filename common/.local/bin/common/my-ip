@@ -2,4 +2,5 @@
 
 set -u
 
-curl -s "https://httpbin.org/ip" | jq -r .origin
+curl -s4 "https://httpbin.org/ip" | jq -r .origin
+curl -s6 "https://httpbin.org/ip" | jq -r .origin
