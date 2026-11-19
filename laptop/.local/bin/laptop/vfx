@@ -5,11 +5,12 @@ set -u
 # create a chain from source -> virt sink -> plugin -> hw sink
 # requires yabridge, carla, pipewire
 
-if (($# != 1)); then
-    echo "usage: $0 <plugin path>" >&2
+if (($# < 1 || $# > 2)); then
+    echo "usage: $0 <plugin path> [plugin label]" >&2
     exit 1
 fi
 plugin="$(realpath -s "$1")"
+label="${2-}"
 
 case "$plugin" in
 *.clap) type="clap" ;;
@@ -25,14 +26,14 @@ flock -n 9 || exit 1
 
 sink_hw="$(pactl get-default-sink)"
 sink_virt="vfx"
-node="$(basename "$plugin" ".$type")"
+node="${label:-$(basename "$plugin" ".$type")}"
 module=""
 
 state_dir="$XDG_STATE_HOME/vfx"
 mkdir -p "$state_dir"
 
 export WINELOADER="$HOME/.local/bin/laptop/yabridge-wine"
-(cd "$state_dir" && CARLA_CLIENT_NAME="$node" exec carla-single native "$type" "$plugin") 9>&- &
+(cd "$state_dir" && CARLA_CLIENT_NAME="$node" exec carla-single native "$type" "$plugin" ${label:+"$label"}) 9>&- &
 carla=$!
 trap 'kill "$carla" 2>/dev/null; pactl set-default-sink "$sink_hw"; [[ $module ]] && pactl unload-module "$module"' EXIT
 
