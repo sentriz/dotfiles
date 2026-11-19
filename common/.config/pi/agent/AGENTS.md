@@ -51,7 +51,7 @@
 
 - You run in a bwrap sandbox unless `PI_UNSANDBOXED` is set: only the working directory, `$PROJECTS_DIR`, and a whitelist of caches and configs are bound - no docker socket, no sway ipc, no system services. The ssh agent exposes only the dev key, so commit signing and forge pushes work, but ssh to other hosts does not.
 - So when something looks missing, broken, or not running, suspect the sandbox first. Don't work around it: ask me to re-run you with `PI_UNSANDBOXED=1`, or give me a command to run on the host. `which pi` is the wrapper, and `PI_SHELL=1 pi <cmd>` probes an identical sandbox.
-- pi lives at `/usr/lib/node_modules/pi/packages/coding-agent`: `docs/`, `examples/`, and `dist/` as readable per-module JS, with the original TypeScript in each `.js.map`'s `sourcesContent`. Your own config - agents, skills, extensions, sessions - is `$PI_CODING_AGENT_DIR`.
+- pi lives at `/usr/lib/node_modules/pi/packages/coding-agent`: `docs/`, `examples/`, and `dist/` as readable per-module JS, with the original TypeScript in each `.js.map`'s `sourcesContent`. Your own config - agents, skills, extensions, sessions - is `$PI_CODING_AGENT_DIR`. `pi-archive [days]` moves sessions older than 90 days (default) from `sessions/` to `sessions-archive/` there, keeping the same layout - search both when looking for an old session.
 - When showing me shell commands to run, use my shell's syntax (check `$SHELL`). Commands you run yourself via the bash tool are still bash.
 - Prefer `gh` CLI over `curl` for GitHub interactions.
 - Always use `jq` when parsing JSON. Prefer this over parsing with Python.

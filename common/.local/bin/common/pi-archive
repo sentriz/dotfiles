@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+set -u
+
+days="${1-90}"
+sessions_dir="$XDG_CONFIG_HOME/pi/agent/sessions"
+archive_dir="$XDG_CONFIG_HOME/pi/agent/sessions-archive"
+
+cd "$sessions_dir" || exit 1
+
+count=0
+while IFS= read -r -d '' path; do
+    mkdir -p "$archive_dir/$(dirname "$path")"
+    mv "$path" "$archive_dir/$path"
+    count=$((count + 1))
+done < <(find . -name '*.jsonl' -mtime +"$days" -print0)
+
+find . -mindepth 1 -type d -empty -delete
+
+echo "archived $count sessions older than $days days to $archive_dir"
