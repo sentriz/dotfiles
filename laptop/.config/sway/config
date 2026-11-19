@@ -299,7 +299,7 @@ exec_always 'pkill -f "^foot --server=$cmenu_sock"; pidwait -f "^foot --server=$
 exec rbw-agent
 exec secret daemon
 exec 'secret wait && until pimsync daemon || [ $? -eq 74 ]; do sleep 60; done'
-exec someday -dir ~/calendars
+exec someday -dir ~/calendars -dir ~/contacts
 
 exec_always 'pkill kanshi; exec kanshi'
 exec_always 'pkill mako; exec mako'
