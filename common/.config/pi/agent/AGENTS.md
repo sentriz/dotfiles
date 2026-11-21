@@ -44,6 +44,7 @@
 - Before your first edit or write to a file, check the skill list for a match on that file's language and load it. Do this even if the session started as a discussion.
 - When reading a main file under 500 lines, read it all in one go - don't chunk it. You can use `wc -l` first to measure the line count. This applies when the codebase is very small - list the root directory to check.
 - When changing approach or moving code, always clean up dormant/redundant artefacts left behind.
+- When scope narrows (fewer kinds, one caller, an option removed), collapse what served the wider version: getters, generic forms, wrappers, and stored derived state.
 - Only use codemode to batch independent calls or filter large output. For a single command, call bash directly - wrapping it in codemode just hides the command.
 - Do arithmetic with a tool (`python3`, `bc`), never in your head.
 
@@ -51,6 +52,7 @@
 
 - You run in a bwrap sandbox unless `PI_UNSANDBOXED` is set: only the working directory, `$PROJECTS_DIR`, and a whitelist of caches and configs are bound - no docker socket, no sway ipc, no system services. The ssh agent exposes only the dev key, so commit signing and forge pushes work, but ssh to other hosts does not.
 - So when something looks missing, broken, or not running, suspect the sandbox first. Don't work around it: ask me to re-run you with `PI_UNSANDBOXED=1`, or give me a command to run on the host. `which pi` is the wrapper, and `PI_SHELL=1 pi <cmd>` probes an identical sandbox.
+- `/tmp` is a tmpfs that's wiped when the session restarts. Put scratch files for work in the cwd (notes, repro scripts, test data, intermediate output) in `<cwd>/.scratch/` so they survive and I can see them. Git ignores it globally. Use `/tmp` only for throwaway stuff unrelated to the cwd.
 - pi lives at `/usr/lib/node_modules/pi/packages/coding-agent`: `docs/`, `examples/`, and `dist/` as readable per-module JS, with the original TypeScript in each `.js.map`'s `sourcesContent`. Your own config - agents, skills, extensions, sessions - is `$PI_CODING_AGENT_DIR`. `pi-archive [days]` moves sessions older than 90 days (default) from `sessions/` to `sessions-archive/` there, keeping the same layout - search both when looking for an old session.
 - When showing me shell commands to run, use my shell's syntax (check `$SHELL`). Commands you run yourself via the bash tool are still bash.
 - Prefer `gh` CLI over `curl` for GitHub interactions.
