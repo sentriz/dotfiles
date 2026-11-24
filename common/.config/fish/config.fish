@@ -19,6 +19,7 @@ and locale \
 
 set -gx SCRAP_DIR "$HOME/scrap"
 set -gx PROJECTS_DIR "$HOME/projects"
+set -gx WIKI_DIR "$HOME/wiki"
 
 set -gx EDITOR nvim
 set -gx PAGER vpager

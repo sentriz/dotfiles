@@ -62,7 +62,7 @@ ro /usr /etc /opt /run/systemd/resolve
 rw "$PROJECTS_DIR" "${extra_dirs[@]}" "${XDG_DOWNLOAD_DIR-}"
 
 # pi
-rw "$XDG_CONFIG_HOME/pi"
+rw "$XDG_CONFIG_HOME/pi" "$XDG_CONFIG_HOME/pi/agent"/sessions{,-archive}
 keep "$XDG_CACHE_HOME/pi" "$XDG_RUNTIME_DIR/pi"
 env_args+=(--setenv PI_CODING_AGENT_DIR "$XDG_CONFIG_HOME/pi/agent" --setenv PI_OFFLINE 1)
 keep "$XDG_CACHE_HOME/jiti"
@@ -96,8 +96,8 @@ rw "$XDG_DATA_HOME/tasks"
 ro "$XDG_CONFIG_HOME/todoman"
 rw "$CALENDARS_DIR" "$XDG_CACHE_HOME/todoman"
 
-# notes
-rw "${NOTES_DIR:+$NOTES_DIR/machines}"
+# wiki
+rw "$WIKI_DIR"
 
 # go
 ro "$XDG_CONFIG_HOME/go"

@@ -48,6 +48,13 @@
 - Only use codemode to batch independent calls or filter large output. For a single command, call bash directly - wrapping it in codemode just hides the command.
 - Do arithmetic with a tool (`python3`, `bc`), never in your head.
 
+# Docs
+
+- Knowledge about a project or machine goes where its repo already keeps such knowledge: an `AGENTS.md` or `CLAUDE.md` (at the root or in `.claude/`), `docs/`, or similar. A README written for the repo's users doesn't count. It's versioned with what it describes, so it doesn't drift.
+- `$WIKI_DIR` is the fallback when there's no such place: `infra.md` for how my machines fit together, `machines/<hostname>.md` per machine, and `projects/<name>.md` per project in `$PROJECTS_DIR`. Never start a wiki page for something whose repo has one. A machine whose docs live in a repo still has a page here, pointing to them.
+- Before anything else in a project, read its docs: its `AGENTS.md` or `CLAUDE.md` if it has one, otherwise `$WIKI_DIR/projects/<name>.md` if that exists. Nothing loads the wiki page for you, so check for it first thing. For a machine, read `$WIKI_DIR/machines/<hostname>.md`, and work on it over `ssh <hostname>`, not from local copies. That needs `PI_UNSANDBOXED`, so if you're sandboxed, ask me to re-run you first. As you go, record decisions made and non-obvious things learnt, not session progress. If you change a machine or find a discrepancy, update its docs.
+- Keep docs short: correct or delete stale entries rather than only appending.
+
 # Environment
 
 - You run in a bwrap sandbox unless `PI_UNSANDBOXED` is set: only the working directory, `$PROJECTS_DIR`, and a whitelist of caches and configs are bound - no docker socket, no sway ipc, no system services. The ssh agent exposes only the dev key, so commit signing and forge pushes work, but ssh to other hosts does not.
