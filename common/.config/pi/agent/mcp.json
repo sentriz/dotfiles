@@ -41,6 +41,16 @@
         "scope": "https://www.googleapis.com/auth/calendar.calendarlist.readonly https://www.googleapis.com/auth/calendar.events.readonly offline_access",
         "authServerMetadataUrl": "https://accounts.google.com/.well-known/openid-configuration"
       }
+    },
+    "gdrive": {
+      "url": "https://drivemcp.googleapis.com/mcp/v1",
+      "oauth": {
+        "clientId": "499778445863-0lo3qfi8jflmsb1bt4q10b9bdrnvvd61.apps.googleusercontent.com",
+        "clientSecret": "!secret google_mcp_client_secret",
+        "callbackUrl": "http://localhost:8085/oauth/callback",
+        "scope": "https://www.googleapis.com/auth/drive.readonly https://www.googleapis.com/auth/drive.file offline_access",
+        "authServerMetadataUrl": "https://accounts.google.com/.well-known/openid-configuration"
+      }
     }
   }
 }
