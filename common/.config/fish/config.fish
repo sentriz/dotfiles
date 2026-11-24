@@ -42,6 +42,7 @@ set -gx BUN_INSTALL_CACHE_DIR "$XDG_CACHE_HOME/.bun/install/cache"
 set -gx CARGO_HOME "$XDG_DATA_HOME/cargo"
 set -gx CARGO_NET_GIT_FETCH_WITH_CLI true
 set -gx RUSTUP_HOME "$XDG_DATA_HOME/rustup"
+set -gx GNUPGHOME "$XDG_DATA_HOME/gnupg"
 
 set -gx fish_user_paths \
     $HOME/.local/bin \
