@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+
+# depends
+#   - wf-recorder
+#   - socat
+#   - jq
+#   - dlna-play
+
+set -u
+
+port=8765
+
+if [[ "${1-}" == --serve ]]; then
+    output="$2"
+    read -r method _
+    while read -r line && [[ "$line" != $'\r' ]]; do :; done
+
+    printf 'HTTP/1.1 200 OK\r\nContent-Type: video/mp2t\r\ntransferMode.dlna.org: Streaming\r\nConnection: close\r\n\r\n'
+    [[ "$method" == GET ]] || exit 0
+
+    exec wf-recorder \
+        --output "$output" \
+        --audio="$(pactl get-default-sink).monitor" \
+        --no-damage --framerate 30 \
+        --pixel-format yuv420p \
+        --codec libx264 --codec-param preset=ultrafast --codec-param tune=zerolatency \
+        --audio-codec aac \
+        --muxer mpegts --file pipe:1 \
+        2>/dev/null
+fi
+
+if [[ $# -lt 1 ]]; then
+    echo "usage: ${0##*/} <renderer ip> [<width>x<height>]" >&2
+    exit 1
+fi
+
+renderer="$1"
+resolution="${2-1920x1080}"
+host="$(ip -o route get "$renderer" | grep -oP 'src \K\S+')"
+url="http://$host:$port/$HOSTNAME.ts"
+
+outputs="$(swaymsg -t get_outputs | jq '[.[] | select(.active)]')"
+swaymsg -q create_output
+output="$(swaymsg -t get_outputs | jq -r --argjson old "$outputs" '.[].name | select(IN($old[].name) | not)')"
+read -r x y < <(jq -r --argjson height "${resolution#*x}" '"\([.[].rect.x] | min) \([.[].rect.y] | min - $height)"' <<<"$outputs")
+swaymsg -q -- output "$output" mode "$resolution" position "$x" "$y"
+
+socat TCP-LISTEN:$port,reuseaddr,fork EXEC:"$0 --serve $output" 2>/dev/null &
+trap 'swaymsg -q output "$output" unplug; kill 0' EXIT
+
+dlna-play "$renderer" "$url"

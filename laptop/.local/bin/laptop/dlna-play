@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+
+# depends
+#   - socat
+#   - xmllint
+
+set -u
+
+if [[ $# -lt 2 ]]; then
+    echo "usage: ${0##*/} <renderer ip> <url>" >&2
+    exit 1
+fi
+
+renderer="$1"
+url="$2"
+service="urn:schemas-upnp-org:service:AVTransport:1"
+
+avtransport() {
+    curl -s -o /dev/null -w '%{http_code}' "$control" \
+        -H 'Content-Type: text/xml; charset="utf-8"' \
+        -H "SOAPACTION: \"$service#$1\"" \
+        -d "<?xml version=\"1.0\"?><s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\" s:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\"><s:Body><u:$1 xmlns:u=\"$service\"><InstanceID>0</InstanceID>$2</u:$1></s:Body></s:Envelope>" \
+        | grep -q 200
+}
+
+escape() {
+    sed 's/&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g; s/"/\&quot;/g' <<<"$1"
+}
+
+location="$(
+    printf 'M-SEARCH * HTTP/1.1\r\nHOST: 239.255.255.250:1900\r\nMAN: "ssdp:discover"\r\nMX: 1\r\nST: %s\r\n\r\n' "$service" \
+        | socat -T2 - UDP-DATAGRAM:239.255.255.250:1900 \
+        | grep -m1 -oiP "^location: *\Khttps?://\Q$renderer\E[:/]\S*"
+)"
+if [[ -z "$location" ]]; then
+    echo "no renderer found at $renderer" >&2
+    exit 1
+fi
+
+control="$(curl -s "$location" | xmllint --xpath "string(//*[local-name()='service'][*[local-name()='serviceType']='$service']/*[local-name()='controlURL'])" -)"
+[[ "$control" == http* ]] || control="$(grep -oP '^https?://[^/]+' <<<"$location")/${control#/}"
+
+mime="$(curl -sI "$url" | grep -m1 -oiP '^content-type: *\K[^;\s]+')"
+didl="<DIDL-Lite xmlns=\"urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/\" xmlns:dc=\"http://purl.org/dc/elements/1.1/\" xmlns:upnp=\"urn:schemas-upnp-org:metadata-1-0/upnp/\"><item id=\"0\" parentID=\"-1\" restricted=\"1\"><dc:title>$(escape "${url##*/}")</dc:title><upnp:class>object.item.${mime%%/*}Item</upnp:class><res protocolInfo=\"http-get:*:$mime:*\">$(escape "$url")</res></item></DIDL-Lite>"
+
+trap 'avtransport Stop ""' EXIT
+avtransport SetAVTransportURI "<CurrentURI>$(escape "$url")</CurrentURI><CurrentURIMetaData>$(escape "$didl")</CurrentURIMetaData>" || exit 1
+avtransport Play "<Speed>1</Speed>" || exit 1
+
+echo "playing $url on $renderer, ctrl-c to stop"
+sleep infinity
