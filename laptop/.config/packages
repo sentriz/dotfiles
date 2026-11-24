@@ -140,7 +140,7 @@ arch wlr-sunclock
 arch pimsync
 arch khal
 arch todoman
-go go.senan.xyz/someday@latest
+go go.senan.xyz/daybook/cmd/daybook-desktop@latest
 arch whisper-cpp-git
 arch sox
 
