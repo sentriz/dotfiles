@@ -15,7 +15,10 @@ for arg in "$@"; do
     fi
 done
 
-cmd=("$(PATH="/usr/bin:/usr/local/bin" command -v pi)" "${cmd_args[@]}")
+cmd=("$(type -aP pi | while read -r p; do [[ $p -ef $0 ]] || {
+    echo "$p"
+    break
+}; done)" "${cmd_args[@]}")
 
 if [ -n "${PI_SHELL-}" ]; then
     [ ${#cmd_args[@]} -gt 0 ] || {
@@ -94,7 +97,7 @@ rw "$XDG_DATA_HOME/tasks"
 
 # todoman
 ro "$XDG_CONFIG_HOME/todoman"
-rw "$CALENDARS_DIR" "$XDG_CACHE_HOME/todoman"
+rw "${CALENDARS_DIR-}" "$XDG_CACHE_HOME/todoman"
 
 # wiki
 rw "$WIKI_DIR"
