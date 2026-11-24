@@ -51,6 +51,9 @@
         "scope": "https://www.googleapis.com/auth/drive.readonly https://www.googleapis.com/auth/drive.file offline_access",
         "authServerMetadataUrl": "https://accounts.google.com/.well-known/openid-configuration"
       }
+    },
+    "notion": {
+      "url": "https://mcp.notion.com/mcp"
     }
   }
 }
