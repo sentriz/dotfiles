@@ -5,6 +5,7 @@ package main
 
 import (
 	"bufio"
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"os"
@@ -23,34 +24,35 @@ func main() {
 }
 
 func run() error {
-	userConfig, err := os.UserConfigDir()
-	if err != nil {
-		return fmt.Errorf("read user config: %w", err)
+	if len(os.Args) != 2 {
+		return fmt.Errorf("usage: %s <maintainer>", os.Args[0])
 	}
-
-	projectsListPath := filepath.Join(userConfig, "projects")
-	projectsList, err := os.Open(projectsListPath)
-	if err != nil {
-		return fmt.Errorf("read projects list: %w", err)
-	}
-	defer projectsList.Close()
+	maintainer := os.Args[1]
 
 	projectsDir := os.Getenv("PROJECTS_DIR")
 	if projectsDir == "" {
 		return fmt.Errorf("PROJECTS_DIR not set")
 	}
 
+	maintainersPaths, err := filepath.Glob(filepath.Join(globEscape(projectsDir), "*", "MAINTAINERS"))
+	if err != nil {
+		return fmt.Errorf("glob maintainers: %w", err)
+	}
+
 	out := bufio.NewWriter(os.Stdout)
 	defer out.Flush()
 
 	enc := json.NewEncoder(out)
-	sc := bufio.NewScanner(projectsList)
-	for sc.Scan() {
-		if sc.Text() == "" {
+	for _, maintainersPath := range maintainersPaths {
+		maintainers, err := os.ReadFile(maintainersPath)
+		if err != nil {
+			return fmt.Errorf("read %s: %w", maintainersPath, err)
+		}
+		if !bytes.Contains(maintainers, []byte(maintainer)) {
 			continue
 		}
 
-		projectPath := filepath.Join(projectsDir, sc.Text())
+		projectPath := filepath.Dir(maintainersPath)
 
 		var dest = map[string]any{"path": projectPath}
 		for _, sn := range sniffers {
@@ -81,9 +83,6 @@ func run() error {
 		if err := enc.Encode(dest); err != nil {
 			return fmt.Errorf("enc: %w", err)
 		}
-	}
-	if err := sc.Err(); err != nil {
-		return fmt.Errorf("read projects list: %w", err)
 	}
 
 	return nil
