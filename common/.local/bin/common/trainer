@@ -1,0 +1,178 @@
+///bin/true; exec go-script "$0" "$@"
+// vi: ft=go
+
+package main
+
+import (
+	"encoding/binary"
+	"errors"
+	"fmt"
+	"os"
+	"os/signal"
+	"time"
+
+	"tinygo.org/x/bluetooth"
+)
+
+const (
+	flagPedalPowerBalance = 1 << iota
+	_
+	flagAccumulatedTorque
+	_
+	flagWheelRevolution
+	flagCrankRevolution
+)
+
+const staleAfter = 3 * time.Second
+
+type measurement struct {
+	power     int16
+	hasCrank  bool
+	crankRevs uint16
+	crankTime uint16
+}
+
+func main() {
+	if err := run(); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
+}
+
+func run() error {
+	adapter := bluetooth.DefaultAdapter
+	if err := adapter.Enable(); err != nil {
+		return fmt.Errorf("enable adapter: %w", err)
+	}
+
+	devices := make(chan bluetooth.Device)
+	measurements := make(chan measurement, 16)
+	go func() {
+		for {
+			err := connect(adapter, devices, measurements)
+			fmt.Fprintf(os.Stderr, "%v, reconnecting\n", err)
+			time.Sleep(time.Second)
+		}
+	}()
+
+	interrupt := make(chan os.Signal, 1)
+	signal.Notify(interrupt, os.Interrupt)
+
+	ticker := time.NewTicker(time.Second)
+	defer ticker.Stop()
+
+	fmt.Println("time\tpower\tcadence")
+
+	var device *bluetooth.Device
+	var last measurement
+	var lastAt, lastCrankAt time.Time
+	var cadence float64
+	for {
+		select {
+		case d := <-devices:
+			device = &d
+			last = measurement{}
+
+		case m := <-measurements:
+			if m.hasCrank && last.hasCrank && m.crankTime != last.crankTime {
+				seconds := float64(m.crankTime-last.crankTime) / 1024
+				cadence = float64(m.crankRevs-last.crankRevs) / seconds * 60
+				lastCrankAt = time.Now()
+			}
+			last = m
+			lastAt = time.Now()
+
+		case now := <-ticker.C:
+			if now.Sub(lastAt) > staleAfter {
+				continue
+			}
+			if now.Sub(lastCrankAt) > staleAfter {
+				cadence = 0
+			}
+			fmt.Printf("%s\t%d\t%.0f\n", now.Format(time.RFC3339), max(last.power, 0), cadence)
+
+		case <-interrupt:
+			if device != nil {
+				device.Disconnect()
+			}
+			return nil
+		}
+	}
+}
+
+func connect(adapter *bluetooth.Adapter, devices chan<- bluetooth.Device, measurements chan<- measurement) error {
+	fmt.Fprintln(os.Stderr, "scanning for a power meter, pedal to wake it")
+	var found bluetooth.ScanResult
+	err := adapter.Scan(func(a *bluetooth.Adapter, r bluetooth.ScanResult) {
+		if r.HasServiceUUID(bluetooth.ServiceUUIDCyclingPower) {
+			found = r
+			a.StopScan()
+		}
+	})
+	if err != nil {
+		return fmt.Errorf("scan: %w", err)
+	}
+
+	device, err := adapter.Connect(found.Address, bluetooth.ConnectionParams{})
+	if err != nil {
+		return fmt.Errorf("connect %s: %w", found.Address, err)
+	}
+	defer device.Disconnect()
+	devices <- device
+	fmt.Fprintf(os.Stderr, "connected to %s (%s)\n", found.LocalName(), found.Address)
+
+	var services []bluetooth.DeviceService
+	for range 6 {
+		services, err = device.DiscoverServices([]bluetooth.UUID{bluetooth.ServiceUUIDCyclingPower})
+		if err == nil {
+			break
+		}
+	}
+	if err != nil {
+		return fmt.Errorf("discover services: %w", err)
+	}
+	chars, err := services[0].DiscoverCharacteristics([]bluetooth.UUID{bluetooth.CharacteristicUUIDCyclingPowerMeasurement})
+	if err != nil {
+		return fmt.Errorf("discover characteristics: %w", err)
+	}
+
+	err = chars[0].EnableNotifications(func(buf []byte) {
+		if len(buf) < 4 {
+			return
+		}
+		flags := binary.LittleEndian.Uint16(buf)
+		m := measurement{power: int16(binary.LittleEndian.Uint16(buf[2:]))}
+
+		offset := 4
+		if flags&flagPedalPowerBalance != 0 {
+			offset += 1
+		}
+		if flags&flagAccumulatedTorque != 0 {
+			offset += 2
+		}
+		if flags&flagWheelRevolution != 0 {
+			offset += 6
+		}
+		if flags&flagCrankRevolution != 0 && len(buf) >= offset+4 {
+			m.hasCrank = true
+			m.crankRevs = binary.LittleEndian.Uint16(buf[offset:])
+			m.crankTime = binary.LittleEndian.Uint16(buf[offset+2:])
+		}
+
+		measurements <- m
+	})
+	if err != nil {
+		return fmt.Errorf("enable notifications: %w", err)
+	}
+
+	for {
+		time.Sleep(time.Second)
+		connected, err := device.Connected()
+		if err != nil {
+			return fmt.Errorf("check connection: %w", err)
+		}
+		if !connected {
+			return errors.New("disconnected")
+		}
+	}
+}

@@ -1,0 +1,135 @@
+///bin/true; exec go-script "$0" "$@"
+// vi: ft=go
+
+package main
+
+import (
+	"bufio"
+	"errors"
+	"fmt"
+	"io"
+	"math"
+	"os"
+	"strconv"
+	"strings"
+	"time"
+
+	"github.com/muktihari/fit/encoder"
+	"github.com/muktihari/fit/profile/filedef"
+	"github.com/muktihari/fit/profile/mesgdef"
+	"github.com/muktihari/fit/profile/typedef"
+)
+
+const (
+	mass              = 80.0
+	gravity           = 9.81
+	rollingResistance = 0.004
+	dragArea          = 0.32
+	airDensity        = 1.225
+)
+
+const pauseAfter = 5 * time.Second
+
+func main() {
+	if err := run(); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
+}
+
+func run() error {
+	activity := filedef.NewActivity()
+
+	var energy, distance, timer float64
+	var prev time.Time
+
+	sc := bufio.NewScanner(os.Stdin)
+	for sc.Scan() {
+		if sc.Text() == "time\tpower\tcadence" {
+			continue
+		}
+		fields := strings.Split(sc.Text(), "\t")
+		if len(fields) != 3 {
+			return fmt.Errorf("want 3 fields, got %d: %q", len(fields), sc.Text())
+		}
+		t, err := time.Parse(time.RFC3339, fields[0])
+		if err != nil {
+			return fmt.Errorf("parse time: %w", err)
+		}
+		power, err := strconv.ParseUint(fields[1], 10, 16)
+		if err != nil {
+			return fmt.Errorf("parse power: %w", err)
+		}
+		cadence, err := strconv.ParseUint(fields[2], 10, 8)
+		if err != nil {
+			return fmt.Errorf("parse cadence: %w", err)
+		}
+		var dt float64
+		if gap := t.Sub(prev); gap <= pauseAfter {
+			dt = gap.Seconds()
+		} else {
+			energy = 0
+		}
+		prev = t
+		timer += dt
+
+		speed := math.Sqrt(2 * energy / mass)
+		resistance := (rollingResistance*mass*gravity + 0.5*airDensity*dragArea*speed*speed) * speed
+		energy = max(energy+(float64(power)-resistance)*dt, 0)
+		speed = math.Sqrt(2 * energy / mass)
+		distance += speed * dt
+
+		activity.Records = append(activity.Records, mesgdef.NewRecord(nil).
+			SetTimestamp(t).
+			SetPower(uint16(power)).
+			SetCadence(uint8(cadence)).
+			SetSpeedScaled(speed).
+			SetDistanceScaled(distance))
+	}
+	if err := sc.Err(); err != nil {
+		return fmt.Errorf("read stdin: %w", err)
+	}
+	if len(activity.Records) == 0 {
+		return errors.New("no records")
+	}
+
+	start := activity.Records[0].Timestamp
+	end := activity.Records[len(activity.Records)-1].Timestamp
+	elapsed := end.Sub(start).Seconds()
+
+	activity.FileId.
+		SetType(typedef.FileActivity).
+		SetTimeCreated(start).
+		SetManufacturer(typedef.ManufacturerDevelopment)
+
+	activity.Laps = append(activity.Laps, mesgdef.NewLap(nil).
+		SetTimestamp(end).
+		SetStartTime(start).
+		SetTotalElapsedTimeScaled(elapsed).
+		SetTotalTimerTimeScaled(timer).
+		SetTotalDistanceScaled(distance).
+		SetSport(typedef.SportCycling).
+		SetSubSport(typedef.SubSportIndoorCycling))
+
+	activity.Sessions = append(activity.Sessions, mesgdef.NewSession(nil).
+		SetTimestamp(end).
+		SetStartTime(start).
+		SetTotalElapsedTimeScaled(elapsed).
+		SetTotalTimerTimeScaled(timer).
+		SetTotalDistanceScaled(distance).
+		SetSport(typedef.SportCycling).
+		SetSubSport(typedef.SubSportIndoorCycling))
+
+	activity.Activity = mesgdef.NewActivity(nil).
+		SetTimestamp(end).
+		SetType(typedef.ActivityManual).
+		SetTotalTimerTimeScaled(timer).
+		SetNumSessions(1)
+
+	fit := activity.ToFIT(nil)
+	stdout := struct{ io.Writer }{os.Stdout}
+	if err := encoder.New(stdout).Encode(&fit); err != nil {
+		return fmt.Errorf("encode: %w", err)
+	}
+	return nil
+}
