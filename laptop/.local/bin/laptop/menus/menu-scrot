@@ -8,7 +8,9 @@ main() {
 
         case "$cmd" in
         "screenshot")
-            filename="${SCREENSHOTS_DIR}/$(date '+%Y%m%d_%H%M%S').png"
+            date="$(date '+%Y%m%d_%H%M%S')"
+            dir="${date::6}"
+            filename="${SCREENSHOTS_DIR}/$dir/$date.png"
 
             {
                 area_out="$(area "$arg")"

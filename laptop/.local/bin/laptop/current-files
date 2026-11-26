@@ -34,14 +34,17 @@ if grep -qx 'text/uri-list' <<<"$types"; then
     path="${path#file://}"
 fi
 
-files="$(for dir in "$XDG_DOWNLOAD_DIR" "$SCREENSHOTS_DIR" "$RECORDINGS_DIR"; do
+files="$(for dir in \
+    "$XDG_DOWNLOAD_DIR" \
+    "$(find "$SCREENSHOTS_DIR" -maxdepth 1 -type d -not -name ".*" | sort -rn | head -n1)" \
+    "$RECORDINGS_DIR"; do
     age=()
     [[ "$dir" == "$XDG_DOWNLOAD_DIR" ]] && age=(-mmin -15)
 
     find "$dir" -maxdepth 1 -type f -size +0 "${age[@]}" ! -name '*.part' ! -name '*.crdownload' -printf '%T@\t%p\n' 2>/dev/null | sort -rn | head -1
-done \
-    | sort -rn \
-    | while IFS=$'\t' read -r mtime file; do
+done |
+    sort -rn |
+    while IFS=$'\t' read -r mtime file; do
         [[ "$file" == "$path" ]] && continue
         printf '%d\t%s\t%s\n' "${mtime%.*}" "$(file --mime-type -b "$file")" "$file"
     done)"
