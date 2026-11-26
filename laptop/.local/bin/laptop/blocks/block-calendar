@@ -3,9 +3,9 @@
 set now_secs (date "+%s")
 set buffer_secs (math "6 * 3600")
 
-khal list today tomorrow -df "" --json start-date --json start-time --json end-date --json end-time --json cancelled --json title --json alarms-list \
-    | jq -r '.[] | select(.cancelled == "") | [."start-date", ."start-time", ."end-date", ."end-time", .title, (."alarms-list" | map(.delta) | join(" "))] | @tsv' \
-    | while read -d \t start_date start_time end_date end_time title alarms
+khal list today tomorrow -df "" --json start-date --json start-time --json end-date --json end-time --json cancelled --json title \
+    | jq -r '.[] | select(.cancelled == "") | [."start-date", ."start-time", ."end-date", ."end-time", .title] | @tsv' \
+    | while read -d \t start_date start_time end_date end_time title
     set is_all_day 0
     if test -z "$start_time"
         set is_all_day 1
@@ -18,15 +18,6 @@ khal list today tomorrow -df "" --json start-date --json start-time --json end-d
     test "$now_secs" -gt "$end_secs"; and continue
 
     set diff (math "$start_secs - $now_secs")
-    for alarm in (string split -n " " -- $alarms)
-        set until_alarm (math "$start_secs + $alarm - $now_secs")
-        if test "$until_alarm" -le 0; and test "$until_alarm" -gt -30
-            set rel now
-            test "$diff" -gt 0; and set rel "in "(relative-duration $diff 2)
-            notify-send -- "$title" "$rel"
-        end
-    end
-
     test "$diff" -gt "$buffer_secs"; and continue
 
     # rank by start clamped to now, so events already running all tie and the earliest-ending one wins
