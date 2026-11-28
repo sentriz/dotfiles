@@ -52,6 +52,7 @@ set -gx fish_user_paths \
     $GOPATH/bin \
     $NPM_CONFIG_PREFIX/bin \
     $XDG_DATA_HOME/cargo/bin \
+    $XDG_DATA_HOME/github/bin \
     $HOME/bin \
     $HOME/bin/*/ \
     /usr/local/go/bin \

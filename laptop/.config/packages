@@ -140,7 +140,7 @@ arch wlr-sunclock
 arch pimsync
 arch khal
 arch todoman
-go go.senan.xyz/daybook/cmd/daybook-desktop@latest
+github sentriz/daybook daybook-desktop-linux-amd64 daybook-desktop
 arch whisper-cpp-git
 arch sox
 

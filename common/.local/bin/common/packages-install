@@ -81,6 +81,17 @@ if want go; then
     done
 fi
 
+if want github; then
+    gh --version
+    mkdir -p "$XDG_DATA_HOME/github/bin"
+    packages-list github | while read -r repo asset name; do
+        tag="$(gh release view --repo "$repo" --json tagName --jq .tagName)"
+        bin="$XDG_DATA_HOME/github/bin/$name"
+        gh release download "$tag" --repo "$repo" --pattern "$asset-$tag" --clobber --output "$bin"
+        chmod +x "$bin"
+    done
+fi
+
 if want npm; then
     npm version
     readarray -t pkgs < <(packages-list npm)
